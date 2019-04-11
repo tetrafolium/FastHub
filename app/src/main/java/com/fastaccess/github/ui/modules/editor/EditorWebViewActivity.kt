@@ -14,8 +14,7 @@ import com.fastaccess.github.platform.deeplink.RawWebDeepLink
 class EditorWebViewActivity : BaseActivity() {
     override fun layoutRes(): Int = R.layout.code_editor_activity_layout
 
-    override fun onActivityCreatedWithUser(savedInstanceState: Bundle?) {
-    }
+    override fun onActivityCreatedWithUser(savedInstanceState: Bundle?) {}
 
     companion object {
         fun startActivity(context: Context) {

@@ -5,7 +5,6 @@ import com.fastaccess.github.R
 import com.fastaccess.github.base.BaseActivity
 import com.fastaccess.github.extensions.isTrue
 import com.fastaccess.github.extensions.replace
-import com.fastaccess.github.ui.modules.editor.EditorWebViewActivity
 import com.fastaccess.github.ui.modules.main.fragment.MainFragment
 
 class MainActivity : BaseActivity() {
@@ -16,8 +15,6 @@ class MainActivity : BaseActivity() {
         if (savedInstanceState == null) {
             replace(R.id.container, MainFragment.newInstance(), MainFragment.TAG)
         }
-
-        EditorWebViewActivity.startActivity(this)
     }
 
     override fun onBackPressed() {
