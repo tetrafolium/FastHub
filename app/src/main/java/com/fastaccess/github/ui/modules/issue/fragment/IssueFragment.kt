@@ -151,6 +151,7 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
     }
 
     private fun initIssue(model: IssueModel, me: LoginModel?) {
+        issueHeaderWrapper.isVisible = true
         val theme = preference.theme
         title.text = model.title
         opener.text = SpannableBuilder.builder()
