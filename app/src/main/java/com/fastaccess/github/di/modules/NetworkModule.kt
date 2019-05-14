@@ -4,7 +4,6 @@ import android.net.Uri
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.response.CustomTypeAdapter
 import com.apollographql.apollo.response.CustomTypeValue
-import com.fastaccess.domain.HttpLoggingInterceptor
 import com.fastaccess.domain.repository.services.*
 import com.fastaccess.github.BuildConfig
 import com.google.gson.FieldNamingPolicy
@@ -13,8 +12,8 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import github.type.CustomType
-import me.eugeniomarletti.kotlin.metadata.shadow.utils.addToStdlib.cast
 import okhttp3.*
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -50,7 +49,7 @@ class NetworkModule {
         .addInterceptor(auth)
         .addInterceptor(PaginationInterceptor())
         .addInterceptor(Pandora.get().interceptor)
-        .addInterceptor(HttpLoggingInterceptor(debug = BuildConfig.DEBUG))
+        .addInterceptor(HttpLoggingInterceptor())
         .build()
 
     @Singleton @Provides fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
@@ -192,7 +191,7 @@ private class UriApolloAdapter : CustomTypeAdapter<URI> {
 
 private class ObjectApolloAdapter : CustomTypeAdapter<Any> {
     override fun encode(value: Any): CustomTypeValue<String> = CustomTypeValue.GraphQLString(value.toString())
-    override fun decode(value: CustomTypeValue<*>): Any = value.value.cast()
+    override fun decode(value: CustomTypeValue<*>): Any = value.value
 }
 
 private class DateApolloAdapter : CustomTypeAdapter<Date> {

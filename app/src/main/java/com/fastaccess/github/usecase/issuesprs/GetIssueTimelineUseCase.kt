@@ -8,10 +8,10 @@ import com.fastaccess.data.model.parcelable.LabelModel
 import com.fastaccess.data.repository.IssueRepositoryProvider
 import com.fastaccess.domain.usecase.base.BaseObservableUseCase
 import com.fastaccess.extension.*
+import com.fastaccess.github.extensions.addIfNotNull
 import github.GetIssueTimelineQuery
 import github.GetIssueTimelineQuery.*
 import io.reactivex.Observable
-import me.eugeniomarletti.kotlin.metadata.shadow.utils.addIfNotNull
 import javax.inject.Inject
 
 /**

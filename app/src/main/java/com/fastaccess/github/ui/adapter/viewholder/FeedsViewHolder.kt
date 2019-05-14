@@ -12,13 +12,15 @@ import com.fastaccess.github.extensions.timeAgo
 import com.fastaccess.github.ui.adapter.base.BaseViewHolder
 import com.fastaccess.markdown.MarkdownProvider
 import com.fastaccess.markdown.widget.SpannableBuilder
-import kotlinx.android.synthetic.main.feeds_main_screen_row_item.view.*
+import kotlinx.android.synthetic.main.feeds_row_item.view.*
 
 /**
  * Created by Kosh on 20.10.18.
  */
-class FeedsViewHolder(parent: ViewGroup) : BaseViewHolder<FeedModel>(LayoutInflater.from(parent.context)
-    .inflate(R.layout.feeds_main_screen_row_item, parent, false)) {
+class FeedsViewHolder(
+    parent: ViewGroup
+) : BaseViewHolder<FeedModel>(LayoutInflater.from(parent.context)
+    .inflate(R.layout.feeds_row_item, parent, false)) {
 
     override fun bind(item: FeedModel) {
         itemView.apply {
@@ -55,7 +57,8 @@ class FeedsViewHolder(parent: ViewGroup) : BaseViewHolder<FeedModel>(LayoutInfla
                 else -> otherEvent(this, item)
             }
             dateWithIcon.text = item.createdAt?.timeAgo()
-            dateWithIcon.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, item.type?.drawableRes ?: 0, 0)
+            stateIcon.setImageResource(item.type?.drawableRes ?: 0)
+            userIcon.loadAvatar(item.actor?.avatarUrl, item.actor?.url)
         }
     }
 

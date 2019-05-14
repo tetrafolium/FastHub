@@ -22,49 +22,62 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
+            <FrameLayout
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_gravity="center"
+                android:layout_marginEnd="@dimen/spacing_xs_large">
+
+                <com.fastaccess.github.ui.widget.AvatarImageView
+                    android:id="@+id/userIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/ic_ring"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/stateIcon"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_gravity="bottom|end"
+                    android:background="@drawable/circle_shape_cardview"
+                    android:padding="@dimen/spacing_micro"
+                    tools:src="@drawable/ic_issue_closed_small"/>
+            </FrameLayout>
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/feedTitle"
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="top"
+                android:layout_gravity="center"
                 android:layout_weight="1"
+                android:ellipsize="marquee"
                 android:maxLines="2"
-                android:paddingBottom="@dimen/spacing_normal"
-                android:paddingTop="@dimen/spacing_normal"
-                app:autoSizeMaxTextSize="17sp"
-                app:autoSizeStepGranularity="2sp"
-                app:autoSizeTextType="uniform"
                 tools:text="To some, a believer is a sex for loving."/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dateWithIcon"
+                style="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:layout_marginStart="@dimen/spacing_xs_large"
-                android:drawablePadding="@dimen/spacing_micro"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/spacing_normal"
                 android:gravity="start|center"
                 android:maxLines="1"
-                android:paddingBottom="8dp"
-                android:paddingTop="8dp"
-                android:textSize="12sp"
-                tools:drawableTop="@drawable/ic_issues_small"
                 tools:text="An two hour ago"/>
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/feedDescription"
-            style="@style/TextAppearance.AppCompat.Small"
+            style="@style/TextAppearance.AppCompat.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/spacing_micro"
-            android:ellipsize="end"
+            android:ellipsize="marquee"
             android:maxLines="2"
-            app:autoSizeMaxTextSize="16sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
             tools:text="To some, a believer is a sex for loving. hahahahahahhahahahahahahaha"/>
 
     </LinearLayout>

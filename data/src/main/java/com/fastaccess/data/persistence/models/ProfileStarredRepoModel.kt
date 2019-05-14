@@ -33,7 +33,7 @@ data class ProfileStarredReposModel(
 @Entity(tableName = ProfileStarredRepoModel.TABLE_NAME)
 data class ProfileStarredRepoModel(
     @PrimaryKey @SerializedName("id") var id: String = "",
-    @SerializedName("databaseId") var databaseId: Int?? = null,
+    @SerializedName("databaseId") var databaseId: Int? = null,
     @SerializedName("name") var name: String? = null,
     @SerializedName("nameWithOwner") var nameWithOwner: String? = null,
     @SerializedName("updatedAt") var updatedAt: Date? = null,
