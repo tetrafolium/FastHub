@@ -76,7 +76,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/spacing_normal"
             android:ellipsize="marquee"
+            android:layout_marginTop="@dimen/spacing_normal"
             android:maxLines="2"
             tools:text="To some, a believer is a sex for loving. hahahahahahhahahahahahahaha"/>
 

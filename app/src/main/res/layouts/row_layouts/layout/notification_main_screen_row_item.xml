@@ -22,10 +22,8 @@
             style="@style/TextAppearance.AppCompat.Subhead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="marquee"
             android:maxLines="2"
-            app:autoSizeMaxTextSize="18sp"
-            app:autoSizeStepGranularity="2sp"
-            app:autoSizeTextType="uniform"
             tools:text="To some, a believer is a sex for loving."/>
 
         <LinearLayout
@@ -41,10 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:maxLines="1"
-                app:autoSizeMaxTextSize="16sp"
-                app:autoSizeStepGranularity="2sp"
-                app:autoSizeTextType="uniform"
+                android:ellipsize="marquee"
+                android:singleLine="true"
                 tools:text="To some, a believer is a sex for loving."/>
 
             <androidx.appcompat.widget.AppCompatTextView

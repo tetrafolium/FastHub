@@ -28,10 +28,8 @@
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:ellipsize="marquee"
                 android:maxLines="2"
-                app:autoSizeMaxTextSize="18sp"
-                app:autoSizeStepGranularity="2sp"
-                app:autoSizeTextType="uniform"
                 tools:text="To some, a believer is a sex for loving."/>
 
 
@@ -42,10 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="4dp"
-                android:maxLines="1"
-                app:autoSizeMaxTextSize="18sp"
-                app:autoSizeStepGranularity="2sp"
-                app:autoSizeTextType="uniform"
+                android:ellipsize="marquee"
+                android:singleLine="true"
                 app:fontFamily="@font/rubik"
                 tools:text="To some, a believer is a sex for loving."/>
 
