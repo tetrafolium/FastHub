@@ -60,7 +60,7 @@ data class OrganizationModel(
                 OrganizationModel(data.id, data.databaseId, data.avatarUrl.toString(), data.location, data.email, data.login, data.name,
                     data.url.toString(), data.description, data.isVerified, data.isViewerIsAMember, data.isViewerCanCreateTeams,
                     data.isViewerCanCreateRepositories, data.isViewerCanCreateProjects, data.isViewerCanAdminister,
-                    CountModel(data.teams.totalCount), CountModel(data.projects.totalCount), CountModel(data.members.totalCount),
+                    CountModel(data.teams.totalCount), CountModel(data.projects.totalCount), CountModel(data.membersWithRole.totalCount),
                     CountModel(data.repositories.totalCount))
             }?.toList() ?: arrayListOf()
         }

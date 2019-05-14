@@ -89,7 +89,7 @@ query getProfileOrgs($login: String!, $cursor: String) {
         projects(first: 0) {
           totalCount
         }
-        members(first: 0) {
+        membersWithRole(first: 0) {
           totalCount
         }
         repositories(first: 0) {
