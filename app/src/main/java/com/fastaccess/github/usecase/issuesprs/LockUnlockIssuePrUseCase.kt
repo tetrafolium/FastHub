@@ -31,7 +31,7 @@ class LockUnlockIssuePrUseCase @Inject constructor(
     var lockReason: LockReason? = null
     var lock: Boolean = false
 
-    override fun buildObservable(): Observable<TimelineModel> = issueRepositoryProvider.getIssueByNumberSingle("$login/$repo", number)
+    override fun buildObservable(): Observable<TimelineModel> = issueRepositoryProvider.getIssueByNumberMaybe("$login/$repo", number)
         .flatMapObservable { issue ->
             if (lockReason == null) {
                 Rx2Apollo.from(apolloClient.mutate(LockMutation(issue.id, Input.optional(lockReason))))

@@ -28,7 +28,7 @@ class MilestoneIssuePrUseCase @Inject constructor(
     var milestone: Int = -1
 
     override fun buildObservable(): Observable<Pair<TimelineModel, MilestoneModel>> =
-        issueRepositoryProvider.getIssueByNumberSingle("$login/$repo", number)
+        issueRepositoryProvider.getIssueByNumberMaybe("$login/$repo", number)
             .flatMapObservable { issue ->
                 issuePrService.editIssue(login, repo, number, IssueRequestModel(milestone = milestone))
                     .map {

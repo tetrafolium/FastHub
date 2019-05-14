@@ -26,7 +26,7 @@ class CloseOpenIssuePrUseCase @Inject constructor(
     var login: String = ""
     var number: Int = -1
 
-    override fun buildObservable(): Observable<TimelineModel> = issueRepositoryProvider.getIssueByNumberSingle("$login/$repo", number)
+    override fun buildObservable(): Observable<TimelineModel> = issueRepositoryProvider.getIssueByNumberMaybe("$login/$repo", number)
         .flatMapObservable { issue ->
             issuePrService.editIssue(login, repo, number, IssueRequestModel(state = if ("closed".equals(issue.state, true)) "open" else "closed"))
                 .map {

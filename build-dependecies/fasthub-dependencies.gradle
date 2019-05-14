@@ -2,26 +2,26 @@ ext {
     rxJava2 = '2.1.9'
     rxKotlin = '2.2.0'
     rxAndroid = '2.0.1'
-    room = "2.1.0-alpha03"
-    paging = "2.1.0-rc01"
+    room = '2.1.0-beta01'
+    paging = '2.1.0'
     androidX = '1.0.0'
-    lifecycle = "2.0.0"
-    navigation = '1.0.0-alpha05'
-    workManager = '1.0.0-beta02'
-    constraintLayout = '1.1.0'
-    dagger2 = '2.21'
+    lifecycle = '2.2.0-alpha01'
+    navigation = '1.0.0'
+    workManager = '1.0.1'
+    constraintLayout = '2.0.0-beta1'
+    dagger2 = '2.22.1'
     butterKnife = '8.8.1'
     javaxAnnotation = '10.0-b28'
-    okHttp = '3.11.0'
-    retrofit2 = '2.4.0'
+    okHttp = '4.0.0-alpha01'
+    retrofit2 = '2.5.0'
     gson = '2.8.5'
-    glide = '4.8.0'
+    glide = '4.9.0'
     timber = '4.7.1'
     androidState = '1.4.1'
-    junit = '4.13-beta-1'
+    junit = '4.13-beta-3'
     mockito = '2.23.4'
     mockitoKotlin = '1.5.0'
-    assertJ = '3.11.1'
+    assertJ = '3.12.2'
     apollo = '1.0.1-SNAPSHOT'
     pandora = 'v1.2.2'
     deepLinkDispatch = '3.1.1'
@@ -35,7 +35,7 @@ ext {
     supportLibraries = [
             "androidx.appcompat:appcompat:$androidX",
             "androidx.coordinatorlayout:coordinatorlayout:$androidX",
-            "com.google.android.material:material:$androidX",
+            "com.google.android.material:material:1.0.0-rc01",
             "androidx.drawerlayout:drawerlayout:$androidX",
             "androidx.recyclerview:recyclerview-selection:$androidX",
             "androidx.cardview:cardview:$androidX",
@@ -58,13 +58,13 @@ ext {
 
     extrasLibraries = [
             'com.github.daniel-stoneuk:material-about-library:2.1.0',
-            'com.scottyab:secure-preferences-lib:0.1.4',
+            'com.scottyab:secure-preferences-lib:0.1.7',
 //            "com.airbnb:deeplinkdispatch:$deepLinkDispatch"
             "com.github.airbnb.DeepLinkDispatch:deeplinkdispatch-base:master-SNAPSHOT",
-            'com.airbnb.android:lottie:2.8.0',
+            'com.airbnb.android:lottie:3.0.1',
             'com.github.zagum:Android-ExpandIcon:1.2.1',
             "com.evernote:android-state:$androidState",
-            "org.jsoup:jsoup:1.11.3",
+            'org.jsoup:jsoup:1.12.1',
             'com.github.k0shk0sh:RetainedDateTimePickers:1.0.2'
     ]
 
@@ -103,19 +103,19 @@ ext {
             "androidx.room:room-common:$room",
             "androidx.room:room-rxjava2:$room",
             "androidx.room:room-compiler:$room",
-            "androidx.core:core-ktx:1.1.0-alpha03",
-            "androidx.fragment:fragment-ktx:1.1.0-alpha03",
-            "androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0",
-            "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.0.0",
+            'androidx.core:core-ktx:1.2.0-alpha01',
+            'androidx.fragment:fragment-ktx:1.1.0-alpha08',
+            'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha01',
+            'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.2.0-alpha01',
             "android.arch.work:work-runtime:$workManager",
             "android.arch.work:work-rxjava2:$workManager"
     ]
 
     firebase = [
-            "com.google.firebase:firebase-core:16.0.6",
-            "com.google.firebase:firebase-database:16.0.5",
-            "com.crashlytics.sdk.android:crashlytics:2.9.8",
-            "com.google.firebase:firebase-messaging:17.3.4",
+            'com.google.firebase:firebase-core:16.0.9',
+            'com.google.firebase:firebase-database:17.0.0',
+            'com.crashlytics.sdk.android:crashlytics:2.10.0',
+            'com.google.firebase:firebase-messaging:18.0.0',
             "com.github.b3er.rxfirebase:firebase-database:11.2.0",
             "com.github.b3er.rxfirebase:firebase-database-kotlin:11.2.0"
     ]
