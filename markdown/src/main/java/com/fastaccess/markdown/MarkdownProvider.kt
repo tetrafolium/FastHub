@@ -1,5 +1,6 @@
 package com.fastaccess.markdown
 
+import android.text.method.LinkMovementMethod
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.core.view.doOnPreDraw
@@ -7,7 +8,7 @@ import com.fastaccess.github.extensions.generateTextColor
 import com.fastaccess.markdown.spans.DrawableHandler
 import com.fastaccess.markdown.spans.HrHandler
 import com.fastaccess.markdown.spans.PreTagHandler
-import com.fastaccess.markdown.spans.QouteHandler
+import com.fastaccess.markdown.spans.QuoteHandler
 import net.nightwhistler.htmlspanner.HtmlSpanner
 import org.commonmark.parser.Parser
 import org.commonmark.renderer.html.HtmlRenderer
@@ -64,12 +65,12 @@ object MarkdownProvider {
         isLightTheme: Boolean,
         onLinkClicked: ((link: String) -> Unit)? = null
     ) {
-        val betterLinkMovementExtended = BetterLinkMovementExtended.linkifyHtml(textView)
-        betterLinkMovementExtended.setOnLinkClickListener { link -> onLinkClicked?.invoke(link) }
+        val linkMovementMethod = LinkMovementMethod.getInstance()
+        textView.movementMethod =  linkMovementMethod
         htmlSpanner.registerHandler("pre", PreTagHandler(windowBackground, true, isLightTheme))
         htmlSpanner.registerHandler("code", PreTagHandler(windowBackground, false, isLightTheme))
         htmlSpanner.registerHandler("img", DrawableHandler(textView, width))
-        htmlSpanner.registerHandler("blockquote", QouteHandler(windowBackground))
+        htmlSpanner.registerHandler("blockquote", QuoteHandler(windowBackground))
         htmlSpanner.registerHandler("hr", HrHandler(windowBackground, width))
         val tableHandler = net.nightwhistler.htmlspanner.handlers.TableHandler()
         tableHandler.setTableWidth(width)

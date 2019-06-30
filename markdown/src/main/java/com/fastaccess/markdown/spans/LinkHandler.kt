@@ -2,10 +2,8 @@ package com.fastaccess.markdown.spans
 
 import android.graphics.Color
 import android.text.SpannableStringBuilder
-
 import net.nightwhistler.htmlspanner.SpanStack
 import net.nightwhistler.htmlspanner.TagNodeHandler
-
 import org.htmlcleaner.TagNode
 
 /**
@@ -14,13 +12,23 @@ import org.htmlcleaner.TagNode
 
 class LinkHandler : TagNodeHandler() {
 
-    override fun handleTagNode(node: TagNode, builder: SpannableStringBuilder, start: Int, end: Int, spanStack: SpanStack) {
+    override fun handleTagNode(
+        node: TagNode,
+        builder: SpannableStringBuilder,
+        start: Int,
+        end: Int,
+        spanStack: SpanStack
+    ) {
         val href = node.getAttributeByName("href")
-        if (href != null) {
-            builder.setSpan(LinkSpan(href, linkColor), start, end, 33)
-        } else if (node.text != null) {
-            builder.setSpan(LinkSpan("https://github.com/" + node.text.toString(), linkColor), start, end, 33)
+        val url = if (!href.isNullOrEmpty()) {
+            href.toString()
+        } else if (!node.text.isNullOrEmpty()) {
+            "https://github.com/${node.text}"
+        } else {
+            null
         }
+
+        url?.let { builder.setSpan(UrlSpan(href, linkColor), start, end, 33) }
     }
 
     companion object {
