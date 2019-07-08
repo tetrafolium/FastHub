@@ -5,14 +5,14 @@ package com.fastaccess.data.model
  */
 data class FirebaseTrendingConfigModel(
     var pathUrl: String = "https://github.com/trending/",
-    var description: String = ".py-1 > p",
+    var description: String = ".Box-row > p",
     var forks: String = ".f6 > a[href*=/network]",
     var language: String = ".f6 span[itemprop=programmingLanguage]",
     var languageFallback: String = ".f6 span[itemprop=programmingLanguage]",
-    var listName: String = ".repo-list",
-    var listNameSublistTag: String = "li",
+    var listName: String = ".Box",
+    var listNameSublistTag: String = "article",
     var stars: String = ".f6 > a[href*=/stargazers]",
-    var title: String = ".d-inline-block > h3 > a",
+    var title: String = ".Box-row > h1 > a",
     var todayStars: String = ".f6 > span.float-sm-right",
     var todayStarsFallback: String = ".f6 > span.float-sm-right"
 ) {

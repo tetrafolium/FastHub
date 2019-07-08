@@ -22,9 +22,9 @@ ext {
     mockito = '2.23.4'
     mockitoKotlin = '1.5.0'
     assertJ = '3.12.2'
-    apollo = '1.0.1-SNAPSHOT'
+    apollo = '1.0.1'
     pandora = 'v1.2.2'
-    deepLinkDispatch = '3.1.1'
+    deepLinkDispatch = '4.1.0'
     commonmark = '0.12.1'
 
 
@@ -59,8 +59,7 @@ ext {
     extrasLibraries = [
             'com.github.daniel-stoneuk:material-about-library:2.1.0',
             'com.scottyab:secure-preferences-lib:0.1.7',
-//            "com.airbnb:deeplinkdispatch:$deepLinkDispatch"
-            "com.github.airbnb.DeepLinkDispatch:deeplinkdispatch-base:master-SNAPSHOT",
+            "com.airbnb:deeplinkdispatch:$deepLinkDispatch",
             'com.airbnb.android:lottie:3.0.1',
             'com.github.zagum:Android-ExpandIcon:1.2.1',
             "com.evernote:android-state:$androidState",
@@ -137,9 +136,8 @@ ext {
             "com.google.dagger:dagger-compiler:$dagger2",
             "com.github.bumptech.glide:compiler:$glide",
             "androidx.room:room-runtime:$room",
-            "com.github.airbnb.DeepLinkDispatch:deeplinkdispatch-processor:master-SNAPSHOT",
             "com.evernote:android-state-processor:$androidState",
-//            "com.airbnb:deeplinkdispatch-processor:$deepLinkDispatch"
+            "com.airbnb:deeplinkdispatch-processor:$deepLinkDispatch"
     ]
 
     testing = [

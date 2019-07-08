@@ -89,7 +89,6 @@ class MainFragment : BaseFragment(), IconDialogFragment.IconDialogClickListener 
         positive.isTrue { viewModel.logout() }
     }
 
-
     private fun initClicks() {
         bottomBar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
