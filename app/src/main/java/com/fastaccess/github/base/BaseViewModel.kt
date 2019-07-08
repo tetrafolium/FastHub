@@ -35,8 +35,8 @@ abstract class BaseViewModel : ViewModel() {
         hideProgress()
         if (throwable is HttpException) {
             val response = throwable.response()
-            val message: String? = JSONObject(response.errorBody()?.string() ?: "").getString("message")
-            val code = response.code()
+            val message: String? = JSONObject(response?.errorBody()?.string() ?: "").getString("message")
+            val code = response?.code()
             if (code == 401) { // OTP
                 val twoFactor = response.headers()["X-GitHub-OTP"]
                 if (twoFactor != null) {

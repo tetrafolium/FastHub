@@ -52,14 +52,20 @@ class NetworkModule {
         .addInterceptor(HttpLoggingInterceptor())
         .build()
 
-    @Singleton @Provides fun provideRetrofit(gson: Gson, okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
+    @Singleton @Provides fun provideRetrofit(
+        gson: Gson,
+        okHttpClient: OkHttpClient
+    ): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.REST_URL)
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GithubResponseConverter(gson))
         .client(okHttpClient)
         .build()
 
-    @Singleton @Provides fun provideRetrofitBuilder(gson: Gson, okHttpClient: OkHttpClient): Retrofit.Builder = Retrofit.Builder()
+    @Singleton @Provides fun provideRetrofitBuilder(
+        gson: Gson,
+        okHttpClient: OkHttpClient
+    ): Retrofit.Builder = Retrofit.Builder()
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .addConverterFactory(GithubResponseConverter(gson))
         .client(okHttpClient)
@@ -80,9 +86,11 @@ class NetworkModule {
     @Singleton @Provides fun provideRepoService(retrofit: Retrofit): RepoService = retrofit.create(RepoService::class.java)
 }
 
-class AuthenticationInterceptor(var otp: String? = null,
-                                var token: String? = null,
-                                var isScrapping: Boolean = false) : Interceptor {
+class AuthenticationInterceptor(
+    var otp: String? = null,
+    var token: String? = null,
+    var isScrapping: Boolean = false
+) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val original = chain.request()
@@ -100,11 +108,13 @@ class AuthenticationInterceptor(var otp: String? = null,
 private class ContentTypeInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        return chain.proceed(request.newBuilder()
-            .addHeader("Accept", "application/vnd.github.v3+json")
-            .addHeader("Content-type", "application/vnd.github.v3+json")
-            .method(request.method(), request.body())
-            .build())
+        return chain.proceed(
+            request.newBuilder()
+                .addHeader("Accept", "application/vnd.github.v3+json")
+                .addHeader("Content-type", "application/vnd.github.v3+json")
+                .method(request.method, request.body)
+                .build()
+        )
     }
 }
 
@@ -112,10 +122,11 @@ private class PaginationInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val response = chain.proceed(request)
-        val headers = chain.request().headers()
-        headers?.let {
+        val headers = chain.request().headers
+        headers.let {
             if (it.values("Accept").contains("application/vnd.github.html") ||
-                it.values("Accept").contains("application/vnd.github.VERSION" + ".raw")) {
+                it.values("Accept").contains("application/vnd.github.VERSION" + ".raw")
+            ) {
                 return response//return them as they are.
             }
         }
@@ -132,8 +143,8 @@ private class PaginationInterceptor : Interceptor {
                         if (page != null) json += String.format("\"%s\":\"%s\",", rel.trim { it <= ' ' }, page)
                     }
                 }
-                json += String.format("\"items\":%s}", response.body()!!.string())
-                return response.newBuilder().body(ResponseBody.create(response.body()!!.contentType(), json)).build()
+                json += String.format("\"items\":%s}", response.body?.string())
+                return response.newBuilder().body(ResponseBody.create(response.body?.contentType(), json)).build()
             } else if (response.header("link") != null) {
                 val link = response.header("link")
                 var pagination = ""
@@ -145,9 +156,13 @@ private class PaginationInterceptor : Interceptor {
                     if (page != null) pagination += String.format("\"%s\":\"%s\",", rel.trim { it <= ' ' }, page)
                 }
                 if (pagination.isNotEmpty()) {
-                    val body = response.body()!!.string()
-                    return response.newBuilder().body(ResponseBody.create(response.body()!!.contentType(),
-                        "{" + pagination + body.substring(1, body.length))).build()
+                    val body = response.body?.string()
+                    return response.newBuilder().body(
+                        ResponseBody.create(
+                            response.body?.contentType(),
+                            "{" + pagination + body?.substring(1, body.length)
+                        )
+                    ).build()
                 }
             }
         }
@@ -155,10 +170,16 @@ private class PaginationInterceptor : Interceptor {
     }
 }
 
-private class GithubResponseConverter(private val gson: Gson,
-                                      private val creator: GsonConverterFactory = GsonConverterFactory.create(gson)) : Converter.Factory() {
+private class GithubResponseConverter(
+    private val gson: Gson,
+    private val creator: GsonConverterFactory = GsonConverterFactory.create(gson)
+) : Converter.Factory() {
 
-    override fun responseBodyConverter(type: Type, annotations: Array<Annotation>, retrofit: Retrofit): Converter<ResponseBody, *>? {
+    override fun responseBodyConverter(
+        type: Type,
+        annotations: Array<Annotation>,
+        retrofit: Retrofit
+    ): Converter<ResponseBody, *>? {
         return try {
             if (type === String::class.java) {
                 StringResponseConverter()
@@ -167,12 +188,16 @@ private class GithubResponseConverter(private val gson: Gson,
             }
         } catch (ignored: OutOfMemoryError) {
             null
-        }
+        } as Converter<ResponseBody, *>?
 
     }
 
-    override fun requestBodyConverter(type: Type, parameterAnnotations: Array<Annotation>,
-                                      methodAnnotations: Array<Annotation>, retrofit: Retrofit): Converter<*, RequestBody>? {
+    override fun requestBodyConverter(
+        type: Type,
+        parameterAnnotations: Array<Annotation>,
+        methodAnnotations: Array<Annotation>,
+        retrofit: Retrofit
+    ): Converter<*, RequestBody>? {
         return creator.requestBodyConverter(type, parameterAnnotations, methodAnnotations, retrofit)
     }
 

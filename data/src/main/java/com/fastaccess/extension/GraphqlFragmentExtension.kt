@@ -25,7 +25,7 @@ fun ShortIssueRowItem.toIssue(): MyIssuesPullsModel = MyIssuesPullsModel(id, dat
 
 fun CommitFragment.toCommit(): CommitModel = CommitModel(id,
     ShortUserModel(author?.name, author?.name, avatarUrl = author?.avatarUrl?.toString()), message,
-    abbreviatedOid, oid.toString(), commitUrl.toString(), authoredDate, isCommittedViaWeb)
+    abbreviatedOid, commitUrl.toString(), authoredDate, isCommittedViaWeb)
 
 fun Reactions.toReactionGroup(): ReactionGroupModel = ReactionGroupModel(ReactionContent.getByValue(this.content.rawValue()),
     this.createdAt, CountModel(this.users.totalCount), this.isViewerHasReacted)

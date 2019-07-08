@@ -30,7 +30,6 @@ data class CommitModel(
     @SerializedName("author") var author: ShortUserModel? = null,
     @SerializedName("message") var message: String? = null,
     @SerializedName("abbreviatedOid") var abbreviatedOid: String? = null,
-    @SerializedName("oid") var oid: String? = null,
     @SerializedName("commitUrl") var commitUrl: String? = null,
     @SerializedName("authoredDate") var authoredDate: Date? = null,
     @SerializedName("committedViaWeb") var committedViaWeb: Boolean? = null

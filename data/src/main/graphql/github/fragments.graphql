@@ -78,7 +78,6 @@ fragment CommitFragment on Commit {
     }
     message
     abbreviatedOid
-    oid
     commitUrl
     authoredDate
     committedViaWeb

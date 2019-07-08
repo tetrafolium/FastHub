@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -43,6 +42,7 @@ import com.fastaccess.markdown.widget.SpannableBuilder
 import github.type.LockReason
 import kotlinx.android.synthetic.main.empty_state_layout.*
 import kotlinx.android.synthetic.main.issue_header_row_item.*
+import kotlinx.android.synthetic.main.issue_pr_bottomsheet_layout.*
 import kotlinx.android.synthetic.main.issue_pr_fragment_layout.*
 import net.nightwhistler.htmlspanner.HtmlSpanner
 import javax.inject.Inject
@@ -51,7 +51,8 @@ import javax.inject.Inject
  * Created by Kosh on 28.01.19.
  */
 class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
-    LabelsFragment.OnLabelSelected, AssigneesFragment.OnAssigneesSelected, MilestoneFragment.OnMilestoneChanged {
+                      LabelsFragment.OnLabelSelected, AssigneesFragment.OnAssigneesSelected,
+                      MilestoneFragment.OnMilestoneChanged {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
     @Inject lateinit var htmlSpanner: HtmlSpanner
@@ -66,14 +67,13 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
     override fun layoutRes(): Int = R.layout.issue_pr_fragment_layout
     override fun viewModel(): BaseViewModel? = viewModel
 
-    override fun onFragmentCreatedWithUser(view: View, savedInstanceState: Bundle?) {
+    override fun onFragmentCreatedWithUser(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         swipeRefresh.appBarLayout = appBar
         setupToolbar("${getString(R.string.issue)}#$number")
         bottomBar.inflateMenu(R.menu.issue_menu)
-        bottomBar.menu.children.forEach {
-            it.icon.mutate().setTint(Color.WHITE)
-        }
-        bottomBar.overflowIcon?.mutate()?.setTint(Color.WHITE)
         (recyclerView.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
         recyclerView.addDivider()
         recyclerView.setEmptyView(emptyLayout)
@@ -106,7 +106,10 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
         initAssignees(assignees)
     }
 
-    override fun onMilestoneAdded(timeline: TimelineModel, milestone: MilestoneModel) {
+    override fun onMilestoneAdded(
+        timeline: TimelineModel,
+        milestone: MilestoneModel
+    ) {
         viewModel.addTimeline(timeline)
         initMilestone(milestone)
     }
@@ -130,12 +133,18 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
                 } else {
                     viewModel.lockUnlockIssue(login, repo, number)
                 }
-                R.id.labels -> MultiPurposeBottomSheetDialog.show(childFragmentManager,
-                    MultiPurposeBottomSheetDialog.BottomSheetFragmentType.LABELS, LoginRepoParcelableModel(login, repo, model.labels, number))
-                R.id.assignees -> MultiPurposeBottomSheetDialog.show(childFragmentManager,
-                    MultiPurposeBottomSheetDialog.BottomSheetFragmentType.ASSIGNEES, LoginRepoParcelableModel(login, repo, model.assignees, number))
-                R.id.milestone -> MultiPurposeBottomSheetDialog.show(childFragmentManager,
-                    MultiPurposeBottomSheetDialog.BottomSheetFragmentType.MILESTONE, LoginRepoParcelableModel(login, repo, model.assignees, number))
+                R.id.labels -> MultiPurposeBottomSheetDialog.show(
+                    childFragmentManager,
+                    MultiPurposeBottomSheetDialog.BottomSheetFragmentType.LABELS, LoginRepoParcelableModel(login, repo, model.labels, number)
+                )
+                R.id.assignees -> MultiPurposeBottomSheetDialog.show(
+                    childFragmentManager,
+                    MultiPurposeBottomSheetDialog.BottomSheetFragmentType.ASSIGNEES, LoginRepoParcelableModel(login, repo, model.assignees, number)
+                )
+                R.id.milestone -> MultiPurposeBottomSheetDialog.show(
+                    childFragmentManager,
+                    MultiPurposeBottomSheetDialog.BottomSheetFragmentType.MILESTONE, LoginRepoParcelableModel(login, repo, model.assignees, number)
+                )
             }
             return@setOnMenuItemClickListener true
         }
@@ -150,7 +159,10 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
         }
     }
 
-    private fun initIssue(model: IssueModel, me: LoginModel?) {
+    private fun initIssue(
+        model: IssueModel,
+        me: LoginModel?
+    ) {
         issueHeaderWrapper.isVisible = true
         val theme = preference.theme
         title.text = model.title
@@ -166,14 +178,18 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
         } else {
             "${model.authorAssociation?.toLowerCase()?.replace("_", "")} ${model.updatedAt?.timeAgo()}"
         }
-        MarkdownProvider.loadIntoTextView(htmlSpanner, description, model.bodyHTML ?: "", ThemeEngine.getCodeBackground(theme),
-            ThemeEngine.isLightTheme(theme))
+        MarkdownProvider.loadIntoTextView(
+            htmlSpanner, description, model.bodyHTML ?: "", ThemeEngine.getCodeBackground(theme),
+            ThemeEngine.isLightTheme(theme)
+        )
         state.text = model.state?.toLowerCase()
-        state.setChipBackgroundColorResource(if ("OPEN".equals(model.state, true)) {
-            R.color.material_green_700
-        } else {
-            R.color.material_red_700
-        })
+        state.setChipBackgroundColorResource(
+            if ("OPEN".equals(model.state, true)) {
+                R.color.material_green_700
+            } else {
+                R.color.material_red_700
+            }
+        )
         addEmoji.setOnClickListener {
             it.popupEmoji(requireNotNull(model.id), model.reactionGroups) {
                 initReactions(model)
@@ -222,7 +238,7 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
                 it.description != null -> "${it.description}"
                 else -> ""
             }
-        } ?: kotlin.run { milestoneLayout.isVisible = false }
+        } ?: run { milestoneLayout.isVisible = false }
     }
 
     private fun initLabels(labelList: List<LabelModel>?) {
@@ -255,7 +271,11 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
 
     companion object {
         const val TAG = "IssueFragment"
-        fun newInstance(login: String, repo: String, number: Int) = IssueFragment().apply {
+        fun newInstance(
+            login: String,
+            repo: String,
+            number: Int
+        ) = IssueFragment().apply {
             arguments = bundleOf(EXTRA to login, EXTRA_TWO to repo, EXTRA_THREE to number)
         }
     }

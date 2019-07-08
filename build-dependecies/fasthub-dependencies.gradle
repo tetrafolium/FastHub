@@ -60,7 +60,7 @@ ext {
             'com.github.daniel-stoneuk:material-about-library:2.1.0',
             'com.scottyab:secure-preferences-lib:0.1.7',
             "com.airbnb:deeplinkdispatch:$deepLinkDispatch",
-            'com.airbnb.android:lottie:3.0.1',
+            'com.airbnb.android:lottie:3.0.7',
             'com.github.zagum:Android-ExpandIcon:1.2.1',
             "com.evernote:android-state:$androidState",
             'org.jsoup:jsoup:1.12.1',
@@ -68,11 +68,11 @@ ext {
     ]
 
     networking = [
-            "com.squareup.okhttp3:okhttp:$okHttp",
-            "com.squareup.okhttp3:logging-interceptor:$okHttp",
-            "com.squareup.retrofit2:retrofit:$retrofit2",
-            "com.squareup.retrofit2:adapter-rxjava2:$retrofit2",
-            "com.squareup.retrofit2:converter-gson:$retrofit2",
+            "com.squareup.okhttp3:okhttp:4.0.0",
+            "com.squareup.okhttp3:logging-interceptor:4.0.0",
+            "com.squareup.retrofit2:retrofit:2.6.0",
+            "com.squareup.retrofit2:adapter-rxjava2:2.6.0",
+            "com.squareup.retrofit2:converter-gson:2.6.0",
             "com.google.code.gson:gson:$gson",
             "com.github.bumptech.glide:glide:$glide",
             "com.jakewharton.timber:timber:$timber",
@@ -88,33 +88,33 @@ ext {
     ]
 
     dagger = [
-            "com.google.dagger:dagger:$dagger2",
-            "com.google.dagger:dagger-android-support:$dagger2",
+            "com.google.dagger:dagger:2.23.2",
+            "com.google.dagger:dagger-android-support:2.23.2",
             "org.glassfish:javax.annotation:$javaxAnnotation"
     ]
 
     archs = [
-            "androidx.lifecycle:lifecycle-extensions:$lifecycle",
-            "androidx.lifecycle:lifecycle-livedata:$lifecycle",
-            "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle",
+            "androidx.lifecycle:lifecycle-extensions:2.2.0-alpha02",
+            "androidx.lifecycle:lifecycle-livedata:2.2.0-alpha02",
+            "androidx.lifecycle:lifecycle-reactivestreams:2.2.0-alpha02",
             "androidx.paging:paging-common:$paging",
             "androidx.paging:paging-runtime:$paging",
-            "androidx.room:room-common:$room",
-            "androidx.room:room-rxjava2:$room",
-            "androidx.room:room-compiler:$room",
-            'androidx.core:core-ktx:1.2.0-alpha01',
-            'androidx.fragment:fragment-ktx:1.1.0-alpha08',
-            'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha01',
-            'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.2.0-alpha01',
+            "androidx.room:room-common:2.1.0",
+            "androidx.room:room-rxjava2:2.1.0",
+            "androidx.room:room-compiler:2.1.0",
+            'androidx.core:core-ktx:1.2.0-alpha02',
+            'androidx.fragment:fragment-ktx:1.2.0-alpha01',
+            'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-alpha02',
+            'androidx.lifecycle:lifecycle-reactivestreams-ktx:2.2.0-alpha02',
             "android.arch.work:work-runtime:$workManager",
             "android.arch.work:work-rxjava2:$workManager"
     ]
 
     firebase = [
-            'com.google.firebase:firebase-core:16.0.9',
-            'com.google.firebase:firebase-database:17.0.0',
-            'com.crashlytics.sdk.android:crashlytics:2.10.0',
-            'com.google.firebase:firebase-messaging:18.0.0',
+            'com.google.firebase:firebase-core:17.0.0',
+            'com.google.firebase:firebase-database:18.0.0',
+            'com.crashlytics.sdk.android:crashlytics:2.10.1',
+            'com.google.firebase:firebase-messaging:19.0.1',
             "com.github.b3er.rxfirebase:firebase-database:11.2.0",
             "com.github.b3er.rxfirebase:firebase-database-kotlin:11.2.0"
     ]
@@ -132,10 +132,10 @@ ext {
 
 
     processing = [
-            "com.google.dagger:dagger-android-processor:$dagger2",
-            "com.google.dagger:dagger-compiler:$dagger2",
+            "com.google.dagger:dagger-android-processor:2.23.2",
+            "com.google.dagger:dagger-compiler:2.23.2",
             "com.github.bumptech.glide:compiler:$glide",
-            "androidx.room:room-runtime:$room",
+            "androidx.room:room-runtime:2.1.0",
             "com.evernote:android-state-processor:$androidState",
             "com.airbnb:deeplinkdispatch-processor:$deepLinkDispatch"
     ]
