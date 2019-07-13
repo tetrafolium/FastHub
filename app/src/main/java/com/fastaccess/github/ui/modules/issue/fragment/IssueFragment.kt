@@ -171,10 +171,11 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
     ) {
         issueHeaderWrapper.isVisible = true
         val theme = preference.theme
-        issueNumber.text = SpannableBuilder.builder()
+        title.text = SpannableBuilder.builder()
             .append(getString(R.string.issue))
             .bold("#${model.number}")
-        title.text = model.title
+            .newline()
+            .append(model.title)
         opener.text = SpannableBuilder.builder()
             .bold(model.author?.login)
             .append(" opened this issue ")
@@ -232,7 +233,7 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
         assigneesLayout.isVisible = !assigneesList.isNullOrEmpty()
         val builder = SpannableBuilder.builder()
         assigneesList?.forEachIndexed { index, item ->
-            builder.clickable(item.login ?: item.name ?: "", View.OnClickListener {
+            builder.clickable("@${item.login}" ?: item.name ?: "", View.OnClickListener {
                 it.context.route(item.url)
             }).append(if (index == assigneesList.size.minus(1)) "" else ", ")
         }

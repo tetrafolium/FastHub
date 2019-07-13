@@ -11,30 +11,11 @@
     android:paddingBottom="@dimen/spacing_normal">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/issueNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:maxLines="4"
-        android:paddingTop="@dimen/spacing_micro"
-        android:paddingBottom="@dimen/spacing_micro"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        android:textIsSelectable="true"
-        app:autoSizeMaxTextSize="16sp"
-        app:autoSizeMinTextSize="12sp"
-        app:autoSizeStepGranularity="1dp"
-        app:autoSizeTextType="uniform"
-        tools:text="@string/issue" />
-
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:maxLines="4"
-        android:paddingTop="@dimen/spacing_micro"
-        android:paddingBottom="@dimen/spacing_micro"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         android:textIsSelectable="true"
         app:autoSizeMaxTextSize="16sp"
@@ -48,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/spacing_micro"
+        android:layout_marginTop="@dimen/spacing_micro"
         android:orientation="horizontal">
 
         <com.google.android.material.chip.Chip
