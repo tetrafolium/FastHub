@@ -4,6 +4,7 @@ import android.text.format.DateUtils
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class DatePrettifier private constructor() {
 
@@ -27,10 +28,9 @@ class DatePrettifier private constructor() {
 
     companion object {
         private val instance = DatePrettifier()
-        private const val SECOND_MILLIS = 1000
-        private const val MINUTE_MILLIS = 60 * SECOND_MILLIS
-        private const val HOUR_MILLIS = 60 * MINUTE_MILLIS
-        private const val DAY_MILLIS = 24 * HOUR_MILLIS
+        private val DAY_MILLIS = TimeUnit.DAYS.toMillis(1)
+        private val HOUR_MILLIS = TimeUnit.HOURS.toMillis(1)
+        private val MINUTE_MILLIS = TimeUnit.MINUTES.toMillis(1)
 
         fun getTimeAgo(parsedDate: Date?): CharSequence {
             var _time = parsedDate?.time ?: return "N/A"

@@ -35,7 +35,7 @@ class FilterIssuePullRequestsFragment : BaseFragment(), FilterIssuesPrsBottomShe
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(FilterIssuePullRequestsViewModel::class.java) }
     private val adapter by lazy {
         MyIssuesPrsAdapter {
-            val isPr = !it.state.isNullOrBlank()
+            val isPr = it.isPr
             if (!isPr) {
                 route("$GITHUB_LINK${it.repoName}/issues/${it.number}")
             }

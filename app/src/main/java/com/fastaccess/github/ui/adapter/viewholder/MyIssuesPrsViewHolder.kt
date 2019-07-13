@@ -20,7 +20,7 @@ class MyIssuesPrsViewHolder(viewGroup: ViewGroup) : BaseViewHolder<MyIssuesPulls
     @SuppressLint("SetTextI18n")
     override fun bind(model: MyIssuesPullsModel?) {
         itemView.let {
-            val item = model ?: kotlin.run {
+            val item = model ?: run {
                 itemView.isVisible = false
                 return
             }
@@ -31,7 +31,7 @@ class MyIssuesPrsViewHolder(viewGroup: ViewGroup) : BaseViewHolder<MyIssuesPulls
             }
             it.commentCountBox.isVisible = item.commentCounts != 0
             it.commentCount.text = "${if (item.commentCounts ?: 0 > 99) "99" else item.commentCounts}"
-            if (!item.state.isNullOrEmpty()) { // PR
+            if (!item.state.isNullOrEmpty()) {
                 it.stateIcon.isVisible = true
                 it.stateIcon.setImageResource(
                     when {
