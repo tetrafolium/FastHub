@@ -35,16 +35,20 @@ import com.fastaccess.github.ui.modules.multipurpose.MultiPurposeBottomSheetDial
 import com.fastaccess.github.utils.EXTRA
 import com.fastaccess.github.utils.EXTRA_THREE
 import com.fastaccess.github.utils.EXTRA_TWO
-import com.fastaccess.github.utils.extensions.*
+import com.fastaccess.github.utils.extensions.isConnected
+import com.fastaccess.github.utils.extensions.popupEmoji
+import com.fastaccess.github.utils.extensions.route
+import com.fastaccess.github.utils.extensions.theme
 import com.fastaccess.markdown.MarkdownProvider
 import com.fastaccess.markdown.spans.LabelSpan
 import com.fastaccess.markdown.widget.SpannableBuilder
+import com.google.android.material.appbar.AppBarLayout
 import github.type.LockReason
 import kotlinx.android.synthetic.main.empty_state_layout.*
 import kotlinx.android.synthetic.main.issue_header_row_item.*
-import kotlinx.android.synthetic.main.issue_pr_bottomsheet_layout.*
 import kotlinx.android.synthetic.main.issue_pr_fragment_layout.*
 import net.nightwhistler.htmlspanner.HtmlSpanner
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -72,10 +76,12 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
         savedInstanceState: Bundle?
     ) {
         swipeRefresh.appBarLayout = appBar
-        setupToolbar("${getString(R.string.issue)}#$number")
-        bottomBar.inflateMenu(R.menu.issue_menu)
+        appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { p0, p1 ->
+            Timber.e("$p1")
+            toolbar.menu?.findItem(R.id.scrollTop)?.isVisible = p1 < 0
+        })
+        setupToolbar("", R.menu.issue_menu)
         (recyclerView.itemAnimator as? SimpleItemAnimator)?.supportsChangeAnimations = false
-        recyclerView.addDivider()
         recyclerView.setEmptyView(emptyLayout)
         fastScroller.attachRecyclerView(recyclerView, appBar)
         recyclerView.adapter = adapter
@@ -115,7 +121,7 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
     }
 
     private fun menuClick(model: IssueModel) {
-        bottomBar.setOnMenuItemClickListener { item ->
+        toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.scrollTop -> {
                     appBar.setExpanded(true, true)
@@ -165,6 +171,9 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
     ) {
         issueHeaderWrapper.isVisible = true
         val theme = preference.theme
+        issueNumber.text = SpannableBuilder.builder()
+            .append(getString(R.string.issue))
+            .bold("#${model.number}")
         title.text = model.title
         opener.text = SpannableBuilder.builder()
             .bold(model.author?.login)
@@ -200,7 +209,7 @@ class IssueFragment : BaseFragment(), LockUnlockFragment.OnLockReasonSelected,
         initLabels(model.labels)
         initAssignees(model.assignees)
         initMilestone(model.milestone)
-        bottomBar.menu.let {
+        toolbar.menu.let {
             val isAuthor = login == me?.login || model.authorAssociation?.equals("OWNER", true) == true ||
                 model.authorAssociation?.equals("COLLABORATOR", true) == true
             it.findItem(R.id.edit).isVisible = model.viewerDidAuthor == true
