@@ -17,7 +17,8 @@ data class MyIssuesPullsModel(
     @SerializedName("repoName") var repoName: String? = null,
     @SerializedName("commentsCount") var commentCounts: Int? = null,
     @SerializedName("state") var state: String? = null,
-    @SerializedName("url") var url: String? = null
+    @SerializedName("url") var url: String? = null,
+    @SerializedName("isPr") var isPr: Boolean = false
 ) {
     companion object {
         const val TABLE_NAME = "main_screen_issues"

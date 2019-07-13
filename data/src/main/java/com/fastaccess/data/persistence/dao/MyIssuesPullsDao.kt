@@ -9,10 +9,10 @@ import com.fastaccess.data.persistence.models.MyIssuesPullsModel
  */
 @Dao interface MyIssuesPullsDao {
 
-    @Query("SELECT * FROM ${MyIssuesPullsModel.TABLE_NAME} WHERE `state` = '' LIMIT 5")
+    @Query("SELECT * FROM ${MyIssuesPullsModel.TABLE_NAME} WHERE `isPr` == 0 LIMIT 5")
     fun getMainScreenIssues(): LiveData<List<MyIssuesPullsModel>>
 
-    @Query("SELECT * FROM ${MyIssuesPullsModel.TABLE_NAME} WHERE `state` != '' LIMIT 5")
+    @Query("SELECT * FROM ${MyIssuesPullsModel.TABLE_NAME} WHERE `isPr` == 1 LIMIT 5")
     fun getMainScreenPulls(): LiveData<List<MyIssuesPullsModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -25,7 +25,7 @@ import com.fastaccess.data.persistence.models.MyIssuesPullsModel
     fun update(model: MyIssuesPullsModel): Int
 
     @Delete fun delete(model: MyIssuesPullsModel)
-    @Query("DELETE FROM ${MyIssuesPullsModel.TABLE_NAME} WHERE `state` = '' ") fun deleteAllIssues()
-    @Query("DELETE FROM ${MyIssuesPullsModel.TABLE_NAME} WHERE `state` != '' ") fun deleteAllPrs()
+    @Query("DELETE FROM ${MyIssuesPullsModel.TABLE_NAME} WHERE `state` == 0 ") fun deleteAllIssues()
+    @Query("DELETE FROM ${MyIssuesPullsModel.TABLE_NAME} WHERE `state` == 1 ") fun deleteAllPrs()
     @Query("DELETE FROM ${MyIssuesPullsModel.TABLE_NAME}") fun deleteAll()
 }

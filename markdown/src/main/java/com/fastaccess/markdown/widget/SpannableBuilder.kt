@@ -35,7 +35,7 @@ class SpannableBuilder private constructor() : SpannableStringBuilder() {
     fun append(drawable: Drawable?): SpannableBuilder {
         if (drawable != null) {
             drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
-            append(' ', ImageSpan(drawable))
+            append(' ', CenterImageSpan(drawable))
         }
         return this
     }

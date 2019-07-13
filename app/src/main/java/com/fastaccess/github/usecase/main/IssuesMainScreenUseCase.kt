@@ -6,7 +6,7 @@ import com.fastaccess.data.persistence.models.MyIssuesPullsModel
 import com.fastaccess.data.repository.LoginRepositoryProvider
 import com.fastaccess.data.repository.MyIssuesPullsRepositoryProvider
 import com.fastaccess.domain.usecase.base.BaseObservableUseCase
-import github.GetIssuesQuery
+import github.GetIssuesWithoutStateQuery
 import github.type.IssueState
 import io.reactivex.Observable
 import javax.inject.Inject
@@ -25,17 +25,22 @@ class IssuesMainScreenUseCase @Inject constructor(
     override fun buildObservable(): Observable<*> = loginRepository.getLogin()
         .flatMapObservable { it ->
             return@flatMapObservable it.login?.let { login ->
-                Rx2Apollo.from(apolloClient.query(GetIssuesQuery.builder()
-                    .login(login)
-                    .state(arrayListOf(state))
-                    .count(5)
-                    .build()))
+                Rx2Apollo.from(
+                    apolloClient.query(
+                        GetIssuesWithoutStateQuery.builder()
+                            .login(login)
+                            .count(5)
+                            .build()
+                    )
+                )
                     .map { it.data()?.user?.issues?.nodes }
                     .map { value ->
                         myIssues.deleteAllIssues()
                         myIssues.insert(value.asSequence().map { it.fragments.shortIssueRowItem }.map {
-                            MyIssuesPullsModel(it.id, it.databaseId, it.number, it.title,
-                                it.repository.nameWithOwner, it.comments.totalCount, "", it.url.toString())
+                            MyIssuesPullsModel(
+                                it.id, it.databaseId, it.number, it.title,
+                                it.repository.nameWithOwner, it.comments.totalCount, it.issueState.rawValue(), it.url.toString()
+                            )
                         }.toList())
                     }
             } ?: Observable.empty()

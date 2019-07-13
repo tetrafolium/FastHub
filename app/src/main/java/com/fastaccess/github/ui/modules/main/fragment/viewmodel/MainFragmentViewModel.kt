@@ -47,7 +47,7 @@ class MainFragmentViewModel @Inject constructor(
             .switchMap(mapPulls())
     }
 
-    val unreadMotificationLiveData = notificationRepositoryProvider.getMainNotifications().map { it.firstOrNull { it.unread == true } != null }
+    val unreadNotificationLiveData = notificationRepositoryProvider.getMainNotifications().map { it.firstOrNull { it.unread == true } != null }
 
     fun load() {
         feedsMainScreenUseCase.executeSafely(callApi(

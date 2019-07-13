@@ -16,7 +16,6 @@ import com.fastaccess.github.ui.adapter.base.CurrentState
 import com.fastaccess.github.ui.modules.notifications.NotificationPagerFragment
 import com.fastaccess.github.ui.modules.notifications.fragment.unread.viewmodel.UnreadNotificationsViewModel
 import com.fastaccess.github.ui.widget.recyclerview.SwipeToDeleteCallback
-import com.fastaccess.github.utils.extensions.addDivider
 import com.fastaccess.github.utils.extensions.isConnected
 import kotlinx.android.synthetic.main.empty_state_layout.*
 import kotlinx.android.synthetic.main.simple_refresh_list_layout.*
@@ -37,7 +36,6 @@ class UnreadNotificationsFragment : BaseFragment() {
 
     override fun onFragmentCreatedWithUser(view: View, savedInstanceState: Bundle?) {
         recyclerView.adapter = adapter
-        recyclerView.addDivider()
         recyclerView.setEmptyView(emptyLayout)
         fastScroller.attachRecyclerView(recyclerView, (parentFragment as? NotificationPagerFragment)?.view?.findViewById(R.id.appBar))
         if (savedInstanceState == null) isConnected().isTrue { viewModel.loadNotifications(true) }

@@ -1,3 +1,13 @@
+query getIssuesWithoutState($login: String!, $count: Int!) {
+    user(login: $login) {
+        issues(first: $count, orderBy: {field: CREATED_AT, direction: DESC}) {
+            nodes {
+                ...ShortIssueRowItem
+            }
+        }
+    }
+}
+
 query getIssues($login: String!, $state: [IssueState!], $count: Int!) {
     user(login: $login) {
         issues(first: $count, orderBy: {field: CREATED_AT, direction: DESC}, states: $state) {

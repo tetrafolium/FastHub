@@ -24,16 +24,22 @@ class PullRequestsMainScreenUseCase @Inject constructor(
     override fun buildObservable(): Observable<*> = loginRepository.getLogin()
         .flatMapObservable { loginModel ->
             return@flatMapObservable loginModel.login?.let { login ->
-                Rx2Apollo.from(apolloClient.query(GetPullRequestsQuery.builder()
-                    .login(login)
-                    .count(5)
-                    .build()))
+                Rx2Apollo.from(
+                    apolloClient.query(
+                        GetPullRequestsQuery.builder()
+                            .login(login)
+                            .count(5)
+                            .build()
+                    )
+                )
                     .map { it.data()?.user?.pullRequests?.nodes }
                     .map { value ->
                         myIssues.deleteAllPrs()
                         myIssues.insert(value.asSequence().map { it.fragments.shortPullRequestRowItem }.map {
-                            MyIssuesPullsModel(it.id, it.databaseId, it.number, it.title,
-                                it.repository.nameWithOwner, it.comments.totalCount, it.state.name, it.url.toString())
+                            MyIssuesPullsModel(
+                                it.id, it.databaseId, it.number, it.title,
+                                it.repository.nameWithOwner, it.comments.totalCount, it.state.name, it.url.toString(), true
+                            )
                         }.toList())
                     }
             } ?: Observable.empty()

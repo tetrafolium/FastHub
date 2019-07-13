@@ -19,7 +19,6 @@ import com.fastaccess.github.ui.modules.issuesprs.fragment.viewmodel.FilterIssue
 import com.fastaccess.github.ui.modules.multipurpose.MultiPurposeBottomSheetDialog
 import com.fastaccess.github.utils.EXTRA
 import com.fastaccess.github.utils.GITHUB_LINK
-import com.fastaccess.github.utils.extensions.addDivider
 import com.fastaccess.github.utils.extensions.isConnected
 import com.fastaccess.github.utils.extensions.route
 import kotlinx.android.synthetic.main.appbar_center_title_layout.*
@@ -55,7 +54,6 @@ class FilterIssuePullRequestsFragment : BaseFragment(), FilterIssuesPrsBottomShe
 
         viewModel.isPr = fragmentType == FragmentType.FILTER_PRS
         recyclerView.adapter = adapter
-        recyclerView.addDivider()
         recyclerView.setEmptyView(emptyLayout)
         fastScroller.attachRecyclerView(recyclerView, appBar)
         if (savedInstanceState == null) isConnected().isTrue { viewModel.loadData(true) }
@@ -95,4 +93,3 @@ class FilterIssuePullRequestsFragment : BaseFragment(), FilterIssuesPrsBottomShe
         }
     }
 }
-

@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?selectableItemBackground"
-    android:paddingBottom="@dimen/spacing_normal"
-    android:paddingEnd="@dimen/spacing_xs_large"
     android:paddingStart="@dimen/spacing_xs_large"
-    android:paddingTop="@dimen/spacing_normal">
+    android:paddingTop="@dimen/spacing_normal"
+    android:paddingEnd="@dimen/spacing_xs_large"
+    android:paddingBottom="@dimen/spacing_normal">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/stateIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:background="@drawable/circle_shape_cardview"
+            android:padding="@dimen/spacing_micro"
+            tools:src="@drawable/circle_shape_green_small" />
+
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/spacing_xs_large"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -30,64 +39,40 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="marquee"
                 android:maxLines="2"
-                tools:text="To some, a believer is a sex for loving."/>
+                tools:text="To some, a believer is a sex for loving." />
 
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/issueDescription"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="4dp"
                 android:ellipsize="marquee"
                 android:singleLine="true"
-                tools:text="To some, a believer is a sex for loving."/>
-
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                tools:text="To some, a believer is a sex for loving." />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <FrameLayout
+            android:id="@+id/commentCountBox"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_gravity="center"
-            android:orientation="vertical">
+            android:background="@drawable/ic_comments_number">
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/commentCount"
-                style="@style/TextAppearance.AppCompat.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="4dp"
-                android:drawableEnd="@drawable/ic_comment_small"
-                android:drawablePadding="@dimen/spacing_normal"
+                style="@style/TextAppearance.AppCompat.Subhead.Inverse"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="top|center"
                 android:gravity="center"
                 android:maxLines="1"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                android:visibility="gone"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeStepGranularity="2sp"
-                app:autoSizeTextType="uniform"
-                tools:text="100"
-                tools:visibility="visible"/>
+                tools:text="5" />
+        </FrameLayout>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/state"
-                style="@style/TextAppearance.AppCompat.Caption"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:gravity="center"
-                android:maxLines="1"
-                android:textColor="@color/material_green_700"
-                android:textStyle="bold"
-                android:visibility="gone"
-                app:autoSizeMaxTextSize="14sp"
-                app:autoSizeStepGranularity="2sp"
-                app:autoSizeTextType="uniform"
-                tools:text="OPEN"
-                tools:visibility="visible"/>
-
-        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

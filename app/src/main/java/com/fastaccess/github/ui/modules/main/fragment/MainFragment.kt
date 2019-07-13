@@ -26,7 +26,7 @@ import com.fastaccess.github.utils.SEARCH_LINK
 import com.fastaccess.github.utils.TRENDING_LINK
 import com.fastaccess.github.utils.extensions.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.appbar_center_title_layout.*
+import kotlinx.android.synthetic.main.appbar_logo_center_title_layout.*
 import kotlinx.android.synthetic.main.bottm_bar_menu_layout.*
 import kotlinx.android.synthetic.main.main_fragment_layout.*
 import javax.inject.Inject
@@ -154,7 +154,7 @@ class MainFragment : BaseFragment(), IconDialogFragment.IconDialogClickListener 
                 LoginChooserActivity.startActivity(requireActivity())
             }
         }
-        viewModel.unreadMotificationLiveData.observeNotNull(this) {
+        viewModel.unreadNotificationLiveData.observeNotNull(this) {
             bottomBar.menu?.findItem(R.id.notifications)?.icon = if (it) {
                 getDrawable(R.drawable.ic_notification_unread)
             } else {

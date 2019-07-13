@@ -34,6 +34,7 @@ fragment ShortIssueRowItem on Issue {
     comments(first: 1) {
         totalCount
     }
+    issueState: state
     url
 }
 

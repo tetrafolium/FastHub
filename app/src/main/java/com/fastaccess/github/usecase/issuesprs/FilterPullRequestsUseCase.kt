@@ -31,7 +31,7 @@ class FilterPullRequestsUseCase @Inject constructor(
                 .flatMapObservable { user ->
                     return@flatMapObservable user.login?.let { login ->
                         searchObservable(login = login)
-                    } ?: Observable.empty<Pair<PageInfoModel, List<MyIssuesPullsModel>>>()
+                    } ?: Observable.empty()
                 }
         } else {
             searchObservable(query = query)
@@ -45,7 +45,7 @@ class FilterPullRequestsUseCase @Inject constructor(
                 val list = search.nodes?.asSequence()?.mapNotNull { it.fragments.shortPullRequestRowItem }
                     ?.map {
                         MyIssuesPullsModel(it.id, it.databaseId, it.number, it.title,
-                            it.repository.nameWithOwner, it.comments.totalCount, it.state.name, it.url.toString())
+                            it.repository.nameWithOwner, it.comments.totalCount, it.state.name, it.url.toString(), true)
                     }
                     ?.toList() ?: arrayListOf()
                 val pageInfo = PageInfoModel(search.pageInfo.startCursor, search.pageInfo.endCursor,

@@ -8,10 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fastaccess.data.model.MainScreenModel
 import com.fastaccess.data.model.MainScreenModelRowType
 import com.fastaccess.github.R
+import com.fastaccess.github.extensions.getDrawableCompat
 import com.fastaccess.github.ui.adapter.viewholder.FeedsViewHolder
 import com.fastaccess.github.ui.adapter.viewholder.MyIssuesPrsViewHolder
 import com.fastaccess.github.ui.adapter.viewholder.NotificationsViewHolder
 import com.fastaccess.github.ui.adapter.viewholder.TitleSectionViewHolder
+import com.fastaccess.markdown.widget.SpannableBuilder
 
 /**
  * Created by Kosh on 04.11.18.
@@ -54,7 +56,16 @@ class MainScreenAdapter(
             is TitleSectionViewHolder -> {
                 when (item.mainScreenModelRowType) {
                     MainScreenModelRowType.FEED_TITLE -> holder.bind(holder.itemView.context.getString(R.string.feeds))
-                    MainScreenModelRowType.NOTIFICATION_TITLE -> holder.bind(holder.itemView.context.getString(R.string.notifications))
+                    MainScreenModelRowType.NOTIFICATION_TITLE -> holder.bind(
+                        if (item.hasBubble) {
+                            SpannableBuilder.builder()
+                                .append(holder.itemView.context.getString(R.string.notifications))
+                                .space().space()
+                                .append(holder.itemView.context.getDrawableCompat(R.drawable.circle_shape_red_small))
+                        } else {
+                            holder.itemView.context.getString(R.string.notifications)
+                        }
+                    )
                     MainScreenModelRowType.ISSUES_TITLE -> holder.bind(holder.itemView.context.getString(R.string.issues))
                     MainScreenModelRowType.PRS_TITLE -> holder.bind(holder.itemView.context.getString(R.string.pull_requests))
                     else -> holder.itemView.isVisible = false
