@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fastaccess.data.model.MainScreenModel
 import com.fastaccess.data.model.MainScreenModelRowType
 import com.fastaccess.github.R
+import com.fastaccess.github.ui.adapter.viewholder.FeedsViewHolder
 import com.fastaccess.github.ui.adapter.viewholder.MyIssuesPrsViewHolder
 import com.fastaccess.github.ui.adapter.viewholder.NotificationsViewHolder
-import com.fastaccess.github.ui.adapter.viewholder.FeedsViewHolder
 import com.fastaccess.github.ui.adapter.viewholder.TitleSectionViewHolder
 
 /**
@@ -20,7 +20,10 @@ class MainScreenAdapter(
     private val clickListener: (model: MainScreenModel) -> Unit
 ) : ListAdapter<MainScreenModel, RecyclerView.ViewHolder>(DIFF_CALLBACK) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): RecyclerView.ViewHolder {
         return when (viewType) {
             MainScreenModelRowType.FEED.rowType -> FeedsViewHolder(parent).apply { setOnClick(this) }
             MainScreenModelRowType.NOTIFICATION.rowType -> NotificationsViewHolder(parent).apply { setOnClick(this) }
@@ -39,7 +42,10 @@ class MainScreenAdapter(
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int
+    ) {
         val item = getItem(position) ?: return
         when (holder) {
             is FeedsViewHolder -> item.feed?.let { holder.bind(it) }
@@ -51,7 +57,7 @@ class MainScreenAdapter(
                     MainScreenModelRowType.NOTIFICATION_TITLE -> holder.bind(holder.itemView.context.getString(R.string.notifications))
                     MainScreenModelRowType.ISSUES_TITLE -> holder.bind(holder.itemView.context.getString(R.string.issues))
                     MainScreenModelRowType.PRS_TITLE -> holder.bind(holder.itemView.context.getString(R.string.pull_requests))
-                    else -> holder.itemView?.isVisible = false
+                    else -> holder.itemView.isVisible = false
                 }
             }
         }
@@ -63,10 +69,16 @@ class MainScreenAdapter(
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<MainScreenModel?>() {
-            override fun areItemsTheSame(oldItem: MainScreenModel, newItem: MainScreenModel):
+            override fun areItemsTheSame(
+                oldItem: MainScreenModel,
+                newItem: MainScreenModel
+            ):
                 Boolean = oldItem.mainScreenModelRowType == newItem.mainScreenModelRowType
 
-            override fun areContentsTheSame(oldItem: MainScreenModel, newItem: MainScreenModel):
+            override fun areContentsTheSame(
+                oldItem: MainScreenModel,
+                newItem: MainScreenModel
+            ):
                 Boolean = oldItem == newItem
         }
     }

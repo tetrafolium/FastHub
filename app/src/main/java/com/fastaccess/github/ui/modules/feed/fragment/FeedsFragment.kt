@@ -14,7 +14,6 @@ import com.fastaccess.github.platform.extension.onClick
 import com.fastaccess.github.ui.adapter.ProfileFeedsAdapter
 import com.fastaccess.github.ui.adapter.base.CurrentState
 import com.fastaccess.github.ui.modules.feed.fragment.viewmodel.FeedsViewModel
-import com.fastaccess.github.utils.extensions.addDivider
 import com.fastaccess.github.utils.extensions.isConnected
 import kotlinx.android.synthetic.main.appbar_center_title_layout.*
 import kotlinx.android.synthetic.main.empty_state_layout.*
@@ -40,7 +39,6 @@ class FeedsFragment : BaseFragment() {
     override fun onFragmentCreatedWithUser(view: View, savedInstanceState: Bundle?) {
         setupToolbar(R.string.feeds)
         recyclerView.adapter = adapter
-        recyclerView.addDivider()
         recyclerView.setEmptyView(emptyLayout)
         fastScroller.attachRecyclerView(recyclerView, appBar)
         if (savedInstanceState == null) isConnected().isTrue { viewModel.loadFeeds(true) }

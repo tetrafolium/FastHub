@@ -11,6 +11,7 @@ import com.fastaccess.data.storage.FastHubSharedPreference
 import com.fastaccess.github.R
 import com.fastaccess.github.base.BaseFragment
 import com.fastaccess.github.base.BaseViewModel
+import com.fastaccess.github.extensions.getDrawable
 import com.fastaccess.github.extensions.getDrawableCompat
 import com.fastaccess.github.extensions.isTrue
 import com.fastaccess.github.extensions.observeNotNull
@@ -44,7 +45,10 @@ class MainFragment : BaseFragment(), IconDialogFragment.IconDialogClickListener 
     override fun layoutRes(): Int = R.layout.main_fragment_layout
     override fun viewModel(): BaseViewModel? = viewModel
 
-    override fun onFragmentCreatedWithUser(view: View, savedInstanceState: Bundle?) {
+    override fun onFragmentCreatedWithUser(
+        view: View,
+        savedInstanceState: Bundle?
+    ) {
         if (savedInstanceState == null) {
             isConnected().isTrue { viewModel.load() }
         }
@@ -57,7 +61,6 @@ class MainFragment : BaseFragment(), IconDialogFragment.IconDialogClickListener 
                 swipeRefresh.isRefreshing = false
             }
         }
-        recyclerView.addDivider()
         recyclerView.adapter = adapter
         bottomBar.inflateMenu(R.menu.main_bottom_bar_menu)
         behaviour.setBottomSheetCallback({ state: Int ->
@@ -101,8 +104,10 @@ class MainFragment : BaseFragment(), IconDialogFragment.IconDialogClickListener 
         navigationView.setNavigationItemSelectedListener {
             behaviour.state = BottomSheetBehavior.STATE_COLLAPSED
             when (it.itemId) {
-                R.id.logout -> IconDialogFragment.show(childFragmentManager, R.drawable.ic_info_outline, getString(R.string.logout),
-                    getString(R.string.confirm_message), getString(R.string.logout), getString(R.string.cancel))
+                R.id.logout -> IconDialogFragment.show(
+                    childFragmentManager, R.drawable.ic_info_outline, getString(R.string.logout),
+                    getString(R.string.confirm_message), getString(R.string.logout), getString(R.string.cancel)
+                )
                 R.id.add_account -> LoginChooserActivity.startActivity(requireActivity(), false)
             }
             return@setNavigationItemSelectedListener true
@@ -120,15 +125,19 @@ class MainFragment : BaseFragment(), IconDialogFragment.IconDialogClickListener 
         repos.setOnClickListener { onUserRetrieved { route(it?.toRepos()) } }
         gists.setOnClickListener { onUserRetrieved { route(it?.toGists()) } }
         orgs.setOnClickListener {
-            MultiPurposeBottomSheetDialog.show(childFragmentManager,
-                MultiPurposeBottomSheetDialog.BottomSheetFragmentType.ORGANIZATIONS)
+            MultiPurposeBottomSheetDialog.show(
+                childFragmentManager,
+                MultiPurposeBottomSheetDialog.BottomSheetFragmentType.ORGANIZATIONS
+            )
         }
         trending.setOnClickListener { route(TRENDING_LINK) }
     }
 
     private fun onUserRetrieved(action: (user: LoginModel?) -> Unit) {
-        addDisposal(viewModel.login
-            .subscribe({ action(it) }, ::print))
+        addDisposal(
+            viewModel.login
+                .subscribe({ action(it) }, ::print)
+        )
     }
 
     private fun listenToDataChanges() {
@@ -143,6 +152,13 @@ class MainFragment : BaseFragment(), IconDialogFragment.IconDialogClickListener 
                 preference.token = null
                 preference.otpCode = null
                 LoginChooserActivity.startActivity(requireActivity())
+            }
+        }
+        viewModel.unreadMotificationLiveData.observeNotNull(this) {
+            bottomBar.menu?.findItem(R.id.notifications)?.icon = if (it) {
+                getDrawable(R.drawable.ic_notification_unread)
+            } else {
+                getDrawable(R.drawable.ic_notifications_none)
             }
         }
     }

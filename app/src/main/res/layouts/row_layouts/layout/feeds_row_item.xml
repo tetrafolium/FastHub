@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:foreground="?selectableItemBackground"
-    android:paddingBottom="@dimen/spacing_normal"
-    android:paddingEnd="@dimen/spacing_xs_large"
     android:paddingStart="@dimen/spacing_xs_large"
-    android:paddingTop="@dimen/spacing_normal">
+    android:paddingTop="@dimen/spacing_normal"
+    android:paddingEnd="@dimen/spacing_xs_large"
+    android:paddingBottom="@dimen/spacing_normal">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +33,7 @@
                     android:layout_gravity="center"
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
-                    tools:src="@drawable/ic_ring"/>
+                    tools:src="@drawable/ic_ring" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/stateIcon"
@@ -44,7 +42,7 @@
                     android:layout_gravity="bottom|end"
                     android:background="@drawable/circle_shape_cardview"
                     android:padding="@dimen/spacing_micro"
-                    tools:src="@drawable/ic_issue_closed_small"/>
+                    tools:src="@drawable/ic_issue_closed_small" />
             </FrameLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -56,7 +54,7 @@
                 android:layout_weight="1"
                 android:ellipsize="marquee"
                 android:maxLines="2"
-                tools:text="To some, a believer is a sex for loving."/>
+                tools:text="To some, a believer is a sex for loving." />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dateWithIcon"
@@ -67,7 +65,7 @@
                 android:layout_marginStart="@dimen/spacing_normal"
                 android:gravity="start|center"
                 android:maxLines="1"
-                tools:text="An two hour ago"/>
+                tools:text="An two hour ago" />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -77,10 +75,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/spacing_normal"
-            android:ellipsize="marquee"
             android:layout_marginTop="@dimen/spacing_normal"
+            android:ellipsize="marquee"
             android:maxLines="2"
-            tools:text="To some, a believer is a sex for loving. hahahahahahhahahahahahahaha"/>
+            tools:text="To some, a believer is a sex for loving. hahahahahahhahahahahahahaha" />
 
     </LinearLayout>
 

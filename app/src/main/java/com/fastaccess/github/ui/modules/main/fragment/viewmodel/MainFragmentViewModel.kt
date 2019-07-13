@@ -1,10 +1,10 @@
 package com.fastaccess.github.ui.modules.main.fragment.viewmodel
 
 import androidx.lifecycle.LiveData
+import com.fastaccess.data.model.FastHubErrors
 import com.fastaccess.data.model.MainScreenModel
 import com.fastaccess.data.model.MainScreenModelRowType
 import com.fastaccess.data.persistence.db.FastHubDatabase
-import com.fastaccess.data.model.FastHubErrors
 import com.fastaccess.data.persistence.models.FeedModel
 import com.fastaccess.data.repository.FeedsRepositoryProvider
 import com.fastaccess.data.repository.LoginRepositoryProvider
@@ -47,6 +47,8 @@ class MainFragmentViewModel @Inject constructor(
             .switchMap(mapPulls())
     }
 
+    val unreadMotificationLiveData = notificationRepositoryProvider.getMainNotifications().map { it.firstOrNull { it.unread == true } != null }
+
     fun load() {
         feedsMainScreenUseCase.executeSafely(callApi(
             feedsMainScreenUseCase.buildObservable()
@@ -63,7 +65,8 @@ class MainFragmentViewModel @Inject constructor(
         }
             .uiThread()
             .subscribe({ logoutProcess.postValue(true) },
-                { error.postValue(FastHubErrors(FastHubErrors.ErrorType.OTHER, it.message)) }))
+                { error.postValue(FastHubErrors(FastHubErrors.ErrorType.OTHER, it.message)) })
+        )
     }
 
     override fun onCleared() {
@@ -109,7 +112,8 @@ class MainFragmentViewModel @Inject constructor(
         return { list ->
             notificationRepositoryProvider.getMainNotifications().map { notifications ->
                 if (notifications.isEmpty()) return@map list
-                list.add(MainScreenModel(MainScreenModelRowType.NOTIFICATION_TITLE))
+                list.add(MainScreenModel(MainScreenModelRowType.NOTIFICATION_TITLE,
+                    hasBubble = notifications.firstOrNull { it.unread == true } != null))
                 list.addAll(notifications.asSequence().map { MainScreenModel(MainScreenModelRowType.NOTIFICATION, notificationModel = it) }.toList())
                 return@map list
             }

@@ -23,7 +23,7 @@
             android:orientation="vertical">
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.AppCompat.Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_xs_large"
@@ -72,7 +72,7 @@
             </com.google.android.material.chip.ChipGroup>
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.AppCompat.Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_xs_large"
@@ -107,7 +107,7 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.AppCompat.Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_xs_large"
@@ -149,7 +149,7 @@
 
 
             <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextAppearance.AppCompat.Title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/spacing_xs_large"

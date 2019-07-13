@@ -8,7 +8,8 @@ data class MainScreenModel(
     var mainScreenModelRowType: MainScreenModelRowType? = null,
     var feed: FeedModel? = null,
     var notificationModel: NotificationModel? = null,
-    var issuesPullsModel: MyIssuesPullsModel? = null
+    var issuesPullsModel: MyIssuesPullsModel? = null,
+    var hasBubble: Boolean = false
 )
 
 enum class MainScreenModelRowType(val rowType: Int) {

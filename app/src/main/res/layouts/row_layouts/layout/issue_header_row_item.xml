@@ -32,7 +32,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/opener"
-                style="@style/TextAppearance.AppCompat.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -94,7 +94,7 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/author"
-                        style="@style/TextAppearance.AppCompat.Small"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -179,7 +179,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/labels"
-                style="@style/TextAppearance.AppCompat.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -201,7 +201,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/assignees"
-                style="@style/TextAppearance.AppCompat.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -223,7 +223,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/milestone"
-                style="@style/TextAppearance.AppCompat.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

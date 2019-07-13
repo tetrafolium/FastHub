@@ -35,14 +35,13 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/issueDescription"
-                style="@style/TextAppearance.AppCompat.Small"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="4dp"
                 android:ellipsize="marquee"
                 android:singleLine="true"
-                app:fontFamily="@font/rubik"
                 tools:text="To some, a believer is a sex for loving."/>
 
         </LinearLayout>

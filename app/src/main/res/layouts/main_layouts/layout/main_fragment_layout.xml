@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:id="@+id/coordinatorLayout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/appbar_center_title_layout"/>
+    <include layout="@layout/appbar_center_title_layout" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,68 +20,79 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/spacing_xs_large"
-                android:paddingTop="@dimen/spacing_xs_large">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/orgs"
                     style="@style/ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_micro"
                     android:layout_marginStart="@dimen/spacing_xs_large"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:elevation="@dimen/spacing_micro"
+                    android:outlineProvider="background"
                     android:text="@string/organizations"
-                    android:textAllCaps="false"/>
+                    android:textAllCaps="false" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/pinned"
                     style="@style/ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_micro"
+                    android:layout_margin="@dimen/spacing_normal"
+                    android:elevation="@dimen/spacing_micro"
+                    android:outlineProvider="background"
                     android:text="@string/pinned"
-                    android:textAllCaps="false"/>
+                    android:textAllCaps="false" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/starred"
                     style="@style/ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_micro"
-                    android:layout_marginStart="@dimen/spacing_micro"
+                    android:layout_margin="@dimen/spacing_normal"
+                    android:elevation="@dimen/spacing_micro"
+                    android:outlineProvider="background"
                     android:text="@string/starred"
-                    android:textAllCaps="false"/>
+                    android:textAllCaps="false" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/repos"
                     style="@style/ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_micro"
-                    android:layout_marginStart="@dimen/spacing_micro"
+                    android:layout_margin="@dimen/spacing_normal"
+                    android:elevation="@dimen/spacing_micro"
+                    android:outlineProvider="background"
                     android:text="@string/repos"
-                    android:textAllCaps="false"/>
+                    android:textAllCaps="false" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/trending"
                     style="@style/ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_micro"
-                    android:layout_marginStart="@dimen/spacing_micro"
+                    android:layout_margin="@dimen/spacing_normal"
+                    android:elevation="@dimen/spacing_micro"
+                    android:outlineProvider="background"
                     android:text="@string/trending"
-                    android:textAllCaps="false"/>
+                    android:textAllCaps="false" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/gists"
                     style="@style/ChipStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/spacing_xs_large"
-                    android:layout_marginStart="@dimen/spacing_micro"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_xs_large"
+                    android:elevation="@dimen/spacing_micro"
+                    android:outlineProvider="background"
                     android:text="@string/gists"
-                    android:textAllCaps="false"/>
+                    android:textAllCaps="false" />
 
             </LinearLayout>
         </HorizontalScrollView>
@@ -99,9 +108,9 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingBottom="@dimen/spacing_anti"
-                app:layoutManager="@string/llm"/>
+                app:layoutManager="@string/llm" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
-    <include layout="@layout/bottm_bar_menu_layout"/>
+    <include layout="@layout/bottm_bar_menu_layout" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

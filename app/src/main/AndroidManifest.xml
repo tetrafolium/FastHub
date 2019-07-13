@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.fastaccess.github"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:app="http://schemas.android.com/apk/res-auto"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.fastaccess.github">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="com.android.vending.BILLING"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="com.android.vending.BILLING" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -27,8 +26,8 @@
 
         <activity android:name=".ui.modules.main.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -36,34 +35,34 @@
             android:name=".ui.modules.auth.LoginChooserActivity"
             android:theme="@style/LoginTheme">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
                     android:host="login"
-                    android:scheme="fasthub"/>
+                    android:scheme="fasthub" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".ui.modules.profile.ProfileActivity"
-            android:parentActivityName=".ui.modules.main.MainActivity"/>
+            android:parentActivityName=".ui.modules.main.MainActivity" />
 
         <activity
             android:name=".ui.modules.trending.TrendingActivity"
-            android:parentActivityName=".ui.modules.main.MainActivity"/>
+            android:parentActivityName=".ui.modules.main.MainActivity" />
 
         <activity
             android:name="com.fastaccess.github.ui.modules.multipurpose.MultiPurposeActivity"
-            android:parentActivityName=".ui.modules.main.MainActivity"/>
+            android:parentActivityName=".ui.modules.main.MainActivity" />
 
-        <activity android:name=".ui.modules.issue.IssueActivity"/>
+        <activity android:name=".ui.modules.issue.IssueActivity" />
 
         <activity
             android:name=".ui.modules.editor.EditorWebViewActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"/>
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
 
         <activity
             android:name=".ui.modules.routing.RoutingActivity"
@@ -72,48 +71,48 @@
             android:theme="@android:style/Theme.NoDisplay">
 
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
 
                 <data
                     android:host="fasthub"
-                    android:scheme="app"/>
+                    android:scheme="app" />
 
                 <data
                     android:host="api.github.com"
-                    android:scheme="https"/>
+                    android:scheme="https" />
                 <data
                     android:host="api.github.com"
-                    android:scheme="http"/>
+                    android:scheme="http" />
                 <data
                     android:host="github.com"
-                    android:scheme="http"/>
+                    android:scheme="http" />
                 <data
                     android:host="github.com"
-                    android:scheme="https"/>
+                    android:scheme="https" />
                 <data
                     android:host="gist.github.com"
-                    android:scheme="http"/>
+                    android:scheme="http" />
                 <data
                     android:host="gist.github.com"
-                    android:scheme="https"/>
+                    android:scheme="https" />
                 <data
                     android:host="raw.githubusercontent.com"
-                    android:scheme="https"/>
+                    android:scheme="https" />
                 <data
                     android:host="gist.githubusercontent.com"
-                    android:scheme="https"/>
+                    android:scheme="https" />
 
-                <data android:pathPattern=".*"/>
+                <data android:pathPattern=".*" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
+                <action android:name="android.intent.action.SEND" />
 
-                <data android:mimeType="text/plain"/>
+                <data android:mimeType="text/plain" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
@@ -121,15 +120,15 @@
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"
             android:exported="false"
-            tools:node="remove"/>
+            tools:node="remove" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_notification"/>
+            android:resource="@drawable/ic_notification" />
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="6ed82b6e0756853d7d782a3f547f84f9ecba217e"/>
+            android:value="6ed82b6e0756853d7d782a3f547f84f9ecba217e" />
 
     </application>
 
