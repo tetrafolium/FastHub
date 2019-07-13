@@ -26,8 +26,41 @@ class DatePrettifier private constructor() {
     }
 
     companion object {
-
         private val instance = DatePrettifier()
+        private const val SECOND_MILLIS = 1000
+        private const val MINUTE_MILLIS = 60 * SECOND_MILLIS
+        private const val HOUR_MILLIS = 60 * MINUTE_MILLIS
+        private const val DAY_MILLIS = 24 * HOUR_MILLIS
+
+        fun getTimeAgo(parsedDate: Date?): CharSequence {
+            var _time = parsedDate?.time ?: return "N/A"
+            if (_time < 1000000000000L) {
+                _time *= 1000
+            }
+
+            val now = System.currentTimeMillis()
+            if (_time > now || _time <= 0) {
+                return "N/A"
+            }
+
+
+            val diff = now - _time
+            return when {
+                diff < MINUTE_MILLIS -> "just now"
+                diff < 50 * MINUTE_MILLIS -> {
+                    val mns = (diff / MINUTE_MILLIS)
+                    "$mns${if (mns > 1) "ms" else "m"} ago"
+                }
+                diff < 24 * HOUR_MILLIS -> {
+                    val hours = (diff / HOUR_MILLIS)
+                    "$hours${if (hours > 1) "hs" else "h"}  ago"
+                }
+                else -> {
+                    val days = (diff / DAY_MILLIS)
+                    "$days${if (days > 1) "ds" else "d"} ago"
+                }
+            }
+        }
 
         fun getTimeAgo(toParse: String?): CharSequence {
             try {
@@ -37,17 +70,9 @@ class DatePrettifier private constructor() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
             return "N/A"
         }
 
-        fun getTimeAgo(parsedDate: Date?): CharSequence {
-            if (parsedDate != null) {
-                val now = System.currentTimeMillis()
-                return DateUtils.getRelativeTimeSpanString(parsedDate.time, now, DateUtils.SECOND_IN_MILLIS)
-            }
-            return "N/A"
-        }
 
         fun toGithubDate(date: Date): String = instance.format(date)
 
