@@ -3,10 +3,18 @@ package com.fastaccess.ui.modules.main;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.GravityCompat;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.fastaccess.BuildConfig;
+import com.fastaccess.helper.Logger;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.core.view.GravityCompat;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -28,11 +36,15 @@ import com.fastaccess.ui.modules.notification.NotificationActivity;
 import com.fastaccess.ui.modules.search.SearchActivity;
 import com.fastaccess.ui.modules.settings.SlackBottomSheetDialog;
 import com.fastaccess.ui.modules.user.UserPagerActivity;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 import shortbread.Shortcut;
+
+import static com.fastaccess.helper.AppHelper.getFragmentByTag;
 
 public class MainActivity extends BaseActivity<MainMvp.View, MainPresenter> implements MainMvp.View {
 
@@ -69,6 +81,13 @@ public class MainActivity extends BaseActivity<MainMvp.View, MainPresenter> impl
                 new SlackBottomSheetDialog().show(getSupportFragmentManager(), SlackBottomSheetDialog.TAG);
             }
         }
+
+        if (BuildConfig.DEBUG) {
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(o -> {
+                Logger.e(o.getId(), o.getToken());
+            });
+        }
+
         getPresenter().setEnterprise(PrefGetter.isEnterprise());
         selectHome(false);
         hideShowShadow(navType == MainMvp.FEEDS);
@@ -144,6 +163,29 @@ public class MainActivity extends BaseActivity<MainMvp.View, MainPresenter> impl
     @Override public void onUserIsBlackListed() {
         Toast.makeText(App.getInstance(), "You are blacklisted, please contact the dev", Toast.LENGTH_LONG).show();
         finish();
+    }
+
+    @Override public void onScrollTop(int index) {
+        super.onScrollTop(index);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (index == 0) {
+            FeedsFragment homeView = (FeedsFragment) getFragmentByTag(fragmentManager, FeedsFragment.TAG);
+            if (homeView != null) {
+                homeView.onScrollTop(index);
+            }
+        } else if (index == 1) {
+            MyIssuesPagerFragment issuesView = (MyIssuesPagerFragment) getFragmentByTag
+                    (fragmentManager, MyIssuesPagerFragment.TAG);
+            if (issuesView != null) {
+                issuesView.onScrollTop(index);
+            }
+        } else if (index == 2) {
+            MyPullsPagerFragment pullRequestView = (MyPullsPagerFragment) getFragmentByTag
+                    (fragmentManager, MyPullsPagerFragment.TAG);
+            if (pullRequestView != null) {
+                pullRequestView.onScrollTop(0);
+            }
+        }
     }
 
     @Shortcut(id = "myIssues", icon = R.drawable.ic_app_shortcut_issues, shortLabelRes = R.string.issues, rank = 2, action = "myIssues")

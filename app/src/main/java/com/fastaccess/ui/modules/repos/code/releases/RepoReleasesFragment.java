@@ -1,10 +1,13 @@
 package com.fastaccess.ui.modules.repos.code.releases;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.widget.SwipeRefreshLayout;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.view.View;
 
 import com.annimon.stream.Collectors;
@@ -138,10 +141,12 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
     @Override public void onDownload(@NonNull Release item) {
         ArrayList<SimpleUrlsModel> models = new ArrayList<>();
         if (!InputHelper.isEmpty(item.getZipBallUrl())) {
-            models.add(new SimpleUrlsModel(getString(R.string.download_as_zip), item.getZipBallUrl()));
+            String url = item.getZipBallUrl();
+            models.add(new SimpleUrlsModel(getString(R.string.download_as_zip), url, ".zip"));
         }
         if (!InputHelper.isEmpty(item.getTarballUrl())) {
-            models.add(new SimpleUrlsModel(getString(R.string.download_as_tar), item.getTarballUrl()));
+            String url = item.getTarballUrl();
+            models.add(new SimpleUrlsModel(getString(R.string.download_as_tar), url, ".tar.gz"));
         }
         if (item.getAssets() != null && !item.getAssets().isEmpty()) {
             ArrayList<SimpleUrlsModel> mapped = Stream.of(item.getAssets())
@@ -176,8 +181,10 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
     }
 
     @Override public void onItemSelected(SimpleUrlsModel item) {
-        if (ActivityHelper.checkAndRequestReadWritePermission(getActivity())) {
-            RestProvider.downloadFile(getContext(), item.getUrl());
+        Activity activity = getActivity();
+        if (activity == null) return;
+        if (ActivityHelper.checkAndRequestReadWritePermission(activity)) {
+            RestProvider.downloadFile(activity, item.getUrl(), item.extension);
         }
     }
 

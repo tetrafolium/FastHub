@@ -1,9 +1,9 @@
 package com.fastaccess.ui.adapter.viewholder;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.transition.ChangeBounds;
-import android.support.transition.TransitionManager;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.transition.ChangeBounds;
+import androidx.transition.TransitionManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +64,10 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
     @BindView(R.id.hurrayReaction) FontTextView hurrayReaction;
     @BindView(R.id.sadReaction) FontTextView sadReaction;
     @BindView(R.id.heartReaction) FontTextView heartReaction;
+    @BindView(R.id.rocketReaction) FontTextView rocketReaction;
+    @BindView(R.id.eyeReaction) FontTextView eyeReaction;
+    @BindView(R.id.rocket) FontTextView rocket;
+    @BindView(R.id.eyes) FontTextView eyes;
     private OnToggleView onToggleView;
     private boolean showEmojies;
     private ReactionsCallback reactionsCallback;
@@ -133,6 +137,14 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
         thumbsUpReaction.setOnLongClickListener(this);
         hurrayReaction.setOnLongClickListener(this);
         heartReaction.setOnLongClickListener(this);
+        rocketReaction.setOnLongClickListener(this);
+        rocketReaction.setOnClickListener(this);
+        rocket.setOnLongClickListener(this);
+        rocket.setOnClickListener(this);
+        eyeReaction.setOnLongClickListener(this);
+        eyeReaction.setOnClickListener(this);
+        eyes.setOnLongClickListener(this);
+        eyes.setOnClickListener(this);
     }
 
     public static TimelineCommentsViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable IssuesTimelineAdapter adapter,
@@ -162,14 +174,14 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
                         owner.setVisibility(View.VISIBLE);
                         owner.setText(R.string.original_poster);
                     } else {
-                        owner.setText(null);
+                        owner.setText("");
                         owner.setVisibility(View.GONE);
                     }
                 }
             }
         } else {
             avatar.setUrl(null, null, false, false);
-            name.setText(null);
+            name.setText("");
         }
         if (!InputHelper.isEmpty(commentsModel.getPath()) && commentsModel.getPosition() > 0) {
             pathText.setVisibility(View.VISIBLE);
@@ -237,6 +249,14 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
                     case R.id.hurrayReaction:
                         reactionsModel.setHooray(!isReacted ? reactionsModel.getHooray() + 1 : reactionsModel.getHooray() - 1);
                         break;
+                    case R.id.rocket:
+                    case R.id.rocketReaction:
+                        reactionsModel.setRocket(!isReacted ? reactionsModel.getRocket() + 1 : reactionsModel.getRocket() - 1);
+                        break;
+                    case R.id.eyes:
+                    case R.id.eyeReaction:
+                        reactionsModel.setEyes(!isReacted ? reactionsModel.getEyes() + 1 : reactionsModel.getEyes() - 1);
+                        break;
                 }
                 comment.setReactions(reactionsModel);
                 appendEmojies(reactionsModel);
@@ -247,7 +267,7 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
 
     private void appendEmojies(ReactionsModel reaction) {
         CommentsHelper.appendEmojies(reaction, thumbsUp, thumbsUpReaction, thumbsDown, thumbsDownReaction, hurray, hurrayReaction, sad,
-                sadReaction, laugh, laughReaction, heart, heartReaction, reactionsList);
+                sadReaction, laugh, laughReaction, heart, heartReaction, rocket, rocketReaction, eyes, eyeReaction, reactionsList);
     }
 
     private void onToggle(boolean expanded, boolean animate) {

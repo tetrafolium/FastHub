@@ -1,7 +1,7 @@
 package com.fastaccess.provider.timeline.handler;
 
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
+import androidx.annotation.ColorInt;
 import android.text.SpannableStringBuilder;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
@@ -71,7 +71,7 @@ import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
             this.appendNewLine(builder);
             this.appendNewLine(builder);
         } else {
-            StringBuffer text = node.getText();
+            CharSequence text = node.getText();
             builder.append(" ");
             builder.append(replace(text.toString()));
             builder.append(" ");

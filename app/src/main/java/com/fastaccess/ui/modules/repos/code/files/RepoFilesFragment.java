@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.PopupMenu;
@@ -115,6 +115,7 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         boolean canOpen = canOpen(item);
         popup.getMenu().findItem(R.id.editFile).setVisible(isOwner && item.getType() == FilesType.file && canOpen);
         popup.getMenu().findItem(R.id.deleteFile).setVisible(isOwner && item.getType() == FilesType.file);
+        popup.getMenu().findItem(R.id.history).setVisible(true);
         popup.setOnMenuItemClickListener(item1 -> {
             switch (item1.getItemId()) {
                 case R.id.share:
@@ -147,6 +148,9 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
                         PremiumActivity.Companion.startActivity(getContext());
                     }
                     break;
+                case R.id.history:
+                    getPresenter().onItemLongClick(position, v, item);
+                    break;
             }
             return true;
         });
@@ -178,7 +182,7 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         adapter = new RepoFilesAdapter(getPresenter().getFiles());
         adapter.setListener(getPresenter());
         recycler.setAdapter(adapter);
-        fastScroller.attachRecyclerView(recycler);
+        fastScroller.setVisibility(View.GONE);
     }
 
     @Override public void showProgress(@StringRes int resId) {
@@ -225,13 +229,13 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
 
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK && requestCode == EditRepoFileActivity.Companion.getEDIT_RQ()) {
+        if (resultCode == Activity.RESULT_OK && requestCode == EditRepoFileActivity.EDIT_RQ) {
             onRefresh();
         }
     }
 
     @Override public void onDelete(@NonNull String message, int position) {
-        getPresenter().onDeleteFile(message, adapter.getItem(position));
+        getPresenter().onDeleteFile(message, adapter.getItem(position), getParent() != null ? getParent().getRef() : "master");
     }
 
     private void showReload() {

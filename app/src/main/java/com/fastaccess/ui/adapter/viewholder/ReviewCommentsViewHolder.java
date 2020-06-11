@@ -1,10 +1,10 @@
 package com.fastaccess.ui.adapter.viewholder;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.transition.ChangeBounds;
-import android.support.transition.TransitionManager;
-import android.support.v7.widget.AppCompatImageView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.transition.ChangeBounds;
+import androidx.transition.TransitionManager;
+import androidx.appcompat.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +56,10 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
     @BindView(R.id.hurrayReaction) FontTextView hurrayReaction;
     @BindView(R.id.sadReaction) FontTextView sadReaction;
     @BindView(R.id.heartReaction) FontTextView heartReaction;
+    @BindView(R.id.rocketReaction) FontTextView rocketReaction;
+    @BindView(R.id.eyeReaction) FontTextView eyeReaction;
+    @BindView(R.id.rocket) FontTextView rocket;
+    @BindView(R.id.eyes) FontTextView eyes;
     private OnToggleView onToggleView;
     private ReactionsCallback reactionsCallback;
     private ViewGroup viewGroup;
@@ -122,6 +126,14 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
         thumbsUpReaction.setOnLongClickListener(this);
         hurrayReaction.setOnLongClickListener(this);
         heartReaction.setOnLongClickListener(this);
+        rocketReaction.setOnLongClickListener(this);
+        rocketReaction.setOnClickListener(this);
+        rocket.setOnLongClickListener(this);
+        rocket.setOnClickListener(this);
+        eyeReaction.setOnLongClickListener(this);
+        eyeReaction.setOnClickListener(this);
+        eyes.setOnLongClickListener(this);
+        eyes.setOnClickListener(this);
     }
 
     public static ReviewCommentsViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter,
@@ -150,7 +162,7 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
                         owner.setVisibility(View.VISIBLE);
                         owner.setText(R.string.original_poster);
                     } else {
-                        owner.setText(null);
+                        owner.setText("");
                         owner.setVisibility(View.GONE);
                     }
                 }
@@ -201,6 +213,14 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
                     case R.id.hurrayReaction:
                         reactionsModel.setHooray(!isReacted ? reactionsModel.getHooray() + 1 : reactionsModel.getHooray() - 1);
                         break;
+                    case R.id.rocket:
+                    case R.id.rocketReaction:
+                        reactionsModel.setRocket(!isReacted ? reactionsModel.getRocket() + 1 : reactionsModel.getRocket() - 1);
+                        break;
+                    case R.id.eyes:
+                    case R.id.eyeReaction:
+                        reactionsModel.setEyes(!isReacted ? reactionsModel.getEyes() + 1 : reactionsModel.getEyes() - 1);
+                        break;
                 }
                 comment.setReactions(reactionsModel);
                 appendEmojies(reactionsModel);
@@ -210,7 +230,7 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
 
     private void appendEmojies(ReactionsModel reaction) {
         CommentsHelper.appendEmojies(reaction, thumbsUp, thumbsUpReaction, thumbsDown, thumbsDownReaction, hurray, hurrayReaction, sad,
-                sadReaction, laugh, laughReaction, heart, heartReaction, reactionsList);
+                sadReaction, laugh, laughReaction, heart, heartReaction, rocket, rocketReaction, eyes, eyeReaction, reactionsList);
     }
 
     private long getId() {
