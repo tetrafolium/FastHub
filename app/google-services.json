@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:535903042804:android:516309017e0298c938b2a1",
         "android_client_info": {
-          "package_name": "com.fastaccess.github.debug"
+          "package_name": "com.fastaccess.github"
         }
       },
       "oauth_client": [
