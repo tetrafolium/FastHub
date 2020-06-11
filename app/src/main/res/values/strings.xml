@@ -605,4 +605,16 @@
     <string name="send_feedback">Send feedback</string>
     <string name="private_wiki_error_msg">Unfortunately we cannot access private repos wiki</string>
     <string name="file_history">File History</string>
+
+    <!-- Temporary additional settings to avoid "unresolved reference" errors -->
+    <string name="donation_product_1">*donation_product_1*</string>
+    <string name="donation_product_2">*donation_product_2*</string>
+    <string name="donation_product_3">*donation_product_3*</string>
+    <string name="donation_product_4">*donation_product_4*</string>
+    <string name="amlod_theme_purchase">*amlod_theme_purchase*</string>
+    <string name="fasthub_all_features_purchase">*fasthub_all_features_purchase*</string>
+    <string name="fasthub_enterprise_purchase">*fasthub_enterprise_purchase*</string>
+    <string name="fasthub_pro_purchase">*fasthub_pro_purchase*</string>
+    <string name="midnight_blue_theme_purchase">*midnight_blue_theme_purchase*</string>
+    <string name="theme_bluish_purchase">*theme_bluish_purchase*</string>
 </resources>
