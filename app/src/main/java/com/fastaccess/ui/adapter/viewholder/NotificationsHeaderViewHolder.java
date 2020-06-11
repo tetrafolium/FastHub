@@ -1,11 +1,11 @@
 package com.fastaccess.ui.adapter.viewholder;
 
+import android.view.View;
+import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
-import android.view.View;
-import android.view.ViewGroup;
-
+import butterknife.BindView;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.GroupedNotificationModel;
 import com.fastaccess.data.dao.model.Repo;
@@ -13,30 +13,34 @@ import com.fastaccess.ui.widgets.FontTextView;
 import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
 
-import butterknife.BindView;
-
 /**
  * Created by Kosh on 11 Nov 2016, 2:08 PM
  */
 
-public class NotificationsHeaderViewHolder extends BaseViewHolder<GroupedNotificationModel> {
+public class NotificationsHeaderViewHolder
+    extends BaseViewHolder<GroupedNotificationModel> {
 
-@Nullable @BindView(R.id.headerTitle) FontTextView headerTitle;
-@BindView(R.id.markAsRead) AppCompatImageButton markAsRead;
+  @Nullable @BindView(R.id.headerTitle) FontTextView headerTitle;
+  @BindView(R.id.markAsRead) AppCompatImageButton markAsRead;
 
-private NotificationsHeaderViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
-	super(itemView, adapter);
-	markAsRead.setOnClickListener(this);
-}
+  private NotificationsHeaderViewHolder(final @NonNull View itemView, final
+                                        @Nullable BaseRecyclerAdapter adapter) {
+    super(itemView, adapter);
+    markAsRead.setOnClickListener(this);
+  }
 
-public static NotificationsHeaderViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter) {
-	return new NotificationsHeaderViewHolder(getView(viewGroup, R.layout.notification_header_row_item), adapter);
-}
+  public static NotificationsHeaderViewHolder
+  newInstance(final @NonNull ViewGroup viewGroup,
+              final @Nullable BaseRecyclerAdapter adapter) {
+    return new NotificationsHeaderViewHolder(
+        getView(viewGroup, R.layout.notification_header_row_item), adapter);
+  }
 
-@Override public void bind(final @NonNull GroupedNotificationModel model) {
-	Repo repo = model.getRepo();
-	if (repo != null && headerTitle != null) {
-		headerTitle.setText(repo.getFullName());
-	}
-}
+  @Override
+  public void bind(final @NonNull GroupedNotificationModel model) {
+    Repo repo = model.getRepo();
+    if (repo != null && headerTitle != null) {
+      headerTitle.setText(repo.getFullName());
+    }
+  }
 }

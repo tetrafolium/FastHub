@@ -3,9 +3,7 @@ package com.fastaccess.provider.timeline.handler;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.LeadingMarginSpan;
-
 import net.nightwhistler.htmlspanner.TagNodeHandler;
-
 import org.htmlcleaner.TagNode;
 
 /**
@@ -14,14 +12,19 @@ import org.htmlcleaner.TagNode;
 
 public class MarginHandler extends TagNodeHandler {
 
-public void beforeChildren(final TagNode node, final SpannableStringBuilder builder) {
-	if (builder.length() > 0 && builder.charAt(builder.length() - 1) != 10) { //'10 = \n'
-		this.appendNewLine(builder);
-	}
-}
+  public void beforeChildren(final TagNode node,
+                             final SpannableStringBuilder builder) {
+    if (builder.length() > 0 &&
+        builder.charAt(builder.length() - 1) != 10) { //'10 = \n'
+      this.appendNewLine(builder);
+    }
+  }
 
-public void handleTagNode(final TagNode node, final SpannableStringBuilder builder, final int start, final int end) {
-	builder.setSpan(new LeadingMarginSpan.Standard(30), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-	this.appendNewLine(builder);
-}
+  public void handleTagNode(final TagNode node,
+                            final SpannableStringBuilder builder,
+                            final int start, final int end) {
+    builder.setSpan(new LeadingMarginSpan.Standard(30), start, end,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    this.appendNewLine(builder);
+  }
 }

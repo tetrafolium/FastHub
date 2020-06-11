@@ -2,12 +2,11 @@ package com.fastaccess.ui.modules.repos.code.commit.details.files;
 
 import android.app.Activity;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.PopupMenu;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.CommentRequestModel;
 import com.fastaccess.data.dao.CommitFileChanges;
@@ -23,99 +22,119 @@ import com.fastaccess.provider.rest.RestProvider;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
 import com.fastaccess.ui.modules.code.CodeViewerActivity;
-
-import java.util.ArrayList;
-
 import io.reactivex.Observable;
+import java.util.ArrayList;
 
 /**
  * Created by Kosh on 15 Feb 2017, 10:10 PM
  */
 
-class CommitFilesPresenter extends BasePresenter<CommitFilesMvp.View> implements CommitFilesMvp.Presenter {
-@com.evernote.android.state.State String sha;
-ArrayList<CommitFileChanges> changes = new ArrayList<>();
+class CommitFilesPresenter extends BasePresenter<CommitFilesMvp.View>
+    implements CommitFilesMvp.Presenter {
+  @com.evernote.android.state.State String sha;
+  ArrayList<CommitFileChanges> changes = new ArrayList<>();
 
-@Override public void onItemClick(final int position, final View v, final CommitFileChanges model) {
-	if (v.getId() == R.id.patchList) {
-		sendToView(view->view.onOpenForResult(position, model));
-	} else if (v.getId() == R.id.open) {
-		CommitFileModel item = model.getCommitFileModel();
-		PopupMenu popup = new PopupMenu(v.getContext(), v);
-		MenuInflater inflater = popup.getMenuInflater();
-		inflater.inflate(R.menu.commit_row_menu, popup.getMenu());
-		popup.setOnMenuItemClickListener(item1->{
-				switch (item1.getItemId()) {
-				case R.id.open:
-					v.getContext().startActivity(CodeViewerActivity.createIntent(v.getContext(), item.getContentsUrl(), item.getBlobUrl()));
-					break;
-				case R.id.share:
-					ActivityHelper.shareUrl(v.getContext(), item.getBlobUrl());
-					break;
-				case R.id.download:
-					Activity activity = ActivityHelper.getActivity(v.getContext());
-					if (activity == null) break;
-					if (ActivityHelper.checkAndRequestReadWritePermission(activity)) {
-					        RestProvider.downloadFile(v.getContext(), item.getRawUrl());
-					}
-					break;
-				case R.id.copy:
-					AppHelper.copyToClipboard(v.getContext(), item.getBlobUrl());
-					break;
-				}
-				return true;
-			});
-		popup.show();
-	}
-}
+  @Override
+  public void onItemClick(final int position, final View v,
+                          final CommitFileChanges model) {
+    if (v.getId() == R.id.patchList) {
+      sendToView(view -> view.onOpenForResult(position, model));
+    } else if (v.getId() == R.id.open) {
+      CommitFileModel item = model.getCommitFileModel();
+      PopupMenu popup = new PopupMenu(v.getContext(), v);
+      MenuInflater inflater = popup.getMenuInflater();
+      inflater.inflate(R.menu.commit_row_menu, popup.getMenu());
+      popup.setOnMenuItemClickListener(item1 -> {
+        switch (item1.getItemId()) {
+        case R.id.open:
+          v.getContext().startActivity(CodeViewerActivity.createIntent(
+              v.getContext(), item.getContentsUrl(), item.getBlobUrl()));
+          break;
+        case R.id.share:
+          ActivityHelper.shareUrl(v.getContext(), item.getBlobUrl());
+          break;
+        case R.id.download:
+          Activity activity = ActivityHelper.getActivity(v.getContext());
+          if (activity == null)
+            break;
+          if (ActivityHelper.checkAndRequestReadWritePermission(activity)) {
+            RestProvider.downloadFile(v.getContext(), item.getRawUrl());
+          }
+          break;
+        case R.id.copy:
+          AppHelper.copyToClipboard(v.getContext(), item.getBlobUrl());
+          break;
+        }
+        return true;
+      });
+      popup.show();
+    }
+  }
 
-@Override public void onItemLongClick(final int position, final View v, final CommitFileChanges item) {
-}
+  @Override
+  public void onItemLongClick(final int position, final View v,
+                              final CommitFileChanges item) {}
 
-@Override public void onFragmentCreated(final @Nullable Bundle bundle) {
-	if (sha == null) {
-		if (bundle != null) {
-			sha = bundle.getString(BundleConstant.ID);
-		}
-	}
-	if (!InputHelper.isEmpty(sha)) {
-		CommitFileListModel commitFiles = CommitFilesSingleton.getInstance().getByCommitId(sha);
-		if (commitFiles != null) {
-			manageObservable(Observable.just(commitFiles)
-			                 .map(CommitFileChanges::construct)
-			                 .doOnSubscribe(disposable->sendToView(CommitFilesMvp.View::clearAdapter))
-			                 .doOnNext(commitFileChanges->{
-					sendToView(view->view.onNotifyAdapter(commitFileChanges));
-				})
-			                 .doOnComplete(()->sendToView(BaseMvp.FAView::hideProgress)));
-		}
-	} else {
-		throw new NullPointerException("Bundle is null");
-	}
-}
+  @Override
+  public void onFragmentCreated(final @Nullable Bundle bundle) {
+    if (sha == null) {
+      if (bundle != null) {
+        sha = bundle.getString(BundleConstant.ID);
+      }
+    }
+    if (!InputHelper.isEmpty(sha)) {
+      CommitFileListModel commitFiles =
+          CommitFilesSingleton.getInstance().getByCommitId(sha);
+      if (commitFiles != null) {
+        manageObservable(
+            Observable.just(commitFiles)
+                .map(CommitFileChanges::construct)
+                .doOnSubscribe(
+                    disposable -> sendToView(CommitFilesMvp.View::clearAdapter))
+                .doOnNext(commitFileChanges -> {
+                  sendToView(view -> view.onNotifyAdapter(commitFileChanges));
+                })
+                .doOnComplete(() -> sendToView(BaseMvp.FAView::hideProgress)));
+      }
+    } else {
+      throw new NullPointerException("Bundle is null");
+    }
+  }
 
-@Override public void onSubmitComment(final @NonNull String comment, final @NonNull CommitLinesModel item, final @Nullable Bundle bundle) {
-	if (bundle != null) {
-		String blob = bundle.getString(BundleConstant.ITEM);
-		String path = bundle.getString(BundleConstant.EXTRA);
-		if (path == null || sha == null) return;
-		CommentRequestModel commentRequestModel = new CommentRequestModel();
-		commentRequestModel.setBody(comment);
-		commentRequestModel.setPath(path);
-		commentRequestModel.setPosition(item.getPosition());
-		commentRequestModel.setLine(item.getRightLineNo() > 0 ? item.getRightLineNo() : item.getLeftLineNo());
-		NameParser nameParser = new NameParser(blob);
-		onSubmit(nameParser.getUsername(), nameParser.getName(), commentRequestModel);
-	}
-}
+  @Override
+  public void onSubmitComment(final @NonNull String comment,
+                              final @NonNull CommitLinesModel item,
+                              final @Nullable Bundle bundle) {
+    if (bundle != null) {
+      String blob = bundle.getString(BundleConstant.ITEM);
+      String path = bundle.getString(BundleConstant.EXTRA);
+      if (path == null || sha == null)
+        return;
+      CommentRequestModel commentRequestModel = new CommentRequestModel();
+      commentRequestModel.setBody(comment);
+      commentRequestModel.setPath(path);
+      commentRequestModel.setPosition(item.getPosition());
+      commentRequestModel.setLine(item.getRightLineNo() > 0
+                                      ? item.getRightLineNo()
+                                      : item.getLeftLineNo());
+      NameParser nameParser = new NameParser(blob);
+      onSubmit(nameParser.getUsername(), nameParser.getName(),
+               commentRequestModel);
+    }
+  }
 
-@Override public void onSubmit(final String username, final String name, final CommentRequestModel commentRequestModel) {
-	makeRestCall(RestProvider.getRepoService(isEnterprise()).postCommitComment(username, name, sha,
-	                                                                           commentRequestModel), newComment->sendToView(view->view.onCommentAdded(newComment)));
-}
+  @Override
+  public void onSubmit(final String username, final String name,
+                       final CommentRequestModel commentRequestModel) {
+    makeRestCall(
+        RestProvider.getRepoService(isEnterprise())
+            .postCommitComment(username, name, sha, commentRequestModel),
+        newComment -> sendToView(view -> view.onCommentAdded(newComment)));
+  }
 
-@Override protected void onDestroy() {
-	CommitFilesSingleton.getInstance().clear();
-	super.onDestroy();
-}
+  @Override
+  protected void onDestroy() {
+    CommitFilesSingleton.getInstance().clear();
+    super.onDestroy();
+  }
 }

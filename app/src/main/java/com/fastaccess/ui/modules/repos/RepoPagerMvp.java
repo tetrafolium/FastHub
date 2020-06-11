@@ -5,15 +5,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-
 import com.fastaccess.data.dao.model.Repo;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.modules.filter.chooser.FilterAddChooserListener;
-
+import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-
-import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 /**
  * Created by Kosh on 09 Dec 2016, 4:16 PM
@@ -21,107 +18,106 @@ import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 public interface RepoPagerMvp {
 
-int CODE = 0;
-int ISSUES = 1;
-int PULL_REQUEST = 2;
-int PROJECTS = 3;
-int PROFILE = 4;
+  int CODE = 0;
+  int ISSUES = 1;
+  int PULL_REQUEST = 2;
+  int PROJECTS = 3;
+  int PROFILE = 4;
 
-@IntDef({
-		CODE,
-		ISSUES,
-		PULL_REQUEST,
-		PROJECTS,
-		PROFILE
-	})
-@Retention(RetentionPolicy.SOURCE) @interface RepoNavigationType { }
+  @IntDef({CODE, ISSUES, PULL_REQUEST, PROJECTS, PROFILE})
+  @Retention(RetentionPolicy.SOURCE)
+  @interface RepoNavigationType {}
 
+  interface View extends BaseMvp.FAView, FilterAddChooserListener {
 
-interface View extends BaseMvp.FAView, FilterAddChooserListener {
+    void onNavigationChanged(@RepoNavigationType int navType);
 
-void onNavigationChanged(@RepoNavigationType int navType);
+    void onFinishActivity();
 
-void onFinishActivity();
+    void onInitRepo();
 
-void onInitRepo();
+    void onRepoWatched(boolean isWatched);
 
-void onRepoWatched(boolean isWatched);
+    void onRepoStarred(boolean isStarred);
 
-void onRepoStarred(boolean isStarred);
+    void onRepoForked(boolean isForked);
 
-void onRepoForked(boolean isForked);
+    void onRepoPinned(boolean isPinned);
 
-void onRepoPinned(boolean isPinned);
+    void onEnableDisableWatch(boolean isEnabled);
 
-void onEnableDisableWatch(boolean isEnabled);
+    void onEnableDisableStar(boolean isEnabled);
 
-void onEnableDisableStar(boolean isEnabled);
+    void onEnableDisableFork(boolean isEnabled);
 
-void onEnableDisableFork(boolean isEnabled);
+    void onChangeWatchedCount(boolean isWatched);
 
-void onChangeWatchedCount(boolean isWatched);
+    void onChangeStarCount(boolean isStarred);
 
-void onChangeStarCount(boolean isStarred);
+    void onChangeForkCount(boolean isForked);
 
-void onChangeForkCount(boolean isForked);
+    boolean hasUserInteractedWithView();
 
-boolean hasUserInteractedWithView();
+    void disableIssueTab();
 
-void disableIssueTab();
+    void openUserProfile();
 
-void openUserProfile();
+    void onScrolled(boolean isUp);
 
-void onScrolled(boolean isUp);
+    boolean isCollaborator();
+  }
 
-boolean isCollaborator();
-}
+  interface Presenter extends BaseMvp.FAPresenter,
+                              BottomNavigation.OnMenuItemSelectionListener {
 
-interface Presenter extends BaseMvp.FAPresenter, BottomNavigation.OnMenuItemSelectionListener {
+    void onUpdatePinnedEntry(@NonNull String repoId, @NonNull String login);
 
-void onUpdatePinnedEntry(@NonNull String repoId, @NonNull String login);
+    void onActivityCreate(@NonNull String repoId, @NonNull String login,
+                          @RepoPagerMvp.RepoNavigationType int navTyp);
 
-void onActivityCreate(@NonNull String repoId, @NonNull String login, @RepoPagerMvp.RepoNavigationType int navTyp);
+    @NonNull String repoId();
 
-@NonNull String repoId();
+    @NonNull String login();
 
-@NonNull String login();
+    @Nullable Repo getRepo();
 
-@Nullable Repo getRepo();
+    boolean isWatched();
 
-boolean isWatched();
+    boolean isStarred();
 
-boolean isStarred();
+    boolean isForked();
 
-boolean isForked();
+    boolean isRepoOwner();
 
-boolean isRepoOwner();
+    void onWatch();
 
-void onWatch();
+    void onStar();
 
-void onStar();
+    void onFork();
 
-void onFork();
+    void onCheckWatching();
 
-void onCheckWatching();
+    void onCheckStarring();
 
-void onCheckStarring();
+    void onWorkOffline();
 
-void onWorkOffline();
+    void onModuleChanged(@NonNull FragmentManager fragmentManager,
+                         @RepoNavigationType int type);
 
-void onModuleChanged(@NonNull FragmentManager fragmentManager, @RepoNavigationType int type);
+    void onShowHideFragment(@NonNull FragmentManager fragmentManager,
+                            @NonNull Fragment toShow, @NonNull Fragment toHide);
 
-void onShowHideFragment(@NonNull FragmentManager fragmentManager, @NonNull Fragment toShow, @NonNull Fragment toHide);
+    void onAddAndHide(@NonNull FragmentManager fragmentManager,
+                      @NonNull Fragment toAdd, @NonNull Fragment toHide);
 
-void onAddAndHide(@NonNull FragmentManager fragmentManager, @NonNull Fragment toAdd, @NonNull Fragment toHide);
+    void onDeleteRepo();
 
-void onDeleteRepo();
+    void onPinUnpinRepo();
 
-void onPinUnpinRepo();
+    void updatePinned(int forks, int stars, int watching);
+  }
 
-void updatePinned(int forks, int stars, int watching);
-}
-
-interface TabsBadgeListener {
-void onSetBadge(int tabIndex, int count);
-}
+  interface TabsBadgeListener {
+    void onSetBadge(int tabIndex, int count);
+  }
 }

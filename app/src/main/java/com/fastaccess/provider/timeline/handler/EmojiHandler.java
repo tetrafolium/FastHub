@@ -1,13 +1,10 @@
 package com.fastaccess.provider.timeline.handler;
 
 import android.text.SpannableStringBuilder;
-
 import com.fastaccess.helper.Logger;
 import com.fastaccess.provider.emoji.Emoji;
 import com.fastaccess.provider.emoji.EmojiManager;
-
 import net.nightwhistler.htmlspanner.TagNodeHandler;
-
 import org.htmlcleaner.TagNode;
 
 /**
@@ -16,23 +13,28 @@ import org.htmlcleaner.TagNode;
 
 public class EmojiHandler extends TagNodeHandler {
 
-@Override public void handleTagNode(final TagNode node, final SpannableStringBuilder builder, final int start, final int end) {
-	String emoji = node.getAttributeByName("alias");
-	if (emoji != null) {
-		Emoji unicode = EmojiManager.getForAlias(emoji);
-		if (unicode != null && unicode.getUnicode() != null) {
-			builder.replace(start, end, " " + unicode.getUnicode() + " ");
-		}
-	} else if (node.getText() != null) {
-		Logger.e(node.getText());
-		Emoji unicode = EmojiManager.getForAlias(node.getText().toString());
-		if (unicode != null && unicode.getUnicode() != null) {
-			builder.replace(start, end, " " + unicode.getUnicode() + " ");
-		}
-	}
-}
+  @Override
+  public void handleTagNode(final TagNode node,
+                            final SpannableStringBuilder builder,
+                            final int start, final int end) {
+    String emoji = node.getAttributeByName("alias");
+    if (emoji != null) {
+      Emoji unicode = EmojiManager.getForAlias(emoji);
+      if (unicode != null && unicode.getUnicode() != null) {
+        builder.replace(start, end, " " + unicode.getUnicode() + " ");
+      }
+    } else if (node.getText() != null) {
+      Logger.e(node.getText());
+      Emoji unicode = EmojiManager.getForAlias(node.getText().toString());
+      if (unicode != null && unicode.getUnicode() != null) {
+        builder.replace(start, end, " " + unicode.getUnicode() + " ");
+      }
+    }
+  }
 
-@Override public void beforeChildren(final TagNode node, final SpannableStringBuilder builder) {
-	super.beforeChildren(node, builder);
-}
+  @Override
+  public void beforeChildren(final TagNode node,
+                             final SpannableStringBuilder builder) {
+    super.beforeChildren(node, builder);
+  }
 }

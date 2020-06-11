@@ -1,10 +1,10 @@
 package com.fastaccess.ui.modules.pinned.repo;
 
 import android.os.Bundle;
+import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.view.View;
-
+import butterknife.BindView;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.model.AbstractPinnedRepos;
 import com.fastaccess.data.dao.model.PinnedRepos;
@@ -17,74 +17,88 @@ import com.fastaccess.ui.widgets.StateLayout;
 import com.fastaccess.ui.widgets.dialog.MessageDialogView;
 import com.fastaccess.ui.widgets.recyclerview.DynamicRecyclerView;
 import com.fastaccess.ui.widgets.recyclerview.scroll.RecyclerViewFastScroller;
-
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * Created by Kosh on 25 Mar 2017, 8:04 PM
  */
 
-public class PinnedReposFragment extends BaseFragment<PinnedReposMvp.View, PinnedReposPresenter> implements PinnedReposMvp.View {
+public class PinnedReposFragment
+    extends BaseFragment<PinnedReposMvp.View, PinnedReposPresenter>
+    implements PinnedReposMvp.View {
 
-public static final String TAG = PinnedReposFragment.class.getSimpleName();
+  public static final String TAG = PinnedReposFragment.class.getSimpleName();
 
-@BindView(R.id.recycler) DynamicRecyclerView recycler;
-@BindView(R.id.refresh) AppbarRefreshLayout refresh;
-@BindView(R.id.stateLayout) StateLayout stateLayout;
-@BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
-private PinnedReposAdapter adapter;
+  @BindView(R.id.recycler) DynamicRecyclerView recycler;
+  @BindView(R.id.refresh) AppbarRefreshLayout refresh;
+  @BindView(R.id.stateLayout) StateLayout stateLayout;
+  @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
+  private PinnedReposAdapter adapter;
 
-public static PinnedReposFragment newInstance() {
-	return new PinnedReposFragment();
-}
+  public static PinnedReposFragment newInstance() {
+    return new PinnedReposFragment();
+  }
 
-@Override public void onNotifyAdapter(final @Nullable List<PinnedRepos> items) {
-	refresh.setRefreshing(false);
-	stateLayout.hideProgress();
-	if (items != null) adapter.insertItems(items);
-	else adapter.clear();
-}
+  @Override
+  public void onNotifyAdapter(final @Nullable List<PinnedRepos> items) {
+    refresh.setRefreshing(false);
+    stateLayout.hideProgress();
+    if (items != null)
+      adapter.insertItems(items);
+    else
+      adapter.clear();
+  }
 
-@Override public void onDeletePinnedRepo(final long id, final int position) {
-	MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
-	                              Bundler.start().put(BundleConstant.YES_NO_EXTRA, true)
-	                              .put(BundleConstant.EXTRA, position)
-	                              .put(BundleConstant.ID, id)
-	                              .end())
-	.show(getChildFragmentManager(), MessageDialogView.TAG);
-}
+  @Override
+  public void onDeletePinnedRepo(final long id, final int position) {
+    MessageDialogView
+        .newInstance(getString(R.string.delete),
+                     getString(R.string.confirm_message),
+                     Bundler.start()
+                         .put(BundleConstant.YES_NO_EXTRA, true)
+                         .put(BundleConstant.EXTRA, position)
+                         .put(BundleConstant.ID, id)
+                         .end())
+        .show(getChildFragmentManager(), MessageDialogView.TAG);
+  }
 
-@Override protected int fragmentLayout() {
-	return R.layout.small_grid_refresh_list;
-}
+  @Override
+  protected int fragmentLayout() {
+    return R.layout.small_grid_refresh_list;
+  }
 
-@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-	adapter = new PinnedReposAdapter(getPresenter().getPinnedRepos(), getPresenter());
-	stateLayout.setEmptyText(R.string.empty_pinned_repos);
-	recycler.setEmptyView(stateLayout, refresh);
-	recycler.setAdapter(adapter);
-	recycler.addKeyLineDivider();
-	refresh.setOnRefreshListener(()->getPresenter().onReload());
-	stateLayout.setOnReloadListener(v->getPresenter().onReload());
-	if (savedInstanceState == null) {
-		stateLayout.showProgress();
-	}
-	fastScroller.attachRecyclerView(recycler);
-}
+  @Override
+  protected void onFragmentCreated(final @NonNull View view,
+                                   final @Nullable Bundle savedInstanceState) {
+    adapter =
+        new PinnedReposAdapter(getPresenter().getPinnedRepos(), getPresenter());
+    stateLayout.setEmptyText(R.string.empty_pinned_repos);
+    recycler.setEmptyView(stateLayout, refresh);
+    recycler.setAdapter(adapter);
+    recycler.addKeyLineDivider();
+    refresh.setOnRefreshListener(() -> getPresenter().onReload());
+    stateLayout.setOnReloadListener(v -> getPresenter().onReload());
+    if (savedInstanceState == null) {
+      stateLayout.showProgress();
+    }
+    fastScroller.attachRecyclerView(recycler);
+  }
 
-@NonNull @Override public PinnedReposPresenter providePresenter() {
-	return new PinnedReposPresenter();
-}
+  @NonNull
+  @Override
+  public PinnedReposPresenter providePresenter() {
+    return new PinnedReposPresenter();
+  }
 
-@Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
-	super.onMessageDialogActionClicked(isOk, bundle);
-	if (bundle != null && isOk) {
-		long id = bundle.getLong(BundleConstant.ID);
-		int position = bundle.getInt(BundleConstant.EXTRA);
-		AbstractPinnedRepos.delete(id);
-		adapter.removeItem(position);
-	}
-}
+  @Override
+  public void onMessageDialogActionClicked(final boolean isOk,
+                                           final @Nullable Bundle bundle) {
+    super.onMessageDialogActionClicked(isOk, bundle);
+    if (bundle != null && isOk) {
+      long id = bundle.getLong(BundleConstant.ID);
+      int position = bundle.getInt(BundleConstant.EXTRA);
+      AbstractPinnedRepos.delete(id);
+      adapter.removeItem(position);
+    }
+  }
 }

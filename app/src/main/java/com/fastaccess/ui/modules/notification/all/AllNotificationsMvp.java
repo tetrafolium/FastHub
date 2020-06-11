@@ -3,17 +3,14 @@ package com.fastaccess.ui.modules.notification.all;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.fastaccess.data.dao.GroupedNotificationModel;
 import com.fastaccess.data.dao.model.Notification;
 import com.fastaccess.data.dao.model.Repo;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
-import net.grandcentrix.thirtyinch.callonmainthread.CallOnMainThread;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.grandcentrix.thirtyinch.callonmainthread.CallOnMainThread;
 
 /**
  * Created by Kosh on 19 Feb 2017, 7:53 PM
@@ -21,31 +18,35 @@ import java.util.List;
 
 public interface AllNotificationsMvp {
 
-interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener {
+  interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener {
 
-@CallOnMainThread void onNotifyAdapter(@Nullable List<GroupedNotificationModel> items);
+    @CallOnMainThread
+    void onNotifyAdapter(@Nullable List<GroupedNotificationModel> items);
 
-void onUpdateReadState(GroupedNotificationModel item, int position);
+    void onUpdateReadState(GroupedNotificationModel item, int position);
 
-void onClick(@NonNull String url);
+    void onClick(@NonNull String url);
 
-void onReadNotification(@NonNull Notification notification);
+    void onReadNotification(@NonNull Notification notification);
 
-void onMarkAllByRepo(@NonNull Repo repo);
+    void onMarkAllByRepo(@NonNull Repo repo);
 
-void onNotifyNotificationChanged(@NonNull GroupedNotificationModel notification);
-}
+    void
+    onNotifyNotificationChanged(@NonNull GroupedNotificationModel notification);
+  }
 
-interface Presenter extends BaseViewHolder.OnItemClickListener<GroupedNotificationModel> {
+  interface Presenter
+      extends BaseViewHolder.OnItemClickListener<GroupedNotificationModel> {
 
-void onWorkOffline();
+    void onWorkOffline();
 
-@NonNull ArrayList<GroupedNotificationModel> getNotifications();
+    @NonNull ArrayList<GroupedNotificationModel> getNotifications();
 
-void onCallApi();
+    void onCallApi();
 
-void onMarkAllAsRead(@NonNull List<GroupedNotificationModel> data);
+    void onMarkAllAsRead(@NonNull List<GroupedNotificationModel> data);
 
-void onMarkReadByRepo(@NonNull List<GroupedNotificationModel> data, @NonNull Repo repo);
-}
+    void onMarkReadByRepo(@NonNull List<GroupedNotificationModel> data,
+                          @NonNull Repo repo);
+  }
 }

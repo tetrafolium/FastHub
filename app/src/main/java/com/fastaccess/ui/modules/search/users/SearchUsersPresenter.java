@@ -1,77 +1,87 @@
 package com.fastaccess.ui.modules.search.users;
 
+import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import android.view.View;
-
 import com.fastaccess.R;
 import com.fastaccess.data.dao.model.User;
 import com.fastaccess.provider.rest.RestProvider;
 import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
-
 import java.util.ArrayList;
 
 /**
  * Created by Kosh on 03 Dec 2016, 3:48 PM
  */
 
-class SearchUsersPresenter extends BasePresenter<SearchUsersMvp.View> implements SearchUsersMvp.Presenter {
+class SearchUsersPresenter extends BasePresenter<SearchUsersMvp.View>
+    implements SearchUsersMvp.Presenter {
 
-private ArrayList<User> users = new ArrayList<>();
-private int page;
-private int previousTotal;
-private int lastPage = Integer.MAX_VALUE;
+  private ArrayList<User> users = new ArrayList<>();
+  private int page;
+  private int previousTotal;
+  private int lastPage = Integer.MAX_VALUE;
 
-@Override public int getCurrentPage() {
-	return page;
-}
+  @Override
+  public int getCurrentPage() {
+    return page;
+  }
 
-@Override public int getPreviousTotal() {
-	return previousTotal;
-}
+  @Override
+  public int getPreviousTotal() {
+    return previousTotal;
+  }
 
-@Override public void setCurrentPage(final int page) {
-	this.page = page;
-}
+  @Override
+  public void setCurrentPage(final int page) {
+    this.page = page;
+  }
 
-@Override public void setPreviousTotal(final int previousTotal) {
-	this.previousTotal = previousTotal;
-}
+  @Override
+  public void setPreviousTotal(final int previousTotal) {
+    this.previousTotal = previousTotal;
+  }
 
-@Override public boolean onCallApi(final int page, final @Nullable String parameter) {
-	if (page == 1) {
-		lastPage = Integer.MAX_VALUE;
-		sendToView(view->view.getLoadMore().reset());
-	}
-	setCurrentPage(page);
-	if (page > lastPage || lastPage == 0 || parameter == null) {
-		sendToView(SearchUsersMvp.View::hideProgress);
-		return false;
-	}
-	makeRestCall(RestProvider.getSearchService(isEnterprise()).searchUsers(parameter, page),
-	             response->{
-			lastPage = response.getLast();
-			sendToView(view->{
-				view.onNotifyAdapter(response.isIncompleteResults() ? null : response.getItems(), page);
-				if (!response.isIncompleteResults()) {
-				        view.onSetTabCount(response.getTotalCount());
-				} else {
-				        view.onSetTabCount(0);
-				        view.showMessage(R.string.error, R.string.search_results_warning);
-				}
-			});
-		});
-	return true;
-}
+  @Override
+  public boolean onCallApi(final int page, final @Nullable String parameter) {
+    if (page == 1) {
+      lastPage = Integer.MAX_VALUE;
+      sendToView(view -> view.getLoadMore().reset());
+    }
+    setCurrentPage(page);
+    if (page > lastPage || lastPage == 0 || parameter == null) {
+      sendToView(SearchUsersMvp.View::hideProgress);
+      return false;
+    }
+    makeRestCall(
+        RestProvider.getSearchService(isEnterprise())
+            .searchUsers(parameter, page),
+        response -> {
+          lastPage = response.getLast();
+          sendToView(view -> {
+            view.onNotifyAdapter(
+                response.isIncompleteResults() ? null : response.getItems(),
+                page);
+            if (!response.isIncompleteResults()) {
+              view.onSetTabCount(response.getTotalCount());
+            } else {
+              view.onSetTabCount(0);
+              view.showMessage(R.string.error, R.string.search_results_warning);
+            }
+          });
+        });
+    return true;
+  }
 
-@NonNull @Override public ArrayList<User> getUsers() {
-	return users;
-}
+  @NonNull
+  @Override
+  public ArrayList<User> getUsers() {
+    return users;
+  }
 
-@Override public void onItemClick(final int position, final View v, final User item) {
+  @Override
+  public void onItemClick(final int position, final View v, final User item) {}
 
-}
-
-@Override public void onItemLongClick(final int position, final View v, final User item) {
-}
+  @Override
+  public void onItemLongClick(final int position, final View v,
+                              final User item) {}
 }

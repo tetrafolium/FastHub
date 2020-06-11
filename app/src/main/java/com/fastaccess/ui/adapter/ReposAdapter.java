@@ -1,38 +1,42 @@
 package com.fastaccess.ui.adapter;
 
-import androidx.annotation.NonNull;
 import android.view.ViewGroup;
-
+import androidx.annotation.NonNull;
 import com.fastaccess.data.dao.model.Repo;
 import com.fastaccess.ui.adapter.viewholder.ReposViewHolder;
 import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.List;
 
 /**
  * Created by Kosh on 11 Nov 2016, 2:07 PM
  */
 
-public class ReposAdapter extends BaseRecyclerAdapter<Repo, ReposViewHolder, BaseViewHolder.OnItemClickListener<Repo> > {
-private boolean isStarred;
-private boolean withImage;
+public class ReposAdapter
+    extends BaseRecyclerAdapter<Repo, ReposViewHolder,
+                                BaseViewHolder.OnItemClickListener<Repo>> {
+  private boolean isStarred;
+  private boolean withImage;
 
-public ReposAdapter(final @NonNull List<Repo> data, final boolean isStarred) {
-	this(data, isStarred, false);
-}
+  public ReposAdapter(final @NonNull List<Repo> data, final boolean isStarred) {
+    this(data, isStarred, false);
+  }
 
-public ReposAdapter(final @NonNull List<Repo> data, final boolean isStarred, final boolean withImage) {
-	super(data);
-	this.isStarred = isStarred;
-	this.withImage = withImage;
-}
+  public ReposAdapter(final @NonNull List<Repo> data, final boolean isStarred,
+                      final boolean withImage) {
+    super(data);
+    this.isStarred = isStarred;
+    this.withImage = withImage;
+  }
 
-@Override protected ReposViewHolder viewHolder(final ViewGroup parent, final int viewType) {
-	return ReposViewHolder.newInstance(parent, this, isStarred, withImage);
-}
+  @Override
+  protected ReposViewHolder viewHolder(final ViewGroup parent,
+                                       final int viewType) {
+    return ReposViewHolder.newInstance(parent, this, isStarred, withImage);
+  }
 
-@Override protected void onBindView(final ReposViewHolder holder, final int position) {
-	holder.bind(getItem(position));
-}
+  @Override
+  protected void onBindView(final ReposViewHolder holder, final int position) {
+    holder.bind(getItem(position));
+  }
 }

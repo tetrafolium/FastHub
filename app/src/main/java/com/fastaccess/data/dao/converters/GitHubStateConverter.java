@@ -7,7 +7,8 @@ import com.fastaccess.data.dao.GithubState;
  */
 
 public class GitHubStateConverter extends BaseConverter<GithubState> {
-@Override protected Class<? extends GithubState> getTypeClass() {
-	return GithubState.class;
-}
+  @Override
+  protected Class<? extends GithubState> getTypeClass() {
+    return GithubState.class;
+  }
 }

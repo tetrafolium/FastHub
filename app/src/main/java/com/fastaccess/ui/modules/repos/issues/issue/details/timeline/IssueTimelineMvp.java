@@ -5,7 +5,6 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.fastaccess.data.dao.TimelineModel;
 import com.fastaccess.data.dao.model.Comment;
 import com.fastaccess.data.dao.model.Issue;
@@ -17,7 +16,6 @@ import com.fastaccess.ui.adapter.callback.OnToggleView;
 import com.fastaccess.ui.adapter.callback.ReactionsCallback;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,63 +25,68 @@ import java.util.List;
 
 public interface IssueTimelineMvp {
 
-interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener,
-	               OnToggleView, ReactionsCallback {
+  interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
+                         android.view.View.OnClickListener, OnToggleView,
+                         ReactionsCallback {
 
-void onNotifyAdapter(@Nullable List<TimelineModel> items, int page);
+    void onNotifyAdapter(@Nullable List<TimelineModel> items, int page);
 
-@NonNull OnLoadMore<Issue> getLoadMore();
+    @NonNull OnLoadMore<Issue> getLoadMore();
 
-void onEditComment(@NonNull Comment item);
+    void onEditComment(@NonNull Comment item);
 
-void onRemove(@NonNull TimelineModel timelineModel);
+    void onRemove(@NonNull TimelineModel timelineModel);
 
-void onStartNewComment(String text);
+    void onStartNewComment(String text);
 
-void onShowDeleteMsg(long id);
+    void onShowDeleteMsg(long id);
 
-void onTagUser(@Nullable User user);
+    void onTagUser(@Nullable User user);
 
-void onReply(User user, String message);
+    void onReply(User user, String message);
 
-void showReactionsPopup(@NonNull ReactionTypes type, @NonNull String login, @NonNull String repoId, long idOrNumber, boolean isHeadre);
+    void showReactionsPopup(@NonNull ReactionTypes type, @NonNull String login,
+                            @NonNull String repoId, long idOrNumber,
+                            boolean isHeadre);
 
-void onSetHeader(@NonNull TimelineModel timelineModel);
+    void onSetHeader(@NonNull TimelineModel timelineModel);
 
-@Nullable Issue getIssue();
+    @Nullable Issue getIssue();
 
-void onUpdateHeader();
+    void onUpdateHeader();
 
-void onHandleComment(String text, @Nullable Bundle bundle);
+    void onHandleComment(String text, @Nullable Bundle bundle);
 
-void addNewComment(@NonNull TimelineModel timelineModel);
+    void addNewComment(@NonNull TimelineModel timelineModel);
 
-@NonNull ArrayList<String> getNamesToTag();
+    @NonNull ArrayList<String> getNamesToTag();
 
-void onHideBlockingProgress();
+    void onHideBlockingProgress();
 
-long getCommentId();
+    long getCommentId();
 
-void addComment(@Nullable TimelineModel timelineModel, int index);
-}
+    void addComment(@Nullable TimelineModel timelineModel, int index);
+  }
 
-interface Presenter extends BaseMvp.FAPresenter, BaseViewHolder.OnItemClickListener<TimelineModel>,
-	                    BaseMvp.PaginationListener<Issue> {
+  interface Presenter extends BaseMvp.FAPresenter,
+                              BaseViewHolder.OnItemClickListener<TimelineModel>,
+                              BaseMvp.PaginationListener<Issue> {
 
-boolean isPreviouslyReacted(long commentId, int vId);
+    boolean isPreviouslyReacted(long commentId, int vId);
 
-@NonNull ArrayList<TimelineModel> getEvents();
+    @NonNull ArrayList<TimelineModel> getEvents();
 
-void onWorkOffline();
+    void onWorkOffline();
 
-void onHandleDeletion(@Nullable Bundle bundle);
+    void onHandleDeletion(@Nullable Bundle bundle);
 
-void onHandleReaction(@IdRes int viewId, long id, @ReactionsProvider.ReactionType int reactionType);
+    void onHandleReaction(@IdRes int viewId, long id,
+                          @ReactionsProvider.ReactionType int reactionType);
 
-boolean isCallingApi(long id, int vId);
+    boolean isCallingApi(long id, int vId);
 
-void onHandleComment(@NonNull String text, @Nullable Bundle bundle);
+    void onHandleComment(@NonNull String text, @Nullable Bundle bundle);
 
-void setCommentId(long commentId);
-}
+    void setCommentId(long commentId);
+  }
 }

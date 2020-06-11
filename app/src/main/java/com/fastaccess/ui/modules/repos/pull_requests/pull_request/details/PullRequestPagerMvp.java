@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.fastaccess.data.dao.LabelModel;
 import com.fastaccess.data.dao.MilestoneModel;
 import com.fastaccess.data.dao.model.PullRequest;
@@ -20,7 +19,6 @@ import com.fastaccess.ui.modules.repos.pull_requests.pull_request.details.files.
 import com.fastaccess.ui.modules.repos.pull_requests.pull_request.merge.MergePullReqeustMvp;
 import com.fastaccess.ui.modules.reviews.changes.ReviewChangesMvp;
 import com.fastaccess.ui.widgets.SpannableBuilder;
-
 import java.util.ArrayList;
 
 /**
@@ -29,74 +27,79 @@ import java.util.ArrayList;
 
 public interface PullRequestPagerMvp {
 
-interface View extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener,
-	               AssigneesMvp.SelectedAssigneesListener, MergePullReqeustMvp.MergeCallback,
-	               IssuePagerMvp.IssuePrCallback<PullRequest>, PullRequestFilesMvp.PatchCallback,
-	               CommentEditorFragment.CommentListener, ReviewChangesMvp.ReviewSubmissionCallback,
-	               LockIssuePrCallback {
+  interface View extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener,
+                         AssigneesMvp.SelectedAssigneesListener,
+                         MergePullReqeustMvp.MergeCallback,
+                         IssuePagerMvp.IssuePrCallback<PullRequest>,
+                         PullRequestFilesMvp.PatchCallback,
+                         CommentEditorFragment.CommentListener,
+                         ReviewChangesMvp.ReviewSubmissionCallback,
+                         LockIssuePrCallback {
 
-void onSetupIssue(boolean update);
+    void onSetupIssue(boolean update);
 
-void showSuccessIssueActionMsg(boolean isClose);
+    void showSuccessIssueActionMsg(boolean isClose);
 
-void showErrorIssueActionMsg(boolean isClose);
+    void showErrorIssueActionMsg(boolean isClose);
 
-void onUpdateTimeline();
+    void onUpdateTimeline();
 
-void onMileStoneSelected(@NonNull MilestoneModel milestoneModel);
+    void onMileStoneSelected(@NonNull MilestoneModel milestoneModel);
 
-void onFinishActivity();
+    void onFinishActivity();
 
-void onUpdateMenu();
-}
+    void onUpdateMenu();
+  }
 
-interface Presenter extends BaseMvp.FAPresenter, PullRequestFilesMvp.CommitCommentCallback {
+  interface Presenter
+      extends BaseMvp.FAPresenter, PullRequestFilesMvp.CommitCommentCallback {
 
-@Nullable PullRequest getPullRequest();
+    @Nullable PullRequest getPullRequest();
 
-void onActivityCreated(@Nullable Intent intent);
+    void onActivityCreated(@Nullable Intent intent);
 
-void onWorkOffline();
+    void onWorkOffline();
 
-boolean isOwner();
+    boolean isOwner();
 
-boolean isRepoOwner();
+    boolean isRepoOwner();
 
-boolean isLocked();
+    boolean isLocked();
 
-boolean isMergeable();
+    boolean isMergeable();
 
-boolean showToRepoBtn();
+    boolean showToRepoBtn();
 
-void onHandleConfirmDialog(@Nullable Bundle bundle);
+    void onHandleConfirmDialog(@Nullable Bundle bundle);
 
-void onOpenCloseIssue();
+    void onOpenCloseIssue();
 
-void onLockUnlockConversations(String reason);
+    void onLockUnlockConversations(String reason);
 
-@NonNull SpannableBuilder getMergeBy(@NonNull PullRequest pullRequest, @NonNull Context context);
+    @NonNull
+    SpannableBuilder getMergeBy(@NonNull PullRequest pullRequest,
+                                @NonNull Context context);
 
-void onMerge(String s, String msg);
+    void onMerge(String s, String msg);
 
-void onPutLabels(@NonNull ArrayList<LabelModel> labels);
+    void onPutLabels(@NonNull ArrayList<LabelModel> labels);
 
-void onPutMilestones(@NonNull MilestoneModel milestone);
+    void onPutMilestones(@NonNull MilestoneModel milestone);
 
-void onPutAssignees(@NonNull ArrayList<User> users, boolean isAssignee);
+    void onPutAssignees(@NonNull ArrayList<User> users, boolean isAssignee);
 
-String getLogin();
+    String getLogin();
 
-String getRepoId();
+    String getRepoId();
 
-boolean isCollaborator();
+    boolean isCollaborator();
 
-void onUpdatePullRequest(@NonNull PullRequest pullRequestModel);
+    void onUpdatePullRequest(@NonNull PullRequest pullRequestModel);
 
-void onRefresh();
+    void onRefresh();
 
-void onPinUnpinPullRequest();
+    void onPinUnpinPullRequest();
 
-void onSubscribeOrMute(boolean mute);
-}
-
+    void onSubscribeOrMute(boolean mute);
+  }
 }

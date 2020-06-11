@@ -1,17 +1,15 @@
 package com.fastaccess.ui.adapter.viewholder;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import butterknife.BindView;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.SearchCodeModel;
 import com.fastaccess.ui.widgets.FontTextView;
 import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
-import butterknife.BindView;
 
 /**
  * Created by Kosh on 11 Nov 2016, 2:08 PM
@@ -19,30 +17,36 @@ import butterknife.BindView;
 
 public class SearchCodeViewHolder extends BaseViewHolder<SearchCodeModel> {
 
-@BindView(R.id.title) FontTextView title;
-@BindView(R.id.details) FontTextView details;
-@BindView(R.id.commentsNo) View commentsNo;
+  @BindView(R.id.title) FontTextView title;
+  @BindView(R.id.details) FontTextView details;
+  @BindView(R.id.commentsNo) View commentsNo;
 
-private SearchCodeViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
-	super(itemView, adapter);
-}
+  private SearchCodeViewHolder(final @NonNull View itemView,
+                               final @Nullable BaseRecyclerAdapter adapter) {
+    super(itemView, adapter);
+  }
 
-public static SearchCodeViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
-	return new SearchCodeViewHolder(getView(viewGroup, R.layout.issue_no_image_row_item), adapter);
-}
+  public static SearchCodeViewHolder
+  newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
+    return new SearchCodeViewHolder(
+        getView(viewGroup, R.layout.issue_no_image_row_item), adapter);
+  }
 
-public void bind(final @NonNull SearchCodeModel codeModel, final boolean showRepoName) {
-	if (showRepoName) {
-		title.setText(codeModel.getRepository() != null ? codeModel.getRepository().getFullName() : "N/A");
-		details.setText(codeModel.getName());
-		commentsNo.setVisibility(View.GONE);
-	} else {
-		title.setText(codeModel.getName());
-		details.setText(codeModel.getPath());
-		commentsNo.setVisibility(View.GONE);
-	}
-}
+  public void bind(final @NonNull SearchCodeModel codeModel,
+                   final boolean showRepoName) {
+    if (showRepoName) {
+      title.setText(codeModel.getRepository() != null
+                        ? codeModel.getRepository().getFullName()
+                        : "N/A");
+      details.setText(codeModel.getName());
+      commentsNo.setVisibility(View.GONE);
+    } else {
+      title.setText(codeModel.getName());
+      details.setText(codeModel.getPath());
+      commentsNo.setVisibility(View.GONE);
+    }
+  }
 
-@Override public void bind(final @NonNull SearchCodeModel searchCodeModel) {
-}
+  @Override
+  public void bind(final @NonNull SearchCodeModel searchCodeModel) {}
 }

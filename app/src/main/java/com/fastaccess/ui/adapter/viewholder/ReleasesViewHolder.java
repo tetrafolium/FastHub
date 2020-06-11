@@ -1,10 +1,11 @@
 package com.fastaccess.ui.adapter.viewholder;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import butterknife.BindString;
+import butterknife.BindView;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.model.Release;
 import com.fastaccess.helper.InputHelper;
@@ -15,42 +16,46 @@ import com.fastaccess.ui.widgets.SpannableBuilder;
 import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
 
-import butterknife.BindString;
-import butterknife.BindView;
-
 /**
  * Created by Kosh on 11 Nov 2016, 2:08 PM
  */
 
 public class ReleasesViewHolder extends BaseViewHolder<Release> {
 
-@BindView(R.id.title) FontTextView title;
-@BindView(R.id.details) FontTextView details;
-@BindView(R.id.download) ForegroundImageView download;
-@BindString(R.string.released) String released;
-@BindString(R.string.drafted) String drafted;
+  @BindView(R.id.title) FontTextView title;
+  @BindView(R.id.details) FontTextView details;
+  @BindView(R.id.download) ForegroundImageView download;
+  @BindString(R.string.released) String released;
+  @BindString(R.string.drafted) String drafted;
 
-private ReleasesViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
-	super(itemView, adapter);
-	download.setOnClickListener(this);
-	download.setOnLongClickListener(this);
-}
+  private ReleasesViewHolder(final @NonNull View itemView,
+                             final @Nullable BaseRecyclerAdapter adapter) {
+    super(itemView, adapter);
+    download.setOnClickListener(this);
+    download.setOnLongClickListener(this);
+  }
 
-public static ReleasesViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
-	return new ReleasesViewHolder(getView(viewGroup, R.layout.releases_row_item), adapter);
-}
+  public static ReleasesViewHolder
+  newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
+    return new ReleasesViewHolder(
+        getView(viewGroup, R.layout.releases_row_item), adapter);
+  }
 
-@Override public void bind(final @NonNull Release item) {
-	title.setText(SpannableBuilder.builder().bold(!InputHelper.isEmpty(item.getName()) ? item.getName() : item.getTagName()));
-	if (item.getAuthor() != null) {
-		details.setText(SpannableBuilder.builder()
-		                .append(item.getAuthor().getLogin())
-		                .append(" ")
-		                .append(item.isDraft() ? drafted : released)
-		                .append(" ")
-		                .append(ParseDateFormat.getTimeAgo(item.getCreatedAt())));
-	} else {
-		details.setVisibility(View.GONE);
-	}
-}
+  @Override
+  public void bind(final @NonNull Release item) {
+    title.setText(SpannableBuilder.builder().bold(
+        !InputHelper.isEmpty(item.getName()) ? item.getName()
+                                             : item.getTagName()));
+    if (item.getAuthor() != null) {
+      details.setText(
+          SpannableBuilder.builder()
+              .append(item.getAuthor().getLogin())
+              .append(" ")
+              .append(item.isDraft() ? drafted : released)
+              .append(" ")
+              .append(ParseDateFormat.getTimeAgo(item.getCreatedAt())));
+    } else {
+      details.setVisibility(View.GONE);
+    }
+  }
 }

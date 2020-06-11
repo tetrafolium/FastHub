@@ -4,14 +4,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.fastaccess.data.dao.SimpleUrlsModel;
 import com.fastaccess.data.dao.model.Release;
 import com.fastaccess.provider.rest.loadmore.OnLoadMore;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.widgets.dialog.ListDialogView;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,25 +19,26 @@ import java.util.List;
 
 interface RepoReleasesMvp {
 
-interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-	               android.view.View.OnClickListener, ListDialogView.onSimpleItemSelection<SimpleUrlsModel> {
-void onNotifyAdapter(@Nullable List<Release> items, int page);
+  interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
+                         android.view.View.OnClickListener,
+                         ListDialogView.onSimpleItemSelection<SimpleUrlsModel> {
+    void onNotifyAdapter(@Nullable List<Release> items, int page);
 
-@NonNull OnLoadMore getLoadMore();
+    @NonNull OnLoadMore getLoadMore();
 
-void onDownload(@NonNull Release item);
+    void onDownload(@NonNull Release item);
 
-void onShowDetails(@NonNull Release item);
-}
+    void onShowDetails(@NonNull Release item);
+  }
 
-interface Presenter extends BaseMvp.FAPresenter,
-	                    BaseViewHolder.OnItemClickListener<Release>,
-	                    BaseMvp.PaginationListener {
+  interface Presenter extends BaseMvp.FAPresenter,
+                              BaseViewHolder.OnItemClickListener<Release>,
+                              BaseMvp.PaginationListener {
 
-void onFragmentCreated(@NonNull Bundle bundle);
+    void onFragmentCreated(@NonNull Bundle bundle);
 
-void onWorkOffline();
+    void onWorkOffline();
 
-@NonNull ArrayList<Release> getReleases();
-}
+    @NonNull ArrayList<Release> getReleases();
+  }
 }

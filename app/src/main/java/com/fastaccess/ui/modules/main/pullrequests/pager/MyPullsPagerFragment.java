@@ -1,15 +1,14 @@
 package com.fastaccess.ui.modules.main.pullrequests.pager;
 
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import androidx.viewpager.widget.ViewPager;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
+import butterknife.BindView;
 import com.annimon.stream.Stream;
 import com.evernote.android.state.State;
 import com.fastaccess.R;
@@ -22,176 +21,202 @@ import com.fastaccess.ui.base.BaseFragment;
 import com.fastaccess.ui.modules.main.pullrequests.MyPullRequestFragment;
 import com.fastaccess.ui.widgets.SpannableBuilder;
 import com.fastaccess.ui.widgets.ViewPagerView;
-
+import com.google.android.material.tabs.TabLayout;
 import java.util.HashSet;
-
-import butterknife.BindView;
 
 /**
  * Created by Kosh on 26 Mar 2017, 12:14 AM
  */
 
-public class MyPullsPagerFragment extends BaseFragment<MyPullsPagerMvp.View, MyPullsPagerPresenter> implements MyPullsPagerMvp.View {
+public class MyPullsPagerFragment
+    extends BaseFragment<MyPullsPagerMvp.View, MyPullsPagerPresenter>
+    implements MyPullsPagerMvp.View {
 
-public static final String TAG = MyPullsPagerFragment.class.getSimpleName();
+  public static final String TAG = MyPullsPagerFragment.class.getSimpleName();
 
-@BindView(R.id.tabs) TabLayout tabs;
-@BindView(R.id.pager) ViewPagerView pager;
-@State HashSet<TabsCountStateModel> counts = new HashSet<>();
+  @BindView(R.id.tabs) TabLayout tabs;
+  @BindView(R.id.pager) ViewPagerView pager;
+  @State HashSet<TabsCountStateModel> counts = new HashSet<>();
 
-public static MyPullsPagerFragment newInstance() {
-	return new MyPullsPagerFragment();
-}
+  public static MyPullsPagerFragment newInstance() {
+    return new MyPullsPagerFragment();
+  }
 
-@Override protected int fragmentLayout() {
-	return R.layout.tabbed_viewpager;
-}
+  @Override
+  protected int fragmentLayout() {
+    return R.layout.tabbed_viewpager;
+  }
 
-@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-	FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(getChildFragmentManager(),
-	                                                          FragmentPagerAdapterModel.buildForMyPulls(getContext()));
-	pager.setAdapter(adapter);
-	//noinspection deprecation
-	tabs.setTabsFromPagerAdapter(adapter);
-	tabs.setTabGravity(TabLayout.GRAVITY_FILL);
-	tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
-	if (savedInstanceState == null) {
-		tabs.getTabAt(0).select();
-	}
-	pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-			@Override public void onPageSelected(final int position) {
-			        super.onPageSelected(position);
-			        selectTab(position, true);
-			}
-		});
-	tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-			@Override public void onTabSelected(final TabLayout.Tab tab) {
-			        if (tab.getTag() == null) {
-			                int position = tab.getPosition();
-			                selectTab(position, false);
-				}
-			        tab.setTag(null);
-			}
+  @Override
+  protected void onFragmentCreated(final @NonNull View view,
+                                   final @Nullable Bundle savedInstanceState) {
+    FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(
+        getChildFragmentManager(),
+        FragmentPagerAdapterModel.buildForMyPulls(getContext()));
+    pager.setAdapter(adapter);
+    // noinspection deprecation
+    tabs.setTabsFromPagerAdapter(adapter);
+    tabs.setTabGravity(TabLayout.GRAVITY_FILL);
+    tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+    if (savedInstanceState == null) {
+      tabs.getTabAt(0).select();
+    }
+    pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+      @Override
+      public void onPageSelected(final int position) {
+        super.onPageSelected(position);
+        selectTab(position, true);
+      }
+    });
+    tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+      @Override
+      public void onTabSelected(final TabLayout.Tab tab) {
+        if (tab.getTag() == null) {
+          int position = tab.getPosition();
+          selectTab(position, false);
+        }
+        tab.setTag(null);
+      }
 
-			@Override public void onTabUnselected(final TabLayout.Tab tab) {
-			}
+      @Override
+      public void onTabUnselected(final TabLayout.Tab tab) {}
 
-			@Override public void onTabReselected(final TabLayout.Tab tab) {
-			        selectTab(tab.getPosition(), false);
-			}
-		});
-	if (savedInstanceState != null && !counts.isEmpty()) {
-		Stream.of(counts).forEach(this::updateCount);
-	}
-}
+      @Override
+      public void onTabReselected(final TabLayout.Tab tab) {
+        selectTab(tab.getPosition(), false);
+      }
+    });
+    if (savedInstanceState != null && !counts.isEmpty()) {
+      Stream.of(counts).forEach(this::updateCount);
+    }
+  }
 
-@NonNull @Override public MyPullsPagerPresenter providePresenter() {
-	return new MyPullsPagerPresenter();
-}
+  @NonNull
+  @Override
+  public MyPullsPagerPresenter providePresenter() {
+    return new MyPullsPagerPresenter();
+  }
 
-@Override public void onSetBadge(final int tabIndex, final int count) {
-	TabsCountStateModel model = getModelAtIndex(tabIndex);
-	if (model == null) {
-		model = new TabsCountStateModel();
-	}
-	model.setTabIndex(tabIndex);
-	model.setCount(count);
-	boolean removed = counts.remove(model);
-	counts.add(model);
-	if (tabs != null) {
-		updateCount(model);
-	}
-}
+  @Override
+  public void onSetBadge(final int tabIndex, final int count) {
+    TabsCountStateModel model = getModelAtIndex(tabIndex);
+    if (model == null) {
+      model = new TabsCountStateModel();
+    }
+    model.setTabIndex(tabIndex);
+    model.setCount(count);
+    boolean removed = counts.remove(model);
+    counts.add(model);
+    if (tabs != null) {
+      updateCount(model);
+    }
+  }
 
-@Nullable private TabsCountStateModel getModelAtIndex(final int index) {
-	return Stream.of(counts)
-	       .filter(model->model.getTabIndex() == index)
-	       .findFirst()
-	       .orElse(null);
-}
+  @Nullable
+  private TabsCountStateModel getModelAtIndex(final int index) {
+    return Stream.of(counts)
+        .filter(model -> model.getTabIndex() == index)
+        .findFirst()
+        .orElse(null);
+  }
 
-@Override public void onScrollTop(final int index) {
-	super.onScrollTop(index);
-	if (pager != null && pager.getAdapter() != null) {
-		MyPullRequestFragment myIssuesFragment = (MyPullRequestFragment) pager.getAdapter().instantiateItem(pager, pager.getCurrentItem());
-		if (myIssuesFragment != null) {
-			myIssuesFragment.onScrollTop(0);
-		}
-	}
-}
+  @Override
+  public void onScrollTop(final int index) {
+    super.onScrollTop(index);
+    if (pager != null && pager.getAdapter() != null) {
+      MyPullRequestFragment myIssuesFragment =
+          (MyPullRequestFragment)pager.getAdapter().instantiateItem(
+              pager, pager.getCurrentItem());
+      if (myIssuesFragment != null) {
+        myIssuesFragment.onScrollTop(0);
+      }
+    }
+  }
 
-private void selectTab(final int position, final boolean fromViewPager) {
-	if (!fromViewPager) {
-		onShowFilterMenu(getModelAtIndex(position), ViewHelper.getTabTextView(tabs, position));
-		pager.setCurrentItem(position);
-	} else {
-		TabLayout.Tab tab = tabs.getTabAt(position);
-		if (tab != null) {
-			tab.setTag("hello");
-			if (!tab.isSelected()) tab.select();
-		}
-	}
-}
+  private void selectTab(final int position, final boolean fromViewPager) {
+    if (!fromViewPager) {
+      onShowFilterMenu(getModelAtIndex(position),
+                       ViewHelper.getTabTextView(tabs, position));
+      pager.setCurrentItem(position);
+    } else {
+      TabLayout.Tab tab = tabs.getTabAt(position);
+      if (tab != null) {
+        tab.setTag("hello");
+        if (!tab.isSelected())
+          tab.select();
+      }
+    }
+  }
 
-private void updateCount(final @NonNull TabsCountStateModel model) {
-	TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
-	String title = getString(R.string.created);
-	switch (model.getTabIndex()) {
-	case 0:
-		title = getString(R.string.created);
-		break;
-	case 1:
-		title = getString(R.string.assigned);
-		break;
-	case 2:
-		title = getString(R.string.mentioned);
-		break;
-	case 3:
-		title = getString(R.string.review_requests);
-		break;
-	}
-	updateDrawable(model, tv);
-	tv.setText(SpannableBuilder.builder()
-	           .append(title)
-	           .append("   ")
-	           .append("(")
-	           .bold(String.valueOf(model.getCount()))
-	           .append(")"));
-}
+  private void updateCount(final @NonNull TabsCountStateModel model) {
+    TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
+    String title = getString(R.string.created);
+    switch (model.getTabIndex()) {
+    case 0:
+      title = getString(R.string.created);
+      break;
+    case 1:
+      title = getString(R.string.assigned);
+      break;
+    case 2:
+      title = getString(R.string.mentioned);
+      break;
+    case 3:
+      title = getString(R.string.review_requests);
+      break;
+    }
+    updateDrawable(model, tv);
+    tv.setText(SpannableBuilder.builder()
+                   .append(title)
+                   .append("   ")
+                   .append("(")
+                   .bold(String.valueOf(model.getCount()))
+                   .append(")"));
+  }
 
-private void onShowFilterMenu(final @Nullable TabsCountStateModel model, final TextView tv) {
-	if (model == null) return;
-	PopupMenu popup = new PopupMenu(getContext(), tv);
-	MenuInflater inflater = popup.getMenuInflater();
-	inflater.inflate(R.menu.filter_issue_state_menu, popup.getMenu());
-	popup.setOnMenuItemClickListener(item->{
-			if (pager == null || pager.getAdapter() == null) return false;
-			MyPullRequestFragment myIssuesFragment = (MyPullRequestFragment) pager.getAdapter().instantiateItem(pager, model.getTabIndex());
-			if (myIssuesFragment == null) return false;
-			switch (item.getItemId()) {
-			case R.id.opened:
-				counts.remove(model);
-				model.setDrawableId(R.drawable.ic_issue_opened_small);
-				counts.add(model);
-				updateDrawable(model, tv);
-				myIssuesFragment.onFilterIssue(IssueState.open);
-				return true;
-			case R.id.closed:
-				counts.remove(model);
-				model.setDrawableId(R.drawable.ic_issue_closed_small);
-				counts.add(model);
-				updateDrawable(model, tv);
-				myIssuesFragment.onFilterIssue(IssueState.closed);
-				return true;
-			}
-			return false;
-		});
-	popup.show();
-}
+  private void onShowFilterMenu(final @Nullable TabsCountStateModel model,
+                                final TextView tv) {
+    if (model == null)
+      return;
+    PopupMenu popup = new PopupMenu(getContext(), tv);
+    MenuInflater inflater = popup.getMenuInflater();
+    inflater.inflate(R.menu.filter_issue_state_menu, popup.getMenu());
+    popup.setOnMenuItemClickListener(item -> {
+      if (pager == null || pager.getAdapter() == null)
+        return false;
+      MyPullRequestFragment myIssuesFragment =
+          (MyPullRequestFragment)pager.getAdapter().instantiateItem(
+              pager, model.getTabIndex());
+      if (myIssuesFragment == null)
+        return false;
+      switch (item.getItemId()) {
+      case R.id.opened:
+        counts.remove(model);
+        model.setDrawableId(R.drawable.ic_issue_opened_small);
+        counts.add(model);
+        updateDrawable(model, tv);
+        myIssuesFragment.onFilterIssue(IssueState.open);
+        return true;
+      case R.id.closed:
+        counts.remove(model);
+        model.setDrawableId(R.drawable.ic_issue_closed_small);
+        counts.add(model);
+        updateDrawable(model, tv);
+        myIssuesFragment.onFilterIssue(IssueState.closed);
+        return true;
+      }
+      return false;
+    });
+    popup.show();
+  }
 
-private void updateDrawable(final @NonNull TabsCountStateModel model, final TextView tv) {
-	model.setDrawableId(model.getDrawableId() == 0 ? R.drawable.ic_issue_opened_small : model.getDrawableId());
-	tv.setCompoundDrawablePadding(16);
-	tv.setCompoundDrawablesWithIntrinsicBounds(model.getDrawableId(), 0, R.drawable.ic_arrow_drop_down, 0);
-}
+  private void updateDrawable(final @NonNull TabsCountStateModel model,
+                              final TextView tv) {
+    model.setDrawableId(model.getDrawableId() == 0
+                            ? R.drawable.ic_issue_opened_small
+                            : model.getDrawableId());
+    tv.setCompoundDrawablePadding(16);
+    tv.setCompoundDrawablesWithIntrinsicBounds(
+        model.getDrawableId(), 0, R.drawable.ic_arrow_drop_down, 0);
+  }
 }

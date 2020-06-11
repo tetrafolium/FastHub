@@ -1,7 +1,6 @@
 package com.fastaccess.ui.modules.repos.pull_requests.pull_request.merge;
 
 import androidx.annotation.NonNull;
-
 import com.fastaccess.ui.base.mvp.BaseMvp;
 
 /**
@@ -10,13 +9,11 @@ import com.fastaccess.ui.base.mvp.BaseMvp;
 
 public interface MergePullReqeustMvp {
 
-interface MergeCallback {
-void onMerge(@NonNull String msg, @NonNull String mergeMethod);
-}
+  interface MergeCallback {
+    void onMerge(@NonNull String msg, @NonNull String mergeMethod);
+  }
 
-interface View extends BaseMvp.FAView {
+  interface View extends BaseMvp.FAView {}
 
-}
-
-interface Presenter { }
+  interface Presenter {}
 }

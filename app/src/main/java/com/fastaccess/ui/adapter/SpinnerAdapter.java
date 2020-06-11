@@ -1,17 +1,15 @@
 package com.fastaccess.ui.adapter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
-import java.util.List;
-
+import androidx.annotation.NonNull;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import java.util.List;
 
 /**
  * Created by Kosh on 09 Apr 2017, 10:55 AM
@@ -19,56 +17,66 @@ import butterknife.ButterKnife;
 
 public class SpinnerAdapter<O> extends BaseAdapter {
 
-private List<O> data;
-private Context context;
+  private List<O> data;
+  private Context context;
 
-public SpinnerAdapter(final @NonNull Context context, final @NonNull List<O> branches) {
-	this.data = branches;
-	this.context = context;
-}
+  public SpinnerAdapter(final @NonNull Context context,
+                        final @NonNull List<O> branches) {
+    this.data = branches;
+    this.context = context;
+  }
 
-@Override public int getCount() {
-	return data.size();
-}
+  @Override
+  public int getCount() {
+    return data.size();
+  }
 
-@Override public O getItem(final int position) {
-	return data.get(position);
-}
+  @Override
+  public O getItem(final int position) {
+    return data.get(position);
+  }
 
-@Override public long getItemId(final int position) {
-	return position;
-}
+  @Override
+  public long getItemId(final int position) {
+    return position;
+  }
 
-@Override public View getView(final int position, final View convertView, final ViewGroup parent) {
-	return getRowView(position, convertView, parent, false);
-}
+  @Override
+  public View getView(final int position, final View convertView,
+                      final ViewGroup parent) {
+    return getRowView(position, convertView, parent, false);
+  }
 
-@Override public View getDropDownView(final int position, final View convertView, final ViewGroup parent) {
-	return getRowView(position, convertView, parent, true);
-}
+  @Override
+  public View getDropDownView(final int position, final View convertView,
+                              final ViewGroup parent) {
+    return getRowView(position, convertView, parent, true);
+  }
 
-@NonNull private View getRowView(final int position, final View convertView, final ViewGroup parent, final boolean isDropDown) {
-	ViewHolder viewHolder;
-	if (convertView == null) {
-		if (!isDropDown) {
-			convertView = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false);
-		} else {
-			convertView = LayoutInflater.from(context).inflate(android.R.layout.simple_dropdown_item_1line, parent, false);
-		}
-		viewHolder = new ViewHolder(convertView);
-		convertView.setTag(viewHolder);
-	} else {
-		viewHolder = (ViewHolder) convertView.getTag();
-	}
-	viewHolder.title.setText(getItem(position).toString());
-	return convertView;
-}
+  @NonNull
+  private View getRowView(final int position, final View convertView,
+                          final ViewGroup parent, final boolean isDropDown) {
+    ViewHolder viewHolder;
+    if (convertView == null) {
+      if (!isDropDown) {
+        convertView = LayoutInflater.from(context).inflate(
+            android.R.layout.simple_list_item_1, parent, false);
+      } else {
+        convertView = LayoutInflater.from(context).inflate(
+            android.R.layout.simple_dropdown_item_1line, parent, false);
+      }
+      viewHolder = new ViewHolder(convertView);
+      convertView.setTag(viewHolder);
+    } else {
+      viewHolder = (ViewHolder)convertView.getTag();
+    }
+    viewHolder.title.setText(getItem(position).toString());
+    return convertView;
+  }
 
-static class ViewHolder {
-@BindView(android.R.id.text1) TextView title;
+  static class ViewHolder {
+    @BindView(android.R.id.text1) TextView title;
 
-ViewHolder(final View view) {
-	ButterKnife.bind(this, view);
-}
-}
+    ViewHolder(final View view) { ButterKnife.bind(this, view); }
+  }
 }

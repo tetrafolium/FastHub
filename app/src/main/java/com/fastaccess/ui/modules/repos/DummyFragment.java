@@ -1,12 +1,11 @@
 package com.fastaccess.ui.modules.repos;
 
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import com.fastaccess.R;
 
 /**
@@ -15,7 +14,11 @@ import com.fastaccess.R;
 
 public class DummyFragment extends Fragment {
 
-@Nullable @Override public View onCreateView(final LayoutInflater inflater, final @Nullable ViewGroup container, final @Nullable Bundle savedInstanceState) {
-	return inflater.inflate(R.layout.single_container_layout, container, false);
-}
+  @Nullable
+  @Override
+  public View onCreateView(final LayoutInflater inflater,
+                           final @Nullable ViewGroup container,
+                           final @Nullable Bundle savedInstanceState) {
+    return inflater.inflate(R.layout.single_container_layout, container, false);
+  }
 }

@@ -1,11 +1,10 @@
 package com.fastaccess.ui.modules.profile;
 
 import android.os.Bundle;
+import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import com.google.android.material.tabs.TabLayout;
-import android.view.View;
-
+import butterknife.BindView;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.FragmentPagerAdapterModel;
 import com.fastaccess.helper.BundleConstant;
@@ -13,58 +12,68 @@ import com.fastaccess.helper.Bundler;
 import com.fastaccess.ui.adapter.FragmentsPagerAdapter;
 import com.fastaccess.ui.base.BaseFragment;
 import com.fastaccess.ui.widgets.ViewPagerView;
-
-import butterknife.BindView;
+import com.google.android.material.tabs.TabLayout;
 
 /**
  * Created by Kosh on 03 Dec 2016, 8:00 AM
  */
 
-public class ProfilePagerFragment extends BaseFragment<ProfilePagerMvp.View, ProfilePagerPresenter> implements ProfilePagerMvp.View {
+public class ProfilePagerFragment
+    extends BaseFragment<ProfilePagerMvp.View, ProfilePagerPresenter>
+    implements ProfilePagerMvp.View {
 
-public static final String TAG = ProfilePagerFragment.class.getSimpleName();
+  public static final String TAG = ProfilePagerFragment.class.getSimpleName();
 
-@BindView(R.id.tabs) TabLayout tabs;
-@BindView(R.id.pager) ViewPagerView pager;
+  @BindView(R.id.tabs) TabLayout tabs;
+  @BindView(R.id.pager) ViewPagerView pager;
 
-public static ProfilePagerFragment newInstance(final @NonNull String login) {
-	ProfilePagerFragment profileView = new ProfilePagerFragment();
-	profileView.setArguments(Bundler.start().put(BundleConstant.EXTRA, login).end());
-	return profileView;
-}
+  public static ProfilePagerFragment newInstance(final @NonNull String login) {
+    ProfilePagerFragment profileView = new ProfilePagerFragment();
+    profileView.setArguments(
+        Bundler.start().put(BundleConstant.EXTRA, login).end());
+    return profileView;
+  }
 
-@Override protected int fragmentLayout() {
-	return R.layout.tabbed_viewpager;
-}
+  @Override
+  protected int fragmentLayout() {
+    return R.layout.tabbed_viewpager;
+  }
 
-@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-	if (getArguments() == null) {
-		throw new RuntimeException("Bundle is null?");
-	}
-	String login = getArguments().getString(BundleConstant.EXTRA);
-	if (login == null) {
-		throw new RuntimeException("user is null?");
-	}
-	FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(getChildFragmentManager(),
-	                                                          FragmentPagerAdapterModel.buildForProfile(getContext(), login));
-	tabs.setTabGravity(TabLayout.GRAVITY_FILL);
-	tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
-	pager.setAdapter(adapter);
-	tabs.setupWithViewPager(pager);
-}
+  @Override
+  protected void onFragmentCreated(final @NonNull View view,
+                                   final @Nullable Bundle savedInstanceState) {
+    if (getArguments() == null) {
+      throw new RuntimeException("Bundle is null?");
+    }
+    String login = getArguments().getString(BundleConstant.EXTRA);
+    if (login == null) {
+      throw new RuntimeException("user is null?");
+    }
+    FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(
+        getChildFragmentManager(),
+        FragmentPagerAdapterModel.buildForProfile(getContext(), login));
+    tabs.setTabGravity(TabLayout.GRAVITY_FILL);
+    tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+    pager.setAdapter(adapter);
+    tabs.setupWithViewPager(pager);
+  }
 
-@NonNull @Override public ProfilePagerPresenter providePresenter() {
-	return new ProfilePagerPresenter();
-}
+  @NonNull
+  @Override
+  public ProfilePagerPresenter providePresenter() {
+    return new ProfilePagerPresenter();
+  }
 
-@Override public void onNavigateToFollowers() {
-	pager.setCurrentItem(4);
-}
+  @Override
+  public void onNavigateToFollowers() {
+    pager.setCurrentItem(4);
+  }
 
-@Override public void onNavigateToFollowing() {
-	pager.setCurrentItem(5);
-}
+  @Override
+  public void onNavigateToFollowing() {
+    pager.setCurrentItem(5);
+  }
 
-@Override public void onCheckType(final boolean isOrg) {
-}
+  @Override
+  public void onCheckType(final boolean isOrg) {}
 }

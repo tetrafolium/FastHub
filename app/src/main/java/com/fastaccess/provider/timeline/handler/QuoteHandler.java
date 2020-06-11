@@ -1,26 +1,26 @@
 package com.fastaccess.provider.timeline.handler;
 
-import androidx.annotation.ColorInt;
 import android.text.SpannableStringBuilder;
-
+import androidx.annotation.ColorInt;
 import com.zzhoujay.markdown.style.MarkDownQuoteSpan;
-
-import net.nightwhistler.htmlspanner.TagNodeHandler;
-
-import org.htmlcleaner.TagNode;
-
 import lombok.AllArgsConstructor;
+import net.nightwhistler.htmlspanner.TagNodeHandler;
+import org.htmlcleaner.TagNode;
 
 /**
  * Created by Kosh on 23 Apr 2017, 11:30 AM
  */
 
-@AllArgsConstructor public class QuoteHandler extends TagNodeHandler {
+@AllArgsConstructor
+public class QuoteHandler extends TagNodeHandler {
 
-@ColorInt private int color;
+  @ColorInt private int color;
 
-@Override
-public void handleTagNode(final TagNode node, final SpannableStringBuilder builder, final int start, final int end) {
-	builder.setSpan(new MarkDownQuoteSpan(color), start + 1, builder.length(), 33);
-}
+  @Override
+  public void handleTagNode(final TagNode node,
+                            final SpannableStringBuilder builder,
+                            final int start, final int end) {
+    builder.setSpan(new MarkDownQuoteSpan(color), start + 1, builder.length(),
+                    33);
+  }
 }

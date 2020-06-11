@@ -3,14 +3,11 @@ package com.fastaccess.data.dao;
 import android.os.Parcel;
 import android.os.Parcelable;
 import androidx.annotation.Nullable;
-
 import com.annimon.stream.Stream;
 import com.fastaccess.data.dao.model.IssueEvent;
 import com.fastaccess.data.dao.model.PullRequest;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,59 +15,69 @@ import lombok.Setter;
  * Created by Kosh on 10 Dec 2016, 3:34 PM
  */
 
-@Getter @Setter
+@Getter
+@Setter
 public class PullRequestAdapterModel implements Parcelable {
 
-public static final int HEADER = 1;
-public static final int ROW = 2;
-private int type;
+  public static final int HEADER = 1;
+  public static final int ROW = 2;
+  private int type;
 
-private IssueEvent issueEvent;
-private PullRequest pullRequest;
+  private IssueEvent issueEvent;
+  private PullRequest pullRequest;
 
-private PullRequestAdapterModel(final int type, final IssueEvent model) {
-	this.type = type;
-	this.issueEvent = model;
-}
+  private PullRequestAdapterModel(final int type, final IssueEvent model) {
+    this.type = type;
+    this.issueEvent = model;
+  }
 
-public PullRequestAdapterModel(final int type, final PullRequest pullRequest) {
-	this.type = type;
-	this.pullRequest = pullRequest;
-}
+  public PullRequestAdapterModel(final int type,
+                                 final PullRequest pullRequest) {
+    this.type = type;
+    this.pullRequest = pullRequest;
+  }
 
-public static ArrayList<PullRequestAdapterModel> addEvents(final @Nullable List<IssueEvent> modelList) {
-	ArrayList<PullRequestAdapterModel> models = new ArrayList<>();
-	if (modelList == null || modelList.isEmpty()) return models;
-	Stream.of(modelList).forEach(issueEventModel->models.add(new PullRequestAdapterModel(ROW, issueEventModel)));
-	return models;
-}
+  public static ArrayList<PullRequestAdapterModel>
+  addEvents(final @Nullable List<IssueEvent> modelList) {
+    ArrayList<PullRequestAdapterModel> models = new ArrayList<>();
+    if (modelList == null || modelList.isEmpty())
+      return models;
+    Stream.of(modelList).forEach(
+        issueEventModel
+        -> models.add(new PullRequestAdapterModel(ROW, issueEventModel)));
+    return models;
+  }
 
-public PullRequestAdapterModel() {
-}
+  public PullRequestAdapterModel() {}
 
-@Override public int describeContents() {
-	return 0;
-}
+  @Override
+  public int describeContents() {
+    return 0;
+  }
 
-@Override public void writeToParcel(final Parcel dest, final int flags) {
-	dest.writeInt(this.type);
-	dest.writeParcelable(this.issueEvent, flags);
-	dest.writeParcelable(this.pullRequest, flags);
-}
+  @Override
+  public void writeToParcel(final Parcel dest, final int flags) {
+    dest.writeInt(this.type);
+    dest.writeParcelable(this.issueEvent, flags);
+    dest.writeParcelable(this.pullRequest, flags);
+  }
 
-private PullRequestAdapterModel(final Parcel in) {
-	this.type = in.readInt();
-	this.issueEvent = in.readParcelable(IssueEvent.class.getClassLoader());
-	this.pullRequest = in.readParcelable(PullRequest.class.getClassLoader());
-}
+  private PullRequestAdapterModel(final Parcel in) {
+    this.type = in.readInt();
+    this.issueEvent = in.readParcelable(IssueEvent.class.getClassLoader());
+    this.pullRequest = in.readParcelable(PullRequest.class.getClassLoader());
+  }
 
-public static final Creator<PullRequestAdapterModel> CREATOR = new Creator<PullRequestAdapterModel>() {
-	@Override public PullRequestAdapterModel createFromParcel(final Parcel source) {
-		return new PullRequestAdapterModel(source);
-	}
+  public static final Creator<PullRequestAdapterModel> CREATOR =
+      new Creator<PullRequestAdapterModel>() {
+        @Override
+        public PullRequestAdapterModel createFromParcel(final Parcel source) {
+          return new PullRequestAdapterModel(source);
+        }
 
-	@Override public PullRequestAdapterModel[] newArray(final int size) {
-		return new PullRequestAdapterModel[size];
-	}
-};
+        @Override
+        public PullRequestAdapterModel[] newArray(final int size) {
+          return new PullRequestAdapterModel[size];
+        }
+      };
 }

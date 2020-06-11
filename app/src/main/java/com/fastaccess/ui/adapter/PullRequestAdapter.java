@@ -1,47 +1,52 @@
 package com.fastaccess.ui.adapter;
 
-import androidx.annotation.NonNull;
 import android.view.ViewGroup;
-
+import androidx.annotation.NonNull;
 import com.fastaccess.data.dao.model.PullRequest;
 import com.fastaccess.ui.adapter.viewholder.PullRequestViewHolder;
 import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.List;
 
 /**
  * Created by Kosh on 11 Nov 2016, 2:07 PM
  */
 
-public class PullRequestAdapter extends BaseRecyclerAdapter<PullRequest, PullRequestViewHolder, BaseViewHolder
-	                                                    .OnItemClickListener<PullRequest> > {
+public class PullRequestAdapter extends BaseRecyclerAdapter<
+    PullRequest, PullRequestViewHolder,
+    BaseViewHolder.OnItemClickListener<PullRequest>> {
 
-private boolean showRepoName;
-private boolean withAvatar;
+  private boolean showRepoName;
+  private boolean withAvatar;
 
-public PullRequestAdapter(final @NonNull List<PullRequest> data) {
-	this(data, false);
-}
+  public PullRequestAdapter(final @NonNull List<PullRequest> data) {
+    this(data, false);
+  }
 
-public PullRequestAdapter(final @NonNull List<PullRequest> data, final boolean withAvatar) {
-	super(data);
-	this.withAvatar = withAvatar;
-}
+  public PullRequestAdapter(final @NonNull List<PullRequest> data,
+                            final boolean withAvatar) {
+    super(data);
+    this.withAvatar = withAvatar;
+  }
 
-public PullRequestAdapter(final @NonNull List<PullRequest> data, final boolean withAvatar, final boolean showRepoName) {
-	super(data);
-	this.withAvatar = withAvatar;
-	this.showRepoName = showRepoName;
-}
+  public PullRequestAdapter(final @NonNull List<PullRequest> data,
+                            final boolean withAvatar,
+                            final boolean showRepoName) {
+    super(data);
+    this.withAvatar = withAvatar;
+    this.showRepoName = showRepoName;
+  }
 
-@Override protected PullRequestViewHolder viewHolder(final ViewGroup parent, final int viewType) {
-	return PullRequestViewHolder.newInstance(parent, this, withAvatar, showRepoName);
-}
+  @Override
+  protected PullRequestViewHolder viewHolder(final ViewGroup parent,
+                                             final int viewType) {
+    return PullRequestViewHolder.newInstance(parent, this, withAvatar,
+                                             showRepoName);
+  }
 
-@Override protected void onBindView(final PullRequestViewHolder holder, final int position) {
-	holder.bind(getItem(position));
-}
-
-
+  @Override
+  protected void onBindView(final PullRequestViewHolder holder,
+                            final int position) {
+    holder.bind(getItem(position));
+  }
 }

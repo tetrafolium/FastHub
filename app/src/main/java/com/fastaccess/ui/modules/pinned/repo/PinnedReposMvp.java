@@ -2,11 +2,9 @@ package com.fastaccess.ui.modules.pinned.repo;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.fastaccess.data.dao.model.PinnedRepos;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +14,15 @@ import java.util.List;
 
 public interface PinnedReposMvp {
 
-interface View extends BaseMvp.FAView {
-void onNotifyAdapter(@Nullable List<PinnedRepos> items);
+  interface View extends BaseMvp.FAView {
+    void onNotifyAdapter(@Nullable List<PinnedRepos> items);
 
-void onDeletePinnedRepo(long id, int position);
-}
+    void onDeletePinnedRepo(long id, int position);
+  }
 
-interface Presenter extends BaseViewHolder.OnItemClickListener<PinnedRepos> {
-@NonNull ArrayList<PinnedRepos> getPinnedRepos();
+  interface Presenter extends BaseViewHolder.OnItemClickListener<PinnedRepos> {
+    @NonNull ArrayList<PinnedRepos> getPinnedRepos();
 
-void onReload();
-}
+    void onReload();
+  }
 }

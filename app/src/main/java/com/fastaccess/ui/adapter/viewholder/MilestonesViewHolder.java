@@ -1,10 +1,10 @@
 package com.fastaccess.ui.adapter.viewholder;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import butterknife.BindView;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.MilestoneModel;
 import com.fastaccess.helper.ParseDateFormat;
@@ -12,33 +12,36 @@ import com.fastaccess.ui.widgets.FontTextView;
 import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
 
-import butterknife.BindView;
-
 /**
  * Created by Kosh on 11 Nov 2016, 2:08 PM
  */
 
 public class MilestonesViewHolder extends BaseViewHolder<MilestoneModel> {
 
-@BindView(R.id.title) FontTextView title;
-@BindView(R.id.date) FontTextView date;
-@BindView(R.id.notificationTitle) FontTextView notificationTitle;
+  @BindView(R.id.title) FontTextView title;
+  @BindView(R.id.date) FontTextView date;
+  @BindView(R.id.notificationTitle) FontTextView notificationTitle;
 
-private MilestonesViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
-	super(itemView, adapter);
-}
+  private MilestonesViewHolder(final @NonNull View itemView,
+                               final @Nullable BaseRecyclerAdapter adapter) {
+    super(itemView, adapter);
+  }
 
-public static MilestonesViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter) {
-	return new MilestonesViewHolder(getView(viewGroup, R.layout.milestone_row_item), adapter);
-}
+  public static MilestonesViewHolder
+  newInstance(final @NonNull ViewGroup viewGroup,
+              final @Nullable BaseRecyclerAdapter adapter) {
+    return new MilestonesViewHolder(
+        getView(viewGroup, R.layout.milestone_row_item), adapter);
+  }
 
-@Override public void bind(final @NonNull MilestoneModel milestoneModel) {
-	title.setText(milestoneModel.getTitle());
-	notificationTitle.setText(milestoneModel.getDescription());
-	if (milestoneModel.getDueOn() != null) {
-		date.setText(ParseDateFormat.getTimeAgo(milestoneModel.getDueOn()));
-	} else if (milestoneModel.getCreatedAt() != null) {
-		date.setText(ParseDateFormat.getTimeAgo(milestoneModel.getCreatedAt()));
-	}
-}
+  @Override
+  public void bind(final @NonNull MilestoneModel milestoneModel) {
+    title.setText(milestoneModel.getTitle());
+    notificationTitle.setText(milestoneModel.getDescription());
+    if (milestoneModel.getDueOn() != null) {
+      date.setText(ParseDateFormat.getTimeAgo(milestoneModel.getDueOn()));
+    } else if (milestoneModel.getCreatedAt() != null) {
+      date.setText(ParseDateFormat.getTimeAgo(milestoneModel.getCreatedAt()));
+    }
+  }
 }
