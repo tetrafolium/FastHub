@@ -128,14 +128,12 @@ public class RepoPullRequestFragment
   public void onActivityResult(final int requestCode, final int resultCode,
                                final Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK) {
-      if (requestCode == RepoPullRequestMvp.PULL_REQUEST_REQUEST_CODE) {
-        boolean isClose = data.getExtras().getBoolean(BundleConstant.EXTRA);
-        boolean isOpened =
-            data.getExtras().getBoolean(BundleConstant.EXTRA_TWO);
-        if (isClose || isOpened) {
-          onRefresh();
-        }
+    if ((resultCode == Activity.RESULT_OK) && (requestCode == RepoPullRequestMvp.PULL_REQUEST_REQUEST_CODE)) {
+      boolean isClose = data.getExtras().getBoolean(BundleConstant.EXTRA);
+      boolean isOpened =
+          data.getExtras().getBoolean(BundleConstant.EXTRA_TWO);
+      if (isClose || isOpened) {
+        onRefresh();
       }
     }
   }

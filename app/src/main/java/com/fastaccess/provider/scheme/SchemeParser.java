@@ -342,10 +342,8 @@ public class SchemeParser {
       return null;
     String owner = segments.get(0);
     String repoName = segments.get(1);
-    if (!InputHelper.isEmpty(repoName)) {
-      if (repoName.endsWith(".git"))
-        repoName = repoName.replace(".git", "");
-    }
+    if ((!InputHelper.isEmpty(repoName)) && (repoName.endsWith(".git")))
+      repoName = repoName.replace(".git", "");
     if (segments.size() == 3) {
       String lastPath = uri.getLastPathSegment();
       if ("milestones".equalsIgnoreCase(lastPath)) {

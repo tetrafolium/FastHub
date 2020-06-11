@@ -203,17 +203,15 @@ public class PullRequestPagerActivity
   protected void onActivityResult(final int requestCode, final int resultCode,
                                   final Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == RESULT_OK) {
-      if (requestCode == BundleConstant.REQUEST_CODE) {
-        if (data == null)
-          return;
-        Bundle bundle = data.getExtras();
-        PullRequest pullRequest = bundle.getParcelable(BundleConstant.ITEM);
-        if (pullRequest != null) {
-          getPresenter().onUpdatePullRequest(pullRequest);
-        } else {
-          getPresenter().onRefresh();
-        }
+    if ((resultCode == RESULT_OK) && (requestCode == BundleConstant.REQUEST_CODE)) {
+      if (data == null)
+        return;
+      Bundle bundle = data.getExtras();
+      PullRequest pullRequest = bundle.getParcelable(BundleConstant.ITEM);
+      if (pullRequest != null) {
+        getPresenter().onUpdatePullRequest(pullRequest);
+      } else {
+        getPresenter().onRefresh();
       }
     }
   }
@@ -441,11 +439,9 @@ public class PullRequestPagerActivity
                                            final @Nullable Bundle bundle) {
     super.onMessageDialogActionClicked(isOk, bundle);
     if (isOk) {
-      if (bundle != null) {
-        if (bundle.getBoolean(BundleConstant.EXTRA_TYPE)) {
-          hideAndClearReviews();
-          return;
-        }
+      if ((bundle != null) && (bundle.getBoolean(BundleConstant.EXTRA_TYPE))) {
+        hideAndClearReviews();
+        return;
       }
       getPresenter().onHandleConfirmDialog(bundle);
     }

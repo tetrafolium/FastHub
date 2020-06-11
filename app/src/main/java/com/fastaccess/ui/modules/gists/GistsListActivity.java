@@ -101,11 +101,9 @@ public class GistsListActivity extends BaseActivity {
   protected void onActivityResult(final int requestCode, final int resultCode,
                                   final Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == RESULT_OK && requestCode == BundleConstant.REQUEST_CODE) {
-      if (pager != null && pager.getAdapter() != null) {
-        ((Fragment)pager.getAdapter().instantiateItem(pager, 0))
-            .onActivityResult(resultCode, resultCode, data);
-      }
+    if ((resultCode == RESULT_OK && requestCode == BundleConstant.REQUEST_CODE) && (pager != null && pager.getAdapter() != null)) {
+      ((Fragment)pager.getAdapter().instantiateItem(pager, 0))
+          .onActivityResult(resultCode, resultCode, data);
     }
   }
 

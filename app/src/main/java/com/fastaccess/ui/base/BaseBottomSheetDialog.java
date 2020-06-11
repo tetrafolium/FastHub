@@ -121,11 +121,9 @@ public abstract class BaseBottomSheetDialog extends BottomSheetDialogFragment {
   public Dialog onCreateDialog(final Bundle savedInstanceState) {
     final Dialog dialog = super.onCreateDialog(savedInstanceState);
     dialog.setOnShowListener(dialogInterface -> {
-      if (ViewHelper.isTablet(requireContext())) {
-        if (dialog.getWindow() != null) {
-          dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                       ViewGroup.LayoutParams.MATCH_PARENT);
-        }
+      if ((ViewHelper.isTablet(requireContext())) && (dialog.getWindow() != null)) {
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                     ViewGroup.LayoutParams.MATCH_PARENT);
       }
       onDialogIsShowing();
     });

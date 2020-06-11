@@ -197,15 +197,13 @@ public abstract class AbstractGist implements Parcelable {
       }
       spannableBuilder.append(description);
     }
-    if (InputHelper.isEmpty(spannableBuilder.toString())) {
-      if (isFromProfile) {
-        List<FilesListModel> files = getFilesAsList();
-        if (!files.isEmpty()) {
-          FilesListModel filesListModel = files.get(0);
-          if (!InputHelper.isEmpty(filesListModel.getFilename()) &&
-              filesListModel.getFilename().trim().length() > 2) {
-            spannableBuilder.append(" ").append(filesListModel.getFilename());
-          }
+    if ((InputHelper.isEmpty(spannableBuilder.toString())) && (isFromProfile)) {
+      List<FilesListModel> files = getFilesAsList();
+      if (!files.isEmpty()) {
+        FilesListModel filesListModel = files.get(0);
+        if (!InputHelper.isEmpty(filesListModel.getFilename()) &&
+            filesListModel.getFilename().trim().length() > 2) {
+          spannableBuilder.append(" ").append(filesListModel.getFilename());
         }
       }
     }

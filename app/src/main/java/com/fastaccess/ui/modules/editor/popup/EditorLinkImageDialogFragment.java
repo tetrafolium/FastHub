@@ -102,18 +102,16 @@ public class EditorLinkImageDialogFragment
   public void onActivityResult(final int requestCode, final int resultCode,
                                final Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK &&
-        requestCode == BundleConstant.REQUEST_CODE) {
-      if (data != null && data.getData() != null) {
-        String path = FileHelper.getPath(getContext(), data.getData());
-        if (!InputHelper.isEmpty(path)) {
-          getPresenter().onSubmit(InputHelper.toString(title), new File(path));
-        } else {
-          Toasty
-              .error(App.getInstance(),
-                     getString(R.string.failed_selecting_image))
-              .show();
-        }
+    if ((resultCode == Activity.RESULT_OK &&
+        requestCode == BundleConstant.REQUEST_CODE) && (data != null && data.getData() != null)) {
+      String path = FileHelper.getPath(getContext(), data.getData());
+      if (!InputHelper.isEmpty(path)) {
+        getPresenter().onSubmit(InputHelper.toString(title), new File(path));
+      } else {
+        Toasty
+            .error(App.getInstance(),
+                   getString(R.string.failed_selecting_image))
+            .show();
       }
     }
   }

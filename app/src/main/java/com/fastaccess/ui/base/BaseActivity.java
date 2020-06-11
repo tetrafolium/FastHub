@@ -121,10 +121,8 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P
     }
     if (!validateAuth())
       return;
-    if (savedInstanceState == null) {
-      if (showInAppNotifications()) {
-        FastHubNotificationDialog.Companion.show(getSupportFragmentManager());
-      }
+    if ((savedInstanceState == null) && (showInAppNotifications())) {
+      FastHubNotificationDialog.Companion.show(getSupportFragmentManager());
     }
     showChangelog();
     initPresenterBundle(savedInstanceState);
@@ -141,11 +139,9 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P
 
   @Override
   public boolean onOptionsItemSelected(final MenuItem item) {
-    if (canBack()) {
-      if (item.getItemId() == android.R.id.home) {
-        onBackPressed();
-        return true;
-      }
+    if ((canBack()) && (item.getItemId() == android.R.id.home)) {
+      onBackPressed();
+      return true;
     }
     return super.onOptionsItemSelected(item);
   }
@@ -286,10 +282,8 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P
   @Override
   protected void onActivityResult(final int requestCode, final int resultCode,
                                   final Intent data) {
-    if (resultCode == RESULT_OK) {
-      if (requestCode == BundleConstant.REFRESH_CODE) {
-        onThemeChanged();
-      }
+    if ((resultCode == RESULT_OK) && (requestCode == BundleConstant.REFRESH_CODE)) {
+      onThemeChanged();
     }
     super.onActivityResult(requestCode, resultCode, data);
   }
@@ -382,20 +376,18 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P
     changeStatusBarColor(isTransparent());
     if (toolbar != null) {
       setSupportActionBar(toolbar);
-      if (canBack()) {
-        if (getSupportActionBar() != null) {
-          getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
-          getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-          if (canBack()) {
-            View navIcon = getToolbarNavigationIcon(toolbar);
-            if (navIcon != null) {
-              navIcon.setOnLongClickListener(v -> {
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
-                finish();
-                return true;
-              });
-            }
+      if ((canBack()) && (getSupportActionBar() != null)) {
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_back);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (canBack()) {
+          View navIcon = getToolbarNavigationIcon(toolbar);
+          if (navIcon != null) {
+            navIcon.setOnLongClickListener(v -> {
+              Intent intent = new Intent(this, MainActivity.class);
+              startActivity(intent);
+              finish();
+              return true;
+            });
           }
         }
       }
@@ -431,39 +423,35 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P
   }
 
   public void closeDrawer() {
-    if (drawer != null) {
-      if (drawer.isDrawerOpen(GravityCompat.START)) {
-        drawer.closeDrawer(GravityCompat.START);
-      }
+    if ((drawer != null) && (drawer.isDrawerOpen(GravityCompat.START))) {
+      drawer.closeDrawer(GravityCompat.START);
     }
   }
 
   private void setupDrawer() {
-    if (drawer != null && !(this instanceof MainActivity)) {
-      if (!PrefGetter.isNavDrawerHintShowed()) {
-        drawer.getViewTreeObserver().addOnPreDrawListener(
-            new ViewTreeObserver.OnPreDrawListener() {
-              @Override
-              public boolean onPreDraw() {
-                drawer.openDrawer(GravityCompat.START);
-                drawer.addDrawerListener(
-                    new DrawerLayout.SimpleDrawerListener() {
-                      @Override
-                      public void onDrawerOpened(final View drawerView) {
-                        super.onDrawerOpened(drawerView);
-                        drawerView.postDelayed(() -> {
-                          if (drawer != null) {
-                            closeDrawer();
-                            drawer.removeDrawerListener(this);
-                          }
-                        }, 1000);
-                      }
-                    });
-                drawer.getViewTreeObserver().removeOnPreDrawListener(this);
-                return true;
-              }
-            });
-      }
+    if ((drawer != null && !(this instanceof MainActivity)) && (!PrefGetter.isNavDrawerHintShowed())) {
+      drawer.getViewTreeObserver().addOnPreDrawListener(
+          new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+              drawer.openDrawer(GravityCompat.START);
+              drawer.addDrawerListener(
+                  new DrawerLayout.SimpleDrawerListener() {
+                    @Override
+                    public void onDrawerOpened(final View drawerView) {
+                      super.onDrawerOpened(drawerView);
+                      drawerView.postDelayed(() -> {
+                        if (drawer != null) {
+                          closeDrawer();
+                          drawer.removeDrawerListener(this);
+                        }
+                      }, 1000);
+                    }
+                  });
+              drawer.getViewTreeObserver().removeOnPreDrawListener(this);
+              return true;
+            }
+          });
     }
   }
 
@@ -549,25 +537,21 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P
   }
 
   private boolean validateAuth() {
-    if (!isSecured()) {
-      if (!isLoggedIn()) {
-        onRequireLogin();
-        return false;
-      }
+    if ((!isSecured()) && (!isLoggedIn())) {
+      onRequireLogin();
+      return false;
     }
     return true;
   }
 
   private void initEnterpriseExtra(final @Nullable Bundle savedInstanceState) {
-    if (savedInstanceState == null) {
-      if (getIntent() != null) {
-        if (getIntent().getExtras() != null) {
-          getPresenter().setEnterprise(
-              getIntent().getExtras().getBoolean(BundleConstant.IS_ENTERPRISE));
-        } else if (getIntent().hasExtra(BundleConstant.IS_ENTERPRISE)) {
-          getPresenter().setEnterprise(
-              getIntent().getBooleanExtra(BundleConstant.IS_ENTERPRISE, false));
-        }
+    if ((savedInstanceState == null) && (getIntent() != null)) {
+      if (getIntent().getExtras() != null) {
+        getPresenter().setEnterprise(
+            getIntent().getExtras().getBoolean(BundleConstant.IS_ENTERPRISE));
+      } else if (getIntent().hasExtra(BundleConstant.IS_ENTERPRISE)) {
+        getPresenter().setEnterprise(
+            getIntent().getBooleanExtra(BundleConstant.IS_ENTERPRISE, false));
       }
     }
   }

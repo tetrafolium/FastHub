@@ -173,14 +173,12 @@ public class PullRequestTimelinePresenter
         }
       } else if (item.getType() == TimelineModel.GROUP) {
         GroupedReviewModel reviewModel = item.getGroupedReviewModel();
-        if (v.getId() == R.id.addCommentPreview) {
-          if (getView() != null) {
-            EditReviewCommentModel model = new EditReviewCommentModel();
-            model.setCommentPosition(-1);
-            model.setGroupPosition(position);
-            model.setInReplyTo(reviewModel.getId());
-            getView().onReplyOrCreateReview(null, null, position, -1, model);
-          }
+        if ((v.getId() == R.id.addCommentPreview) && (getView() != null)) {
+          EditReviewCommentModel model = new EditReviewCommentModel();
+          model.setCommentPosition(-1);
+          model.setGroupPosition(position);
+          model.setInReplyTo(reviewModel.getId());
+          getView().onReplyOrCreateReview(null, null, position, -1, model);
         }
       }
     }
@@ -309,31 +307,29 @@ public class PullRequestTimelinePresenter
     if (getView() == null)
       return;
     PullRequest pullRequest = getView().getPullRequest();
-    if (pullRequest != null) {
-      if (bundle == null) {
-        CommentRequestModel commentRequestModel = new CommentRequestModel();
-        commentRequestModel.setBody(text);
-        manageDisposable(
-            RxHelper
-                .getObservable(RestProvider.getIssueService(isEnterprise())
-                                   .createIssueComment(pullRequest.getLogin(),
-                                                       pullRequest.getRepoId(),
-                                                       pullRequest.getNumber(),
-                                                       commentRequestModel))
-                .doOnSubscribe(
-                    disposable
-                    -> sendToView(view -> view.showBlockingProgress(0)))
-                .subscribe(
-                    comment
-                    -> sendToView(view
-                                  -> view.addComment(
-                                      TimelineModel.constructComment(comment))),
-                    throwable -> {
-                      onError(throwable);
-                      sendToView(
-                          PullRequestTimelineMvp.View::onHideBlockingProgress);
-                    }));
-      }
+    if ((pullRequest != null) && (bundle == null)) {
+      CommentRequestModel commentRequestModel = new CommentRequestModel();
+      commentRequestModel.setBody(text);
+      manageDisposable(
+          RxHelper
+              .getObservable(RestProvider.getIssueService(isEnterprise())
+                                 .createIssueComment(pullRequest.getLogin(),
+                                                     pullRequest.getRepoId(),
+                                                     pullRequest.getNumber(),
+                                                     commentRequestModel))
+              .doOnSubscribe(
+                  disposable
+                  -> sendToView(view -> view.showBlockingProgress(0)))
+              .subscribe(
+                  comment
+                  -> sendToView(view
+                                -> view.addComment(
+                                    TimelineModel.constructComment(comment))),
+                  throwable -> {
+                    onError(throwable);
+                    sendToView(
+                        PullRequestTimelineMvp.View::onHideBlockingProgress);
+                  }));
     }
   }
 

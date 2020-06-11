@@ -267,30 +267,28 @@ public class GistCommentsFragment
   public void onActivityResult(final int requestCode, final int resultCode,
                                final Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK) {
-      if (requestCode == BundleConstant.REQUEST_CODE) {
-        if (data == null) {
-          onRefresh();
+    if ((resultCode == Activity.RESULT_OK) && (requestCode == BundleConstant.REQUEST_CODE)) {
+      if (data == null) {
+        onRefresh();
+        return;
+      }
+      Bundle bundle = data.getExtras();
+      if (bundle != null) {
+        boolean isNew = bundle.getBoolean(BundleConstant.EXTRA);
+        Comment commentsModel = bundle.getParcelable(BundleConstant.ITEM);
+        if (commentsModel == null)
           return;
-        }
-        Bundle bundle = data.getExtras();
-        if (bundle != null) {
-          boolean isNew = bundle.getBoolean(BundleConstant.EXTRA);
-          Comment commentsModel = bundle.getParcelable(BundleConstant.ITEM);
-          if (commentsModel == null)
-            return;
-          if (isNew) {
+        if (isNew) {
+          adapter.addItem(commentsModel);
+          recycler.smoothScrollToPosition(adapter.getItemCount());
+        } else {
+          int position = adapter.getItem(commentsModel);
+          if (position != -1) {
+            adapter.swapItem(commentsModel, position);
+            recycler.smoothScrollToPosition(position);
+          } else {
             adapter.addItem(commentsModel);
             recycler.smoothScrollToPosition(adapter.getItemCount());
-          } else {
-            int position = adapter.getItem(commentsModel);
-            if (position != -1) {
-              adapter.swapItem(commentsModel, position);
-              recycler.smoothScrollToPosition(position);
-            } else {
-              adapter.addItem(commentsModel);
-              recycler.smoothScrollToPosition(adapter.getItemCount());
-            }
           }
         }
       }

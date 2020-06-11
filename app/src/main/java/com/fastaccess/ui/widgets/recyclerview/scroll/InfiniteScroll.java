@@ -57,10 +57,8 @@ public abstract class InfiniteScroll extends RecyclerView.OnScrollListener {
     if (layoutManager == null) {
       initLayoutManager(recyclerView.getLayoutManager());
     }
-    if (adapter == null) {
-      if (recyclerView.getAdapter() instanceof BaseRecyclerAdapter) {
-        adapter = (BaseRecyclerAdapter)recyclerView.getAdapter();
-      }
+    if ((adapter == null) && (recyclerView.getAdapter() instanceof BaseRecyclerAdapter)) {
+      adapter = (BaseRecyclerAdapter)recyclerView.getAdapter();
     }
     if (adapter != null && adapter.isProgressAdded())
       return;

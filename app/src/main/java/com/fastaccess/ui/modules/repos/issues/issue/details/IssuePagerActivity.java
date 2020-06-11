@@ -174,14 +174,12 @@ public class IssuePagerActivity
   protected void onActivityResult(final int requestCode, final int resultCode,
                                   final Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == RESULT_OK && data != null) {
-      if (requestCode == BundleConstant.REQUEST_CODE) {
-        Bundle bundle = data.getExtras();
-        if (bundle != null) {
-          Issue issueModel = bundle.getParcelable(BundleConstant.ITEM);
-          if (issueModel != null) {
-            getPresenter().onUpdateIssue(issueModel);
-          }
+    if ((resultCode == RESULT_OK && data != null) && (requestCode == BundleConstant.REQUEST_CODE)) {
+      Bundle bundle = data.getExtras();
+      if (bundle != null) {
+        Issue issueModel = bundle.getParcelable(BundleConstant.ITEM);
+        if (issueModel != null) {
+          getPresenter().onUpdateIssue(issueModel);
         }
       }
     }

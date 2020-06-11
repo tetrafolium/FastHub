@@ -225,11 +225,9 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
     } else {
       date.setText(ParseDateFormat.getTimeAgo(commentsModel.getCreatedAt()));
     }
-    if (showEmojies) {
-      if (commentsModel.getReactions() != null) {
-        ReactionsModel reaction = commentsModel.getReactions();
-        appendEmojies(reaction);
-      }
+    if ((showEmojies) && (commentsModel.getReactions() != null)) {
+      ReactionsModel reaction = commentsModel.getReactions();
+      appendEmojies(reaction);
     }
     emojiesList.setVisibility(showEmojies ? View.VISIBLE : View.GONE);
     if (onToggleView != null)

@@ -185,20 +185,18 @@ public class ViewerFragment
 
   @Override
   public void onScrollChanged(final boolean reachedTop, final int scroll) {
-    if (AppHelper.isDeviceAnimationEnabled(getContext())) {
-      if (getPresenter().isRepo() && appBarLayout != null &&
-          bottomNavigation != null && webView != null) {
-        boolean shouldExpand = webView.getScrollY() == 0;
-        if (!isAppBarMoving && shouldExpand != isAppBarExpanded) {
-          isAppBarMoving = true;
-          isAppBarExpanded = shouldExpand;
-          bottomNavigation.setExpanded(shouldExpand, true);
-          appBarLayout.setExpanded(shouldExpand, true);
-          webView.setNestedScrollingEnabled(shouldExpand);
-          if (shouldExpand)
-            webView.onTouchEvent(
-                MotionEvent.obtain(0, 0, MotionEvent.ACTION_UP, 0, 0, 0));
-        }
+    if ((AppHelper.isDeviceAnimationEnabled(getContext())) && (getPresenter().isRepo() && appBarLayout != null &&
+          bottomNavigation != null && webView != null)) {
+      boolean shouldExpand = webView.getScrollY() == 0;
+      if (!isAppBarMoving && shouldExpand != isAppBarExpanded) {
+        isAppBarMoving = true;
+        isAppBarExpanded = shouldExpand;
+        bottomNavigation.setExpanded(shouldExpand, true);
+        appBarLayout.setExpanded(shouldExpand, true);
+        webView.setNestedScrollingEnabled(shouldExpand);
+        if (shouldExpand)
+          webView.onTouchEvent(
+              MotionEvent.obtain(0, 0, MotionEvent.ACTION_UP, 0, 0, 0));
       }
     }
   }
@@ -243,21 +241,17 @@ public class ViewerFragment
   @Override
   public void onStart() {
     super.onStart();
-    if (AppHelper.isDeviceAnimationEnabled(getContext())) {
-      if (appBarLayout != null && !isAppBarListener) {
-        appBarLayout.addOnOffsetChangedListener(this);
-        isAppBarListener = true;
-      }
+    if ((AppHelper.isDeviceAnimationEnabled(getContext())) && (appBarLayout != null && !isAppBarListener)) {
+      appBarLayout.addOnOffsetChangedListener(this);
+      isAppBarListener = true;
     }
   }
 
   @Override
   public void onStop() {
-    if (AppHelper.isDeviceAnimationEnabled(getContext())) {
-      if (appBarLayout != null && isAppBarListener) {
-        appBarLayout.removeOnOffsetChangedListener(this);
-        isAppBarListener = false;
-      }
+    if ((AppHelper.isDeviceAnimationEnabled(getContext())) && (appBarLayout != null && isAppBarListener)) {
+      appBarLayout.removeOnOffsetChangedListener(this);
+      isAppBarListener = false;
     }
     super.onStop();
   }

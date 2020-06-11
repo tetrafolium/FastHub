@@ -94,12 +94,10 @@ public class SearchUsersFragment
     adapter.setListener(getPresenter());
     recycler.setAdapter(adapter);
     recycler.addKeyLineDivider();
-    if (savedInstanceState != null) {
-      if (!InputHelper.isEmpty(searchQuery) &&
+    if ((savedInstanceState != null) && (!InputHelper.isEmpty(searchQuery) &&
           getPresenter().getUsers().isEmpty() &&
-          !getPresenter().isApiCalled()) {
-        onRefresh();
-      }
+          !getPresenter().isApiCalled())) {
+      onRefresh();
     }
     if (InputHelper.isEmpty(searchQuery)) {
       stateLayout.showEmptyState();

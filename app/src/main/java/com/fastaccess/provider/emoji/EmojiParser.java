@@ -96,16 +96,14 @@ public class EmojiParser {
     String result = input;
     for (AliasCandidate candidate : candidates) {
       Emoji emoji = EmojiManager.getForAlias(candidate.alias);
-      if (emoji != null) {
-        if (emoji.supportsFitzpatrick() ||
-            (!emoji.supportsFitzpatrick() && candidate.fitzpatrick == null)) {
-          String replacement = emoji.getUnicode();
-          if (candidate.fitzpatrick != null) {
-            replacement += candidate.fitzpatrick.unicode;
-          }
-          result =
-              result.replace(":" + candidate.fullString + ":", replacement);
+      if ((emoji != null) && (emoji.supportsFitzpatrick() ||
+            (!emoji.supportsFitzpatrick() && candidate.fitzpatrick == null))) {
+        String replacement = emoji.getUnicode();
+        if (candidate.fitzpatrick != null) {
+          replacement += candidate.fitzpatrick.unicode;
         }
+        result =
+            result.replace(":" + candidate.fullString + ":", replacement);
       }
     }
 

@@ -77,10 +77,8 @@ class CommitFilesPresenter extends BasePresenter<CommitFilesMvp.View>
 
   @Override
   public void onFragmentCreated(final @Nullable Bundle bundle) {
-    if (sha == null) {
-      if (bundle != null) {
-        sha = bundle.getString(BundleConstant.ID);
-      }
+    if ((sha == null) && (bundle != null)) {
+      sha = bundle.getString(BundleConstant.ID);
     }
     if (!InputHelper.isEmpty(sha)) {
       CommitFileListModel commitFiles =

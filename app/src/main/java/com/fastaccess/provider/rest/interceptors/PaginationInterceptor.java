@@ -17,12 +17,10 @@ public class PaginationInterceptor implements Interceptor {
     Request request = chain.request();
     Response response = chain.proceed(request);
     Headers headers = chain.request().headers();
-    if (headers != null) {
-      if ((headers.values("Accept").contains("application/vnd.github.html") ||
+    if ((headers != null) && ((headers.values("Accept").contains("application/vnd.github.html") ||
            headers.values("Accept").contains(
-               "application/vnd.github.VERSION.raw"))) {
-        return response; // return them as they are.
-      }
+               "application/vnd.github.VERSION.raw")))) {
+      return response; // return them as they are.
     }
     if (response.isSuccessful()) {
       if (response.peekBody(1).string().equals("[")) {

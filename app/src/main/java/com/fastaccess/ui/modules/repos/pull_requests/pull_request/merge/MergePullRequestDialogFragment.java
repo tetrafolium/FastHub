@@ -67,10 +67,8 @@ public class MergePullRequestDialogFragment
                                    final @Nullable Bundle savedInstanceState) {
     if (savedInstanceState == null) {
       String titleMsg = getArguments().getString(BundleConstant.EXTRA);
-      if (!InputHelper.isEmpty(titleMsg)) {
-        if (title.getEditText() != null)
-          title.getEditText().setText(titleMsg);
-      }
+      if ((!InputHelper.isEmpty(titleMsg)) && (title.getEditText() != null))
+        title.getEditText().setText(titleMsg);
     }
   }
 
@@ -96,11 +94,9 @@ public class MergePullRequestDialogFragment
 
   @OnItemSelected(R.id.mergeMethod)
   void onItemSelect(final int position) {
-    if (position > 0) {
-      if (!PrefGetter.isProEnabled()) {
-        mergeMethod.setSelection(0);
-        PremiumActivity.Companion.startActivity(getContext());
-      }
+    if ((position > 0) && (!PrefGetter.isProEnabled())) {
+      mergeMethod.setSelection(0);
+      PremiumActivity.Companion.startActivity(getContext());
     }
   }
 }

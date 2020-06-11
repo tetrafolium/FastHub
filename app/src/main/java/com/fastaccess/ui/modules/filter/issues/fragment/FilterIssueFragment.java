@@ -168,10 +168,8 @@ public class FilterIssueFragment
     recycler.setAdapter(adapter);
     recycler.addOnScrollListener(getLoadMore());
     recycler.addKeyLineDivider();
-    if (savedInstanceState != null) {
-      if (!InputHelper.isEmpty(query) && getPresenter().getIssues().isEmpty()) {
-        onRefresh();
-      }
+    if ((savedInstanceState != null) && (!InputHelper.isEmpty(query) && getPresenter().getIssues().isEmpty())) {
+      onRefresh();
     }
     fastScroller.attachRecyclerView(recycler);
   }

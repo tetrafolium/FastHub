@@ -690,14 +690,12 @@ public class RepoPagerActivity
     if (isOk && bundle != null) {
       boolean isDelete = bundle.getBoolean(BundleConstant.EXTRA_TWO);
       boolean fork = bundle.getBoolean(BundleConstant.EXTRA);
-      if (fork) {
-        if (getPresenter().login() != null && getPresenter().repoId() != null &&
-            !getPresenter().isForked()) {
-          GithubActionService.startForRepo(
-              this, getPresenter().login(), getPresenter().repoId(),
-              GithubActionService.FORK_REPO, isEnterprise());
-          getPresenter().onFork();
-        }
+      if ((fork) && (getPresenter().login() != null && getPresenter().repoId() != null &&
+            !getPresenter().isForked())) {
+        GithubActionService.startForRepo(
+            this, getPresenter().login(), getPresenter().repoId(),
+            GithubActionService.FORK_REPO, isEnterprise());
+        getPresenter().onFork();
       }
       if (isDelete)
         getPresenter().onDeleteRepo();

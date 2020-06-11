@@ -55,10 +55,8 @@ public class LinksParserActivity extends Activity {
         }
       } catch (Exception ignored) {
       }
-    } else if (intent.getAction().equals(Intent.ACTION_VIEW)) {
-      if (intent.getData() != null) {
-        onUriReceived(intent.getData());
-      }
+    } else if ((intent.getAction().equals(Intent.ACTION_VIEW)) && (intent.getData() != null)) {
+      onUriReceived(intent.getData());
     }
     finish();
   }
