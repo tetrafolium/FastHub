@@ -1,4 +1,63 @@
 inspecode:
 
+  astyle:
+    auto-fix: true
+    thresholds: { num-issues: 382 }
+
+  checkstyle:
+    auto-fix: true
+    thresholds: { num-issues: 999 } # too many issues detected: 22631 > 1000
+
+  clang-format:
+    auto-fix: true
+    thresholds: { num-issues: 603 }
+
+  cpd:
+    thresholds: { num-issues: 139 }
+
+  detekt:
+    thresholds: { num-issues: 310 }
+
+  #### not supported yet ??
+  #fortify:
+  #  thresholds: { num-issues: 999 }
+
+  fossology:
+    thresholds: { num-issues: 7 }
+
+  grep:
+    thresholds: { num-issues: 2 }
+
   infer:
-    thresholds: { num-issues: 999 }
+    thresholds: { num-issues: 116 }
+
+  jscpd:
+    thresholds: { num-issues: 837 }
+
+  ktlint:
+    auto-fix: true
+    thresholds: { num-issues: 315 }
+
+  misspell:
+    auto-fix: true
+    thresholds: { num-issues: 13 }
+
+  pmd:
+    auto-fix: true
+    thresholds: { num-issues: 96 }
+
+  ## Classfiles/jarfiles of targets are not specified.
+  ## Please specify targets with the "-targets", "-project" or "-analyzeFromFile" option.
+  #spotbugs:
+  #  thresholds: { num-issues: 999 }
+
+  uncrustify:
+    auto-fix: true
+    thresholds: { num-issues: 588 }
+
+  #### not supported yet ??
+  #understand:
+  #  thresholds: { num-issues: 999 }
+
+  unused:
+    thresholds: { num-issues: 197 }
