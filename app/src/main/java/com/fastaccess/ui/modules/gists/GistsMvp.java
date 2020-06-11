@@ -25,8 +25,8 @@ interface GistsMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<Gist>,
-            BaseMvp.PaginationListener {
+        BaseViewHolder.OnItemClickListener<Gist>,
+        BaseMvp.PaginationListener {
 
         @NonNull ArrayList<Gist> getGists();
 

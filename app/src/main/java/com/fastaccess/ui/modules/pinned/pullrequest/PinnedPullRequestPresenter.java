@@ -31,8 +31,8 @@ public class PinnedPullRequestPresenter extends BasePresenter<PinnedPullRequestM
 
     @Override public void onReload() {
         manageDisposable(PinnedPullRequests.getMyPinnedPullRequests()
-                .subscribe(repos -> sendToView(view -> view.onNotifyAdapter(repos)), throwable ->
-                        sendToView(view -> view.onNotifyAdapter(null))));
+                         .subscribe(repos -> sendToView(view -> view.onNotifyAdapter(repos)), throwable ->
+                                    sendToView(view -> view.onNotifyAdapter(null))));
     }
 
     @Override public void onItemClick(int position, View v, PullRequest item) {

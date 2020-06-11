@@ -67,15 +67,15 @@ public class LoginPresenter extends BasePresenter<LoginMvp.View> implements Logi
 
     @NonNull @Override public Uri getAuthorizationUrl() {
         return new Uri.Builder().scheme("https")
-                .authority("github.com")
-                .appendPath("login")
-                .appendPath("oauth")
-                .appendPath("authorize")
-                .appendQueryParameter("client_id", GithubConfigHelper.getClientId())
-                .appendQueryParameter("redirect_uri", GithubConfigHelper.getRedirectUrl())
-                .appendQueryParameter("scope", "user,repo,gist,notifications,read:org")
-                .appendQueryParameter("state", BuildConfig.APPLICATION_ID)
-                .build();
+               .authority("github.com")
+               .appendPath("login")
+               .appendPath("oauth")
+               .appendPath("authorize")
+               .appendQueryParameter("client_id", GithubConfigHelper.getClientId())
+               .appendQueryParameter("redirect_uri", GithubConfigHelper.getRedirectUrl())
+               .appendQueryParameter("scope", "user,repo,gist,notifications,read:org")
+               .appendQueryParameter("state", BuildConfig.APPLICATION_ID)
+               .build();
     }
 
     @Override public void onHandleAuthIntent(@Nullable Intent intent) {
@@ -85,9 +85,9 @@ public class LoginPresenter extends BasePresenter<LoginMvp.View> implements Logi
                 String tokenCode = uri.getQueryParameter("code");
                 if (!InputHelper.isEmpty(tokenCode)) {
                     makeRestCall(LoginProvider.getLoginRestService().getAccessToken(tokenCode,
-                            GithubConfigHelper.getClientId(), GithubConfigHelper.getSecret(),
-                            BuildConfig.APPLICATION_ID, GithubConfigHelper.getRedirectUrl()),
-                            this::onTokenResponse);
+                                 GithubConfigHelper.getClientId(), GithubConfigHelper.getSecret(),
+                                 BuildConfig.APPLICATION_ID, GithubConfigHelper.getRedirectUrl()),
+                                 this::onTokenResponse);
                 } else {
                     sendToView(view -> view.showMessage(R.string.error, R.string.error));
                 }
@@ -98,7 +98,7 @@ public class LoginPresenter extends BasePresenter<LoginMvp.View> implements Logi
     @Override public void onUserResponse(@Nullable Login userModel) {
         if (userModel != null) {
             manageObservable(Login.onMultipleLogin(userModel, isEnterprise(), true)
-                    .doOnComplete(() -> sendToView(view -> view.onSuccessfullyLoggedIn(isEnterprise()))));
+                             .doOnComplete(() -> sendToView(view -> view.onSuccessfullyLoggedIn(isEnterprise()))));
             return;
         }
         sendToView(view -> view.showMessage(R.string.error, R.string.failed_login));
@@ -144,15 +144,15 @@ public class LoginPresenter extends BasePresenter<LoginMvp.View> implements Logi
     private void accessTokenLogin(@NonNull String password, @Nullable String endpoint, @Nullable String otp,
                                   @NonNull String authToken) {
         makeRestCall(LoginProvider.getLoginRestService(authToken, otp, endpoint).loginAccessToken(),
-                login -> {
-                    if (!isEnterprise()) {
-                        PrefGetter.setToken(password);
-                    } else {
-                        PrefGetter.setEnterpriseOtpCode(otp);
-                        PrefGetter.setTokenEnterprise(authToken);
-                        PrefGetter.setEnterpriseUrl(endpoint);
-                    }
-                    onUserResponse(login);
-                });
+        login -> {
+            if (!isEnterprise()) {
+                PrefGetter.setToken(password);
+            } else {
+                PrefGetter.setEnterpriseOtpCode(otp);
+                PrefGetter.setTokenEnterprise(authToken);
+                PrefGetter.setEnterpriseUrl(endpoint);
+            }
+            onUserResponse(login);
+        });
     }
 }

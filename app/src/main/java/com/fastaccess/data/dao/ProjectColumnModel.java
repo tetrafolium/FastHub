@@ -77,7 +77,9 @@ public class ProjectColumnModel implements Parcelable {
 
     public ProjectColumnModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
@@ -102,9 +104,13 @@ public class ProjectColumnModel implements Parcelable {
     }
 
     public static final Creator<ProjectColumnModel> CREATOR = new Creator<ProjectColumnModel>() {
-        @Override public ProjectColumnModel createFromParcel(Parcel source) {return new ProjectColumnModel(source);}
+        @Override public ProjectColumnModel createFromParcel(Parcel source) {
+            return new ProjectColumnModel(source);
+        }
 
-        @Override public ProjectColumnModel[] newArray(int size) {return new ProjectColumnModel[size];}
+        @Override public ProjectColumnModel[] newArray(int size) {
+            return new ProjectColumnModel[size];
+        }
     };
 
     @Override public boolean equals(Object o) {

@@ -15,7 +15,9 @@ import lombok.Setter;
     private String value;
     private String label;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.value);
@@ -41,8 +43,12 @@ import lombok.Setter;
     }
 
     public static final Parcelable.Creator<AppLanguageModel> CREATOR = new Parcelable.Creator<AppLanguageModel>() {
-        @Override public AppLanguageModel createFromParcel(Parcel source) {return new AppLanguageModel(source);}
+        @Override public AppLanguageModel createFromParcel(Parcel source) {
+            return new AppLanguageModel(source);
+        }
 
-        @Override public AppLanguageModel[] newArray(int size) {return new AppLanguageModel[size];}
+        @Override public AppLanguageModel[] newArray(int size) {
+            return new AppLanguageModel[size];
+        }
     };
 }

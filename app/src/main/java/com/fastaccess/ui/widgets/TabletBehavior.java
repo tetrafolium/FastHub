@@ -35,11 +35,11 @@ public class TabletBehavior extends VerticalScrollingBehavior<BottomNavigation> 
     }
 
     public void onNestedVerticalOverScroll(CoordinatorLayout coordinatorLayout, BottomNavigation child, int direction, int currentOverScroll, int
-            totalOverScroll) {
+                                           totalOverScroll) {
     }
 
     public void onDirectionNestedPreScroll(CoordinatorLayout coordinatorLayout, BottomNavigation child, View target, int dx, int dy, int[]
-            consumed, int scrollDirection) {
+                                           consumed, int scrollDirection) {
     }
 
     protected boolean onNestedDirectionFling(CoordinatorLayout coordinatorLayout, BottomNavigation child, View target, float velocityX, float

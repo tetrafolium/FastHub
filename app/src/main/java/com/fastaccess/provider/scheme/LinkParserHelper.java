@@ -46,11 +46,11 @@ public class LinkParserHelper {
         String repo = segments.get(1);
         String branch = segments.get(3);
         urlBuilder.scheme("https")
-                .authority(API_AUTHORITY)
-                .appendPath("repos")
-                .appendPath(owner)
-                .appendPath(repo)
-                .appendPath("contents");
+        .authority(API_AUTHORITY)
+        .appendPath("repos")
+        .appendPath(owner)
+        .appendPath(repo)
+        .appendPath("contents");
         for (int i = 4; i < segments.size(); i++) {
             urlBuilder.appendPath(segments.get(i));
         }
@@ -71,7 +71,7 @@ public class LinkParserHelper {
         String enterpriseUrl = PrefGetter.getEnterpriseUrl().toLowerCase();
         url = url.toLowerCase();
         return url.equalsIgnoreCase(enterpriseUrl) || url.startsWith(enterpriseUrl) || url.startsWith(getEndpoint(enterpriseUrl))
-                || url.contains(enterpriseUrl) || enterpriseUrl.contains(url);
+               || url.contains(enterpriseUrl) || enterpriseUrl.contains(url);
     }
 
     public static String stripScheme(@NonNull String url) {

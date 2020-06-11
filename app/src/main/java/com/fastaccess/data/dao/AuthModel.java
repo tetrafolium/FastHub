@@ -27,7 +27,9 @@ public class AuthModel implements Parcelable {
     private String noteUrl;
     @SerializedName("X-GitHub-OTP") private String otpCode;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.clientId);
@@ -52,8 +54,12 @@ public class AuthModel implements Parcelable {
     }
 
     public static final Creator<AuthModel> CREATOR = new Creator<AuthModel>() {
-        @Override public AuthModel createFromParcel(Parcel source) {return new AuthModel(source);}
+        @Override public AuthModel createFromParcel(Parcel source) {
+            return new AuthModel(source);
+        }
 
-        @Override public AuthModel[] newArray(int size) {return new AuthModel[size];}
+        @Override public AuthModel[] newArray(int size) {
+            return new AuthModel[size];
+        }
     };
 }

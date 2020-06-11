@@ -7,7 +7,7 @@ import com.fastaccess.ui.base.mvp.BaseMvp;
  */
 
 public interface SettingsCategoryMvp {
-	interface Presenter extends BaseMvp.FAPresenter {
+    interface Presenter extends BaseMvp.FAPresenter {
 
-	}
+    }
 }

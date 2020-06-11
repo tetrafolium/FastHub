@@ -193,7 +193,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
 
     @Override public void hideProgress() {
         ProgressDialogFragment fragment = (ProgressDialogFragment) AppHelper.getFragmentByTag(getSupportFragmentManager(),
-                ProgressDialogFragment.TAG);
+                                          ProgressDialogFragment.TAG);
         if (fragment != null) {
             isProgressShowing = false;
             fragment.dismiss();
@@ -230,11 +230,11 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
 
     @Override public void onLogoutPressed() {
         MessageDialogView.newInstance(getString(R.string.logout), getString(R.string.confirm_message),
-                Bundler.start()
-                        .put(BundleConstant.YES_NO_EXTRA, true)
-                        .put("logout", true)
-                        .end())
-                .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                      Bundler.start()
+                                      .put(BundleConstant.YES_NO_EXTRA, true)
+                                      .put("logout", true)
+                                      .end())
+        .show(getSupportFragmentManager(), MessageDialogView.TAG);
     }
 
     @Override public void onThemeChanged() {
@@ -481,7 +481,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         }
         if (!isProgressShowing && !isFinishing()) {
             ProgressDialogFragment fragment = (ProgressDialogFragment) AppHelper.getFragmentByTag(getSupportFragmentManager(),
-                    ProgressDialogFragment.TAG);
+                                              ProgressDialogFragment.TAG);
             if (fragment == null) {
                 isProgressShowing = true;
                 fragment = ProgressDialogFragment.newInstance(msg, cancelable);

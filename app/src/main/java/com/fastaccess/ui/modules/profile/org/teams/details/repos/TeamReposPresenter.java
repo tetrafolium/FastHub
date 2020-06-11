@@ -55,10 +55,10 @@ class TeamReposPresenter extends BasePresenter<TeamReposMvp.View> implements Tea
             return false;
         }
         makeRestCall(RestProvider.getOrgService(isEnterprise()).getTeamRepos(parameter, page),
-                repoModelPageable -> {
-                    lastPage = repoModelPageable.getLast();
-                    sendToView(view -> view.onNotifyAdapter(repoModelPageable.getItems(), page));
-                });
+        repoModelPageable -> {
+            lastPage = repoModelPageable.getLast();
+            sendToView(view -> view.onNotifyAdapter(repoModelPageable.getItems(), page));
+        });
         return true;
     }
 

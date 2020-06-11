@@ -51,9 +51,9 @@ public class ActivityHelper {
         String packageNameToUse = CustomTabsHelper.getPackageNameToUse(context);
         if (packageNameToUse != null) {
             CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                    .setToolbarColor(ViewHelper.getPrimaryColor(context))
-                    .setShowTitle(true)
-                    .build();
+            .setToolbarColor(ViewHelper.getPrimaryColor(context))
+            .setShowTitle(true)
+            .build();
             customTabsIntent.intent.setPackage(packageNameToUse);
             try {
                 customTabsIntent.launchUrl(context, url);
@@ -114,15 +114,15 @@ public class ActivityHelper {
 
     public static void start(@NonNull Activity activity, Intent intent, @NonNull View sharedElement) {
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
-                sharedElement, ViewHelper.getTransitionName(sharedElement));
+                                        sharedElement, ViewHelper.getTransitionName(sharedElement));
         activity.startActivity(intent, options.toBundle());
     }
 
     public static void startReveal(@NonNull Activity activity, Intent intent, @NonNull View sharedElement, int requestCode) {
         if (!PrefGetter.isAppAnimationDisabled()) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeClipRevealAnimation(sharedElement, sharedElement.getWidth() / 2,
-                    sharedElement.getHeight() / 2,
-                    sharedElement.getWidth(), sharedElement.getHeight());
+                                            sharedElement.getHeight() / 2,
+                                            sharedElement.getWidth(), sharedElement.getHeight());
             activity.startActivityForResult(intent, requestCode, options.toBundle());
         } else {
             activity.startActivityForResult(intent, requestCode);
@@ -132,8 +132,8 @@ public class ActivityHelper {
     public static void startReveal(@NonNull Fragment fragment, Intent intent, @NonNull View sharedElement, int requestCode) {
         if (!PrefGetter.isAppAnimationDisabled()) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeClipRevealAnimation(sharedElement, sharedElement.getWidth() / 2,
-                    sharedElement.getHeight() / 2,
-                    sharedElement.getWidth(), sharedElement.getHeight());
+                                            sharedElement.getHeight() / 2,
+                                            sharedElement.getWidth(), sharedElement.getHeight());
             fragment.startActivityForResult(intent, requestCode, options.toBundle());
         } else {
             fragment.startActivityForResult(intent, requestCode);
@@ -143,8 +143,8 @@ public class ActivityHelper {
     public static void startReveal(@NonNull Activity activity, Intent intent, @NonNull View sharedElement) {
         if (!PrefGetter.isAppAnimationDisabled()) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeClipRevealAnimation(sharedElement, sharedElement.getWidth() / 2,
-                    sharedElement.getHeight() / 2,
-                    sharedElement.getWidth(), sharedElement.getHeight());
+                                            sharedElement.getHeight() / 2,
+                                            sharedElement.getWidth(), sharedElement.getHeight());
             activity.startActivity(intent, options.toBundle());
         } else {
             activity.startActivity(intent);
@@ -163,10 +163,10 @@ public class ActivityHelper {
         if (activity == null) throw new IllegalArgumentException("Context given is not an instance of activity " + context.getClass().getName());
         try {
             ShareCompat.IntentBuilder.from(activity)
-                    .setChooserTitle(context.getString(R.string.share))
-                    .setType("text/plain")
-                    .setText(url)
-                    .startChooser();
+            .setChooserTitle(context.getString(R.string.share))
+            .setType("text/plain")
+            .setText(url)
+            .startChooser();
         } catch (ActivityNotFoundException e) {
             Toasty.error(App.getInstance(), e.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -196,14 +196,14 @@ public class ActivityHelper {
 
     private static boolean isReadWritePermissionIsGranted(@NonNull Context context) {
         return isPermissionGranted(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-                && isPermissionGranted(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+               && isPermissionGranted(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
     private static void requestReadWritePermission(@NonNull Activity context) {
-        ActivityCompat.requestPermissions(context, new String[]{
-                Manifest.permission.READ_EXTERNAL_STORAGE,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        }, 1);
+        ActivityCompat.requestPermissions(context, new String[] {
+                                              Manifest.permission.READ_EXTERNAL_STORAGE,
+                                              Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                          }, 1);
     }
 
     public static boolean checkAndRequestReadWritePermission(@NonNull Activity activity) {
@@ -211,7 +211,7 @@ public class ActivityHelper {
             requestReadWritePermission(activity);
             return false;
         } else if (isExplanationNeeded(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
-                || isExplanationNeeded(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                   || isExplanationNeeded(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
             Toasty.error(App.getInstance(), activity.getString(R.string.read_write_permission_explanation), Toast.LENGTH_LONG).show();
             return false;
         }

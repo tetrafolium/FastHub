@@ -94,12 +94,12 @@ public class RepoFilesActivity extends BaseActivity {
             if (!InputHelper.isEmpty(repoId) && !InputHelper.isEmpty(login)) {
                 Intent intent = new Intent(context, RepoFilesActivity.class);
                 intent.putExtras(Bundler.start()
-                        .put(BundleConstant.ID, repoId)
-                        .put(BundleConstant.EXTRA, login)
-                        .put(BundleConstant.EXTRA_TWO, path.toString())
-                        .put(BundleConstant.EXTRA_THREE, branch)
-                        .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                        .end());
+                                 .put(BundleConstant.ID, repoId)
+                                 .put(BundleConstant.EXTRA, login)
+                                 .put(BundleConstant.EXTRA_TWO, path.toString())
+                                 .put(BundleConstant.EXTRA_THREE, branch)
+                                 .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                                 .end());
                 return intent;
             }
             return new Intent(context, MainActivity.class);
@@ -136,8 +136,8 @@ public class RepoFilesActivity extends BaseActivity {
             String path = bundle.getString(BundleConstant.EXTRA_TWO);
             String defaultBranch = Objects.toString(bundle.getString(BundleConstant.EXTRA_THREE), "master");
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragmentContainer, RepoFilePathFragment.newInstance(login, repoId, path, defaultBranch, true), "RepoFilePathFragment")
-                    .commit();
+            .add(R.id.fragmentContainer, RepoFilePathFragment.newInstance(login, repoId, path, defaultBranch, true), "RepoFilePathFragment")
+            .commit();
         }
         setTitle(String.format("%s/%s", login, repoId));
     }

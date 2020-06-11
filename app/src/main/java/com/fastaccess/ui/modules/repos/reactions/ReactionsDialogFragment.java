@@ -33,7 +33,7 @@ import butterknife.BindView;
  */
 
 public class ReactionsDialogFragment extends BaseDialogFragment<ReactionsDialogMvp.View, ReactionsDialogPresenter>
-        implements ReactionsDialogMvp.View {
+    implements ReactionsDialogMvp.View {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.appbar) AppBarLayout appbar;
@@ -45,16 +45,16 @@ public class ReactionsDialogFragment extends BaseDialogFragment<ReactionsDialogM
     private OnLoadMore onLoadMore;
 
     public static ReactionsDialogFragment newInstance(@NonNull String login, @NonNull String repoId,
-                                                      @NonNull ReactionTypes type, long idOrNumber,
-                                                      @ReactionsProvider.ReactionType int reactionType) {
+            @NonNull ReactionTypes type, long idOrNumber,
+            @ReactionsProvider.ReactionType int reactionType) {
         ReactionsDialogFragment view = new ReactionsDialogFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA_TYPE, type)
-                .put(BundleConstant.EXTRA, repoId)
-                .put(BundleConstant.EXTRA_TWO, login)
-                .put(BundleConstant.EXTRA_THREE, reactionType)
-                .put(BundleConstant.ID, idOrNumber)
-                .end());
+                          .put(BundleConstant.EXTRA_TYPE, type)
+                          .put(BundleConstant.EXTRA, repoId)
+                          .put(BundleConstant.EXTRA_TWO, login)
+                          .put(BundleConstant.EXTRA_THREE, reactionType)
+                          .put(BundleConstant.ID, idOrNumber)
+                          .end());
         return view;
     }
 
@@ -77,8 +77,8 @@ public class ReactionsDialogFragment extends BaseDialogFragment<ReactionsDialogM
             getPresenter().onFragmentCreated(getArguments());
         }
         toolbar.setTitle(SpannableBuilder.builder().append(getString(R.string.reactions))
-                .append(" ")
-                .append(CommentsHelper.getEmoji(getPresenter().getReactionType())));
+                         .append(" ")
+                         .append(CommentsHelper.getEmoji(getPresenter().getReactionType())));
         fastScroller.attachRecyclerView(recycler);
     }
 

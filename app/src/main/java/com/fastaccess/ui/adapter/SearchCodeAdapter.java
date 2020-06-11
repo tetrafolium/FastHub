@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public class SearchCodeAdapter extends BaseRecyclerAdapter<SearchCodeModel, SearchCodeViewHolder, BaseViewHolder
-        .OnItemClickListener<SearchCodeModel>> {
+    .OnItemClickListener<SearchCodeModel>> {
 
     private boolean showRepoName;
 

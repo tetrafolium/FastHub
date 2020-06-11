@@ -35,7 +35,7 @@ import static android.view.View.GONE;
  */
 
 public class OrgProfileOverviewFragment extends BaseFragment<OrgProfileOverviewMvp.View, OrgProfileOverviewPresenter>
-        implements OrgProfileOverviewMvp.View {
+    implements OrgProfileOverviewMvp.View {
 
     @BindView(R.id.avatarLayout) AvatarLayout avatarLayout;
     @BindView(R.id.username) FontTextView username;

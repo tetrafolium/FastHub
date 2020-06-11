@@ -62,13 +62,13 @@ class GistCommentsPresenter extends BasePresenter<GistCommentsMvp.View> implemen
         }
         setCurrentPage(page);
         makeRestCall(RestProvider.getGistService(isEnterprise()).getGistComments(parameter, page),
-                listResponse -> {
-                    lastPage = listResponse.getLast();
-                    if (getCurrentPage() == 1) {
-                        manageDisposable(Comment.saveForGist(listResponse.getItems(), parameter));
-                    }
-                    sendToView(view -> view.onNotifyAdapter(listResponse.getItems(), page));
-                });
+        listResponse -> {
+            lastPage = listResponse.getLast();
+            if (getCurrentPage() == 1) {
+                manageDisposable(Comment.saveForGist(listResponse.getItems(), parameter));
+            }
+            sendToView(view -> view.onNotifyAdapter(listResponse.getItems(), page));
+        });
         return true;
     }
 
@@ -82,15 +82,15 @@ class GistCommentsPresenter extends BasePresenter<GistCommentsMvp.View> implemen
             String gistId = bundle.getString(BundleConstant.ID);
             if (commId != 0 && gistId != null) {
                 makeRestCall(RestProvider.getGistService(isEnterprise()).deleteGistComment(gistId, commId),
-                        booleanResponse -> sendToView(view -> {
-                            if (booleanResponse.code() == 204) {
-                                Comment comment = new Comment();
-                                comment.setId(commId);
-                                view.onRemove(comment);
-                            } else {
-                                view.showMessage(R.string.error, R.string.error_deleting_comment);
-                            }
-                        }));
+                booleanResponse -> sendToView(view -> {
+                    if (booleanResponse.code() == 204) {
+                        Comment comment = new Comment();
+                        comment.setId(commId);
+                        view.onRemove(comment);
+                    } else {
+                        view.showMessage(R.string.error, R.string.error_deleting_comment);
+                    }
+                }));
             }
         }
     }
@@ -98,7 +98,7 @@ class GistCommentsPresenter extends BasePresenter<GistCommentsMvp.View> implemen
     @Override public void onWorkOffline(@NonNull String gistId) {
         if (comments.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Comment.getGistComments(gistId).toObservable())
-                    .subscribe(localComments -> sendToView(view -> view.onNotifyAdapter(localComments, 1))));
+                             .subscribe(localComments -> sendToView(view -> view.onNotifyAdapter(localComments, 1))));
         } else {
             sendToView(BaseMvp.FAView::hideProgress);
         }
@@ -108,11 +108,11 @@ class GistCommentsPresenter extends BasePresenter<GistCommentsMvp.View> implemen
         CommentRequestModel model = new CommentRequestModel();
         model.setBody(text);
         manageDisposable(RxHelper.getObservable(RestProvider.getGistService(isEnterprise()).createGistComment(gistId, model))
-                .doOnSubscribe(disposable -> sendToView(view -> view.showBlockingProgress(0)))
-                .subscribe(comment -> sendToView(view -> view.onAddNewComment(comment)), throwable -> {
-                    onError(throwable);
-                    sendToView(GistCommentsMvp.View::hideBlockingProgress);
-                }));
+                         .doOnSubscribe(disposable -> sendToView(view -> view.showBlockingProgress(0)))
+        .subscribe(comment -> sendToView(view -> view.onAddNewComment(comment)), throwable -> {
+            onError(throwable);
+            sendToView(GistCommentsMvp.View::hideBlockingProgress);
+        }));
     }
 
     @Override public void onItemClick(int position, View v, Comment item) {

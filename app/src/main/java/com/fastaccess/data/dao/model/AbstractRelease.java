@@ -62,10 +62,10 @@ public abstract class AbstractRelease implements Parcelable {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                 dataSource.delete(Release.class)
-                        .where(Release.REPO_ID.equal(repoId)
-                                .and(Release.LOGIN.equal(login)))
-                        .get()
-                        .value();
+                .where(Release.REPO_ID.equal(repoId)
+                       .and(Release.LOGIN.equal(login)))
+                .get()
+                .value();
                 if (!models.isEmpty()) {
                     for (Release releasesModel : models) {
                         dataSource.delete(Release.class).where(Release.ID.eq(releasesModel.getId())).get().value();
@@ -84,34 +84,36 @@ public abstract class AbstractRelease implements Parcelable {
 
     public static Completable delete(@NonNull String repoId, @NonNull String login) {
         return App.getInstance().getDataStore()
-                .delete(Release.class)
-                .where(REPO_ID.eq(repoId)
-                        .and(LOGIN.eq(login)))
-                .get()
-                .single()
-                .toCompletable();
+               .delete(Release.class)
+               .where(REPO_ID.eq(repoId)
+                      .and(LOGIN.eq(login)))
+               .get()
+               .single()
+               .toCompletable();
     }
 
     public static Observable<Release> get(long id) {
         return App.getInstance().getDataStore()
-                .select(Release.class)
-                .where(ID.eq(id))
-                .get()
-                .observable();
+               .select(Release.class)
+               .where(ID.eq(id))
+               .get()
+               .observable();
     }
 
     public static Single<List<Release>> get(@NonNull String repoId, @NonNull String login) {
         return App.getInstance().getDataStore()
-                .select(Release.class)
-                .where(REPO_ID.eq(repoId)
-                        .and(LOGIN.eq(login)))
-                .orderBy(CREATED_AT.desc())
-                .get()
-                .observable()
-                .toList();
+               .select(Release.class)
+               .where(REPO_ID.eq(repoId)
+                      .and(LOGIN.eq(login)))
+               .orderBy(CREATED_AT.desc())
+               .get()
+               .observable()
+               .toList();
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -161,8 +163,12 @@ public abstract class AbstractRelease implements Parcelable {
     }
 
     public static final Creator<Release> CREATOR = new Creator<Release>() {
-        @Override public Release createFromParcel(Parcel source) {return new Release(source);}
+        @Override public Release createFromParcel(Parcel source) {
+            return new Release(source);
+        }
 
-        @Override public Release[] newArray(int size) {return new Release[size];}
+        @Override public Release[] newArray(int size) {
+            return new Release[size];
+        }
     };
 }

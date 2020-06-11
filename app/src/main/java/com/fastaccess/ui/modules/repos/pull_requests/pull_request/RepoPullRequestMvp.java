@@ -36,8 +36,8 @@ interface RepoPullRequestMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<PullRequest>,
-            BaseMvp.PaginationListener<IssueState> {
+        BaseViewHolder.OnItemClickListener<PullRequest>,
+        BaseMvp.PaginationListener<IssueState> {
         void onFragmentCreated(@NonNull Bundle bundle);
 
         void onWorkOffline();

@@ -132,18 +132,18 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
 
     public static Maybe<Repo> getRepo(@NonNull String name, @NonNull String login) {
         return App.getInstance().getDataStore()
-                .select(Repo.class)
-                .where(FULL_NAME.eq(login + "/" + name))
-                .get()
-                .maybe();
+               .select(Repo.class)
+               .where(FULL_NAME.eq(login + "/" + name))
+               .get()
+               .maybe();
     }
 
     public static Repo getRepo(long id) {
         return App.getInstance().getDataStore()
-                .select(Repo.class)
-                .where(ID.eq(id))
-                .get()
-                .firstOrNull();
+               .select(Repo.class)
+               .where(ID.eq(id))
+               .get()
+               .firstOrNull();
     }
 
     public static Disposable saveStarred(@NonNull List<Repo> models, @NonNull String starredUser) {
@@ -154,9 +154,9 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
                     BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                     if (login.getLogin().equalsIgnoreCase(starredUser)) {
                         dataSource.delete(Repo.class)
-                                .where(STARRED_USER.eq(starredUser))
-                                .get()
-                                .value();
+                        .where(STARRED_USER.eq(starredUser))
+                        .get()
+                        .value();
                         if (!models.isEmpty()) {
                             for (Repo repo : models) {
                                 dataSource.delete(Repo.class).where(Repo.ID.eq(repo.getId())).get().value();
@@ -166,10 +166,10 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
                         }
                     } else {
                         dataSource.delete(Repo.class)
-                                .where(STARRED_USER.notEqual(login.getLogin())
-                                        .or(STATUSES_URL.isNull()))
-                                .get()
-                                .value();
+                        .where(STARRED_USER.notEqual(login.getLogin())
+                               .or(STATUSES_URL.isNull()))
+                        .get()
+                        .value();
                     }
                 }
                 s.onNext("");
@@ -186,9 +186,9 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
                     BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                     if (login.getLogin().equalsIgnoreCase(reposOwner)) {
                         dataSource.delete(Repo.class)
-                                .where(REPOS_OWNER.eq(reposOwner))
-                                .get()
-                                .value();
+                        .where(REPOS_OWNER.eq(reposOwner))
+                        .get()
+                        .value();
                         if (!models.isEmpty()) {
                             for (Repo repo : models) {
                                 dataSource.delete(Repo.class).where(Repo.ID.eq(repo.getId())).get().value();
@@ -198,10 +198,10 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
                         }
                     } else {
                         dataSource.delete(Repo.class)
-                                .where(REPOS_OWNER.notEqual(login.getLogin())
-                                        .or(REPOS_OWNER.isNull()))
-                                .get()
-                                .value();
+                        .where(REPOS_OWNER.notEqual(login.getLogin())
+                               .or(REPOS_OWNER.isNull()))
+                        .get()
+                        .value();
                     }
                 }
                 s.onNext("");
@@ -214,22 +214,22 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
 
     public static Single<List<Repo>> getStarred(@NonNull String starredUser) {
         return App.getInstance().getDataStore()
-                .select(Repo.class)
-                .where(STARRED_USER.eq(starredUser))
-                .orderBy(UPDATED_AT.desc())
-                .get()
-                .observable()
-                .toList();
+               .select(Repo.class)
+               .where(STARRED_USER.eq(starredUser))
+               .orderBy(UPDATED_AT.desc())
+               .get()
+               .observable()
+               .toList();
     }
 
     public static Single<List<Repo>> getMyRepos(@NonNull String reposOwner) {
         return App.getInstance().getDataStore()
-                .select(Repo.class)
-                .where(REPOS_OWNER.eq(reposOwner))
-                .orderBy(UPDATED_AT.desc())
-                .get()
-                .observable()
-                .toList();
+               .select(Repo.class)
+               .where(REPOS_OWNER.eq(reposOwner))
+               .orderBy(UPDATED_AT.desc())
+               .get()
+               .observable()
+               .toList();
     }
 
     @Override public boolean equals(Object o) {
@@ -243,7 +243,9 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
         return (int) (id ^ (id >>> 32));
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -412,8 +414,12 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
     }
 
     public static final Creator<Repo> CREATOR = new Creator<Repo>() {
-        @Override public Repo createFromParcel(Parcel source) {return new Repo(source);}
+        @Override public Repo createFromParcel(Parcel source) {
+            return new Repo(source);
+        }
 
-        @Override public Repo[] newArray(int size) {return new Repo[size];}
+        @Override public Repo[] newArray(int size) {
+            return new Repo[size];
+        }
     };
 }

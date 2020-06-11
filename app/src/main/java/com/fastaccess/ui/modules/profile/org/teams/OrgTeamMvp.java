@@ -26,8 +26,8 @@ interface OrgTeamMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<TeamsModel>,
-            BaseMvp.PaginationListener<String> {
+        BaseViewHolder.OnItemClickListener<TeamsModel>,
+        BaseMvp.PaginationListener<String> {
 
         @NonNull ArrayList<TeamsModel> getTeams();
 

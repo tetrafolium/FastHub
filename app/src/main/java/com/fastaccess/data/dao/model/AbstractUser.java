@@ -81,18 +81,18 @@ public abstract class AbstractUser implements Parcelable {
 
     @Nullable public static User getUser(String login) {
         return App.getInstance().getDataStore()
-                .select(User.class)
-                .where(LOGIN.eq(login))
-                .get()
-                .firstOrNull();
+               .select(User.class)
+               .where(LOGIN.eq(login))
+               .get()
+               .firstOrNull();
     }
 
     @Nullable public static User getUser(long id) {
         return App.getInstance().getDataStore()
-                .select(User.class)
-                .where(ID.eq(id))
-                .get()
-                .firstOrNull();
+               .select(User.class)
+               .where(ID.eq(id))
+               .get()
+               .firstOrNull();
     }
 
     public static Disposable saveUserFollowerList(@NonNull List<User> models, @NonNull String followingName) {
@@ -103,9 +103,9 @@ public abstract class AbstractUser implements Parcelable {
                     BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                     if (login.getLogin().equalsIgnoreCase(followingName)) {
                         dataSource.delete(User.class)
-                                .where(FOLLOWING_NAME.eq(followingName))
-                                .get()
-                                .value();
+                        .where(FOLLOWING_NAME.eq(followingName))
+                        .get()
+                        .value();
                         if (!models.isEmpty()) {
                             for (User user : models) {
                                 dataSource.delete(User.class).where(User.ID.eq(user.getId())).get().value();
@@ -115,9 +115,9 @@ public abstract class AbstractUser implements Parcelable {
                         }
                     } else {
                         dataSource.delete(User.class)
-                                .where(User.FOLLOWING_NAME.notEqual(login.getLogin()))
-                                .get()
-                                .value();
+                        .where(User.FOLLOWING_NAME.notEqual(login.getLogin()))
+                        .get()
+                        .value();
                     }
                 }
                 s.onNext("");
@@ -136,9 +136,9 @@ public abstract class AbstractUser implements Parcelable {
                     BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                     if (login.getLogin().equalsIgnoreCase(followerName)) {
                         dataSource.delete(User.class)
-                                .where(FOLLOWER_NAME.eq(followerName))
-                                .get()
-                                .value();
+                        .where(FOLLOWER_NAME.eq(followerName))
+                        .get()
+                        .value();
                         if (!models.isEmpty()) {
                             for (User user : models) {
                                 dataSource.delete(User.class).where(User.ID.eq(user.getId())).get().value();
@@ -148,9 +148,9 @@ public abstract class AbstractUser implements Parcelable {
                         }
                     } else {
                         dataSource.delete(User.class)
-                                .where(User.FOLLOWER_NAME.notEqual(login.getLogin()))
-                                .get()
-                                .value();
+                        .where(User.FOLLOWER_NAME.notEqual(login.getLogin()))
+                        .get()
+                        .value();
                     }
                 }
                 s.onNext("");
@@ -163,27 +163,29 @@ public abstract class AbstractUser implements Parcelable {
 
     @NonNull public static Single<List<User>> getUserFollowerList(@NonNull String following) {
         return App.getInstance().getDataStore()
-                .select(User.class)
-                .where(FOLLOWING_NAME.eq(following))
-                .get()
-                .observable()
-                .toList();
+               .select(User.class)
+               .where(FOLLOWING_NAME.eq(following))
+               .get()
+               .observable()
+               .toList();
     }
 
     @NonNull public static Single<List<User>> getUserFollowingList(@NonNull String follower) {
         return App.getInstance().getDataStore()
-                .select(User.class)
-                .where(FOLLOWER_NAME.eq(follower))
-                .get()
-                .observable()
-                .toList();
+               .select(User.class)
+               .where(FOLLOWER_NAME.eq(follower))
+               .get()
+               .observable()
+               .toList();
     }
 
     public boolean isOrganizationType() {
         return type != null && type.equalsIgnoreCase("Organization");
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -267,8 +269,12 @@ public abstract class AbstractUser implements Parcelable {
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override public User createFromParcel(Parcel source) {return new User(source);}
+        @Override public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
 
-        @Override public User[] newArray(int size) {return new User[size];}
+        @Override public User[] newArray(int size) {
+            return new User[size];
+        }
     };
 }

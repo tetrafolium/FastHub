@@ -49,7 +49,7 @@ public class PinnedReposViewHolder extends BaseViewHolder<PinnedRepos> {
 
     public static PinnedReposViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter, boolean singleLine) {
         return new PinnedReposViewHolder(getView(viewGroup,
-                singleLine ? R.layout.repos_row_item_menu : R.layout.repos_row_item), adapter);
+                                         singleLine ? R.layout.repos_row_item_menu : R.layout.repos_row_item), adapter);
     }
 
     @Override public void bind(@NonNull PinnedRepos pinnedRepos) {
@@ -57,14 +57,14 @@ public class PinnedReposViewHolder extends BaseViewHolder<PinnedRepos> {
         if (repo == null) return;
         if (repo.isFork()) {
             title.setText(SpannableBuilder.builder()
-                    .append(" " + forked + " ", new LabelSpan(forkColor))
-                    .append(" ")
-                    .append(repo.getName(), new LabelSpan(Color.TRANSPARENT)));
+                          .append(" " + forked + " ", new LabelSpan(forkColor))
+                          .append(" ")
+                          .append(repo.getName(), new LabelSpan(Color.TRANSPARENT)));
         } else if (repo.isPrivateX()) {
             title.setText(SpannableBuilder.builder()
-                    .append(" " + privateRepo + " ", new LabelSpan(privateColor))
-                    .append(" ")
-                    .append(repo.getName(), new LabelSpan(Color.TRANSPARENT)));
+                          .append(" " + privateRepo + " ", new LabelSpan(privateColor))
+                          .append(" ")
+                          .append(repo.getName(), new LabelSpan(Color.TRANSPARENT)));
         } else {
             title.setText(repo.getFullName());
         }

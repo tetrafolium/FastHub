@@ -13,17 +13,29 @@ public class ProUsersModel implements Parcelable {
     private int type;
     private boolean isBlocked;
 
-    public int getCount() { return count;}
+    public int getCount() {
+        return count;
+    }
 
-    public void setCount(int count) { this.count = count;}
+    public void setCount(int count) {
+        this.count = count;
+    }
 
-    public boolean isAllowed() { return allowed;}
+    public boolean isAllowed() {
+        return allowed;
+    }
 
-    public void setAllowed(boolean allowed) { this.allowed = allowed;}
+    public void setAllowed(boolean allowed) {
+        this.allowed = allowed;
+    }
 
-    public int getType() { return type;}
+    public int getType() {
+        return type;
+    }
 
-    public void setType(int type) { this.type = type;}
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public boolean isBlocked() {
         return isBlocked;
@@ -35,15 +47,17 @@ public class ProUsersModel implements Parcelable {
 
     @Override public String toString() {
         return "ProUsersModel{" +
-                ", count=" + count +
-                ", allowed=" + allowed +
-                ", type=" + type +
-                '}';
+               ", count=" + count +
+               ", allowed=" + allowed +
+               ", type=" + type +
+               '}';
     }
 
     public ProUsersModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.count);
@@ -60,8 +74,12 @@ public class ProUsersModel implements Parcelable {
     }
 
     public static final Creator<ProUsersModel> CREATOR = new Creator<ProUsersModel>() {
-        @Override public ProUsersModel createFromParcel(Parcel source) {return new ProUsersModel(source);}
+        @Override public ProUsersModel createFromParcel(Parcel source) {
+            return new ProUsersModel(source);
+        }
 
-        @Override public ProUsersModel[] newArray(int size) {return new ProUsersModel[size];}
+        @Override public ProUsersModel[] newArray(int size) {
+            return new ProUsersModel[size];
+        }
     };
 }

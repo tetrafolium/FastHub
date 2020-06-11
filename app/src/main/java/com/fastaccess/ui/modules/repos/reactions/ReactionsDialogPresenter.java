@@ -77,22 +77,22 @@ public class ReactionsDialogPresenter extends BasePresenter<ReactionsDialogMvp.V
         setCurrentPage(page);
         Observable<Pageable<ReactionsModel>> observable = null;
         switch (reactionTypeMode) {
-            case ReactionsProvider.COMMENT:
-                observable = RestProvider.getReactionsService(isEnterprise())
-                        .getIssueCommentReaction(login, repoId, id, reactionType.getContent(), page);
-                break;
-            case ReactionsProvider.COMMIT:
-                observable = RestProvider.getReactionsService(isEnterprise())
-                        .getCommitReaction(login, repoId, id, reactionType.getContent(), page);
-                break;
-            case ReactionsProvider.HEADER:
-                observable = RestProvider.getReactionsService(isEnterprise())
-                        .getIssueReaction(login, repoId, id, reactionType.getContent(), page);
-                break;
-            case ReactionsProvider.REVIEW_COMMENT:
-                observable = RestProvider.getReactionsService(isEnterprise())
-                        .getPullRequestReactions(login, repoId, id, reactionType.getContent(), page);
-                break;
+        case ReactionsProvider.COMMENT:
+            observable = RestProvider.getReactionsService(isEnterprise())
+                         .getIssueCommentReaction(login, repoId, id, reactionType.getContent(), page);
+            break;
+        case ReactionsProvider.COMMIT:
+            observable = RestProvider.getReactionsService(isEnterprise())
+                         .getCommitReaction(login, repoId, id, reactionType.getContent(), page);
+            break;
+        case ReactionsProvider.HEADER:
+            observable = RestProvider.getReactionsService(isEnterprise())
+                         .getIssueReaction(login, repoId, id, reactionType.getContent(), page);
+            break;
+        case ReactionsProvider.REVIEW_COMMENT:
+            observable = RestProvider.getReactionsService(isEnterprise())
+                         .getPullRequestReactions(login, repoId, id, reactionType.getContent(), page);
+            break;
         }
         if (observable == null) {
             throw new NullPointerException("Reaction is null?");
@@ -100,9 +100,9 @@ public class ReactionsDialogPresenter extends BasePresenter<ReactionsDialogMvp.V
         makeRestCall(observable, response -> {
             lastPage = response.getLast();
             sendToView(view -> view.onNotifyAdapter(Stream.of(response.getItems())
-                    .filter(reactionsModel -> reactionsModel.getUser() != null)
-                    .map(ReactionsModel::getUser)
-                    .collect(Collectors.toList()), page));
+                                                    .filter(reactionsModel -> reactionsModel.getUser() != null)
+                                                    .map(ReactionsModel::getUser)
+                                                    .collect(Collectors.toList()), page));
         });
         return true;
     }

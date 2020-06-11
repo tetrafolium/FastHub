@@ -31,11 +31,11 @@ public interface PullRequestService {
 
     @GET("repos/{owner}/{repo}/pulls")
     Observable<Pageable<PullRequest>> getPullRequests(@Path("owner") String owner, @Path("repo") String repo,
-                                                      @Query("state") String state, @Query("page") int page);
+            @Query("state") String state, @Query("page") int page);
 
     @GET("search/issues")
     Observable<Pageable<PullRequest>> getPullsWithCount(@NonNull @Query(value = "q", encoded = true) String query,
-                                                        @Query("page") int page);
+            @Query("page") int page);
 
     @GET("repos/{owner}/{repo}/pulls/{number}")
     @Headers("Accept: application/vnd.github.VERSION.full+json, application/vnd.github.squirrel-girl-preview")
@@ -43,22 +43,22 @@ public interface PullRequestService {
 
     @PUT("repos/{owner}/{repo}/pulls/{number}/merge")
     Observable<MergeResponseModel> mergePullRequest(@Path("owner") String owner, @Path("repo") String repo,
-                                                    @Path("number") long number, @Body MergeRequestModel body);
+            @Path("number") long number, @Body MergeRequestModel body);
 
 
     @GET("repos/{owner}/{repo}/pulls/{number}/commits")
     Observable<Pageable<Commit>> getPullRequestCommits(@Path("owner") String owner, @Path("repo") String repo,
-                                                       @Path("number") long number,
-                                                       @Query("page") int page);
+            @Path("number") long number,
+            @Query("page") int page);
 
     @GET("repos/{owner}/{repo}/pulls/{number}/files")
     Observable<Pageable<CommitFileModel>> getPullRequestFiles(@Path("owner") String owner, @Path("repo") String repo,
-                                                              @Path("number") long number,
-                                                              @Query("page") int page);
+            @Path("number") long number,
+            @Query("page") int page);
 
     @GET("repos/{owner}/{repo}/pulls/{number}/merge")
     Observable<Response<Boolean>> hasPullRequestBeenMerged(@Path("owner") String owner, @Path("repo") String repo,
-                                                           @Path("number") long number);
+            @Path("number") long number);
 
     @PATCH("repos/{owner}/{repo}/pulls/{number}")
     @Headers("Accept: application/vnd.github.VERSION.full+json, application/vnd.github.squirrel-girl-preview")

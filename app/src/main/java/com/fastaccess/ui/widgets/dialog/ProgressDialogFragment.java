@@ -37,9 +37,9 @@ public class ProgressDialogFragment extends BaseDialogFragment {
     @NonNull public static ProgressDialogFragment newInstance(@NonNull String msg, boolean isCancelable) {
         ProgressDialogFragment fragment = new ProgressDialogFragment();
         fragment.setArguments(Bundler.start()
-                .put("msg", msg)
-                .put("isCancelable", isCancelable)
-                .end());
+                              .put("msg", msg)
+                              .put("isCancelable", isCancelable)
+                              .end());
         return fragment;
     }
 

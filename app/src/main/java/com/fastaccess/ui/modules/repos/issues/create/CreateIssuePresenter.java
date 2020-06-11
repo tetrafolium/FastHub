@@ -39,11 +39,11 @@ public class CreateIssuePresenter extends BasePresenter<CreateIssueMvp.View> imp
 
     @Override public void checkAuthority(@NonNull String login, @NonNull String repoId) {
         manageViewDisposable(RxHelper.getObservable(RestProvider.getRepoService(isEnterprise()).
-                isCollaborator(login, repoId, Login.getUser().getLogin()))
-                .subscribe(booleanResponse -> {
-                    isCollaborator = booleanResponse.code() == 204;
-                    sendToView(CreateIssueMvp.View::onShowIssueMisc);
-                }, Throwable::printStackTrace));
+                             isCollaborator(login, repoId, Login.getUser().getLogin()))
+        .subscribe(booleanResponse -> {
+            isCollaborator = booleanResponse.code() == 204;
+            sendToView(CreateIssueMvp.View::onShowIssueMisc);
+        }, Throwable::printStackTrace));
     }
 
     @Override public void onActivityForResult(int resultCode, int requestCode, Intent intent) {
@@ -83,13 +83,13 @@ public class CreateIssuePresenter extends BasePresenter<CreateIssueMvp.View> imp
                     }
                 }
                 makeRestCall(RestProvider.getIssueService(isEnterprise()).createIssue(login, repo, createIssue),
-                        issueModel -> {
-                            if (issueModel != null) {
-                                sendToView(view -> view.onSuccessSubmission(issueModel));
-                            } else {
-                                sendToView(view -> view.showMessage(R.string.error, R.string.error_creating_issue));
-                            }
-                        }, false);
+                issueModel -> {
+                    if (issueModel != null) {
+                        sendToView(view -> view.onSuccessSubmission(issueModel));
+                    } else {
+                        sendToView(view -> view.showMessage(R.string.error, R.string.error_creating_issue));
+                    }
+                }, false);
             } else {
                 if (issue != null) {
                     issue.setBody(InputHelper.toString(description));
@@ -112,13 +112,13 @@ public class CreateIssuePresenter extends BasePresenter<CreateIssueMvp.View> imp
                     }
                     IssueRequestModel requestModel = IssueRequestModel.clone(issue, false);
                     makeRestCall(RestProvider.getIssueService(isEnterprise()).editIssue(login, repo, number, requestModel),
-                            issueModel -> {
-                                if (issueModel != null) {
-                                    sendToView(view -> view.onSuccessSubmission(issueModel));
-                                } else {
-                                    sendToView(view -> view.showMessage(R.string.error, R.string.error_creating_issue));
-                                }
-                            }, false);
+                    issueModel -> {
+                        if (issueModel != null) {
+                            sendToView(view -> view.onSuccessSubmission(issueModel));
+                        } else {
+                            sendToView(view -> view.showMessage(R.string.error, R.string.error_creating_issue));
+                        }
+                    }, false);
                 }
                 if (pullRequestModel != null) {
                     int number = pullRequestModel.getNumber();
@@ -141,13 +141,13 @@ public class CreateIssuePresenter extends BasePresenter<CreateIssueMvp.View> imp
                     }
                     IssueRequestModel requestModel = IssueRequestModel.clone(pullRequestModel, false);
                     makeRestCall(RestProvider.getPullRequestService(isEnterprise()).editPullRequest(login, repo, number, requestModel)
-                            .flatMap(pullRequest1 -> RestProvider.getIssueService(isEnterprise()).getIssue(login, repo, number),
-                                    (pullRequest1, issueReaction) -> {//hack to get reactions from issue api
-                                        if (issueReaction != null) {
-                                            pullRequest1.setReactions(issueReaction.getReactions());
-                                        }
-                                        return pullRequest1;
-                                    }), pr -> {
+                                 .flatMap(pullRequest1 -> RestProvider.getIssueService(isEnterprise()).getIssue(login, repo, number),
+                    (pullRequest1, issueReaction) -> {//hack to get reactions from issue api
+                        if (issueReaction != null) {
+                            pullRequest1.setReactions(issueReaction.getReactions());
+                        }
+                        return pullRequest1;
+                    }), pr -> {
                         if (pr != null) {
                             sendToView(view -> view.onSuccessSubmission(pr));
                         } else {
@@ -162,15 +162,15 @@ public class CreateIssuePresenter extends BasePresenter<CreateIssueMvp.View> imp
 
     @Override public void onCheckAppVersion() {
         makeRestCall(RestProvider.getRepoService(false).getLatestRelease("k0shk0sh", "FastHub"),
-                release -> {
-                    if (release != null) {
-                        if (!BuildConfig.VERSION_NAME.contains(release.getTagName())) {
-                            sendToView(CreateIssueMvp.View::onShowUpdate);
-                        } else {
-                            sendToView(BaseMvp.FAView::hideProgress);
-                        }
-                    }
-                }, false);
+        release -> {
+            if (release != null) {
+                if (!BuildConfig.VERSION_NAME.contains(release.getTagName())) {
+                    sendToView(CreateIssueMvp.View::onShowUpdate);
+                } else {
+                    sendToView(BaseMvp.FAView::hideProgress);
+                }
+            }
+        }, false);
     }
 
     @Override public boolean isCollaborator() {

@@ -45,7 +45,7 @@ import butterknife.BindView;
  */
 
 public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.View, PullRequestFilesPresenter>
-        implements PullRequestFilesMvp.View {
+    implements PullRequestFilesMvp.View {
 
     @BindView(R.id.recycler) DynamicRecyclerView recycler;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
@@ -64,10 +64,10 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
     public static PullRequestFilesFragment newInstance(@NonNull String repoId, @NonNull String login, long number) {
         PullRequestFilesFragment view = new PullRequestFilesFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, number)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .put(BundleConstant.EXTRA_TWO, number)
+                          .end());
         return view;
     }
 
@@ -79,7 +79,7 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
             issueCallback = (IssuePagerMvp.IssuePrCallback) context;
         } else {
             throw new IllegalArgumentException(String.format("%s or parent fragment must implement IssuePagerMvp.IssuePrCallback", context.getClass()
-                    .getSimpleName()));
+                                               .getSimpleName()));
         }
         if (getParentFragment() instanceof PullRequestFilesMvp.PatchCallback) {
             viewCallback = (PullRequestFilesMvp.PatchCallback) getParentFragment();
@@ -216,7 +216,7 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
                     .put(BundleConstant.EXTRA_TWO, groupPosition)
                     .put(BundleConstant.EXTRA_THREE, childPosition)
                     .end())
-                    .show(getChildFragmentManager(), "AddReviewDialogFragment");
+            .show(getChildFragmentManager(), "AddReviewDialogFragment");
         } else {
             PremiumActivity.Companion.startActivity(getContext());
         }

@@ -48,10 +48,10 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
     public static RepoPullRequestFragment newInstance(@NonNull String repoId, @NonNull String login, @NonNull IssueState issueState) {
         RepoPullRequestFragment view = new RepoPullRequestFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, issueState)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .put(BundleConstant.EXTRA_TWO, issueState)
+                          .end());
         return view;
     }
 
@@ -169,7 +169,7 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
 
     @Override public void onOpenPullRequest(@NonNull PullsIssuesParser parser) {
         Intent intent = PullRequestPagerActivity.createIntent(getContext(), parser.getRepoId(), parser.getLogin(),
-                parser.getNumber(), false, isEnterprise());
+                        parser.getNumber(), false, isEnterprise());
         startActivityForResult(intent, RepoPullRequestMvp.PULL_REQUEST_REQUEST_CODE);
     }
 

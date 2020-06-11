@@ -116,7 +116,7 @@ public class PrettifyWebView extends NestedWebView {
 
     private boolean hitLinkResult(WebView.HitTestResult result) {
         return result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE || result.getType() == HitTestResult.IMAGE_TYPE ||
-                result.getType() == HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
+               result.getType() == HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
     }
 
     public void setOnContentChangedListener(@NonNull OnContentChangedListener onContentChangedListener) {
@@ -190,14 +190,14 @@ public class PrettifyWebView extends NestedWebView {
     public void setWikiContent(@NonNull String source, @Nullable String baseUrl) {
         addJavascriptInterface(new MarkDownInterceptorInterface(this, true), "Android");
         String page = GithubHelper.generateContent(getContext(), source, baseUrl, AppHelper.isNightMode(getResources()), AppHelper.isNightMode
-                (getResources()), true);
+                      (getResources()), true);
         post(() -> loadDataWithBaseURL("file:///android_asset/md/", page, "text/html", "utf-8", null));
     }
 
     public void setGithubContent(@NonNull String source, @Nullable String baseUrl, boolean toggleNestScrolling, boolean enableBridge) {
         if (enableBridge) addJavascriptInterface(new MarkDownInterceptorInterface(this, toggleNestScrolling), "Android");
         String page = GithubHelper.generateContent(getContext(), source, baseUrl, AppHelper.isNightMode(getResources()),
-                AppHelper.isNightMode(getResources()), false);
+                      AppHelper.isNightMode(getResources()), false);
         post(() -> loadDataWithBaseURL("file:///android_asset/md/", page, "text/html", "utf-8", null));
     }
 
@@ -213,7 +213,7 @@ public class PrettifyWebView extends NestedWebView {
             html = url;
         } else {
             html = "<html><head><style>img{display: inline; height: auto; max-width: 100%;}</style></head><body>" +
-                    "<img src=\"" + url + "\"/></body></html>";
+                   "<img src=\"" + url + "\"/></body></html>";
         }
         Logger.e(html);
         loadData(html, "text/html", null);

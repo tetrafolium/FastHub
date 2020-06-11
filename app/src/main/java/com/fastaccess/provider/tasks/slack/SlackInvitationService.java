@@ -31,16 +31,16 @@ public class SlackInvitationService extends IntentService {
             body.setFirst_name(login.getName());
             body.setLast_name(login.getLogin());
             RxHelper.getObservable(RestProvider.getSlackService()
-                    .invite(body))
-                    .subscribe(response -> {
-                        if (response != null) {
-                            if (response.isOk()) {
-                                Toasty.success(App.getInstance(), getString(R.string.successfully_invited)).show();
-                            } else {
-                                Toasty.info(App.getInstance(), response.getError().replaceAll("_", " ")).show();
-                            }
-                        }
-                    }, Throwable::printStackTrace);
+                                   .invite(body))
+            .subscribe(response -> {
+                if (response != null) {
+                    if (response.isOk()) {
+                        Toasty.success(App.getInstance(), getString(R.string.successfully_invited)).show();
+                    } else {
+                        Toasty.info(App.getInstance(), response.getError().replaceAll("_", " ")).show();
+                    }
+                }
+            }, Throwable::printStackTrace);
         }
     }
 }

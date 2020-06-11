@@ -38,7 +38,9 @@ public class ReviewModel implements Parcelable {
         return (int) (id ^ (id >>> 32));
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -68,9 +70,13 @@ public class ReviewModel implements Parcelable {
     }
 
     public static final Creator<ReviewModel> CREATOR = new Creator<ReviewModel>() {
-        @Override public ReviewModel createFromParcel(Parcel source) {return new ReviewModel(source);}
+        @Override public ReviewModel createFromParcel(Parcel source) {
+            return new ReviewModel(source);
+        }
 
-        @Override public ReviewModel[] newArray(int size) {return new ReviewModel[size];}
+        @Override public ReviewModel[] newArray(int size) {
+            return new ReviewModel[size];
+        }
     };
 
     public long getId() {

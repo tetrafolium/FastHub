@@ -42,11 +42,11 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
     @Override public void onCheckFollowStatus(@NonNull String login) {
         if (!TextUtils.equals(login, Login.getUser().getLogin())) {
             manageDisposable(RxHelper.getObservable(RestProvider.getUserService(isEnterprise()).getFollowStatus(login))
-                    .subscribe(booleanResponse -> {
-                        isSuccessResponse = true;
-                        isFollowing = booleanResponse.code() == 204;
-                        sendToView(ProfileOverviewMvp.View::invalidateFollowBtn);
-                    }, Throwable::printStackTrace));
+            .subscribe(booleanResponse -> {
+                isSuccessResponse = true;
+                isFollowing = booleanResponse.code() == 204;
+                sendToView(ProfileOverviewMvp.View::invalidateFollowBtn);
+            }, Throwable::printStackTrace));
         }
     }
 
@@ -60,13 +60,13 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
 
     @Override public void onFollowButtonClicked(@NonNull String login) {
         manageDisposable(RxHelper.getObservable(!isFollowing ? RestProvider.getUserService(isEnterprise()).followUser(login)
-                                                             : RestProvider.getUserService(isEnterprise()).unfollowUser(login))
-                .subscribe(booleanResponse -> {
-                    if (booleanResponse.code() == 204) {
-                        isFollowing = !isFollowing;
-                        sendToView(ProfileOverviewMvp.View::invalidateFollowBtn);
-                    }
-                }, this::onError));
+                                                : RestProvider.getUserService(isEnterprise()).unfollowUser(login))
+        .subscribe(booleanResponse -> {
+            if (booleanResponse.code() == 204) {
+                isFollowing = !isFollowing;
+                sendToView(ProfileOverviewMvp.View::invalidateFollowBtn);
+            }
+        }, this::onError));
     }
 
     @Override public void onError(@NonNull Throwable throwable) {
@@ -89,11 +89,11 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
         login = bundle.getString(BundleConstant.EXTRA);
         if (login != null) {
             makeRestCall(RestProvider.getUserService(isEnterprise())
-                    .getUser(login)
-                    .doOnComplete(() -> {
-                        loadPinnedRepos(login);
-                        loadOrgs();
-                    }), userModel -> {
+                         .getUser(login)
+            .doOnComplete(() -> {
+                loadPinnedRepos(login);
+                loadOrgs();
+            }), userModel -> {
                 onSendUserToView(userModel);
                 if (userModel != null) {
                     userModel.save(userModel);
@@ -108,24 +108,24 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
     @SuppressWarnings("ConstantConditions") private void loadPinnedRepos(@NonNull String login) {
         ApolloCall<GetPinnedReposQuery.Data> apolloCall = ApolloProdivder.INSTANCE.getApollo(isEnterprise())
                 .query(GetPinnedReposQuery.builder()
-                        .login(login)
-                        .build());
+                       .login(login)
+                       .build());
         manageDisposable(RxHelper.getObservable(Rx2Apollo.from(apolloCall))
-                .filter(dataResponse -> !dataResponse.hasErrors())
-                .flatMap(dataResponse -> {
-                    if (dataResponse.data() != null && dataResponse.data().user() != null) {
-                        return Observable.fromIterable(dataResponse.data().user().pinnedRepositories().edges());
-                    }
-                    return Observable.empty();
-                })
-                .map(GetPinnedReposQuery.Edge::node)
-                .toList()
-                .toObservable()
-                .subscribe(nodes1 -> {
-                    nodes.clear();
-                    nodes.addAll(nodes1);
-                    sendToView(view -> view.onInitPinnedRepos(nodes));
-                }, Throwable::printStackTrace));
+                         .filter(dataResponse -> !dataResponse.hasErrors())
+        .flatMap(dataResponse -> {
+            if (dataResponse.data() != null && dataResponse.data().user() != null) {
+                return Observable.fromIterable(dataResponse.data().user().pinnedRepositories().edges());
+            }
+            return Observable.empty();
+        })
+        .map(GetPinnedReposQuery.Edge::node)
+        .toList()
+        .toObservable()
+        .subscribe(nodes1 -> {
+            nodes.clear();
+            nodes.addAll(nodes1);
+            sendToView(view -> view.onInitPinnedRepos(nodes));
+        }, Throwable::printStackTrace));
     }
 
     @Override public void onWorkOffline(@NonNull String login) {
@@ -145,12 +145,12 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
             if (contributions == null || contributions.isEmpty()) {
                 String url = String.format(URL, login);
                 manageDisposable(RxHelper.getObservable(RestProvider.getContribution().getContributions(url))
-                        .flatMap(s -> Observable.just(new ContributionsProvider().getContributions(s)))
-                        .subscribe(lists -> {
-                            contributions.clear();
-                            contributions.addAll(lists);
-                            loadContributions(contributions, gitHubContributionsView);
-                        }, Throwable::printStackTrace));
+                                 .flatMap(s -> Observable.just(new ContributionsProvider().getContributions(s)))
+                .subscribe(lists -> {
+                    contributions.clear();
+                    contributions.addAll(lists);
+                    loadContributions(contributions, gitHubContributionsView);
+                }, Throwable::printStackTrace));
             } else {
                 loadContributions(contributions, gitHubContributionsView);
             }
@@ -178,20 +178,20 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
         if (filter != null && contributions != null) {
             Observable<Bitmap> bitmapObservable = Observable.just(gitHubContributionsView.drawOnCanvas(filter, contributions));
             manageObservable(bitmapObservable
-                    .doOnNext(bitmap -> sendToView(view -> view.onInitContributions(bitmap != null))));
+                             .doOnNext(bitmap -> sendToView(view -> view.onInitContributions(bitmap != null))));
         }
     }
 
     private void loadOrgs() {
         boolean isMe = login.equalsIgnoreCase(Login.getUser() != null ? Login.getUser().getLogin() : "");
         manageDisposable(RxHelper.getObservable(isMe ? RestProvider.getOrgService(isEnterprise()).getMyOrganizations()
-                                                     : RestProvider.getOrgService(isEnterprise()).getMyOrganizations(login))
-                .subscribe(response -> {
-                    if (response != null && response.getItems() != null) {
-                        userOrgs.addAll(response.getItems());
-                    }
-                    sendToView(view -> view.onInitOrgs(userOrgs));
-                }, Throwable::printStackTrace));
+                                                : RestProvider.getOrgService(isEnterprise()).getMyOrganizations(login))
+        .subscribe(response -> {
+            if (response != null && response.getItems() != null) {
+                userOrgs.addAll(response.getItems());
+            }
+            sendToView(view -> view.onInitOrgs(userOrgs));
+        }, Throwable::printStackTrace));
     }
 
 }

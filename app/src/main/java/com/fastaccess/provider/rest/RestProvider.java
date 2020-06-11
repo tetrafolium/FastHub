@@ -59,19 +59,19 @@ public class RestProvider {
 
     private static OkHttpClient okHttpClient;
     public final static Gson gson = new GsonBuilder()
-            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-            .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
-            .setDateFormat("yyyy-MM-dd HH:mm:ss")
-            .disableHtmlEscaping()
-            .setPrettyPrinting()
-            .create();
+    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+    .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
+    .setDateFormat("yyyy-MM-dd HH:mm:ss")
+    .disableHtmlEscaping()
+    .setPrettyPrinting()
+    .create();
 
     public static OkHttpClient provideOkHttpClient() {
         if (okHttpClient == null) {
             OkHttpClient.Builder client = new OkHttpClient.Builder();
             if (BuildConfig.DEBUG) {
                 client.addInterceptor(new HttpLoggingInterceptor()
-                        .setLevel(HttpLoggingInterceptor.Level.BODY));
+                                      .setLevel(HttpLoggingInterceptor.Level.BODY));
             }
             client.addInterceptor(new AuthenticationInterceptor());
             client.addInterceptor(new PaginationInterceptor());
@@ -84,11 +84,11 @@ public class RestProvider {
 
     private static Retrofit provideRetrofit(boolean enterprise) {
         return new Retrofit.Builder()
-                .baseUrl(enterprise && PrefGetter.isEnterprise() ? LinkParserHelper.getEndpoint(PrefGetter.getEnterpriseUrl()) : BuildConfig.REST_URL)
-                .client(provideOkHttpClient())
-                .addConverterFactory(new GithubResponseConverter(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+               .baseUrl(enterprise && PrefGetter.isEnterprise() ? LinkParserHelper.getEndpoint(PrefGetter.getEnterpriseUrl()) : BuildConfig.REST_URL)
+               .client(provideOkHttpClient())
+               .addConverterFactory(new GithubResponseConverter(gson))
+               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+               .build();
     }
 
     public static void downloadFile(@NonNull Context context, @NonNull String url) {
@@ -169,11 +169,11 @@ public class RestProvider {
 
     @NonNull public static UserRestService getContribution() {
         return new Retrofit.Builder()
-                .baseUrl(BuildConfig.REST_URL)
-                .addConverterFactory(new GithubResponseConverter(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(UserRestService.class);
+               .baseUrl(BuildConfig.REST_URL)
+               .addConverterFactory(new GithubResponseConverter(gson))
+               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+               .build()
+               .create(UserRestService.class);
     }
 
     @NonNull public static SearchService getSearchService(boolean enterprise) {
@@ -182,11 +182,11 @@ public class RestProvider {
 
     @NonNull public static SlackService getSlackService() {
         return new Retrofit.Builder()
-                .baseUrl("https://ok13pknpj4.execute-api.eu-central-1.amazonaws.com/prod/")
-                .addConverterFactory(new GithubResponseConverter(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(SlackService.class);
+               .baseUrl("https://ok13pknpj4.execute-api.eu-central-1.amazonaws.com/prod/")
+               .addConverterFactory(new GithubResponseConverter(gson))
+               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+               .build()
+               .create(SlackService.class);
     }
 
     @NonNull public static ContentService getContentService(boolean enterprise) {
@@ -212,13 +212,13 @@ public class RestProvider {
 
     @NonNull public static Observable<GitHubStatusModel> gitHubStatus() {
         return new Retrofit.Builder()
-                .baseUrl("https://kctbh9vrtdwd.statuspage.io/")
-                .client(provideOkHttpClient())
-                .addConverterFactory(new GithubResponseConverter(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(ContentService.class)
-                .checkStatus();
+               .baseUrl("https://kctbh9vrtdwd.statuspage.io/")
+               .client(provideOkHttpClient())
+               .addConverterFactory(new GithubResponseConverter(gson))
+               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+               .build()
+               .create(ContentService.class)
+               .checkStatus();
     }
 
     public static void clearHttpClient() {

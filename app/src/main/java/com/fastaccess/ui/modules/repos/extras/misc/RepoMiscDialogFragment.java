@@ -41,10 +41,10 @@ public class RepoMiscDialogFragment extends BaseDialogFragment<RepoMiscMVp.View,
     private static RepoMiscDialogFragment newInstance(@NonNull String owner, @NonNull String repo, @RepoMiscMVp.MiscType int type) {
         RepoMiscDialogFragment view = new RepoMiscDialogFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, owner)
-                .put(BundleConstant.ID, repo)
-                .put(BundleConstant.EXTRA_TYPE, type)
-                .end());
+                          .put(BundleConstant.EXTRA, owner)
+                          .put(BundleConstant.ID, repo)
+                          .put(BundleConstant.EXTRA_TYPE, type)
+                          .end());
         return view;
     }
 
@@ -75,18 +75,18 @@ public class RepoMiscDialogFragment extends BaseDialogFragment<RepoMiscMVp.View,
             throw new NullPointerException("Bundle is null, username is required");
         }
         switch (getPresenter().getType()) {
-            case RepoMiscMVp.FORKS:
-                toolbar.setTitle(R.string.forks);
-                stateLayout.setEmptyText(String.format("%s %s", getString(R.string.no), getString(R.string.forks)));
-                break;
-            case RepoMiscMVp.STARS:
-                toolbar.setTitle(R.string.stars);
-                stateLayout.setEmptyText(String.format("%s %s", getString(R.string.no), getString(R.string.stars)));
-                break;
-            case RepoMiscMVp.WATCHERS:
-                toolbar.setTitle(R.string.watchers);
-                stateLayout.setEmptyText(String.format("%s %s", getString(R.string.no), getString(R.string.watchers)));
-                break;
+        case RepoMiscMVp.FORKS:
+            toolbar.setTitle(R.string.forks);
+            stateLayout.setEmptyText(String.format("%s %s", getString(R.string.no), getString(R.string.forks)));
+            break;
+        case RepoMiscMVp.STARS:
+            toolbar.setTitle(R.string.stars);
+            stateLayout.setEmptyText(String.format("%s %s", getString(R.string.no), getString(R.string.stars)));
+            break;
+        case RepoMiscMVp.WATCHERS:
+            toolbar.setTitle(R.string.watchers);
+            stateLayout.setEmptyText(String.format("%s %s", getString(R.string.no), getString(R.string.watchers)));
+            break;
         }
         toolbar.setNavigationIcon(R.drawable.ic_clear);
         toolbar.setNavigationOnClickListener(v -> dismiss());

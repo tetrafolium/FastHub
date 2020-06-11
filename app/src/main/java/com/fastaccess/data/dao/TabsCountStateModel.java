@@ -54,7 +54,9 @@ public class TabsCountStateModel implements Parcelable, Serializable {
 
     public TabsCountStateModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.count);
@@ -69,8 +71,12 @@ public class TabsCountStateModel implements Parcelable, Serializable {
     }
 
     public static final Creator<TabsCountStateModel> CREATOR = new Creator<TabsCountStateModel>() {
-        @Override public TabsCountStateModel createFromParcel(Parcel source) {return new TabsCountStateModel(source);}
+        @Override public TabsCountStateModel createFromParcel(Parcel source) {
+            return new TabsCountStateModel(source);
+        }
 
-        @Override public TabsCountStateModel[] newArray(int size) {return new TabsCountStateModel[size];}
+        @Override public TabsCountStateModel[] newArray(int size) {
+            return new TabsCountStateModel[size];
+        }
     };
 }

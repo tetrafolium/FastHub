@@ -118,7 +118,7 @@ public class AutoLinearLayout extends FrameLayout {
             wSize = maxRowWidth + (getPaddingLeft() + getPaddingRight());
 
         setMeasuredDimension(resolveSize(wSize, widthMeasureSpec),
-                resolveSize(totalHeight + getPaddingTop() + getPaddingBottom(), heightMeasureSpec));
+                             resolveSize(totalHeight + getPaddingTop() + getPaddingBottom(), heightMeasureSpec));
     }
 
     private void measureVertical(int widthMeasureSpec, int heightMeasureSpec) {
@@ -167,7 +167,7 @@ public class AutoLinearLayout extends FrameLayout {
             hSize = maxColumnHeight + (getPaddingTop() + getPaddingBottom());
 
         setMeasuredDimension(resolveSize(totalWidth + getPaddingRight() + getPaddingLeft(),
-                widthMeasureSpec), resolveSize(hSize, heightMeasureSpec));
+                                         widthMeasureSpec), resolveSize(hSize, heightMeasureSpec));
     }
 
     /**
@@ -204,7 +204,7 @@ public class AutoLinearLayout extends FrameLayout {
                 //if child is not updated yet call measure
                 if (child.getMeasuredHeight() == 0 || child.getMeasuredWidth() == 0)
                     child.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
-                            MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
+                                  MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
 
                 LayoutParams lp = (LayoutParams) child.getLayoutParams();
                 final int childWidth = child.getMeasuredWidth();
@@ -274,7 +274,7 @@ public class AutoLinearLayout extends FrameLayout {
             if (child != null && child.getVisibility() != View.GONE) {
                 if (child.getMeasuredHeight() == 0 || child.getMeasuredWidth() == 0)
                     child.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST),
-                            MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
+                                  MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST));
 
                 LayoutParams lp = (LayoutParams) child.getLayoutParams();
                 final int childWidth = child.getMeasuredWidth();
@@ -377,25 +377,25 @@ public class AutoLinearLayout extends FrameLayout {
 
     private void updateLeftPositionByGravity(ViewPosition pos, int size, int gravity) {
         switch (gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
-            case GravityCompat.END:
-                pos.left += (size > 0) ? size : 0;
-                break;
+        case GravityCompat.END:
+            pos.left += (size > 0) ? size : 0;
+            break;
 
-            case Gravity.CENTER_HORIZONTAL:
-                pos.left += ((size > 0) ? size : 0) / 2;
-                break;
+        case Gravity.CENTER_HORIZONTAL:
+            pos.left += ((size > 0) ? size : 0) / 2;
+            break;
         }
     }
 
     private void updateTopPositionByGravity(ViewPosition pos, int size, int gravity) {
         switch (gravity & Gravity.VERTICAL_GRAVITY_MASK) {
-            case Gravity.BOTTOM:
-                pos.top += (size > 0) ? size : 0;
-                break;
+        case Gravity.BOTTOM:
+            pos.top += (size > 0) ? size : 0;
+            break;
 
-            case Gravity.CENTER_VERTICAL:
-                pos.top += ((size > 0) ? size : 0) / 2;
-                break;
+        case Gravity.CENTER_VERTICAL:
+            pos.top += ((size > 0) ? size : 0) / 2;
+            break;
         }
     }
 
@@ -404,10 +404,10 @@ public class AutoLinearLayout extends FrameLayout {
 
         if (mOrientation == HORIZONTAL)
             child.layout(pos.left, pos.top + lp.topMargin, pos.left + child.getMeasuredWidth(), pos.top +
-                    child.getMeasuredHeight() + lp.topMargin);
+                         child.getMeasuredHeight() + lp.topMargin);
         else
             child.layout(pos.left + lp.leftMargin, pos.top, pos.left + child.getMeasuredWidth() +
-                    lp.leftMargin, pos.top + child.getMeasuredHeight());
+                         lp.leftMargin, pos.top + child.getMeasuredHeight());
     }
 
     /**

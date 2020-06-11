@@ -65,6 +65,8 @@ public class SettingsAdapter extends BaseAdapter {
         @BindView(R.id.iconItemTitle) FontTextView title;
         @BindView(R.id.iconItemSummary) FontTextView summary;
 
-        ViewHolder(View view) {ButterKnife.bind(this, view);}
+        ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

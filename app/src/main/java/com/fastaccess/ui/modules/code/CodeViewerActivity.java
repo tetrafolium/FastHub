@@ -49,10 +49,10 @@ public class CodeViewerActivity extends BaseActivity {
         boolean isEnterprise = LinkParserHelper.isEnterprise(htmlUrl);
         url = LinkParserHelper.getEnterpriseGistUrl(url, isEnterprise);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA_TWO, htmlUrl)
-                .put(BundleConstant.EXTRA, url)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .end());
+                         .put(BundleConstant.EXTRA_TWO, htmlUrl)
+                         .put(BundleConstant.EXTRA, url)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .end());
         return intent;
     }
 
@@ -85,9 +85,9 @@ public class CodeViewerActivity extends BaseActivity {
             url = Objects.requireNonNull(bundle.getString(BundleConstant.EXTRA), "Url is null");
             htmlUrl = bundle.getString(BundleConstant.EXTRA_TWO);
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.container, ViewerFragment.newInstance(url, htmlUrl), ViewerFragment.TAG)
-                    .commit();
+            .beginTransaction()
+            .replace(R.id.container, ViewerFragment.newInstance(url, htmlUrl), ViewerFragment.TAG)
+            .commit();
         }
         String title = Uri.parse(url).getLastPathSegment();
         setTitle(title);

@@ -35,8 +35,8 @@ import lombok.Setter;
             return new ArrayList<>();
         }
         return Stream.of(files)
-                .map(CommitFileChanges::getCommitFileChanges)
-                .toList();
+               .map(CommitFileChanges::getCommitFileChanges)
+               .toList();
     }
 
     @NonNull private static CommitFileChanges getCommitFileChanges(CommitFileModel m) {
@@ -49,7 +49,9 @@ import lombok.Setter;
         return model;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeTypedList(this.linesModel);
@@ -62,9 +64,13 @@ import lombok.Setter;
     }
 
     public static final Creator<CommitFileChanges> CREATOR = new Creator<CommitFileChanges>() {
-        @Override public CommitFileChanges createFromParcel(Parcel source) {return new CommitFileChanges(source);}
+        @Override public CommitFileChanges createFromParcel(Parcel source) {
+            return new CommitFileChanges(source);
+        }
 
-        @Override public CommitFileChanges[] newArray(int size) {return new CommitFileChanges[size];}
+        @Override public CommitFileChanges[] newArray(int size) {
+            return new CommitFileChanges[size];
+        }
     };
 
     public static boolean canAttachToBundle(CommitFileChanges model) {
@@ -76,8 +82,8 @@ import lombok.Setter;
 
     @Override public String toString() {
         return "CommitFileChanges{" +
-                "linesModel=" + linesModel +
-                ", commitFileModel=" + commitFileModel +
-                '}';
+               "linesModel=" + linesModel +
+               ", commitFileModel=" + commitFileModel +
+               '}';
     }
 }

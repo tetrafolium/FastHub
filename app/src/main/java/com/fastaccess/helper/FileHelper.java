@@ -34,7 +34,7 @@ public class FileHelper {
             String[] column = {MediaStore.Images.Media.DATA};
             String sel = MediaStore.Images.Media._ID + "=?";
             try (Cursor cursor = context.getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    column, sel, new String[]{id}, null)) {
+                                     column, sel, new String[] {id}, null)) {
                 if (cursor != null) {
                     int columnIndex = cursor.getColumnIndex(column[0]);
                     if (cursor.moveToFirst()) {
@@ -54,8 +54,8 @@ public class FileHelper {
                 return ringtone.getTitle(context);
             } else {
                 try (Cursor cur = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                        new String[]{MediaStore.Audio.Media.TITLE}, MediaStore.Audio.Media._ID + " =?",
-                        new String[]{uri.getLastPathSegment()}, null)) {
+                                      new String[] {MediaStore.Audio.Media.TITLE}, MediaStore.Audio.Media._ID + " =?",
+                                      new String[] {uri.getLastPathSegment()}, null)) {
                     if (cur != null) {
                         title = cur.getString(1);
                         if (InputHelper.isEmpty(title)) {
@@ -76,9 +76,9 @@ public class FileHelper {
             while (ringsCursor.moveToNext()) {
                 String title = ringsCursor.getString(RingtoneManager.TITLE_COLUMN_INDEX);
                 Uri uri = Uri.parse(ringsCursor.getString(RingtoneManager.URI_COLUMN_INDEX) + "/"
-                        + ringsCursor.getString(RingtoneManager.ID_COLUMN_INDEX));
+                                    + ringsCursor.getString(RingtoneManager.ID_COLUMN_INDEX));
                 boolean selected = defaultValue != null && (uri.toString().contains(defaultValue) ||
-                        title.equalsIgnoreCase(defaultValue) || defaultValue.contains(title));
+                                   title.equalsIgnoreCase(defaultValue) || defaultValue.contains(title));
                 Logger.e(defaultValue, title, uri, selected);
                 notificationSounds.add(new NotificationSoundModel(title, uri, selected));
             }

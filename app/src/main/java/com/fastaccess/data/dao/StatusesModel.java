@@ -25,7 +25,9 @@ import lombok.Setter;
 
     public StatusesModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.url);
@@ -51,8 +53,12 @@ import lombok.Setter;
     }
 
     public static final Creator<StatusesModel> CREATOR = new Creator<StatusesModel>() {
-        @Override public StatusesModel createFromParcel(Parcel source) {return new StatusesModel(source);}
+        @Override public StatusesModel createFromParcel(Parcel source) {
+            return new StatusesModel(source);
+        }
 
-        @Override public StatusesModel[] newArray(int size) {return new StatusesModel[size];}
+        @Override public StatusesModel[] newArray(int size) {
+            return new StatusesModel[size];
+        }
     };
 }

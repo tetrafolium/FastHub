@@ -38,7 +38,7 @@ import butterknife.BindView;
  */
 
 public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, GistFilesListPresenter> implements
-        GistFilesListMvp.View {
+    GistFilesListMvp.View {
 
     @BindView(R.id.recycler) DynamicRecyclerView recycler;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
@@ -50,9 +50,9 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
     public static GistFilesListFragment newInstance(@NonNull ArrayList<FilesListModel> files, boolean isOwner) {
         GistFilesListFragment view = new GistFilesListFragment();
         view.setArguments(Bundler.start()
-                .putParcelableArrayList(BundleConstant.ITEM, files)
-                .put(BundleConstant.EXTRA_TYPE, isOwner)
-                .end());
+                          .putParcelableArrayList(BundleConstant.ITEM, files)
+                          .put(BundleConstant.EXTRA_TYPE, isOwner)
+                          .end());
         return view;
     }
 
@@ -92,11 +92,11 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
 
     @Override public void onDeleteFile(@NonNull FilesListModel item, int position) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message), false,
-                Bundler.start()
-                        .put(BundleConstant.ID, position)
-                        .put(BundleConstant.YES_NO_EXTRA, true)
-                        .end())
-                .show(getChildFragmentManager(), MessageDialogView.TAG);
+                                      Bundler.start()
+                                      .put(BundleConstant.ID, position)
+                                      .put(BundleConstant.YES_NO_EXTRA, true)
+                                      .end())
+        .show(getChildFragmentManager(), MessageDialogView.TAG);
     }
 
     @Override public void onEditFile(@NonNull FilesListModel item, int position) {
@@ -121,7 +121,7 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
         Logger.e("Hello world");
         if (adapter.getItemCount() == 0 || (PrefGetter.isProEnabled() || PrefGetter.isAllFeaturesUnlocked())) {
             AddGistBottomSheetDialog.Companion.newInstance(null, -1)
-                    .show(getChildFragmentManager(), AddGistBottomSheetDialog.Companion.getTAG());
+            .show(getChildFragmentManager(), AddGistBottomSheetDialog.Companion.getTAG());
         } else {
             PremiumActivity.Companion.startActivity(getContext());
         }
@@ -178,8 +178,8 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
         if (item.getRawUrl() == null) return false;
         if (item.getSize() > FileHelper.ONE_MB && !MarkDownProvider.isImage(item.getRawUrl())) {
             MessageDialogView.newInstance(getString(R.string.big_file), getString(R.string.big_file_description), false, true,
-                    Bundler.start().put(BundleConstant.YES_NO_EXTRA, true).put(BundleConstant.EXTRA, item.getRawUrl()).end())
-                    .show(getChildFragmentManager(), "MessageDialogView");
+                                          Bundler.start().put(BundleConstant.YES_NO_EXTRA, true).put(BundleConstant.EXTRA, item.getRawUrl()).end())
+            .show(getChildFragmentManager(), "MessageDialogView");
             return false;
         }
         return true;

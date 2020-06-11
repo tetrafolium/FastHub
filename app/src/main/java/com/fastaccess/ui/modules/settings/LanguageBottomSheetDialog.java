@@ -59,9 +59,9 @@ public class LanguageBottomSheetDialog extends BaseBottomSheetDialog {
         String language = PrefGetter.getAppLanguage();
         String[] values = getResources().getStringArray(R.array.languages_array_values);
         List<AppLanguageModel> languageModels = Stream.of(getResources().getStringArray(R.array.languages_array))
-                .mapIndexed((index, s) -> new AppLanguageModel(values[index], s))
-                .sortBy(AppLanguageModel::getLabel)
-                .toList();
+                                                .mapIndexed((index, s) -> new AppLanguageModel(values[index], s))
+                                                .sortBy(AppLanguageModel::getLabel)
+                                                .toList();
         int padding = getResources().getDimensionPixelSize(R.dimen.spacing_xs_large);
         for (int i = 0; i < languageModels.size(); i++) {
             RadioButton radioButtonView = new RadioButton(getContext());

@@ -53,10 +53,10 @@ public class LabelsDialogFragment extends BaseDialogFragment<LabelsMvp.View, Lab
     public static LabelsDialogFragment newInstance(@Nullable LabelListModel selectedLabels, @NonNull String repo, @NonNull String login) {
         LabelsDialogFragment fragment = new LabelsDialogFragment();
         fragment.setArguments(Bundler.start()
-                .putParcelableArrayList(BundleConstant.EXTRA, selectedLabels)
-                .put(BundleConstant.EXTRA_TWO, repo)
-                .put(BundleConstant.EXTRA_THREE, login)
-                .end());
+                              .putParcelableArrayList(BundleConstant.EXTRA, selectedLabels)
+                              .put(BundleConstant.EXTRA_TWO, repo)
+                              .put(BundleConstant.EXTRA_THREE, login)
+                              .end());
         return fragment;
     }
 
@@ -154,13 +154,13 @@ public class LabelsDialogFragment extends BaseDialogFragment<LabelsMvp.View, Lab
 
     @OnClick({R.id.cancel, R.id.ok}) public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.cancel:
-                dismiss();
-                break;
-            case R.id.ok:
-                if (callback != null) callback.onSelectedLabels(labelModels);
-                dismiss();
-                break;
+        case R.id.cancel:
+            dismiss();
+            break;
+        case R.id.ok:
+            if (callback != null) callback.onSelectedLabels(labelModels);
+            dismiss();
+            break;
         }
     }
 

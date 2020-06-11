@@ -19,7 +19,9 @@ public class LicenseModel implements Parcelable {
     String url;
     boolean featured;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.key);
@@ -38,8 +40,12 @@ public class LicenseModel implements Parcelable {
     }
 
     public static final Creator<LicenseModel> CREATOR = new Creator<LicenseModel>() {
-        @Override public LicenseModel createFromParcel(Parcel source) {return new LicenseModel(source);}
+        @Override public LicenseModel createFromParcel(Parcel source) {
+            return new LicenseModel(source);
+        }
 
-        @Override public LicenseModel[] newArray(int size) {return new LicenseModel[size];}
+        @Override public LicenseModel[] newArray(int size) {
+            return new LicenseModel[size];
+        }
     };
 }

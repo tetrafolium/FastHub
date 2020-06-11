@@ -18,7 +18,9 @@ public class RenameModel implements Parcelable {
     @SerializedName("from") String fromValue;
     @SerializedName("to") String toValue;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.fromValue);
@@ -31,8 +33,12 @@ public class RenameModel implements Parcelable {
     }
 
     public static final Creator<RenameModel> CREATOR = new Creator<RenameModel>() {
-        @Override public RenameModel createFromParcel(Parcel source) {return new RenameModel(source);}
+        @Override public RenameModel createFromParcel(Parcel source) {
+            return new RenameModel(source);
+        }
 
-        @Override public RenameModel[] newArray(int size) {return new RenameModel[size];}
+        @Override public RenameModel[] newArray(int size) {
+            return new RenameModel[size];
+        }
     };
 }

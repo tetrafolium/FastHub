@@ -50,39 +50,39 @@ public class NestedWebView extends WebView implements NestedScrollingChild {
         int eventY = (int) event.getY();
         event.offsetLocation(0, mNestedOffsetY);
         switch (action) {
-            case MotionEvent.ACTION_MOVE:
-                int deltaY = mLastY - eventY;
-                // NestedPreScroll
-                if (dispatchNestedPreScroll(0, deltaY, mScrollConsumed, mScrollOffset)) {
-                    deltaY -= mScrollConsumed[1];
-                    mLastY = eventY - mScrollOffset[1];
-                    event.offsetLocation(0, -mScrollOffset[1]);
-                    mNestedOffsetY += mScrollOffset[1];
-                }
-                returnValue = super.onTouchEvent(event);
+        case MotionEvent.ACTION_MOVE:
+            int deltaY = mLastY - eventY;
+            // NestedPreScroll
+            if (dispatchNestedPreScroll(0, deltaY, mScrollConsumed, mScrollOffset)) {
+                deltaY -= mScrollConsumed[1];
+                mLastY = eventY - mScrollOffset[1];
+                event.offsetLocation(0, -mScrollOffset[1]);
+                mNestedOffsetY += mScrollOffset[1];
+            }
+            returnValue = super.onTouchEvent(event);
 
-                // NestedScroll
-                if (dispatchNestedScroll(0, mScrollOffset[1], 0, deltaY, mScrollOffset)) {
-                    event.offsetLocation(0, mScrollOffset[1]);
-                    mNestedOffsetY += mScrollOffset[1];
-                    mLastY -= mScrollOffset[1];
-                }
-                break;
-            case MotionEvent.ACTION_DOWN:
-                returnValue = super.onTouchEvent(event);
-                if (firstScroll) {
-                    mLastY = eventY - 5;
-                    firstScroll = false;
-                } else {
-                    mLastY = eventY;
-                }
-                startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL);
-                break;
-            default:
-                returnValue = super.onTouchEvent(event);
-                // end NestedScroll
-                stopNestedScroll();
-                break;
+            // NestedScroll
+            if (dispatchNestedScroll(0, mScrollOffset[1], 0, deltaY, mScrollOffset)) {
+                event.offsetLocation(0, mScrollOffset[1]);
+                mNestedOffsetY += mScrollOffset[1];
+                mLastY -= mScrollOffset[1];
+            }
+            break;
+        case MotionEvent.ACTION_DOWN:
+            returnValue = super.onTouchEvent(event);
+            if (firstScroll) {
+                mLastY = eventY - 5;
+                firstScroll = false;
+            } else {
+                mLastY = eventY;
+            }
+            startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL);
+            break;
+        default:
+            returnValue = super.onTouchEvent(event);
+            // end NestedScroll
+            stopNestedScroll();
+            break;
         }
         return returnValue;
     }
@@ -108,7 +108,7 @@ public class NestedWebView extends WebView implements NestedScrollingChild {
     }
 
     @Override public boolean dispatchNestedScroll(int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed,
-                                                  int[] offsetInWindow) {
+            int[] offsetInWindow) {
         return mChildHelper.dispatchNestedScroll(dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, offsetInWindow);
     }
 

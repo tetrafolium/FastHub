@@ -51,16 +51,16 @@ import static com.fastaccess.data.dao.model.PinnedIssues.LOGIN;
 
     @Nullable public static PinnedIssues get(long issueId) {
         return App.getInstance().getDataStore().select(PinnedIssues.class)
-                .where(PinnedIssues.ISSUE_ID.eq(issueId))
-                .get()
-                .firstOrNull();
+               .where(PinnedIssues.ISSUE_ID.eq(issueId))
+               .get()
+               .firstOrNull();
     }
 
     public static void delete(long issueId) {
         App.getInstance().getDataStore().delete(PinnedIssues.class)
-                .where(PinnedIssues.ISSUE_ID.eq(issueId))
-                .get()
-                .value();
+        .where(PinnedIssues.ISSUE_ID.eq(issueId))
+        .get()
+        .value();
     }
 
     @NonNull public static Disposable updateEntry(long issueId) {
@@ -77,12 +77,12 @@ import static com.fastaccess.data.dao.model.PinnedIssues.LOGIN;
 
     @NonNull public static Single<List<Issue>> getMyPinnedIssues() {
         return App.getInstance().getDataStore().select(PinnedIssues.class)
-                .where(LOGIN.eq(Login.getUser().getLogin()).or(LOGIN.isNull()))
-                .orderBy(ENTRY_COUNT.desc(), ID.desc())
-                .get()
-                .observable()
-                .map(PinnedIssues::getIssue)
-                .toList();
+               .where(LOGIN.eq(Login.getUser().getLogin()).or(LOGIN.isNull()))
+               .orderBy(ENTRY_COUNT.desc(), ID.desc())
+               .get()
+               .observable()
+               .map(PinnedIssues::getIssue)
+               .toList();
     }
 
     public static boolean isPinned(long issueId) {

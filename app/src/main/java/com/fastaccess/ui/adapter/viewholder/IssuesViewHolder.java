@@ -56,7 +56,7 @@ public class IssuesViewHolder extends BaseViewHolder<Issue> {
     }
 
     public static IssuesViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter, boolean withAvatar,
-                                               boolean showRepoName, boolean showState) {
+            boolean showRepoName, boolean showState) {
         if (withAvatar) {
             return new IssuesViewHolder(getView(viewGroup, R.layout.issue_row_item), adapter, true, showRepoName, showState);
         } else {
@@ -68,40 +68,40 @@ public class IssuesViewHolder extends BaseViewHolder<Issue> {
         title.setText(issueModel.getTitle());
         if (issueModel.getState() != null) {
             CharSequence data = ParseDateFormat.getTimeAgo(issueModel.getState() == IssueState.open
-                                                           ? issueModel.getCreatedAt() : issueModel.getClosedAt());
+                                ? issueModel.getCreatedAt() : issueModel.getClosedAt());
             SpannableBuilder builder = SpannableBuilder.builder();
             if (showRepoName) {
                 PullsIssuesParser parser = PullsIssuesParser.getForIssue(issueModel.getHtmlUrl());
                 if (parser != null) builder.bold(parser.getLogin())
-                        .append("/")
-                        .bold(parser.getRepoId())
-                        .bold("#")
-                        .bold(String.valueOf(issueModel.getNumber())).append(" ")
-                        .append(" ");
+                    .append("/")
+                    .bold(parser.getRepoId())
+                    .bold("#")
+                    .bold(String.valueOf(issueModel.getNumber())).append(" ")
+                    .append(" ");
             }
             if (!showRepoName) {
                 if (issueModel.getState() == IssueState.closed) {
                     if (issueModel.getClosedBy() == null) {
                         builder.bold("#")
-                                .bold(String.valueOf(issueModel.getNumber())).append(" ")
-                                .append(" ");
+                        .bold(String.valueOf(issueModel.getNumber())).append(" ")
+                        .append(" ");
                     } else {
                         builder.append("#")
-                                .append(String.valueOf(issueModel.getNumber())).append(" ")
-                                .append(issueModel.getClosedBy().getLogin())
-                                .append(" ");
+                        .append(String.valueOf(issueModel.getNumber())).append(" ")
+                        .append(issueModel.getClosedBy().getLogin())
+                        .append(" ");
                     }
                 } else {
                     builder.bold("#")
-                            .bold(String.valueOf(issueModel.getNumber())).append(" ")
-                            .append(issueModel.getUser().getLogin())
-                            .append(" ");
+                    .bold(String.valueOf(issueModel.getNumber())).append(" ")
+                    .append(issueModel.getUser().getLogin())
+                    .append(" ");
                 }
             }
             details.setText(builder
-                    .append(itemView.getResources().getString(issueModel.getState().getStatus()).toLowerCase())
-                    .append(" ")
-                    .append(data));
+                            .append(itemView.getResources().getString(issueModel.getState().getStatus()).toLowerCase())
+                            .append(" ")
+                            .append(data));
             if (issueModel.getComments() > 0) {
                 commentsNo.setText(String.valueOf(issueModel.getComments()));
                 commentsNo.setVisibility(View.VISIBLE);
@@ -118,7 +118,7 @@ public class IssuesViewHolder extends BaseViewHolder<Issue> {
         }
         if (withAvatar && avatarLayout != null) {
             avatarLayout.setUrl(issueModel.getUser().getAvatarUrl(), issueModel.getUser().getLogin(), false,
-                    LinkParserHelper.isEnterprise(issueModel.getUser().getHtmlUrl()));
+                                LinkParserHelper.isEnterprise(issueModel.getUser().getHtmlUrl()));
             avatarLayout.setVisibility(View.VISIBLE);
         }
     }

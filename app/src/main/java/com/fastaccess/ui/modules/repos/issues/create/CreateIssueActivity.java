@@ -82,11 +82,11 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
     public static void startForResult(@NonNull Fragment fragment, @NonNull String login, @NonNull String repoId, boolean isEnterprise) {
         Intent intent = new Intent(fragment.getContext(), CreateIssueActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA_TWO, login.equalsIgnoreCase("k0shk0sh") && repoId.equalsIgnoreCase("FastHub"))
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .end());
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.ID, repoId)
+                         .put(BundleConstant.EXTRA_TWO, login.equalsIgnoreCase("k0shk0sh") && repoId.equalsIgnoreCase("FastHub"))
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .end());
         View view = fragment.getActivity() != null ? fragment.getActivity().findViewById(R.id.fab) : null;
         if (view != null) {
             ActivityHelper.startReveal(fragment, intent, view, BundleConstant.REQUEST_CODE);
@@ -101,11 +101,11 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         if (issueModel != null) {
             Intent intent = new Intent(activity, CreateIssueActivity.class);
             intent.putExtras(Bundler.start()
-                    .put(BundleConstant.EXTRA, login)
-                    .put(BundleConstant.ID, repoId)
-                    .put(BundleConstant.ITEM, issueModel)
-                    .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                    .end());
+                             .put(BundleConstant.EXTRA, login)
+                             .put(BundleConstant.ID, repoId)
+                             .put(BundleConstant.ITEM, issueModel)
+                             .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                             .end());
             View view = activity.findViewById(R.id.fab);
             if (view != null) {
                 startForResult(activity, intent, view);
@@ -120,11 +120,11 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         if (pullRequestModel != null) {
             Intent intent = new Intent(activity, CreateIssueActivity.class);
             intent.putExtras(Bundler.start()
-                    .put(BundleConstant.EXTRA, login)
-                    .put(BundleConstant.ID, repoId)
-                    .put(BundleConstant.ITEM, pullRequestModel)
-                    .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                    .end());
+                             .put(BundleConstant.EXTRA, login)
+                             .put(BundleConstant.ID, repoId)
+                             .put(BundleConstant.ITEM, pullRequestModel)
+                             .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                             .end());
             View view = activity.findViewById(R.id.fab);
             if (view != null) {
                 startForResult(activity, intent, view);
@@ -137,10 +137,10 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
     @NonNull public static Intent getIntent(@NonNull Context context, @NonNull String login, @NonNull String repoId, boolean isFeedback) {
         Intent intent = new Intent(context, CreateIssueActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA_TWO, isFeedback)
-                .end());
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.ID, repoId)
+                         .put(BundleConstant.EXTRA_TWO, isFeedback)
+                         .end());
         return intent;
     }
 
@@ -149,10 +149,10 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         String repoId = "FastHub";// FIXME: 23/02/2017 hardcoded
         Intent intent = new Intent(activity, CreateIssueActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA_TWO, true)
-                .end());
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.ID, repoId)
+                         .put(BundleConstant.EXTRA_TWO, true)
+                         .end());
         return intent;
     }
 
@@ -177,8 +177,8 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         hideProgress();
         Intent intent = new Intent();
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.ITEM, issueModel)
-                .end());
+                         .put(BundleConstant.ITEM, issueModel)
+                         .end());
         setResult(RESULT_OK, intent);
         finish();
         showMessage(R.string.success, R.string.successfully_submitted);
@@ -188,8 +188,8 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         hideProgress();
         Intent intent = new Intent();
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.ITEM, issueModel)
-                .end());
+                         .put(BundleConstant.ITEM, issueModel)
+                         .end());
         setResult(RESULT_OK, intent);
         finish();
         showMessage(R.string.success, R.string.successfully_submitted);
@@ -291,11 +291,11 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         }
         if (BuildConfig.DEBUG && isFeedback) {
             alertDialog = new AlertDialog.Builder(this)
-                    .setTitle("You are currently using a debug build")
-                    .setMessage("If you have found a bug, please report it on slack." + "\n" +
-                            "Feature requests can be submitted here." + "\n" + "Happy Testing")
-                    .setPositiveButton(android.R.string.ok, null)
-                    .show();
+            .setTitle("You are currently using a debug build")
+            .setMessage("If you have found a bug, please report it on slack." + "\n" +
+                        "Feature requests can be submitted here." + "\n" + "Happy Testing")
+            .setPositiveButton(android.R.string.ok, null)
+            .show();
         }
         if (toolbar != null) toolbar.setSubtitle(login + "/" + repoId);
         setTaskName(login + "/" + repoId + " - " + (isFeedback ? getString(R.string.submit_feedback) : getString(R.string.create_issue)));
@@ -313,8 +313,8 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         } else {
             ViewHelper.hideKeyboard(title);
             MessageDialogView.newInstance(getString(R.string.close), getString(R.string.unsaved_data_warning),
-                    Bundler.start().put("primary_extra", getString(R.string.discard)).put("secondary_extra", getString(R.string.cancel))
-                            .put(BundleConstant.EXTRA, true).end()).show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                          Bundler.start().put("primary_extra", getString(R.string.discard)).put("secondary_extra", getString(R.string.cancel))
+                                          .put(BundleConstant.EXTRA, true).end()).show(getSupportFragmentManager(), MessageDialogView.TAG);
         }
     }
 
@@ -339,10 +339,10 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         if (event.getAction() == MotionEvent.ACTION_UP) {
             Intent intent = new Intent(this, EditorActivity.class);
             intent.putExtras(Bundler.start()
-                    .put(BundleConstant.EXTRA, InputHelper.toString(savedText))
-                    .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.FOR_RESULT_EXTRA)
-                    .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
-                    .end());
+                             .put(BundleConstant.EXTRA, InputHelper.toString(savedText))
+                             .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.FOR_RESULT_EXTRA)
+                             .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
+                             .end());
             ActivityHelper.startReveal(this, intent, submit, BundleConstant.REQUEST_CODE);
             return true;
         }
@@ -355,20 +355,20 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
 
     @OnClick({R.id.addAssignee, R.id.addLabels, R.id.addMilestone}) public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.addAssignee:
-                AssigneesDialogFragment.newInstance(login, repoId, false)
-                        .show(getSupportFragmentManager(), "AssigneesDialogFragment");
-                break;
-            case R.id.addLabels:
-                LabelListModel labelModels = new LabelListModel();
-                labelModels.addAll(this.labelModels);
-                LabelsDialogFragment.newInstance(labelModels, repoId, login)
-                        .show(getSupportFragmentManager(), "LabelsDialogFragment");
-                break;
-            case R.id.addMilestone:
-                MilestoneDialogFragment.newInstance(login, repoId)
-                        .show(getSupportFragmentManager(), "MilestoneDialogFragment");
-                break;
+        case R.id.addAssignee:
+            AssigneesDialogFragment.newInstance(login, repoId, false)
+            .show(getSupportFragmentManager(), "AssigneesDialogFragment");
+            break;
+        case R.id.addLabels:
+            LabelListModel labelModels = new LabelListModel();
+            labelModels.addAll(this.labelModels);
+            LabelsDialogFragment.newInstance(labelModels, repoId, login)
+            .show(getSupportFragmentManager(), "LabelsDialogFragment");
+            break;
+        case R.id.addMilestone:
+            MilestoneDialogFragment.newInstance(login, repoId)
+            .show(getSupportFragmentManager(), "MilestoneDialogFragment");
+            break;
         }
     }
 

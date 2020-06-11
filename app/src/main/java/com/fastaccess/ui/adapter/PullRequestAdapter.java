@@ -15,7 +15,7 @@ import java.util.List;
  */
 
 public class PullRequestAdapter extends BaseRecyclerAdapter<PullRequest, PullRequestViewHolder, BaseViewHolder
-        .OnItemClickListener<PullRequest>> {
+    .OnItemClickListener<PullRequest>> {
 
     private boolean showRepoName;
     private boolean withAvatar;
