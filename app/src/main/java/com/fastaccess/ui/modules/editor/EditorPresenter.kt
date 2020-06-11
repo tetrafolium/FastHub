@@ -33,9 +33,16 @@ class EditorPresenter : BasePresenter<EditorMvp.View>(), EditorMvp.Presenter {
         }
     }
 
-    override fun onHandleSubmission(savedText: CharSequence?, @BundleConstant.ExtraType extraType: String?,
-                                    itemId: String?, id: Long, login: String?, issueNumber: Int,
-                                    sha: String?, reviewComment: EditReviewCommentModel?) {
+    override fun onHandleSubmission(
+        savedText: CharSequence?,
+        @BundleConstant.ExtraType extraType: String?,
+        itemId: String?,
+        id: Long,
+        login: String?,
+        issueNumber: Int,
+        sha: String?,
+        reviewComment: EditReviewCommentModel?
+    ) {
         if (extraType == null) {
             throw NullPointerException("extraType  is null")
         }
@@ -92,8 +99,14 @@ class EditorPresenter : BasePresenter<EditorMvp.View>(), EditorMvp.Presenter {
         }
     }
 
-    private fun onEditReviewComment(reviewComment: EditReviewCommentModel, savedText: CharSequence, repoId: String,
-                                    login: String, @Suppress("UNUSED_PARAMETER") issueNumber: Int, id: Long) {
+    private fun onEditReviewComment(
+        reviewComment: EditReviewCommentModel,
+        savedText: CharSequence,
+        repoId: String,
+        login: String,
+        @Suppress("UNUSED_PARAMETER") issueNumber: Int,
+        id: Long
+    ) {
         if (!InputHelper.isEmpty(savedText)) {
             val requestModel = CommentRequestModel()
             requestModel.body = savedText.toString()
@@ -105,8 +118,13 @@ class EditorPresenter : BasePresenter<EditorMvp.View>(), EditorMvp.Presenter {
         }
     }
 
-    private fun onSubmitReviewComment(reviewComment: EditReviewCommentModel, savedText: CharSequence,
-                                      repoId: String, login: String, issueNumber: Int) {
+    private fun onSubmitReviewComment(
+        reviewComment: EditReviewCommentModel,
+        savedText: CharSequence,
+        repoId: String,
+        login: String,
+        issueNumber: Int
+    ) {
         if (!InputHelper.isEmpty(savedText)) {
             val requestModel = CommentRequestModel()
             requestModel.body = savedText.toString()

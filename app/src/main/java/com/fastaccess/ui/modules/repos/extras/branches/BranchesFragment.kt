@@ -2,8 +2,8 @@ package com.fastaccess.ui.modules.repos.extras.branches
 
 import android.content.Context
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.View
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.BranchesModel

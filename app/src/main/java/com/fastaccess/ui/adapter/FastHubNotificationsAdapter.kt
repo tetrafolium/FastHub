@@ -21,5 +21,4 @@ class FastHubNotificationsAdapter(data: List<FastHubNotification>) : BaseRecycle
     override fun onBindView(holder: FastHubNotificationViewHolder?, position: Int) {
         holder?.bind(getItem(position))
     }
-
 }

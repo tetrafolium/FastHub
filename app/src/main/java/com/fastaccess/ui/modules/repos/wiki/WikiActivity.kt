@@ -4,13 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
-import androidx.drawerlayout.widget.DrawerLayout
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
+import androidx.drawerlayout.widget.DrawerLayout
 import butterknife.BindView
 import com.evernote.android.state.State
 import com.fastaccess.R
@@ -23,6 +22,7 @@ import com.fastaccess.provider.scheme.LinkParserHelper
 import com.fastaccess.ui.base.BaseActivity
 import com.fastaccess.ui.modules.repos.RepoPagerActivity
 import com.fastaccess.ui.widgets.StateLayout
+import com.google.android.material.navigation.NavigationView
 import com.prettifier.pretty.PrettifyWebView
 
 /**

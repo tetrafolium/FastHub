@@ -1,11 +1,10 @@
 package com.fastaccess.provider.rest.interceptors
 
-import com.fastaccess.helper.Logger
 import com.fastaccess.helper.PrefGetter
 import com.fastaccess.provider.scheme.LinkParserHelper
+import java.io.IOException
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.io.IOException
 
 class AuthenticationInterceptor : Interceptor {
     private var isScrapping: Boolean = false

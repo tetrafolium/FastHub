@@ -1,7 +1,5 @@
 package com.fastaccess.ui.base
 
-import com.google.android.material.navigation.NavigationView
-import com.google.android.material.tabs.TabLayout
 import android.view.View
 import android.widget.TextView
 import com.fastaccess.R
@@ -12,12 +10,13 @@ import com.fastaccess.ui.adapter.FragmentsPagerAdapter
 import com.fastaccess.ui.widgets.AvatarLayout
 import com.fastaccess.ui.widgets.FontTextView
 import com.fastaccess.ui.widgets.ViewPagerView
+import com.google.android.material.navigation.NavigationView
+import com.google.android.material.tabs.TabLayout
 
 /**
  * Created by Kosh on 09 Jul 2017, 3:50 PM
  */
 class MainNavDrawer(val view: BaseActivity<*, *>, private val extraNav: NavigationView?) {
-
 
     init {
         setupView()

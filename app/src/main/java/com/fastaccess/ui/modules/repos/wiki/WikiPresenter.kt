@@ -1,8 +1,6 @@
 package com.fastaccess.ui.modules.repos.wiki
 
 import android.content.Intent
-import com.fastaccess.BuildConfig
-import com.fastaccess.R
 import com.fastaccess.data.dao.wiki.FirebaseWikiConfigModel
 import com.fastaccess.data.dao.wiki.WikiContentModel
 import com.fastaccess.data.dao.wiki.WikiSideBarModel
@@ -13,10 +11,10 @@ import com.fastaccess.ui.base.mvp.presenter.BasePresenter
 import com.github.b3er.rxfirebase.database.RxFirebaseDatabase
 import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.Observable
+import java.util.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import retrofit2.HttpException
-import java.util.*
 
 /**
  * Created by Kosh on 13 Jun 2017, 8:14 PM

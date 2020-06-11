@@ -11,7 +11,6 @@ import com.google.firebase.database.GenericTypeIndicator
 import io.reactivex.Completable
 import io.reactivex.Observable
 
-
 /**
  * Created by kosh on 15/07/2017.
  */

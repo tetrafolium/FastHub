@@ -18,10 +18,12 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
  * Created by Kosh on 13 Dec 2016, 1:42 AM
  */
 
-class ReviewsViewHolder private constructor(itemView: View,
-                                            adapter: BaseRecyclerAdapter<*, *, *>?,
-                                            val viewGroup: ViewGroup)
-    : BaseViewHolder<TimelineModel>(itemView, adapter) {
+class ReviewsViewHolder private constructor(
+    itemView: View,
+    adapter: BaseRecyclerAdapter<*, *, *>?,
+    val viewGroup: ViewGroup
+) :
+    BaseViewHolder<TimelineModel>(itemView, adapter) {
 
     @BindView(R.id.stateImage) lateinit var stateImage: ForegroundImageView
     @BindView(R.id.avatarLayout) lateinit var avatarLayout: AvatarLayout
@@ -58,5 +60,4 @@ class ReviewsViewHolder private constructor(itemView: View,
             return ReviewsViewHolder(BaseViewHolder.getView(viewGroup, R.layout.review_timeline_row_item), adapter, viewGroup)
         }
     }
-
 }

@@ -3,9 +3,9 @@ package com.fastaccess.ui.modules.repos.projects.details
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.viewpager.widget.ViewPager
 import android.view.MenuItem
 import android.view.View
+import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import com.airbnb.lottie.LottieAnimationView
 import com.evernote.android.state.State
@@ -145,7 +145,5 @@ class ProjectPagerActivity : BaseActivity<ProjectPagerMvp.View, ProjectPagerPres
                     .end())
             return intent
         }
-
     }
-
 }

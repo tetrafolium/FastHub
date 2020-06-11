@@ -3,13 +3,13 @@ package com.fastaccess.ui.modules.repos.projects.crud
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
-import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.EditText
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentManager
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.helper.BundleConstant
@@ -116,5 +116,4 @@ class ProjectCurdDialogFragment : BaseDialogFragment<BaseMvp.FAView, BasePresent
     interface OnProjectEditedCallback {
         fun onCreatedOrEdited(text: String, isCard: Boolean, position: Int)
     }
-
 }

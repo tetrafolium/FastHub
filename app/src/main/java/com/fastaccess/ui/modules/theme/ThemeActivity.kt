@@ -20,7 +20,6 @@ import com.fastaccess.ui.modules.theme.fragment.ThemeFragmentMvp
 import com.fastaccess.ui.widgets.CardsPagerTransformerBasic
 import com.fastaccess.ui.widgets.ViewPagerView
 
-
 /**
  * Created by Kosh on 08 Jun 2017, 10:34 PM
  */
@@ -97,5 +96,4 @@ class ThemeActivity : BaseActivity<BaseMvp.FAView, BasePresenter<BaseMvp.FAView>
         showMessage(R.string.success, R.string.change_theme_warning)
         onThemeChanged()
     }
-
 }

@@ -3,10 +3,10 @@ package com.fastaccess.ui.modules.reviews
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.CommitLinesModel
@@ -98,7 +98,6 @@ class AddReviewDialogFragment : BaseDialogFragment<BaseMvp.FAView, BasePresenter
                 return@setOnMenuItemClickListener true
             }
         }
-
     }
 
     override fun providePresenter(): BasePresenter<BaseMvp.FAView> = BasePresenter()

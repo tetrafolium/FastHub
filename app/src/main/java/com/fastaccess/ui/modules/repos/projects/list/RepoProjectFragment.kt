@@ -2,9 +2,9 @@ package com.fastaccess.ui.modules.repos.projects.list
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import android.view.View
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.types.IssueState

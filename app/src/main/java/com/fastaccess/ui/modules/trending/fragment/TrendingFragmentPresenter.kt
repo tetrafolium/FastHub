@@ -12,9 +12,9 @@ import com.github.b3er.rxfirebase.database.RxFirebaseDatabase
 import com.google.firebase.database.FirebaseDatabase
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
-import org.jsoup.Jsoup
 import java.util.*
 import kotlin.collections.ArrayList
+import org.jsoup.Jsoup
 
 /**
  * Created by Kosh on 30 May 2017, 11:04 PM
@@ -83,7 +83,6 @@ class TrendingFragmentPresenter : BasePresenter<TrendingFragmentMvp.View>(), Tre
             )
         manageDisposable(disposel)
     }
-
 
     private fun getTrendingObservable(html: String, trendingModel: FirebaseTrendingConfigModel): Observable<List<TrendingModel>> {
         return Observable.fromPublisher { s ->

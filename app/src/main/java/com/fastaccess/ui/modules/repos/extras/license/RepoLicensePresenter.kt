@@ -12,5 +12,4 @@ class RepoLicensePresenter : BasePresenter<RepoLicenseMvp.View>(), RepoLicenseMv
         makeRestCall(RestProvider.getRepoService(isEnterprise).getLicense(login, repo),
                 { license -> sendToView { it.onLicenseLoaded(license) } })
     }
-
 }

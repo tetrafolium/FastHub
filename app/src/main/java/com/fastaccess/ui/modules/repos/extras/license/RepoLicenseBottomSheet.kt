@@ -22,7 +22,6 @@ class RepoLicenseBottomSheet : BaseMvpBottomSheetDialogFragment<RepoLicenseMvp.V
 
     @State var content: String? = null
 
-
     @BindView(R.id.stateLayout) lateinit var stateLayout: StateLayout
     @BindView(R.id.readmeLoader) lateinit var loader: ProgressBar
     @BindView(R.id.webView) lateinit var webView: PrettifyWebView

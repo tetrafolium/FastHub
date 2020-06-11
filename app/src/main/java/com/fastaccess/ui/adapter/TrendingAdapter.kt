@@ -21,5 +21,4 @@ class TrendingAdapter(data: MutableList<TrendingModel>) : BaseRecyclerAdapter<Tr
     override fun onBindView(holder: TrendingViewHolder?, position: Int) {
         holder?.bind(getItem(position))
     }
-
 }

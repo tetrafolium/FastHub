@@ -2,14 +2,13 @@ package com.fastaccess.ui.widgets.markdown
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.google.android.material.snackbar.Snackbar
-import androidx.transition.TransitionManager
-import androidx.fragment.app.FragmentManager
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import androidx.fragment.app.FragmentManager
+import androidx.transition.TransitionManager
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -21,6 +20,7 @@ import com.fastaccess.provider.emoji.Emoji
 import com.fastaccess.provider.markdown.MarkDownProvider
 import com.fastaccess.ui.modules.editor.emoji.EmojiBottomSheet
 import com.fastaccess.ui.modules.editor.popup.EditorLinkImageDialogFragment
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * Created by kosh on 11/08/2017.

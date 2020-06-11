@@ -22,7 +22,6 @@ class BranchesPresenter : BasePresenter<BranchesMvp.View>(), BranchesMvp.Present
 
     var branches = ArrayList<BranchesModel>()
 
-
     override fun onFragmentCreated(bundle: Bundle) {
         login = bundle.getString(BundleConstant.EXTRA)
         repoId = bundle.getString(BundleConstant.ID)
@@ -85,5 +84,4 @@ class BranchesPresenter : BasePresenter<BranchesMvp.View>(), BranchesMvp.Present
         callApi(login!!, repoId!!, page)
         return true
     }
-
 }

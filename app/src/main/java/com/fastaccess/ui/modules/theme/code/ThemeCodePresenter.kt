@@ -15,5 +15,4 @@ class ThemeCodePresenter : BasePresenter<ThemeCodeMvp.View>(), ThemeCodeMvp.Pres
         manageDisposable(RxHelper.getObservable(Observable.just(CodeThemesHelper.listThemes()))
                 .subscribe({ list -> sendToView { it.onInitAdapter(list) } }, { onError(it) }))
     }
-
 }

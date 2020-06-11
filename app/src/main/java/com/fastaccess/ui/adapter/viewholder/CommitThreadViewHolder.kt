@@ -18,10 +18,12 @@ import com.fastaccess.ui.widgets.recyclerview.DynamicRecyclerView
 /**
  * Created by kosh on 15/08/2017.
  */
-class CommitThreadViewHolder private constructor(view: View,
-                                                 adapter: BaseRecyclerAdapter<*, *, *>,
-                                                 val onToggleView: OnToggleView)
-    : BaseViewHolder<TimelineModel>(view, adapter), BaseViewHolder.OnItemClickListener<Comment> {
+class CommitThreadViewHolder private constructor(
+    view: View,
+    adapter: BaseRecyclerAdapter<*, *, *>,
+    val onToggleView: OnToggleView
+) :
+    BaseViewHolder<TimelineModel>(view, adapter), BaseViewHolder.OnItemClickListener<Comment> {
 
     @BindView(R.id.pathText) lateinit var pathText: FontTextView
     @BindView(R.id.toggle) lateinit var toggle: View
@@ -62,7 +64,6 @@ class CommitThreadViewHolder private constructor(view: View,
         onToggle(onToggleView.isCollapsed(adapterPosition.toLong()))
     }
 
-
     private fun onToggle(expanded: Boolean) {
         toggle.rotation = if (!expanded) 0.0f else 180f
         commitComments.visibility = if (!expanded) View.GONE
@@ -75,8 +76,11 @@ class CommitThreadViewHolder private constructor(view: View,
     override fun onItemLongClick(position: Int, v: View?, item: Comment) {}
 
     companion object {
-        fun newInstance(parent: ViewGroup, adapter: BaseRecyclerAdapter<*, *, *>,
-                        onToggleView: OnToggleView): CommitThreadViewHolder {
+        fun newInstance(
+            parent: ViewGroup,
+            adapter: BaseRecyclerAdapter<*, *, *>,
+            onToggleView: OnToggleView
+        ): CommitThreadViewHolder {
             return CommitThreadViewHolder(getView(parent, R.layout.grouped_commit_comment_row), adapter, onToggleView)
         }
     }

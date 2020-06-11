@@ -1,9 +1,9 @@
 package com.fastaccess.ui.modules.main.notifications
 
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
 import android.text.Html
 import android.view.View
+import androidx.fragment.app.FragmentManager
 import butterknife.OnClick
 import com.fastaccess.R
 import com.fastaccess.data.dao.model.AbstractFastHubNotification.NotificationType

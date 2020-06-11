@@ -3,10 +3,10 @@ package com.fastaccess.ui.modules.login.chooser
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.transition.TransitionManager
 import android.view.View
 import android.widget.RelativeLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.transition.TransitionManager
 import butterknife.BindView
 import butterknife.OnClick
 import com.fastaccess.BuildConfig
@@ -103,7 +103,6 @@ class LoginChooserActivity : BaseActivity<LoginChooserMvp.View, LoginChooserPres
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     override fun providePresenter(): LoginChooserPresenter {
@@ -134,5 +133,4 @@ class LoginChooserActivity : BaseActivity<LoginChooserMvp.View, LoginChooserPres
         languageBottomSheetDialog.onAttach(this as Context)
         languageBottomSheetDialog.show(supportFragmentManager, "LanguageBottomSheetDialog")
     }
-
 }

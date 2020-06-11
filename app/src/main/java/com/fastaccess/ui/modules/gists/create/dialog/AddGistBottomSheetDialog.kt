@@ -4,15 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
-import com.google.android.material.textfield.TextInputLayout
-import androidx.fragment.app.FragmentManager
-import androidx.appcompat.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.webkit.MimeTypeMap
 import android.widget.EditText
+import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.FragmentManager
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.FilesListModel
@@ -25,6 +24,7 @@ import com.fastaccess.ui.base.BaseDialogFragment
 import com.fastaccess.ui.modules.gists.create.dialog.AddGistMvp.AddGistFileListener
 import com.fastaccess.ui.widgets.markdown.MarkDownLayout
 import com.fastaccess.ui.widgets.markdown.MarkdownEditText
+import com.google.android.material.textfield.TextInputLayout
 
 /**
  * Created by kosh on 14/08/2017.

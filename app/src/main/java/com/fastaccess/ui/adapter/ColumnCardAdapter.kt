@@ -17,5 +17,4 @@ class ColumnCardAdapter(date: ArrayList<ProjectCardModel>, val isOwner: Boolean)
     override fun onBindView(holder: ColumnCardViewHolder?, position: Int) {
         holder?.bind(data[position])
     }
-
 }

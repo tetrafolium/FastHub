@@ -5,11 +5,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.transition.TransitionManager
-import androidx.fragment.app.FragmentManager
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.FragmentManager
+import androidx.transition.TransitionManager
 import butterknife.BindView
 import butterknife.OnClick
 import com.fastaccess.R

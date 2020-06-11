@@ -19,5 +19,4 @@ object ApolloProdivder {
             }}graphql")
             .okHttpClient(RestProvider.provideOkHttpClient())
             .build()
-
 }

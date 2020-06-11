@@ -12,18 +12,22 @@ import retrofit2.http.*
 interface ContentService {
 
     @PUT("repos/{owner}/{repoId}/contents/{path}")
-    fun updateCreateFile(@Path("owner") owner: String,
-                         @Path("repoId") repoId: String,
-                         @Path("path") path: String,
-                         @Query("branch") branch: String,
-                         @Body body: CommitRequestModel): Observable<GitCommitModel>
+    fun updateCreateFile(
+        @Path("owner") owner: String,
+        @Path("repoId") repoId: String,
+        @Path("path") path: String,
+        @Query("branch") branch: String,
+        @Body body: CommitRequestModel
+    ): Observable<GitCommitModel>
 
     @HTTP(method = "DELETE", path = "repos/{owner}/{repoId}/contents/{path}", hasBody = true)
-    fun deleteFile(@Path("owner") owner: String,
-                   @Path("repoId") repoId: String,
-                   @Path("path") path: String,
-                   @Query("branch") branch: String,
-                   @Body body: CommitRequestModel): Observable<GitCommitModel>
+    fun deleteFile(
+        @Path("owner") owner: String,
+        @Path("repoId") repoId: String,
+        @Path("path") path: String,
+        @Query("branch") branch: String,
+        @Body body: CommitRequestModel
+    ): Observable<GitCommitModel>
 
     @GET("api/v2/status.json")
     fun checkStatus(): Observable<GitHubStatusModel>

@@ -5,15 +5,14 @@ import android.content.Intent
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.os.Handler
-import androidx.annotation.ColorInt
-import com.google.android.material.navigation.NavigationView
-import androidx.drawerlayout.widget.DrawerLayout
 import android.text.Editable
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.annotation.ColorInt
+import androidx.drawerlayout.widget.DrawerLayout
 import butterknife.BindView
 import butterknife.OnClick
 import butterknife.OnEditorAction
@@ -26,8 +25,8 @@ import com.fastaccess.ui.base.BaseActivity
 import com.fastaccess.ui.modules.main.MainActivity
 import com.fastaccess.ui.modules.trending.fragment.TrendingFragment
 import com.fastaccess.ui.widgets.FontEditText
+import com.google.android.material.navigation.NavigationView
 import java.util.*
-
 
 /**
  * Created by Kosh on 30 May 2017, 10:57 PM
@@ -43,7 +42,6 @@ class TrendingActivity : BaseActivity<TrendingMvp.View, TrendingPresenter>(), Tr
     @BindView(R.id.drawer) lateinit var drawerLayout: DrawerLayout
     @BindView(R.id.clear) lateinit var clear: View
     @BindView(R.id.searchEditText) lateinit var searchEditText: FontEditText
-
 
     @State var selectedTitle: String = "All"
 
@@ -115,7 +113,7 @@ class TrendingActivity : BaseActivity<TrendingMvp.View, TrendingPresenter>(), Tr
         } else {
             Handler().postDelayed({
                 Logger.e(searchEditText.text)
-                if (InputHelper.isEmpty(searchEditText)) { //searchEditText.text is always empty even tho there is a text in it !!!!!!!
+                if (InputHelper.isEmpty(searchEditText)) { // searchEditText.text is always empty even tho there is a text in it !!!!!!!
                     presenter.onLoadLanguage()
                 } else {
                     presenter.onFilterLanguage(InputHelper.toString(searchEditText))

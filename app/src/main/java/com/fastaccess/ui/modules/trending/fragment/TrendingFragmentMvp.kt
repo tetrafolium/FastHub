@@ -1,6 +1,5 @@
 package com.fastaccess.ui.modules.trending.fragment
 
-
 import com.fastaccess.data.dao.TrendingModel
 import com.fastaccess.ui.base.mvp.BaseMvp
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder

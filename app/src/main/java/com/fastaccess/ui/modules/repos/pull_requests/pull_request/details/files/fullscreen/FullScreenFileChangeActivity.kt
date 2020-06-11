@@ -4,12 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.CommentRequestModel
@@ -131,7 +131,6 @@ class FullScreenFileChangeActivity : BaseActivity<FullScreenFileChangeMvp.View, 
     }
 
     override fun onItemLongClick(position: Int, v: View?, item: CommitLinesModel?) {
-
     }
 
     override fun onCommentAdded(comment: String, item: CommitLinesModel, bundle: Bundle?) {
@@ -160,7 +159,6 @@ class FullScreenFileChangeActivity : BaseActivity<FullScreenFileChangeMvp.View, 
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
-
 
     companion object {
         val FOR_RESULT_CODE = 1002

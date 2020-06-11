@@ -13,13 +13,15 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
  * Created: by Kosh on 02 Jun 2017, 1:27 PM
  */
 
-open class FastHubNotificationViewHolder(itemView: View, adapter: BaseRecyclerAdapter<FastHubNotification,
-        FastHubNotificationViewHolder, OnItemClickListener<FastHubNotification>>) : BaseViewHolder<FastHubNotification>(itemView, adapter) {
+open class FastHubNotificationViewHolder(
+    itemView: View,
+    adapter: BaseRecyclerAdapter<FastHubNotification,    
+            FastHubNotificationViewHolder, OnItemClickListener<FastHubNotification>>
+) : BaseViewHolder<FastHubNotification>(itemView, adapter) {
 
     @BindView(R.id.title) lateinit var title: FontTextView
     @BindView(R.id.date) lateinit var date: FontTextView
     @BindView(R.id.type) lateinit var type: FontTextView
-
 
     override fun bind(t: FastHubNotification) {
         title.text = t.title
@@ -28,5 +30,4 @@ open class FastHubNotificationViewHolder(itemView: View, adapter: BaseRecyclerAd
         }
         type.text = t.type.name.replace("_", " ")
     }
-
 }

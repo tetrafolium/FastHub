@@ -25,5 +25,4 @@ class EmojiPresenter : BasePresenter<EmojiMvp.View>(), EmojiMvp.Presenter {
                 .doOnSubscribe { sendToView { it.clearAdapter() } }
                 .doOnNext { emoji -> sendToView { it.onAddEmoji(emoji) } })
     }
-
 }

@@ -11,8 +11,8 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
 /**
  * Created by kosh on 17/08/2017.
  */
-class EmojiAdapter(listener: BaseViewHolder.OnItemClickListener<Emoji>)
-    : BaseRecyclerAdapter<Emoji, EmojiViewHolder, BaseViewHolder.OnItemClickListener<Emoji>>(listener), Filterable {
+class EmojiAdapter(listener: BaseViewHolder.OnItemClickListener<Emoji>) :
+    BaseRecyclerAdapter<Emoji, EmojiViewHolder, BaseViewHolder.OnItemClickListener<Emoji>>(listener), Filterable {
 
     var copiedList = mutableListOf<Emoji>()
 

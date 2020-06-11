@@ -2,7 +2,6 @@ package com.fastaccess.ui.modules.main.drawer
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.navigation.NavigationView
 import android.view.MenuItem
 import android.view.View
 import com.fastaccess.R
@@ -21,9 +20,9 @@ import com.fastaccess.ui.modules.notification.NotificationActivity
 import com.fastaccess.ui.modules.pinned.PinnedReposActivity
 import com.fastaccess.ui.modules.repos.RepoPagerActivity
 import com.fastaccess.ui.modules.repos.RepoPagerMvp
-import com.fastaccess.ui.modules.repos.issues.create.CreateIssueActivity
 import com.fastaccess.ui.modules.trending.TrendingActivity
 import com.fastaccess.ui.modules.user.UserPagerActivity
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.main_nav_fragment_layout.*
 
 /**

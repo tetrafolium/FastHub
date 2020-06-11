@@ -108,7 +108,7 @@ object TimelineConverter {
                 list.add(timeline)
             }
         }
-        return list.filter({filterEvents(it.event)})
+        return list.filter({ filterEvents(it.event) })
     }
 
     private fun getCommit(jsonObject: JsonObject, gson: Gson): PullRequestCommitModel? {

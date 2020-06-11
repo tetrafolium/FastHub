@@ -5,12 +5,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.transition.TransitionManager
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.transition.TransitionManager
 import butterknife.BindView
 import butterknife.OnClick
 import butterknife.OnEditorAction
