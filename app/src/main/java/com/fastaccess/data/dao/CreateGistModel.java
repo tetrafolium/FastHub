@@ -25,24 +25,24 @@ public class CreateGistModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeSerializable(this.files);
         dest.writeString(this.description);
         dest.writeValue(this.publicGist);
     }
 
-    @SuppressWarnings("unchecked") private CreateGistModel(Parcel in) {
+    @SuppressWarnings("unchecked") private CreateGistModel(final Parcel in) {
         this.files = (HashMap<String, FilesListModel>) in.readSerializable();
         this.description = in.readString();
         this.publicGist = (Boolean) in.readValue(Boolean.class.getClassLoader());
     }
 
     public static final Creator<CreateGistModel> CREATOR = new Creator<CreateGistModel>() {
-        @Override public CreateGistModel createFromParcel(Parcel source) {
+        @Override public CreateGistModel createFromParcel(final Parcel source) {
             return new CreateGistModel(source);
         }
 
-        @Override public CreateGistModel[] newArray(int size) {
+        @Override public CreateGistModel[] newArray(final int size) {
             return new CreateGistModel[size];
         }
     };

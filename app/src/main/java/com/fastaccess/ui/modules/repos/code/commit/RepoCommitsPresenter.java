@@ -43,20 +43,20 @@ class RepoCommitsPresenter extends BasePresenter<RepoCommitsMvp.View> implements
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Object parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());
@@ -82,7 +82,7 @@ class RepoCommitsPresenter extends BasePresenter<RepoCommitsMvp.View> implements
         return true;
     }
 
-    @Override public void onFragmentCreated(@NonNull Bundle bundle) {
+    @Override public void onFragmentCreated(final @NonNull Bundle bundle) {
         repoId = bundle.getString(BundleConstant.ID);
         login = bundle.getString(BundleConstant.EXTRA);
         branch = bundle.getString(BundleConstant.EXTRA_TWO);
@@ -108,7 +108,7 @@ class RepoCommitsPresenter extends BasePresenter<RepoCommitsMvp.View> implements
         }
     }
 
-    @Override public void onBranchChanged(@NonNull String branch) {
+    @Override public void onBranchChanged(final @NonNull String branch) {
         if (!TextUtils.equals(branch, this.branch)) {
             this.branch = branch;
             onCallApi(1, null);
@@ -120,13 +120,13 @@ class RepoCommitsPresenter extends BasePresenter<RepoCommitsMvp.View> implements
         return branch;
     }
 
-    @Override public void onItemClick(int position, View v, Commit item) {
+    @Override public void onItemClick(final int position, final View v, final Commit item) {
         CommitPagerActivity.createIntentForOffline(v.getContext(), item);
     }
 
-    @Override public void onItemLongClick(int position, View v, Commit item) {}
+    @Override public void onItemLongClick(final int position, final View v, final Commit item) { }
 
-    private void getCommitCount(@NonNull String branch) {
+    private void getCommitCount(final @NonNull String branch) {
         manageDisposable(RxHelper.safeObservable(RxHelper.getObservable(RestProvider.getRepoService(isEnterprise())
                          .getCommitCounts(login, repoId, branch)))
         .subscribe(response -> {

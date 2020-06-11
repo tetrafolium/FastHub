@@ -39,8 +39,8 @@ public class RepoCodePagerFragment extends BaseFragment<RepoCodePagerMvp.View, R
     @BindView(R.id.pager) ViewPagerView pager;
     @State HashSet<TabsCountStateModel> counts = new HashSet<>();
 
-    public static RepoCodePagerFragment newInstance(@NonNull String repoId, @NonNull String login,
-            @NonNull String htmlLink, @NonNull String url, @NonNull String defaultBranch) {
+    public static RepoCodePagerFragment newInstance(final @NonNull String repoId, final @NonNull String login,
+            final @NonNull String htmlLink, final @NonNull String url, final @NonNull String defaultBranch) {
         RepoCodePagerFragment view = new RepoCodePagerFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.ID, repoId)
@@ -56,7 +56,7 @@ public class RepoCodePagerFragment extends BaseFragment<RepoCodePagerMvp.View, R
         return R.layout.tabbed_viewpager;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
             String repoId = getArguments().getString(BundleConstant.ID);
             String login = getArguments().getString(BundleConstant.EXTRA);
@@ -76,14 +76,14 @@ public class RepoCodePagerFragment extends BaseFragment<RepoCodePagerMvp.View, R
             Stream.of(counts).forEach(this::updateCount);
         }
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onScrollTop(tab.getPosition());
             }
         });
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {
@@ -110,7 +110,7 @@ public class RepoCodePagerFragment extends BaseFragment<RepoCodePagerMvp.View, R
         }
     }
 
-    @Override public void onSetBadge(int tabIndex, int count) {
+    @Override public void onSetBadge(final int tabIndex, final int count) {
         TabsCountStateModel model = new TabsCountStateModel();
         model.setTabIndex(tabIndex);
         model.setCount(count);
@@ -120,7 +120,7 @@ public class RepoCodePagerFragment extends BaseFragment<RepoCodePagerMvp.View, R
         }
     }
 
-    private void updateCount(@NonNull TabsCountStateModel model) {
+    private void updateCount(final @NonNull TabsCountStateModel model) {
         TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
         tv.setText(SpannableBuilder.builder()
                    .append(getString(R.string.commits))

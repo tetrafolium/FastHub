@@ -39,7 +39,7 @@ public class OrgListDialogFragment extends BaseDialogFragment<OrgListDialogMvp.V
         return new OrgListDialogFragment();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<User> items) {
+    @Override public void onNotifyAdapter(final @Nullable List<User> items) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -52,7 +52,7 @@ public class OrgListDialogFragment extends BaseDialogFragment<OrgListDialogMvp.V
         return R.layout.milestone_dialog_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         toolbar.setTitle(R.string.organizations);
         toolbar.inflateMenu(R.menu.add_menu);
         toolbar.getMenu().findItem(R.id.add).setIcon(R.drawable.ic_info_outline).setTitle(R.string.no_orgs_dialog_title);
@@ -76,7 +76,7 @@ public class OrgListDialogFragment extends BaseDialogFragment<OrgListDialogMvp.V
         fastScroller.attachRecyclerView(recycler);
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
         stateLayout.showProgress();
@@ -87,12 +87,12 @@ public class OrgListDialogFragment extends BaseDialogFragment<OrgListDialogMvp.V
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }

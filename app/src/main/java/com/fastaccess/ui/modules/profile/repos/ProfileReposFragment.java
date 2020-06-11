@@ -36,13 +36,13 @@ public class ProfileReposFragment extends BaseFragment<ProfileReposMvp.View, Pro
     private OnLoadMore<String> onLoadMore;
     private ReposAdapter adapter;
 
-    public static ProfileReposFragment newInstance(@NonNull String username) {
+    public static ProfileReposFragment newInstance(final @NonNull String username) {
         ProfileReposFragment view = new ProfileReposFragment();
         view.setArguments(Bundler.start().put(BundleConstant.EXTRA, username).end());
         return view;
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Repo> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Repo> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -59,7 +59,7 @@ public class ProfileReposFragment extends BaseFragment<ProfileReposMvp.View, Pro
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, username is required");
         }
@@ -83,7 +83,7 @@ public class ProfileReposFragment extends BaseFragment<ProfileReposMvp.View, Pro
         return new ProfileReposPresenter();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
 
@@ -95,12 +95,12 @@ public class ProfileReposFragment extends BaseFragment<ProfileReposMvp.View, Pro
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -121,11 +121,11 @@ public class ProfileReposFragment extends BaseFragment<ProfileReposMvp.View, Pro
         getPresenter().onCallApi(1, getArguments().getString(BundleConstant.EXTRA));
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }
@@ -141,17 +141,17 @@ public class ProfileReposFragment extends BaseFragment<ProfileReposMvp.View, Pro
     }
 
     @Override
-    public void onTypeSelected(String selectedType) {
+    public void onTypeSelected(final String selectedType) {
         getPresenter().onTypeSelected(selectedType);
     }
 
     @Override
-    public void onSortOptionSelected(String selectedSortOption) {
+    public void onSortOptionSelected(final String selectedSortOption) {
         getPresenter().onSortOptionSelected(selectedSortOption);
     }
 
     @Override
-    public void onSortDirectionSelected(String selectedSortDirection) {
+    public void onSortDirectionSelected(final String selectedSortDirection) {
         getPresenter().onSortDirectionSelected(selectedSortDirection);
     }
 

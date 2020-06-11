@@ -45,20 +45,20 @@ public class ColorGenerator {
 
     private final List<Integer> colors;
 
-    private static ColorGenerator create(List<Integer> colorList) {
+    private static ColorGenerator create(final List<Integer> colorList) {
         return new ColorGenerator(colorList);
     }
 
-    private ColorGenerator(List<Integer> colorList) {
+    private ColorGenerator(final List<Integer> colorList) {
         colors = colorList;
     }
 
-    private int getColor(@Nullable Object key) {
+    private int getColor(final @Nullable Object key) {
         key = Objects.toString(key, "default");
         return colors.get(Math.abs(key.hashCode()) % colors.size());
     }
 
-    @ColorInt public static int getColor(@NonNull Context context, @Nullable Object object) {
+    @ColorInt public static int getColor(final @NonNull Context context, final @Nullable Object object) {
         if (AppHelper.isNightMode(context.getResources())) {
             return MATERIAL_DARK.getColor(object);
         } else {

@@ -24,13 +24,13 @@ public class SearchCodeModel implements Parcelable {
     private String htmlUrl;
 
 
-    public SearchCodeModel() {}
+    public SearchCodeModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.name);
         dest.writeString(this.path);
         dest.writeString(this.sha);
@@ -40,7 +40,7 @@ public class SearchCodeModel implements Parcelable {
         dest.writeDouble(this.score);
     }
 
-    protected SearchCodeModel(Parcel in) {
+    protected SearchCodeModel(final Parcel in) {
         this.name = in.readString();
         this.path = in.readString();
         this.sha = in.readString();
@@ -51,11 +51,11 @@ public class SearchCodeModel implements Parcelable {
     }
 
     public static final Creator<SearchCodeModel> CREATOR = new Creator<SearchCodeModel>() {
-        @Override public SearchCodeModel createFromParcel(Parcel source) {
+        @Override public SearchCodeModel createFromParcel(final Parcel source) {
             return new SearchCodeModel(source);
         }
 
-        @Override public SearchCodeModel[] newArray(int size) {
+        @Override public SearchCodeModel[] newArray(final int size) {
             return new SearchCodeModel[size];
         }
     };

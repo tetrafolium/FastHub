@@ -37,7 +37,7 @@ public class ReadNotificationService extends IntentService {
     private NotificationCompat.Builder notification;
     private NotificationManager notificationManager;
 
-    public static void start(@NonNull Context context, long id) {
+    public static void start(final @NonNull Context context, final long id) {
         Intent intent = new Intent(context.getApplicationContext(), ReadNotificationService.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA_TYPE, READ_SINGLE)
@@ -46,11 +46,11 @@ public class ReadNotificationService extends IntentService {
         context.startService(intent);
     }
 
-    public static Intent start(@NonNull Context context, long id, @NonNull String url) {
+    public static Intent start(final @NonNull Context context, final long id, final @NonNull String url) {
         return start(context, id, url, false);
     }
 
-    public static Intent start(@NonNull Context context, long id, @NonNull String url, boolean onlyRead) {
+    public static Intent start(final @NonNull Context context, final long id, final @NonNull String url, final boolean onlyRead) {
         Intent intent = new Intent(context.getApplicationContext(), ReadNotificationService.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA_TYPE, OPEN_NOTIFICATION)
@@ -61,7 +61,7 @@ public class ReadNotificationService extends IntentService {
         return intent;
     }
 
-    public static void unSubscribe(@NonNull Context context, long id) {
+    public static void unSubscribe(final @NonNull Context context, final long id) {
         Intent intent = new Intent(context.getApplicationContext(), ReadNotificationService.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA_TYPE, UN_SUBSCRIBE)
@@ -70,7 +70,7 @@ public class ReadNotificationService extends IntentService {
         context.startService(intent);
     }
 
-    public static void start(@NonNull Context context, @NonNull long[] ids) {
+    public static void start(final @NonNull Context context, final @NonNull long[] ids) {
         Intent intent = new Intent(context.getApplicationContext(), ReadNotificationService.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA_TYPE, READ_ALL)
@@ -88,7 +88,7 @@ public class ReadNotificationService extends IntentService {
         notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
     }
 
-    @Override protected void onHandleIntent(@Nullable Intent intent) {
+    @Override protected void onHandleIntent(final @Nullable Intent intent) {
         if (intent != null && intent.getExtras() != null) {
             Bundle bundle = intent.getExtras();
             int type = bundle.getInt(BundleConstant.EXTRA_TYPE);
@@ -105,7 +105,7 @@ public class ReadNotificationService extends IntentService {
         }
     }
 
-    private void unSubscribeFromThread(long id) {
+    private void unSubscribeFromThread(final long id) {
         RestProvider.getNotificationService(PrefGetter.isEnterprise())
         .unSubscribe(id)
         .doOnSubscribe(disposable -> notify(id, getNotification().build()))
@@ -114,7 +114,7 @@ public class ReadNotificationService extends IntentService {
         .subscribe(booleanResponse -> cancel(id), throwable -> cancel(id));
     }
 
-    private void openNotification(long id, @Nullable String url, boolean readOnly) {
+    private void openNotification(final long id, final @Nullable String url, final boolean readOnly) {
         if (id > 0 && url != null) {
             AppHelper.cancelNotification(this, InputHelper.getSafeIntId(id));
             if (readOnly) {
@@ -128,13 +128,13 @@ public class ReadNotificationService extends IntentService {
         }
     }
 
-    private void markMultiAsRead(@Nullable long[] ids) {
+    private void markMultiAsRead(final @Nullable long[] ids) {
         if (ids != null && ids.length > 0) {
             LongStream.of(ids).forEach(this::markSingleAsRead);
         }
     }
 
-    private void markSingleAsRead(long id) {
+    private void markSingleAsRead(final long id) {
         com.fastaccess.data.dao.model.Notification.markAsRead(id);
         RestProvider.getNotificationService(PrefGetter.isEnterprise())
         .markAsRead(String.valueOf(id))
@@ -153,11 +153,11 @@ public class ReadNotificationService extends IntentService {
         return notification;
     }
 
-    private void notify(long id, Notification notification) {
+    private void notify(final long id, final Notification notification) {
         notificationManager.notify(InputHelper.getSafeIntId(id), notification);
     }
 
-    private void cancel(long id) {
+    private void cancel(final long id) {
         notificationManager.cancel(InputHelper.getSafeIntId(id));
     }
 }

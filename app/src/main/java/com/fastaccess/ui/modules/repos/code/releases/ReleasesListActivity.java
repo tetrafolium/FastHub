@@ -26,7 +26,7 @@ public class ReleasesListActivity extends BaseActivity {
     @State String login;
 
 
-    public static Intent getIntent(@NonNull Context context, @NonNull String username, @NonNull String repoId) {
+    public static Intent getIntent(final @NonNull Context context, final @NonNull String username, final @NonNull String repoId) {
         Intent intent = new Intent(context, ReleasesListActivity.class);
         intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
                          .put(BundleConstant.EXTRA, username)
@@ -34,8 +34,8 @@ public class ReleasesListActivity extends BaseActivity {
         return intent;
     }
 
-    public static Intent getIntent(@NonNull Context context, @NonNull String username, @NonNull String repoId,
-                                   @NonNull String tag, boolean isEnterprise) {
+    public static Intent getIntent(final @NonNull Context context, final @NonNull String username, final @NonNull String repoId,
+                                   final @NonNull String tag, final boolean isEnterprise) {
         Intent intent = new Intent(context, ReleasesListActivity.class);
         intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
                          .put(BundleConstant.EXTRA, username)
@@ -45,8 +45,8 @@ public class ReleasesListActivity extends BaseActivity {
         return intent;
     }
 
-    public static Intent getIntent(@NonNull Context context, @NonNull String username, @NonNull String repoId,
-                                   long id, boolean isEnterprise) {
+    public static Intent getIntent(final @NonNull Context context, final @NonNull String username, final @NonNull String repoId,
+                                   final long id, final boolean isEnterprise) {
         Intent intent = new Intent(context, ReleasesListActivity.class);
         intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
                          .put(BundleConstant.EXTRA, username)
@@ -76,7 +76,7 @@ public class ReleasesListActivity extends BaseActivity {
         return new BasePresenter();
     }
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             if (getIntent() == null || getIntent().getExtras() == null) {
@@ -98,7 +98,7 @@ public class ReleasesListActivity extends BaseActivity {
         }
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             NameParser parser = new NameParser("");
             parser.setName(repoId);

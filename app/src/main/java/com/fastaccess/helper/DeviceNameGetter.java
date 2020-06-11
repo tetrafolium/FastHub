@@ -19,7 +19,7 @@ public class DeviceNameGetter {
         return ourInstance;
     }
 
-    private DeviceNameGetter() {}
+    private DeviceNameGetter() { }
 
     public void loadDevice() {
         DeviceName.with(App.getInstance())

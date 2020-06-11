@@ -29,7 +29,7 @@ public class IssuesPageable<M> implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(this.first);
         dest.writeInt(this.next);
         dest.writeInt(this.prev);
@@ -38,7 +38,7 @@ public class IssuesPageable<M> implements Parcelable {
         dest.writeByte(this.incompleteResults ? (byte) 1 : (byte) 0);
     }
 
-    @SuppressWarnings("WeakerAccess") protected IssuesPageable(Parcel in) {
+    @SuppressWarnings("WeakerAccess") protected IssuesPageable(final Parcel in) {
         this.first = in.readInt();
         this.next = in.readInt();
         this.prev = in.readInt();
@@ -48,11 +48,11 @@ public class IssuesPageable<M> implements Parcelable {
     }
 
     public static final Creator<IssuesPageable> CREATOR = new Creator<IssuesPageable>() {
-        @Override public IssuesPageable createFromParcel(Parcel source) {
+        @Override public IssuesPageable createFromParcel(final Parcel source) {
             return new IssuesPageable(source);
         }
 
-        @Override public IssuesPageable[] newArray(int size) {
+        @Override public IssuesPageable[] newArray(final int size) {
             return new IssuesPageable[size];
         }
     };

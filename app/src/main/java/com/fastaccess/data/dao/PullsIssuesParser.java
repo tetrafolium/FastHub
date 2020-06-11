@@ -19,7 +19,7 @@ public class PullsIssuesParser implements Parcelable {
     private String repoId;
     private int number;
 
-    public static PullsIssuesParser getForPullRequest(@NonNull String url) {
+    public static PullsIssuesParser getForPullRequest(final @NonNull String url) {
         Uri uri = Uri.parse(url);
         List<String> segments = uri.getPathSegments();
         if (segments == null || segments.size() < 3) return null;
@@ -54,7 +54,7 @@ public class PullsIssuesParser implements Parcelable {
         return model;
     }
 
-    public static PullsIssuesParser getForIssue(@NonNull String url) {
+    public static PullsIssuesParser getForIssue(final @NonNull String url) {
         Uri uri = Uri.parse(url);
         List<String> segments = uri.getPathSegments();
         if (segments == null || segments.size() < 3) return null;
@@ -91,18 +91,18 @@ public class PullsIssuesParser implements Parcelable {
     }
 
     @Override public String toString() {
-        return "PullsIssuesParser{" +
-               "login='" + login + '\'' +
-               ", repoId='" + repoId + '\'' +
-               ", number=" + number +
-               '}';
+        return "PullsIssuesParser{"
+               + "login='" + login + '\''
+               + ", repoId='" + repoId + '\''
+               + ", number=" + number
+               + '}';
     }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.login);
         dest.writeString(this.repoId);
         dest.writeInt(this.number);
@@ -112,7 +112,7 @@ public class PullsIssuesParser implements Parcelable {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(final String login) {
         this.login = login;
     }
 
@@ -120,7 +120,7 @@ public class PullsIssuesParser implements Parcelable {
         return repoId;
     }
 
-    public void setRepoId(String repoId) {
+    public void setRepoId(final String repoId) {
         this.repoId = repoId;
     }
 
@@ -128,24 +128,24 @@ public class PullsIssuesParser implements Parcelable {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(final int number) {
         this.number = number;
     }
 
-    public PullsIssuesParser() {}
+    public PullsIssuesParser() { }
 
-    protected PullsIssuesParser(Parcel in) {
+    protected PullsIssuesParser(final Parcel in) {
         this.login = in.readString();
         this.repoId = in.readString();
         this.number = in.readInt();
     }
 
     public static final Parcelable.Creator<PullsIssuesParser> CREATOR = new Parcelable.Creator<PullsIssuesParser>() {
-        @Override public PullsIssuesParser createFromParcel(Parcel source) {
+        @Override public PullsIssuesParser createFromParcel(final Parcel source) {
             return new PullsIssuesParser(source);
         }
 
-        @Override public PullsIssuesParser[] newArray(int size) {
+        @Override public PullsIssuesParser[] newArray(final int size) {
             return new PullsIssuesParser[size];
         }
     };

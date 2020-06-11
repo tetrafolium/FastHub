@@ -27,7 +27,7 @@ public class ProfilePagerFragment extends BaseFragment<ProfilePagerMvp.View, Pro
     @BindView(R.id.tabs) TabLayout tabs;
     @BindView(R.id.pager) ViewPagerView pager;
 
-    public static ProfilePagerFragment newInstance(@NonNull String login) {
+    public static ProfilePagerFragment newInstance(final @NonNull String login) {
         ProfilePagerFragment profileView = new ProfilePagerFragment();
         profileView.setArguments(Bundler.start().put(BundleConstant.EXTRA, login).end());
         return profileView;
@@ -37,7 +37,7 @@ public class ProfilePagerFragment extends BaseFragment<ProfilePagerMvp.View, Pro
         return R.layout.tabbed_viewpager;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new RuntimeException("Bundle is null?");
         }
@@ -65,5 +65,5 @@ public class ProfilePagerFragment extends BaseFragment<ProfilePagerMvp.View, Pro
         pager.setCurrentItem(5);
     }
 
-    @Override public void onCheckType(boolean isOrg) {}
+    @Override public void onCheckType(final boolean isOrg) { }
 }

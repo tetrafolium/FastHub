@@ -31,7 +31,7 @@ class ViewerPresenter extends BasePresenter<ViewerMvp.View> implements ViewerMvp
     @com.evernote.android.state.State String url;
     @com.evernote.android.state.State String htmlUrl;
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         throwable.printStackTrace();
         int code = RestProvider.getErrorCode(throwable);
         if (code == 404) {
@@ -52,7 +52,7 @@ class ViewerPresenter extends BasePresenter<ViewerMvp.View> implements ViewerMvp
         }
     }
 
-    @Override public void onHandleIntent(@Nullable Bundle intent) {
+    @Override public void onHandleIntent(final @Nullable Bundle intent) {
         if (intent == null) return;
         isRepo = intent.getBoolean(BundleConstant.EXTRA);
         url = intent.getString(BundleConstant.ITEM);

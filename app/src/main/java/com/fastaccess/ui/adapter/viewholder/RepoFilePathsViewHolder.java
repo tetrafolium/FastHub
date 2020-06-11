@@ -20,15 +20,15 @@ public class RepoFilePathsViewHolder extends BaseViewHolder<RepoFile> {
 
     @BindView(R.id.pathName) FontTextView pathName;
 
-    private RepoFilePathsViewHolder(@NonNull View itemView, @NonNull BaseRecyclerAdapter baseAdapter) {
+    private RepoFilePathsViewHolder(final @NonNull View itemView, final @NonNull BaseRecyclerAdapter baseAdapter) {
         super(itemView, baseAdapter);
     }
 
-    public static RepoFilePathsViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter) {
+    public static RepoFilePathsViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
         return new RepoFilePathsViewHolder(getView(viewGroup, R.layout.file_path_row_item), adapter);
     }
 
-    @Override public void bind(@NonNull RepoFile filesModel) {
+    @Override public void bind(final @NonNull RepoFile filesModel) {
         pathName.setText(filesModel.getName());
     }
 }

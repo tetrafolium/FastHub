@@ -32,7 +32,7 @@ class GistPresenter extends BasePresenter<GistMvp.View> implements GistMvp.Prese
         return gistId;
     }
 
-    @SuppressWarnings("unchecked") @Override public void onActivityCreated(@Nullable Intent intent) {
+    @SuppressWarnings("unchecked") @Override public void onActivityCreated(final @Nullable Intent intent) {
         if (intent == null || intent.getExtras() == null) {
             return;
         }
@@ -59,12 +59,12 @@ class GistPresenter extends BasePresenter<GistMvp.View> implements GistMvp.Prese
                 sendToView(GistMvp.View::onErrorDeleting);
             }
         })
-        .subscribe(booleanResponse -> {/**/}, throwable -> sendToView(view -> view.showErrorMessage(throwable.getMessage()))));
+        .subscribe(booleanResponse -> { /**/ }, throwable -> sendToView(view -> view.showErrorMessage(throwable.getMessage()))));
     }
 
     @Override public boolean isOwner() {
-        return getGist() != null && getGist().getOwner() != null &&
-               getGist().getOwner().getLogin().equals(Login.getUser().getLogin());
+        return getGist() != null && getGist().getOwner() != null
+               && getGist().getOwner().getLogin().equals(Login.getUser().getLogin());
     }
 
     @Override public void onStarGist() {
@@ -85,7 +85,7 @@ class GistPresenter extends BasePresenter<GistMvp.View> implements GistMvp.Prese
         return isGistStarred;
     }
 
-    @Override public void checkStarring(@NonNull String gistId) {
+    @Override public void checkStarring(final @NonNull String gistId) {
         makeRestCall(RestProvider.getGistService(isEnterprise()).checkGistStar(gistId),
         booleanResponse -> {
             isGistStarred = booleanResponse.code() == 204;
@@ -93,7 +93,7 @@ class GistPresenter extends BasePresenter<GistMvp.View> implements GistMvp.Prese
         });
     }
 
-    @Override public void onWorkOffline(@NonNull String gistId) {
+    @Override public void onWorkOffline(final @NonNull String gistId) {
         if (gist == null) {
             manageDisposable(RxHelper.getObservable(Gist.getGist(gistId))
             .subscribe(gistsModel -> {

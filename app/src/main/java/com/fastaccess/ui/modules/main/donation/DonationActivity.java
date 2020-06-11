@@ -47,25 +47,25 @@ public class DonationActivity extends BaseActivity {
         return true;
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AnimHelper.animateVisibility(cardsHolder, true);
         checkPurchase();
     }
 
-    @OnClick(R.id.two) void onTwoClicked(View v) {
+    @OnClick(R.id.two) void onTwoClicked(final View v) {
         onProceed(getString(R.string.donation_product_1));
     }
 
-    @OnClick(R.id.five) void onFiveClicked(View v) {
+    @OnClick(R.id.five) void onFiveClicked(final View v) {
         onProceed(getString(R.string.donation_product_2));
     }
 
-    @OnClick(R.id.ten) void onTenClicked(View v) {
+    @OnClick(R.id.ten) void onTenClicked(final View v) {
         onProceed(getString(R.string.donation_product_3));
     }
 
-    @OnClick(R.id.twenty) void onTwentyClicked(View v) {
+    @OnClick(R.id.twenty) void onTwentyClicked(final View v) {
         onProceed(getString(R.string.donation_product_4));
     }
 
@@ -77,7 +77,7 @@ public class DonationActivity extends BaseActivity {
         return new BasePresenter();
     }
 
-    private void onProceed(@NonNull String productKey) {
+    private void onProceed(final @NonNull String productKey) {
         if (AppHelper.isGoogleAvailable(this)) {
             DonateActivity.Companion.start(this, productKey, null, null);
         } else {

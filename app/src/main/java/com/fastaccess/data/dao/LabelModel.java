@@ -21,29 +21,29 @@ public class LabelModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.url);
         dest.writeString(this.name);
         dest.writeString(this.color);
     }
 
-    protected LabelModel(Parcel in) {
+    protected LabelModel(final Parcel in) {
         this.url = in.readString();
         this.name = in.readString();
         this.color = in.readString();
     }
 
     public static final Creator<LabelModel> CREATOR = new Creator<LabelModel>() {
-        @Override public LabelModel createFromParcel(Parcel source) {
+        @Override public LabelModel createFromParcel(final Parcel source) {
             return new LabelModel(source);
         }
 
-        @Override public LabelModel[] newArray(int size) {
+        @Override public LabelModel[] newArray(final int size) {
             return new LabelModel[size];
         }
     };
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -57,10 +57,10 @@ public class LabelModel implements Parcelable {
     }
 
     @Override public String toString() {
-        return "LabelModel{" +
-               "url='" + url + '\'' +
-               ", name='" + name + '\'' +
-               ", color='" + color + '\'' +
-               '}';
+        return "LabelModel{"
+               + "url='" + url + '\''
+               + ", name='" + name + '\''
+               + ", color='" + color + '\''
+               + '}';
     }
 }

@@ -34,7 +34,7 @@ public class MergePullRequestDialogFragment extends BaseDialogFragment<MergePull
 
     private MergePullReqeustMvp.MergeCallback mergeCallback;
 
-    public static MergePullRequestDialogFragment newInstance(@Nullable String title) {
+    public static MergePullRequestDialogFragment newInstance(final @Nullable String title) {
         MergePullRequestDialogFragment view = new MergePullRequestDialogFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.EXTRA, title)
@@ -42,7 +42,7 @@ public class MergePullRequestDialogFragment extends BaseDialogFragment<MergePull
         return view;
     }
 
-    @Override public void onAttach(@NotNull Context context) {
+    @Override public void onAttach(final @NotNull Context context) {
         super.onAttach(context);
         if (context instanceof MergePullReqeustMvp.MergeCallback) {
             mergeCallback = (MergePullReqeustMvp.MergeCallback) context;
@@ -60,7 +60,7 @@ public class MergePullRequestDialogFragment extends BaseDialogFragment<MergePull
         return R.layout.merge_dialog_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             String titleMsg = getArguments().getString(BundleConstant.EXTRA);
             if (!InputHelper.isEmpty(titleMsg)) {
@@ -73,7 +73,7 @@ public class MergePullRequestDialogFragment extends BaseDialogFragment<MergePull
         return new MergePullRequestPresenter();
     }
 
-    @OnClick({R.id.cancel, R.id.ok}) public void onClick(View view) {
+    @OnClick({R.id.cancel, R.id.ok}) public void onClick(final View view) {
         if (view.getId() == R.id.ok) {
             boolean isEmpty = InputHelper.isEmpty(title);
             title.setError(isEmpty ? getString(R.string.required_field) : null);
@@ -83,7 +83,7 @@ public class MergePullRequestDialogFragment extends BaseDialogFragment<MergePull
         dismiss();
     }
 
-    @OnItemSelected(R.id.mergeMethod) void onItemSelect(int position) {
+    @OnItemSelected(R.id.mergeMethod) void onItemSelect(final int position) {
         if (position > 0) {
             if (!PrefGetter.isProEnabled()) {
                 mergeMethod.setSelection(0);

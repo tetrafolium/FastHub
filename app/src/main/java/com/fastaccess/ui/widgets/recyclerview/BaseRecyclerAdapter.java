@@ -35,16 +35,16 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
         this(new ArrayList<>());
     }
 
-    protected BaseRecyclerAdapter(@NonNull List<M> data) {
+    protected BaseRecyclerAdapter(final @NonNull List<M> data) {
         this(data, null);
     }
 
-    protected BaseRecyclerAdapter(@NonNull List<M> data, @Nullable P listener) {
+    protected BaseRecyclerAdapter(final @NonNull List<M> data, final @Nullable P listener) {
         this.data = data;
         this.listener = listener;
     }
 
-    protected BaseRecyclerAdapter(@Nullable P listener) {
+    protected BaseRecyclerAdapter(final @Nullable P listener) {
         this(new ArrayList<>(), listener);
     }
 
@@ -56,19 +56,19 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
         return data;
     }
 
-    public M getItemByPosition(int position) {
+    public M getItemByPosition(final int position) {
         return data.get(position);
     }
 
-    public M getItem(int position) {
+    public M getItem(final int position) {
         return data.get(position);
     }
 
-    public int getItem(M t) {
+    public int getItem(final M t) {
         return data.indexOf(t);
     }
 
-    @SuppressWarnings("unchecked") @Override public VH onCreateViewHolder(ViewGroup parent, int viewType) {
+    @SuppressWarnings("unchecked") @Override public VH onCreateViewHolder(final ViewGroup parent, final int viewType) {
         if (viewType == PROGRESS_TYPE) {
             addSpanLookup(parent);
             return (VH) ProgressBarViewHolder.newInstance(parent);
@@ -77,7 +77,7 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
         }
     }
 
-    @Override public void onBindViewHolder(@NonNull VH holder, int position) {
+    @Override public void onBindViewHolder(final @NonNull VH holder, final int position) {
         if (holder instanceof ProgressBarViewHolder) {
             if (holder.itemView.getLayoutParams() instanceof StaggeredGridLayoutManager.LayoutParams) {
                 StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
@@ -90,7 +90,7 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
         }
     }
 
-    @Override public int getItemViewType(int position) {
+    @Override public int getItemViewType(final int position) {
         if (getItem(position) == null) {
             return PROGRESS_TYPE;
         }
@@ -102,33 +102,33 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
     }
 
     @SuppressWarnings("unchecked")
-    private void onShowGuide(@NonNull VH holder, int position) {// give the flexibility to other adapters to override this
+    private void onShowGuide(final @NonNull VH holder, final int position) { // give the flexibility to other adapters to override this
         if (position == 0 && !isShowedGuide() && guideListener != null) {
             guideListener.onShowGuide(holder.itemView, getItem(position));
             showedGuide = true;
         }
     }
 
-    private void animate(@NonNull VH holder, int position) {
+    private void animate(final @NonNull VH holder, final int position) {
         if (isEnableAnimation() && position > lastKnowingPosition) {
             AnimHelper.startBeatsAnimation(holder.itemView);
             lastKnowingPosition = position;
         }
     }
 
-    public void insertItems(@NonNull List<M> items) {
+    public void insertItems(final @NonNull List<M> items) {
         data.clear();
         data.addAll(items);
         notifyDataSetChanged();
         progressAdded = false;
     }
 
-    public void addItem(M item, int position) {
+    public void addItem(final M item, final int position) {
         data.add(position, item);
         notifyItemInserted(position);
     }
 
-    public void addItem(M item) {
+    public void addItem(final M item) {
         removeProgress();
         data.add(item);
         if (data.size() == 0) {
@@ -138,41 +138,41 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
         }
     }
 
-    @SuppressWarnings("WeakerAccess") public void addItems(@NonNull List<M> items) {
+    @SuppressWarnings("WeakerAccess") public void addItems(final @NonNull List<M> items) {
         removeProgress();
         data.addAll(items);
         notifyItemRangeInserted(getItemCount(), (getItemCount() + items.size()) - 1);
     }
 
-    @SuppressWarnings("WeakerAccess") public void removeItem(int position) {
+    @SuppressWarnings("WeakerAccess") public void removeItem(final int position) {
         data.remove(position);
         notifyItemRemoved(position);
     }
 
-    public void removeItem(M item) {
+    public void removeItem(final M item) {
         int position = data.indexOf(item);
         if (position != -1) removeItem(position);
     }
 
-    public void removeItems(@NonNull List<M> items) {
+    public void removeItems(final @NonNull List<M> items) {
         int prevSize = getItemCount();
         data.removeAll(items);
         notifyItemRangeRemoved(prevSize, Math.abs(data.size() - prevSize));
     }
 
-    public void swapItem(@NonNull M model) {
+    public void swapItem(final @NonNull M model) {
         int index = getItem(model);
         swapItem(model, index);
     }
 
-    public void swapItem(@NonNull M model, int position) {
+    public void swapItem(final @NonNull M model, final int position) {
         if (position != -1) {
             data.set(position, model);
             notifyItemChanged(position);
         }
     }
 
-    public void subList(int fromPosition, int toPosition) {
+    public void subList(final int fromPosition, final int toPosition) {
         if (data.isEmpty()) return;
         data.subList(fromPosition, toPosition).clear();
         notifyItemRangeRemoved(fromPosition, toPosition);
@@ -188,7 +188,7 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
         return data.isEmpty();
     }
 
-    public void setEnableAnimation(boolean enableAnimation) {
+    public void setEnableAnimation(final boolean enableAnimation) {
         this.enableAnimation = enableAnimation;
         notifyDataSetChanged();
     }
@@ -201,12 +201,12 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
         return listener;
     }
 
-    public void setListener(@Nullable P listener) {
+    public void setListener(final @Nullable P listener) {
         this.listener = listener;
         notifyDataSetChanged();
     }
 
-    public void setGuideListener(GuideListener guideListener) {
+    public void setGuideListener(final GuideListener guideListener) {
         this.guideListener = guideListener;
     }
 
@@ -214,7 +214,7 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
         return rowWidth;
     }
 
-    public void setRowWidth(int rowWidth) {
+    public void setRowWidth(final int rowWidth) {
         if (this.rowWidth == 0) {
             this.rowWidth = rowWidth;
             notifyDataSetChanged();
@@ -225,7 +225,7 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
         return showedGuide;
     }
 
-    @Override public void onViewDetachedFromWindow(VH holder) {
+    @Override public void onViewDetachedFromWindow(final VH holder) {
         holder.onViewIsDetaching();
         super.onViewDetachedFromWindow(holder);
     }
@@ -251,12 +251,12 @@ public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
         }
     }
 
-    private void addSpanLookup(ViewGroup parent) {
+    private void addSpanLookup(final ViewGroup parent) {
         if (parent instanceof RecyclerView) {
             if (((RecyclerView) parent).getLayoutManager() instanceof GridLayoutManager) {
                 GridLayoutManager layoutManager = ((GridLayoutManager) ((RecyclerView) parent).getLayoutManager());
                 layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                    @Override public int getSpanSize(int position) {
+                    @Override public int getSpanSize(final int position) {
                         return getItemViewType(position) == PROGRESS_TYPE ? layoutManager.getSpanCount() : 1;
                     }
                 });

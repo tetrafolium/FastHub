@@ -36,59 +36,59 @@ import java.util.Arrays;
  */
 public class ViewHelper {
 
-    @ColorInt public static int getPrimaryDarkColor(@NonNull Context context) {
+    @ColorInt public static int getPrimaryDarkColor(final @NonNull Context context) {
         return getColorAttr(context, R.attr.colorPrimaryDark);
     }
 
-    @ColorInt public static int getPrimaryColor(@NonNull Context context) {
+    @ColorInt public static int getPrimaryColor(final @NonNull Context context) {
         return getColorAttr(context, R.attr.colorPrimary);
     }
 
-    @ColorInt public static int getPrimaryTextColor(@NonNull Context context) {
+    @ColorInt public static int getPrimaryTextColor(final @NonNull Context context) {
         return getColorAttr(context, android.R.attr.textColorPrimary);
     }
 
-    @ColorInt public static int getSecondaryTextColor(@NonNull Context context) {
+    @ColorInt public static int getSecondaryTextColor(final @NonNull Context context) {
         return getColorAttr(context, android.R.attr.textColorSecondary);
     }
 
-    @ColorInt public static int getTertiaryTextColor(@NonNull Context context) {
+    @ColorInt public static int getTertiaryTextColor(final @NonNull Context context) {
         return getColorAttr(context, android.R.attr.textColorTertiary);
     }
 
-    @ColorInt public static int getAccentColor(@NonNull Context context) {
+    @ColorInt public static int getAccentColor(final @NonNull Context context) {
         return getColorAttr(context, R.attr.colorAccent);
     }
 
-    @ColorInt public static int getIconColor(@NonNull Context context) {
+    @ColorInt public static int getIconColor(final @NonNull Context context) {
         return getColorAttr(context, R.attr.icon_color);
     }
 
-    @ColorInt public static int getWindowBackground(@NonNull Context context) {
+    @ColorInt public static int getWindowBackground(final @NonNull Context context) {
         return getColorAttr(context, android.R.attr.windowBackground);
     }
 
-    @ColorInt public static int getListDivider(@NonNull Context context) {
+    @ColorInt public static int getListDivider(final @NonNull Context context) {
         return getColorAttr(context, R.attr.dividerColor);
     }
 
-    @ColorInt public static int getCardBackground(@NonNull Context context) {
+    @ColorInt public static int getCardBackground(final @NonNull Context context) {
         return getColorAttr(context, R.attr.card_background);
     }
 
-    @ColorInt public static int getPatchAdditionColor(@NonNull Context context) {
+    @ColorInt public static int getPatchAdditionColor(final @NonNull Context context) {
         return getColorAttr(context, R.attr.patch_addition);
     }
 
-    @ColorInt public static int getPatchDeletionColor(@NonNull Context context) {
+    @ColorInt public static int getPatchDeletionColor(final @NonNull Context context) {
         return getColorAttr(context, R.attr.patch_deletion);
     }
 
-    @ColorInt public static int getPatchRefColor(@NonNull Context context) {
+    @ColorInt public static int getPatchRefColor(final @NonNull Context context) {
         return getColorAttr(context, R.attr.patch_ref);
     }
 
-    @ColorInt private static int getColorAttr(@NonNull Context context, int attr) {
+    @ColorInt private static int getColorAttr(final @NonNull Context context, final int attr) {
         Resources.Theme theme = context.getTheme();
         TypedArray typedArray = theme.obtainStyledAttributes(new int[] {attr});
         final int color = typedArray.getColor(0, Color.LTGRAY);
@@ -96,23 +96,23 @@ public class ViewHelper {
         return color;
     }
 
-    public static int toPx(@NonNull Context context, int dp) {
+    public static int toPx(final @NonNull Context context, final int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_PX, dp, context.getResources().getDisplayMetrics());
     }
 
-    public static int dpToPx(Context context, float dp) {
+    public static int dpToPx(final Context context, final float dp) {
         return (int) (dp * context.getResources().getDisplayMetrics().density + 0.5f);
     }
 
-    public static void tintDrawable(@NonNull Drawable drawable, @ColorInt int color) {
+    public static void tintDrawable(final @NonNull Drawable drawable, final @ColorInt int color) {
         drawable.mutate().setColorFilter(color, PorterDuff.Mode.SRC_IN);
     }
 
-    public static Drawable getDrawableSelector(int normalColor, int pressedColor) {
+    public static Drawable getDrawableSelector(final int normalColor, final int pressedColor) {
         return new RippleDrawable(ColorStateList.valueOf(pressedColor), getRippleMask(normalColor), getRippleMask(normalColor));
     }
 
-    @NonNull private static Drawable getRippleMask(int color) {
+    @NonNull private static Drawable getRippleMask(final int color) {
         float[] outerRadii = new float[8];
         Arrays.fill(outerRadii, 3);
         RoundRectShape r = new RoundRectShape(outerRadii, null, null);
@@ -121,7 +121,7 @@ public class ViewHelper {
         return shapeDrawable;
     }
 
-    @NonNull private static StateListDrawable getStateListDrawable(int normalColor, int pressedColor) {
+    @NonNull private static StateListDrawable getStateListDrawable(final int normalColor, final int pressedColor) {
         StateListDrawable states = new StateListDrawable();
         states.addState(new int[] {android.R.attr.state_pressed}, new ColorDrawable(pressedColor));
         states.addState(new int[] {android.R.attr.state_focused}, new ColorDrawable(pressedColor));
@@ -131,7 +131,7 @@ public class ViewHelper {
         return states;
     }
 
-    public static ColorStateList textSelector(int normalColor, int pressedColor) {
+    public static ColorStateList textSelector(final int normalColor, final int pressedColor) {
         return new ColorStateList(
                    new int[][] {
                        new int[]{android.R.attr.state_pressed},
@@ -150,52 +150,52 @@ public class ViewHelper {
                );
     }
 
-    private static boolean isTablet(@NonNull Resources resources) {
+    private static boolean isTablet(final @NonNull Resources resources) {
         return (resources.getConfiguration().screenLayout & Configuration.SCREENLAYOUT_SIZE_MASK) >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
-    @SuppressWarnings("ConstantConditions") public static boolean isTablet(@NonNull Context context) {
+    @SuppressWarnings("ConstantConditions") public static boolean isTablet(final @NonNull Context context) {
         return context != null && isTablet(context.getResources());
     }
 
-    public static boolean isLandscape(@NonNull Resources resources) {
+    public static boolean isLandscape(final @NonNull Resources resources) {
         return resources.getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    @NonNull @SuppressWarnings("WeakerAccess") public static Rect getLayoutPosition(@NonNull View view) {
+    @NonNull @SuppressWarnings("WeakerAccess") public static Rect getLayoutPosition(final @NonNull View view) {
         Rect myViewRect = new Rect();
         view.getGlobalVisibleRect(myViewRect);
         return myViewRect;
     }
 
-    @SuppressWarnings("WeakerAccess") @Nullable public static String getTransitionName(@NonNull View view) {
+    @SuppressWarnings("WeakerAccess") @Nullable public static String getTransitionName(final @NonNull View view) {
         return !InputHelper.isEmpty(view.getTransitionName()) ? view.getTransitionName() : null;
     }
 
-    @SuppressWarnings("WeakerAccess") public static void showKeyboard(@NonNull View v, @NonNull Context activity) {
+    @SuppressWarnings("WeakerAccess") public static void showKeyboard(final @NonNull View v, final @NonNull Context activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(v, 0);
     }
 
-    public static void showKeyboard(@NonNull View v) {
+    public static void showKeyboard(final @NonNull View v) {
         showKeyboard(v, v.getContext());
     }
 
-    public static void hideKeyboard(@NonNull View view) {
+    public static void hideKeyboard(final @NonNull View view) {
         InputMethodManager inputManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    @ColorInt public static int generateTextColor(int background) {
+    @ColorInt public static int generateTextColor(final int background) {
         return getContrastColor(background);
     }
 
-    @ColorInt private static int getContrastColor(@ColorInt int color) {
+    @ColorInt private static int getContrastColor(final @ColorInt int color) {
         double a = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255;
         return a < 0.5 ? Color.BLACK : Color.WHITE;
     }
 
-    public static boolean isEllipsed(@NonNull TextView textView) {
+    public static boolean isEllipsed(final @NonNull TextView textView) {
         Layout layout = textView.getLayout();
         if (layout != null) {
             int lines = layout.getLineCount();
@@ -206,7 +206,7 @@ public class ViewHelper {
         return false;
     }
 
-    @NonNull public static TextView getTabTextView(@NonNull TabLayout tabs, int tabIndex) {
+    @NonNull public static TextView getTabTextView(final @NonNull TabLayout tabs, final int tabIndex) {
         return (TextView) (((LinearLayout) ((LinearLayout) tabs.getChildAt(0)).getChildAt(tabIndex)).getChildAt(1));
     }
 }

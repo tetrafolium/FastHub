@@ -54,18 +54,18 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
             }
             return Single.just(true);
         })
-        .subscribe(unread -> {/**/}, Throwable::printStackTrace/*fail silently*/, () -> sendToView(view -> {
+        .subscribe(unread -> { /**/ }, Throwable::printStackTrace/*fail silently*/, () -> sendToView(view -> {
             view.onInvalidateNotification();
             view.onUpdateDrawerMenuHeader();
         })));
     }
 
-    @Override public boolean canBackPress(@NonNull DrawerLayout drawerLayout) {
+    @Override public boolean canBackPress(final @NonNull DrawerLayout drawerLayout) {
         return !drawerLayout.isDrawerOpen(GravityCompat.START);
     }
 
     @SuppressWarnings("ConstantConditions")
-    @Override public void onModuleChanged(@NonNull FragmentManager fragmentManager, @MainMvp.NavigationType
+    @Override public void onModuleChanged(final @NonNull FragmentManager fragmentManager, final @MainMvp.NavigationType
                                           int type) {
         Fragment currentVisible = getVisibleFragment(fragmentManager);
         FeedsFragment homeView = (FeedsFragment) getFragmentByTag(fragmentManager, FeedsFragment
@@ -104,8 +104,8 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
         }
     }
 
-    @Override public void onShowHideFragment(@NonNull FragmentManager fragmentManager, @NonNull Fragment toShow,
-            @NonNull Fragment toHide) {
+    @Override public void onShowHideFragment(final @NonNull FragmentManager fragmentManager, final @NonNull Fragment toShow,
+            final @NonNull Fragment toHide) {
         toHide.onHiddenChanged(true);
         fragmentManager
         .beginTransaction()
@@ -115,8 +115,8 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
         toShow.onHiddenChanged(false);
     }
 
-    @Override public void onAddAndHide(@NonNull FragmentManager fragmentManager, @NonNull Fragment toAdd,
-                                       @NonNull Fragment toHide) {
+    @Override public void onAddAndHide(final @NonNull FragmentManager fragmentManager, final @NonNull Fragment toAdd,
+                                       final @NonNull Fragment toHide) {
         toHide.onHiddenChanged(true);
         fragmentManager
         .beginTransaction()
@@ -126,13 +126,13 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
         toAdd.onHiddenChanged(false);
     }
 
-    @Override public void onMenuItemSelect(@IdRes int id, int position, boolean fromUser) {
+    @Override public void onMenuItemSelect(final @IdRes int id, final int position, final boolean fromUser) {
         if (getView() != null) {
             getView().onNavigationChanged(position);
         }
     }
 
-    @Override public void onMenuItemReselect(@IdRes int id, int position, boolean fromUser) {
+    @Override public void onMenuItemReselect(final @IdRes int id, final int position, final boolean fromUser) {
         sendToView(view -> view.onScrollTop(position));
     }
 }

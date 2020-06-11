@@ -24,17 +24,17 @@ public class TopicsAdapter extends BaseRecyclerAdapter<String, SimpleViewHolder<
     private boolean isLightTheme = true;
     @ColorInt private int cardBackground;
 
-    public TopicsAdapter(@NonNull List<String> data) {
+    public TopicsAdapter(final @NonNull List<String> data) {
         super(data);
     }
 
-    @Override protected SimpleViewHolder<String> viewHolder(ViewGroup parent, int viewType) {
+    @Override protected SimpleViewHolder<String> viewHolder(final ViewGroup parent, final int viewType) {
         isLightTheme = !AppHelper.isNightMode(parent.getResources());
         cardBackground = ViewHelper.getCardBackground(parent.getContext());
         return new SimpleViewHolder<>(BaseViewHolder.getView(parent, R.layout.topics_row_item), null);
     }
 
-    @Override protected void onBindView(SimpleViewHolder<String> holder, int position) {
+    @Override protected void onBindView(final SimpleViewHolder<String> holder, final int position) {
         if (isLightTheme) {
             holder.itemView.setBackgroundColor(cardBackground);
         }

@@ -37,7 +37,7 @@ public class MilestoneModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeString(this.title);
@@ -54,7 +54,7 @@ public class MilestoneModel implements Parcelable {
         dest.writeLong(this.dueOn != null ? this.dueOn.getTime() : -1);
     }
 
-    protected MilestoneModel(Parcel in) {
+    protected MilestoneModel(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         this.title = in.readString();
@@ -76,11 +76,11 @@ public class MilestoneModel implements Parcelable {
     }
 
     public static final Creator<MilestoneModel> CREATOR = new Creator<MilestoneModel>() {
-        @Override public MilestoneModel createFromParcel(Parcel source) {
+        @Override public MilestoneModel createFromParcel(final Parcel source) {
             return new MilestoneModel(source);
         }
 
-        @Override public MilestoneModel[] newArray(int size) {
+        @Override public MilestoneModel[] newArray(final int size) {
             return new MilestoneModel[size];
         }
     };

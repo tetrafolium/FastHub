@@ -8,4 +8,4 @@ import java.util.HashMap;
  */
 
 
-public class GithubFileModel extends HashMap<String, FilesListModel> implements Serializable {}
+public class GithubFileModel extends HashMap<String, FilesListModel> implements Serializable { }

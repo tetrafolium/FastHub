@@ -52,13 +52,13 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
     private CommentsAdapter adapter;
     private OnLoadMore<String> onLoadMore;
 
-    public static GistCommentsFragment newInstance(@NonNull String gistId) {
+    public static GistCommentsFragment newInstance(final @NonNull String gistId) {
         GistCommentsFragment view = new GistCommentsFragment();
         view.setArguments(Bundler.start().put("gistId", gistId).end());
         return view;
     }
 
-    @SuppressWarnings("unchecked") @Override public void onAttach(Context context) {
+    @SuppressWarnings("unchecked") @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof CommentEditorFragment.CommentListener) {
             commentsCallback = (CommentEditorFragment.CommentListener) getParentFragment();
@@ -79,7 +79,7 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
         return R.layout.fab_micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         gistId = getArguments().getString("gistId");
         recycler.setEmptyView(stateLayout, refresh);
         if (gistId == null) return;
@@ -105,7 +105,7 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
         getPresenter().onCallApi(1, gistId);
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Comment> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Comment> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -118,7 +118,7 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
         }
     }
 
-    @Override public void onRemove(@NonNull Comment comment) {
+    @Override public void onRemove(final @NonNull Comment comment) {
         hideProgress();
         adapter.removeItem(comment);
     }
@@ -129,19 +129,19 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
         stateLayout.hideProgress();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
 
         stateLayout.showProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -157,7 +157,7 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
         return onLoadMore;
     }
 
-    @Override public void onEditComment(@NonNull Comment item) {
+    @Override public void onEditComment(final @NonNull Comment item) {
         Intent intent = new Intent(getContext(), EditorActivity.class);
         intent.putExtras(Bundler
                          .start()
@@ -172,7 +172,7 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
         ActivityHelper.startReveal(this, intent, view, BundleConstant.REQUEST_CODE);
     }
 
-    @Override public void onShowDeleteMsg(long id) {
+    @Override public void onShowDeleteMsg(final long id) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
                                       Bundler.start()
                                       .put(BundleConstant.EXTRA, id)
@@ -183,21 +183,21 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
         .show(getChildFragmentManager(), MessageDialogView.TAG);
     }
 
-    @Override public void onTagUser(@Nullable User user) {
+    @Override public void onTagUser(final @Nullable User user) {
         if (commentsCallback != null && user != null) {
             commentsCallback.onTagUser(user.getLogin());
         }
     }
 
-    @Override public void onReply(User user, String message) {
+    @Override public void onReply(final User user, final String message) {
         onTagUser(user);
     }
 
-    @Override public void onHandleComment(@NonNull String text, @Nullable Bundle bundle) {
+    @Override public void onHandleComment(final @NonNull String text, final @Nullable Bundle bundle) {
         getPresenter().onHandleComment(text, bundle, gistId);
     }
 
-    @Override public void onAddNewComment(@NonNull Comment comment) {
+    @Override public void onAddNewComment(final @NonNull Comment comment) {
         hideBlockingProgress();
         adapter.addItem(comment);
         if (commentsCallback != null) commentsCallback.onClearEditText();
@@ -217,11 +217,11 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
         super.onDestroyView();
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == BundleConstant.REQUEST_CODE) {
@@ -252,14 +252,14 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
         }
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk) {
             getPresenter().onHandleDeletion(bundle);
         }
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

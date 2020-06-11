@@ -50,7 +50,7 @@ public class LabelsDialogFragment extends BaseDialogFragment<LabelsMvp.View, Lab
     private LabelsAdapter adapter;
     private LabelsMvp.SelectedLabelsListener callback;
 
-    public static LabelsDialogFragment newInstance(@Nullable LabelListModel selectedLabels, @NonNull String repo, @NonNull String login) {
+    public static LabelsDialogFragment newInstance(final @Nullable LabelListModel selectedLabels, final @NonNull String repo, final @NonNull String login) {
         LabelsDialogFragment fragment = new LabelsDialogFragment();
         fragment.setArguments(Bundler.start()
                               .putParcelableArrayList(BundleConstant.EXTRA, selectedLabels)
@@ -68,7 +68,7 @@ public class LabelsDialogFragment extends BaseDialogFragment<LabelsMvp.View, Lab
         }
     }
 
-    @Override public void onAttach(@NotNull Context context) {
+    @Override public void onAttach(final @NotNull Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof LabelsMvp.SelectedLabelsListener) {
             callback = (LabelsMvp.SelectedLabelsListener) getParentFragment();
@@ -86,7 +86,7 @@ public class LabelsDialogFragment extends BaseDialogFragment<LabelsMvp.View, Lab
         return R.layout.simple_footer_list_dialog;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         stateLayout.setEmptyText(R.string.no_labels);
         recycler.setEmptyView(stateLayout, refresh);
         refresh.setOnRefreshListener(() -> getPresenter().onCallApi(1, null));
@@ -114,11 +114,11 @@ public class LabelsDialogFragment extends BaseDialogFragment<LabelsMvp.View, Lab
         return new LabelsPresenter(bundle.getString(BundleConstant.EXTRA_THREE), bundle.getString(BundleConstant.EXTRA_TWO));
     }
 
-    @Override public boolean isLabelSelected(LabelModel labelModel) {
+    @Override public boolean isLabelSelected(final LabelModel labelModel) {
         return labelModels.indexOf(labelModel) != -1;
     }
 
-    @Override public void onToggleSelection(LabelModel labelModel, boolean select) {
+    @Override public void onToggleSelection(final LabelModel labelModel, final boolean select) {
         if (select) {
             labelModels.add(labelModel);
         } else {
@@ -134,7 +134,7 @@ public class LabelsDialogFragment extends BaseDialogFragment<LabelsMvp.View, Lab
         return onLoadMore;
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<LabelModel> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<LabelModel> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -147,12 +147,12 @@ public class LabelsDialogFragment extends BaseDialogFragment<LabelsMvp.View, Lab
         }
     }
 
-    @Override public void onLabelAdded(@NonNull LabelModel labelModel) {
+    @Override public void onLabelAdded(final @NonNull LabelModel labelModel) {
         adapter.addItem(labelModel, 0);
         recycler.scrollToPosition(0);
     }
 
-    @OnClick({R.id.cancel, R.id.ok}) public void onClick(View view) {
+    @OnClick({R.id.cancel, R.id.ok}) public void onClick(final View view) {
         switch (view.getId()) {
         case R.id.cancel:
             dismiss();
@@ -164,7 +164,7 @@ public class LabelsDialogFragment extends BaseDialogFragment<LabelsMvp.View, Lab
         }
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
@@ -174,12 +174,12 @@ public class LabelsDialogFragment extends BaseDialogFragment<LabelsMvp.View, Lab
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }

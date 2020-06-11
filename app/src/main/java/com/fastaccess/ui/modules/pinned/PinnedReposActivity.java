@@ -30,7 +30,7 @@ public class PinnedReposActivity extends BaseActivity {
     @BindView(R.id.tabs) TabLayout tabs;
     @BindView(R.id.tabbedPager) ViewPagerView tabbedPager;
 
-    public static void startActivity(@NonNull Context context) {
+    public static void startActivity(final @NonNull Context context) {
         context.startActivity(new Intent(context, PinnedReposActivity.class));
     }
 
@@ -54,7 +54,7 @@ public class PinnedReposActivity extends BaseActivity {
         return new BasePresenter();
     }
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         selectPinned();
         tabbedPager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapterModel.buildForPinned(this)));

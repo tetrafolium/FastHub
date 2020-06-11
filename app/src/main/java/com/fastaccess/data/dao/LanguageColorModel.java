@@ -19,24 +19,24 @@ import lombok.ToString;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.color);
         dest.writeString(this.url);
     }
 
-    public LanguageColorModel() {}
+    public LanguageColorModel() { }
 
-    private LanguageColorModel(Parcel in) {
+    private LanguageColorModel(final Parcel in) {
         this.color = in.readString();
         this.url = in.readString();
     }
 
     public static final Parcelable.Creator<LanguageColorModel> CREATOR = new Parcelable.Creator<LanguageColorModel>() {
-        @Override public LanguageColorModel createFromParcel(Parcel source) {
+        @Override public LanguageColorModel createFromParcel(final Parcel source) {
             return new LanguageColorModel(source);
         }
 
-        @Override public LanguageColorModel[] newArray(int size) {
+        @Override public LanguageColorModel[] newArray(final int size) {
             return new LanguageColorModel[size];
         }
     };

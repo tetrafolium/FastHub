@@ -39,7 +39,7 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
     private ArrayList<ContributionsDay> contributions = new ArrayList<>();
     private static final String URL = "https://github.com/users/%s/contributions";
 
-    @Override public void onCheckFollowStatus(@NonNull String login) {
+    @Override public void onCheckFollowStatus(final @NonNull String login) {
         if (!TextUtils.equals(login, Login.getUser().getLogin())) {
             manageDisposable(RxHelper.getObservable(RestProvider.getUserService(isEnterprise()).getFollowStatus(login))
             .subscribe(booleanResponse -> {
@@ -58,7 +58,7 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
         return isFollowing;
     }
 
-    @Override public void onFollowButtonClicked(@NonNull String login) {
+    @Override public void onFollowButtonClicked(final @NonNull String login) {
         manageDisposable(RxHelper.getObservable(!isFollowing ? RestProvider.getUserService(isEnterprise()).followUser(login)
                                                 : RestProvider.getUserService(isEnterprise()).unfollowUser(login))
         .subscribe(booleanResponse -> {
@@ -69,7 +69,7 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
         }, this::onError));
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         int statusCode = RestProvider.getErrorCode(throwable);
         if (statusCode == 404) {
             sendToView(ProfileOverviewMvp.View::onUserNotFound);
@@ -82,7 +82,7 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
         super.onError(throwable);
     }
 
-    @Override public void onFragmentCreated(@Nullable Bundle bundle) {
+    @Override public void onFragmentCreated(final @Nullable Bundle bundle) {
         if (bundle == null || bundle.getString(BundleConstant.EXTRA) == null) {
             throw new NullPointerException("Either bundle or User is null");
         }
@@ -105,7 +105,7 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
         }
     }
 
-    @SuppressWarnings("ConstantConditions") private void loadPinnedRepos(@NonNull String login) {
+    @SuppressWarnings("ConstantConditions") private void loadPinnedRepos(final @NonNull String login) {
         ApolloCall<GetPinnedReposQuery.Data> apolloCall = ApolloProdivder.INSTANCE.getApollo(isEnterprise())
                 .query(GetPinnedReposQuery.builder()
                        .login(login)
@@ -128,7 +128,7 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
         }, Throwable::printStackTrace));
     }
 
-    @Override public void onWorkOffline(@NonNull String login) {
+    @Override public void onWorkOffline(final @NonNull String login) {
         User userModel = User.getUser(login);
         if (userModel == null) {
             return;
@@ -136,11 +136,11 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
         onSendUserToView(userModel);
     }
 
-    @Override public void onSendUserToView(@Nullable User userModel) {
+    @Override public void onSendUserToView(final @Nullable User userModel) {
         sendToView(view -> view.onInitViews(userModel));
     }
 
-    @Override public void onLoadContributionWidget(@NonNull GitHubContributionsView gitHubContributionsView) {
+    @Override public void onLoadContributionWidget(final @NonNull GitHubContributionsView gitHubContributionsView) {
         if (!isEnterprise()) {
             if (contributions == null || contributions.isEmpty()) {
                 String url = String.format(URL, login);
@@ -173,7 +173,7 @@ class ProfileOverviewPresenter extends BasePresenter<ProfileOverviewMvp.View> im
         return login;
     }
 
-    private void loadContributions(ArrayList<ContributionsDay> contributions, GitHubContributionsView gitHubContributionsView) {
+    private void loadContributions(final ArrayList<ContributionsDay> contributions, final GitHubContributionsView gitHubContributionsView) {
         List<ContributionsDay> filter = gitHubContributionsView.getLastContributions(contributions);
         if (filter != null && contributions != null) {
             Observable<Bitmap> bitmapObservable = Observable.just(gitHubContributionsView.drawOnCanvas(filter, contributions));

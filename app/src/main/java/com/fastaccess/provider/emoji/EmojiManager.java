@@ -53,23 +53,23 @@ public class EmojiManager {
         })).subscribeOn(Schedulers.io()).subscribe();
     }
 
-    private EmojiManager() {}
+    private EmojiManager() { }
 
-    public static Set<Emoji> getForTag(String tag) {
+    public static Set<Emoji> getForTag(final String tag) {
         if (tag == null) {
             return null;
         }
         return EMOJIS_BY_TAG.get(tag);
     }
 
-    public static Emoji getForAlias(String alias) {
+    public static Emoji getForAlias(final String alias) {
         if (alias == null) {
             return null;
         }
         return EMOJIS_BY_ALIAS.get(trimAlias(alias));
     }
 
-    private static String trimAlias(String alias) {
+    private static String trimAlias(final String alias) {
         String result = alias;
         if (result.startsWith(":")) {
             result = result.substring(1, result.length());
@@ -80,7 +80,7 @@ public class EmojiManager {
         return result;
     }
 
-    public static Emoji getByUnicode(String unicode) {
+    public static Emoji getByUnicode(final String unicode) {
         if (unicode == null) {
             return null;
         }
@@ -91,16 +91,16 @@ public class EmojiManager {
         return ALL_EMOJIS;
     }
 
-    public static boolean isEmoji(String string) {
-        return string != null &&
-               EMOJI_TRIE.isEmoji(string.toCharArray()).exactMatch();
+    public static boolean isEmoji(final String string) {
+        return string != null
+               && EMOJI_TRIE.isEmoji(string.toCharArray()).exactMatch();
     }
 
-    public static boolean isOnlyEmojis(String string) {
+    public static boolean isOnlyEmojis(final String string) {
         return string != null && EmojiParser.removeAllEmojis(string).isEmpty();
     }
 
-    public static EmojiTrie.Matches isEmoji(char[] sequence) {
+    public static EmojiTrie.Matches isEmoji(final char[] sequence) {
         return EMOJI_TRIE.isEmoji(sequence);
     }
 

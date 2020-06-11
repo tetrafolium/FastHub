@@ -16,7 +16,7 @@ import org.htmlcleaner.TagNode;
 
 public class EmojiHandler extends TagNodeHandler {
 
-    @Override public void handleTagNode(TagNode node, SpannableStringBuilder builder, int start, int end) {
+    @Override public void handleTagNode(final TagNode node, final SpannableStringBuilder builder, final int start, final int end) {
         String emoji = node.getAttributeByName("alias");
         if (emoji != null) {
             Emoji unicode = EmojiManager.getForAlias(emoji);
@@ -32,7 +32,7 @@ public class EmojiHandler extends TagNodeHandler {
         }
     }
 
-    @Override public void beforeChildren(TagNode node, SpannableStringBuilder builder) {
+    @Override public void beforeChildren(final TagNode node, final SpannableStringBuilder builder) {
         super.beforeChildren(node, builder);
     }
 }

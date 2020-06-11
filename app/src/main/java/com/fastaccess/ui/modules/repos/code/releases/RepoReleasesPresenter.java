@@ -36,20 +36,20 @@ class RepoReleasesPresenter extends BasePresenter<RepoReleasesMvp.View> implemen
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Object parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());
@@ -72,7 +72,7 @@ class RepoReleasesPresenter extends BasePresenter<RepoReleasesMvp.View> implemen
 
     }
 
-    @Override public void onFragmentCreated(@NonNull Bundle bundle) {
+    @Override public void onFragmentCreated(final @NonNull Bundle bundle) {
         repoId = bundle.getString(BundleConstant.ID);
         login = bundle.getString(BundleConstant.EXTRA);
         String tag = bundle.getString(BundleConstant.EXTRA_THREE);
@@ -110,7 +110,7 @@ class RepoReleasesPresenter extends BasePresenter<RepoReleasesMvp.View> implemen
         return releases;
     }
 
-    @Override public void onItemClick(int position, View v, Release item) {
+    @Override public void onItemClick(final int position, final View v, final Release item) {
         if (getView() == null) return;
         if (v.getId() == R.id.download) {
             getView().onDownload(item);
@@ -119,9 +119,9 @@ class RepoReleasesPresenter extends BasePresenter<RepoReleasesMvp.View> implemen
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, Release item) {}
+    @Override public void onItemLongClick(final int position, final View v, final Release item) { }
 
-    private void onResponse(Pageable<Release> response) {
+    private void onResponse(final Pageable<Release> response) {
         lastPage = response.getLast();
         if (getCurrentPage() == 1) {
             manageDisposable(Release.save(response.getItems(), repoId, login));

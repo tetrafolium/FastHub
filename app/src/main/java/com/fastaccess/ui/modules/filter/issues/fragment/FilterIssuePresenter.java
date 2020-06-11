@@ -22,13 +22,13 @@ public class FilterIssuePresenter extends BasePresenter<FilterIssuesMvp.View> im
     private int previousTotal;
     private int lastPage = Integer.MAX_VALUE;
 
-    @Override public void onItemClick(int position, View v, Issue item) {
+    @Override public void onItemClick(final int position, final View v, final Issue item) {
         if (getView() != null) {
             getView().onItemClicked(item);
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, Issue item) {
+    @Override public void onItemLongClick(final int position, final View v, final Issue item) {
         if (getView() != null) getView().onShowPopupDetails(item);
     }
 
@@ -44,15 +44,15 @@ public class FilterIssuePresenter extends BasePresenter<FilterIssuesMvp.View> im
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public boolean onCallApi(int page, @Nullable String parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable String parameter) {
         if (page == 1 || parameter == null) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());

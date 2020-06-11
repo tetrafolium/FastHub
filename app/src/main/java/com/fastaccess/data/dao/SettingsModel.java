@@ -33,7 +33,7 @@ import lombok.Setter;
         LANGUAGE,
         CODE_THEME
     })
-    @Retention(RetentionPolicy.SOURCE) public @interface SettingsType {}
+    @Retention(RetentionPolicy.SOURCE) public @interface SettingsType { }
 
     private int image;
     private String title;

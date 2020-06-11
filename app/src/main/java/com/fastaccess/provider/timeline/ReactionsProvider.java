@@ -36,12 +36,12 @@ public class ReactionsProvider {
         REVIEW_COMMENT,
         COMMIT
     })
-    @Retention(RetentionPolicy.SOURCE) public @interface ReactionType {}
+    @Retention(RetentionPolicy.SOURCE) public @interface ReactionType { }
 
     private Map<Long, ReactionsModel> reactionsMap = new LinkedHashMap<>();
 
-    @Nullable public Observable onHandleReaction(@IdRes int viewId, long idOrNumber, @Nullable String login,
-            @Nullable String repoId, @ReactionType int reactionType, boolean isEnterprise) {
+    @Nullable public Observable onHandleReaction(final @IdRes int viewId, final long idOrNumber, final @Nullable String login,
+            final @Nullable String repoId, final @ReactionType int reactionType, final boolean isEnterprise) {
         if (!InputHelper.isEmpty(login) && !InputHelper.isEmpty(repoId)) {
             if (!isPreviouslyReacted(idOrNumber, viewId)) {
                 ReactionTypes reactionTypes = ReactionTypes.get(viewId);
@@ -85,7 +85,7 @@ public class ReactionsProvider {
     }
 
 
-    public boolean isPreviouslyReacted(long idOrNumber, @IdRes int vId) {
+    public boolean isPreviouslyReacted(final long idOrNumber, final @IdRes int vId) {
         ReactionsModel reactionsModel = getReactionsMap().get(idOrNumber);
         if (reactionsModel == null || InputHelper.isEmpty(reactionsModel.getContent())) {
             return false;
@@ -94,7 +94,7 @@ public class ReactionsProvider {
         return type != null && (type.getContent().equals(reactionsModel.getContent()) || type.getPostContent().equals(reactionsModel.getContent()));
     }
 
-    public boolean isCallingApi(long id, int vId) {
+    public boolean isCallingApi(final long id, final int vId) {
         ReactionsModel reactionsModel = getReactionsMap().get(id);
         if (reactionsModel == null || InputHelper.isEmpty(reactionsModel.getContent())) {
             return false;

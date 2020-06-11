@@ -14,15 +14,15 @@ import java.util.List;
 public class CommitLinesAdapter extends BaseRecyclerAdapter<CommitLinesModel, CommitLinesViewHolder,
     SimpleViewHolder.OnItemClickListener<CommitLinesModel>> {
 
-    public CommitLinesAdapter(@NonNull List<CommitLinesModel> data, @Nullable CommitLinesViewHolder.OnItemClickListener<CommitLinesModel> listener) {
+    public CommitLinesAdapter(final @NonNull List<CommitLinesModel> data, final @Nullable CommitLinesViewHolder.OnItemClickListener<CommitLinesModel> listener) {
         super(data, listener);
     }
 
-    @Override protected CommitLinesViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected CommitLinesViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return CommitLinesViewHolder.newInstance(parent, this);
     }
 
-    @Override protected void onBindView(CommitLinesViewHolder holder, int position) {
+    @Override protected void onBindView(final CommitLinesViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

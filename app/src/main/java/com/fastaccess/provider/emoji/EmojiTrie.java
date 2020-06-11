@@ -7,7 +7,7 @@ import java.util.Map;
 public class EmojiTrie {
     private Node root = new Node();
 
-    public EmojiTrie(Collection<Emoji> emojis) {
+    public EmojiTrie(final Collection<Emoji> emojis) {
         for (Emoji emoji : emojis) {
             Node tree = root;
             for (char c : emoji.getUnicode().toCharArray()) {
@@ -29,7 +29,7 @@ public class EmojiTrie {
      * @return &lt;li&gt; Matches.EXACTLY if char sequence in its entirety is an emoji &lt;/li&gt; &lt;li&gt; Matches.POSSIBLY if char sequence
      * matches prefix of an emoji &lt;/li&gt; &lt;li&gt; Matches.IMPOSSIBLE if char sequence matches no emoji or prefix of an emoji &lt;/li&gt;
      */
-    public Matches isEmoji(char[] sequence) {
+    public Matches isEmoji(final char[] sequence) {
         if (sequence == null) {
             return Matches.POSSIBLY;
         }
@@ -53,7 +53,7 @@ public class EmojiTrie {
      *         unicode of emoji to get
      * @return Emoji instance if unicode matches and emoji, null otherwise.
      */
-    public Emoji getEmoji(String unicode) {
+    public Emoji getEmoji(final String unicode) {
         Node tree = root;
         for (char c : unicode.toCharArray()) {
             if (!tree.hasChild(c)) {
@@ -84,7 +84,7 @@ public class EmojiTrie {
         private Map<Character, Node> children = new HashMap<Character, Node>();
         private Emoji emoji;
 
-        private void setEmoji(Emoji emoji) {
+        private void setEmoji(final Emoji emoji) {
             this.emoji = emoji;
         }
 
@@ -92,15 +92,15 @@ public class EmojiTrie {
             return emoji;
         }
 
-        private boolean hasChild(char child) {
+        private boolean hasChild(final char child) {
             return children.containsKey(child);
         }
 
-        private void addChild(char child) {
+        private void addChild(final char child) {
             children.put(child, new Node());
         }
 
-        private Node getChild(char child) {
+        private Node getChild(final char child) {
             return children.get(child);
         }
 

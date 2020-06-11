@@ -48,7 +48,7 @@ public class SettingsActivity extends BaseActivity implements LanguageBottomShee
         return false;
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setToolbarIcon(R.drawable.ic_back);
         setTitle(getString(R.string.settings));
@@ -82,7 +82,7 @@ public class SettingsActivity extends BaseActivity implements LanguageBottomShee
         });
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if (requestCode == THEME_CHANGE && resultCode == RESULT_OK) {
             setResult(resultCode);
             finish();
@@ -99,9 +99,9 @@ public class SettingsActivity extends BaseActivity implements LanguageBottomShee
         languageBottomSheetDialog.show(getSupportFragmentManager(), "LanguageBottomSheetDialog");
     }
 
-    @Override public void onLanguageChanged(Action action) {
+    @Override public void onLanguageChanged(final Action action) {
         try {
-            action.run();//dismiss dialog avoid leakage
+            action.run(); //dismiss dialog avoid leakage
         } catch (Exception e) {
             e.printStackTrace();
         }

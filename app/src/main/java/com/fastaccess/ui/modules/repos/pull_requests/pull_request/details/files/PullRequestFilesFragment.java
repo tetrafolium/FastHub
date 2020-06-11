@@ -61,7 +61,7 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
     private CommitFilesAdapter adapter;
     private IssuePagerMvp.IssuePrCallback<PullRequest> issueCallback;
 
-    public static PullRequestFilesFragment newInstance(@NonNull String repoId, @NonNull String login, long number) {
+    public static PullRequestFilesFragment newInstance(final @NonNull String repoId, final @NonNull String login, final long number) {
         PullRequestFilesFragment view = new PullRequestFilesFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.ID, repoId)
@@ -71,7 +71,7 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
         return view;
     }
 
-    @SuppressWarnings("unchecked") @Override public void onAttach(Context context) {
+    @SuppressWarnings("unchecked") @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof IssuePagerMvp.IssuePrCallback) {
             issueCallback = (IssuePagerMvp.IssuePrCallback) getParentFragment();
@@ -94,7 +94,7 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
         super.onDetach();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<CommitFileChanges> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<CommitFileChanges> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -111,7 +111,7 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
         return R.layout.pull_request_files_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, therefore, PullRequestFilesFragment can't be proceeded.");
         }
@@ -146,7 +146,7 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
         return new PullRequestFilesPresenter();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
@@ -156,12 +156,12 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -173,7 +173,7 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
         return onLoadMore;
     }
 
-    @Override public void onOpenForResult(int position, @NonNull CommitFileChanges model) {
+    @Override public void onOpenForResult(final int position, final @NonNull CommitFileChanges model) {
         FullScreenFileChangeActivity.Companion.startActivityForResult(this, model, position, false);
     }
 
@@ -181,11 +181,11 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
         getPresenter().onCallApi(1, null);
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onToggle(long position, boolean isCollapsed) {
+    @Override public void onToggle(final long position, final boolean isCollapsed) {
         CommitFileChanges model = adapter.getItem((int) position);
         if (model == null) return;
         if (model.getCommitFileModel().getPatch() == null) {
@@ -198,17 +198,17 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
         toggleMap.put(position, isCollapsed);
     }
 
-    @Override public boolean isCollapsed(long position) {
+    @Override public boolean isCollapsed(final long position) {
         Boolean toggle = toggleMap.get(position);
         return toggle != null && toggle;
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }
 
-    @Override public void onPatchClicked(int groupPosition, int childPosition, View v, CommitFileModel commit, CommitLinesModel item) {
+    @Override public void onPatchClicked(final int groupPosition, final int childPosition, final View v, final CommitFileModel commit, final CommitLinesModel item) {
         if (item.getText().startsWith("@@")) return;
         if (PrefGetter.isProEnabled()) {
             AddReviewDialogFragment.Companion.newInstance(item, Bundler.start()
@@ -222,7 +222,7 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
         }
     }
 
-    @Override public void onCommentAdded(@NonNull String comment, @NonNull CommitLinesModel item, Bundle bundle) {
+    @Override public void onCommentAdded(final @NonNull String comment, final @NonNull CommitLinesModel item, final Bundle bundle) {
         if (bundle != null) {
             String path = bundle.getString(BundleConstant.ITEM);
             if (path == null) return;
@@ -246,7 +246,7 @@ public class PullRequestFilesFragment extends BaseFragment<PullRequestFilesMvp.V
         }
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == FullScreenFileChangeActivity.Companion.getFOR_RESULT_CODE() && data != null) {
                 List<CommentRequestModel> comments = data.getParcelableArrayListExtra(BundleConstant.ITEM);

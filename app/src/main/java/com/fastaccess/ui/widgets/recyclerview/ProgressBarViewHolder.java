@@ -12,15 +12,15 @@ import com.fastaccess.R;
 
 public class ProgressBarViewHolder extends BaseViewHolder {
 
-    private ProgressBarViewHolder(@NonNull View itemView) {
+    private ProgressBarViewHolder(final @NonNull View itemView) {
         super(itemView);
     }
 
-    public static ProgressBarViewHolder newInstance(ViewGroup viewGroup) {
+    public static ProgressBarViewHolder newInstance(final ViewGroup viewGroup) {
         return new ProgressBarViewHolder(getView(viewGroup, R.layout.progress_layout));
     }
 
-    @Override public void bind(@NonNull Object o) {
+    @Override public void bind(final @NonNull Object o) {
 
     }
 }

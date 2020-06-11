@@ -31,7 +31,7 @@ public class IssueRequestModel implements Parcelable {
     private List<String> labels;
     private String base;
 
-    public static IssueRequestModel clone(@NonNull Issue issue, boolean toClose) {
+    public static IssueRequestModel clone(final @NonNull Issue issue, final boolean toClose) {
         IssueRequestModel model = new IssueRequestModel();
         if (issue.getLabels() != null) {
             model.setLabels(Stream.of(issue.getLabels()).filter(value -> value.getName() != null)
@@ -45,7 +45,7 @@ public class IssueRequestModel implements Parcelable {
         return model;
     }
 
-    public static IssueRequestModel clone(@NonNull PullRequest issue, boolean toClose) {
+    public static IssueRequestModel clone(final @NonNull PullRequest issue, final boolean toClose) {
         IssueRequestModel model = new IssueRequestModel();
         if (issue.getLabels() != null) {
             model.setLabels(Stream.of(issue.getLabels()).filter(value -> value.getName() != null)
@@ -64,7 +64,7 @@ public class IssueRequestModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(this.state == null ? -1 : this.state.ordinal());
         dest.writeString(this.title);
         dest.writeString(this.body);
@@ -73,7 +73,7 @@ public class IssueRequestModel implements Parcelable {
         dest.writeStringList(this.labels);
     }
 
-    private IssueRequestModel(Parcel in) {
+    private IssueRequestModel(final Parcel in) {
         int tmpState = in.readInt();
         this.state = tmpState == -1 ? null : IssueState.values()[tmpState];
         this.title = in.readString();
@@ -84,11 +84,11 @@ public class IssueRequestModel implements Parcelable {
     }
 
     public static final Creator<IssueRequestModel> CREATOR = new Creator<IssueRequestModel>() {
-        @Override public IssueRequestModel createFromParcel(Parcel source) {
+        @Override public IssueRequestModel createFromParcel(final Parcel source) {
             return new IssueRequestModel(source);
         }
 
-        @Override public IssueRequestModel[] newArray(int size) {
+        @Override public IssueRequestModel[] newArray(final int size) {
             return new IssueRequestModel[size];
         }
     };

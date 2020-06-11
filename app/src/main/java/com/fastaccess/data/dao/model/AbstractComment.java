@@ -56,7 +56,7 @@ import static com.fastaccess.data.dao.model.Comment.UPDATED_AT;
     @Convert(ReactionsConverter.class) ReactionsModel reactions;
     String authorAssociation;
 
-    public static Disposable saveForGist(@NonNull List<Comment> models, @NonNull String gistId) {
+    public static Disposable saveForGist(final @NonNull List<Comment> models, final @NonNull String gistId) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
@@ -76,11 +76,11 @@ import static com.fastaccess.data.dao.model.Comment.UPDATED_AT;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Disposable saveForCommits(@NonNull List<Comment> models, @NonNull String repoId,
-                                            @NonNull String login, @NonNull String commitId) {
+    public static Disposable saveForCommits(final @NonNull List<Comment> models, final @NonNull String repoId,
+                                            final @NonNull String login, final @NonNull String commitId) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
@@ -104,10 +104,10 @@ import static com.fastaccess.data.dao.model.Comment.UPDATED_AT;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Single<List<Comment>> getGistComments(@NonNull String gistId) {
+    public static Single<List<Comment>> getGistComments(final @NonNull String gistId) {
         return App.getInstance().getDataStore()
                .select(Comment.class)
                .where(GIST_ID.equal(gistId))
@@ -117,8 +117,8 @@ import static com.fastaccess.data.dao.model.Comment.UPDATED_AT;
                .toList();
     }
 
-    public static Single<List<Comment>> getCommitComments(@NonNull String repoId, @NonNull String login,
-            @NonNull String commitId) {
+    public static Single<List<Comment>> getCommitComments(final @NonNull String repoId, final @NonNull String login,
+            final @NonNull String commitId) {
         return App.getInstance().getDataStore()
                .select(Comment.class)
                .where(REPO_ID.equal(repoId)
@@ -130,7 +130,7 @@ import static com.fastaccess.data.dao.model.Comment.UPDATED_AT;
                .toList();
     }
 
-    public static Single<List<Comment>> getIssueComments(@NonNull String repoId, @NonNull String login, @NonNull String issueId) {
+    public static Single<List<Comment>> getIssueComments(final @NonNull String repoId, final @NonNull String login, final @NonNull String issueId) {
         return App.getInstance().getDataStore()
                .select(Comment.class)
                .where(REPO_ID.equal(repoId)
@@ -142,8 +142,8 @@ import static com.fastaccess.data.dao.model.Comment.UPDATED_AT;
                .toList();
     }
 
-    public static Single<List<Comment>> getPullRequestComments(@NonNull String repoId, @NonNull String login,
-            @NonNull String pullRequestId) {
+    public static Single<List<Comment>> getPullRequestComments(final @NonNull String repoId, final @NonNull String login,
+            final @NonNull String pullRequestId) {
         return App.getInstance().getDataStore()
                .select(Comment.class)
                .where(REPO_ID.equal(repoId)
@@ -156,7 +156,7 @@ import static com.fastaccess.data.dao.model.Comment.UPDATED_AT;
     }
 
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment that = (Comment) o;
@@ -172,7 +172,7 @@ import static com.fastaccess.data.dao.model.Comment.UPDATED_AT;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeParcelable(this.user, flags);
         dest.writeString(this.url);
@@ -194,7 +194,7 @@ import static com.fastaccess.data.dao.model.Comment.UPDATED_AT;
         dest.writeString(this.authorAssociation);
     }
 
-    protected AbstractComment(Parcel in) {
+    protected AbstractComment(final Parcel in) {
         this.id = in.readLong();
         this.user = in.readParcelable(User.class.getClassLoader());
         this.url = in.readString();
@@ -219,11 +219,11 @@ import static com.fastaccess.data.dao.model.Comment.UPDATED_AT;
     }
 
     public static final Creator<Comment> CREATOR = new Creator<Comment>() {
-        @Override public Comment createFromParcel(Parcel source) {
+        @Override public Comment createFromParcel(final Parcel source) {
             return new Comment(source);
         }
 
-        @Override public Comment[] newArray(int size) {
+        @Override public Comment[] newArray(final int size) {
             return new Comment[size];
         }
     };

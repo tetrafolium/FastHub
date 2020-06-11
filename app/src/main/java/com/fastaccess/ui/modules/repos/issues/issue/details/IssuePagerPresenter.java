@@ -54,7 +54,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         return issueModel;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         if (RestProvider.getErrorCode(throwable) == 404) {
             sendToView(BaseMvp.FAView::onOpenUrlInBrowser);
         } else {
@@ -63,7 +63,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         super.onError(throwable);
     }
 
-    @Override public void onActivityCreated(@Nullable Intent intent) {
+    @Override public void onActivityCreated(final @Nullable Intent intent) {
         Logger.e(isEnterprise());
         if (intent != null && intent.getExtras() != null) {
             issueModel = intent.getExtras().getParcelable(BundleConstant.ITEM);
@@ -84,7 +84,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         sendToView(view -> view.onSetupIssue(false));
     }
 
-    @Override public void onWorkOffline(long issueNumber, @NonNull String repoId, @NonNull String login) {
+    @Override public void onWorkOffline(final long issueNumber, final @NonNull String repoId, final @NonNull String login) {
         if (issueModel == null) {
             manageDisposable(RxHelper.getObservable(Issue.getIssueByNumber((int) issueNumber, repoId, login))
             .subscribe(issueModel1 -> {
@@ -125,7 +125,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         return showToRepoBtn;
     }
 
-    @Override public void onHandleConfirmDialog(@Nullable Bundle bundle) {
+    @Override public void onHandleConfirmDialog(final @Nullable Bundle bundle) {
         if (bundle != null) {
             boolean proceedCloseIssue = bundle.getBoolean(BundleConstant.EXTRA);
             boolean proceedLockUnlock = bundle.getBoolean(BundleConstant.EXTRA_TWO);
@@ -156,7 +156,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         }
     }
 
-    @Override public void onLockUnlockIssue(String reason) {
+    @Override public void onLockUnlockIssue(final String reason) {
         Issue currentIssue = getIssue();
         if (currentIssue == null) return;
         String login = getLogin();
@@ -169,8 +169,8 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         IssueService issueService = RestProvider.getIssueService(isEnterprise());
         Observable<Response<Boolean>> observable = RxHelper
                 .getObservable(model == null
-                               ? issueService.unlockIssue(login, repoId, number) :
-                               issueService.lockIssue(model, login, repoId, number));
+                               ? issueService.unlockIssue(login, repoId, number)
+                               : issueService.lockIssue(model, login, repoId, number));
         makeRestCall(observable, booleanResponse -> {
             int code = booleanResponse.code();
             if (code == 204) {
@@ -182,7 +182,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
 
     }
 
-    @Override public void onPutMilestones(@NonNull MilestoneModel milestone) {
+    @Override public void onPutMilestones(final @NonNull MilestoneModel milestone) {
         issueModel.setMilestone(milestone);
         IssueRequestModel issueRequestModel = IssueRequestModel.clone(issueModel, false);
         makeRestCall(RestProvider.getIssueService(isEnterprise()).editIssue(login, repoId, issueNumber, issueRequestModel),
@@ -194,7 +194,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
 
     }
 
-    @Override public void onPutLabels(@NonNull ArrayList<LabelModel> labels) {
+    @Override public void onPutLabels(final @NonNull ArrayList<LabelModel> labels) {
         makeRestCall(RestProvider.getIssueService(isEnterprise()).putLabels(login, repoId, issueNumber,
                      Stream.of(labels).filter(value -> value != null && value.getName() != null)
                      .map(LabelModel::getName).collect(Collectors.toList())),
@@ -207,14 +207,14 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         });
     }
 
-    @Override public void onPutAssignees(@NonNull ArrayList<User> users) {
+    @Override public void onPutAssignees(final @NonNull ArrayList<User> users) {
         AssigneesRequestModel assigneesRequestModel = new AssigneesRequestModel();
         ArrayList<String> assignees = new ArrayList<>();
         Stream.of(users).forEach(userModel -> assignees.add(userModel.getLogin()));
         assigneesRequestModel.setAssignees(assignees.isEmpty() ? Stream.of(issueModel.getAssignees()).map(User::getLogin).toList() : assignees);
-        makeRestCall(!assignees.isEmpty() ?
-                     RestProvider.getIssueService(isEnterprise()).putAssignees(login, repoId, issueNumber, assigneesRequestModel) :
-                     RestProvider.getIssueService(isEnterprise()).deleteAssignees(login, repoId, issueNumber, assigneesRequestModel),
+        makeRestCall(!assignees.isEmpty()
+                     ? RestProvider.getIssueService(isEnterprise()).putAssignees(login, repoId, issueNumber, assigneesRequestModel)
+                     : RestProvider.getIssueService(isEnterprise()).deleteAssignees(login, repoId, issueNumber, assigneesRequestModel),
         issue -> {
             UsersListModel assignee = new UsersListModel();
             assignee.addAll(users);
@@ -233,7 +233,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         return repoId;
     }
 
-    @Override public void onUpdateIssue(@NonNull Issue issue) {
+    @Override public void onUpdateIssue(final @NonNull Issue issue) {
         this.issueModel.setBody(issue.getBody());
         this.issueModel.setBodyHtml(issue.getBodyHtml());
         this.issueModel.setTitle(issue.getTitle());
@@ -243,7 +243,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         sendToView(view -> view.onSetupIssue(true));
     }
 
-    @Override public void onSubscribeOrMute(boolean mute) {
+    @Override public void onSubscribeOrMute(final boolean mute) {
         if (getIssue() == null) return;
         makeRestCall(mute ? RestProvider.getNotificationService(isEnterprise()).subscribe(getIssue().getId(),
                      new NotificationSubscriptionBodyModel(false, true))
@@ -275,7 +275,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         })), this::setupIssue);
     }
 
-    private void setupIssue(Issue issue) {
+    private void setupIssue(final Issue issue) {
         issueModel = issue;
         issueModel.setRepoId(repoId);
         issueModel.setLogin(login);
@@ -283,7 +283,7 @@ class IssuePagerPresenter extends BasePresenter<IssuePagerMvp.View> implements I
         manageDisposable(PinnedIssues.updateEntry(issue.getId()));
     }
 
-    private void updateTimeline(IssuePagerMvp.View view, int assignee_added) {
+    private void updateTimeline(final IssuePagerMvp.View view, final int assignee_added) {
         view.showMessage(R.string.success, assignee_added);
         view.onUpdateTimeline();
     }

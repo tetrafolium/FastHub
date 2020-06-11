@@ -31,7 +31,7 @@ public class CommitLinesViewHolder extends BaseViewHolder<CommitLinesModel> {
     private final int patchDeletionColor;
     private final int patchRefColor;
 
-    private CommitLinesViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+    private CommitLinesViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
         patchAdditionColor = ViewHelper.getPatchAdditionColor(itemView.getContext());
         patchDeletionColor = ViewHelper.getPatchDeletionColor(itemView.getContext());
@@ -39,11 +39,11 @@ public class CommitLinesViewHolder extends BaseViewHolder<CommitLinesModel> {
         textView.setOnLongClickListener(this);
     }
 
-    public static CommitLinesViewHolder newInstance(@NonNull ViewGroup viewGroup, @NonNull BaseRecyclerAdapter adapter) {
+    public static CommitLinesViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @NonNull BaseRecyclerAdapter adapter) {
         return new CommitLinesViewHolder(getView(viewGroup, R.layout.commit_line_row_item), adapter);
     }
 
-    @Override public void bind(@NonNull CommitLinesModel item) {
+    @Override public void bind(final @NonNull CommitLinesModel item) {
         leftLinNo.setText(item.getLeftLineNo() > 0 ? String.valueOf(item.getLeftLineNo()) : "  ");
         rightLinNo.setText(item.getRightLineNo() > 0 ? String.valueOf(item.getRightLineNo()) : "  ");
         hasComment.setVisibility(item.isHasCommentedOn() ? View.VISIBLE : View.GONE);

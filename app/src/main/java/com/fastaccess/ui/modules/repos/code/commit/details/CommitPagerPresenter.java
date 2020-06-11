@@ -33,7 +33,7 @@ class CommitPagerPresenter extends BasePresenter<CommitPagerMvp.View> implements
         return commitModel;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         if (RestProvider.getErrorCode(throwable) == 404) {
             sendToView(CommitPagerMvp.View::onFinishActivity);
         } else {
@@ -42,7 +42,7 @@ class CommitPagerPresenter extends BasePresenter<CommitPagerMvp.View> implements
         super.onError(throwable);
     }
 
-    @Override public void onActivityCreated(@Nullable Intent intent) {
+    @Override public void onActivityCreated(final @Nullable Intent intent) {
         if (intent != null && intent.getExtras() != null) {
             sha = intent.getExtras().getString(BundleConstant.ID);
             login = intent.getExtras().getString(BundleConstant.EXTRA);
@@ -80,7 +80,7 @@ class CommitPagerPresenter extends BasePresenter<CommitPagerMvp.View> implements
         sendToView(CommitPagerMvp.View::onSetup);
     }
 
-    @Override public void onWorkOffline(@NonNull String sha, @NonNull String repoId, @NonNull String login) {
+    @Override public void onWorkOffline(final @NonNull String sha, final @NonNull String repoId, final @NonNull String login) {
         manageDisposable(RxHelper.getObservable(Commit.getCommit(sha, repoId, login))
         .subscribe(commit -> {
             commitModel = commit;

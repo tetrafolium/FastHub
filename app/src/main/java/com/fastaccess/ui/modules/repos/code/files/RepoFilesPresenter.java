@@ -31,7 +31,7 @@ class RepoFilesPresenter extends BasePresenter<RepoFilesMvp.View> implements Rep
     @com.evernote.android.state.State String path;
     @com.evernote.android.state.State String ref;
 
-    @Override public void onItemClick(int position, View v, RepoFile item) {
+    @Override public void onItemClick(final int position, final View v, final RepoFile item) {
         if (getView() == null) return;
         if (v.getId() != R.id.menu) {
             getView().onItemClicked(item);
@@ -40,11 +40,11 @@ class RepoFilesPresenter extends BasePresenter<RepoFilesMvp.View> implements Rep
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, RepoFile item) {
+    @Override public void onItemLongClick(final int position, final View v, final RepoFile item) {
         FileCommitHistoryActivity.Companion.startActivity(v.getContext(), login, repoId, ref, item.getPath(), isEnterprise());
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
@@ -71,7 +71,7 @@ class RepoFilesPresenter extends BasePresenter<RepoFilesMvp.View> implements Rep
         }));
     }
 
-    @Override public void onCallApi(@Nullable RepoFile toAppend) {
+    @Override public void onCallApi(final @Nullable RepoFile toAppend) {
         if (repoId == null || login == null) return;
         makeRestCall(RestProvider.getRepoService(isEnterprise()).getRepoFiles(login, repoId, path, ref)
         .flatMap(response -> {
@@ -97,8 +97,8 @@ class RepoFilesPresenter extends BasePresenter<RepoFilesMvp.View> implements Rep
 
     }
 
-    @Override public void onInitDataAndRequest(@NonNull String login, @NonNull String repoId, @NonNull String path,
-            @NonNull String ref, boolean clear, @Nullable RepoFile toAppend) {
+    @Override public void onInitDataAndRequest(final @NonNull String login, final @NonNull String repoId, final @NonNull String path,
+            final @NonNull String ref, final boolean clear, final @Nullable RepoFile toAppend) {
         if (clear) pathsModel.clear();
         this.login = login;
         this.repoId = repoId;
@@ -117,11 +117,11 @@ class RepoFilesPresenter extends BasePresenter<RepoFilesMvp.View> implements Rep
         }
     }
 
-    @Nullable @Override public List<RepoFile> getCachedFiles(@NonNull String url, @NonNull String ref) {
+    @Nullable @Override public List<RepoFile> getCachedFiles(final @NonNull String url, final @NonNull String ref) {
         return pathsModel.getPaths(url, ref);
     }
 
-    @Override public void onDeleteFile(@NonNull String message, @NonNull RepoFile item, @NonNull String branch) {
+    @Override public void onDeleteFile(final @NonNull String message, final @NonNull RepoFile item, final @NonNull String branch) {
         CommitRequestModel body = new CommitRequestModel(message, null, item.getSha(), branch);
         makeRestCall(RestProvider.getContentService(isEnterprise())
                      .deleteFile(login, repoId, item.getPath(), ref, body),

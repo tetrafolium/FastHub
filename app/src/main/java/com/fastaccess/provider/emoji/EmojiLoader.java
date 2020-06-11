@@ -17,9 +17,9 @@ import java.util.List;
  * @author Vincent DURMONT [vdurmont@gmail.com]
  */
 class EmojiLoader {
-    private EmojiLoader() {}
+    private EmojiLoader() { }
 
-    static List<Emoji> loadEmojis(InputStream stream) throws IOException {
+    static List<Emoji> loadEmojis(final InputStream stream) throws IOException {
         try {
             JSONArray emojisJSON = new JSONArray(inputStreamToString(stream));
             List<Emoji> emojis = new ArrayList<Emoji>(emojisJSON.length());
@@ -36,7 +36,7 @@ class EmojiLoader {
         return Collections.emptyList();
     }
 
-    private static String inputStreamToString(InputStream stream) throws IOException {
+    private static String inputStreamToString(final InputStream stream) throws IOException {
         StringBuilder sb = new StringBuilder();
         InputStreamReader isr = new InputStreamReader(stream, "UTF-8");
         BufferedReader br = new BufferedReader(isr);
@@ -48,7 +48,7 @@ class EmojiLoader {
         return sb.toString();
     }
 
-    private static Emoji buildEmojiFromJSON(JSONObject json) throws Exception {
+    private static Emoji buildEmojiFromJSON(final JSONObject json) throws Exception {
         if (!json.has("emoji")) {
             return null;
         }
@@ -66,7 +66,7 @@ class EmojiLoader {
         return new Emoji(description, supportsFitzpatrick, aliases, tags, bytes);
     }
 
-    private static List<String> jsonArrayToStringList(JSONArray array) {
+    private static List<String> jsonArrayToStringList(final JSONArray array) {
         List<String> strings = new ArrayList<String>(array.length());
         try {
             for (int i = 0; i < array.length(); i++) {

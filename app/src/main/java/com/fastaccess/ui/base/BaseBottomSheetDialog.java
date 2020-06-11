@@ -32,14 +32,14 @@ import butterknife.Unbinder;
 
     protected BottomSheetBehavior<View> bottomSheetBehavior;
     private final BottomSheetBehavior.BottomSheetCallback bottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {
-        @Override public void onStateChanged(@NonNull View bottomSheet, int newState) {
+        @Override public void onStateChanged(final @NonNull View bottomSheet, final int newState) {
             if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                 isAlreadyHidden = true;
                 onHidden();
             }
         }
 
-        @Override public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+        @Override public void onSlide(final @NonNull View bottomSheet, final float slideOffset) {
             if (slideOffset == -1.0) {
                 isAlreadyHidden = true;
                 onDismissedByScrolling();
@@ -51,23 +51,23 @@ import butterknife.Unbinder;
 
     @LayoutRes protected abstract int layoutRes();
 
-    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @Override public void onSaveInstanceState(@NotNull Bundle outState) {
+    @Override public void onSaveInstanceState(final @NotNull Bundle outState) {
         super.onSaveInstanceState(outState);
         StateSaver.saveInstanceState(this, outState);
     }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             StateSaver.restoreInstanceState(this, savedInstanceState);
         }
     }
 
-    @Nullable @Override public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    @Nullable @Override public View onCreateView(final LayoutInflater inflater, final @Nullable ViewGroup container, final @Nullable Bundle savedInstanceState) {
         final Context contextThemeWrapper = new ContextThemeWrapper(getContext(), requireContext().getTheme());
         LayoutInflater themeAwareInflater = inflater.cloneInContext(contextThemeWrapper);
         View view = themeAwareInflater.inflate(layoutRes(), container, false);
@@ -88,7 +88,7 @@ import butterknife.Unbinder;
         return view;
     }
 
-    @Override public void setupDialog(Dialog dialog, int style) {
+    @Override public void setupDialog(final Dialog dialog, final int style) {
         super.setupDialog(dialog, style);
     }
 
@@ -97,7 +97,7 @@ import butterknife.Unbinder;
         if (unbinder != null) unbinder.unbind();
     }
 
-    @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @NonNull @Override public Dialog onCreateDialog(final Bundle savedInstanceState) {
         final Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setOnShowListener(dialogInterface -> {
             if (ViewHelper.isTablet(requireContext())) {
@@ -129,11 +129,11 @@ import butterknife.Unbinder;
     protected void onHidden() {
         try {
             dismiss();
-        } catch (IllegalStateException ignored) {} //FML FIXME
+        } catch (IllegalStateException ignored) { } //FML FIXME
     }
 
-    protected void onDismissedByScrolling() {}
+    protected void onDismissedByScrolling() { }
 
-    private void onDialogIsShowing() {}
+    private void onDialogIsShowing() { }
 
 }

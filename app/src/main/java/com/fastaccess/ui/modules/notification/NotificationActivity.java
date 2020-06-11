@@ -55,20 +55,20 @@ public class NotificationActivity extends BaseActivity implements OnNotification
         return new BasePresenter();
     }
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppHelper.cancelNotification(this);
         onSelectNotifications();
         setupTabs();
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onScrollTop(tab.getPosition());
             }
         });
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {
@@ -83,7 +83,7 @@ public class NotificationActivity extends BaseActivity implements OnNotification
         super.onBackPressed();
     }
 
-    @Override public void onNotificationChanged(@NonNull GroupedNotificationModel notification, int index) {
+    @Override public void onNotificationChanged(final @NonNull GroupedNotificationModel notification, final int index) {
         if (pager != null && pager.getAdapter() != null) {
             if (index == 0) {
                 UnreadNotificationsFragment fragment = (UnreadNotificationsFragment) pager.getAdapter().instantiateItem(pager, 0);

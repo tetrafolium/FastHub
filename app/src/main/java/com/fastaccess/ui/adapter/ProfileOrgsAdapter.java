@@ -13,11 +13,11 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
 
 public class ProfileOrgsAdapter extends BaseRecyclerAdapter<User, ProfileOrgsViewHolder, BaseViewHolder.OnItemClickListener<User>> {
 
-    @Override protected ProfileOrgsViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected ProfileOrgsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return ProfileOrgsViewHolder.newInstance(parent);
     }
 
-    @Override protected void onBindView(ProfileOrgsViewHolder holder, int position) {
+    @Override protected void onBindView(final ProfileOrgsViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

@@ -47,7 +47,7 @@ public class MyPullsPagerFragment extends BaseFragment<MyPullsPagerMvp.View, MyP
         return R.layout.tabbed_viewpager;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(getChildFragmentManager(),
                 FragmentPagerAdapterModel.buildForMyPulls(getContext()));
         pager.setAdapter(adapter);
@@ -59,13 +59,13 @@ public class MyPullsPagerFragment extends BaseFragment<MyPullsPagerMvp.View, MyP
             tabs.getTabAt(0).select();
         }
         pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override public void onPageSelected(int position) {
+            @Override public void onPageSelected(final int position) {
                 super.onPageSelected(position);
                 selectTab(position, true);
             }
         });
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override public void onTabSelected(TabLayout.Tab tab) {
+            @Override public void onTabSelected(final TabLayout.Tab tab) {
                 if (tab.getTag() == null) {
                     int position = tab.getPosition();
                     selectTab(position, false);
@@ -73,9 +73,9 @@ public class MyPullsPagerFragment extends BaseFragment<MyPullsPagerMvp.View, MyP
                 tab.setTag(null);
             }
 
-            @Override public void onTabUnselected(TabLayout.Tab tab) {}
+            @Override public void onTabUnselected(final TabLayout.Tab tab) { }
 
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 selectTab(tab.getPosition(), false);
             }
         });
@@ -88,7 +88,7 @@ public class MyPullsPagerFragment extends BaseFragment<MyPullsPagerMvp.View, MyP
         return new MyPullsPagerPresenter();
     }
 
-    @Override public void onSetBadge(int tabIndex, int count) {
+    @Override public void onSetBadge(final int tabIndex, final int count) {
         TabsCountStateModel model = getModelAtIndex(tabIndex);
         if (model == null) {
             model = new TabsCountStateModel();
@@ -102,14 +102,14 @@ public class MyPullsPagerFragment extends BaseFragment<MyPullsPagerMvp.View, MyP
         }
     }
 
-    @Nullable private TabsCountStateModel getModelAtIndex(int index) {
+    @Nullable private TabsCountStateModel getModelAtIndex(final int index) {
         return Stream.of(counts)
                .filter(model -> model.getTabIndex() == index)
                .findFirst()
                .orElse(null);
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (pager != null && pager.getAdapter() != null) {
             MyPullRequestFragment myIssuesFragment = (MyPullRequestFragment) pager.getAdapter().instantiateItem(pager, pager.getCurrentItem());
@@ -119,7 +119,7 @@ public class MyPullsPagerFragment extends BaseFragment<MyPullsPagerMvp.View, MyP
         }
     }
 
-    private void selectTab(int position, boolean fromViewPager) {
+    private void selectTab(final int position, final boolean fromViewPager) {
         if (!fromViewPager) {
             onShowFilterMenu(getModelAtIndex(position), ViewHelper.getTabTextView(tabs, position));
             pager.setCurrentItem(position);
@@ -132,7 +132,7 @@ public class MyPullsPagerFragment extends BaseFragment<MyPullsPagerMvp.View, MyP
         }
     }
 
-    private void updateCount(@NonNull TabsCountStateModel model) {
+    private void updateCount(final @NonNull TabsCountStateModel model) {
         TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
         String title = getString(R.string.created);
         switch (model.getTabIndex()) {
@@ -158,7 +158,7 @@ public class MyPullsPagerFragment extends BaseFragment<MyPullsPagerMvp.View, MyP
                    .append(")"));
     }
 
-    private void onShowFilterMenu(@Nullable TabsCountStateModel model, TextView tv) {
+    private void onShowFilterMenu(final @Nullable TabsCountStateModel model, final TextView tv) {
         if (model == null) return;
         PopupMenu popup = new PopupMenu(getContext(), tv);
         MenuInflater inflater = popup.getMenuInflater();
@@ -188,7 +188,7 @@ public class MyPullsPagerFragment extends BaseFragment<MyPullsPagerMvp.View, MyP
         popup.show();
     }
 
-    private void updateDrawable(@NonNull TabsCountStateModel model, TextView tv) {
+    private void updateDrawable(final @NonNull TabsCountStateModel model, final TextView tv) {
         model.setDrawableId(model.getDrawableId() == 0 ? R.drawable.ic_issue_opened_small : model.getDrawableId());
         tv.setCompoundDrawablePadding(16);
         tv.setCompoundDrawablesWithIntrinsicBounds(model.getDrawableId(), 0, R.drawable.ic_arrow_drop_down, 0);

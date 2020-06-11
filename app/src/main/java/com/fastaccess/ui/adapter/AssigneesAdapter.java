@@ -25,16 +25,16 @@ public class AssigneesAdapter extends BaseRecyclerAdapter<User, AssigneesViewHol
 
     private final OnSelectAssignee onSelectAssignee;
 
-    public AssigneesAdapter(@NonNull List<User> data, @Nullable OnSelectAssignee onSelectAssignee) {
+    public AssigneesAdapter(final @NonNull List<User> data, final @Nullable OnSelectAssignee onSelectAssignee) {
         super(data);
         this.onSelectAssignee = onSelectAssignee;
     }
 
-    @Override protected AssigneesViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected AssigneesViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return AssigneesViewHolder.newInstance(parent, onSelectAssignee, this);
     }
 
-    @Override protected void onBindView(AssigneesViewHolder holder, int position) {
+    @Override protected void onBindView(final AssigneesViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

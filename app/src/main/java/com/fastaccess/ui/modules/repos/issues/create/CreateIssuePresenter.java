@@ -37,7 +37,7 @@ public class CreateIssuePresenter extends BasePresenter<CreateIssueMvp.View> imp
     @com.evernote.android.state.State boolean isCollaborator;
 
 
-    @Override public void checkAuthority(@NonNull String login, @NonNull String repoId) {
+    @Override public void checkAuthority(final @NonNull String login, final @NonNull String repoId) {
         manageViewDisposable(RxHelper.getObservable(RestProvider.getRepoService(isEnterprise()).
                              isCollaborator(login, repoId, Login.getUser().getLogin()))
         .subscribe(booleanResponse -> {
@@ -46,7 +46,7 @@ public class CreateIssuePresenter extends BasePresenter<CreateIssueMvp.View> imp
         }, Throwable::printStackTrace));
     }
 
-    @Override public void onActivityForResult(int resultCode, int requestCode, Intent intent) {
+    @Override public void onActivityForResult(final int resultCode, final int requestCode, final Intent intent) {
         if (resultCode == Activity.RESULT_OK && requestCode == BundleConstant.REQUEST_CODE) {
             if (intent != null && intent.getExtras() != null) {
                 CharSequence charSequence = intent.getExtras().getCharSequence(BundleConstant.EXTRA);
@@ -57,10 +57,10 @@ public class CreateIssuePresenter extends BasePresenter<CreateIssueMvp.View> imp
         }
     }
 
-    @Override public void onSubmit(@NonNull String title, @NonNull CharSequence description, @NonNull String login,
-                                   @NonNull String repo, @Nullable Issue issue, @Nullable PullRequest pullRequestModel,
-                                   @Nullable ArrayList<LabelModel> labels, @Nullable MilestoneModel milestoneModel,
-                                   @Nullable ArrayList<User> users) {
+    @Override public void onSubmit(final @NonNull String title, final @NonNull CharSequence description, final @NonNull String login,
+                                   final @NonNull String repo, final @Nullable Issue issue, final @Nullable PullRequest pullRequestModel,
+                                   final @Nullable ArrayList<LabelModel> labels, final @Nullable MilestoneModel milestoneModel,
+                                   final @Nullable ArrayList<User> users) {
 
         boolean isEmptyTitle = InputHelper.isEmpty(title);
         if (getView() != null) {
@@ -142,7 +142,7 @@ public class CreateIssuePresenter extends BasePresenter<CreateIssueMvp.View> imp
                     IssueRequestModel requestModel = IssueRequestModel.clone(pullRequestModel, false);
                     makeRestCall(RestProvider.getPullRequestService(isEnterprise()).editPullRequest(login, repo, number, requestModel)
                                  .flatMap(pullRequest1 -> RestProvider.getIssueService(isEnterprise()).getIssue(login, repo, number),
-                    (pullRequest1, issueReaction) -> {//hack to get reactions from issue api
+                    (pullRequest1, issueReaction) -> { //hack to get reactions from issue api
                         if (issueReaction != null) {
                             pullRequest1.setReactions(issueReaction.getReactions());
                         }

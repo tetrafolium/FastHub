@@ -23,15 +23,15 @@ import butterknife.BindView;
 public class BranchesAdapter extends BaseRecyclerAdapter<BranchesModel, BranchesAdapter.BranchesViewHolder, BaseViewHolder
     .OnItemClickListener<BranchesModel>> {
 
-    public BranchesAdapter(@NonNull List<BranchesModel> data, @Nullable BaseViewHolder.OnItemClickListener<BranchesModel> listener) {
+    public BranchesAdapter(final @NonNull List<BranchesModel> data, final @Nullable BaseViewHolder.OnItemClickListener<BranchesModel> listener) {
         super(data, listener);
     }
 
-    @Override protected BranchesViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected BranchesViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return new BranchesViewHolder(BaseViewHolder.getView(parent, R.layout.branches_row_item), this);
     }
 
-    @Override protected void onBindView(BranchesViewHolder holder, int position) {
+    @Override protected void onBindView(final BranchesViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 
@@ -40,11 +40,11 @@ public class BranchesAdapter extends BaseRecyclerAdapter<BranchesModel, Branches
         @Nullable @BindView(R.id.image) AppCompatImageView image;
         @BindView(android.R.id.text1) TextView title;
 
-        BranchesViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+        BranchesViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
             super(itemView, adapter);
         }
 
-        @Override public void bind(@NonNull BranchesModel branchesModel) {
+        @Override public void bind(final @NonNull BranchesModel branchesModel) {
             if (image != null) {
                 image.setImageResource(branchesModel.isTag() ? R.drawable.ic_label : R.drawable.ic_branch);
                 image.setContentDescription(branchesModel.getName());

@@ -33,17 +33,17 @@ public class PullStatusViewHolder extends BaseViewHolder<PullRequestStatusModel>
     @BindColor(R.color.material_red_700) int red;
     @BindColor(R.color.material_indigo_700) int indigo;
 
-    private PullStatusViewHolder(@NonNull View itemView) {
+    private PullStatusViewHolder(final @NonNull View itemView) {
         super(itemView);
         itemView.setOnClickListener(null);
         itemView.setOnLongClickListener(null);
     }
 
-    public static PullStatusViewHolder newInstance(@NonNull ViewGroup parent) {
+    public static PullStatusViewHolder newInstance(final @NonNull ViewGroup parent) {
         return new PullStatusViewHolder(getView(parent, R.layout.pull_status_row_item));
     }
 
-    @Override public void bind(@NonNull PullRequestStatusModel pullRequestStatusModel) {
+    @Override public void bind(final @NonNull PullRequestStatusModel pullRequestStatusModel) {
         if (pullRequestStatusModel.getState() != null) {
             StatusStateType stateType = pullRequestStatusModel.getState();
             stateImage.setImageResource(stateType.getDrawableRes());

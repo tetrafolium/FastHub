@@ -23,13 +23,13 @@ import lombok.Setter;
     private Date createdAt;
     private Date updatedAt;
 
-    public StatusesModel() {}
+    public StatusesModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.url);
         dest.writeInt(this.state == null ? -1 : this.state.ordinal());
         dest.writeString(this.description);
@@ -39,7 +39,7 @@ import lombok.Setter;
         dest.writeLong(this.updatedAt != null ? this.updatedAt.getTime() : -1);
     }
 
-    private StatusesModel(Parcel in) {
+    private StatusesModel(final Parcel in) {
         this.url = in.readString();
         int tmpState = in.readInt();
         this.state = tmpState == -1 ? null : StatusStateType.values()[tmpState];
@@ -53,11 +53,11 @@ import lombok.Setter;
     }
 
     public static final Creator<StatusesModel> CREATOR = new Creator<StatusesModel>() {
-        @Override public StatusesModel createFromParcel(Parcel source) {
+        @Override public StatusesModel createFromParcel(final Parcel source) {
             return new StatusesModel(source);
         }
 
-        @Override public StatusesModel[] newArray(int size) {
+        @Override public StatusesModel[] newArray(final int size) {
             return new StatusesModel[size];
         }
     };

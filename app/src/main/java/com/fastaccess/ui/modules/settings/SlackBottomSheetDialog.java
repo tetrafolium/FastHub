@@ -32,7 +32,7 @@ public class SlackBottomSheetDialog extends BaseBottomSheetDialog {
     @BindView(R.id.ok) FontButton ok;
     private SlackDialogListener listener;
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (context instanceof SlackDialogListener) {
             listener = (SlackDialogListener) context;
@@ -48,7 +48,7 @@ public class SlackBottomSheetDialog extends BaseBottomSheetDialog {
         return R.layout.message_dialog;
     }
 
-    @OnClick({R.id.cancel, R.id.ok}) public void onViewClicked(View view) {
+    @OnClick({R.id.cancel, R.id.ok}) public void onViewClicked(final View view) {
         switch (view.getId()) {
         case R.id.ok:
             ActivityHelper.startCustomTab(getActivity(), "http://rebrand.ly/fasthub");
@@ -58,7 +58,7 @@ public class SlackBottomSheetDialog extends BaseBottomSheetDialog {
         dismiss();
     }
 
-    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         cancel.setText(R.string.no);
         ok.setText(R.string.yes);

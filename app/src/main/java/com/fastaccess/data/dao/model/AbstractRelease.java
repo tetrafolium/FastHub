@@ -57,7 +57,7 @@ public abstract class AbstractRelease implements Parcelable {
     @Convert(UserConverter.class) User author;
     @Convert(ReleasesAssetsConverter.class) ReleasesAssetsListModel assets;
 
-    public static Disposable save(@NonNull List<Release> models, @NonNull String repoId, @NonNull String login) {
+    public static Disposable save(final @NonNull List<Release> models, final @NonNull String repoId, final @NonNull String login) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
@@ -79,10 +79,10 @@ public abstract class AbstractRelease implements Parcelable {
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Completable delete(@NonNull String repoId, @NonNull String login) {
+    public static Completable delete(final @NonNull String repoId, final @NonNull String login) {
         return App.getInstance().getDataStore()
                .delete(Release.class)
                .where(REPO_ID.eq(repoId)
@@ -92,7 +92,7 @@ public abstract class AbstractRelease implements Parcelable {
                .toCompletable();
     }
 
-    public static Observable<Release> get(long id) {
+    public static Observable<Release> get(final long id) {
         return App.getInstance().getDataStore()
                .select(Release.class)
                .where(ID.eq(id))
@@ -100,7 +100,7 @@ public abstract class AbstractRelease implements Parcelable {
                .observable();
     }
 
-    public static Single<List<Release>> get(@NonNull String repoId, @NonNull String login) {
+    public static Single<List<Release>> get(final @NonNull String repoId, final @NonNull String login) {
         return App.getInstance().getDataStore()
                .select(Release.class)
                .where(REPO_ID.eq(repoId)
@@ -115,7 +115,7 @@ public abstract class AbstractRelease implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeString(this.htmlUrl);
@@ -137,7 +137,7 @@ public abstract class AbstractRelease implements Parcelable {
         dest.writeList(this.assets);
     }
 
-    protected AbstractRelease(Parcel in) {
+    protected AbstractRelease(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         this.htmlUrl = in.readString();
@@ -163,11 +163,11 @@ public abstract class AbstractRelease implements Parcelable {
     }
 
     public static final Creator<Release> CREATOR = new Creator<Release>() {
-        @Override public Release createFromParcel(Parcel source) {
+        @Override public Release createFromParcel(final Parcel source) {
             return new Release(source);
         }
 
-        @Override public Release[] newArray(int size) {
+        @Override public Release[] newArray(final int size) {
             return new Release[size];
         }
     };

@@ -58,21 +58,21 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
     @State boolean isOrg;
     @State HashSet<TabsCountStateModel> counts = new HashSet<>();
 
-    public static void startActivity(@NonNull Context context, @NonNull String login, boolean isOrg,
-                                     boolean isEnterprise, int index) {
+    public static void startActivity(final @NonNull Context context, final @NonNull String login, final boolean isOrg,
+                                     final boolean isEnterprise, final int index) {
         context.startActivity(createIntent(context, login, isOrg, isEnterprise, index));
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String login) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String login) {
         return createIntent(context, login, false);
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String login, boolean isOrg) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String login, final boolean isOrg) {
         return createIntent(context, login, isOrg, false, -1);
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String login, boolean isOrg,
-                                      boolean isEnterprise, int index) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String login, final boolean isOrg,
+                                      final boolean isEnterprise, final int index) {
         Intent intent = new Intent(context, UserPagerActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA, login)
@@ -106,7 +106,7 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
         return new UserPagerPresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Login currentUser = Login.getUser();
         if (currentUser == null) {
@@ -163,13 +163,13 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
             }
         }
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onScrollTop(tab.getPosition());
             }
         });
         pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override public void onPageSelected(int position) {
+            @Override public void onPageSelected(final int position) {
                 super.onPageSelected(position);
                 hideShowFab(position);
             }
@@ -182,7 +182,7 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
         hideShowFab(pager.getCurrentItem());
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {
@@ -202,7 +202,7 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
         pager.setCurrentItem(6);
     }
 
-    @Override public void onInitOrg(boolean isMember) {
+    @Override public void onInitOrg(final boolean isMember) {
         hideProgress();
         FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(getSupportFragmentManager(),
                 FragmentPagerAdapterModel.buildForOrg(this, login, isMember));
@@ -228,14 +228,14 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
         onInvalidateMenu();
     }
 
-    @Override public void onCheckType(boolean isOrg) {
+    @Override public void onCheckType(final boolean isOrg) {
         if (!this.isOrg == isOrg) {
             startActivity(this, login, isOrg, isEnterprise(), index);
             finish();
         }
     }
 
-    @Override public void onSetBadge(int tabIndex, int count) {
+    @Override public void onSetBadge(final int tabIndex, final int count) {
         TabsCountStateModel model = new TabsCountStateModel();
         model.setTabIndex(tabIndex);
         model.setCount(count);
@@ -261,12 +261,12 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
         }
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.share_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == R.id.share && !InputHelper.isEmpty(login)) {
             ActivityHelper.shareUrl(this, new Uri.Builder().scheme("https")
                                     .authority(LinkParserHelper.HOST_DEFAULT)
@@ -279,7 +279,7 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public boolean onPrepareOptionsMenu(Menu menu) {
+    @Override public boolean onPrepareOptionsMenu(final Menu menu) {
         Logger.e(getPresenter().isUserBlockedRequested(), getPresenter().isUserBlocked());
         if (getPresenter().isUserBlockedRequested()) {
             Login login = Login.getUser();
@@ -296,7 +296,7 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
         return super.onPrepareOptionsMenu(menu);
     }
 
-    private void hideShowFab(int position) {
+    private void hideShowFab(final int position) {
         if (isOrg) {
             if (getPresenter().getIsMember() == 1) {
                 if (position == 2) {
@@ -320,7 +320,7 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
         }
     }
 
-    private void updateCount(@NonNull TabsCountStateModel model) {
+    private void updateCount(final @NonNull TabsCountStateModel model) {
         TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
         tv.setText(SpannableBuilder.builder()
                    .append(getString(R.string.starred))

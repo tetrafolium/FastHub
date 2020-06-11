@@ -19,7 +19,7 @@ public enum StatusStateType {
 
     @DrawableRes private int drawableRes;
 
-    StatusStateType(@DrawableRes int drawableRes) {
+    StatusStateType(final @DrawableRes int drawableRes) {
         this.drawableRes = drawableRes;
     }
 
@@ -27,7 +27,7 @@ public enum StatusStateType {
         return drawableRes;
     }
 
-    @NonNull public static StatusStateType getState(@Nullable String status) {
+    @NonNull public static StatusStateType getState(final @Nullable String status) {
         return Stream.of(values())
         .filter(value -> value.name().toLowerCase().equalsIgnoreCase(status))
         .findFirst()

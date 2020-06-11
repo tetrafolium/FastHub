@@ -34,7 +34,7 @@ import static com.fastaccess.data.dao.model.PinnedPullRequests.LOGIN;
     @io.requery.Nullable @Convert(PullRequestConverter.class) PullRequest pullRequest;
     @io.requery.Nullable long pullRequestId;
 
-    public static void pinUpin(@NonNull PullRequest pullRequest) {
+    public static void pinUpin(final @NonNull PullRequest pullRequest) {
         PinnedPullRequests pinnedPullRequests = get(pullRequest.getId());
         if (pinnedPullRequests == null) {
             PinnedPullRequests pinned = new PinnedPullRequests();
@@ -43,27 +43,27 @@ import static com.fastaccess.data.dao.model.PinnedPullRequests.LOGIN;
             pinned.setPullRequestId(pullRequest.getId());
             try {
                 App.getInstance().getDataStore().toBlocking().insert(pinned);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) { }
         } else {
             delete(pullRequest.getId());
         }
     }
 
-    @Nullable public static PinnedPullRequests get(long pullRequestId) {
+    @Nullable public static PinnedPullRequests get(final long pullRequestId) {
         return App.getInstance().getDataStore().select(PinnedPullRequests.class)
                .where(PinnedPullRequests.PULL_REQUEST_ID.eq(pullRequestId))
                .get()
                .firstOrNull();
     }
 
-    public static void delete(long pullRequestId) {
+    public static void delete(final long pullRequestId) {
         App.getInstance().getDataStore().delete(PinnedPullRequests.class)
         .where(PinnedPullRequests.PULL_REQUEST_ID.eq(pullRequestId))
         .get()
         .value();
     }
 
-    @NonNull public static Disposable updateEntry(@NonNull long pullRequestId) {
+    @NonNull public static Disposable updateEntry(final @NonNull long pullRequestId) {
         return RxHelper.getObservable(Observable.fromPublisher(e -> {
             PinnedPullRequests pinned = get(pullRequestId);
             if (pinned != null) {
@@ -72,7 +72,7 @@ import static com.fastaccess.data.dao.model.PinnedPullRequests.LOGIN;
                 e.onNext("");
             }
             e.onComplete();
-        })).subscribe(o -> {/*do nothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*do nothing*/ }, Throwable::printStackTrace);
     }
 
     @NonNull public static Single<List<PullRequest>> getMyPinnedPullRequests() {
@@ -85,7 +85,7 @@ import static com.fastaccess.data.dao.model.PinnedPullRequests.LOGIN;
                .toList();
     }
 
-    public static boolean isPinned(long pullRequestId) {
+    public static boolean isPinned(final long pullRequestId) {
         return get(pullRequestId) != null;
     }
 

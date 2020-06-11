@@ -57,7 +57,7 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         return pullRequest;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         if (RestProvider.getErrorCode(throwable) == 404) {
             sendToView(BaseMvp.FAView::onOpenUrlInBrowser);
         } else {
@@ -66,7 +66,7 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         super.onError(throwable);
     }
 
-    @Override public void onActivityCreated(@Nullable Intent intent) {
+    @Override public void onActivityCreated(final @Nullable Intent intent) {
         if (intent != null && intent.getExtras() != null) {
             issueNumber = intent.getExtras().getInt(BundleConstant.ID);
             login = intent.getExtras().getString(BundleConstant.EXTRA);
@@ -122,7 +122,7 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         return showToRepoBtn;
     }
 
-    @Override public void onHandleConfirmDialog(@Nullable Bundle bundle) {
+    @Override public void onHandleConfirmDialog(final @Nullable Bundle bundle) {
         if (bundle != null) {
             boolean proceedCloseIssue = bundle.getBoolean(BundleConstant.EXTRA);
             boolean proceedLockUnlock = bundle.getBoolean(BundleConstant.EXTRA_TWO);
@@ -134,7 +134,7 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         }
     }
 
-    @Override public void onLockUnlockConversations(String reason) {
+    @Override public void onLockUnlockConversations(final String reason) {
         PullRequest currentPullRequest = getPullRequest();
         if (currentPullRequest == null) return;
         IssueService service = RestProvider.getIssueService(isEnterprise());
@@ -143,8 +143,8 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
             model = new LockIssuePrModel(true, reason);
         }
         Observable<Response<Boolean>> observable = RxHelper
-                .getObservable(model == null ? service.unlockIssue(login, repoId, issueNumber) :
-                               service.lockIssue(model, login, repoId, issueNumber));
+                .getObservable(model == null ? service.unlockIssue(login, repoId, issueNumber)
+                               : service.lockIssue(model, login, repoId, issueNumber));
         makeRestCall(observable, booleanResponse -> {
             int code = booleanResponse.code();
             if (code == 204) {
@@ -172,11 +172,11 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         }
     }
 
-    @NonNull @Override public SpannableBuilder getMergeBy(@NonNull PullRequest pullRequest, @NonNull Context context) {
+    @NonNull @Override public SpannableBuilder getMergeBy(final @NonNull PullRequest pullRequest, final @NonNull Context context) {
         return PullRequest.getMergeBy(pullRequest, context, false);
     }
 
-    @Override public void onPutLabels(@NonNull ArrayList<LabelModel> labels) {
+    @Override public void onPutLabels(final @NonNull ArrayList<LabelModel> labels) {
         makeRestCall(RestProvider.getIssueService(isEnterprise()).putLabels(login, repoId, issueNumber,
                      Stream.of(labels).filter(value -> value != null && value.getName() != null)
                      .map(LabelModel::getName).collect(Collectors.toList())),
@@ -189,7 +189,7 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         });
     }
 
-    @Override public void onPutMilestones(@NonNull MilestoneModel milestone) {
+    @Override public void onPutMilestones(final @NonNull MilestoneModel milestone) {
         pullRequest.setMilestone(milestone);
         IssueRequestModel issueRequestModel = IssueRequestModel.clone(pullRequest, false);
         makeRestCall(RestProvider.getPullRequestService(isEnterprise()).editIssue(login, repoId, issueNumber, issueRequestModel),
@@ -201,16 +201,16 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
 
     }
 
-    @Override public void onPutAssignees(@NonNull ArrayList<User> users, boolean isAssignees) {
+    @Override public void onPutAssignees(final @NonNull ArrayList<User> users, final boolean isAssignees) {
         AssigneesRequestModel assigneesRequestModel = new AssigneesRequestModel();
         ArrayList<String> assignees = Stream.of(users)
                                       .map(User::getLogin)
                                       .collect(Collectors.toCollection(ArrayList::new));
         if (isAssignees) {
             assigneesRequestModel.setAssignees(assignees.isEmpty() ? Stream.of(pullRequest.getAssignees()).map(User::getLogin).toList() : assignees);
-            makeRestCall(!assignees.isEmpty() ?
-                         RestProvider.getIssueService(isEnterprise()).putAssignees(login, repoId, issueNumber, assigneesRequestModel) :
-                         RestProvider.getIssueService(isEnterprise()).deleteAssignees(login, repoId, issueNumber, assigneesRequestModel),
+            makeRestCall(!assignees.isEmpty()
+                         ? RestProvider.getIssueService(isEnterprise()).putAssignees(login, repoId, issueNumber, assigneesRequestModel)
+                         : RestProvider.getIssueService(isEnterprise()).deleteAssignees(login, repoId, issueNumber, assigneesRequestModel),
             pullRequestResponse -> {
                 UsersListModel usersListModel = new UsersListModel();
                 usersListModel.addAll(users);
@@ -227,8 +227,8 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         }
     }
 
-    @Override public void onMerge(@NonNull String msg, @NonNull String mergeMethod) {
-        if (isMergeable() && (isCollaborator() || isRepoOwner())) {//double the checking
+    @Override public void onMerge(final @NonNull String msg, final @NonNull String mergeMethod) {
+        if (isMergeable() && (isCollaborator() || isRepoOwner())) { //double the checking
             if (getPullRequest() == null || getPullRequest().getHead() == null || getPullRequest().getHead().getSha() == null) return;
             MergeRequestModel mergeRequestModel = new MergeRequestModel();
             mergeRequestModel.setSha(getPullRequest().getHead().getSha());
@@ -261,7 +261,7 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         return isCollaborator;
     }
 
-    @Override public void onUpdatePullRequest(@NonNull PullRequest pullRequestModel) {
+    @Override public void onUpdatePullRequest(final @NonNull PullRequest pullRequestModel) {
         this.pullRequest.setTitle(pullRequestModel.getTitle());
         this.pullRequest.setBody(pullRequestModel.getBody());
         this.pullRequest.setBodyHtml(pullRequestModel.getBodyHtml());
@@ -285,7 +285,7 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         return reviewComments;
     }
 
-    @Override public void onAddComment(@NonNull CommentRequestModel comment) {
+    @Override public void onAddComment(final @NonNull CommentRequestModel comment) {
         int index = reviewComments.indexOf(comment);
         if (index != -1) {
             reviewComments.set(index, comment);
@@ -298,7 +298,7 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         return reviewComments.size() > 0;
     }
 
-    @Override public void onSubscribeOrMute(boolean mute) {
+    @Override public void onSubscribeOrMute(final boolean mute) {
         if (getPullRequest() == null) return;
         makeRestCall(mute ? RestProvider.getNotificationService(isEnterprise()).subscribe(getPullRequest().getId(),
                      new NotificationSubscriptionBodyModel(false, true))
@@ -339,7 +339,7 @@ class PullRequestPagerPresenter extends BasePresenter<PullRequestPagerMvp.View> 
         });
     }
 
-    private void updateTimeline(PullRequestPagerMvp.View view, int assignee_added) {
+    private void updateTimeline(final PullRequestPagerMvp.View view, final int assignee_added) {
         view.showMessage(R.string.success, assignee_added);
         view.onUpdateTimeline();
     }

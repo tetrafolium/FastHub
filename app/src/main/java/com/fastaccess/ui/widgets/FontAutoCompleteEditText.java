@@ -13,18 +13,18 @@ import com.fastaccess.helper.TypeFaceHelper;
  */
 public class FontAutoCompleteEditText extends AppCompatAutoCompleteTextView {
 
-    public FontAutoCompleteEditText(@NonNull Context context) {
+    public FontAutoCompleteEditText(final @NonNull Context context) {
         super(context);
         init();
     }
 
-    public FontAutoCompleteEditText(@NonNull Context context, AttributeSet attrs) {
+    public FontAutoCompleteEditText(final @NonNull Context context, final AttributeSet attrs) {
         super(context, attrs);
         init();
 
     }
 
-    public FontAutoCompleteEditText(@NonNull Context context, AttributeSet attrs, int defStyleAttr) {
+    public FontAutoCompleteEditText(final @NonNull Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

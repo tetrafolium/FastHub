@@ -81,7 +81,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
     private PopupWindow popupWindow;
 
 
-    public static Intent getIntent(@NonNull Context context, @NonNull String login, @NonNull String repoId, @NonNull String criteria) {
+    public static Intent getIntent(final @NonNull Context context, final @NonNull String login, final @NonNull String repoId, final @NonNull String criteria) {
         Intent intent = new Intent(context, FilterIssuesActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA, login)
@@ -93,8 +93,8 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         return intent;
     }
 
-    public static void startActivity(@NonNull Activity context, @NonNull String login, @NonNull String repoId,
-                                     boolean isIssue, boolean isOpen, boolean isEnterprise) {
+    public static void startActivity(final @NonNull Activity context, final @NonNull String login, final @NonNull String repoId,
+                                     final boolean isIssue, final boolean isOpen, final boolean isEnterprise) {
         Intent intent = new Intent(context, FilterIssuesActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA, login)
@@ -111,8 +111,8 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         }
     }
 
-    public static void startActivity(@NonNull View view, @NonNull String login, @NonNull String repoId,
-                                     boolean isIssue, boolean isOpen, boolean isEnterprise, @NonNull String criteria) {
+    public static void startActivity(final @NonNull View view, final @NonNull String login, final @NonNull String repoId,
+                                     final boolean isIssue, final boolean isOpen, final boolean isEnterprise, final @NonNull String criteria) {
         Intent intent = new Intent(view.getContext(), FilterIssuesActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA, login)
@@ -146,7 +146,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         return new FilterIssuesActivityPresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             Bundle bundle = getIntent().getExtras();
@@ -250,16 +250,16 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         lists.add(CommentsHelper.getSad());
         lists.add(CommentsHelper.getHeart());
         viewHolder.recycler.setAdapter(new SimpleListAdapter<>(lists, new BaseViewHolder.OnItemClickListener<String>() {
-            @Override public void onItemClick(int position, View v, String item) {
+            @Override public void onItemClick(final int position, final View v, final String item) {
                 appendSort(item);
             }
 
-            @Override public void onItemLongClick(int position, View v, String item) {}
+            @Override public void onItemLongClick(final int position, final View v, final String item) { }
         }));
         AnimHelper.revealPopupWindow(popupWindow, sort);
     }
 
-    @OnClick(value = {R.id.clear}) void onClear(View view) {
+    @OnClick(value = {R.id.clear}) void onClear(final View view) {
         if (view.getId() == R.id.clear) {
             AppHelper.hideKeyboard(searchEditText);
             searchEditText.setText("");
@@ -270,7 +270,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         onSearch();
     }
 
-    @OnTextChanged(value = R.id.searchEditText, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED) void onTextChange(Editable s) {
+    @OnTextChanged(value = R.id.searchEditText, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED) void onTextChange(final Editable s) {
         String text = s.toString();
         if (text.length() == 0) {
             AnimHelper.animateVisibility(clear, false);
@@ -284,7 +284,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         return true;
     }
 
-    @Override public void onSetCount(int count, boolean isOpen) {
+    @Override public void onSetCount(final int count, final boolean isOpen) {
         if (isOpen) {
             open.setText(SpannableBuilder.builder()
                          .append(getString(R.string.open))
@@ -302,7 +302,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         }
     }
 
-    @Override public void showProgress(int resId) {
+    @Override public void showProgress(final int resId) {
         super.showProgress(resId);
     }
 
@@ -312,7 +312,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
 
     @NonNull private String getRepoName() {
         return "repo:" + login + "/" + repoId + " ";
-    }// let users stay within selected repo context.
+    } // let users stay within selected repo context.
 
     @Override public void onBackPressed() {
         if (popupWindow != null && popupWindow.isShowing()) {
@@ -322,7 +322,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         }
     }
 
-    private void setupPopupWindow(@NonNull ViewHolder viewHolder) {
+    private void setupPopupWindow(final @NonNull ViewHolder viewHolder) {
         if (popupWindow == null) {
             popupWindow = new PopupWindow(this);
             popupWindow.setElevation(getResources().getDimension(R.dimen.spacing_micro));
@@ -368,11 +368,11 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
             }
             milestonesAdapter = new MilestonesAdapter(getPresenter().getMilestones());
             milestonesAdapter.setListener(new BaseViewHolder.OnItemClickListener<MilestoneModel>() {
-                @Override public void onItemClick(int position, View v, MilestoneModel item) {
+                @Override public void onItemClick(final int position, final View v, final MilestoneModel item) {
                     appendMilestone(item);
                 }
 
-                @Override public void onItemLongClick(int position, View v, MilestoneModel item) {
+                @Override public void onItemLongClick(final int position, final View v, final MilestoneModel item) {
 
                 }
             });
@@ -389,11 +389,11 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
             }
             labelsAdapter = new LabelsAdapter(getPresenter().getLabels(), null);
             labelsAdapter.setListener(new BaseViewHolder.OnItemClickListener<LabelModel>() {
-                @Override public void onItemClick(int position, View v, LabelModel item) {
+                @Override public void onItemClick(final int position, final View v, final LabelModel item) {
                     appendLabel(item);
                 }
 
-                @Override public void onItemLongClick(int position, View v, LabelModel item) {
+                @Override public void onItemLongClick(final int position, final View v, final LabelModel item) {
 
                 }
             });
@@ -410,11 +410,11 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
             }
             assigneesAdapter = new UsersAdapter(getPresenter().getAssignees(), false, true);
             assigneesAdapter.setListener(new BaseViewHolder.OnItemClickListener<User>() {
-                @Override public void onItemClick(int position, View v, User item) {
+                @Override public void onItemClick(final int position, final View v, final User item) {
                     appendAssignee(item);
                 }
 
-                @Override public void onItemLongClick(int position, View v, User item) {}
+                @Override public void onItemLongClick(final int position, final View v, final User item) { }
             });
         }
         return assigneesAdapter;
@@ -431,7 +431,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
             }
     }
 
-    private void appendMilestone(MilestoneModel item) {
+    private void appendMilestone(final MilestoneModel item) {
         if (popupWindow != null) {
             popupWindow.dismiss();
         }
@@ -455,7 +455,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         onSearch();
     }
 
-    private void appendLabel(LabelModel item) {
+    private void appendLabel(final LabelModel item) {
         if (popupWindow != null) {
             popupWindow.dismiss();
         }
@@ -479,7 +479,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         onSearch();
     }
 
-    private void appendAssignee(User item) {
+    private void appendAssignee(final User item) {
         if (popupWindow != null) {
             popupWindow.dismiss();
         }
@@ -503,7 +503,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         onSearch();
     }
 
-    private void appendSort(String item) {
+    private void appendSort(final String item) {
         dismissPopup();
         appendIfEmpty();
         Resources resources = getResources();
@@ -576,7 +576,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
         @BindView(R.id.recycler) DynamicRecyclerView recycler;
         View view;
 
-        ViewHolder(View view) {
+        ViewHolder(final View view) {
             this.view = view;
             ButterKnife.bind(this, view);
             title.setVisibility(View.GONE);

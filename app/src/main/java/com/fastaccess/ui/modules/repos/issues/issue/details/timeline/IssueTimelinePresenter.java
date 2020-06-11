@@ -50,11 +50,11 @@ import lombok.Getter;
     @com.evernote.android.state.State boolean isCollaborator;
     private long commentId;
 
-    @Override public boolean isPreviouslyReacted(long commentId, int vId) {
+    @Override public boolean isPreviouslyReacted(final long commentId, final int vId) {
         return getReactionsProvider().isPreviouslyReacted(commentId, vId);
     }
 
-    @Override public void onItemClick(int position, View v, TimelineModel item) {
+    @Override public void onItemClick(final int position, final View v, final TimelineModel item) {
         if (getView() != null) {
             Issue issue = getView().getIssue();
             if (issue == null) return;
@@ -140,7 +140,7 @@ import lombok.Getter;
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, TimelineModel item) {
+    @Override public void onItemLongClick(final int position, final View v, final TimelineModel item) {
         if (getView() == null) return;
         if (item.getType() == TimelineModel.COMMENT || item.getType() == TimelineModel.HEADER) {
             if (v.getId() == R.id.commentMenu && item.getType() == TimelineModel.COMMENT) {
@@ -177,7 +177,7 @@ import lombok.Getter;
         //TODO
     }
 
-    @Override public void onHandleDeletion(@Nullable Bundle bundle) {
+    @Override public void onHandleDeletion(final @Nullable Bundle bundle) {
         if (bundle != null) {
             long commId = bundle.getLong(BundleConstant.EXTRA, 0);
             if (commId != 0) {
@@ -197,7 +197,7 @@ import lombok.Getter;
         }
     }
 
-    @Override public void onHandleReaction(int viewId, long id, @ReactionsProvider.ReactionType int reactionType) {
+    @Override public void onHandleReaction(final int viewId, final long id, final @ReactionsProvider.ReactionType int reactionType) {
         if (getView() == null || getView().getIssue() == null) return;
         Issue issue = getView().getIssue();
         String login = issue.getLogin();
@@ -206,11 +206,11 @@ import lombok.Getter;
         if (observable != null) manageObservable(observable);
     }
 
-    @Override public boolean isCallingApi(long id, int vId) {
+    @Override public boolean isCallingApi(final long id, final int vId) {
         return getReactionsProvider().isCallingApi(id, vId);
     }
 
-    @Override public void onHandleComment(@NonNull String text, @Nullable Bundle bundle) {
+    @Override public void onHandleComment(final @NonNull String text, final @Nullable Bundle bundle) {
         if (getView() == null) return;
         Issue issue = getView().getIssue();
         if (issue != null) {
@@ -230,7 +230,7 @@ import lombok.Getter;
         }
     }
 
-    @Override public void setCommentId(long commentId) {
+    @Override public void setCommentId(final long commentId) {
         this.commentId = commentId;
     }
 
@@ -249,15 +249,15 @@ import lombok.Getter;
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Issue parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Issue parameter) {
         if (parameter == null) {
             sendToView(BaseMvp.FAView::hideProgress);
             return false;
@@ -296,7 +296,7 @@ import lombok.Getter;
         return true;
     }
 
-    private void loadComment(int page, long commentId, String login, String repoId, List<TimelineModel> timeline) {
+    private void loadComment(final int page, final long commentId, final String login, final String repoId, final List<TimelineModel> timeline) {
         if (page == 1 && commentId > 0) {
             Observable<TimelineModel> observable = Observable.create(source -> {
                 int index = -1;

@@ -34,7 +34,7 @@ import static com.fastaccess.data.dao.model.PinnedIssues.LOGIN;
     @io.requery.Nullable @Convert(IssueConverter.class) Issue issue;
     @io.requery.Nullable long issueId;
 
-    public static void pinUpin(@NonNull Issue issue) {
+    public static void pinUpin(final @NonNull Issue issue) {
         PinnedIssues pinnedIssues = get(issue.getId());
         if (pinnedIssues == null) {
             PinnedIssues pinned = new PinnedIssues();
@@ -43,27 +43,27 @@ import static com.fastaccess.data.dao.model.PinnedIssues.LOGIN;
             pinned.setIssueId(issue.getId());
             try {
                 App.getInstance().getDataStore().toBlocking().insert(pinned);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) { }
         } else {
             delete(issue.getId());
         }
     }
 
-    @Nullable public static PinnedIssues get(long issueId) {
+    @Nullable public static PinnedIssues get(final long issueId) {
         return App.getInstance().getDataStore().select(PinnedIssues.class)
                .where(PinnedIssues.ISSUE_ID.eq(issueId))
                .get()
                .firstOrNull();
     }
 
-    public static void delete(long issueId) {
+    public static void delete(final long issueId) {
         App.getInstance().getDataStore().delete(PinnedIssues.class)
         .where(PinnedIssues.ISSUE_ID.eq(issueId))
         .get()
         .value();
     }
 
-    @NonNull public static Disposable updateEntry(long issueId) {
+    @NonNull public static Disposable updateEntry(final long issueId) {
         return RxHelper.getObservable(Observable.fromPublisher(e -> {
             PinnedIssues pinned = get(issueId);
             if (pinned != null) {
@@ -72,7 +72,7 @@ import static com.fastaccess.data.dao.model.PinnedIssues.LOGIN;
                 e.onNext("");
             }
             e.onComplete();
-        })).subscribe(o -> {/*do nothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*do nothing*/ }, Throwable::printStackTrace);
     }
 
     @NonNull public static Single<List<Issue>> getMyPinnedIssues() {
@@ -85,7 +85,7 @@ import static com.fastaccess.data.dao.model.PinnedIssues.LOGIN;
                .toList();
     }
 
-    public static boolean isPinned(long issueId) {
+    public static boolean isPinned(final long issueId) {
         return get(issueId) != null;
     }
 

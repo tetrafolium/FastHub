@@ -42,7 +42,7 @@ public class SearchUsersFragment extends BaseFragment<SearchUsersMvp.View, Searc
         return new SearchUsersFragment();
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (context instanceof SearchMvp.View) {
             countCallback = (SearchMvp.View) context;
@@ -54,7 +54,7 @@ public class SearchUsersFragment extends BaseFragment<SearchUsersMvp.View, Searc
         super.onDetach();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<User> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<User> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -67,7 +67,7 @@ public class SearchUsersFragment extends BaseFragment<SearchUsersMvp.View, Searc
         }
     }
 
-    @Override public void onSetTabCount(int count) {
+    @Override public void onSetTabCount(final int count) {
         if (countCallback != null) countCallback.onSetCount(count, 1);
     }
 
@@ -75,7 +75,7 @@ public class SearchUsersFragment extends BaseFragment<SearchUsersMvp.View, Searc
         return R.layout.small_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         stateLayout.setEmptyText(R.string.no_search_results);
         getLoadMore().initialize(getPresenter().getCurrentPage(), getPresenter().getPreviousTotal());
         stateLayout.setOnReloadListener(this);
@@ -105,22 +105,22 @@ public class SearchUsersFragment extends BaseFragment<SearchUsersMvp.View, Searc
         stateLayout.hideProgress();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void onSetSearchQuery(@NonNull String query) {
+    @Override public void onSetSearchQuery(final @NonNull String query) {
         this.searchQuery = query;
         getLoadMore().reset();
         adapter.clear();
@@ -131,7 +131,7 @@ public class SearchUsersFragment extends BaseFragment<SearchUsersMvp.View, Searc
         }
     }
 
-    @Override public void onQueueSearch(@NonNull String query) {
+    @Override public void onQueueSearch(final @NonNull String query) {
         this.searchQuery = query;
         if (getView() != null)
             onSetSearchQuery(query);
@@ -153,11 +153,11 @@ public class SearchUsersFragment extends BaseFragment<SearchUsersMvp.View, Searc
         getPresenter().onCallApi(1, searchQuery);
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

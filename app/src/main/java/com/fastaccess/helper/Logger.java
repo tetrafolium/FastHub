@@ -18,30 +18,30 @@ public class Logger {
 
     private static final boolean DEBUG = BuildConfig.DEBUG;
 
-    private static void e(@NonNull String tag, @Nullable Object text) {
+    private static void e(final @NonNull String tag, final @Nullable Object text) {
         if (!DEBUG) return;
-        Log.e(tag, text != null ? text.toString() : "LOGGER IS NULL");//avoid null
+        Log.e(tag, text != null ? text.toString() : "LOGGER IS NULL"); //avoid null
     }
 
-    private static void d(@NonNull String tag, @Nullable Object text) {
+    private static void d(final @NonNull String tag, final @Nullable Object text) {
         if (!DEBUG) return;
-        Log.d(tag, text != null ? text.toString() : "LOGGER IS NULL");//avoid null
+        Log.d(tag, text != null ? text.toString() : "LOGGER IS NULL"); //avoid null
     }
 
-    private static void i(@NonNull String tag, @Nullable Object text) {
+    private static void i(final @NonNull String tag, final @Nullable Object text) {
         if (!DEBUG) return;
-        Log.i(tag, text != null ? text.toString() : "LOGGER IS NULL");//avoid null
+        Log.i(tag, text != null ? text.toString() : "LOGGER IS NULL"); //avoid null
     }
 
-    public static void d(@Nullable Object text) {
-        d(getCurrentClassName() + " || " + getCurrentMethodName(), text);//avoid null
+    public static void d(final @Nullable Object text) {
+        d(getCurrentClassName() + " || " + getCurrentMethodName(), text); //avoid null
     }
 
-    public static void i(@Nullable Object text) {
-        i(getCurrentClassName() + " || " + getCurrentMethodName(), text);//avoid null
+    public static void i(final @Nullable Object text) {
+        i(getCurrentClassName() + " || " + getCurrentMethodName(), text); //avoid null
     }
 
-    public static void e(Object... objects) {
+    public static void e(final Object... objects) {
         if (objects != null && objects.length > 0) {
             e(getCurrentClassName() + " || " + getCurrentMethodName(), Arrays.toString(objects));
         } else {
@@ -49,7 +49,7 @@ public class Logger {
         }
     }
 
-    public static void e(List<Object> objects) {
+    public static void e(final List<Object> objects) {
         if (objects != null) {
             e(getCurrentClassName() + " || " + getCurrentMethodName(), Arrays.toString(objects.toArray()));
         } else {
@@ -60,7 +60,7 @@ public class Logger {
     private static String getCurrentMethodName() {
         try {
             return Thread.currentThread().getStackTrace()[4].getMethodName() + "()";
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
         return TAG;
     }
 
@@ -70,7 +70,7 @@ public class Logger {
             String[] temp = className.split("[.]");
             className = temp[temp.length - 1];
             return className;
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
         return TAG;
     }
 }

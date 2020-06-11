@@ -35,7 +35,7 @@ public class TeamPagerActivity extends BaseActivity {
     @BindView(R.id.tabs) TabLayout tabs;
     @BindView(R.id.tabbedPager) ViewPagerView pager;
 
-    public static void startActivity(@NonNull Context context, long id, @NonNull String name) {
+    public static void startActivity(final @NonNull Context context, final long id, final @NonNull String name) {
         Intent intent = new Intent(context, TeamPagerActivity.class);
         intent.putExtras(Bundler
                          .start()
@@ -65,7 +65,7 @@ public class TeamPagerActivity extends BaseActivity {
         return new BasePresenter();
     }
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             id = getIntent().getExtras().getLong(BundleConstant.ID);
@@ -84,14 +84,14 @@ public class TeamPagerActivity extends BaseActivity {
         tabs.setupWithViewPager(pager);
         tabs.setPaddingRelative(0, 0, 0, 0);
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onScrollTop(tab.getPosition());
             }
         });
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {

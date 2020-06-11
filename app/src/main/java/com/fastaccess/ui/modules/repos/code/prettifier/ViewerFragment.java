@@ -45,15 +45,15 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
     private boolean isAppBarListener;
     @State boolean isWrap = PrefGetter.isWrapCode();
 
-    public static ViewerFragment newInstance(@NonNull String url, @Nullable String htmlUrl) {
+    public static ViewerFragment newInstance(final @NonNull String url, final @Nullable String htmlUrl) {
         return newInstance(url, htmlUrl, false);
     }
 
-    public static ViewerFragment newInstance(@NonNull String url, boolean isRepo) {
+    public static ViewerFragment newInstance(final @NonNull String url, final boolean isRepo) {
         return newInstance(url, null, isRepo);
     }
 
-    public static ViewerFragment newInstance(@NonNull String url, @Nullable String htmlUrl, boolean isRepo) {
+    public static ViewerFragment newInstance(final @NonNull String url, final @Nullable String htmlUrl, final boolean isRepo) {
         return newInstance(Bundler.start()
                            .put(BundleConstant.ITEM, url)
                            .put(BundleConstant.EXTRA_TWO, htmlUrl)
@@ -61,20 +61,20 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
                            .end());
     }
 
-    private static ViewerFragment newInstance(@NonNull Bundle bundle) {
+    private static ViewerFragment newInstance(final @NonNull Bundle bundle) {
         ViewerFragment fragmentView = new ViewerFragment();
         fragmentView.setArguments(bundle);
         return fragmentView;
     }
 
-    @Override public void onSetImageUrl(@NonNull String url, boolean isSvg) {
+    @Override public void onSetImageUrl(final @NonNull String url, final boolean isSvg) {
         webView.loadImage(url, isSvg);
         webView.setOnContentChangedListener(this);
         webView.setVisibility(View.VISIBLE);
         getActivity().invalidateOptionsMenu();
     }
 
-    @Override public void onSetMdText(@NonNull String text, String baseUrl, boolean replace) {
+    @Override public void onSetMdText(final @NonNull String text, final String baseUrl, final boolean replace) {
         webView.setVisibility(View.VISIBLE);
         loader.setIndeterminate(false);
         webView.setGithubContentWithReplace(text, baseUrl, replace);
@@ -82,7 +82,7 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         getActivity().invalidateOptionsMenu();
     }
 
-    @Override public void onSetCode(@NonNull String text) {
+    @Override public void onSetCode(final @NonNull String text) {
         webView.setVisibility(View.VISIBLE);
         loader.setIndeterminate(false);
         webView.setSource(text, isWrap);
@@ -90,12 +90,12 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         getActivity().invalidateOptionsMenu();
     }
 
-    @Override public void onShowError(@NonNull String msg) {
+    @Override public void onShowError(final @NonNull String msg) {
         hideProgress();
         showErrorMessage(msg);
     }
 
-    @Override public void onShowError(@StringRes int msg) {
+    @Override public void onShowError(final @StringRes int msg) {
         hideProgress();
         onShowError(getString(msg));
     }
@@ -106,7 +106,7 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         stateLayout.showProgress();
     }
 
-    @Override public void openUrl(@NonNull String url) {
+    @Override public void openUrl(final @NonNull String url) {
         ActivityHelper.startCustomTab(getActivity(), url);
     }
 
@@ -114,7 +114,7 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         getPresenter().onLoadContentAsStream();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         onShowMdProgress();
     }
 
@@ -124,17 +124,17 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         if (!getPresenter().isImage()) stateLayout.showReload(getPresenter().downloadedStream() == null ? 0 : 1);
     }
 
-    @Override public void showErrorMessage(@NonNull String msgRes) {
+    @Override public void showErrorMessage(final @NonNull String msgRes) {
         hideProgress();
         super.showErrorMessage(msgRes);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         hideProgress();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void showMessage(@NonNull String titleRes, @NonNull String msgRes) {
+    @Override public void showMessage(final @NonNull String titleRes, final @NonNull String msgRes) {
         hideProgress();
         super.showMessage(titleRes, msgRes);
     }
@@ -147,7 +147,7 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         return new ViewerPresenter();
     }
 
-    @Override public void onContentChanged(int progress) {
+    @Override public void onContentChanged(final int progress) {
         if (loader != null) {
             loader.setProgress(progress);
             if (progress == 100) {
@@ -159,7 +159,7 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         }
     }
 
-    @Override public void onScrollChanged(boolean reachedTop, int scroll) {
+    @Override public void onScrollChanged(final boolean reachedTop, final int scroll) {
         if (AppHelper.isDeviceAnimationEnabled(getContext())) {
             if (getPresenter().isRepo() && appBarLayout != null && bottomNavigation != null && webView != null) {
                 boolean shouldExpand = webView.getScrollY() == 0;
@@ -176,12 +176,12 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         }
     }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (InputHelper.isEmpty(getPresenter().downloadedStream())) {
             getPresenter().onHandleIntent(getArguments());
         } else {
@@ -228,13 +228,13 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         super.onStop();
     }
 
-    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.wrap_menu_option, menu);
         menu.findItem(R.id.wrap).setVisible(false);
     }
 
-    @Override public void onPrepareOptionsMenu(Menu menu) {
+    @Override public void onPrepareOptionsMenu(final Menu menu) {
         super.onPrepareOptionsMenu(menu);
         MenuItem menuItem = menu.findItem(R.id.wrap);
         if (menuItem != null) {
@@ -246,7 +246,7 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         }
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == R.id.wrap) {
             item.setChecked(!item.isChecked());
             isWrap = item.isChecked();
@@ -256,19 +256,19 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (webView != null) webView.scrollTo(0, 0);
     }
 
-    @Override public void setUserVisibleHint(boolean isVisibleToUser) {
+    @Override public void setUserVisibleHint(final boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (!isVisibleToUser && appBarLayout != null) {
             appBarLayout.setVisibility(View.VISIBLE);
         }
     }
 
-    @Override public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+    @Override public void onOffsetChanged(final AppBarLayout appBarLayout, final int verticalOffset) {
         verticalOffset = Math.abs(verticalOffset);
         if (verticalOffset == 0 || verticalOffset == appBarLayout.getTotalScrollRange())
             isAppBarMoving = false;

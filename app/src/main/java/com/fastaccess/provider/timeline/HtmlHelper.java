@@ -43,12 +43,12 @@ import net.nightwhistler.htmlspanner.handlers.BoldHandler;
 
 public class HtmlHelper {
 
-    public static void htmlIntoTextView(@NonNull TextView textView, @NonNull String html, int width) {
+    public static void htmlIntoTextView(final @NonNull TextView textView, final @NonNull String html, final int width) {
         registerClickEvent(textView);
         textView.setText(initHtml(textView, width).fromHtml(format(html).toString()));
     }
 
-    private static void registerClickEvent(@NonNull TextView textView) {
+    private static void registerClickEvent(final @NonNull TextView textView) {
         BetterLinkMovementExtended betterLinkMovementMethod = BetterLinkMovementExtended.linkifyHtml(textView);
         betterLinkMovementMethod.setOnLinkClickListener((view, url) -> {
             SchemeParser.launchUri(view.getContext(), Uri.parse(url));
@@ -78,7 +78,7 @@ public class HtmlHelper {
         });
     }
 
-    private static HtmlSpanner initHtml(@NonNull TextView textView, int width) {
+    private static HtmlSpanner initHtml(final @NonNull TextView textView, final int width) {
         @PrefGetter.ThemeType int theme = PrefGetter.getThemeType();
         @ColorInt int windowBackground = getWindowBackground(theme);
         Drawable checked = ContextCompat.getDrawable(textView.getContext(), R.drawable.ic_checkbox_small);
@@ -122,7 +122,7 @@ public class HtmlHelper {
         return mySpanner;
     }
 
-    @ColorInt public static int getWindowBackground(@PrefGetter.ThemeType int theme) {
+    @ColorInt public static int getWindowBackground(final @PrefGetter.ThemeType int theme) {
         if (theme == PrefGetter.AMLOD) {
             return Color.parseColor("#0B162A");
         } else if (theme == PrefGetter.BLUISH) {

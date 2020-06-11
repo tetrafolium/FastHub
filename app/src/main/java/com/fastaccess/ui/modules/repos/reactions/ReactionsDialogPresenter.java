@@ -34,7 +34,7 @@ public class ReactionsDialogPresenter extends BasePresenter<ReactionsDialogMvp.V
     @com.evernote.android.state.State ReactionTypes reactionType;
     @com.evernote.android.state.State @ReactionsProvider.ReactionType int reactionTypeMode;
 
-    @Override public void onFragmentCreated(@Nullable Bundle bundle) {
+    @Override public void onFragmentCreated(final @Nullable Bundle bundle) {
         if (bundle != null) {
             repoId = bundle.getString(BundleConstant.EXTRA);
             login = bundle.getString(BundleConstant.EXTRA_TWO);
@@ -57,15 +57,15 @@ public class ReactionsDialogPresenter extends BasePresenter<ReactionsDialogMvp.V
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Object parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());

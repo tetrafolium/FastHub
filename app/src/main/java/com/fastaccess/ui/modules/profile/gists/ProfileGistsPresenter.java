@@ -31,15 +31,15 @@ class ProfileGistsPresenter extends BasePresenter<ProfileGistsMvp.View> implemen
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         sendToView(view -> {
             if (view.getLoadMore().getParameter() != null) {
                 onWorkOffline(view.getLoadMore().getParameter());
@@ -48,7 +48,7 @@ class ProfileGistsPresenter extends BasePresenter<ProfileGistsMvp.View> implemen
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable String parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable String parameter) {
         if (parameter == null) {
             throw new NullPointerException("Username is null");
         }
@@ -74,7 +74,7 @@ class ProfileGistsPresenter extends BasePresenter<ProfileGistsMvp.View> implemen
         return gistsModels;
     }
 
-    @Override public void onWorkOffline(@NonNull String login) {
+    @Override public void onWorkOffline(final @NonNull String login) {
         if (gistsModels.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Gist.getMyGists(login).toObservable()).subscribe(gistsModels1 ->
                              sendToView(view -> view.onNotifyAdapter(gistsModels1, 1))));
@@ -83,9 +83,9 @@ class ProfileGistsPresenter extends BasePresenter<ProfileGistsMvp.View> implemen
         }
     }
 
-    @Override public void onItemClick(int position, View v, Gist item) {
+    @Override public void onItemClick(final int position, final View v, final Gist item) {
         SchemeParser.launchUri(v.getContext(), item.getHtmlUrl());
     }
 
-    @Override public void onItemLongClick(int position, View v, Gist item) {}
+    @Override public void onItemLongClick(final int position, final View v, final Gist item) { }
 }

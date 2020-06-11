@@ -13,9 +13,9 @@ import com.crashlytics.android.Crashlytics;
 class UrlDrawable extends BitmapDrawable implements Drawable.Callback {
     private Drawable drawable;
 
-    @SuppressWarnings("deprecation") UrlDrawable() {}
+    @SuppressWarnings("deprecation") UrlDrawable() { }
 
-    @Override public void draw(Canvas canvas) {
+    @Override public void draw(final Canvas canvas) {
         if (drawable != null) {
             try {
                 drawable.draw(canvas);
@@ -35,7 +35,7 @@ class UrlDrawable extends BitmapDrawable implements Drawable.Callback {
         return drawable;
     }
 
-    public void setDrawable(Drawable drawable) {
+    public void setDrawable(final Drawable drawable) {
         if (this.drawable != null) {
             this.drawable.setCallback(null);
         }
@@ -43,19 +43,19 @@ class UrlDrawable extends BitmapDrawable implements Drawable.Callback {
         this.drawable = drawable;
     }
 
-    @Override public void invalidateDrawable(@NonNull Drawable who) {
+    @Override public void invalidateDrawable(final @NonNull Drawable who) {
         if (getCallback() != null) {
             getCallback().invalidateDrawable(who);
         }
     }
 
-    @Override public void scheduleDrawable(@NonNull Drawable who, @NonNull Runnable what, long when) {
+    @Override public void scheduleDrawable(final @NonNull Drawable who, final @NonNull Runnable what, final long when) {
         if (getCallback() != null) {
             getCallback().scheduleDrawable(who, what, when);
         }
     }
 
-    @Override public void unscheduleDrawable(@NonNull Drawable who, @NonNull Runnable what) {
+    @Override public void unscheduleDrawable(final @NonNull Drawable who, final @NonNull Runnable what) {
         if (getCallback() != null) {
             getCallback().unscheduleDrawable(who, what);
         }

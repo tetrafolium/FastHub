@@ -45,21 +45,21 @@ public class CreateGistActivity extends BaseActivity<CreateGistMvp.View, CreateG
     private GistFilesListFragment filesListFragment;
 
 
-    public static void start(@NonNull Activity context, @NonNull Gist gistsModel) {
+    public static void start(final @NonNull Activity context, final @NonNull Gist gistsModel) {
         Intent starter = new Intent(context, CreateGistActivity.class);
         putBundle(gistsModel, starter);
         context.startActivityForResult(starter, BundleConstant.REQUEST_CODE);
     }
 
-    public static void start(@NonNull Fragment context, @NonNull Gist gistsModel) {
+    public static void start(final @NonNull Fragment context, final @NonNull Gist gistsModel) {
         Intent starter = new Intent(context.getContext(), CreateGistActivity.class);
         putBundle(gistsModel, starter);
         context.startActivityForResult(starter, BundleConstant.REQUEST_CODE);
     }
 
-    private static void putBundle(@NonNull Gist gistsModel, @NonNull Intent starter) {
-        String login = gistsModel.getOwner() != null ? gistsModel.getOwner().getLogin() :
-                       gistsModel.getUser() != null ? gistsModel.getUser().getLogin() : "";
+    private static void putBundle(final @NonNull Gist gistsModel, final @NonNull Intent starter) {
+        String login = gistsModel.getOwner() != null ? gistsModel.getOwner().getLogin()
+                       : gistsModel.getUser() != null ? gistsModel.getUser().getLogin() : "";
         starter.putExtras(Bundler.start()
                           .putParcelableArrayList(BundleConstant.ITEM, gistsModel.getFilesAsList())
                           .put(BundleConstant.EXTRA, Login.getUser().getLogin().equalsIgnoreCase(login))
@@ -68,7 +68,7 @@ public class CreateGistActivity extends BaseActivity<CreateGistMvp.View, CreateG
                           .end());
     }
 
-    @OnClick(value = {R.id.createPublicGist, R.id.createSecretGist}) void onClick(View view) {
+    @OnClick(value = {R.id.createPublicGist, R.id.createSecretGist}) void onClick(final View view) {
         getPresenter().onSubmit(InputHelper.toString(description),
                                 getFilesFragment().getFiles(), view.getId() == R.id.createPublicGist);
     }
@@ -78,19 +78,19 @@ public class CreateGistActivity extends BaseActivity<CreateGistMvp.View, CreateG
         getFilesFragment().onAddNewFile();
     }
 
-    @Override public void onDescriptionError(boolean isEmptyDesc) {
+    @Override public void onDescriptionError(final boolean isEmptyDesc) {
         description.setError(isEmptyDesc ? getString(R.string.required_field) : null);
     }
 
-    @Override public void onFileNameError(boolean isEmptyDesc) {
+    @Override public void onFileNameError(final boolean isEmptyDesc) {
 //        fileName.setError(isEmptyDesc ? getString(R.string.required_field) : null);
     }
 
-    @Override public void onFileContentError(boolean isEmptyDesc) {
+    @Override public void onFileContentError(final boolean isEmptyDesc) {
 //        fileContent.setError(isEmptyDesc ? getString(R.string.required_field) : null);
     }
 
-    @Override public void onSuccessSubmission(Gist gistsModel) {
+    @Override public void onSuccessSubmission(final Gist gistsModel) {
         hideProgress();
         setResult(RESULT_OK);
         finish();
@@ -117,7 +117,7 @@ public class CreateGistActivity extends BaseActivity<CreateGistMvp.View, CreateG
         return new CreateGistPresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getPresenter().setEnterprise(PrefGetter.isEnterprise());
         setTaskName(getString(R.string.create_gist));
@@ -137,7 +137,7 @@ public class CreateGistActivity extends BaseActivity<CreateGistMvp.View, CreateG
         buttonsHolder.setVisibility(!InputHelper.isEmpty(id) ? View.GONE : View.VISIBLE);
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk && bundle != null) {
             finish();
@@ -155,14 +155,14 @@ public class CreateGistActivity extends BaseActivity<CreateGistMvp.View, CreateG
         }
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         if (!InputHelper.isEmpty(id)) {
             getMenuInflater().inflate(R.menu.done_menu, menu);
         }
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == R.id.submit) {
             getPresenter().onSubmitUpdate(id, InputHelper.toString(description), getFilesFragment().getFiles());
             return true;

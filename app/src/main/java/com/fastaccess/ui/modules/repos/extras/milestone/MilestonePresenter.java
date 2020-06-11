@@ -17,13 +17,13 @@ import java.util.ArrayList;
 public class MilestonePresenter extends BasePresenter<MilestoneMvp.View> implements MilestoneMvp.Presenter {
     private ArrayList<MilestoneModel> milestoneModels = new ArrayList<>();
 
-    @Override public void onItemClick(int position, View v, MilestoneModel item) {
+    @Override public void onItemClick(final int position, final View v, final MilestoneModel item) {
         if (getView() != null) getView().onMilestoneSelected(item);
     }
 
-    @Override public void onItemLongClick(int position, View v, MilestoneModel item) {}
+    @Override public void onItemLongClick(final int position, final View v, final MilestoneModel item) { }
 
-    @Override public void onLoadMilestones(@NonNull String login, @NonNull String repo) {
+    @Override public void onLoadMilestones(final @NonNull String login, final @NonNull String repo) {
         makeRestCall(RestProvider.getRepoService(isEnterprise()).getMilestones(login, repo),
         response -> {
             if (response == null || response.getItems() == null || response.getItems().isEmpty()) {

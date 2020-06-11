@@ -32,13 +32,13 @@ public class ReviewCommentModel implements Parcelable {
     private ReactionsModel reactions;
     private String authorAssociation;
 
-    public ReviewCommentModel() {}
+    public ReviewCommentModel() { }
 
     public String getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
@@ -46,7 +46,7 @@ public class ReviewCommentModel implements Parcelable {
         return pullRequestReviewId;
     }
 
-    public void setPullRequestReviewId(long pullRequestReviewId) {
+    public void setPullRequestReviewId(final long pullRequestReviewId) {
         this.pullRequestReviewId = pullRequestReviewId;
     }
 
@@ -54,7 +54,7 @@ public class ReviewCommentModel implements Parcelable {
         return diffHunk;
     }
 
-    public void setDiffHunk(String diffHunk) {
+    public void setDiffHunk(final String diffHunk) {
         this.diffHunk = diffHunk;
     }
 
@@ -62,7 +62,7 @@ public class ReviewCommentModel implements Parcelable {
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(final String path) {
         this.path = path;
     }
 
@@ -70,7 +70,7 @@ public class ReviewCommentModel implements Parcelable {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(final int position) {
         this.position = position;
     }
 
@@ -78,7 +78,7 @@ public class ReviewCommentModel implements Parcelable {
         return originalPosition;
     }
 
-    public void setOriginalPosition(int originalPosition) {
+    public void setOriginalPosition(final int originalPosition) {
         this.originalPosition = originalPosition;
     }
 
@@ -86,7 +86,7 @@ public class ReviewCommentModel implements Parcelable {
         return commitId;
     }
 
-    public void setCommitId(String commitId) {
+    public void setCommitId(final String commitId) {
         this.commitId = commitId;
     }
 
@@ -94,7 +94,7 @@ public class ReviewCommentModel implements Parcelable {
         return originalCommitId;
     }
 
-    public void setOriginalCommitId(String originalCommitId) {
+    public void setOriginalCommitId(final String originalCommitId) {
         this.originalCommitId = originalCommitId;
     }
 
@@ -102,7 +102,7 @@ public class ReviewCommentModel implements Parcelable {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
         this.user = user;
     }
 
@@ -110,7 +110,7 @@ public class ReviewCommentModel implements Parcelable {
         return bodyHtml;
     }
 
-    public void setBodyHtml(String bodyHtml) {
+    public void setBodyHtml(final String bodyHtml) {
         this.bodyHtml = bodyHtml;
     }
 
@@ -118,7 +118,7 @@ public class ReviewCommentModel implements Parcelable {
         return body;
     }
 
-    public void setBody(String body) {
+    public void setBody(final String body) {
         this.body = body;
     }
 
@@ -126,7 +126,7 @@ public class ReviewCommentModel implements Parcelable {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(final Date createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -134,7 +134,7 @@ public class ReviewCommentModel implements Parcelable {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(final Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -142,7 +142,7 @@ public class ReviewCommentModel implements Parcelable {
         return htmlUrl;
     }
 
-    public void setHtmlUrl(String htmlUrl) {
+    public void setHtmlUrl(final String htmlUrl) {
         this.htmlUrl = htmlUrl;
     }
 
@@ -150,7 +150,7 @@ public class ReviewCommentModel implements Parcelable {
         return pullRequestUrl;
     }
 
-    public void setPullRequestUrl(String pullRequestUrl) {
+    public void setPullRequestUrl(final String pullRequestUrl) {
         this.pullRequestUrl = pullRequestUrl;
     }
 
@@ -158,7 +158,7 @@ public class ReviewCommentModel implements Parcelable {
         return reactions;
     }
 
-    public void setReactions(ReactionsModel reactions) {
+    public void setReactions(final ReactionsModel reactions) {
         this.reactions = reactions;
     }
 
@@ -166,11 +166,11 @@ public class ReviewCommentModel implements Parcelable {
         return authorAssociation;
     }
 
-    public void setAuthorAssociation(String authorAssociation) {
+    public void setAuthorAssociation(final String authorAssociation) {
         this.authorAssociation = authorAssociation;
     }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -187,7 +187,7 @@ public class ReviewCommentModel implements Parcelable {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -195,7 +195,7 @@ public class ReviewCommentModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeLong(this.pullRequestReviewId);
@@ -216,7 +216,7 @@ public class ReviewCommentModel implements Parcelable {
         dest.writeString(this.authorAssociation);
     }
 
-    protected ReviewCommentModel(Parcel in) {
+    protected ReviewCommentModel(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         this.pullRequestReviewId = in.readLong();
@@ -240,11 +240,11 @@ public class ReviewCommentModel implements Parcelable {
     }
 
     public static final Creator<ReviewCommentModel> CREATOR = new Creator<ReviewCommentModel>() {
-        @Override public ReviewCommentModel createFromParcel(Parcel source) {
+        @Override public ReviewCommentModel createFromParcel(final Parcel source) {
             return new ReviewCommentModel(source);
         }
 
-        @Override public ReviewCommentModel[] newArray(int size) {
+        @Override public ReviewCommentModel[] newArray(final int size) {
             return new ReviewCommentModel[size];
         }
     };

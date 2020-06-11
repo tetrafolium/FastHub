@@ -71,7 +71,7 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
     private int iconColor;
     private CommentEditorFragment commentEditorFragment;
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String gistId, boolean isEnterprise) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String gistId, final boolean isEnterprise) {
         Intent intent = new Intent(context, GistActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA, gistId)
@@ -86,7 +86,7 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
             .show(getSupportFragmentManager(), MessageDialogView.TAG);
     }
 
-    @OnClick({R.id.startGist, R.id.forkGist, R.id.browser}) public void onGistActions(View view) {
+    @OnClick({R.id.startGist, R.id.forkGist, R.id.browser}) public void onGistActions(final View view) {
         if (getPresenter().getGist() == null) return;
         if (view.getId() != R.id.browser) {
             view.setEnabled(false);
@@ -144,7 +144,7 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
         return new GistPresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fab.hide();
         commentEditorFragment = (CommentEditorFragment) getSupportFragmentManager().findFragmentById(R.id.commentFragment);
@@ -159,12 +159,12 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
         }
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.gist_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == R.id.share) {
             if (getPresenter().getGist() != null) ActivityHelper.shareUrl(this, getPresenter().getGist().getHtmlUrl());
             return true;
@@ -184,12 +184,12 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public boolean onPrepareOptionsMenu(Menu menu) {
+    @Override public boolean onPrepareOptionsMenu(final Menu menu) {
         menu.findItem(R.id.deleteGist).setVisible(getPresenter().isOwner());
         return super.onPrepareOptionsMenu(menu);
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (bundle != null) {
             boolean isDelete = bundle.getBoolean(BundleConstant.EXTRA) && isOk;
@@ -199,7 +199,7 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
         }
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == BundleConstant.REQUEST_CODE) {
@@ -224,13 +224,13 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
         showErrorMessage(getString(R.string.error_deleting_gist));
     }
 
-    @Override public void onGistStarred(boolean isStarred) {
+    @Override public void onGistStarred(final boolean isStarred) {
         startGist.setImageResource(isStarred ? R.drawable.ic_star_filled : R.drawable.ic_star);
         startGist.tintDrawableColor(isStarred ? accentColor : iconColor);
         startGist.setEnabled(true);
     }
 
-    @Override public void onGistForked(boolean isForked) {
+    @Override public void onGistForked(final boolean isForked) {
         forkGist.tintDrawableColor(isForked ? accentColor : iconColor);
         forkGist.setEnabled(true);
     }
@@ -242,10 +242,10 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
             return;
         }
         onUpdatePinIcon(gistsModel);
-        String url = gistsModel.getOwner() != null ? gistsModel.getOwner().getAvatarUrl() :
-                     gistsModel.getUser() != null ? gistsModel.getUser().getAvatarUrl() : "";
-        String login = gistsModel.getOwner() != null ? gistsModel.getOwner().getLogin() :
-                       gistsModel.getUser() != null ? gistsModel.getUser().getLogin() : "";
+        String url = gistsModel.getOwner() != null ? gistsModel.getOwner().getAvatarUrl()
+                     : gistsModel.getUser() != null ? gistsModel.getUser().getAvatarUrl() : "";
+        String login = gistsModel.getOwner() != null ? gistsModel.getOwner().getLogin()
+                       : gistsModel.getUser() != null ? gistsModel.getUser().getLogin() : "";
         avatarLayout.setUrl(url, login, false, LinkParserHelper.isEnterprise(gistsModel.getHtmlUrl()));
         title.setText(gistsModel.getDisplayTitle(false, true));
         setTaskName(gistsModel.getDisplayTitle(false, true).toString());
@@ -260,7 +260,7 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
         pager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapterModel.buildForGist(this, gistsModel)));
         tabs.setupWithViewPager(pager);
         pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override public void onPageSelected(int position) {
+            @Override public void onPageSelected(final int position) {
                 super.onPageSelected(position);
                 hideShowFab();
             }
@@ -270,20 +270,20 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
         onGistStarred(getPresenter().isStarred());
         hideShowFab();
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onScrollTop(tab.getPosition());
             }
         });
     }
 
-    @Override public void onUpdatePinIcon(@NonNull Gist gist) {
+    @Override public void onUpdatePinIcon(final @NonNull Gist gist) {
         pinUnpin.setImageDrawable(PinnedGists.isPinned(gist.getGistId().hashCode())
                                   ? ContextCompat.getDrawable(this, R.drawable.ic_pin_filled)
                                   : ContextCompat.getDrawable(this, R.drawable.ic_pin));
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {
@@ -291,18 +291,18 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
         }
     }
 
-    @Override public void onSendActionClicked(@NonNull String text, Bundle bundle) {
+    @Override public void onSendActionClicked(final @NonNull String text, final Bundle bundle) {
         GistCommentsFragment view = getGistCommentsFragment();
         if (view != null) {
             view.onHandleComment(text, bundle);
         }
     }
 
-    @Override public void onTagUser(@NonNull String username) {
+    @Override public void onTagUser(final @NonNull String username) {
         commentEditorFragment.onAddUserName(username);
     }
 
-    @Override public void onCreateComment(String text, Bundle bundle) {
+    @Override public void onCreateComment(final String text, final Bundle bundle) {
 
     }
 

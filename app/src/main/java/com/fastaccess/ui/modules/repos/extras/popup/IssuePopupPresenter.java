@@ -12,7 +12,7 @@ import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
 
 public class IssuePopupPresenter extends BasePresenter<IssuePopupMvp.View> implements IssuePopupMvp.Presenter {
 
-    @Override public void onSubmit(@NonNull String login, @NonNull String repoId, int issueNumber, @NonNull String text) {
+    @Override public void onSubmit(final @NonNull String login, final @NonNull String repoId, final int issueNumber, final @NonNull String text) {
         CommentRequestModel requestModel = new CommentRequestModel();
         requestModel.setBody(text);
         makeRestCall(RestProvider.getIssueService(isEnterprise()).createIssueComment(login, repoId, issueNumber, requestModel),

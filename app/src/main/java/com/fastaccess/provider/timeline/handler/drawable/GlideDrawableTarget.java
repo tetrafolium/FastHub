@@ -20,13 +20,13 @@ class GlideDrawableTarget extends SimpleTarget<Drawable> {
     private final WeakReference<TextView> container;
     private final int width;
 
-    GlideDrawableTarget(UrlDrawable urlDrawable, WeakReference<TextView> container, int width) {
+    GlideDrawableTarget(final UrlDrawable urlDrawable, final WeakReference<TextView> container, final int width) {
         this.urlDrawable = urlDrawable;
         this.container = container;
         this.width = width;
     }
 
-    @Override public void onResourceReady(final @NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+    @Override public void onResourceReady(final @NonNull Drawable resource, final @Nullable Transition<? super Drawable> transition) {
         if (container != null && container.get() != null) {
             TextView textView = container.get();
             textView.post(() -> {

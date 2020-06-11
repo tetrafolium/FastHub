@@ -36,7 +36,7 @@ public abstract class BaseFragment<V extends BaseMvp.FAView, P extends BasePrese
 
     protected abstract void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState);
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (context instanceof BaseMvp.FAView) {
             callback = (BaseMvp.FAView) context;
@@ -48,13 +48,13 @@ public abstract class BaseFragment<V extends BaseMvp.FAView, P extends BasePrese
         callback = null;
     }
 
-    @Override public void onSaveInstanceState(Bundle outState) {
+    @Override public void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         StateSaver.saveInstanceState(this, outState);
         getPresenter().onSaveInstanceState(outState);
     }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             StateSaver.restoreInstanceState(this, savedInstanceState);
@@ -64,7 +64,7 @@ public abstract class BaseFragment<V extends BaseMvp.FAView, P extends BasePrese
     }
 
     @SuppressLint("RestrictedApi") @Nullable @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         if (fragmentLayout() != 0) {
             final Context contextThemeWrapper = new ContextThemeWrapper(getContext(), getContext().getTheme());
             LayoutInflater themeAwareInflater = inflater.cloneInContext(contextThemeWrapper);
@@ -75,7 +75,7 @@ public abstract class BaseFragment<V extends BaseMvp.FAView, P extends BasePrese
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
-    @Override public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(final View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (Login.getUser() != null) {
             onFragmentCreated(view, savedInstanceState);
@@ -87,11 +87,11 @@ public abstract class BaseFragment<V extends BaseMvp.FAView, P extends BasePrese
         if (unbinder != null) unbinder.unbind();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         callback.showProgress(resId);
     }
 
-    @Override public void showBlockingProgress(int resId) {
+    @Override public void showBlockingProgress(final int resId) {
         callback.showBlockingProgress(resId);
     }
 
@@ -99,15 +99,15 @@ public abstract class BaseFragment<V extends BaseMvp.FAView, P extends BasePrese
         if (callback != null) callback.hideProgress();
     }
 
-    @Override public void showMessage(@StringRes int titleRes, @StringRes int msgRes) {
+    @Override public void showMessage(final @StringRes int titleRes, final @StringRes int msgRes) {
         callback.showMessage(titleRes, msgRes);
     }
 
-    @Override public void showMessage(@NonNull String titleRes, @NonNull String msgRes) {
+    @Override public void showMessage(final @NonNull String titleRes, final @NonNull String msgRes) {
         callback.showMessage(titleRes, msgRes);
     }
 
-    @Override public void showErrorMessage(@NonNull String msgRes) {
+    @Override public void showErrorMessage(final @NonNull String msgRes) {
         callback.showErrorMessage(msgRes);
     }
 
@@ -119,9 +119,9 @@ public abstract class BaseFragment<V extends BaseMvp.FAView, P extends BasePrese
         callback.onRequireLogin();
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {}
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) { }
 
-    @Override public void onDialogDismissed() {}
+    @Override public void onDialogDismissed() { }
 
     @Override public void onLogoutPressed() {
         callback.onLogoutPressed();
@@ -135,7 +135,7 @@ public abstract class BaseFragment<V extends BaseMvp.FAView, P extends BasePrese
         callback.onOpenSettings();
     }
 
-    @Override public void onScrollTop(int index) {}
+    @Override public void onScrollTop(final int index) { }
 
     @Override public boolean isEnterprise() {
         return callback != null && callback.isEnterprise();

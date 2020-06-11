@@ -41,13 +41,13 @@ public interface NotificationService {
         ISSUE_THREAD_CLASS,
         PULL_REQUEST_THREAD_CLASS
     })
-    @Retention(RetentionPolicy.SOURCE) @interface ThreadClass {}
+    @Retention(RetentionPolicy.SOURCE) @interface ThreadClass { }
 
     @StringDef({
         SUBSCRIBE,
         MUTE
     })
-    @Retention(RetentionPolicy.SOURCE) @interface ThreadId {}
+    @Retention(RetentionPolicy.SOURCE) @interface ThreadId { }
 
     @GET("notifications") Observable<Pageable<Notification>> getNotifications(@Query("since") String date);
 

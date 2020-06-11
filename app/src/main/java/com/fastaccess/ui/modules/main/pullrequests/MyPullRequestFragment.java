@@ -43,7 +43,7 @@ public class MyPullRequestFragment extends BaseFragment<MyPullRequestsMvp.View, 
     private PullRequestAdapter adapter;
     private RepoPagerMvp.TabsBadgeListener tabsBadgeListener;
 
-    public static MyPullRequestFragment newInstance(@NonNull IssueState issueState, @NonNull MyIssuesType issuesType) {
+    public static MyPullRequestFragment newInstance(final @NonNull IssueState issueState, final @NonNull MyIssuesType issuesType) {
         MyPullRequestFragment view = new MyPullRequestFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.EXTRA, issueState)
@@ -52,7 +52,7 @@ public class MyPullRequestFragment extends BaseFragment<MyPullRequestsMvp.View, 
         return view;
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof RepoPagerMvp.TabsBadgeListener) {
             tabsBadgeListener = (RepoPagerMvp.TabsBadgeListener) getParentFragment();
@@ -70,11 +70,11 @@ public class MyPullRequestFragment extends BaseFragment<MyPullRequestsMvp.View, 
         getPresenter().onCallApi(1, issueState);
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<PullRequest> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<PullRequest> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -92,18 +92,18 @@ public class MyPullRequestFragment extends BaseFragment<MyPullRequestsMvp.View, 
         stateLayout.hideProgress();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -116,7 +116,7 @@ public class MyPullRequestFragment extends BaseFragment<MyPullRequestsMvp.View, 
         return onLoadMore;
     }
 
-    @Override public void onSetCount(int totalCount) {
+    @Override public void onSetCount(final int totalCount) {
         if (tabsBadgeListener != null) {
             switch (getIssuesType()) {
             case CREATED:
@@ -139,7 +139,7 @@ public class MyPullRequestFragment extends BaseFragment<MyPullRequestsMvp.View, 
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             issueState = (IssueState) getArguments().getSerializable(BundleConstant.EXTRA);
         }
@@ -164,7 +164,7 @@ public class MyPullRequestFragment extends BaseFragment<MyPullRequestsMvp.View, 
         return new MyPullRequestsPresenter();
     }
 
-    @Override public void onFilterIssue(@NonNull IssueState issueState) {
+    @Override public void onFilterIssue(final @NonNull IssueState issueState) {
         if (this.issueState != null && this.issueState != issueState) {
             this.issueState = issueState;
             getArguments().putSerializable(BundleConstant.ITEM, issueState);
@@ -174,12 +174,12 @@ public class MyPullRequestFragment extends BaseFragment<MyPullRequestsMvp.View, 
         }
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }
 
-    @Override public void onShowPopupDetails(@NonNull PullRequest item) {
+    @Override public void onShowPopupDetails(final @NonNull PullRequest item) {
         IssuePopupFragment.showPopup(getChildFragmentManager(), item);
     }
 

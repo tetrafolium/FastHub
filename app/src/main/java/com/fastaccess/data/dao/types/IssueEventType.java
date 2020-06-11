@@ -42,7 +42,7 @@ public enum IssueEventType {
 
     int iconResId;
 
-    IssueEventType(int iconResId) {
+    IssueEventType(final int iconResId) {
         this.iconResId = iconResId;
     }
 
@@ -50,7 +50,7 @@ public enum IssueEventType {
         return iconResId == 0 ? R.drawable.ic_label : iconResId;
     }
 
-    @Nullable public static IssueEventType getType(@NonNull String type) {
+    @Nullable public static IssueEventType getType(final @NonNull String type) {
         return Stream.of(values())
         .filter(value -> value.name().toLowerCase().equalsIgnoreCase(type.toLowerCase()
                 .replaceAll("-", "_")))

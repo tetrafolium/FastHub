@@ -59,12 +59,12 @@ import lombok.NoArgsConstructor;
     @Nullable String otpCode;
     @Nullable String enterpriseUrl;
 
-    public Observable<Login> update(Login login) {
+    public Observable<Login> update(final Login login) {
         return RxHelper.safeObservable(App.getInstance().getDataStore().update(login)
                                        .toObservable());
     }
 
-    public void save(Login entity) {
+    public void save(final Login entity) {
         App.getInstance().getDataStore()
         .delete(Login.class)
         .where(Login.LOGIN.eq(entity.getLogin()))
@@ -84,7 +84,7 @@ import lombok.NoArgsConstructor;
                .firstOrNull();
     }
 
-    public static Login getUser(@NonNull String login) {
+    public static Login getUser(final @NonNull String login) {
         return App.getInstance().getDataStore()
                .select(Login.class)
                .where(Login.LOGIN.eq(login)
@@ -119,7 +119,7 @@ import lombok.NoArgsConstructor;
                .value() > 0;
     }
 
-    public static Observable<Boolean> onMultipleLogin(@NonNull Login userModel, boolean isEnterprise, boolean isNew) {
+    public static Observable<Boolean> onMultipleLogin(final @NonNull Login userModel, final boolean isEnterprise, final boolean isNew) {
         return Observable.fromPublisher(s -> {
             Login currentUser = Login.getUser();
             if (currentUser != null) {
@@ -169,7 +169,7 @@ import lombok.NoArgsConstructor;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.login);
         dest.writeString(this.avatarUrl);
@@ -208,7 +208,7 @@ import lombok.NoArgsConstructor;
         dest.writeString(this.enterpriseUrl);
     }
 
-    protected AbstractLogin(Parcel in) {
+    protected AbstractLogin(final Parcel in) {
         this.id = in.readLong();
         this.login = in.readString();
         this.avatarUrl = in.readString();
@@ -251,12 +251,12 @@ import lombok.NoArgsConstructor;
 
     public static final Creator<Login> CREATOR = new Creator<Login>() {
         @Override
-        public Login createFromParcel(Parcel source) {
+        public Login createFromParcel(final Parcel source) {
             return new Login(source);
         }
 
         @Override
-        public Login[] newArray(int size) {
+        public Login[] newArray(final int size) {
             return new Login[size];
         }
     };

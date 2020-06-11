@@ -32,15 +32,15 @@ public class CommentsHelper {
     private static final int EYES = 0x1f440;
 
 
-    public static boolean isOwner(@NonNull String currentLogin, @NonNull String repoOwner, @NonNull String commentUser) {
+    public static boolean isOwner(final @NonNull String currentLogin, final @NonNull String repoOwner, final @NonNull String commentUser) {
         return currentLogin.equalsIgnoreCase(repoOwner) || currentLogin.equalsIgnoreCase(commentUser);
     }
 
-    private static String getEmojiByUnicode(int unicode) {
+    private static String getEmojiByUnicode(final int unicode) {
         return new String(Character.toChars(unicode));
     }
 
-    public static String getEmoji(@NonNull ReactionTypes reactionTypes) {
+    public static String getEmoji(final @NonNull ReactionTypes reactionTypes) {
         switch (reactionTypes) {
         case HEART:
             return getHeart();
@@ -93,7 +93,7 @@ public class CommentsHelper {
         return getEmojiByUnicode(EYES);
     }
 
-    @NonNull public static ArrayList<String> getUsers(@NonNull List<Comment> comments) {
+    @NonNull public static ArrayList<String> getUsers(final @NonNull List<Comment> comments) {
         return Stream.of(comments)
                .filter(comment -> comment.getUser() != null)
                .map(comment -> comment.getUser().getLogin())
@@ -101,7 +101,7 @@ public class CommentsHelper {
                .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    @NonNull public static ArrayList<String> getUsersByTimeline(@NonNull List<TimelineModel> comments) {
+    @NonNull public static ArrayList<String> getUsersByTimeline(final @NonNull List<TimelineModel> comments) {
         return Stream.of(comments)
                .filter(timelineModel -> timelineModel.getComment() != null && timelineModel.getComment().getUser() != null)
                .map(comment -> comment.getComment().getUser().getLogin())
@@ -110,15 +110,15 @@ public class CommentsHelper {
     }
 
     public static void appendEmojies(
-        @NonNull ReactionsModel reaction, @NonNull TextView thumbsUp,
-        @NonNull TextView thumbsUpReaction, @NonNull TextView thumbsDown,
-        @NonNull TextView thumbsDownReaction, @NonNull TextView hurray,
-        @NonNull TextView hurrayReaction, @NonNull TextView sad,
-        @NonNull TextView sadReaction, @NonNull TextView laugh,
-        @NonNull TextView laughReaction, @NonNull TextView heart,
-        @NonNull TextView heartReaction, @NonNull TextView rocket,
-        @NonNull TextView rocketReaction, @NonNull TextView eye,
-        @NonNull TextView eyeReaction, @NonNull View reactionsList
+        final @NonNull ReactionsModel reaction, final @NonNull TextView thumbsUp,
+        final @NonNull TextView thumbsUpReaction, final @NonNull TextView thumbsDown,
+        final @NonNull TextView thumbsDownReaction, final @NonNull TextView hurray,
+        final @NonNull TextView hurrayReaction, final @NonNull TextView sad,
+        final @NonNull TextView sadReaction, final @NonNull TextView laugh,
+        final @NonNull TextView laughReaction, final @NonNull TextView heart,
+        final @NonNull TextView heartReaction, final @NonNull TextView rocket,
+        final @NonNull TextView rocketReaction, final @NonNull TextView eye,
+        final @NonNull TextView eyeReaction, final @NonNull View reactionsList
     ) {
         SpannableBuilder spannableBuilder = SpannableBuilder.builder()
                                             .append(CommentsHelper.getThumbsUp()).append(" ")

@@ -21,13 +21,13 @@ import lombok.Setter;
     @SerializedName("in_reply_to") public long inReplyTo;
 
 
-    public EditReviewCommentModel() {}
+    public EditReviewCommentModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(this.groupPosition);
         dest.writeInt(this.commentPosition);
         dest.writeString(this.comment);
@@ -35,7 +35,7 @@ import lombok.Setter;
         dest.writeLong(this.inReplyTo);
     }
 
-    private EditReviewCommentModel(Parcel in) {
+    private EditReviewCommentModel(final Parcel in) {
         this.groupPosition = in.readInt();
         this.commentPosition = in.readInt();
         this.comment = in.readString();
@@ -44,11 +44,11 @@ import lombok.Setter;
     }
 
     public static final Creator<EditReviewCommentModel> CREATOR = new Creator<EditReviewCommentModel>() {
-        @Override public EditReviewCommentModel createFromParcel(Parcel source) {
+        @Override public EditReviewCommentModel createFromParcel(final Parcel source) {
             return new EditReviewCommentModel(source);
         }
 
-        @Override public EditReviewCommentModel[] newArray(int size) {
+        @Override public EditReviewCommentModel[] newArray(final int size) {
             return new EditReviewCommentModel[size];
         }
     };

@@ -30,21 +30,21 @@ public class PullRequestViewHolder extends BaseViewHolder<PullRequest> {
     private boolean withAvatar;
     private boolean showRepoName;
 
-    private PullRequestViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter, boolean withAvatar, boolean showRepoName) {
+    private PullRequestViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter, final boolean withAvatar, final boolean showRepoName) {
         super(itemView, adapter);
         this.withAvatar = withAvatar;
         this.showRepoName = showRepoName;
     }
 
-    public static PullRequestViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter, boolean withAvatar,
-            boolean showRepoName) {
+    public static PullRequestViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter, final boolean withAvatar,
+            final boolean showRepoName) {
         if (withAvatar) {
             return new PullRequestViewHolder(getView(viewGroup, R.layout.issue_row_item), adapter, true, showRepoName);
         }
         return new PullRequestViewHolder(getView(viewGroup, R.layout.issue_no_image_row_item), adapter, false, showRepoName);
     }
 
-    @Override public void bind(@NonNull PullRequest pullRequest) {
+    @Override public void bind(final @NonNull PullRequest pullRequest) {
         title.setText(pullRequest.getTitle());
         details.setText(PullRequest.getMergeBy(pullRequest, details.getContext(), showRepoName));
         if (pullRequest.getComments() > 0) {

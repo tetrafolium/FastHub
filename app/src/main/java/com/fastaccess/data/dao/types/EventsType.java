@@ -37,7 +37,7 @@ public enum EventsType {
     @StringRes int type;
     @DrawableRes int drawableRes;
 
-    EventsType(@StringRes int type, @DrawableRes int drawableRes) {
+    EventsType(final @StringRes int type, final @DrawableRes int drawableRes) {
         this.type = type;
         this.drawableRes = drawableRes;
     }

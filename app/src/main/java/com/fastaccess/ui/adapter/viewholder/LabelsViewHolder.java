@@ -28,7 +28,7 @@ public class LabelsViewHolder extends BaseViewHolder<LabelModel> {
     @BindView(R.id.name) FontTextView name;
     private LabelsAdapter.OnSelectLabel onSelectLabel;
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         if (onSelectLabel != null) {
             int position = getAdapterPosition();
             if (adapter != null) {
@@ -40,17 +40,17 @@ public class LabelsViewHolder extends BaseViewHolder<LabelModel> {
         }
     }
 
-    private LabelsViewHolder(@NonNull View itemView, LabelsAdapter.OnSelectLabel onSelectLabel, @NonNull BaseRecyclerAdapter adapter) {
+    private LabelsViewHolder(final @NonNull View itemView, final LabelsAdapter.OnSelectLabel onSelectLabel, final @NonNull BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
         this.onSelectLabel = onSelectLabel;
     }
 
-    public static LabelsViewHolder newInstance(@NonNull ViewGroup parent, @Nullable LabelsAdapter.OnSelectLabel onSelectLabel,
-            @NonNull BaseRecyclerAdapter adapter) {
+    public static LabelsViewHolder newInstance(final @NonNull ViewGroup parent, final @Nullable LabelsAdapter.OnSelectLabel onSelectLabel,
+            final @NonNull BaseRecyclerAdapter adapter) {
         return new LabelsViewHolder(getView(parent, R.layout.label_row_item), onSelectLabel, adapter);
     }
 
-    @Override public void bind(@NonNull LabelModel labelModel) {
+    @Override public void bind(final @NonNull LabelModel labelModel) {
         name.setText(labelModel.getName());
         if (labelModel.getColor() != null) {
             int color = Color.parseColor(labelModel.getColor().startsWith("#") ? labelModel.getColor() : "#" + labelModel.getColor());

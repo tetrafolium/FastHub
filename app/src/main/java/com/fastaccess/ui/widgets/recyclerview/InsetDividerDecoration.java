@@ -21,11 +21,11 @@ class InsetDividerDecoration extends RecyclerView.ItemDecoration {
     private final int height;
     private final Class toDivide;
 
-    InsetDividerDecoration(int divider, int leftInset, @ColorInt int dividerColor) {
+    InsetDividerDecoration(final int divider, final int leftInset, final @ColorInt int dividerColor) {
         this(divider, leftInset, dividerColor, null);
     }
 
-    InsetDividerDecoration(int divider, int leftInset, @ColorInt int dividerColor, @Nullable Class toDivide) {
+    InsetDividerDecoration(final int divider, final int leftInset, final @ColorInt int dividerColor, final @Nullable Class toDivide) {
         this.inset = leftInset;
         this.height = divider;
         this.paint = new Paint();
@@ -35,7 +35,7 @@ class InsetDividerDecoration extends RecyclerView.ItemDecoration {
         this.toDivide = toDivide;
     }
 
-    @Override public void onDrawOver(@NonNull Canvas canvas, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+    @Override public void onDrawOver(final @NonNull Canvas canvas, final @NonNull RecyclerView parent, final @NonNull RecyclerView.State state) {
         int childCount = parent.getChildCount();
         if (childCount < 2) return;
         RecyclerView.LayoutManager lm = parent.getLayoutManager();

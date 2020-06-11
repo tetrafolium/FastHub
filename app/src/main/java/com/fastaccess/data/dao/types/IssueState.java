@@ -11,7 +11,7 @@ public enum IssueState {
 
     int status;
 
-    IssueState(@StringRes int status) {
+    IssueState(final @StringRes int status) {
         this.status = status;
     }
 

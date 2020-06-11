@@ -46,7 +46,7 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
     private OnLoadMore onLoadMore;
     private ReleasesAdapter adapter;
 
-    public static RepoReleasesFragment newInstance(@NonNull String repoId, @NonNull String login) {
+    public static RepoReleasesFragment newInstance(final @NonNull String repoId, final @NonNull String login) {
         RepoReleasesFragment view = new RepoReleasesFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.ID, repoId)
@@ -55,7 +55,7 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
         return view;
     }
 
-    public static RepoReleasesFragment newInstance(@NonNull String repoId, @NonNull String login, @Nullable String tag, long id) {
+    public static RepoReleasesFragment newInstance(final @NonNull String repoId, final @NonNull String login, final @Nullable String tag, final long id) {
         RepoReleasesFragment view = new RepoReleasesFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.ID, repoId)
@@ -66,7 +66,7 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
         return view;
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Release> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Release> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -83,7 +83,7 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
         return R.layout.small_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, therefore, issues can't be proceeded.");
         }
@@ -116,7 +116,7 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
         return onLoadMore;
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
 
@@ -128,17 +128,17 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void onDownload(@NonNull Release item) {
+    @Override public void onDownload(final @NonNull Release item) {
         ArrayList<SimpleUrlsModel> models = new ArrayList<>();
         if (!InputHelper.isEmpty(item.getZipBallUrl())) {
             String url = item.getZipBallUrl();
@@ -163,7 +163,7 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
         dialogView.show(getChildFragmentManager(), "ListDialogView");
     }
 
-    @Override public void onShowDetails(@NonNull Release item) {
+    @Override public void onShowDetails(final @NonNull Release item) {
         if (!InputHelper.isEmpty(item.getBody())) {
             MessageDialogView.newInstance(!InputHelper.isEmpty(item.getName()) ? item.getName() : item.getTagName(),
                                           item.getBody(), true, false).show(getChildFragmentManager(), MessageDialogView.TAG);
@@ -176,11 +176,11 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
         getPresenter().onCallApi(1, null);
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onItemSelected(SimpleUrlsModel item) {
+    @Override public void onItemSelected(final SimpleUrlsModel item) {
         Activity activity = getActivity();
         if (activity == null) return;
         if (ActivityHelper.checkAndRequestReadWritePermission(activity)) {
@@ -188,7 +188,7 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
         }
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

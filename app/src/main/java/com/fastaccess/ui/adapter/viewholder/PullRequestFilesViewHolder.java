@@ -46,7 +46,7 @@ public class PullRequestFilesViewHolder extends BaseViewHolder<CommitFileChanges
     private ViewGroup viewGroup;
     @Nullable private PullRequestFilesMvp.OnPatchClickListener onPatchClickListener;
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         if (v.getId() != R.id.open) {
             int position = getAdapterPosition();
             onToggleView.onToggle(position, !onToggleView.isCollapsed(position));
@@ -56,8 +56,8 @@ public class PullRequestFilesViewHolder extends BaseViewHolder<CommitFileChanges
         }
     }
 
-    private PullRequestFilesViewHolder(@NonNull View itemView, @NonNull ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter,
-                                       @NonNull OnToggleView onToggleView, @Nullable PullRequestFilesMvp.OnPatchClickListener onPatchClickListener) {
+    private PullRequestFilesViewHolder(final @NonNull View itemView, final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter,
+                                       final @NonNull OnToggleView onToggleView, final @Nullable PullRequestFilesMvp.OnPatchClickListener onPatchClickListener) {
         super(itemView, adapter);
         this.viewGroup = viewGroup;
         this.onToggleView = onToggleView;
@@ -66,14 +66,14 @@ public class PullRequestFilesViewHolder extends BaseViewHolder<CommitFileChanges
         patch.setNestedScrollingEnabled(false);
     }
 
-    public static PullRequestFilesViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter,
-            @NonNull OnToggleView onToggleView,
-            @Nullable PullRequestFilesMvp.OnPatchClickListener onPatchClickListener) {
+    public static PullRequestFilesViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter,
+            final @NonNull OnToggleView onToggleView,
+            final @Nullable PullRequestFilesMvp.OnPatchClickListener onPatchClickListener) {
         return new PullRequestFilesViewHolder(getView(viewGroup, R.layout.pullrequest_file_row_item), viewGroup, adapter,
                                               onToggleView, onPatchClickListener);
     }
 
-    @Override public void bind(@NonNull CommitFileChanges commitFileChanges) {
+    @Override public void bind(final @NonNull CommitFileChanges commitFileChanges) {
         CommitFileModel commit = commitFileChanges.getCommitFileModel();
         toggle.setVisibility(commit.getPatch() == null ? View.GONE : View.VISIBLE);
         name.setText(commit.getFilename());
@@ -97,7 +97,7 @@ public class PullRequestFilesViewHolder extends BaseViewHolder<CommitFileChanges
         onToggle(onToggleView.isCollapsed(position), false, position);
     }
 
-    private void onToggle(boolean expanded, boolean animate, int position) {
+    private void onToggle(final boolean expanded, final boolean animate, final int position) {
         if (!expanded) {
             patch.swapAdapter(null, true);
             patch.setVisibility(View.GONE);
@@ -129,7 +129,7 @@ public class PullRequestFilesViewHolder extends BaseViewHolder<CommitFileChanges
         }
     }
 
-    @Override public void onItemClick(int position, View v, CommitLinesModel item) {
+    @Override public void onItemClick(final int position, final View v, final CommitLinesModel item) {
         if (onPatchClickListener != null && adapter != null) {
             int groupPosition = getAdapterPosition();
             CommitFileChanges commitFileChanges = (CommitFileChanges) adapter.getItem(groupPosition);
@@ -137,7 +137,7 @@ public class PullRequestFilesViewHolder extends BaseViewHolder<CommitFileChanges
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, CommitLinesModel item) {
+    @Override public void onItemLongClick(final int position, final View v, final CommitLinesModel item) {
         if (adapter == null) return;
         int groupPosition = getAdapterPosition();
         CommitFileChanges commitFileChanges = (CommitFileChanges) adapter.getItem(groupPosition);

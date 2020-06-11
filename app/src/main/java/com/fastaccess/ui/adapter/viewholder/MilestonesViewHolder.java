@@ -24,15 +24,15 @@ public class MilestonesViewHolder extends BaseViewHolder<MilestoneModel> {
     @BindView(R.id.date) FontTextView date;
     @BindView(R.id.notificationTitle) FontTextView notificationTitle;
 
-    private MilestonesViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+    private MilestonesViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
     }
 
-    public static MilestonesViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter) {
+    public static MilestonesViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter) {
         return new MilestonesViewHolder(getView(viewGroup, R.layout.milestone_row_item), adapter);
     }
 
-    @Override public void bind(@NonNull MilestoneModel milestoneModel) {
+    @Override public void bind(final @NonNull MilestoneModel milestoneModel) {
         title.setText(milestoneModel.getTitle());
         notificationTitle.setText(milestoneModel.getDescription());
         if (milestoneModel.getDueOn() != null) {

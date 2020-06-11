@@ -26,16 +26,16 @@ public class UsersViewHolder extends BaseViewHolder<User> {
     @BindView(R.id.date) FontTextView date;
     private boolean isFilter;
 
-    private UsersViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter, boolean isFilter) {
+    private UsersViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter, final boolean isFilter) {
         super(itemView, adapter);
         this.isFilter = isFilter;
     }
 
-    public static UsersViewHolder newInstance(@NonNull ViewGroup parent, @Nullable BaseRecyclerAdapter adapter, boolean isFilter) {
+    public static UsersViewHolder newInstance(final @NonNull ViewGroup parent, final @Nullable BaseRecyclerAdapter adapter, final boolean isFilter) {
         return new UsersViewHolder(getView(parent, isFilter ? R.layout.users_small_row_item : R.layout.feeds_row_item), adapter, isFilter);
     }
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         if (isFilter) {
             super.onClick(v);
         } else {
@@ -43,9 +43,9 @@ public class UsersViewHolder extends BaseViewHolder<User> {
         }
     }
 
-    @Override public void bind(@NonNull User user) {}
+    @Override public void bind(final @NonNull User user) { }
 
-    public void bind(@NonNull User user, boolean isContributor) {
+    public void bind(final @NonNull User user, final boolean isContributor) {
         avatar.setUrl(user.getAvatarUrl(), user.getLogin(), user.isOrganizationType(),
                       LinkParserHelper.isEnterprise(user.getHtmlUrl()));
         title.setText(user.getLogin());

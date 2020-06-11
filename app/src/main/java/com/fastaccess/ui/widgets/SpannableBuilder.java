@@ -22,7 +22,7 @@ import static android.graphics.Typeface.BOLD;
 
 public class SpannableBuilder extends SpannableStringBuilder {
 
-    private SpannableBuilder() {}
+    private SpannableBuilder() { }
 
     public static SpannableBuilder builder() {
         return new SpannableBuilder();
@@ -39,22 +39,22 @@ public class SpannableBuilder extends SpannableStringBuilder {
         return this;
     }
 
-    @Override public SpannableBuilder append(char text) {
+    @Override public SpannableBuilder append(final char text) {
         if (text != 0) super.append(text);
         return this;
     }
 
-    @Override public SpannableBuilder append(CharSequence text) {
+    @Override public SpannableBuilder append(final CharSequence text) {
         if (text != null) super.append(text);
         return this;
     }
 
-    public SpannableBuilder append(Object span) {
+    public SpannableBuilder append(final Object span) {
         setSpan(span, length() - 1, length(), SPAN_EXCLUSIVE_EXCLUSIVE);
         return this;
     }
 
-    public SpannableBuilder append(Drawable drawable) {
+    public SpannableBuilder append(final Drawable drawable) {
         if (drawable != null) {
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
             append(' ', new ImageSpan(drawable));
@@ -71,7 +71,7 @@ public class SpannableBuilder extends SpannableStringBuilder {
         return this;
     }
 
-    public SpannableBuilder bold(CharSequence text, final Object span) {
+    public SpannableBuilder bold(final CharSequence text, final Object span) {
         if (!InputHelper.isEmpty(text)) {
             text = SpannableBuilder.builder().bold(text);
             append(text, span);
@@ -90,12 +90,12 @@ public class SpannableBuilder extends SpannableStringBuilder {
         return this;
     }
 
-    public SpannableBuilder foreground(final CharSequence text, @ColorInt int color) {
+    public SpannableBuilder foreground(final CharSequence text, final @ColorInt int color) {
         if (!InputHelper.isEmpty(text)) return append(text, new ForegroundColorSpan(color));
         return this;
     }
 
-    public SpannableBuilder foreground(final char text, @ColorInt int color) {
+    public SpannableBuilder foreground(final char text, final @ColorInt int color) {
         return append(text, new ForegroundColorSpan(color));
     }
 
@@ -103,7 +103,7 @@ public class SpannableBuilder extends SpannableStringBuilder {
         if (!InputHelper.isEmpty(text))
             return append(text, new URLSpan(text.toString()) {
             @Override
-            public void onClick(View widget) {
+            public void onClick(final View widget) {
                 listener.onClick(widget);
             }
         });
@@ -117,12 +117,12 @@ public class SpannableBuilder extends SpannableStringBuilder {
 
     public SpannableBuilder clickable(final CharSequence text, final View.OnClickListener listener) {
         if (!InputHelper.isEmpty(text)) return append(text, new ClickableSpan() {
-            @Override public void updateDrawState(TextPaint ds) {
+            @Override public void updateDrawState(final TextPaint ds) {
                 ds.setColor(ds.linkColor);
                 ds.setUnderlineText(false);
             }
 
-            @Override public void onClick(View widget) {
+            @Override public void onClick(final View widget) {
                 listener.onClick(widget);
             }
         });

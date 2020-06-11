@@ -82,7 +82,7 @@ public class RestProvider {
         return okHttpClient;
     }
 
-    private static Retrofit provideRetrofit(boolean enterprise) {
+    private static Retrofit provideRetrofit(final boolean enterprise) {
         return new Retrofit.Builder()
                .baseUrl(enterprise && PrefGetter.isEnterprise() ? LinkParserHelper.getEndpoint(PrefGetter.getEnterpriseUrl()) : BuildConfig.REST_URL)
                .client(provideOkHttpClient())
@@ -91,11 +91,11 @@ public class RestProvider {
                .build();
     }
 
-    public static void downloadFile(@NonNull Context context, @NonNull String url) {
+    public static void downloadFile(final @NonNull Context context, final @NonNull String url) {
         downloadFile(context, url, null);
     }
 
-    public static void downloadFile(@NonNull Context context, @NonNull String url, @Nullable String extension) {
+    public static void downloadFile(final @NonNull Context context, final @NonNull String url, final @Nullable String extension) {
         try {
             if (InputHelper.isEmpty(url)) return;
             boolean isEnterprise = LinkParserHelper.isEnterprise(url);
@@ -124,46 +124,46 @@ public class RestProvider {
         }
     }
 
-    public static int getErrorCode(Throwable throwable) {
+    public static int getErrorCode(final Throwable throwable) {
         if (throwable instanceof HttpException) {
             return ((HttpException) throwable).code();
         }
         return -1;
     }
 
-    @NonNull public static UserRestService getUserService(boolean enterprise) {
+    @NonNull public static UserRestService getUserService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(UserRestService.class);
     }
 
-    @NonNull public static GistService getGistService(boolean enterprise) {
+    @NonNull public static GistService getGistService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(GistService.class);
     }
 
-    @NonNull public static RepoService getRepoService(boolean enterprise) {
+    @NonNull public static RepoService getRepoService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(RepoService.class);
     }
 
-    @NonNull public static IssueService getIssueService(boolean enterprise) {
+    @NonNull public static IssueService getIssueService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(IssueService.class);
     }
 
-    @NonNull public static PullRequestService getPullRequestService(boolean enterprise) {
+    @NonNull public static PullRequestService getPullRequestService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(PullRequestService.class);
     }
 
-    @NonNull public static NotificationService getNotificationService(boolean enterprise) {
+    @NonNull public static NotificationService getNotificationService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(NotificationService.class);
     }
 
-    @NonNull public static ReactionsService getReactionsService(boolean enterprise) {
+    @NonNull public static ReactionsService getReactionsService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(ReactionsService.class);
     }
 
-    @NonNull public static OrganizationService getOrgService(boolean enterprise) {
+    @NonNull public static OrganizationService getOrgService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(OrganizationService.class);
     }
 
-    @NonNull public static ReviewService getReviewService(boolean enterprise) {
+    @NonNull public static ReviewService getReviewService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(ReviewService.class);
     }
 
@@ -176,7 +176,7 @@ public class RestProvider {
                .create(UserRestService.class);
     }
 
-    @NonNull public static SearchService getSearchService(boolean enterprise) {
+    @NonNull public static SearchService getSearchService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(SearchService.class);
     }
 
@@ -189,15 +189,15 @@ public class RestProvider {
                .create(SlackService.class);
     }
 
-    @NonNull public static ContentService getContentService(boolean enterprise) {
+    @NonNull public static ContentService getContentService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(ContentService.class);
     }
 
-    @NonNull public static ProjectsService getProjectsService(boolean enterprise) {
+    @NonNull public static ProjectsService getProjectsService(final boolean enterprise) {
         return provideRetrofit(enterprise).create(ProjectsService.class);
     }
 
-    @Nullable public static GitHubErrorResponse getErrorResponse(@NonNull Throwable throwable) {
+    @Nullable public static GitHubErrorResponse getErrorResponse(final @NonNull Throwable throwable) {
         ResponseBody body = null;
         if (throwable instanceof HttpException) {
             body = ((HttpException) throwable).response().errorBody();
@@ -205,7 +205,7 @@ public class RestProvider {
         if (body != null) {
             try {
                 return gson.fromJson(body.string(), GitHubErrorResponse.class);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) { }
         }
         return null;
     }

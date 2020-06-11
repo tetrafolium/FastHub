@@ -35,13 +35,13 @@ public class TeamMembersFragment extends BaseFragment<TeamMembersMvp.View, TeamM
     private OnLoadMore<Long> onLoadMore;
     private UsersAdapter adapter;
 
-    public static TeamMembersFragment newInstance(@NonNull Long id) {
+    public static TeamMembersFragment newInstance(final @NonNull Long id) {
         TeamMembersFragment view = new TeamMembersFragment();
         view.setArguments(Bundler.start().put(BundleConstant.EXTRA, id).end());
         return view;
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<User> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<User> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -58,7 +58,7 @@ public class TeamMembersFragment extends BaseFragment<TeamMembersMvp.View, TeamM
         return R.layout.small_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, username is required");
         }
@@ -82,7 +82,7 @@ public class TeamMembersFragment extends BaseFragment<TeamMembersMvp.View, TeamM
         return new TeamMembersPresenter();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
         stateLayout.showProgress();
@@ -93,12 +93,12 @@ public class TeamMembersFragment extends BaseFragment<TeamMembersMvp.View, TeamM
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -114,11 +114,11 @@ public class TeamMembersFragment extends BaseFragment<TeamMembersMvp.View, TeamM
         getPresenter().onCallApi(1, getArguments().getLong(BundleConstant.EXTRA));
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

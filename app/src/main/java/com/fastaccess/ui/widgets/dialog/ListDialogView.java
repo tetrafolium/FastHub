@@ -49,7 +49,7 @@ public class ListDialogView<O extends Parcelable> extends BaseDialogFragment imp
         return R.layout.simple_list_dialog;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         ArrayList<O> objects = getArguments().getParcelableArrayList(BundleConstant.ITEM);
         String titleText = getArguments().getString(BundleConstant.EXTRA);
         title.setText(titleText);
@@ -63,7 +63,7 @@ public class ListDialogView<O extends Parcelable> extends BaseDialogFragment imp
         fastScroller.attachRecyclerView(recycler);
     }
 
-    @Override public void onAttach(@NotNull Context context) {
+    @Override public void onAttach(final @NotNull Context context) {
         super.onAttach(context);
         if (getParentFragment() != null && getParentFragment() instanceof onSimpleItemSelection) {
             onSimpleItemSelection = (onSimpleItemSelection) getParentFragment();
@@ -81,23 +81,23 @@ public class ListDialogView<O extends Parcelable> extends BaseDialogFragment imp
         return new BasePresenter();
     }
 
-    @SuppressWarnings("unchecked") @Override public void onItemClick(int position, View v, O item) {
+    @SuppressWarnings("unchecked") @Override public void onItemClick(final int position, final View v, final O item) {
         if (onSimpleItemSelection != null) {
             onSimpleItemSelection.onItemSelected(item);
         }
         dismiss();
     }
 
-    @Override public void onItemLongClick(int position, View v, O item) {}
+    @Override public void onItemLongClick(final int position, final View v, final O item) { }
 
-    public void initArguments(@NonNull String title, @NonNull ArrayList<O> objects) {
+    public void initArguments(final @NonNull String title, final @NonNull ArrayList<O> objects) {
         setArguments(Bundler.start()
                      .put(BundleConstant.EXTRA, title)
                      .putParcelableArrayList(BundleConstant.ITEM, objects)
                      .end());
     }
 
-    public void initArguments(@NonNull String title, @NonNull List<O> objects) {
+    public void initArguments(final @NonNull String title, final @NonNull List<O> objects) {
         setArguments(Bundler.start()
                      .put(BundleConstant.EXTRA, title)
                      .putParcelableArrayList(BundleConstant.ITEM, (ArrayList<? extends Parcelable>) objects)

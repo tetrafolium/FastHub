@@ -54,7 +54,7 @@ public class CommitFilesFragment extends BaseFragment<CommitFilesMvp.View, Commi
     private CommitPagerMvp.View viewCallback;
     private CommitFilesAdapter adapter;
 
-    public static CommitFilesFragment newInstance(@NonNull String sha, @Nullable CommitFileListModel commitFileModels) {
+    public static CommitFilesFragment newInstance(final @NonNull String sha, final @Nullable CommitFileListModel commitFileModels) {
         CommitFilesFragment view = new CommitFilesFragment();
         if (commitFileModels != null) {
             CommitFilesSingleton.getInstance().putFiles(sha, commitFileModels);
@@ -64,7 +64,7 @@ public class CommitFilesFragment extends BaseFragment<CommitFilesMvp.View, Commi
         return view;
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof CommitPagerMvp.View) {
             viewCallback = (CommitPagerMvp.View) getParentFragment();
@@ -78,14 +78,14 @@ public class CommitFilesFragment extends BaseFragment<CommitFilesMvp.View, Commi
         super.onDetach();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<CommitFileChanges> items) {
+    @Override public void onNotifyAdapter(final @Nullable List<CommitFileChanges> items) {
         hideProgress();
         if (items != null) {
             adapter.insertItems(items);
         }
     }
 
-    @Override public void onCommentAdded(@NonNull Comment newComment) {
+    @Override public void onCommentAdded(final @NonNull Comment newComment) {
         hideProgress();
         if (viewCallback != null) {
             viewCallback.onAddComment(newComment);
@@ -97,11 +97,11 @@ public class CommitFilesFragment extends BaseFragment<CommitFilesMvp.View, Commi
         adapter.clear();
     }
 
-    @Override public void onOpenForResult(int position, CommitFileChanges model) {
+    @Override public void onOpenForResult(final int position, final CommitFileChanges model) {
         FullScreenFileChangeActivity.Companion.startActivityForResult(this, model, position, true);
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == FullScreenFileChangeActivity.Companion.getFOR_RESULT_CODE() && data != null) {
                 List<CommentRequestModel> comments = data.getParcelableArrayListExtra(BundleConstant.ITEM);
@@ -123,7 +123,7 @@ public class CommitFilesFragment extends BaseFragment<CommitFilesMvp.View, Commi
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         refresh.setEnabled(false);
         stateLayout.setEmptyText(R.string.no_files);
         recycler.setEmptyView(stateLayout, refresh);
@@ -138,7 +138,7 @@ public class CommitFilesFragment extends BaseFragment<CommitFilesMvp.View, Commi
         return new CommitFilesPresenter();
     }
 
-    @Override public void onToggle(long position, boolean isCollapsed) {
+    @Override public void onToggle(final long position, final boolean isCollapsed) {
         CommitFileChanges model = adapter.getItem((int) position);
         if (model == null) return;
         if (model.getCommitFileModel().getPatch() == null) {
@@ -151,17 +151,17 @@ public class CommitFilesFragment extends BaseFragment<CommitFilesMvp.View, Commi
         toggleMap.put(position, isCollapsed);
     }
 
-    @Override public boolean isCollapsed(long position) {
+    @Override public boolean isCollapsed(final long position) {
         Boolean toggle = toggleMap.get(position);
         return toggle != null && toggle;
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }
 
-    @Override public void onPatchClicked(int groupPosition, int childPosition, View v, CommitFileModel commit, CommitLinesModel item) {
+    @Override public void onPatchClicked(final int groupPosition, final int childPosition, final View v, final CommitFileModel commit, final CommitLinesModel item) {
         if (item.getText().startsWith("@@")) return;
         if (PrefGetter.isProEnabled()) {
             AddReviewDialogFragment.Companion.newInstance(item, Bundler.start()
@@ -174,7 +174,7 @@ public class CommitFilesFragment extends BaseFragment<CommitFilesMvp.View, Commi
         }
     }
 
-    @Override public void onCommentAdded(@NonNull String comment, @NonNull CommitLinesModel item, Bundle bundle) {
+    @Override public void onCommentAdded(final @NonNull String comment, final @NonNull CommitLinesModel item, final Bundle bundle) {
         getPresenter().onSubmitComment(comment, item, bundle);
     }
 }

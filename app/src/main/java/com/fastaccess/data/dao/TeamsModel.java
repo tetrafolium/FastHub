@@ -26,7 +26,7 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeString(this.name);
@@ -38,7 +38,7 @@ import lombok.Setter;
         dest.writeString(this.repositoriesUrl);
     }
 
-    protected TeamsModel(Parcel in) {
+    protected TeamsModel(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         this.name = in.readString();
@@ -51,11 +51,11 @@ import lombok.Setter;
     }
 
     public static final Creator<TeamsModel> CREATOR = new Creator<TeamsModel>() {
-        @Override public TeamsModel createFromParcel(Parcel source) {
+        @Override public TeamsModel createFromParcel(final Parcel source) {
             return new TeamsModel(source);
         }
 
-        @Override public TeamsModel[] newArray(int size) {
+        @Override public TeamsModel[] newArray(final int size) {
             return new TeamsModel[size];
         }
     };

@@ -35,13 +35,13 @@ public class ProfileFollowingFragment extends BaseFragment<ProfileFollowingMvp.V
     private OnLoadMore<String> onLoadMore;
     private UsersAdapter adapter;
 
-    public static ProfileFollowingFragment newInstance(@NonNull String username) {
+    public static ProfileFollowingFragment newInstance(final @NonNull String username) {
         ProfileFollowingFragment view = new ProfileFollowingFragment();
         view.setArguments(Bundler.start().put(BundleConstant.EXTRA, username).end());
         return view;
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<User> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<User> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -58,7 +58,7 @@ public class ProfileFollowingFragment extends BaseFragment<ProfileFollowingMvp.V
         return R.layout.small_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, username is required");
         }
@@ -82,7 +82,7 @@ public class ProfileFollowingFragment extends BaseFragment<ProfileFollowingMvp.V
         return new ProfileFollowingPresenter();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
 
@@ -94,12 +94,12 @@ public class ProfileFollowingFragment extends BaseFragment<ProfileFollowingMvp.V
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -115,11 +115,11 @@ public class ProfileFollowingFragment extends BaseFragment<ProfileFollowingMvp.V
         getPresenter().onCallApi(1, getArguments().getString(BundleConstant.EXTRA));
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

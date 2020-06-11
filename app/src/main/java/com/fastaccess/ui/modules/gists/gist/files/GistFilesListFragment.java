@@ -47,7 +47,7 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
     @State boolean isOwner;
     private GistFilesAdapter adapter;
 
-    public static GistFilesListFragment newInstance(@NonNull ArrayList<FilesListModel> files, boolean isOwner) {
+    public static GistFilesListFragment newInstance(final @NonNull ArrayList<FilesListModel> files, final boolean isOwner) {
         GistFilesListFragment view = new GistFilesListFragment();
         view.setArguments(Bundler.start()
                           .putParcelableArrayList(BundleConstant.ITEM, files)
@@ -64,7 +64,7 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
         return new GistFilesListPresenter();
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         stateLayout.setEmptyText(R.string.no_files);
         stateLayout.showEmptyState();
         recycler.setEmptyView(stateLayout, refresh);
@@ -75,14 +75,14 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
             ArrayList<FilesListModel> filesListModel = getArguments().getParcelableArrayList(BundleConstant.ITEM);
             isOwner = getArguments().getBoolean(BundleConstant.EXTRA_TYPE);
             onInitFiles(filesListModel, isOwner);
-            setArguments(null);//CLEAR
+            setArguments(null); //CLEAR
         } else {
             onInitFiles(getPresenter().getFiles(), isOwner);
         }
         fastScroller.attachRecyclerView(recycler);
     }
 
-    @Override public void onOpenFile(@NonNull FilesListModel item, int position) {
+    @Override public void onOpenFile(final @NonNull FilesListModel item, final int position) {
         if (canOpen(item) && !isOwner) {
             CodeViewerActivity.startActivity(getContext(), item.getRawUrl(), item.getRawUrl());
         } else if (isOwner && canOpen(item)) {
@@ -90,7 +90,7 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
         }
     }
 
-    @Override public void onDeleteFile(@NonNull FilesListModel item, int position) {
+    @Override public void onDeleteFile(final @NonNull FilesListModel item, final int position) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message), false,
                                       Bundler.start()
                                       .put(BundleConstant.ID, position)
@@ -99,13 +99,13 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
         .show(getChildFragmentManager(), MessageDialogView.TAG);
     }
 
-    @Override public void onEditFile(@NonNull FilesListModel item, int position) {
+    @Override public void onEditFile(final @NonNull FilesListModel item, final int position) {
         AddGistBottomSheetDialog.Companion.newInstance(item, position).show(getChildFragmentManager(), AddGistBottomSheetDialog.Companion.getTAG());
     }
 
-    @Override public void onInitFiles(@Nullable ArrayList<FilesListModel> filesListModel, boolean isOwner) {
+    @Override public void onInitFiles(final @Nullable ArrayList<FilesListModel> filesListModel, final boolean isOwner) {
         if (filesListModel == null) {
-            filesListModel = new ArrayList<>();//DO NOT PASS NULL TO ADAPTER
+            filesListModel = new ArrayList<>(); //DO NOT PASS NULL TO ADAPTER
         }
         if (getPresenter().getFilesMap().isEmpty()) {
             for (FilesListModel listModel : filesListModel) {
@@ -127,7 +127,7 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
         }
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk && bundle != null) {
             String url = bundle.getString(BundleConstant.EXTRA);
@@ -152,12 +152,12 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
         }
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }
 
-    @Override public void onFileAdded(@NonNull FilesListModel file, Integer position) {
+    @Override public void onFileAdded(final @NonNull FilesListModel file, final Integer position) {
         if (position == null || position == -1) {
             adapter.addItem(file);
             getPresenter().getFilesMap().put(file.getFilename(), file);
@@ -174,7 +174,7 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
         }
     }
 
-    private boolean canOpen(@NonNull FilesListModel item) {
+    private boolean canOpen(final @NonNull FilesListModel item) {
         if (item.getRawUrl() == null) return false;
         if (item.getSize() > FileHelper.ONE_MB && !MarkDownProvider.isImage(item.getRawUrl())) {
             MessageDialogView.newInstance(getString(R.string.big_file), getString(R.string.big_file_description), false, true,

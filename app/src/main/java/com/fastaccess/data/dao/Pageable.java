@@ -29,7 +29,7 @@ public class Pageable<M extends Parcelable> implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(this.first);
         dest.writeInt(this.next);
         dest.writeInt(this.prev);
@@ -39,7 +39,7 @@ public class Pageable<M extends Parcelable> implements Parcelable {
         dest.writeTypedList(this.items);
     }
 
-    @SuppressWarnings("WeakerAccess") protected Pageable(Parcel in) {
+    @SuppressWarnings("WeakerAccess") protected Pageable(final Parcel in) {
         this.first = in.readInt();
         this.next = in.readInt();
         this.prev = in.readInt();
@@ -50,11 +50,11 @@ public class Pageable<M extends Parcelable> implements Parcelable {
     }
 
     public static final Creator<Pageable> CREATOR = new Creator<Pageable>() {
-        @Override public Pageable createFromParcel(Parcel source) {
+        @Override public Pageable createFromParcel(final Parcel source) {
             return new Pageable(source);
         }
 
-        @Override public Pageable[] newArray(int size) {
+        @Override public Pageable[] newArray(final int size) {
             return new Pageable[size];
         }
     };

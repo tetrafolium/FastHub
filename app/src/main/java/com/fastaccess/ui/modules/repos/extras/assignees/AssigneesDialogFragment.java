@@ -49,7 +49,7 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
     private AssigneesAdapter adapter;
     private AssigneesMvp.SelectedAssigneesListener callback;
 
-    public static AssigneesDialogFragment newInstance(@NonNull String login, @NonNull String repoId, boolean isAssignees) {
+    public static AssigneesDialogFragment newInstance(final @NonNull String login, final @NonNull String repoId, final boolean isAssignees) {
         AssigneesDialogFragment fragment = new AssigneesDialogFragment();
         fragment.setArguments(Bundler.start()
                               .put(BundleConstant.ID, repoId)
@@ -59,7 +59,7 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
         return fragment;
     }
 
-    @Override public void onAttach(@NotNull Context context) {
+    @Override public void onAttach(final @NotNull Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof AssigneesMvp.SelectedAssigneesListener) {
             callback = (AssigneesMvp.SelectedAssigneesListener) getParentFragment();
@@ -79,7 +79,7 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
         return R.layout.simple_footer_list_dialog;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             callApi();
         }
@@ -99,11 +99,11 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
         return new AssigneesPresenter();
     }
 
-    @Override public boolean isAssigneeSelected(int position) {
+    @Override public boolean isAssigneeSelected(final int position) {
         return getSelectionMap().get(position) != null;
     }
 
-    @Override public void onToggleSelection(int position, boolean select) {
+    @Override public void onToggleSelection(final int position, final boolean select) {
         if (select) {
             getSelectionMap().put(position, adapter.getItem(position));
         } else {
@@ -112,7 +112,7 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
         adapter.notifyDataSetChanged();
     }
 
-    @OnClick({R.id.cancel, R.id.ok}) public void onClick(View view) {
+    @OnClick({R.id.cancel, R.id.ok}) public void onClick(final View view) {
         switch (view.getId()) {
         case R.id.cancel:
             dismiss();
@@ -128,7 +128,7 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
         }
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<User> items) {
+    @Override public void onNotifyAdapter(final @Nullable List<User> items) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -137,7 +137,7 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
         adapter.insertItems(items);
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         stateLayout.showProgress();
         refresh.setRefreshing(true);
     }
@@ -147,12 +147,12 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
         refresh.setRefreshing(false);
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }

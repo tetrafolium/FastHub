@@ -65,7 +65,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         return new PullRequestTimelineFragment();
     }
 
-    @SuppressWarnings("unchecked") @Override public void onAttach(Context context) {
+    @SuppressWarnings("unchecked") @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof IssuePagerMvp.IssuePrCallback) {
             issueCallback = (IssuePagerMvp.IssuePrCallback) getParentFragment();
@@ -99,7 +99,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getPullRequest() == null) {
             throw new NullPointerException("PullRequest went missing!!!");
         }
@@ -129,7 +129,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         return new PullRequestTimelinePresenter();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
@@ -139,29 +139,29 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onToggle(long position, boolean isCollapsed) {
+    @Override public void onToggle(final long position, final boolean isCollapsed) {
         toggleMap.put(position, isCollapsed);
     }
 
-    @Override public boolean isCollapsed(long position) {
+    @Override public boolean isCollapsed(final long position) {
         return toggleMap.get(position) != null && toggleMap.get(position);
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<TimelineModel> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<TimelineModel> items, final int page) {
         hideProgress();
         if (items == null) {
             adapter.subList(1, adapter.getItemCount());
@@ -181,7 +181,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         return onLoadMore;
     }
 
-    @Override public void onEditComment(@NonNull Comment item) {
+    @Override public void onEditComment(final @NonNull Comment item) {
         Intent intent = new Intent(getContext(), EditorActivity.class);
         if (getPullRequest() == null) return;
         intent.putExtras(Bundler
@@ -199,7 +199,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         ActivityHelper.startReveal(this, intent, view, BundleConstant.REQUEST_CODE);
     }
 
-    @Override public void onEditReviewComment(@NonNull ReviewCommentModel item, int groupPosition, int childPosition) {
+    @Override public void onEditReviewComment(final @NonNull ReviewCommentModel item, final int groupPosition, final int childPosition) {
         EditReviewCommentModel model = new EditReviewCommentModel();
         model.setCommentPosition(childPosition);
         model.setGroupPosition(groupPosition);
@@ -222,12 +222,12 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         ActivityHelper.startReveal(this, intent, view, BundleConstant.REVIEW_REQUEST_CODE);
     }
 
-    @Override public void onRemove(@NonNull TimelineModel timelineModel) {
+    @Override public void onRemove(final @NonNull TimelineModel timelineModel) {
         hideProgress();
         adapter.removeItem(timelineModel);
     }
 
-    @Override public void onShowDeleteMsg(long id) {
+    @Override public void onShowDeleteMsg(final long id) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
                                       Bundler.start()
                                       .put(BundleConstant.EXTRA, id)
@@ -236,7 +236,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         .show(getChildFragmentManager(), MessageDialogView.TAG);
     }
 
-    @Override public void onReply(User user, String message) {
+    @Override public void onReply(final User user, final String message) {
         Intent intent = new Intent(getContext(), EditorActivity.class);
         if (getPullRequest() == null) return;
         intent.putExtras(Bundler
@@ -254,13 +254,13 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         ActivityHelper.startReveal(this, intent, view, BundleConstant.REQUEST_CODE);
     }
 
-    @Override public void onHandleComment(@NonNull String text, @Nullable Bundle bundle) {
+    @Override public void onHandleComment(final @NonNull String text, final @Nullable Bundle bundle) {
         getPresenter().onHandleComment(text, bundle);
     }
 
-    @Override public void onReplyOrCreateReview(@Nullable User user, @Nullable String message,
-            int groupPosition, int childPosition,
-            @NonNull EditReviewCommentModel model) {
+    @Override public void onReplyOrCreateReview(final @Nullable User user, final @Nullable String message,
+            final int groupPosition, final int childPosition,
+            final @NonNull EditReviewCommentModel model) {
         Intent intent = new Intent(getContext(), EditorActivity.class);
         if (getPullRequest() == null) return;
         intent.putExtras(Bundler
@@ -279,7 +279,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         ActivityHelper.startReveal(this, intent, view, BundleConstant.REVIEW_REQUEST_CODE);
     }
 
-    @Override public void addComment(@NonNull TimelineModel timelineModel) {
+    @Override public void addComment(final @NonNull TimelineModel timelineModel) {
         onHideBlockingProgress();
         adapter.addItem(timelineModel);
         if (commentsCallback != null) commentsCallback.onClearEditText();
@@ -294,12 +294,12 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         super.hideProgress();
     }
 
-    @Override public void showReactionsPopup(@NonNull ReactionTypes type, @NonNull String login, @NonNull String repoId,
-            long idOrNumber, int reactionType) {
+    @Override public void showReactionsPopup(final @NonNull ReactionTypes type, final @NonNull String login, final @NonNull String repoId,
+            final long idOrNumber, final int reactionType) {
         ReactionsDialogFragment.newInstance(login, repoId, type, idOrNumber, reactionType).show(getChildFragmentManager(), "ReactionsDialogFragment");
     }
 
-    @Override public void onShowReviewDeleteMsg(long commentId, int groupPosition, int commentPosition) {
+    @Override public void onShowReviewDeleteMsg(final long commentId, final int groupPosition, final int commentPosition) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
                                       Bundler.start()
                                       .put(BundleConstant.EXTRA, commentId)
@@ -310,7 +310,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         .show(getChildFragmentManager(), MessageDialogView.TAG);
     }
 
-    @Override public void onRemoveReviewComment(int groupPosition, int commentPosition) {
+    @Override public void onRemoveReviewComment(final int groupPosition, final int commentPosition) {
         hideProgress();
         TimelineModel timelineModel = adapter.getItem(groupPosition);
         if (timelineModel != null && timelineModel.getGroupedReviewModel() != null) {
@@ -325,7 +325,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         }
     }
 
-    @Override public void onSetHeader(@NonNull TimelineModel timelineModel) {
+    @Override public void onSetHeader(final @NonNull TimelineModel timelineModel) {
         if (adapter != null) {
             if (adapter.isEmpty()) {
                 adapter.addItem(timelineModel, 0);
@@ -344,7 +344,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         onSetHeader(new TimelineModel(getPullRequest()));
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (data == null) {
@@ -403,22 +403,22 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         }
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk) {
             getPresenter().onHandleDeletion(bundle);
         }
     }
 
-    @Override public boolean isPreviouslyReacted(long id, int vId) {
+    @Override public boolean isPreviouslyReacted(final long id, final int vId) {
         return getPresenter().isPreviouslyReacted(id, vId);
     }
 
-    @Override public boolean isCallingApi(long id, int vId) {
+    @Override public boolean isCallingApi(final long id, final int vId) {
         return getPresenter().isCallingApi(id, vId);
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

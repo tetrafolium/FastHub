@@ -22,7 +22,7 @@ public class SpinnerAdapter<O> extends BaseAdapter {
     private List<O> data;
     private Context context;
 
-    public SpinnerAdapter(@NonNull Context context, @NonNull List<O> branches) {
+    public SpinnerAdapter(final @NonNull Context context, final @NonNull List<O> branches) {
         this.data = branches;
         this.context = context;
     }
@@ -31,23 +31,23 @@ public class SpinnerAdapter<O> extends BaseAdapter {
         return data.size();
     }
 
-    @Override public O getItem(int position) {
+    @Override public O getItem(final int position) {
         return data.get(position);
     }
 
-    @Override public long getItemId(int position) {
+    @Override public long getItemId(final int position) {
         return position;
     }
 
-    @Override public View getView(int position, View convertView, ViewGroup parent) {
+    @Override public View getView(final int position, final View convertView, final ViewGroup parent) {
         return getRowView(position, convertView, parent, false);
     }
 
-    @Override public View getDropDownView(int position, View convertView, ViewGroup parent) {
+    @Override public View getDropDownView(final int position, final View convertView, final ViewGroup parent) {
         return getRowView(position, convertView, parent, true);
     }
 
-    @NonNull private View getRowView(int position, View convertView, ViewGroup parent, boolean isDropDown) {
+    @NonNull private View getRowView(final int position, final View convertView, final ViewGroup parent, final boolean isDropDown) {
         ViewHolder viewHolder;
         if (convertView == null) {
             if (!isDropDown) {
@@ -67,7 +67,7 @@ public class SpinnerAdapter<O> extends BaseAdapter {
     static class ViewHolder {
         @BindView(android.R.id.text1) TextView title;
 
-        ViewHolder(View view) {
+        ViewHolder(final View view) {
             ButterKnife.bind(this, view);
         }
     }

@@ -18,13 +18,13 @@ public class MarkDownQuoteSpan extends QuoteSpan {
         super();
     }
 
-    public MarkDownQuoteSpan(int color) {
+    public MarkDownQuoteSpan(final int color) {
         super(color);
     }
 
     @Override
-    public void drawLeadingMargin(Canvas c, Paint p, int x, int dir, int top, int baseline, int bottom, CharSequence text, int start, int end,
-                                  boolean first, Layout layout) {
+    public void drawLeadingMargin(final Canvas c, final Paint p, final int x, final int dir, final int top, final int baseline, final int bottom, final CharSequence text, final int start, final int end,
+                                  final boolean first, final Layout layout) {
         Paint.Style style = p.getStyle();
         int color = p.getColor();
         p.setStyle(Paint.Style.FILL);
@@ -34,7 +34,7 @@ public class MarkDownQuoteSpan extends QuoteSpan {
         p.setColor(color);
     }
 
-    @Override public int getLeadingMargin(boolean first) {
+    @Override public int getLeadingMargin(final boolean first) {
         return STRIPE_WIDTH + GAP_WIDTH;
     }
 

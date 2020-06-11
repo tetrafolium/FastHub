@@ -26,7 +26,7 @@ public class SettingsAdapter extends BaseAdapter {
     private ArrayList<SettingsModel> settings;
     private final LayoutInflater inflater;
 
-    public SettingsAdapter(@NonNull Context context, @NonNull ArrayList<SettingsModel> settings) {
+    public SettingsAdapter(final @NonNull Context context, final @NonNull ArrayList<SettingsModel> settings) {
         this.settings = settings;
         this.inflater = LayoutInflater.from(context);
     }
@@ -35,15 +35,15 @@ public class SettingsAdapter extends BaseAdapter {
         return settings.size();
     }
 
-    @Override public SettingsModel getItem(int position) {
+    @Override public SettingsModel getItem(final int position) {
         return settings.get(position);
     }
 
-    @Override public long getItemId(int position) {
+    @Override public long getItemId(final int position) {
         return position;
     }
 
-    @Override public View getView(int position, View convertView, ViewGroup parent) {
+    @Override public View getView(final int position, final View convertView, final ViewGroup parent) {
         ViewHolder viewHolder;
         View row = convertView;
         if (row == null) {
@@ -65,7 +65,7 @@ public class SettingsAdapter extends BaseAdapter {
         @BindView(R.id.iconItemTitle) FontTextView title;
         @BindView(R.id.iconItemSummary) FontTextView summary;
 
-        ViewHolder(View view) {
+        ViewHolder(final View view) {
             ButterKnife.bind(this, view);
         }
     }

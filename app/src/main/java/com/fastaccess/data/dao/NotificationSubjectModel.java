@@ -21,26 +21,26 @@ public class NotificationSubjectModel implements Parcelable {
     String latestCommentUrl;
 
     @Override public String toString() {
-        return "NotificationSubjectModel{" +
-               ", title='" + title + '\'' +
-               ", url='" + url + '\'' +
-               ", type='" + type + '\'' +
-               ", latestCommentUrl='" + latestCommentUrl + '\'' +
-               '}';
+        return "NotificationSubjectModel{"
+               + ", title='" + title + '\''
+               + ", url='" + url + '\''
+               + ", type='" + type + '\''
+               + ", latestCommentUrl='" + latestCommentUrl + '\''
+               + '}';
     }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.title);
         dest.writeString(this.url);
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeString(this.latestCommentUrl);
     }
 
-    protected NotificationSubjectModel(Parcel in) {
+    protected NotificationSubjectModel(final Parcel in) {
         this.title = in.readString();
         this.url = in.readString();
         int tmpType = in.readInt();
@@ -49,11 +49,11 @@ public class NotificationSubjectModel implements Parcelable {
     }
 
     public static final Creator<NotificationSubjectModel> CREATOR = new Creator<NotificationSubjectModel>() {
-        @Override public NotificationSubjectModel createFromParcel(Parcel source) {
+        @Override public NotificationSubjectModel createFromParcel(final Parcel source) {
             return new NotificationSubjectModel(source);
         }
 
-        @Override public NotificationSubjectModel[] newArray(int size) {
+        @Override public NotificationSubjectModel[] newArray(final int size) {
             return new NotificationSubjectModel[size];
         }
     };

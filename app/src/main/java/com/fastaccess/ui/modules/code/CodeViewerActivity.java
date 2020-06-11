@@ -37,14 +37,14 @@ public class CodeViewerActivity extends BaseActivity {
     @State String url;
     @State String htmlUrl;
 
-    public static void startActivity(@NonNull Context context, @NonNull String url, @NonNull String htmlUrl) {
+    public static void startActivity(final @NonNull Context context, final @NonNull String url, final @NonNull String htmlUrl) {
         if (!InputHelper.isEmpty(url)) {
             Intent intent = ActivityHelper.editBundle(createIntent(context, url, htmlUrl), LinkParserHelper.isEnterprise(htmlUrl));
             context.startActivity(intent);
         }
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String url, @NonNull String htmlUrl) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String url, final @NonNull String htmlUrl) {
         Intent intent = new Intent(context, CodeViewerActivity.class);
         boolean isEnterprise = LinkParserHelper.isEnterprise(htmlUrl);
         url = LinkParserHelper.getEnterpriseGistUrl(url, isEnterprise);
@@ -76,7 +76,7 @@ public class CodeViewerActivity extends BaseActivity {
         return new BasePresenter();
     }
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             Intent intent = Objects.requireNonNull(getIntent(), "Intent is null");
@@ -95,12 +95,12 @@ public class CodeViewerActivity extends BaseActivity {
         setTaskName(title);
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.download_browser_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (InputHelper.isEmpty(url)) return super.onOptionsItemSelected(item);
         if (item.getItemId() == R.id.viewAsCode) {
             ViewerFragment viewerFragment = (ViewerFragment) AppHelper.getFragmentByTag(getSupportFragmentManager(), ViewerFragment.TAG);

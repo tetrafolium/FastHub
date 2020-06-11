@@ -23,7 +23,7 @@ public class PrefHelper {
      *         <p/>
      *         non can be null!!!
      */
-    @SuppressLint("ApplySharedPref") public static <T> void set(@NonNull String key, @Nullable T value) {
+    @SuppressLint("ApplySharedPref") public static <T> void set(final @NonNull String key, final @Nullable T value) {
         if (InputHelper.isEmpty(key)) {
             throw new NullPointerException("Key must not be null! (key = " + key + "), (value = " + value + ")");
         }
@@ -45,36 +45,36 @@ public class PrefHelper {
         } else {
             edit.putString(key, value.toString());
         }
-        edit.commit();//apply on UI
+        edit.commit(); //apply on UI
     }
 
-    @Nullable public static String getString(@NonNull String key) {
+    @Nullable public static String getString(final @NonNull String key) {
         return PreferenceManager.getDefaultSharedPreferences(App.getInstance()).getString(key, null);
     }
 
-    public static boolean getBoolean(@NonNull String key) {
+    public static boolean getBoolean(final @NonNull String key) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(App.getInstance());
         return preferences.getAll().get(key) instanceof Boolean && preferences.getBoolean(key, false);
     }
 
-    public static int getInt(@NonNull String key) {
+    public static int getInt(final @NonNull String key) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(App.getInstance());
         return preferences.getAll().get(key) instanceof Integer ? preferences.getInt(key, 0) : -1;
     }
 
-    public static long getLong(@NonNull String key) {
+    public static long getLong(final @NonNull String key) {
         return PreferenceManager.getDefaultSharedPreferences(App.getInstance()).getLong(key, 0);
     }
 
-    public static float getFloat(@NonNull String key) {
+    public static float getFloat(final @NonNull String key) {
         return PreferenceManager.getDefaultSharedPreferences(App.getInstance()).getFloat(key, 0);
     }
 
-    public static void clearKey(@NonNull String key) {
+    public static void clearKey(final @NonNull String key) {
         PreferenceManager.getDefaultSharedPreferences(App.getInstance()).edit().remove(key).apply();
     }
 
-    public static boolean isExist(@NonNull String key) {
+    public static boolean isExist(final @NonNull String key) {
         return PreferenceManager.getDefaultSharedPreferences(App.getInstance()).contains(key);
     }
 

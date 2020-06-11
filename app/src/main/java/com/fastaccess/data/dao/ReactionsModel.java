@@ -40,29 +40,29 @@ import github.PullRequestTimelineQuery;
     public boolean viewerHasReacted;
     public boolean isCallingApi;
 
-    public ReactionsModel() {}
+    public ReactionsModel() { }
 
     @NotNull @Override public String toString() {
-        return "ReactionsModel{" +
-               "id=" + id +
-               ", url='" + url + '\'' +
-               ", total_count=" + total_count +
-               ", plusOne=" + plusOne +
-               ", minusOne=" + minusOne +
-               ", laugh=" + laugh +
-               ", hooray=" + hooray +
-               ", confused=" + confused +
-               ", heart=" + heart +
-               ", rocket=" + rocket +
-               ", eyes=" + eyes +
-               '}';
+        return "ReactionsModel{"
+               + "id=" + id
+               + ", url='" + url + '\''
+               + ", total_count=" + total_count
+               + ", plusOne=" + plusOne
+               + ", minusOne=" + minusOne
+               + ", laugh=" + laugh
+               + ", hooray=" + hooray
+               + ", confused=" + confused
+               + ", heart=" + heart
+               + ", rocket=" + rocket
+               + ", eyes=" + eyes
+               + '}';
     }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeInt(this.total_count);
@@ -79,7 +79,7 @@ import github.PullRequestTimelineQuery;
         dest.writeByte(this.isCallingApi ? (byte) 1 : (byte) 0);
     }
 
-    protected ReactionsModel(Parcel in) {
+    protected ReactionsModel(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         this.total_count = in.readInt();
@@ -97,11 +97,11 @@ import github.PullRequestTimelineQuery;
     }
 
     public static final Creator<ReactionsModel> CREATOR = new Creator<ReactionsModel>() {
-        @Override public ReactionsModel createFromParcel(Parcel source) {
+        @Override public ReactionsModel createFromParcel(final Parcel source) {
             return new ReactionsModel(source);
         }
 
-        @Override public ReactionsModel[] newArray(int size) {
+        @Override public ReactionsModel[] newArray(final int size) {
             return new ReactionsModel[size];
         }
     };

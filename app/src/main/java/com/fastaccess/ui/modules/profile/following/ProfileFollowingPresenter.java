@@ -30,16 +30,16 @@ class ProfileFollowingPresenter extends BasePresenter<ProfileFollowingMvp.View> 
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
-        sendToView(view -> {//wait view
+    @Override public void onError(final @NonNull Throwable throwable) {
+        sendToView(view -> { //wait view
             if (view.getLoadMore().getParameter() != null) {
                 onWorkOffline(view.getLoadMore().getParameter());
             }
@@ -47,7 +47,7 @@ class ProfileFollowingPresenter extends BasePresenter<ProfileFollowingMvp.View> 
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable String parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable String parameter) {
         if (parameter == null) {
             throw new NullPointerException("Username is null");
         }
@@ -75,7 +75,7 @@ class ProfileFollowingPresenter extends BasePresenter<ProfileFollowingMvp.View> 
         return users;
     }
 
-    @Override public void onWorkOffline(@NonNull String login) {
+    @Override public void onWorkOffline(final @NonNull String login) {
         if (users.isEmpty()) {
             manageDisposable(RxHelper.getSingle(User.getUserFollowingList(login)).subscribe(userModels ->
                              sendToView(view -> view.onNotifyAdapter(userModels, 1))));
@@ -84,7 +84,7 @@ class ProfileFollowingPresenter extends BasePresenter<ProfileFollowingMvp.View> 
         }
     }
 
-    @Override public void onItemClick(int position, View v, User item) {}
+    @Override public void onItemClick(final int position, final View v, final User item) { }
 
-    @Override public void onItemLongClick(int position, View v, User item) {}
+    @Override public void onItemLongClick(final int position, final View v, final User item) { }
 }

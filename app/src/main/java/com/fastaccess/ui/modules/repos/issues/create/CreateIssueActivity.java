@@ -79,7 +79,7 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
     private AlertDialog alertDialog;
     private CharSequence savedText;
 
-    public static void startForResult(@NonNull Fragment fragment, @NonNull String login, @NonNull String repoId, boolean isEnterprise) {
+    public static void startForResult(final @NonNull Fragment fragment, final @NonNull String login, final @NonNull String repoId, final boolean isEnterprise) {
         Intent intent = new Intent(fragment.getContext(), CreateIssueActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA, login)
@@ -96,8 +96,8 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
     }
 
 
-    public static void startForResult(@NonNull Activity activity, @NonNull String login, @NonNull String repoId,
-                                      @Nullable Issue issueModel, boolean isEnterprise) {
+    public static void startForResult(final @NonNull Activity activity, final @NonNull String login, final @NonNull String repoId,
+                                      final @Nullable Issue issueModel, final boolean isEnterprise) {
         if (issueModel != null) {
             Intent intent = new Intent(activity, CreateIssueActivity.class);
             intent.putExtras(Bundler.start()
@@ -115,8 +115,8 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         }
     }
 
-    public static void startForResult(@NonNull Activity activity, @NonNull String login, @NonNull String repoId,
-                                      @Nullable PullRequest pullRequestModel, boolean isEnterprise) {
+    public static void startForResult(final @NonNull Activity activity, final @NonNull String login, final @NonNull String repoId,
+                                      final @Nullable PullRequest pullRequestModel, final boolean isEnterprise) {
         if (pullRequestModel != null) {
             Intent intent = new Intent(activity, CreateIssueActivity.class);
             intent.putExtras(Bundler.start()
@@ -134,7 +134,7 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         }
     }
 
-    @NonNull public static Intent getIntent(@NonNull Context context, @NonNull String login, @NonNull String repoId, boolean isFeedback) {
+    @NonNull public static Intent getIntent(final @NonNull Context context, final @NonNull String login, final @NonNull String repoId, final boolean isFeedback) {
         Intent intent = new Intent(context, CreateIssueActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA, login)
@@ -144,9 +144,9 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         return intent;
     }
 
-    @NonNull public static Intent startForResult(@NonNull Activity activity) {
+    @NonNull public static Intent startForResult(final @NonNull Activity activity) {
         String login = "k0shk0sh"; // FIXME: 23/02/2017 hardcoded
-        String repoId = "FastHub";// FIXME: 23/02/2017 hardcoded
+        String repoId = "FastHub"; // FIXME: 23/02/2017 hardcoded
         Intent intent = new Intent(activity, CreateIssueActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA, login)
@@ -156,24 +156,24 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         return intent;
     }
 
-    public static void startForResult(@NonNull Activity activity, @NonNull Intent intent, @NonNull View view) {
+    public static void startForResult(final @NonNull Activity activity, final @NonNull Intent intent, final @NonNull View view) {
         ActivityHelper.startReveal(activity, intent, view, BundleConstant.REQUEST_CODE);
     }
 
-    @Override public void onSetCode(@NonNull CharSequence charSequence) {
+    @Override public void onSetCode(final @NonNull CharSequence charSequence) {
         this.savedText = charSequence;
         MarkDownProvider.setMdText(description, InputHelper.toString(savedText));
     }
 
-    @Override public void onTitleError(boolean isEmptyTitle) {
+    @Override public void onTitleError(final boolean isEmptyTitle) {
         title.setError(isEmptyTitle ? getString(R.string.required_field) : null);
     }
 
-    @Override public void onDescriptionError(boolean isEmptyDesc) {
+    @Override public void onDescriptionError(final boolean isEmptyDesc) {
         description.setError(isEmptyDesc ? getString(R.string.required_field) : null);
     }
 
-    @Override public void onSuccessSubmission(Issue issueModel) {
+    @Override public void onSuccessSubmission(final Issue issueModel) {
         hideProgress();
         Intent intent = new Intent();
         intent.putExtras(Bundler.start()
@@ -184,7 +184,7 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         showMessage(R.string.success, R.string.successfully_submitted);
     }
 
-    @Override public void onSuccessSubmission(PullRequest issueModel) {
+    @Override public void onSuccessSubmission(final PullRequest issueModel) {
         hideProgress();
         Intent intent = new Intent();
         intent.putExtras(Bundler.start()
@@ -228,7 +228,7 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         return false;
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             Bundle bundle = getIntent().getExtras();
@@ -292,8 +292,8 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         if (BuildConfig.DEBUG && isFeedback) {
             alertDialog = new AlertDialog.Builder(this)
             .setTitle("You are currently using a debug build")
-            .setMessage("If you have found a bug, please report it on slack." + "\n" +
-                        "Feature requests can be submitted here." + "\n" + "Happy Testing")
+            .setMessage("If you have found a bug, please report it on slack." + "\n"
+                        + "Feature requests can be submitted here." + "\n" + "Happy Testing")
             .setPositiveButton(android.R.string.ok, null)
             .show();
         }
@@ -301,7 +301,7 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         setTaskName(login + "/" + repoId + " - " + (isFeedback ? getString(R.string.submit_feedback) : getString(R.string.create_issue)));
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         AppHelper.hideKeyboard(title);
         getPresenter().onActivityForResult(resultCode, requestCode, data);
@@ -325,14 +325,14 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         super.onDestroy();
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk && bundle != null) {
             finish();
         }
     }
 
-    @OnTouch(R.id.description) boolean onTouch(MotionEvent event) {
+    @OnTouch(R.id.description) boolean onTouch(final MotionEvent event) {
         if (isFeedback && InputHelper.isEmpty(savedText)) {
             savedText = AppHelper.getFastHubIssueTemplate(isEnterprise());
         }
@@ -353,7 +353,7 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         getPresenter().onSubmit(InputHelper.toString(title), savedText, login, repoId, issue, pullRequest, labelModels, milestoneModel, users);
     }
 
-    @OnClick({R.id.addAssignee, R.id.addLabels, R.id.addMilestone}) public void onViewClicked(View view) {
+    @OnClick({R.id.addAssignee, R.id.addLabels, R.id.addMilestone}) public void onViewClicked(final View view) {
         switch (view.getId()) {
         case R.id.addAssignee:
             AssigneesDialogFragment.newInstance(login, repoId, false)
@@ -372,7 +372,7 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         }
     }
 
-    @Override public void onSelectedLabels(@NonNull ArrayList<LabelModel> labelModels) {
+    @Override public void onSelectedLabels(final @NonNull ArrayList<LabelModel> labelModels) {
         this.labelModels.clear();
         this.labelModels.addAll(labelModels);
         SpannableBuilder builder = SpannableBuilder.builder();
@@ -388,7 +388,7 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         this.labels.setText(builder);
     }
 
-    @Override public void onMilestoneSelected(@NonNull MilestoneModel milestoneModel) {
+    @Override public void onMilestoneSelected(final @NonNull MilestoneModel milestoneModel) {
         Logger.e(milestoneModel.getTitle(), milestoneModel.getDescription(), milestoneModel.getNumber());
         this.milestoneModel = milestoneModel;
         milestoneTitle.setText(milestoneModel.getTitle());
@@ -401,7 +401,7 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
         }
     }
 
-    @Override public void onSelectedAssignees(@NonNull ArrayList<User> users, boolean isAssignees) {
+    @Override public void onSelectedAssignees(final @NonNull ArrayList<User> users, final boolean isAssignees) {
         this.users.clear();
         this.users.addAll(users);
         SpannableBuilder builder = SpannableBuilder.builder();

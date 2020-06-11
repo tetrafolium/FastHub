@@ -24,7 +24,7 @@ public class AccessTokenModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.token);
         dest.writeString(this.hashedToken);
@@ -32,7 +32,7 @@ public class AccessTokenModel implements Parcelable {
         dest.writeString(this.tokenType);
     }
 
-    private AccessTokenModel(Parcel in) {
+    private AccessTokenModel(final Parcel in) {
         this.id = in.readLong();
         this.token = in.readString();
         this.hashedToken = in.readString();
@@ -41,11 +41,11 @@ public class AccessTokenModel implements Parcelable {
     }
 
     public static final Creator<AccessTokenModel> CREATOR = new Creator<AccessTokenModel>() {
-        @Override public AccessTokenModel createFromParcel(Parcel source) {
+        @Override public AccessTokenModel createFromParcel(final Parcel source) {
             return new AccessTokenModel(source);
         }
 
-        @Override public AccessTokenModel[] newArray(int size) {
+        @Override public AccessTokenModel[] newArray(final int size) {
             return new AccessTokenModel[size];
         }
     };

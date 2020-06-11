@@ -75,7 +75,7 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
     private String repoOwner;
     private String poster;
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         if (v.getId() == R.id.toggle || v.getId() == R.id.toggleHolder) {
             if (onToggleView != null) {
                 int position = getAdapterPosition();
@@ -88,9 +88,9 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
         }
     }
 
-    private TimelineCommentsViewHolder(@NonNull View itemView, @NonNull ViewGroup viewGroup, @Nullable IssuesTimelineAdapter adapter,
-                                       @NonNull OnToggleView onToggleView, boolean showEmojies, @NonNull ReactionsCallback reactionsCallback,
-                                       String repoOwner, String poster) {
+    private TimelineCommentsViewHolder(final @NonNull View itemView, final @NonNull ViewGroup viewGroup, final @Nullable IssuesTimelineAdapter adapter,
+                                       final @NonNull OnToggleView onToggleView, final boolean showEmojies, final @NonNull ReactionsCallback reactionsCallback,
+                                       final String repoOwner, final String poster) {
         super(itemView, adapter);
         if (adapter != null && adapter.getRowWidth() == 0) {
             itemView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -147,14 +147,14 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
         eyes.setOnClickListener(this);
     }
 
-    public static TimelineCommentsViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable IssuesTimelineAdapter adapter,
-            @NonNull OnToggleView onToggleView, boolean showEmojies,
-            @NonNull ReactionsCallback reactionsCallback, String repoOwner, String poster) {
+    public static TimelineCommentsViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable IssuesTimelineAdapter adapter,
+            final @NonNull OnToggleView onToggleView, final boolean showEmojies,
+            final @NonNull ReactionsCallback reactionsCallback, final String repoOwner, final String poster) {
         return new TimelineCommentsViewHolder(getView(viewGroup, R.layout.comments_row_item), viewGroup, adapter,
                                               onToggleView, showEmojies, reactionsCallback, repoOwner, poster);
     }
 
-    @Override public void bind(@NonNull TimelineModel timelineModel) {
+    @Override public void bind(final @NonNull TimelineModel timelineModel) {
         Comment commentsModel = timelineModel.getComment();
         if (commentsModel.getUser() != null) {
             avatar.setUrl(commentsModel.getUser().getAvatarUrl(), commentsModel.getUser().getLogin(),
@@ -214,7 +214,7 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
         if (onToggleView != null) onToggle(onToggleView.isCollapsed(getAdapterPosition()), false);
     }
 
-    private void addReactionCount(View v) {
+    private void addReactionCount(final View v) {
         if (adapter != null) {
             TimelineModel timelineModel = (TimelineModel) adapter.getItem(getAdapterPosition());
             if (timelineModel == null) return;
@@ -265,12 +265,12 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
         }
     }
 
-    private void appendEmojies(ReactionsModel reaction) {
+    private void appendEmojies(final ReactionsModel reaction) {
         CommentsHelper.appendEmojies(reaction, thumbsUp, thumbsUpReaction, thumbsDown, thumbsDownReaction, hurray, hurrayReaction, sad,
                                      sadReaction, laugh, laughReaction, heart, heartReaction, rocket, rocketReaction, eyes, eyeReaction, reactionsList);
     }
 
-    private void onToggle(boolean expanded, boolean animate) {
+    private void onToggle(final boolean expanded, final boolean animate) {
         if (animate) {
             TransitionManager.beginDelayedTransition(viewGroup, new ChangeBounds());
         }

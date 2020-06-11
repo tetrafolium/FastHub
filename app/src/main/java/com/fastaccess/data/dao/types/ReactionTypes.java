@@ -25,7 +25,7 @@ public enum ReactionTypes {
     private int vId;
     private int secondaryViewId;
 
-    ReactionTypes(String content, int vId, int secondaryViewId) {
+    ReactionTypes(final String content, final int vId, final int secondaryViewId) {
         this.content = content;
         this.vId = vId;
         this.secondaryViewId = secondaryViewId;
@@ -49,7 +49,7 @@ public enum ReactionTypes {
         return vId;
     }
 
-    @Nullable public static ReactionTypes get(@IdRes int vId) {
+    @Nullable public static ReactionTypes get(final @IdRes int vId) {
         return Stream.of(values())
                .filter(value -> value.getvId() == vId || value.secondaryViewId == vId)
                .findFirst()

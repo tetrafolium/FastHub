@@ -33,11 +33,11 @@ public class MyPullRequestsPresenter extends BasePresenter<MyPullRequestsMvp.Vie
         setEnterprise(PrefGetter.isEnterprise());
     }
 
-    @Override public void onItemClick(int position, View v, PullRequest item) {
+    @Override public void onItemClick(final int position, final View v, final PullRequest item) {
         SchemeParser.launchUri(v.getContext(), item.getHtmlUrl());
     }
 
-    @Override public void onItemLongClick(int position, View v, PullRequest item) {
+    @Override public void onItemLongClick(final int position, final View v, final PullRequest item) {
         if (getView() != null) getView().onShowPopupDetails(item);
     }
 
@@ -45,7 +45,7 @@ public class MyPullRequestsPresenter extends BasePresenter<MyPullRequestsMvp.Vie
         return pullRequests;
     }
 
-    @Override public void onSetPullType(@NonNull MyIssuesType issuesType) {
+    @Override public void onSetPullType(final @NonNull MyIssuesType issuesType) {
         this.issuesType = issuesType;
     }
 
@@ -57,15 +57,15 @@ public class MyPullRequestsPresenter extends BasePresenter<MyPullRequestsMvp.Vie
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public boolean onCallApi(int page, @Nullable IssueState parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable IssueState parameter) {
         if (parameter == null) {
             throw new NullPointerException("Parameter is null");
         }
@@ -88,7 +88,7 @@ public class MyPullRequestsPresenter extends BasePresenter<MyPullRequestsMvp.Vie
         return true;
     }
 
-    @NonNull private String getUrl(@NonNull IssueState parameter) {
+    @NonNull private String getUrl(final @NonNull IssueState parameter) {
         switch (issuesType) {
         case CREATED:
             return RepoQueryProvider.getMyIssuesPullRequestQuery(login, parameter, true);

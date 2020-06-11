@@ -28,24 +28,24 @@ public class DiffLineSpan extends MetricAffectingSpan implements LineBackgroundS
     private final int color;
     public static Pattern HUNK_TITLE = Pattern.compile("^.*-([0-9]+)(?:,([0-9]+))? \\+([0-9]+)(?:,([0-9]+))?.*$");
 
-    private DiffLineSpan(int color) {
+    private DiffLineSpan(final int color) {
         this.color = color;
     }
 
-    @Override public void updateMeasureState(TextPaint paint) {
+    @Override public void updateMeasureState(final TextPaint paint) {
         apply(paint);
     }
 
-    @Override public void updateDrawState(TextPaint paint) {
+    @Override public void updateDrawState(final TextPaint paint) {
         apply(paint);
     }
 
-    private void apply(TextPaint paint) {
+    private void apply(final TextPaint paint) {
         paint.setTypeface(Typeface.MONOSPACE);
     }
 
-    @Override public void drawBackground(Canvas c, Paint p, int left, int right, int top, int baseline, int bottom, CharSequence text, int start,
-                                         int end, int lnum) {
+    @Override public void drawBackground(final Canvas c, final Paint p, final int left, final int right, final int top, final int baseline, final int bottom, final CharSequence text, final int start,
+                                         final int end, final int lnum) {
         Paint.Style style = p.getStyle();
         int color = p.getColor();
         p.setStyle(Paint.Style.FILL);
@@ -56,14 +56,14 @@ public class DiffLineSpan extends MetricAffectingSpan implements LineBackgroundS
         p.setStyle(style);
     }
 
-    @NonNull public static SpannableStringBuilder getSpannable(@Nullable String text, @ColorInt int patchAdditionColor,
-            @ColorInt int patchDeletionColor, @ColorInt int patchRefColor) {
+    @NonNull public static SpannableStringBuilder getSpannable(final @Nullable String text, final @ColorInt int patchAdditionColor,
+            final @ColorInt int patchDeletionColor, final @ColorInt int patchRefColor) {
         return getSpannable(text, patchAdditionColor, patchDeletionColor, patchRefColor, false);
     }
 
-    @NonNull public static SpannableStringBuilder getSpannable(@Nullable String text, @ColorInt int patchAdditionColor,
-            @ColorInt int patchDeletionColor, @ColorInt int patchRefColor,
-            boolean truncate) {
+    @NonNull public static SpannableStringBuilder getSpannable(final @Nullable String text, final @ColorInt int patchAdditionColor,
+            final @ColorInt int patchDeletionColor, final @ColorInt int patchRefColor,
+            final boolean truncate) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         if (!InputHelper.isEmpty(text)) {
             String[] split = text.split("\\r?\\n|\\r");

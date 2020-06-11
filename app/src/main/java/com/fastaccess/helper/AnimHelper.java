@@ -36,7 +36,7 @@ public class AnimHelper {
     private static final Interpolator LINEAR_OUT_SLOW_IN_INTERPOLATOR = new LinearOutSlowInInterpolator();
     private static final Interpolator interpolator = new LinearInterpolator();
 
-    @UiThread private static void animateVisibility(@Nullable final View view, final boolean show, int visibility) {
+    @UiThread private static void animateVisibility(@Nullable final View view, final boolean show, final int visibility) {
         if (view == null) {
             return;
         }
@@ -57,11 +57,11 @@ public class AnimHelper {
         animateVisibility(view, show, View.GONE);
     }
 
-    @UiThread private static void animateSafeVisibility(final boolean show, @NonNull final View view, int visibility) {
+    @UiThread private static void animateSafeVisibility(final boolean show, @NonNull final View view, final int visibility) {
         view.animate().cancel();
         ViewPropertyAnimator animator = view.animate().setDuration(200).alpha(show ? 1F : 0F).setInterpolator(new AccelerateInterpolator())
         .setListener(new AnimatorListenerAdapter() {
-            @Override public void onAnimationStart(Animator animation) {
+            @Override public void onAnimationStart(final Animator animation) {
                 super.onAnimationStart(animation);
                 if (show) {
                     view.setScaleX(1);
@@ -70,7 +70,7 @@ public class AnimHelper {
                 }
             }
 
-            @Override public void onAnimationEnd(@NonNull Animator animation) {
+            @Override public void onAnimationEnd(final @NonNull Animator animation) {
                 super.onAnimationEnd(animation);
                 if (!show) {
                     view.setVisibility(visibility);
@@ -84,7 +84,7 @@ public class AnimHelper {
         animator.scaleX(show ? 1 : 0).scaleY(show ? 1 : 0);
     }
 
-    @UiThread @NonNull private static List<ObjectAnimator> getBeats(@NonNull View view) {
+    @UiThread @NonNull private static List<ObjectAnimator> getBeats(final @NonNull View view) {
         ObjectAnimator[] animator = new ObjectAnimator[] {
             ObjectAnimator.ofFloat(view, "scaleY", 1, 1.1f, 1),
             ObjectAnimator.ofFloat(view, "scaleX", 1, 1.1f, 1)
@@ -92,7 +92,7 @@ public class AnimHelper {
         return Arrays.asList(animator);
     }
 
-    @UiThread public static void startBeatsAnimation(@NonNull View view) {
+    @UiThread public static void startBeatsAnimation(final @NonNull View view) {
         view.clearAnimation();
         if (view.getAnimation() != null) {
             view.getAnimation().cancel();
@@ -104,7 +104,7 @@ public class AnimHelper {
         }
     }
 
-    @UiThread public static void revealPopupWindow(@NonNull PopupWindow popupWindow, @NonNull View from) {
+    @UiThread public static void revealPopupWindow(final @NonNull PopupWindow popupWindow, final @NonNull View from) {
         Rect rect = ViewHelper.getLayoutPosition(from);
         int x = (int) rect.exactCenterX();
         int y = (int) rect.exactCenterY();
@@ -124,7 +124,7 @@ public class AnimHelper {
         }
     }
 
-    @UiThread public static void revealDialog(@NonNull Dialog dialog, int animDuration) {
+    @UiThread public static void revealDialog(final @NonNull Dialog dialog, final int animDuration) {
         if (dialog.getWindow() != null) {
             View view = dialog.getWindow().getDecorView();
             if (view != null) {
@@ -141,7 +141,7 @@ public class AnimHelper {
         }
     }
 
-    @UiThread public static void dismissDialog(@NonNull DialogFragment dialogFragment, int duration, AnimatorListenerAdapter listenerAdapter) {
+    @UiThread public static void dismissDialog(final @NonNull DialogFragment dialogFragment, final int duration, final AnimatorListenerAdapter listenerAdapter) {
         Dialog dialog = dialogFragment.getDialog();
         if (dialog != null) {
             if (dialog.getWindow() != null) {
@@ -167,8 +167,8 @@ public class AnimHelper {
         }
     }
 
-    @UiThread public static void mimicFabVisibility(boolean show, @NonNull View view,
-            @Nullable FloatingActionButton.OnVisibilityChangedListener listener) {
+    @UiThread public static void mimicFabVisibility(final boolean show, final @NonNull View view,
+            final @Nullable FloatingActionButton.OnVisibilityChangedListener listener) {
         if (show) {
             view.animate().cancel();
             if (ViewCompat.isLaidOut(view)) {

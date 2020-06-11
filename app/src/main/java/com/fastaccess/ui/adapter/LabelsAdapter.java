@@ -26,16 +26,16 @@ public class LabelsAdapter extends BaseRecyclerAdapter<LabelModel, LabelsViewHol
 
     @Nullable private OnSelectLabel onSelectLabel;
 
-    public LabelsAdapter(@NonNull List<LabelModel> eventsModels, @Nullable OnSelectLabel onSelectLabel) {
+    public LabelsAdapter(final @NonNull List<LabelModel> eventsModels, final @Nullable OnSelectLabel onSelectLabel) {
         super(eventsModels);
         this.onSelectLabel = onSelectLabel;
     }
 
-    @Override protected LabelsViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected LabelsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return LabelsViewHolder.newInstance(parent, onSelectLabel, this);
     }
 
-    @Override protected void onBindView(LabelsViewHolder holder, int position) {
+    @Override protected void onBindView(final LabelsViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

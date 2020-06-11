@@ -10,18 +10,18 @@ public class OnLoadMore<P> extends InfiniteScroll {
     private BaseMvp.PaginationListener<P> presenter;
     @Nullable private P parameter;
 
-    public OnLoadMore(BaseMvp.PaginationListener<P> presenter) {
+    public OnLoadMore(final BaseMvp.PaginationListener<P> presenter) {
         this(presenter, null);
     }
 
-    public OnLoadMore(BaseMvp.PaginationListener<P> presenter, @Nullable P parameter) {
+    public OnLoadMore(final BaseMvp.PaginationListener<P> presenter, final @Nullable P parameter) {
         super();
         this.presenter = presenter;
         this.parameter = parameter;
     }
 
 
-    public void setParameter(@Nullable P parameter) {
+    public void setParameter(final @Nullable P parameter) {
         this.parameter = parameter;
     }
 
@@ -29,7 +29,7 @@ public class OnLoadMore<P> extends InfiniteScroll {
         return parameter;
     }
 
-    @Override public boolean onLoadMore(int page, int totalItemsCount) {
+    @Override public boolean onLoadMore(final int page, final int totalItemsCount) {
         if (presenter != null) {
             presenter.setPreviousTotal(totalItemsCount);
             return presenter.onCallApi(page + 1, parameter);

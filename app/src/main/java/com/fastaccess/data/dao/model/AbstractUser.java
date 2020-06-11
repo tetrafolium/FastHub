@@ -71,7 +71,7 @@ public abstract class AbstractUser implements Parcelable {
     String description;
     @Transient boolean hasOrganizationProjects;
 
-    public void save(User entity) {
+    public void save(final User entity) {
         if (getUser(entity.getId()) != null) {
             App.getInstance().getDataStore().toBlocking().update(entity);
         } else {
@@ -79,7 +79,7 @@ public abstract class AbstractUser implements Parcelable {
         }
     }
 
-    @Nullable public static User getUser(String login) {
+    @Nullable public static User getUser(final String login) {
         return App.getInstance().getDataStore()
                .select(User.class)
                .where(LOGIN.eq(login))
@@ -87,7 +87,7 @@ public abstract class AbstractUser implements Parcelable {
                .firstOrNull();
     }
 
-    @Nullable public static User getUser(long id) {
+    @Nullable public static User getUser(final long id) {
         return App.getInstance().getDataStore()
                .select(User.class)
                .where(ID.eq(id))
@@ -95,7 +95,7 @@ public abstract class AbstractUser implements Parcelable {
                .firstOrNull();
     }
 
-    public static Disposable saveUserFollowerList(@NonNull List<User> models, @NonNull String followingName) {
+    public static Disposable saveUserFollowerList(final @NonNull List<User> models, final @NonNull String followingName) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 Login login = Login.getUser();
@@ -125,10 +125,10 @@ public abstract class AbstractUser implements Parcelable {
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Disposable saveUserFollowingList(@NonNull List<User> models, @NonNull String followerName) {
+    public static Disposable saveUserFollowingList(final @NonNull List<User> models, final @NonNull String followerName) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 Login login = Login.getUser();
@@ -158,10 +158,10 @@ public abstract class AbstractUser implements Parcelable {
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    @NonNull public static Single<List<User>> getUserFollowerList(@NonNull String following) {
+    @NonNull public static Single<List<User>> getUserFollowerList(final @NonNull String following) {
         return App.getInstance().getDataStore()
                .select(User.class)
                .where(FOLLOWING_NAME.eq(following))
@@ -170,7 +170,7 @@ public abstract class AbstractUser implements Parcelable {
                .toList();
     }
 
-    @NonNull public static Single<List<User>> getUserFollowingList(@NonNull String follower) {
+    @NonNull public static Single<List<User>> getUserFollowingList(final @NonNull String follower) {
         return App.getInstance().getDataStore()
                .select(User.class)
                .where(FOLLOWER_NAME.eq(follower))
@@ -187,7 +187,7 @@ public abstract class AbstractUser implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.login);
         dest.writeString(this.avatarUrl);
@@ -226,7 +226,7 @@ public abstract class AbstractUser implements Parcelable {
         dest.writeString(this.description);
     }
 
-    protected AbstractUser(Parcel in) {
+    protected AbstractUser(final Parcel in) {
         this.id = in.readLong();
         this.login = in.readString();
         this.avatarUrl = in.readString();
@@ -269,11 +269,11 @@ public abstract class AbstractUser implements Parcelable {
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
-        @Override public User createFromParcel(Parcel source) {
+        @Override public User createFromParcel(final Parcel source) {
             return new User(source);
         }
 
-        @Override public User[] newArray(int size) {
+        @Override public User[] newArray(final int size) {
             return new User[size];
         }
     };

@@ -45,7 +45,7 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
     private RepoPullRequestPagerMvp.View pagerCallback;
     private RepoPagerMvp.TabsBadgeListener tabsBadgeListener;
 
-    public static RepoPullRequestFragment newInstance(@NonNull String repoId, @NonNull String login, @NonNull IssueState issueState) {
+    public static RepoPullRequestFragment newInstance(final @NonNull String repoId, final @NonNull String login, final @NonNull IssueState issueState) {
         RepoPullRequestFragment view = new RepoPullRequestFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.ID, repoId)
@@ -55,7 +55,7 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
         return view;
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof RepoPullRequestPagerMvp.View) {
             pagerCallback = (RepoPullRequestPagerMvp.View) getParentFragment();
@@ -74,7 +74,7 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
         super.onDetach();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<PullRequest> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<PullRequest> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -91,7 +91,7 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, therefore, issues can't be proceeded.");
         }
@@ -113,7 +113,7 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
         fastScroller.attachRecyclerView(recycler);
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == RepoPullRequestMvp.PULL_REQUEST_REQUEST_CODE) {
@@ -135,17 +135,17 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
         stateLayout.hideProgress();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -153,7 +153,7 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
     @NonNull @Override public OnLoadMore<IssueState> getLoadMore() {
         if (onLoadMore == null) {
             onLoadMore = new OnLoadMore<IssueState>(getPresenter()) {
-                @Override public void onScrolled(boolean isUp) {
+                @Override public void onScrolled(final boolean isUp) {
                     super.onScrolled(isUp);
                     if (pagerCallback != null) pagerCallback.onScrolled(isUp);
                 }
@@ -163,17 +163,17 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
         return onLoadMore;
     }
 
-    @Override public void onUpdateCount(int totalCount) {
+    @Override public void onUpdateCount(final int totalCount) {
         if (tabsBadgeListener != null) tabsBadgeListener.onSetBadge(getPresenter().getIssueState() == IssueState.open ? 0 : 1, totalCount);
     }
 
-    @Override public void onOpenPullRequest(@NonNull PullsIssuesParser parser) {
+    @Override public void onOpenPullRequest(final @NonNull PullsIssuesParser parser) {
         Intent intent = PullRequestPagerActivity.createIntent(getContext(), parser.getRepoId(), parser.getLogin(),
                         parser.getNumber(), false, isEnterprise());
         startActivityForResult(intent, RepoPullRequestMvp.PULL_REQUEST_REQUEST_CODE);
     }
 
-    @Override public void onShowPullRequestPopup(@NonNull PullRequest item) {
+    @Override public void onShowPullRequestPopup(final @NonNull PullRequest item) {
         IssuePopupFragment.showPopup(getChildFragmentManager(), item);
     }
 
@@ -181,11 +181,11 @@ public class RepoPullRequestFragment extends BaseFragment<RepoPullRequestMvp.Vie
         getPresenter().onCallApi(1, getIssueState());
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

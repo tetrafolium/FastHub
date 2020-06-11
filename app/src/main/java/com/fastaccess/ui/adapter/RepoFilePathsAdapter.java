@@ -18,15 +18,15 @@ public class RepoFilePathsAdapter extends BaseRecyclerAdapter<RepoFile, RepoFile
     .OnItemClickListener<RepoFile>> {
 
 
-    public RepoFilePathsAdapter(@NonNull ArrayList<RepoFile> eventsModels) {
+    public RepoFilePathsAdapter(final @NonNull ArrayList<RepoFile> eventsModels) {
         super(eventsModels);
     }
 
-    @Override protected RepoFilePathsViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected RepoFilePathsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return RepoFilePathsViewHolder.newInstance(parent, this);
     }
 
-    @Override protected void onBindView(RepoFilePathsViewHolder holder, int position) {
+    @Override protected void onBindView(final RepoFilePathsViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

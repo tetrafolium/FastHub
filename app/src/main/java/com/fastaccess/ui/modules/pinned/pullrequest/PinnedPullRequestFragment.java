@@ -41,14 +41,14 @@ public class PinnedPullRequestFragment extends BaseFragment<PinnedPullRequestMvp
         return new PinnedPullRequestFragment();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<PullRequest> items) {
+    @Override public void onNotifyAdapter(final @Nullable List<PullRequest> items) {
         refresh.setRefreshing(false);
         stateLayout.hideProgress();
         if (items != null) adapter.insertItems(items);
         else adapter.clear();
     }
 
-    @Override public void onDeletePinnedPullRequest(long id, int position) {
+    @Override public void onDeletePinnedPullRequest(final long id, final int position) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
                                       Bundler.start().put(BundleConstant.YES_NO_EXTRA, true)
                                       .put(BundleConstant.EXTRA, position)
@@ -61,7 +61,7 @@ public class PinnedPullRequestFragment extends BaseFragment<PinnedPullRequestMvp
         return R.layout.small_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         adapter = new PullRequestAdapter(getPresenter().getPinnedPullRequest(), true, true);
         adapter.setListener(getPresenter());
         stateLayout.setEmptyText(getString((R.string.no_pull_requests)));
@@ -80,7 +80,7 @@ public class PinnedPullRequestFragment extends BaseFragment<PinnedPullRequestMvp
         return new PinnedPullRequestPresenter();
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (bundle != null && isOk) {
             long id = bundle.getLong(BundleConstant.ID);

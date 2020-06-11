@@ -56,7 +56,7 @@ public class PayloadModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.action);
         dest.writeParcelable(this.forkee, flags);
         dest.writeParcelable(this.issue, flags);
@@ -83,7 +83,7 @@ public class PayloadModel implements Parcelable {
         dest.writeParcelable(this.invitation, flags);
     }
 
-    protected PayloadModel(Parcel in) {
+    protected PayloadModel(final Parcel in) {
         this.action = in.readString();
         this.forkee = in.readParcelable(Repo.class.getClassLoader());
         this.issue = in.readParcelable(Issue.class.getClassLoader());
@@ -111,11 +111,11 @@ public class PayloadModel implements Parcelable {
     }
 
     public static final Creator<PayloadModel> CREATOR = new Creator<PayloadModel>() {
-        @Override public PayloadModel createFromParcel(Parcel source) {
+        @Override public PayloadModel createFromParcel(final Parcel source) {
             return new PayloadModel(source);
         }
 
-        @Override public PayloadModel[] newArray(int size) {
+        @Override public PayloadModel[] newArray(final int size) {
             return new PayloadModel[size];
         }
     };

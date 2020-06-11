@@ -35,7 +35,7 @@ public class JsoupProvider {
         return okHttpClient;
     }
 
-    public static ScrapService getTrendingService(@NonNull String url) {
+    public static ScrapService getTrendingService(final @NonNull String url) {
         return new Retrofit.Builder()
                .baseUrl(url)
                .client(provideOkHttpClient())

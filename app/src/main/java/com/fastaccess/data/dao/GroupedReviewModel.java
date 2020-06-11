@@ -19,13 +19,13 @@ public class GroupedReviewModel implements Parcelable {
     private long id;
     private List<ReviewCommentModel> comments;
 
-    public GroupedReviewModel() {}
+    public GroupedReviewModel() { }
 
     public int getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(final int position) {
         this.position = position;
     }
 
@@ -33,7 +33,7 @@ public class GroupedReviewModel implements Parcelable {
         return diffText;
     }
 
-    public void setDiffText(String diffText) {
+    public void setDiffText(final String diffText) {
         this.diffText = diffText;
     }
 
@@ -41,7 +41,7 @@ public class GroupedReviewModel implements Parcelable {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(final Date date) {
         this.date = date;
     }
 
@@ -49,7 +49,7 @@ public class GroupedReviewModel implements Parcelable {
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(final String path) {
         this.path = path;
     }
 
@@ -57,7 +57,7 @@ public class GroupedReviewModel implements Parcelable {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -65,7 +65,7 @@ public class GroupedReviewModel implements Parcelable {
         return comments;
     }
 
-    public void setComments(List<ReviewCommentModel> comments) {
+    public void setComments(final List<ReviewCommentModel> comments) {
         this.comments = comments;
     }
 
@@ -73,7 +73,7 @@ public class GroupedReviewModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(this.position);
         dest.writeString(this.diffText);
         dest.writeLong(this.date != null ? this.date.getTime() : -1);
@@ -82,7 +82,7 @@ public class GroupedReviewModel implements Parcelable {
         dest.writeTypedList(this.comments);
     }
 
-    private GroupedReviewModel(Parcel in) {
+    private GroupedReviewModel(final Parcel in) {
         this.position = in.readInt();
         this.diffText = in.readString();
         long tmpDate = in.readLong();
@@ -93,11 +93,11 @@ public class GroupedReviewModel implements Parcelable {
     }
 
     public static final Creator<GroupedReviewModel> CREATOR = new Creator<GroupedReviewModel>() {
-        @Override public GroupedReviewModel createFromParcel(Parcel source) {
+        @Override public GroupedReviewModel createFromParcel(final Parcel source) {
             return new GroupedReviewModel(source);
         }
 
-        @Override public GroupedReviewModel[] newArray(int size) {
+        @Override public GroupedReviewModel[] newArray(final int size) {
             return new GroupedReviewModel[size];
         }
     };

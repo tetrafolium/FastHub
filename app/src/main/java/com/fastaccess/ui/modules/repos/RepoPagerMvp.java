@@ -34,7 +34,7 @@ public interface RepoPagerMvp {
         PROJECTS,
         PROFILE
     })
-    @Retention(RetentionPolicy.SOURCE) @interface RepoNavigationType {}
+    @Retention(RetentionPolicy.SOURCE) @interface RepoNavigationType { }
 
 
     interface View extends BaseMvp.FAView, FilterAddChooserListener {

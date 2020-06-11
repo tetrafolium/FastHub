@@ -29,7 +29,7 @@ public interface RepoMiscMVp {
         FORKS,
         STARS
     })
-    @Retention(RetentionPolicy.SOURCE) @interface MiscType {}
+    @Retention(RetentionPolicy.SOURCE) @interface MiscType { }
 
 
     interface View extends BaseMvp.FAView {

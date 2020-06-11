@@ -30,7 +30,7 @@ public class MilestoneDialogFragment extends BaseDialogFragment implements Miles
     private PullRequestPagerMvp.View pullRequestCallback;
     private MilestoneMvp.OnMilestoneSelected milestoneCallback;
 
-    public static MilestoneDialogFragment newInstance(@NonNull String login, @NonNull String repo) {
+    public static MilestoneDialogFragment newInstance(final @NonNull String login, final @NonNull String repo) {
         MilestoneDialogFragment view = new MilestoneDialogFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.EXTRA, login)
@@ -39,7 +39,7 @@ public class MilestoneDialogFragment extends BaseDialogFragment implements Miles
         return view;
     }
 
-    @Override public void onAttach(@NotNull Context context) {
+    @Override public void onAttach(final @NotNull Context context) {
         super.onAttach(context);
         if (context instanceof IssuePagerMvp.View) {
             issueCallback = (IssuePagerMvp.View) context;
@@ -71,7 +71,7 @@ public class MilestoneDialogFragment extends BaseDialogFragment implements Miles
         return R.layout.single_container_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             Bundle bundle = getArguments();
             com.fastaccess.ui.modules.repos.extras.milestone.MilestoneDialogFragment milestoneView = new com.fastaccess.ui.modules.repos.extras
@@ -84,7 +84,7 @@ public class MilestoneDialogFragment extends BaseDialogFragment implements Miles
         }
     }
 
-    @Override public void onMilestoneSelected(@NonNull MilestoneModel milestoneModel) {
+    @Override public void onMilestoneSelected(final @NonNull MilestoneModel milestoneModel) {
         if (issueCallback != null) issueCallback.onMileStoneSelected(milestoneModel);
         if (pullRequestCallback != null) pullRequestCallback.onMileStoneSelected(milestoneModel);
         if (milestoneCallback != null) milestoneCallback.onMilestoneSelected(milestoneModel);

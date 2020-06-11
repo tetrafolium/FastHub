@@ -61,7 +61,7 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
     @Column(name = "user_column") @Convert(UserConverter.class) User user;
     @Convert(UserConverter.class) User owner;
 
-    public static Disposable save(@NonNull List<Gist> models, @NonNull String ownerName) {
+    public static Disposable save(final @NonNull List<Gist> models, final @NonNull String ownerName) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 Login login = Login.getUser();
@@ -93,10 +93,10 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    @NonNull public static Single<List<Gist>> getMyGists(@NonNull String ownerName) {
+    @NonNull public static Single<List<Gist>> getMyGists(final @NonNull String ownerName) {
         return App.getInstance()
                .getDataStore()
                .select(Gist.class)
@@ -116,7 +116,7 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
                .toList();
     }
 
-    public static Observable<Gist> getGist(@NonNull String gistId) {
+    public static Observable<Gist> getGist(final @NonNull String gistId) {
         return App.getInstance()
                .getDataStore()
                .select(Gist.class)
@@ -125,7 +125,7 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
                .observable();
     }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractGist that = (AbstractGist) o;
@@ -145,11 +145,11 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
         return new ArrayList<>();
     }
 
-    @NonNull public SpannableBuilder getDisplayTitle(boolean isFromProfile) {
+    @NonNull public SpannableBuilder getDisplayTitle(final boolean isFromProfile) {
         return getDisplayTitle(isFromProfile, false);
     }
 
-    @NonNull public SpannableBuilder getDisplayTitle(boolean isFromProfile, boolean gistView) {
+    @NonNull public SpannableBuilder getDisplayTitle(final boolean isFromProfile, final boolean gistView) {
         SpannableBuilder spannableBuilder = SpannableBuilder.builder();
         boolean addDescription = true;
         if (!isFromProfile) {
@@ -205,7 +205,7 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeString(this.forksUrl);
@@ -227,7 +227,7 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
         dest.writeParcelable(this.owner, flags);
     }
 
-    protected AbstractGist(Parcel in) {
+    protected AbstractGist(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         this.forksUrl = in.readString();
@@ -252,11 +252,11 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
     }
 
     public static final Creator<Gist> CREATOR = new Creator<Gist>() {
-        @Override public Gist createFromParcel(Parcel source) {
+        @Override public Gist createFromParcel(final Parcel source) {
             return new Gist(source);
         }
 
-        @Override public Gist[] newArray(int size) {
+        @Override public Gist[] newArray(final int size) {
             return new Gist[size];
         }
     };

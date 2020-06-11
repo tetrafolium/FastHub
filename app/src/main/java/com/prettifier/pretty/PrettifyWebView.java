@@ -40,34 +40,34 @@ public class PrettifyWebView extends NestedWebView {
         void onScrollChanged(boolean reachedTop, int scroll);
     }
 
-    public PrettifyWebView(Context context) {
+    public PrettifyWebView(final Context context) {
         super(context);
         if (isInEditMode()) return;
         initView(null);
     }
 
-    public PrettifyWebView(Context context, AttributeSet attrs) {
+    public PrettifyWebView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         initView(attrs);
     }
 
-    public PrettifyWebView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PrettifyWebView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(attrs);
     }
 
-    @Override public boolean onInterceptTouchEvent(MotionEvent p) {
+    @Override public boolean onInterceptTouchEvent(final MotionEvent p) {
         return true;
     }
 
-    @SuppressLint("ClickableViewAccessibility") @Override public boolean onTouchEvent(MotionEvent event) {
+    @SuppressLint("ClickableViewAccessibility") @Override public boolean onTouchEvent(final MotionEvent event) {
         if (getParent() != null) {
             getParent().requestDisallowInterceptTouchEvent(interceptTouch);
         }
         return super.onTouchEvent(event);
     }
 
-    @SuppressLint("SetJavaScriptEnabled") private void initView(@Nullable AttributeSet attrs) {
+    @SuppressLint("SetJavaScriptEnabled") private void initView(final @Nullable AttributeSet attrs) {
         if (isInEditMode()) return;
         if (attrs != null) {
             TypedArray tp = getContext().obtainStyledAttributes(attrs, R.styleable.PrettifyWebView);
@@ -102,7 +102,7 @@ public class PrettifyWebView extends NestedWebView {
         });
     }
 
-    @Override protected void onScrollChanged(int l, int t, int oldl, int oldt) {
+    @Override protected void onScrollChanged(final int l, final int t, final int oldl, final int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
         if (onContentChangedListener != null) {
             onContentChangedListener.onScrollChanged(t == 0, t);
@@ -114,16 +114,16 @@ public class PrettifyWebView extends NestedWebView {
         super.onDetachedFromWindow();
     }
 
-    private boolean hitLinkResult(WebView.HitTestResult result) {
-        return result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE || result.getType() == HitTestResult.IMAGE_TYPE ||
-               result.getType() == HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
+    private boolean hitLinkResult(final WebView.HitTestResult result) {
+        return result.getType() == WebView.HitTestResult.SRC_ANCHOR_TYPE || result.getType() == HitTestResult.IMAGE_TYPE
+               || result.getType() == HitTestResult.SRC_IMAGE_ANCHOR_TYPE;
     }
 
-    public void setOnContentChangedListener(@NonNull OnContentChangedListener onContentChangedListener) {
+    public void setOnContentChangedListener(final @NonNull OnContentChangedListener onContentChangedListener) {
         this.onContentChangedListener = onContentChangedListener;
     }
 
-    public void setThemeSource(@NonNull String source, @Nullable String theme) {
+    public void setThemeSource(final @NonNull String source, final @Nullable String theme) {
         if (!InputHelper.isEmpty(source)) {
             WebSettings settings = getSettings();
             settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
@@ -136,7 +136,7 @@ public class PrettifyWebView extends NestedWebView {
         }
     }
 
-    public void setSource(@NonNull String source, boolean wrap) {
+    public void setSource(final @NonNull String source, final boolean wrap) {
         if (!InputHelper.isEmpty(source)) {
             WebSettings settings = getSettings();
             settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.TEXT_AUTOSIZING);
@@ -149,11 +149,11 @@ public class PrettifyWebView extends NestedWebView {
         }
     }
 
-    private void loadCode(String page) {
+    private void loadCode(final String page) {
         post(() -> loadDataWithBaseURL("file:///android_asset/highlight/", page, "text/html", "utf-8", null));
     }
 
-    public void scrollToLine(@NonNull String url) {
+    public void scrollToLine(final @NonNull String url) {
         String[] lineNo = getLineNo(url);
         if (lineNo != null && lineNo.length > 1) {
             loadUrl("javascript:scrollToLineNumber('" + lineNo[0] + "', '" + lineNo[1] + "')");
@@ -162,7 +162,7 @@ public class PrettifyWebView extends NestedWebView {
         }
     }
 
-    public static String[] getLineNo(@Nullable String url) {
+    public static String[] getLineNo(final @Nullable String url) {
         String lineNo[] = null;
         if (url != null) {
             try {
@@ -171,37 +171,37 @@ public class PrettifyWebView extends NestedWebView {
                 if (lineNumber != null) {
                     lineNo = lineNumber.replaceAll("L", "").split("-");
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) { }
         }
         return lineNo;
     }
 
-    public void setGithubContentWithReplace(@NonNull String source, @Nullable String baseUrl, boolean replace) {
+    public void setGithubContentWithReplace(final @NonNull String source, final @Nullable String baseUrl, final boolean replace) {
         setGithubContent(source, baseUrl, false);
         addJavascriptInterface(new MarkDownInterceptorInterface(this, false), "Android");
         String page = GithubHelper.generateContent(getContext(), source, baseUrl, AppHelper.isNightMode(getResources()), false, replace);
         post(() -> loadDataWithBaseURL("file:///android_asset/md/", page, "text/html", "utf-8", null));
     }
 
-    public void setGithubContent(@NonNull String source, @Nullable String baseUrl, boolean toggleNestScrolling) {
+    public void setGithubContent(final @NonNull String source, final @Nullable String baseUrl, final boolean toggleNestScrolling) {
         setGithubContent(source, baseUrl, toggleNestScrolling, true);
     }
 
-    public void setWikiContent(@NonNull String source, @Nullable String baseUrl) {
+    public void setWikiContent(final @NonNull String source, final @Nullable String baseUrl) {
         addJavascriptInterface(new MarkDownInterceptorInterface(this, true), "Android");
         String page = GithubHelper.generateContent(getContext(), source, baseUrl, AppHelper.isNightMode(getResources()), AppHelper.isNightMode
                       (getResources()), true);
         post(() -> loadDataWithBaseURL("file:///android_asset/md/", page, "text/html", "utf-8", null));
     }
 
-    public void setGithubContent(@NonNull String source, @Nullable String baseUrl, boolean toggleNestScrolling, boolean enableBridge) {
+    public void setGithubContent(final @NonNull String source, final @Nullable String baseUrl, final boolean toggleNestScrolling, final boolean enableBridge) {
         if (enableBridge) addJavascriptInterface(new MarkDownInterceptorInterface(this, toggleNestScrolling), "Android");
         String page = GithubHelper.generateContent(getContext(), source, baseUrl, AppHelper.isNightMode(getResources()),
                       AppHelper.isNightMode(getResources()), false);
         post(() -> loadDataWithBaseURL("file:///android_asset/md/", page, "text/html", "utf-8", null));
     }
 
-    public void loadImage(@NonNull String url, boolean isSvg) {
+    public void loadImage(final @NonNull String url, final boolean isSvg) {
         WebSettings settings = getSettings();
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
@@ -212,25 +212,25 @@ public class PrettifyWebView extends NestedWebView {
         if (isSvg) {
             html = url;
         } else {
-            html = "<html><head><style>img{display: inline; height: auto; max-width: 100%;}</style></head><body>" +
-                   "<img src=\"" + url + "\"/></body></html>";
+            html = "<html><head><style>img{display: inline; height: auto; max-width: 100%;}</style></head><body>"
+                   + "<img src=\"" + url + "\"/></body></html>";
         }
         Logger.e(html);
         loadData(html, "text/html", null);
     }
 
-    public void setInterceptTouch(boolean interceptTouch) {
+    public void setInterceptTouch(final boolean interceptTouch) {
         this.interceptTouch = interceptTouch;
     }
 
-    public void setEnableNestedScrolling(boolean enableNestedScrolling) {
+    public void setEnableNestedScrolling(final boolean enableNestedScrolling) {
         if (this.enableNestedScrolling != enableNestedScrolling) {
             setNestedScrollingEnabled(enableNestedScrolling);
             this.enableNestedScrolling = enableNestedScrolling;
         }
     }
 
-    private void startActivity(@Nullable Uri url) {
+    private void startActivity(final @Nullable Uri url) {
         if (url == null) return;
         if (MarkDownProvider.isImage(url.toString())) {
             CodeViewerActivity.startActivity(getContext(), url.toString(), url.toString());
@@ -244,7 +244,7 @@ public class PrettifyWebView extends NestedWebView {
     }
 
     private class ChromeClient extends WebChromeClient {
-        @Override public void onProgressChanged(WebView view, int progress) {
+        @Override public void onProgressChanged(final WebView view, final int progress) {
             super.onProgressChanged(view, progress);
             if (onContentChangedListener != null) {
                 onContentChangedListener.onContentChanged(progress);
@@ -253,14 +253,14 @@ public class PrettifyWebView extends NestedWebView {
     }
 
     private class WebClient extends WebViewClient {
-        @Override public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+        @Override public boolean shouldOverrideUrlLoading(final WebView view, final WebResourceRequest request) {
             startActivity(request.getUrl());
             return true;
         }
     }
 
     private class WebClientCompat extends WebViewClient {
-        @SuppressWarnings("deprecation") @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        @SuppressWarnings("deprecation") @Override public boolean shouldOverrideUrlLoading(final WebView view, final String url) {
             startActivity(Uri.parse(url));
             return true;
         }

@@ -18,15 +18,15 @@ public class RepoFilesAdapter extends BaseRecyclerAdapter<RepoFile, RepoFilesVie
     .OnItemClickListener<RepoFile>> {
 
 
-    public RepoFilesAdapter(@NonNull ArrayList<RepoFile> eventsModels) {
+    public RepoFilesAdapter(final @NonNull ArrayList<RepoFile> eventsModels) {
         super(eventsModels);
     }
 
-    @Override protected RepoFilesViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected RepoFilesViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return RepoFilesViewHolder.newInstance(parent, this);
     }
 
-    @Override protected void onBindView(RepoFilesViewHolder holder, int position) {
+    @Override protected void onBindView(final RepoFilesViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

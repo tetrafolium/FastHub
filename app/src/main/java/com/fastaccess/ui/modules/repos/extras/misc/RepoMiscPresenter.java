@@ -32,7 +32,7 @@ public class RepoMiscPresenter extends BasePresenter<RepoMiscMVp.View> implement
     @com.evernote.android.state.State String repo;
     @com.evernote.android.state.State @RepoMiscMVp.MiscType int type;
 
-    RepoMiscPresenter(@Nullable Bundle arguments) {
+    RepoMiscPresenter(final @Nullable Bundle arguments) {
         if (arguments == null) return;
         if (InputHelper.isEmpty(owner) || InputHelper.isEmpty(repo)) {
             owner = arguments.getString(BundleConstant.EXTRA);
@@ -58,15 +58,15 @@ public class RepoMiscPresenter extends BasePresenter<RepoMiscMVp.View> implement
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public boolean onCallApi(int page, @RepoMiscMVp.MiscType @Nullable Integer parameter) {
+    @Override public boolean onCallApi(final int page, final @RepoMiscMVp.MiscType @Nullable Integer parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());
@@ -97,7 +97,7 @@ public class RepoMiscPresenter extends BasePresenter<RepoMiscMVp.View> implement
         return false;
     }
 
-    private void onResponse(int page, @Nullable Pageable<User> response) {
+    private void onResponse(final int page, final @Nullable Pageable<User> response) {
         if (response != null) {
             lastPage = response.getLast();
             sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
@@ -106,7 +106,7 @@ public class RepoMiscPresenter extends BasePresenter<RepoMiscMVp.View> implement
         }
     }
 
-    @Override public void onItemClick(int position, View v, User item) {}
+    @Override public void onItemClick(final int position, final View v, final User item) { }
 
-    @Override public void onItemLongClick(int position, View v, User item) {}
+    @Override public void onItemLongClick(final int position, final View v, final User item) { }
 }

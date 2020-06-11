@@ -46,7 +46,7 @@ public class FilterIssueFragment extends BaseFragment<FilterIssuesMvp.View, Filt
 
     private FilterIssuesActivityMvp.View callback;
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         callback = (FilterIssuesActivityMvp.View) context;
     }
@@ -62,7 +62,7 @@ public class FilterIssueFragment extends BaseFragment<FilterIssuesMvp.View, Filt
         }
     }
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         onRefresh();
     }
 
@@ -72,7 +72,7 @@ public class FilterIssueFragment extends BaseFragment<FilterIssuesMvp.View, Filt
         adapter.notifyDataSetChanged();
     }
 
-    @Override public void onSearch(@NonNull String query, boolean isOpen, boolean isIssue, boolean isEnterprise) {
+    @Override public void onSearch(final @NonNull String query, final boolean isOpen, final boolean isIssue, final boolean isEnterprise) {
         getPresenter().setEnterprise(isEnterprise);
         this.query = query;
         this.issueState = isOpen ? IssueState.open : IssueState.closed;
@@ -81,7 +81,7 @@ public class FilterIssueFragment extends BaseFragment<FilterIssuesMvp.View, Filt
         onRefresh();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Issue> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Issue> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -99,18 +99,18 @@ public class FilterIssueFragment extends BaseFragment<FilterIssuesMvp.View, Filt
         stateLayout.hideProgress();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -123,13 +123,13 @@ public class FilterIssueFragment extends BaseFragment<FilterIssuesMvp.View, Filt
         return onLoadMore;
     }
 
-    @Override public void onSetCount(int totalCount) {
+    @Override public void onSetCount(final int totalCount) {
         if (callback != null) {
             callback.onSetCount(totalCount, issueState == IssueState.open);
         }
     }
 
-    @Override public void onItemClicked(@NonNull Issue item) {
+    @Override public void onItemClicked(final @NonNull Issue item) {
         SchemeParser.launchUri(getContext(), item.getHtmlUrl());
     }
 
@@ -137,7 +137,7 @@ public class FilterIssueFragment extends BaseFragment<FilterIssuesMvp.View, Filt
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         stateLayout.setEmptyText(R.string.no_search_results);
         recycler.setEmptyView(stateLayout, refresh);
         stateLayout.setOnReloadListener(this);
@@ -160,7 +160,7 @@ public class FilterIssueFragment extends BaseFragment<FilterIssuesMvp.View, Filt
         return new FilterIssuePresenter();
     }
 
-    @Override public void onShowPopupDetails(@NonNull Issue item) {
+    @Override public void onShowPopupDetails(final @NonNull Issue item) {
         IssuePopupFragment.showPopup(getChildFragmentManager(), item);
     }
 

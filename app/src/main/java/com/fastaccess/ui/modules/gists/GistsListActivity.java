@@ -36,7 +36,7 @@ public class GistsListActivity extends BaseActivity {
     @BindView(R.id.gistsContainer) ViewPagerView pager;
     @BindView(R.id.fab) FloatingActionButton fab;
 
-    public static void startActivity(@NonNull Context context) {
+    public static void startActivity(final @NonNull Context context) {
         context.startActivity(new Intent(context, GistsListActivity.class));
     }
 
@@ -60,21 +60,21 @@ public class GistsListActivity extends BaseActivity {
         return new BasePresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle(R.string.gists);
         setTaskName(getString(R.string.gists));
         setupTabs();
         fab.show();
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onScrollTop(tab.getPosition());
             }
         });
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {
@@ -86,7 +86,7 @@ public class GistsListActivity extends BaseActivity {
         ActivityHelper.startReveal(this, new Intent(this, CreateGistActivity.class), fab, BundleConstant.REQUEST_CODE);
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == BundleConstant.REQUEST_CODE) {
             if (pager != null && pager.getAdapter() != null) {
@@ -95,7 +95,7 @@ public class GistsListActivity extends BaseActivity {
         }
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             startActivity(new Intent(this, MainActivity.class));
             finish();

@@ -29,7 +29,7 @@ public class ProjectsModel implements Parcelable {
         return ownerUrl;
     }
 
-    public void setOwnerUrl(String ownerUrl) {
+    public void setOwnerUrl(final String ownerUrl) {
         this.ownerUrl = ownerUrl;
     }
 
@@ -37,7 +37,7 @@ public class ProjectsModel implements Parcelable {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
@@ -45,7 +45,7 @@ public class ProjectsModel implements Parcelable {
         return htmlUrl;
     }
 
-    public void setHtmlUrl(String htmlUrl) {
+    public void setHtmlUrl(final String htmlUrl) {
         this.htmlUrl = htmlUrl;
     }
 
@@ -53,7 +53,7 @@ public class ProjectsModel implements Parcelable {
         return columnsUrl;
     }
 
-    public void setColumnsUrl(String columnsUrl) {
+    public void setColumnsUrl(final String columnsUrl) {
         this.columnsUrl = columnsUrl;
     }
 
@@ -61,7 +61,7 @@ public class ProjectsModel implements Parcelable {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -69,7 +69,7 @@ public class ProjectsModel implements Parcelable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -77,7 +77,7 @@ public class ProjectsModel implements Parcelable {
         return body;
     }
 
-    public void setBody(String body) {
+    public void setBody(final String body) {
         this.body = body;
     }
 
@@ -85,7 +85,7 @@ public class ProjectsModel implements Parcelable {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(final int number) {
         this.number = number;
     }
 
@@ -93,7 +93,7 @@ public class ProjectsModel implements Parcelable {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(final String state) {
         this.state = state;
     }
 
@@ -101,7 +101,7 @@ public class ProjectsModel implements Parcelable {
         return creator;
     }
 
-    public void setCreator(User creator) {
+    public void setCreator(final User creator) {
         this.creator = creator;
     }
 
@@ -109,7 +109,7 @@ public class ProjectsModel implements Parcelable {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(final Date createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -117,7 +117,7 @@ public class ProjectsModel implements Parcelable {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(final Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -125,7 +125,7 @@ public class ProjectsModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.ownerUrl);
         dest.writeString(this.url);
         dest.writeString(this.htmlUrl);
@@ -140,9 +140,9 @@ public class ProjectsModel implements Parcelable {
         dest.writeLong(this.updatedAt != null ? this.updatedAt.getTime() : -1);
     }
 
-    public ProjectsModel() {}
+    public ProjectsModel() { }
 
-    protected ProjectsModel(Parcel in) {
+    protected ProjectsModel(final Parcel in) {
         this.ownerUrl = in.readString();
         this.url = in.readString();
         this.htmlUrl = in.readString();
@@ -160,11 +160,11 @@ public class ProjectsModel implements Parcelable {
     }
 
     public static final Creator<ProjectsModel> CREATOR = new Creator<ProjectsModel>() {
-        @Override public ProjectsModel createFromParcel(Parcel source) {
+        @Override public ProjectsModel createFromParcel(final Parcel source) {
             return new ProjectsModel(source);
         }
 
-        @Override public ProjectsModel[] newArray(int size) {
+        @Override public ProjectsModel[] newArray(final int size) {
             return new ProjectsModel[size];
         }
     };

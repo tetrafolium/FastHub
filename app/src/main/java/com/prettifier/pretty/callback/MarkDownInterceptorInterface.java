@@ -12,11 +12,11 @@ public class MarkDownInterceptorInterface {
     private PrettifyWebView prettifyWebView;
     private boolean toggleNestScrolling;
 
-    public MarkDownInterceptorInterface(PrettifyWebView prettifyWebView) {
+    public MarkDownInterceptorInterface(final PrettifyWebView prettifyWebView) {
         this(prettifyWebView, false);
     }
 
-    public MarkDownInterceptorInterface(PrettifyWebView prettifyWebView, boolean toggleNestScrolling) {
+    public MarkDownInterceptorInterface(final PrettifyWebView prettifyWebView, final boolean toggleNestScrolling) {
         this.prettifyWebView = prettifyWebView;
         this.toggleNestScrolling = toggleNestScrolling;
     }

@@ -26,7 +26,7 @@ import io.reactivex.Single;
     @Column(unique = true) String fullUrl;
     boolean repo;
 
-    public Single<ViewerFile> save(ViewerFile modelEntity) {
+    public Single<ViewerFile> save(final ViewerFile modelEntity) {
         return RxHelper.getSingle(App.getInstance().getDataStore()
                                   .delete(ViewerFile.class)
                                   .where(ViewerFile.FULL_URL.eq(modelEntity.getFullUrl()))
@@ -35,7 +35,7 @@ import io.reactivex.Single;
                                   .flatMap(i -> App.getInstance().getDataStore().insert(modelEntity)));
     }
 
-    public static Observable<ViewerFile> get(@NonNull String url) {
+    public static Observable<ViewerFile> get(final @NonNull String url) {
         return App.getInstance()
                .getDataStore()
                .select(ViewerFile.class)
@@ -48,7 +48,7 @@ import io.reactivex.Single;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeByte(this.markdown ? (byte) 1 : (byte) 0);
         dest.writeString(this.content);
@@ -56,7 +56,7 @@ import io.reactivex.Single;
         dest.writeByte(this.repo ? (byte) 1 : (byte) 0);
     }
 
-    protected AbstractViewerFile(Parcel in) {
+    protected AbstractViewerFile(final Parcel in) {
         this.id = in.readLong();
         this.markdown = in.readByte() != 0;
         this.content = in.readString();
@@ -65,11 +65,11 @@ import io.reactivex.Single;
     }
 
     public static final Creator<ViewerFile> CREATOR = new Creator<ViewerFile>() {
-        @Override public ViewerFile createFromParcel(Parcel source) {
+        @Override public ViewerFile createFromParcel(final Parcel source) {
             return new ViewerFile(source);
         }
 
-        @Override public ViewerFile[] newArray(int size) {
+        @Override public ViewerFile[] newArray(final int size) {
             return new ViewerFile[size];
         }
     };

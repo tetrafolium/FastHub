@@ -37,20 +37,20 @@ class PullRequestCommitsPresenter extends BasePresenter<PullRequestCommitsMvp.Vi
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Object parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());
@@ -72,7 +72,7 @@ class PullRequestCommitsPresenter extends BasePresenter<PullRequestCommitsMvp.Vi
         return true;
     }
 
-    @Override public void onFragmentCreated(@NonNull Bundle bundle) {
+    @Override public void onFragmentCreated(final @NonNull Bundle bundle) {
         repoId = bundle.getString(BundleConstant.ID);
         login = bundle.getString(BundleConstant.EXTRA);
         number = bundle.getLong(BundleConstant.EXTRA_TWO);
@@ -94,9 +94,9 @@ class PullRequestCommitsPresenter extends BasePresenter<PullRequestCommitsMvp.Vi
         }
     }
 
-    @Override public void onItemClick(int position, View v, Commit item) {
+    @Override public void onItemClick(final int position, final View v, final Commit item) {
         CommitPagerActivity.createIntentForOffline(v.getContext(), item);
     }
 
-    @Override public void onItemLongClick(int position, View v, Commit item) {}
+    @Override public void onItemLongClick(final int position, final View v, final Commit item) { }
 }

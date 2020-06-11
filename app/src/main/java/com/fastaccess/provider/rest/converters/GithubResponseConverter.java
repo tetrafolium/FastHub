@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class GithubResponseConverter extends Converter.Factory {
     private Gson gson;
 
-    @Override public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+    @Override public Converter<ResponseBody, ?> responseBodyConverter(final Type type, final Annotation[] annotations, final Retrofit retrofit) {
         try {
             if (type == String.class) {
                 return new StringResponseConverter();
@@ -34,13 +34,13 @@ public class GithubResponseConverter extends Converter.Factory {
         }
     }
 
-    @Override public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations,
-            Annotation[] methodAnnotations, Retrofit retrofit) {
+    @Override public Converter<?, RequestBody> requestBodyConverter(final Type type, final Annotation[] parameterAnnotations,
+            final Annotation[] methodAnnotations, final Retrofit retrofit) {
         return GsonConverterFactory.create(gson).requestBodyConverter(type, parameterAnnotations, methodAnnotations, retrofit);
     }
 
     public static class StringResponseConverter implements Converter<ResponseBody, String> {
-        @Override public String convert(@NonNull ResponseBody value) throws IOException {
+        @Override public String convert(final @NonNull ResponseBody value) throws IOException {
             return value.string();
         }
     }

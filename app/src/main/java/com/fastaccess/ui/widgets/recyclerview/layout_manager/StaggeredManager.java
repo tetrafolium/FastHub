@@ -10,24 +10,24 @@ import android.util.AttributeSet;
  */
 public class StaggeredManager extends StaggeredGridLayoutManager {
 
-    public StaggeredManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public StaggeredManager(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public StaggeredManager(int spanCount, int orientation) {
+    public StaggeredManager(final int spanCount, final int orientation) {
         super(spanCount, orientation);
     }
 
-    @Override public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+    @Override public void onLayoutChildren(final RecyclerView.Recycler recycler, final RecyclerView.State state) {
         try {
             super.onLayoutChildren(recycler, state);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
     }
 
-    @Override public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec, int heightSpec) {
+    @Override public void onMeasure(final RecyclerView.Recycler recycler, final RecyclerView.State state, final int widthSpec, final int heightSpec) {
         try {
             super.onMeasure(recycler, state, widthSpec, heightSpec);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
     }
 
 }

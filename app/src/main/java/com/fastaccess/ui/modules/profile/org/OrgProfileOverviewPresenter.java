@@ -17,14 +17,14 @@ import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
 public class OrgProfileOverviewPresenter extends BasePresenter<OrgProfileOverviewMvp.View> implements OrgProfileOverviewMvp.Presenter {
     @com.evernote.android.state.State String login;
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         if (!InputHelper.isEmpty(login)) {
             onWorkOffline(login);
         }
         super.onError(throwable);
     }
 
-    @Override public void onFragmentCreated(@Nullable Bundle bundle) {
+    @Override public void onFragmentCreated(final @Nullable Bundle bundle) {
         if (bundle == null || bundle.getString(BundleConstant.EXTRA) == null) {
             throw new NullPointerException("Either bundle or User is null");
         }
@@ -35,7 +35,7 @@ public class OrgProfileOverviewPresenter extends BasePresenter<OrgProfileOvervie
         }
     }
 
-    @Override public void onWorkOffline(@NonNull String login) {
+    @Override public void onWorkOffline(final @NonNull String login) {
         onSendUserToView(User.getUser(login));
     }
 
@@ -43,7 +43,7 @@ public class OrgProfileOverviewPresenter extends BasePresenter<OrgProfileOvervie
         return login;
     }
 
-    private void onSendUserToView(User userModel) {
+    private void onSendUserToView(final User userModel) {
         sendToView(view -> view.onInitViews(userModel));
     }
 }

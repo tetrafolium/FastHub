@@ -44,27 +44,27 @@ public class GitHubContributionsView extends View {
     private int height;
     private Point point = new Point();
 
-    public GitHubContributionsView(Context context) {
+    public GitHubContributionsView(final Context context) {
         super(context);
         init(context, null, 0, 0);
     }
 
-    public GitHubContributionsView(Context context, AttributeSet attrs) {
+    public GitHubContributionsView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs, 0, 0);
     }
 
-    public GitHubContributionsView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GitHubContributionsView(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr, 0);
     }
 
-    public GitHubContributionsView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public GitHubContributionsView(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void init(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
         ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(point);
         final TypedArray attributes = context.getTheme().obtainStyledAttributes(
                                           attrs, R.styleable.GitHubContributionsView, defStyleAttr, defStyleRes);
@@ -76,7 +76,7 @@ public class GitHubContributionsView extends View {
         blockPaint.setStyle(Paint.Style.FILL);
     }
 
-    private void initAttributes(TypedArray attributes) {
+    private void initAttributes(final TypedArray attributes) {
         baseColor = attributes.getColor(R.styleable.GitHubContributionsView_baseColor, baseColor);
         baseEmptyColor = attributes.getColor(R.styleable.GitHubContributionsView_baseEmptyColor, baseEmptyColor);
         backgroundBaseColor = attributes.getColor(R.styleable.GitHubContributionsView_backgroundBaseColor, backgroundBaseColor);
@@ -99,7 +99,7 @@ public class GitHubContributionsView extends View {
      * @param baseColor
      *         base color supported formats
      */
-    public void setBaseColor(String baseColor) {
+    public void setBaseColor(final String baseColor) {
         try {
             this.baseColor = Color.parseColor(baseColor);
         } catch (IllegalArgumentException e) {
@@ -115,7 +115,7 @@ public class GitHubContributionsView extends View {
      * @param color
      *         resource color
      */
-    public void setBaseColor(int color) {
+    public void setBaseColor(final int color) {
         this.baseColor = color;
         invalidate();
     }
@@ -127,7 +127,7 @@ public class GitHubContributionsView extends View {
      * @param baseColor
      *         base color supported formats
      */
-    public void setBaseEmptyColor(String baseColor) {
+    public void setBaseEmptyColor(final String baseColor) {
         try {
             this.baseEmptyColor = Color.parseColor(baseColor);
         } catch (IllegalArgumentException e) {
@@ -142,7 +142,7 @@ public class GitHubContributionsView extends View {
      * @param color
      *         resource color
      */
-    public void setBaseEmptyColor(int color) {
+    public void setBaseEmptyColor(final int color) {
         this.baseEmptyColor = color;
         invalidate();
     }
@@ -153,7 +153,7 @@ public class GitHubContributionsView extends View {
      * @param backgroundBaseColor
      *         the color of the background
      */
-    public void setBackgroundBaseColor(String backgroundBaseColor) {
+    public void setBackgroundBaseColor(final String backgroundBaseColor) {
         try {
             this.backgroundBaseColor = Color.parseColor(backgroundBaseColor);
         } catch (IllegalArgumentException e) {
@@ -168,7 +168,7 @@ public class GitHubContributionsView extends View {
      * @param backgroundBaseColor
      *         the color of the background
      */
-    public void setBackgroundBaseColor(int backgroundBaseColor) {
+    public void setBackgroundBaseColor(final int backgroundBaseColor) {
         this.backgroundBaseColor = backgroundBaseColor;
         invalidate();
     }
@@ -180,7 +180,7 @@ public class GitHubContributionsView extends View {
      * @param textColor
      *         text color supported formats
      */
-    public void setTextColor(String textColor) {
+    public void setTextColor(final String textColor) {
         try {
             this.textColor = Color.parseColor(textColor);
         } catch (IllegalArgumentException e) {
@@ -195,7 +195,7 @@ public class GitHubContributionsView extends View {
      * @param textColor
      *         resource color
      */
-    public void setTextColor(int textColor) {
+    public void setTextColor(final int textColor) {
         this.textColor = textColor;
         invalidate();
     }
@@ -209,7 +209,7 @@ public class GitHubContributionsView extends View {
      * @param lastWeeks
      *         number of week (2..53)
      */
-    public void setLastWeeks(int lastWeeks) {
+    public void setLastWeeks(final int lastWeeks) {
         if (lastWeeks >= 2 && lastWeeks <= 53) {
             this.lastWeeks = lastWeeks;
             invalidate();
@@ -225,7 +225,7 @@ public class GitHubContributionsView extends View {
      * @param displayMonth
      *         true or false
      */
-    public void displayMonth(boolean displayMonth) {
+    public void displayMonth(final boolean displayMonth) {
         this.displayMonth = displayMonth;
         invalidate();
     }
@@ -236,7 +236,7 @@ public class GitHubContributionsView extends View {
      * @param username
      *         also, can be an organization
      */
-    private void loadUserName(String username) {
+    private void loadUserName(final String username) {
         this.username = username;
         clearContribution();
     }
@@ -254,7 +254,7 @@ public class GitHubContributionsView extends View {
         invalidate();
     }
 
-    @Override protected void onDraw(Canvas canvas) {
+    @Override protected void onDraw(final Canvas canvas) {
         super.onDraw(canvas);
         if (bitmap != null) {
             canvas.drawBitmap(bitmap, matrix, paint);
@@ -263,7 +263,7 @@ public class GitHubContributionsView extends View {
         }
     }
 
-    public Bitmap drawOnCanvas(List<ContributionsDay> contributionsFilter, List<ContributionsDay> contributions) {
+    public Bitmap drawOnCanvas(final List<ContributionsDay> contributionsFilter, final List<ContributionsDay> contributions) {
         if ((contributionsFilter == null || contributions == null) || (contributionsFilter.isEmpty() || contributions.isEmpty())) {
             return null;
         }
@@ -313,7 +313,7 @@ public class GitHubContributionsView extends View {
         return bitmap;
     }
 
-    private void adjustHeight(int height) {
+    private void adjustHeight(final int height) {
         ViewGroup.LayoutParams ll = getLayoutParams();
         if (height != ll.height) {
             ll.height = height;
@@ -321,7 +321,7 @@ public class GitHubContributionsView extends View {
         }
     }
 
-    private void drawPlaceholder(Canvas canvas) {
+    private void drawPlaceholder(final Canvas canvas) {
         if (!isInEditMode()) return;
         canvas.getClipBounds(rect);
         int width = rect.width();
@@ -371,13 +371,13 @@ public class GitHubContributionsView extends View {
         setLayoutParams(ll);
     }
 
-    private int getHorizontalBlockNumber(int total, int divider) {
+    private int getHorizontalBlockNumber(final int total, final int divider) {
         boolean isInteger = total % divider == 0;
         int result = total / divider;
         return (isInteger) ? result : result + 1;
     }
 
-    public List<ContributionsDay> getLastContributions(List<ContributionsDay> contributions) {
+    public List<ContributionsDay> getLastContributions(final List<ContributionsDay> contributions) {
         int lastWeekDays = contributions.size() % 7;
         int lastDays = (lastWeekDays > 0) ? lastWeekDays + (lastWeeks - 1) * 7 : lastWeeks * 7;
         return contributions.subList(contributions.size() - lastDays, contributions.size());

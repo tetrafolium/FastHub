@@ -22,19 +22,19 @@ public class ProfileOrgsViewHolder extends BaseViewHolder<User> {
     @BindView(R.id.avatarLayout) AvatarLayout avatarLayout;
     @BindView(R.id.name) FontTextView name;
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         avatarLayout.callOnClick();
     }
 
-    private ProfileOrgsViewHolder(@NonNull View itemView) {
+    private ProfileOrgsViewHolder(final @NonNull View itemView) {
         super(itemView);
     }
 
-    public static ProfileOrgsViewHolder newInstance(@NonNull ViewGroup parent) {
+    public static ProfileOrgsViewHolder newInstance(final @NonNull ViewGroup parent) {
         return new ProfileOrgsViewHolder(getView(parent, R.layout.profile_org_row_item));
     }
 
-    @Override public void bind(@NonNull User user) {
+    @Override public void bind(final @NonNull User user) {
         name.setText(user.getLogin());
         avatarLayout.setUrl(user.getAvatarUrl(), user.getLogin(), true, LinkParserHelper.isEnterprise(user.getUrl()));
     }

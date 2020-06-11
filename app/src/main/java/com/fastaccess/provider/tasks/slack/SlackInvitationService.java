@@ -23,7 +23,7 @@ public class SlackInvitationService extends IntentService {
         super(SlackInvitationService.class.getName());
     }
 
-    @Override protected void onHandleIntent(@Nullable Intent intent) {
+    @Override protected void onHandleIntent(final @Nullable Intent intent) {
         Login login = Login.getUser();
         if (login != null) {
             SlackInvitePostModel body = new SlackInvitePostModel();

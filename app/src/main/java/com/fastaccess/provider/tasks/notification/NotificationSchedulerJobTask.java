@@ -53,7 +53,7 @@ public class NotificationSchedulerJobTask extends JobService {
     private final static int THIRTY_MINUTES = 30 * 60;
     private static final String NOTIFICATION_GROUP_ID = "FastHub";
 
-    @Override public boolean onStartJob(JobParameters job) {
+    @Override public boolean onStartJob(final JobParameters job) {
         if (!SINGLE_JOB_ID.equalsIgnoreCase(job.getTag())) {
             if (PrefGetter.getNotificationTaskDuration() == -1) {
                 scheduleJob(this, -1, false);
@@ -64,7 +64,7 @@ public class NotificationSchedulerJobTask extends JobService {
         Login login = null;
         try {
             login = Login.getUser();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
         if (login != null) {
             RestProvider.getNotificationService(PrefGetter.isEnterprise())
             .getNotifications(ParseDateFormat.getLastWeekDate())
@@ -81,16 +81,16 @@ public class NotificationSchedulerJobTask extends JobService {
         return true;
     }
 
-    @Override public boolean onStopJob(JobParameters jobParameters) {
+    @Override public boolean onStopJob(final JobParameters jobParameters) {
         return false;
     }
 
-    public static void scheduleJob(@NonNull Context context) {
+    public static void scheduleJob(final @NonNull Context context) {
         int duration = PrefGetter.getNotificationTaskDuration();
         scheduleJob(context, duration, false);
     }
 
-    public static void scheduleJob(@NonNull Context context, int duration, boolean cancel) {
+    public static void scheduleJob(final @NonNull Context context, final int duration, final boolean cancel) {
         if (AppHelper.isGoogleAvailable(context)) {
             FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
             dispatcher.cancel(SINGLE_JOB_ID);
@@ -113,7 +113,7 @@ public class NotificationSchedulerJobTask extends JobService {
         }
     }
 
-    public static void scheduleOneTimeJob(@NonNull Context context) {
+    public static void scheduleOneTimeJob(final @NonNull Context context) {
         if (AppHelper.isGoogleAvailable(context)) {
             FirebaseJobDispatcher dispatcher = new FirebaseJobDispatcher(new GooglePlayDriver(context));
             Job.Builder builder = dispatcher
@@ -128,14 +128,14 @@ public class NotificationSchedulerJobTask extends JobService {
         }
     }
 
-    private void onSave(@Nullable List<Notification> notificationThreadModels, JobParameters job) {
+    private void onSave(final @Nullable List<Notification> notificationThreadModels, final JobParameters job) {
         if (notificationThreadModels != null) {
             Notification.save(notificationThreadModels);
             onNotifyUser(notificationThreadModels, job);
         }
     }
 
-    private void onNotifyUser(@NonNull List<Notification> notificationThreadModels, JobParameters job) {
+    private void onNotifyUser(final @NonNull List<Notification> notificationThreadModels, final JobParameters job) {
         long count = Stream.of(notificationThreadModels)
                      .filter(Notification::isUnread)
                      .count();
@@ -187,19 +187,19 @@ public class NotificationSchedulerJobTask extends JobService {
                 showNotification(first.getId(), grouped);
             }
             NotificationQueue.put(notificationThreadModels)
-            .subscribe(aBoolean -> {/*do nothing*/}, Throwable::printStackTrace, () -> finishJob(job));
+            .subscribe(aBoolean -> { /*do nothing*/ }, Throwable::printStackTrace, () -> finishJob(job));
         });
     }
 
-    private void finishJob(JobParameters job) {
+    private void finishJob(final JobParameters job) {
         jobFinished(job, false);
     }
 
-    private void showNotificationWithoutComment(Context context, int accentColor, Notification thread, String iconUrl) {
+    private void showNotificationWithoutComment(final Context context, final int accentColor, final Notification thread, final String iconUrl) {
         withoutComments(thread, context, accentColor);
     }
 
-    private void withoutComments(Notification thread, Context context, int accentColor) {
+    private void withoutComments(final Notification thread, final Context context, final int accentColor) {
         android.app.Notification toAdd = getNotification(thread.getSubject().getTitle(), thread.getRepository().getFullName(),
                                          thread.getRepository() != null ? thread.getRepository().getFullName() : "general")
                                          .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher))
@@ -216,11 +216,11 @@ public class NotificationSchedulerJobTask extends JobService {
         showNotification(thread.getId(), toAdd);
     }
 
-    private void getNotificationWithComment(Context context, int accentColor, Notification thread, Comment comment, String url) {
+    private void getNotificationWithComment(final Context context, final int accentColor, final Notification thread, final Comment comment, final String url) {
         withComments(comment, context, thread, accentColor);
     }
 
-    private void withComments(Comment comment, Context context, Notification thread, int accentColor) {
+    private void withComments(final Comment comment, final Context context, final Notification thread, final int accentColor) {
         android.app.Notification toAdd = getNotification(comment.getUser() != null ? comment.getUser().getLogin() : "",
                                          MarkDownProvider.stripMdText(comment.getBody()),
                                          thread.getRepository() != null ? thread.getRepository().getFullName() : "general")
@@ -242,7 +242,7 @@ public class NotificationSchedulerJobTask extends JobService {
         showNotification(thread.getId(), toAdd);
     }
 
-    private android.app.Notification getSummaryGroupNotification(@NonNull Notification thread, int accentColor, boolean toNotificationActivity) {
+    private android.app.Notification getSummaryGroupNotification(final @NonNull Notification thread, final int accentColor, final boolean toNotificationActivity) {
         PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0,
                                       new Intent(getApplicationContext(), NotificationActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
         NotificationCompat.Builder builder = getNotification(thread.getSubject().getTitle(), thread.getRepository().getFullName(),
@@ -265,14 +265,14 @@ public class NotificationSchedulerJobTask extends JobService {
         return builder.build();
     }
 
-    private NotificationCompat.Builder getNotification(@NonNull String title, @NonNull String message, @NonNull String channelName) {
+    private NotificationCompat.Builder getNotification(final @NonNull String title, final @NonNull String message, final @NonNull String channelName) {
         return new NotificationCompat.Builder(this, channelName)
                .setContentTitle(title)
                .setContentText(message)
                .setAutoCancel(true);
     }
 
-    private void showNotification(long id, android.app.Notification notification) {
+    private void showNotification(final long id, final android.app.Notification notification) {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -285,13 +285,13 @@ public class NotificationSchedulerJobTask extends JobService {
         }
     }
 
-    private PendingIntent getReadOnlyPendingIntent(long id, @NonNull String url) {
+    private PendingIntent getReadOnlyPendingIntent(final long id, final @NonNull String url) {
         Intent intent = ReadNotificationService.start(getApplicationContext(), id, url, true);
         return PendingIntent.getService(getApplicationContext(), InputHelper.getSafeIntId(id) / 2, intent,
                                         PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    private PendingIntent getPendingIntent(long id, @NonNull String url) {
+    private PendingIntent getPendingIntent(final long id, final @NonNull String url) {
         Intent intent = ReadNotificationService.start(getApplicationContext(), id, url);
         return PendingIntent.getService(getApplicationContext(), InputHelper.getSafeIntId(id), intent,
                                         PendingIntent.FLAG_UPDATE_CURRENT);

@@ -22,22 +22,22 @@ public class RenameModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.fromValue);
         dest.writeString(this.toValue);
     }
 
-    protected RenameModel(Parcel in) {
+    protected RenameModel(final Parcel in) {
         this.fromValue = in.readString();
         this.toValue = in.readString();
     }
 
     public static final Creator<RenameModel> CREATOR = new Creator<RenameModel>() {
-        @Override public RenameModel createFromParcel(Parcel source) {
+        @Override public RenameModel createFromParcel(final Parcel source) {
             return new RenameModel(source);
         }
 
-        @Override public RenameModel[] newArray(int size) {
+        @Override public RenameModel[] newArray(final int size) {
             return new RenameModel[size];
         }
     };

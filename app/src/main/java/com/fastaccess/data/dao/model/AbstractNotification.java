@@ -39,7 +39,7 @@ import lombok.NoArgsConstructor;
     Date lastReadAt;
     @Nullable boolean isSubscribed;
 
-    public Disposable save(Notification entity) {
+    public Disposable save(final Notification entity) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 BlockingEntityStore<Persistable> dataStore = App.getInstance().getDataStore().toBlocking();
@@ -51,10 +51,10 @@ import lombok.NoArgsConstructor;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*do nothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*do nothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Disposable markAsRead(long id) {
+    public static Disposable markAsRead(final long id) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 BlockingEntityStore<Persistable> dataStore = App.getInstance().getDataStore().toBlocking();
@@ -69,10 +69,10 @@ import lombok.NoArgsConstructor;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*do nothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*do nothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Disposable save(@androidx.annotation.Nullable List<Notification> models) {
+    public static Disposable save(final @androidx.annotation.Nullable List<Notification> models) {
         if (models == null || models.isEmpty()) {
             return Observable.empty().subscribe();
         }
@@ -89,10 +89,10 @@ import lombok.NoArgsConstructor;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*do nothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*do nothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Single<Boolean> saveAsSingle(@androidx.annotation.Nullable List<Notification> models) {
+    public static Single<Boolean> saveAsSingle(final @androidx.annotation.Nullable List<Notification> models) {
         if (models == null || models.isEmpty()) {
             return Single.just(true);
         }
@@ -147,7 +147,7 @@ import lombok.NoArgsConstructor;
         App.getInstance().getDataStore().toBlocking().delete(Notification.class).get().value();
     }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Notification that = (Notification) o;
@@ -162,7 +162,7 @@ import lombok.NoArgsConstructor;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeParcelable(this.repository, flags);
         dest.writeParcelable(this.subject, flags);
@@ -174,7 +174,7 @@ import lombok.NoArgsConstructor;
         dest.writeByte(this.isSubscribed ? (byte) 1 : (byte) 0);
     }
 
-    protected AbstractNotification(Parcel in) {
+    protected AbstractNotification(final Parcel in) {
         this.id = in.readLong();
         this.repository = in.readParcelable(Repo.class.getClassLoader());
         this.subject = in.readParcelable(NotificationSubjectModel.class.getClassLoader());
@@ -190,11 +190,11 @@ import lombok.NoArgsConstructor;
     }
 
     public static final Creator<Notification> CREATOR = new Creator<Notification>() {
-        @Override public Notification createFromParcel(Parcel source) {
+        @Override public Notification createFromParcel(final Parcel source) {
             return new Notification(source);
         }
 
-        @Override public Notification[] newArray(int size) {
+        @Override public Notification[] newArray(final int size) {
             return new Notification[size];
         }
     };

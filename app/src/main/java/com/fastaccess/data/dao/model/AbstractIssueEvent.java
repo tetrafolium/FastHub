@@ -63,8 +63,8 @@ import static com.fastaccess.data.dao.model.IssueEvent.REPO_ID;
     @Transient List<LabelModel> labels;
     @Transient Issue issue;
 
-    public static Disposable save(@NonNull List<IssueEvent> models, @NonNull String repoId,
-                                  @NonNull String login, @NonNull String issueId) {
+    public static Disposable save(final @NonNull List<IssueEvent> models, final @NonNull String repoId,
+                                  final @NonNull String login, final @NonNull String issueId) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
@@ -88,11 +88,11 @@ import static com.fastaccess.data.dao.model.IssueEvent.REPO_ID;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Single<List<IssueEvent>> get(@NonNull String repoId, @NonNull String login,
-            @NonNull String issueId) {
+    public static Single<List<IssueEvent>> get(final @NonNull String repoId, final @NonNull String login,
+            final @NonNull String issueId) {
         return App.getInstance().getDataStore()
                .select(IssueEvent.class)
                .where(LOGIN.equal(login)
@@ -108,7 +108,7 @@ import static com.fastaccess.data.dao.model.IssueEvent.REPO_ID;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeInt(this.event == null ? -1 : this.event.ordinal());
@@ -131,7 +131,7 @@ import static com.fastaccess.data.dao.model.IssueEvent.REPO_ID;
         dest.writeParcelable(this.issue, flags);
     }
 
-    protected AbstractIssueEvent(Parcel in) {
+    protected AbstractIssueEvent(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         int tmpEvent = in.readInt();
@@ -157,11 +157,11 @@ import static com.fastaccess.data.dao.model.IssueEvent.REPO_ID;
     }
 
     public static final Creator<IssueEvent> CREATOR = new Creator<IssueEvent>() {
-        @Override public IssueEvent createFromParcel(Parcel source) {
+        @Override public IssueEvent createFromParcel(final Parcel source) {
             return new IssueEvent(source);
         }
 
-        @Override public IssueEvent[] newArray(int size) {
+        @Override public IssueEvent[] newArray(final int size) {
             return new IssueEvent[size];
         }
     };

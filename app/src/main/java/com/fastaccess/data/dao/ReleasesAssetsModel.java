@@ -32,7 +32,7 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.url);
         dest.writeString(this.browserDownloadUrl);
         dest.writeLong(this.id);
@@ -47,9 +47,9 @@ import lombok.Setter;
         dest.writeParcelable(this.uploader, flags);
     }
 
-    public ReleasesAssetsModel() {}
+    public ReleasesAssetsModel() { }
 
-    @SuppressWarnings("WeakerAccess") protected ReleasesAssetsModel(Parcel in) {
+    @SuppressWarnings("WeakerAccess") protected ReleasesAssetsModel(final Parcel in) {
         this.url = in.readString();
         this.browserDownloadUrl = in.readString();
         this.id = in.readLong();
@@ -67,11 +67,11 @@ import lombok.Setter;
     }
 
     public static final Creator<ReleasesAssetsModel> CREATOR = new Creator<ReleasesAssetsModel>() {
-        @Override public ReleasesAssetsModel createFromParcel(Parcel source) {
+        @Override public ReleasesAssetsModel createFromParcel(final Parcel source) {
             return new ReleasesAssetsModel(source);
         }
 
-        @Override public ReleasesAssetsModel[] newArray(int size) {
+        @Override public ReleasesAssetsModel[] newArray(final int size) {
             return new ReleasesAssetsModel[size];
         }
     };

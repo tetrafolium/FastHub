@@ -44,9 +44,9 @@ public class ReactionsDialogFragment extends BaseDialogFragment<ReactionsDialogM
     private UsersAdapter adapter;
     private OnLoadMore onLoadMore;
 
-    public static ReactionsDialogFragment newInstance(@NonNull String login, @NonNull String repoId,
-            @NonNull ReactionTypes type, long idOrNumber,
-            @ReactionsProvider.ReactionType int reactionType) {
+    public static ReactionsDialogFragment newInstance(final @NonNull String login, final @NonNull String repoId,
+            final @NonNull ReactionTypes type, final long idOrNumber,
+            final @ReactionsProvider.ReactionType int reactionType) {
         ReactionsDialogFragment view = new ReactionsDialogFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.EXTRA_TYPE, type)
@@ -62,7 +62,7 @@ public class ReactionsDialogFragment extends BaseDialogFragment<ReactionsDialogM
         return R.layout.milestone_dialog_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         toolbar.setNavigationIcon(R.drawable.ic_clear);
         toolbar.setNavigationOnClickListener(v -> dismiss());
         stateLayout.setEmptyText(R.string.no_reactions);
@@ -82,7 +82,7 @@ public class ReactionsDialogFragment extends BaseDialogFragment<ReactionsDialogM
         fastScroller.attachRecyclerView(recycler);
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<User> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<User> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -95,7 +95,7 @@ public class ReactionsDialogFragment extends BaseDialogFragment<ReactionsDialogM
         }
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
         stateLayout.showProgress();
@@ -106,12 +106,12 @@ public class ReactionsDialogFragment extends BaseDialogFragment<ReactionsDialogM
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }

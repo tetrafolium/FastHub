@@ -76,7 +76,7 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
     private SettingsCallback settingsCallback;
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         this.callback = (BaseMvp.FAView) context;
         this.settingsCallback = (SettingsCallback) context;
@@ -90,11 +90,11 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
         super.onDetach();
     }
 
-    @Override public void onCreate(Bundle savedInstanceState) {
+    @Override public void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
-    @Override public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
+    @Override public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
         switch (settingsCallback.getSettingsType()) {
         case SettingsModel.BACKUP:
             addBackup();
@@ -113,7 +113,7 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
         }
     }
 
-    @Override public boolean onPreferenceChange(Preference preference, Object newValue) {
+    @Override public boolean onPreferenceChange(final Preference preference, final Object newValue) {
         if (preference.getKey().equalsIgnoreCase("notificationEnabled")) {
             if ((boolean) newValue) {
                 getPreferenceScreen().addPreference(notificationTime);
@@ -155,7 +155,7 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
         return false;
     }
 
-    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    @Override public void onRequestPermissionsResult(final int requestCode, final @NonNull String[] permissions, final @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (permissions[0].equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
@@ -197,7 +197,7 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
 
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == RESTORE_REQUEST_CODE) {
                 restoreData(data);
@@ -210,7 +210,7 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
         }
     }
 
-    @Override public void onSoundSelected(Uri uri) {
+    @Override public void onSoundSelected(final Uri uri) {
         PrefGetter.setNotificationSound(uri);
         if (notificationSoundPath != null && notificationSoundPath.isVisible())
             notificationSoundPath.setSummary(FileHelper.getRingtoneName(getContext(), uri));
@@ -328,7 +328,7 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
         }
     }
 
-    private void restoreData(Intent data) {
+    private void restoreData(final Intent data) {
         StringBuilder json = new StringBuilder();
         try {
             try (InputStream inputStream = getContext().getContentResolver().openInputStream(data.getData())) {
@@ -347,7 +347,7 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
         if (!InputHelper.isEmpty(json)) {
             try {
                 Gson gson = new Gson();
-                Type typeOfHashMap = new TypeToken<Map<String, ?>>() {} .getType();
+                Type typeOfHashMap = new TypeToken<Map<String, ?>>() { } .getType();
                 Map<String, ?> savedPref = gson.fromJson(json.toString(), typeOfHashMap);
                 if (savedPref != null && !savedPref.isEmpty()) {
                     for (Map.Entry<String, ?> stringEntry : savedPref.entrySet()) {

@@ -33,17 +33,17 @@ public class NotificationsViewHolder extends BaseViewHolder<GroupedNotificationM
     @BindView(R.id.repoName) FontTextView repoName;
     private boolean showUnreadState;
 
-    private NotificationsViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter, boolean showUnreadState) {
+    private NotificationsViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter, final boolean showUnreadState) {
         super(itemView, adapter);
         markAsRead.setOnClickListener(this);
         this.showUnreadState = showUnreadState;
     }
 
-    public static NotificationsViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter, boolean showUnreadState) {
+    public static NotificationsViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter, final boolean showUnreadState) {
         return new NotificationsViewHolder(getView(viewGroup, R.layout.notifications_row_item), adapter, showUnreadState);
     }
 
-    @Override public void bind(@NonNull GroupedNotificationModel model) {
+    @Override public void bind(final @NonNull GroupedNotificationModel model) {
         Notification thread = model.getNotification();
         if (thread != null && thread.getSubject() != null) {
             title.setText(thread.getSubject().getTitle());

@@ -34,7 +34,7 @@ public class ProfileReposFilterBottomSheetDialog extends BaseBottomSheetDialog {
 
     private ProfileReposFilterChangeListener listener;
 
-    public static ProfileReposFilterBottomSheetDialog newInstance(@NonNull FilterOptionsModel currentFilterOptions) {
+    public static ProfileReposFilterBottomSheetDialog newInstance(final @NonNull FilterOptionsModel currentFilterOptions) {
         ProfileReposFilterBottomSheetDialog fragment = new ProfileReposFilterBottomSheetDialog();
         fragment.setArguments(Bundler.start().put(BundleConstant.ITEM, currentFilterOptions).end());
         return fragment;
@@ -44,7 +44,7 @@ public class ProfileReposFilterBottomSheetDialog extends BaseBottomSheetDialog {
         return R.layout.filter_bottom_sheet;
     }
 
-    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         currentFilterOptions = getArguments().getParcelable(BundleConstant.ITEM);
         if (currentFilterOptions == null) return;
@@ -66,7 +66,7 @@ public class ProfileReposFilterBottomSheetDialog extends BaseBottomSheetDialog {
         }
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (context instanceof OrgReposMvp.View || getParentFragment() instanceof OrgReposMvp.View) {
             listener = ((OrgReposFragment) getParentFragment());

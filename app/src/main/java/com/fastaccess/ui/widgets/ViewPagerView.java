@@ -22,11 +22,11 @@ public class ViewPagerView extends ViewPager {
 
     private boolean isEnabled;
 
-    public ViewPagerView(Context context) {
+    public ViewPagerView(final Context context) {
         super(context);
     }
 
-    public ViewPagerView(@NonNull Context context, AttributeSet attrs) {
+    public ViewPagerView(final @NonNull Context context, final AttributeSet attrs) {
         super(context, attrs);
         int[] attrsArray = {enabled};
         TypedArray array = context.obtainStyledAttributes(attrs, attrsArray);
@@ -38,12 +38,12 @@ public class ViewPagerView extends ViewPager {
         return isEnabled;
     }
 
-    @Override public void setEnabled(boolean enabled) {
+    @Override public void setEnabled(final boolean enabled) {
         this.isEnabled = enabled;
         requestLayout();
     }
 
-    @Override public void setAdapter(@Nullable PagerAdapter adapter) {
+    @Override public void setAdapter(final @Nullable PagerAdapter adapter) {
         super.setAdapter(adapter);
         if (isInEditMode()) return;
         if (adapter != null) {
@@ -51,7 +51,7 @@ public class ViewPagerView extends ViewPager {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility") @Override public boolean onTouchEvent(MotionEvent event) {
+    @SuppressLint("ClickableViewAccessibility") @Override public boolean onTouchEvent(final MotionEvent event) {
         try {
             return !isEnabled() || super.onTouchEvent(event);
         } catch (IllegalArgumentException ex) {
@@ -60,7 +60,7 @@ public class ViewPagerView extends ViewPager {
         return false;
     }
 
-    @Override public boolean onInterceptTouchEvent(MotionEvent event) {
+    @Override public boolean onInterceptTouchEvent(final MotionEvent event) {
         try {
             return isEnabled() && super.onInterceptTouchEvent(event);
         } catch (IllegalArgumentException ex) {

@@ -28,47 +28,47 @@ public class IssueEventAdapterModel implements Parcelable {
     private IssueEvent issueEvent;
     private Issue issueModel;
 
-    private IssueEventAdapterModel(int type, IssueEvent model) {
+    private IssueEventAdapterModel(final int type, final IssueEvent model) {
         this.type = type;
         this.issueEvent = model;
     }
 
-    public IssueEventAdapterModel(int type, Issue issueModel) {
+    public IssueEventAdapterModel(final int type, final Issue issueModel) {
         this.type = type;
         this.issueModel = issueModel;
     }
 
-    public static ArrayList<IssueEventAdapterModel> addEvents(@Nullable List<IssueEvent> modelList) {
+    public static ArrayList<IssueEventAdapterModel> addEvents(final @Nullable List<IssueEvent> modelList) {
         ArrayList<IssueEventAdapterModel> models = new ArrayList<>();
         if (modelList == null || modelList.isEmpty()) return models;
         Stream.of(modelList).forEach(issueEventModel -> models.add(new IssueEventAdapterModel(ROW, issueEventModel)));
         return models;
     }
 
-    public IssueEventAdapterModel() {}
+    public IssueEventAdapterModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(this.type);
         dest.writeParcelable(this.issueEvent, flags);
         dest.writeParcelable(this.issueModel, flags);
     }
 
-    private IssueEventAdapterModel(Parcel in) {
+    private IssueEventAdapterModel(final Parcel in) {
         this.type = in.readInt();
         this.issueEvent = in.readParcelable(IssueEvent.class.getClassLoader());
         this.issueModel = in.readParcelable(Issue.class.getClassLoader());
     }
 
     public static final Creator<IssueEventAdapterModel> CREATOR = new Creator<IssueEventAdapterModel>() {
-        @Override public IssueEventAdapterModel createFromParcel(Parcel source) {
+        @Override public IssueEventAdapterModel createFromParcel(final Parcel source) {
             return new IssueEventAdapterModel(source);
         }
 
-        @Override public IssueEventAdapterModel[] newArray(int size) {
+        @Override public IssueEventAdapterModel[] newArray(final int size) {
             return new IssueEventAdapterModel[size];
         }
     };

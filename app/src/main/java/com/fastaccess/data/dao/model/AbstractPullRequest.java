@@ -92,7 +92,7 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
     @Convert(PullRequestConverter.class) PullRequest pullRequest;
     @Convert(ReactionsConverter.class) ReactionsModel reactions;
 
-    public Single<PullRequest> save(PullRequest entity) {
+    public Single<PullRequest> save(final PullRequest entity) {
         return RxHelper.getSingle(App.getInstance().getDataStore()
                                   .delete(PullRequest.class)
                                   .where(PullRequest.ID.eq(entity.getId()))
@@ -101,7 +101,7 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
                                   .flatMap(observer -> App.getInstance().getDataStore().insert(entity)));
     }
 
-    public static Disposable save(@NonNull List<PullRequest> models, @NonNull String repoId, @NonNull String login) {
+    public static Disposable save(final @NonNull List<PullRequest> models, final @NonNull String repoId, final @NonNull String login) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
@@ -123,11 +123,11 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Single<List<PullRequest>> getPullRequests(@NonNull String repoId, @NonNull String login,
-            @NonNull IssueState issueState) {
+    public static Single<List<PullRequest>> getPullRequests(final @NonNull String repoId, final @NonNull String login,
+            final @NonNull IssueState issueState) {
         return App.getInstance().getDataStore()
                .select(PullRequest.class)
                .where(REPO_ID.equal(repoId)
@@ -139,7 +139,7 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
                .toList();
     }
 
-    public static Observable<PullRequest> getPullRequestById(long id) {
+    public static Observable<PullRequest> getPullRequestById(final long id) {
         return App.getInstance().getDataStore()
                .select(PullRequest.class)
                .where(ID.eq(id))
@@ -147,7 +147,7 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
                .observable();
     }
 
-    public static Observable<PullRequest> getPullRequestByNumber(int number, @NonNull String repoId, @NonNull String login) {
+    public static Observable<PullRequest> getPullRequestByNumber(final int number, final @NonNull String repoId, final @NonNull String login) {
         return App.getInstance().getDataStore()
                .select(PullRequest.class)
                .where(REPO_ID.equal(repoId)
@@ -157,7 +157,7 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
                .observable();
     }
 
-    @NonNull public static SpannableBuilder getMergeBy(@NonNull PullRequest pullRequest, @NonNull Context context, boolean showRepoName) {
+    @NonNull public static SpannableBuilder getMergeBy(final @NonNull PullRequest pullRequest, final @NonNull Context context, final boolean showRepoName) {
         boolean isMerge = pullRequest.isMerged() || !InputHelper.isEmpty(pullRequest.mergedAt);
         if (isMerge) {
             User merger = pullRequest.getMergedBy();
@@ -236,7 +236,7 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeString(this.body);
@@ -279,7 +279,7 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
         dest.writeParcelable(this.reactions, flags);
     }
 
-    protected AbstractPullRequest(Parcel in) {
+    protected AbstractPullRequest(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         this.body = in.readString();
@@ -330,11 +330,11 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
     }
 
     public static final Creator<PullRequest> CREATOR = new Creator<PullRequest>() {
-        @Override public PullRequest createFromParcel(Parcel source) {
+        @Override public PullRequest createFromParcel(final Parcel source) {
             return new PullRequest(source);
         }
 
-        @Override public PullRequest[] newArray(int size) {
+        @Override public PullRequest[] newArray(final int size) {
             return new PullRequest[size];
         }
     };

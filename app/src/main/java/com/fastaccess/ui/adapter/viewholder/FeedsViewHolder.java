@@ -46,12 +46,12 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
     @BindView(R.id.date) FontTextView date;
     private Resources resources;
 
-    public FeedsViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+    public FeedsViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
         this.resources = itemView.getResources();
     }
 
-    public static View getView(@NonNull ViewGroup viewGroup, boolean noImage) {
+    public static View getView(final @NonNull ViewGroup viewGroup, final boolean noImage) {
         if (noImage) {
             return getView(viewGroup, R.layout.feeds_row_no_image_item);
         } else {
@@ -59,7 +59,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         }
     }
 
-    @Override public void bind(@NonNull Event eventsModel) {
+    @Override public void bind(final @NonNull Event eventsModel) {
         appendAvatar(eventsModel);
         SpannableBuilder spannableBuilder = SpannableBuilder.builder();
         appendActor(eventsModel, spannableBuilder);
@@ -128,14 +128,14 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         date.setText(ParseDateFormat.getTimeAgo(eventsModel.getCreatedAt()));
     }
 
-    private void appendOrganizationEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendOrganizationEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         spannableBuilder.bold(eventsModel.getPayload().getAction().replaceAll("_", ""))
         .append(" ")
         .append(eventsModel.getPayload().getInvitation() != null ? eventsModel.getPayload().getInvitation().getLogin() + " " : "")
         .append(eventsModel.getPayload().getOrganization().getLogin());
     }
 
-    private void appendProjectCardEvent(SpannableBuilder spannableBuilder, Event eventsModel, boolean isColumn) {
+    private void appendProjectCardEvent(final SpannableBuilder spannableBuilder, final Event eventsModel, final boolean isColumn) {
         spannableBuilder.bold(eventsModel.getPayload().getAction())
         .append(" ")
         .append(!isColumn ? "project" : "column")
@@ -143,7 +143,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         .append(eventsModel.getRepo().getName());
     }
 
-    private void appendOrgBlockEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendOrgBlockEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         spannableBuilder.bold(eventsModel.getPayload().getAction())
         .append(" ")
         .append(eventsModel.getPayload().getBlockedUser().getLogin())
@@ -151,7 +151,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         .append(eventsModel.getPayload().getOrganization().getLogin());
     }
 
-    private void appendForkApplyEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendForkApplyEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         spannableBuilder.bold(eventsModel.getPayload().getHead())
         .append(" ")
         .append(eventsModel.getPayload().getBefore())
@@ -159,7 +159,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         .append(eventsModel.getRepo() != null ? "in " + eventsModel.getRepo().getName() : "");
     }
 
-    private void appendReleaseEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendReleaseEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         Release release = eventsModel.getPayload().getRelease();
         spannableBuilder.bold("released")
         .append(" ")
@@ -168,7 +168,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         .append(eventsModel.getRepo().getName());
     }
 
-    private void appendDeleteEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendDeleteEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         spannableBuilder.bold("deleted")
         .append(" ")
         .append(eventsModel.getPayload().getRefType())
@@ -180,7 +180,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         .append(eventsModel.getRepo().getName());
     }
 
-    private void appendTeamEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendTeamEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         TeamsModel teamsModel = eventsModel.getPayload().getTeam();
         User user = eventsModel.getPayload().getUser();
         spannableBuilder.bold("added")
@@ -192,7 +192,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         .append(teamsModel.getName() != null ? teamsModel.getName() : teamsModel.getSlug());
     }
 
-    private void appendPushEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendPushEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         String ref = eventsModel.getPayload().getRef();
         if (ref.startsWith("refs/heads/")) {
             ref = ref.substring(11);
@@ -236,7 +236,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         }
     }
 
-    private void appendPullRequestReviewCommentEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendPullRequestReviewCommentEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         PullRequest pullRequest = eventsModel.getPayload().getPullRequest();
         Comment comment = eventsModel.getPayload().getComment();
         spannableBuilder.bold("reviewed")
@@ -257,7 +257,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         }
     }
 
-    private void appendPullRequestEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendPullRequestEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         PullRequest issue = eventsModel.getPayload().getPullRequest();
         String action = eventsModel.getPayload().getAction();
         if ("synchronize".equals(action)) {
@@ -284,7 +284,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         }
     }
 
-    private void appendPublicEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendPublicEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         String action = "public";
         if (eventsModel.getPayload() != null && "privatized".equalsIgnoreCase(eventsModel.getPayload().getAction())) {
             action = "private";
@@ -296,7 +296,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         .append(action);
     }
 
-    private void appendMemberEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendMemberEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         User user = eventsModel.getPayload().getMember();
         spannableBuilder.bold("added")
         .append(" ")
@@ -308,7 +308,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         .append(eventsModel.getRepo().getName());
     }
 
-    private void appendIssueEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendIssueEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         Issue issue = eventsModel.getPayload().getIssue();
         boolean isLabel = "label".equals(eventsModel.getPayload().getAction());
         LabelModel label = isLabel ? issue.getLabels() != null && !issue.getLabels().isEmpty()
@@ -329,7 +329,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         }
     }
 
-    private void appendIssueCommentEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendIssueCommentEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         Comment comment = eventsModel.getPayload().getComment();
         Issue issue = eventsModel.getPayload().getIssue();
         spannableBuilder.bold("commented")
@@ -350,7 +350,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         }
     }
 
-    private void appendGollumEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendGollumEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         List<WikiModel> wiki = eventsModel.getPayload().getPages();
         if (wiki != null && !wiki.isEmpty()) {
             for (WikiModel wikiModel : wiki) {
@@ -368,7 +368,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
 
     }
 
-    private void appendGistEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendGistEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         String action = eventsModel.getPayload().getAction();
         action = "create".equals(action) ? "created" : "update".equals(action) ? "updated" : action;
         spannableBuilder.bold(action)
@@ -378,19 +378,19 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         .append(eventsModel.getPayload().getGist().getGistId());
     }
 
-    private void appendForkEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendForkEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         spannableBuilder.bold("forked")
         .append(" ")
         .append(eventsModel.getRepo().getName());
     }
 
-    private void appendFollowEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendFollowEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         spannableBuilder.bold("started following")
         .append(" ")
         .bold(eventsModel.getPayload().getTarget().getLogin());
     }
 
-    private void appendDownloadEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendDownloadEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         spannableBuilder.bold("uploaded a file")
         .append(" ")
         .append(eventsModel.getPayload().getDownload() != null ? eventsModel.getPayload().getDownload().getName() : "")
@@ -400,7 +400,7 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         .append(eventsModel.getRepo().getName());
     }
 
-    private void appendCreateEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendCreateEvent(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         PayloadModel payloadModel = eventsModel.getPayload();
         String refType = payloadModel.getRefType();
         spannableBuilder
@@ -421,17 +421,17 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         }
     }
 
-    private void appendWatch(SpannableBuilder spannableBuilder, EventsType type, Event eventsModel) {
+    private void appendWatch(final SpannableBuilder spannableBuilder, final EventsType type, final Event eventsModel) {
         spannableBuilder.bold(resources.getString(type.getType()).toLowerCase())
         .append(" ")
         .append(eventsModel.getRepo().getName());
     }
 
-    private void appendCommitComment(SpannableBuilder spannableBuilder, Event eventsModel) {
+    private void appendCommitComment(final SpannableBuilder spannableBuilder, final Event eventsModel) {
         Comment comment = eventsModel.getPayload().getCommitComment() == null ? eventsModel.getPayload().getComment() : eventsModel.getPayload()
                           .getCommitComment();
-        String commitId = comment != null && comment.getCommitId() != null && comment.getCommitId().length() > 10 ?
-                          comment.getCommitId().substring(0, 10) : null;
+        String commitId = comment != null && comment.getCommitId() != null && comment.getCommitId().length() > 10
+                          ? comment.getCommitId().substring(0, 10) : null;
         spannableBuilder.bold("commented")
         .append(" ")
         .bold("on")
@@ -449,13 +449,13 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         }
     }
 
-    private void appendActor(@NonNull Event eventsModel, SpannableBuilder spannableBuilder) {
+    private void appendActor(final @NonNull Event eventsModel, final SpannableBuilder spannableBuilder) {
         if (eventsModel.getActor() != null) {
             spannableBuilder.append(eventsModel.getActor().getLogin()).append(" ");
         }
     }
 
-    private void appendAvatar(@NonNull Event eventsModel) {
+    private void appendAvatar(final @NonNull Event eventsModel) {
         if (avatar != null) {
             if (eventsModel.getActor() != null) {
                 avatar.setUrl(eventsModel.getActor().getAvatarUrl(), eventsModel.getActor().getLogin(),

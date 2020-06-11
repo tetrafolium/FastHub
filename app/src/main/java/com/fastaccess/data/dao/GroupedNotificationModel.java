@@ -33,18 +33,18 @@ import static com.annimon.stream.Collectors.toList;
     private Notification notification;
     private Date date;
 
-    private GroupedNotificationModel(Repo repo) {
+    private GroupedNotificationModel(final Repo repo) {
         this.type = HEADER;
         this.repo = repo;
     }
 
-    public GroupedNotificationModel(Notification notification) {
+    public GroupedNotificationModel(final Notification notification) {
         this.type = ROW;
         this.notification = notification;
         this.date = notification.getUpdatedAt();
     }
 
-    @NonNull public static List<GroupedNotificationModel> construct(@Nullable List<Notification> items) {
+    @NonNull public static List<GroupedNotificationModel> construct(final @Nullable List<Notification> items) {
         List<GroupedNotificationModel> models = new ArrayList<>();
         if (items == null || items.isEmpty()) return models;
         Map<Repo, List<Notification>> grouped = Stream.of(items)
@@ -64,14 +64,14 @@ import static com.annimon.stream.Collectors.toList;
         return models;
     }
 
-    @NonNull public static List<GroupedNotificationModel> onlyNotifications(@Nullable List<Notification> items) {
+    @NonNull public static List<GroupedNotificationModel> onlyNotifications(final @Nullable List<Notification> items) {
         if (items == null || items.isEmpty()) return new ArrayList<>();
         return Stream.of(items)
                .map(GroupedNotificationModel::new)
                .collect(Collectors.toList());
     }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GroupedNotificationModel model = (GroupedNotificationModel) o;

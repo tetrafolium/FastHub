@@ -56,7 +56,7 @@ public class PullRequestTimelinePresenter extends BasePresenter<PullRequestTimel
     private int lastPage = Integer.MAX_VALUE;
     @com.evernote.android.state.State boolean isCollaborator;
 
-    @Override public void onItemClick(int position, View v, TimelineModel item) {
+    @Override public void onItemClick(final int position, final View v, final TimelineModel item) {
         if (getView() == null) return;
         PullRequest pullRequest = getView().getPullRequest();
         if (pullRequest != null) {
@@ -158,7 +158,7 @@ public class PullRequestTimelinePresenter extends BasePresenter<PullRequestTimel
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, TimelineModel item) {
+    @Override public void onItemLongClick(final int position, final View v, final TimelineModel item) {
         if (getView() == null || getView().getPullRequest() == null) return;
         if (item.getType() == TimelineModel.COMMENT || item.getType() == TimelineModel.HEADER) {
             if (v.getId() == R.id.commentMenu && item.getType() == TimelineModel.COMMENT) {
@@ -194,7 +194,7 @@ public class PullRequestTimelinePresenter extends BasePresenter<PullRequestTimel
         //TODO
     }
 
-    @Override public void onHandleDeletion(@Nullable Bundle bundle) {
+    @Override public void onHandleDeletion(final @Nullable Bundle bundle) {
         if (getView() == null || getView().getPullRequest() == null) return;
         if (bundle != null) {
             PullRequest pullRequest = getView().getPullRequest();
@@ -228,7 +228,7 @@ public class PullRequestTimelinePresenter extends BasePresenter<PullRequestTimel
         }
     }
 
-    @Override public void onHandleReaction(int vId, long idOrNumber, @ReactionsProvider.ReactionType int reactionType) {
+    @Override public void onHandleReaction(final int vId, final long idOrNumber, final @ReactionsProvider.ReactionType int reactionType) {
         if (getView() == null || getView().getPullRequest() == null) return;
         PullRequest pullRequest = getView().getPullRequest();
         String login = pullRequest.getLogin();
@@ -238,15 +238,15 @@ public class PullRequestTimelinePresenter extends BasePresenter<PullRequestTimel
             manageObservable(observable);
     }
 
-    @Override public boolean isMerged(PullRequest pullRequest) {
+    @Override public boolean isMerged(final PullRequest pullRequest) {
         return pullRequest != null && (pullRequest.isMerged() || !InputHelper.isEmpty(pullRequest.getMergedAt()));
     }
 
-    @Override public boolean isCallingApi(long id, int vId) {
+    @Override public boolean isCallingApi(final long id, final int vId) {
         return getReactionsProvider().isCallingApi(id, vId);
     }
 
-    @Override public void onHandleComment(@NonNull String text, @Nullable Bundle bundle) {
+    @Override public void onHandleComment(final @NonNull String text, final @Nullable Bundle bundle) {
         if (getView() == null) return;
         PullRequest pullRequest = getView().getPullRequest();
         if (pullRequest != null) {
@@ -265,7 +265,7 @@ public class PullRequestTimelinePresenter extends BasePresenter<PullRequestTimel
         }
     }
 
-    @Override public boolean isPreviouslyReacted(long commentId, int vId) {
+    @Override public boolean isPreviouslyReacted(final long commentId, final int vId) {
         return getReactionsProvider().isPreviouslyReacted(commentId, vId);
     }
 
@@ -276,7 +276,7 @@ public class PullRequestTimelinePresenter extends BasePresenter<PullRequestTimel
         return reactionsProvider;
     }
 
-    @Override public void onClick(int groupPosition, int commentPosition, @NonNull View v, @NonNull ReviewCommentModel comment) {
+    @Override public void onClick(final int groupPosition, final int commentPosition, final @NonNull View v, final @NonNull ReviewCommentModel comment) {
         if (getView() == null || getView().getPullRequest() == null) return;
         if (v.getId() == R.id.commentMenu) {
             PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
@@ -308,7 +308,7 @@ public class PullRequestTimelinePresenter extends BasePresenter<PullRequestTimel
         }
     }
 
-    @Override public void onLongClick(int groupPosition, int commentPosition, @NonNull View v, @NonNull ReviewCommentModel model) {
+    @Override public void onLongClick(final int groupPosition, final int commentPosition, final @NonNull View v, final @NonNull ReviewCommentModel model) {
         if (getView() == null || getView().getPullRequest() == null) return;
         PullRequest pullRequest = getView().getPullRequest();
         String login = pullRequest.getLogin();
@@ -331,15 +331,15 @@ public class PullRequestTimelinePresenter extends BasePresenter<PullRequestTimel
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public boolean onCallApi(int page, @Nullable PullRequest parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable PullRequest parameter) {
         if (parameter == null) {
             sendToView(BaseMvp.FAView::hideProgress);
             return false;

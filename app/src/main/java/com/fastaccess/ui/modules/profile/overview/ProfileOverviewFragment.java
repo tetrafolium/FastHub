@@ -83,13 +83,13 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
     @State User userModel;
     private ProfilePagerMvp.View profileCallback;
 
-    public static ProfileOverviewFragment newInstance(@NonNull String login) {
+    public static ProfileOverviewFragment newInstance(final @NonNull String login) {
         ProfileOverviewFragment view = new ProfileOverviewFragment();
         view.setArguments(Bundler.start().put(BundleConstant.EXTRA, login).end());
         return view;
     }
 
-    @OnClick({R.id.following, R.id.followers, R.id.followBtn}) void onClick(View view) {
+    @OnClick({R.id.following, R.id.followers, R.id.followBtn}) void onClick(final View view) {
         if (view.getId() == R.id.followers) {
             profileCallback.onNavigateToFollowers();
         } else if (view.getId() == R.id.following) {
@@ -104,7 +104,7 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
         if (userModel != null) ActivityHelper.startCustomTab(getActivity(), userModel.getAvatarUrl());
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof ProfilePagerMvp.View) {
             profileCallback = (ProfilePagerMvp.View) getParentFragment();
@@ -122,7 +122,7 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
         return R.layout.profile_overview_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         onInitOrgs(getPresenter().getOrgs());
         onInitPinnedRepos(getPresenter().getNodes());
         if (savedInstanceState == null) {
@@ -144,7 +144,7 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
         return new ProfileOverviewPresenter();
     }
 
-    @SuppressLint("ClickableViewAccessibility") @Override public void onInitViews(@Nullable User userModel) {
+    @SuppressLint("ClickableViewAccessibility") @Override public void onInitViews(final @Nullable User userModel) {
         progress.setVisibility(GONE);
         if (userModel == null) return;
         if (profileCallback != null) profileCallback.onCheckType(userModel.isOrganizationType());
@@ -153,23 +153,23 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
                 TransitionManager.beginDelayedTransition((ViewGroup) getView(),
                 new AutoTransition().addListener(new Transition.TransitionListener() {
 
-                    @Override public void onTransitionStart(@NonNull Transition transition) {
+                    @Override public void onTransitionStart(final @NonNull Transition transition) {
 
                     }
 
-                    @Override public void onTransitionEnd(@NonNull Transition transition) {
+                    @Override public void onTransitionEnd(final @NonNull Transition transition) {
                         if (contributionView != null) getPresenter().onLoadContributionWidget(contributionView);
                     }
 
-                    @Override public void onTransitionCancel(@NonNull Transition transition) {
+                    @Override public void onTransitionCancel(final @NonNull Transition transition) {
 
                     }
 
-                    @Override public void onTransitionPause(@NonNull Transition transition) {
+                    @Override public void onTransitionPause(final @NonNull Transition transition) {
 
                     }
 
-                    @Override public void onTransitionResume(@NonNull Transition transition) {
+                    @Override public void onTransitionResume(final @NonNull Transition transition) {
 
                     }
                 }));
@@ -236,7 +236,7 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
         }
     }
 
-    @Override public void onInitContributions(boolean show) {
+    @Override public void onInitContributions(final boolean show) {
         if (contributionView == null) return;
         if (show) {
             contributionView.onResponse();
@@ -245,7 +245,7 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
         contributionsCaption.setVisibility(show ? VISIBLE : GONE);
     }
 
-    @Override public void onInitOrgs(@Nullable List<User> orgs) {
+    @Override public void onInitOrgs(final @Nullable List<User> orgs) {
         if (orgs != null && !orgs.isEmpty()) {
             orgsList.setNestedScrollingEnabled(false);
             ProfileOrgsAdapter adapter = new ProfileOrgsAdapter();
@@ -265,18 +265,18 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
         showMessage(R.string.error, R.string.no_user_found);
     }
 
-    @Override public void onInitPinnedRepos(@NonNull List<GetPinnedReposQuery.Node> nodes) {
+    @Override public void onInitPinnedRepos(final @NonNull List<GetPinnedReposQuery.Node> nodes) {
         if (pinnedReposTextView == null) return;
         if (!nodes.isEmpty()) {
             pinnedReposTextView.setVisibility(VISIBLE);
             pinnedReposCard.setVisibility(VISIBLE);
             ProfilePinnedReposAdapter adapter = new ProfilePinnedReposAdapter(nodes);
             adapter.setListener(new BaseViewHolder.OnItemClickListener<GetPinnedReposQuery.Node>() {
-                @Override public void onItemClick(int position, View v, GetPinnedReposQuery.Node item) {
+                @Override public void onItemClick(final int position, final View v, final GetPinnedReposQuery.Node item) {
                     SchemeParser.launchUri(getContext(), item.url().toString());
                 }
 
-                @Override public void onItemLongClick(int position, View v, GetPinnedReposQuery.Node item) {}
+                @Override public void onItemLongClick(final int position, final View v, final GetPinnedReposQuery.Node item) { }
             });
             pinnedList.addDivider();
             pinnedList.setAdapter(adapter);
@@ -286,7 +286,7 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
         }
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         progress.setVisibility(VISIBLE);
     }
 
@@ -294,17 +294,17 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
         progress.setVisibility(GONE);
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         onHideProgress();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         onHideProgress();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
     }
 
@@ -313,7 +313,7 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
     }
 
     private boolean isMeOrOrganization() {
-        return Login.getUser() != null && Login.getUser().getLogin().equalsIgnoreCase(getPresenter().getLogin()) ||
-               (userModel != null && userModel.getType() != null && !userModel.getType().equalsIgnoreCase("user"));
+        return Login.getUser() != null && Login.getUser().getLogin().equalsIgnoreCase(getPresenter().getLogin())
+               || (userModel != null && userModel.getType() != null && !userModel.getType().equalsIgnoreCase("user"));
     }
 }

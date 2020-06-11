@@ -38,7 +38,7 @@ public class RepoMiscDialogFragment extends BaseDialogFragment<RepoMiscMVp.View,
     private OnLoadMore<Integer> onLoadMore;
     private UsersAdapter adapter;
 
-    private static RepoMiscDialogFragment newInstance(@NonNull String owner, @NonNull String repo, @RepoMiscMVp.MiscType int type) {
+    private static RepoMiscDialogFragment newInstance(final @NonNull String owner, final @NonNull String repo, final @RepoMiscMVp.MiscType int type) {
         RepoMiscDialogFragment view = new RepoMiscDialogFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.EXTRA, owner)
@@ -48,12 +48,12 @@ public class RepoMiscDialogFragment extends BaseDialogFragment<RepoMiscMVp.View,
         return view;
     }
 
-    public static void show(@NonNull FragmentManager fragmentManager, @NonNull String owner,
-                            @NonNull String repo, @RepoMiscMVp.MiscType int type) {
+    public static void show(final @NonNull FragmentManager fragmentManager, final @NonNull String owner,
+                            final @NonNull String repo, final @RepoMiscMVp.MiscType int type) {
         newInstance(owner, repo, type).show(fragmentManager, RepoMiscDialogFragment.class.getName());
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<User> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<User> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -70,7 +70,7 @@ public class RepoMiscDialogFragment extends BaseDialogFragment<RepoMiscMVp.View,
         return R.layout.milestone_dialog_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, username is required");
         }
@@ -105,7 +105,7 @@ public class RepoMiscDialogFragment extends BaseDialogFragment<RepoMiscMVp.View,
         fastScroller.attachRecyclerView(recycler);
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
 
@@ -117,12 +117,12 @@ public class RepoMiscDialogFragment extends BaseDialogFragment<RepoMiscMVp.View,
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }

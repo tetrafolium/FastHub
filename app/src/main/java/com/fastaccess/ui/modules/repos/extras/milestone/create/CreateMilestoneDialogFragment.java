@@ -41,7 +41,7 @@ public class CreateMilestoneDialogFragment extends BaseDialogFragment<CreateMile
 
     private CreateMilestoneMvp.OnMilestoneAdded onMilestoneAdded;
 
-    public static CreateMilestoneDialogFragment newInstance(@NonNull String login, @NonNull String repo) {
+    public static CreateMilestoneDialogFragment newInstance(final @NonNull String login, final @NonNull String repo) {
         CreateMilestoneDialogFragment fragment = new CreateMilestoneDialogFragment();
         fragment.setArguments(Bundler.start()
                               .put(BundleConstant.EXTRA, login)
@@ -50,7 +50,7 @@ public class CreateMilestoneDialogFragment extends BaseDialogFragment<CreateMile
         return fragment;
     }
 
-    @Override public void onAttach(@NotNull Context context) {
+    @Override public void onAttach(final @NotNull Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof CreateMilestoneMvp.OnMilestoneAdded) {
             onMilestoneAdded = (CreateMilestoneMvp.OnMilestoneAdded) getParentFragment();
@@ -68,7 +68,7 @@ public class CreateMilestoneDialogFragment extends BaseDialogFragment<CreateMile
         return R.layout.create_milestone_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         String login = getArguments().getString(BundleConstant.EXTRA);
         String repo = getArguments().getString(BundleConstant.ID);
         if (login == null || repo == null) {
@@ -89,24 +89,24 @@ public class CreateMilestoneDialogFragment extends BaseDialogFragment<CreateMile
         return new CreateMilestonePresenter();
     }
 
-    @OnTouch(R.id.dueOnEditText) boolean onTouch(MotionEvent event) {
+    @OnTouch(R.id.dueOnEditText) boolean onTouch(final MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_UP) {
             DatePickerFragmentDialog.newInstance().show(getChildFragmentManager(), "DatePickerFragmentDialog");
         }
         return false;
     }
 
-    @Override public void onDateSet(long date) {
+    @Override public void onDateSet(final long date) {
         if (date > 0) {
             dueOnEditText.setText(ParseDateFormat.prettifyDate(date));
         }
     }
 
-    @Override public void onShowTitleError(boolean isError) {
+    @Override public void onShowTitleError(final boolean isError) {
         title.setError(isError ? getString(R.string.required_field) : null);
     }
 
-    @Override public void onMilestoneAdded(@NonNull MilestoneModel milestoneModel) {
+    @Override public void onMilestoneAdded(final @NonNull MilestoneModel milestoneModel) {
         hideProgress();
         onMilestoneAdded.onMilestoneAdded(milestoneModel);
         dismiss();

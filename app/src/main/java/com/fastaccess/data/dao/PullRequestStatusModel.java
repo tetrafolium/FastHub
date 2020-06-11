@@ -27,13 +27,13 @@ import lombok.Setter;
     private Date createdAt;
     private String mergeableState;
 
-    public PullRequestStatusModel() {}
+    public PullRequestStatusModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(this.state == null ? -1 : this.state.ordinal());
         dest.writeString(this.sha);
         dest.writeInt(this.totalCount);
@@ -45,7 +45,7 @@ import lombok.Setter;
         dest.writeString(this.mergeableState);
     }
 
-    protected PullRequestStatusModel(Parcel in) {
+    protected PullRequestStatusModel(final Parcel in) {
         int tmpState = in.readInt();
         this.state = tmpState == -1 ? null : StatusStateType.values()[tmpState];
         this.sha = in.readString();
@@ -60,11 +60,11 @@ import lombok.Setter;
     }
 
     public static final Creator<PullRequestStatusModel> CREATOR = new Creator<PullRequestStatusModel>() {
-        @Override public PullRequestStatusModel createFromParcel(Parcel source) {
+        @Override public PullRequestStatusModel createFromParcel(final Parcel source) {
             return new PullRequestStatusModel(source);
         }
 
-        @Override public PullRequestStatusModel[] newArray(int size) {
+        @Override public PullRequestStatusModel[] newArray(final int size) {
             return new PullRequestStatusModel[size];
         }
     };

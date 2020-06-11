@@ -23,7 +23,7 @@ import java.util.Date;
 
 public class PushNotificationService extends FirebaseMessagingService {
 
-    @Override public void onMessageReceived(RemoteMessage remoteMessage) {
+    @Override public void onMessageReceived(final RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         if (remoteMessage != null) {
             if (remoteMessage.getData() != null && !remoteMessage.getData().isEmpty()) {

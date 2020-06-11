@@ -45,13 +45,13 @@ public class LabelSpan extends ReplacementSpan {
     private final int color;
     private final SpanDimensions dims;
 
-    private LabelSpan(int color, @NonNull SpanDimensions dims) {
+    private LabelSpan(final int color, final @NonNull SpanDimensions dims) {
         this.color = color;
         txtPaint.bgColor = color;
         this.dims = dims;
     }
 
-    public LabelSpan(int color) {
+    public LabelSpan(final int color) {
         this(color, new SpanDimensions() {
             @Override public int getPadding() {
                 return 6;
@@ -66,7 +66,7 @@ public class LabelSpan extends ReplacementSpan {
             }
 
             @Override public int getMaxWidth() {
-                return 1000;//random number
+                return 1000; //random number
             }
 
             @Override public float getRoundedCornerRadius() {
@@ -83,7 +83,7 @@ public class LabelSpan extends ReplacementSpan {
         });
     }
 
-    @Override public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, FontMetricsInt fm) {
+    @Override public int getSize(final @NonNull Paint paint, final CharSequence text, final int start, final int end, final FontMetricsInt fm) {
         setupFontMetrics(text, start, end, fm, paint);
         if (fm != null) {
             final int padding = dims.getPadding();
@@ -96,8 +96,8 @@ public class LabelSpan extends ReplacementSpan {
         return measureWidth(txtPaint, text, start, end, dims.isRtl());
     }
 
-    private int measureWidth(Paint paint, CharSequence text, int start, int end,
-                             boolean includePaddingAfter) {
+    private int measureWidth(final Paint paint, final CharSequence text, final int start, final int end,
+                             final boolean includePaddingAfter) {
         final int paddingW = dims.getPadding() + dims.getPaddingExtraWidth();
         final int maxWidth = dims.getMaxWidth();
         int w = (int) paint.measureText(text, start, end) + 2 * paddingW;
@@ -110,7 +110,7 @@ public class LabelSpan extends ReplacementSpan {
         return w;
     }
 
-    private void setupFontMetrics(CharSequence text, int start, int end, FontMetricsInt fm, Paint p) {
+    private void setupFontMetrics(final CharSequence text, final int start, final int end, final FontMetricsInt fm, final Paint p) {
         txtPaint.set(p);
         final CharacterStyle[] otherSpans = ((Spanned) text).getSpans(start, end, CharacterStyle.class);
         for (CharacterStyle otherSpan : otherSpans) {
@@ -122,8 +122,8 @@ public class LabelSpan extends ReplacementSpan {
         }
     }
 
-    @Override public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end,
-                               float x, int top, int y, int bottom, @NonNull Paint paint) {
+    @Override public void draw(final @NonNull Canvas canvas, final CharSequence text, final int start, final int end,
+                               final float x, final int top, final int y, final int bottom, final @NonNull Paint paint) {
         final int padding = dims.getPadding();
         final int paddingW = padding + dims.getPaddingExtraWidth();
         final int maxWidth = dims.getMaxWidth();

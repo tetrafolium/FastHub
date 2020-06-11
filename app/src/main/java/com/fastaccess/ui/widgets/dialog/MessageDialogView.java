@@ -42,7 +42,7 @@ public class MessageDialogView extends BaseBottomSheetDialog {
 
     @Nullable private MessageDialogViewActionCallback callback;
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() != null && getParentFragment() instanceof MessageDialogViewActionCallback) {
             callback = (MessageDialogViewActionCallback) getParentFragment();
@@ -56,7 +56,7 @@ public class MessageDialogView extends BaseBottomSheetDialog {
         callback = null;
     }
 
-    @OnClick({R.id.cancel, R.id.ok}) public void onClick(@NonNull View view) {
+    @OnClick({R.id.cancel, R.id.ok}) public void onClick(final @NonNull View view) {
         if (callback != null) {
             isAlreadyHidden = true;
             callback.onMessageDialogActionClicked(view.getId() == R.id.ok, getArguments().getBundle("bundle"));
@@ -68,7 +68,7 @@ public class MessageDialogView extends BaseBottomSheetDialog {
         return R.layout.message_dialog;
     }
 
-    @SuppressWarnings("ConstantConditions") @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @SuppressWarnings("ConstantConditions") @Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Bundle bundle = getArguments();
         title.setText(bundle.getString("bundleTitle"));
@@ -90,7 +90,7 @@ public class MessageDialogView extends BaseBottomSheetDialog {
         }
     }
 
-    private void initButton(@NonNull Bundle bundle) {
+    private void initButton(final @NonNull Bundle bundle) {
         Bundle extra = bundle.getBundle("bundle");
         if (extra != null) {
             boolean yesNo = extra.getBoolean(BundleConstant.YES_NO_EXTRA);
@@ -124,38 +124,38 @@ public class MessageDialogView extends BaseBottomSheetDialog {
         super.onHidden();
     }
 
-    @NonNull public static MessageDialogView newInstance(@NonNull String bundleTitle, @NonNull String bundleMsg) {
+    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg) {
         return newInstance(bundleTitle, bundleMsg, null);
     }
 
-    @NonNull public static MessageDialogView newInstance(@NonNull String bundleTitle, @NonNull String bundleMsg, boolean isMarkDown) {
+    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final boolean isMarkDown) {
         return newInstance(bundleTitle, bundleMsg, isMarkDown, null);
     }
 
-    @NonNull public static MessageDialogView newInstance(@NonNull String bundleTitle, @NonNull String bundleMsg,
-            boolean isMarkDown, boolean hideCancel) {
+    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg,
+            final boolean isMarkDown, final boolean hideCancel) {
         return newInstance(bundleTitle, bundleMsg, isMarkDown, hideCancel, null);
     }
 
-    @NonNull public static MessageDialogView newInstance(@NonNull String bundleTitle, @NonNull String bundleMsg, boolean isMarkDown,
-            @Nullable Bundle bundle) {
+    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final boolean isMarkDown,
+            final @Nullable Bundle bundle) {
         MessageDialogView messageDialogView = new MessageDialogView();
         messageDialogView.setArguments(getBundle(bundleTitle, bundleMsg, isMarkDown, bundle, false));
         return messageDialogView;
     }
 
-    @NonNull public static MessageDialogView newInstance(@NonNull String bundleTitle, @NonNull String bundleMsg, boolean isMarkDown,
-            boolean hideCancel, @Nullable Bundle bundle) {
+    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final boolean isMarkDown,
+            final boolean hideCancel, final @Nullable Bundle bundle) {
         MessageDialogView messageDialogView = new MessageDialogView();
         messageDialogView.setArguments(getBundle(bundleTitle, bundleMsg, isMarkDown, bundle, hideCancel));
         return messageDialogView;
     }
 
-    @NonNull public static MessageDialogView newInstance(@NonNull String bundleTitle, @NonNull String bundleMsg, @Nullable Bundle bundle) {
+    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final @Nullable Bundle bundle) {
         return newInstance(bundleTitle, bundleMsg, false, bundle);
     }
 
-    private static Bundle getBundle(String bundleTitle, String bundleMsg, boolean isMarkDown, Bundle bundle, boolean hideCancel) {
+    private static Bundle getBundle(final String bundleTitle, final String bundleMsg, final boolean isMarkDown, final Bundle bundle, final boolean hideCancel) {
         return Bundler.start()
                .put("bundleTitle", bundleTitle)
                .put("bundleMsg", bundleMsg)
@@ -165,7 +165,7 @@ public class MessageDialogView extends BaseBottomSheetDialog {
                .end();
     }
 
-    @NonNull public static Bundle getYesNoBundle(@NonNull Context context) {
+    @NonNull public static Bundle getYesNoBundle(final @NonNull Context context) {
         return Bundler.start()
                .put("primary_extra", context.getString(R.string.yes))
                .put("secondary_extra", context.getString(R.string.no))

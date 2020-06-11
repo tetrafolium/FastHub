@@ -16,7 +16,7 @@ import org.htmlcleaner.TagNode;
 public class LinkHandler extends TagNodeHandler {
     private final static int linkColor = Color.parseColor("#4078C0");
 
-    @Override public void handleTagNode(TagNode node, SpannableStringBuilder spannableStringBuilder, int start, int end) {
+    @Override public void handleTagNode(final TagNode node, final SpannableStringBuilder spannableStringBuilder, final int start, final int end) {
         String href = node.getAttributeByName("href");
         if (href != null) {
             spannableStringBuilder.setSpan(new LinkSpan(href, linkColor), start, end, 33);

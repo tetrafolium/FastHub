@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
     @Nullable private Drawable checked;
     @Nullable private Drawable unchecked;
 
-    private int getMyIndex(TagNode node) {
+    private int getMyIndex(final TagNode node) {
         if (node.getParent() == null) {
             return -1;
         } else {
@@ -39,11 +39,11 @@ import lombok.NoArgsConstructor;
         }
     }
 
-    private String getParentName(TagNode node) {
+    private String getParentName(final TagNode node) {
         return node.getParent() == null ? null : node.getParent().getName();
     }
 
-    @Override public void beforeChildren(TagNode node, SpannableStringBuilder builder) {
+    @Override public void beforeChildren(final TagNode node, final SpannableStringBuilder builder) {
         TodoItems todoItem = null;
         if (node.getChildTags() != null && node.getChildTags().length > 0) {
             for (TagNode tagNode : node.getChildTags()) {
@@ -72,7 +72,7 @@ import lombok.NoArgsConstructor;
         }
     }
 
-    @Override public void handleTagNode(TagNode tagNode, SpannableStringBuilder spannableStringBuilder, int i, int i1) {
+    @Override public void handleTagNode(final TagNode tagNode, final SpannableStringBuilder spannableStringBuilder, final int i, final int i1) {
         appendNewLine(spannableStringBuilder);
     }
 

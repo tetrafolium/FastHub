@@ -20,20 +20,20 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.content);
     }
 
-    private PostReactionModel(Parcel in) {
+    private PostReactionModel(final Parcel in) {
         this.content = in.readString();
     }
 
     public static final Parcelable.Creator<PostReactionModel> CREATOR = new Parcelable.Creator<PostReactionModel>() {
-        @Override public PostReactionModel createFromParcel(Parcel source) {
+        @Override public PostReactionModel createFromParcel(final Parcel source) {
             return new PostReactionModel(source);
         }
 
-        @Override public PostReactionModel[] newArray(int size) {
+        @Override public PostReactionModel[] newArray(final int size) {
             return new PostReactionModel[size];
         }
     };

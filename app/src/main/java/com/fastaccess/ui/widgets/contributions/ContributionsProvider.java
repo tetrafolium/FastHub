@@ -18,7 +18,7 @@ public class ContributionsProvider {
     private final static String DATA_STRING = "data-count=\"";
     private final static String DATE_STRING = "data-date=\"";
 
-    @NonNull public List<ContributionsDay> getContributions(@Nullable String string) {
+    @NonNull public List<ContributionsDay> getContributions(final @Nullable String string) {
         ArrayList<ContributionsDay> contributions = new ArrayList<>();
         if (InputHelper.isEmpty(string)) return contributions;
         int fillPos = -1;

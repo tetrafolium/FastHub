@@ -19,17 +19,17 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.value);
         dest.writeString(this.label);
     }
 
-    private AppLanguageModel(Parcel in) {
+    private AppLanguageModel(final Parcel in) {
         this.value = in.readString();
         this.label = in.readString();
     }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -43,11 +43,11 @@ import lombok.Setter;
     }
 
     public static final Parcelable.Creator<AppLanguageModel> CREATOR = new Parcelable.Creator<AppLanguageModel>() {
-        @Override public AppLanguageModel createFromParcel(Parcel source) {
+        @Override public AppLanguageModel createFromParcel(final Parcel source) {
             return new AppLanguageModel(source);
         }
 
-        @Override public AppLanguageModel[] newArray(int size) {
+        @Override public AppLanguageModel[] newArray(final int size) {
             return new AppLanguageModel[size];
         }
     };

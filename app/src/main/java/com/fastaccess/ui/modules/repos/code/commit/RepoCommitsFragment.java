@@ -42,12 +42,12 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
     private CommitsAdapter adapter;
     private RepoPagerMvp.TabsBadgeListener tabsBadgeListener;
 
-    public static RepoCommitsFragment newInstance(@NonNull String repoId, @NonNull String login, @NonNull String branch) {
+    public static RepoCommitsFragment newInstance(final @NonNull String repoId, final @NonNull String login, final @NonNull String branch) {
         return newInstance(repoId, login, branch, null);
     }
 
-    public static RepoCommitsFragment newInstance(@NonNull String repoId, @NonNull String login, @NonNull String branch,
-            @Nullable String path) {
+    public static RepoCommitsFragment newInstance(final @NonNull String repoId, final @NonNull String login, final @NonNull String branch,
+            final @Nullable String path) {
         return newInstance(Bundler.start()
                            .put(BundleConstant.ID, repoId)
                            .put(BundleConstant.EXTRA, login)
@@ -56,7 +56,7 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
                            .end());
     }
 
-    public static RepoCommitsFragment newInstance(@NonNull Bundle bundle) {
+    public static RepoCommitsFragment newInstance(final @NonNull Bundle bundle) {
         RepoCommitsFragment view = new RepoCommitsFragment();
         view.setArguments(bundle);
         return view;
@@ -67,7 +67,7 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
         .show(getChildFragmentManager(), "BranchesFragment");
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (context instanceof RepoPagerMvp.TabsBadgeListener) {
             tabsBadgeListener = (RepoPagerMvp.TabsBadgeListener) context;
@@ -81,7 +81,7 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
         super.onDetach();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Commit> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Commit> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -98,7 +98,7 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
         return R.layout.commit_with_branch_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, therefore, issues can't be proceeded.");
         }
@@ -125,7 +125,7 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
         return new RepoCommitsPresenter();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
 
@@ -137,12 +137,12 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -154,10 +154,10 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
         return onLoadMore;
     }
 
-    @Override public void setBranchesData(@Nullable List<BranchesModel> branchesData, boolean firstTime) {
+    @Override public void setBranchesData(final @Nullable List<BranchesModel> branchesData, final boolean firstTime) {
     }
 
-    @Override public void onShowCommitCount(long sum) {
+    @Override public void onShowCommitCount(final long sum) {
         if (tabsBadgeListener != null) {
             tabsBadgeListener.onSetBadge(2, (int) sum);
         }
@@ -167,16 +167,16 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
         getPresenter().onCallApi(1, null);
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }
 
-    @Override public void onBranchSelected(@NonNull BranchesModel branch) {
+    @Override public void onBranchSelected(final @NonNull BranchesModel branch) {
         String ref = branch.getName();
         branches.setText(ref);
         getPresenter().onBranchChanged(ref);

@@ -21,7 +21,7 @@ import io.requery.Entity;
 public abstract class AbstractSearchHistory implements Parcelable {
     @Column(unique = true) String text;
 
-    public Single<SearchHistory> save(SearchHistory entity) {
+    public Single<SearchHistory> save(final SearchHistory entity) {
         return RxHelper.getSingle(
                    App.getInstance().getDataStore()
                    .delete(SearchHistory.class)
@@ -44,7 +44,7 @@ public abstract class AbstractSearchHistory implements Parcelable {
         return text;
     }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -62,26 +62,26 @@ public abstract class AbstractSearchHistory implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.text);
     }
 
-    public AbstractSearchHistory() {}
+    public AbstractSearchHistory() { }
 
-    public AbstractSearchHistory(String text) {
+    public AbstractSearchHistory(final String text) {
         this.text = text;
     }
 
-    protected AbstractSearchHistory(Parcel in) {
+    protected AbstractSearchHistory(final Parcel in) {
         this.text = in.readString();
     }
 
     public static final Creator<SearchHistory> CREATOR = new Creator<SearchHistory>() {
-        @Override public SearchHistory createFromParcel(Parcel source) {
+        @Override public SearchHistory createFromParcel(final Parcel source) {
             return new SearchHistory(source);
         }
 
-        @Override public SearchHistory[] newArray(int size) {
+        @Override public SearchHistory[] newArray(final int size) {
             return new SearchHistory[size];
         }
     };

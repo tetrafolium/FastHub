@@ -23,15 +23,15 @@ public class SearchCodeViewHolder extends BaseViewHolder<SearchCodeModel> {
     @BindView(R.id.details) FontTextView details;
     @BindView(R.id.commentsNo) View commentsNo;
 
-    private SearchCodeViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+    private SearchCodeViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
     }
 
-    public static SearchCodeViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter) {
+    public static SearchCodeViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
         return new SearchCodeViewHolder(getView(viewGroup, R.layout.issue_no_image_row_item), adapter);
     }
 
-    public void bind(@NonNull SearchCodeModel codeModel, boolean showRepoName) {
+    public void bind(final @NonNull SearchCodeModel codeModel, final boolean showRepoName) {
         if (showRepoName) {
             title.setText(codeModel.getRepository() != null ? codeModel.getRepository().getFullName() : "N/A");
             details.setText(codeModel.getName());
@@ -43,5 +43,5 @@ public class SearchCodeViewHolder extends BaseViewHolder<SearchCodeModel> {
         }
     }
 
-    @Override public void bind(@NonNull SearchCodeModel searchCodeModel) {}
+    @Override public void bind(final @NonNull SearchCodeModel searchCodeModel) { }
 }

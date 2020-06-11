@@ -37,15 +37,15 @@ class ProfileReposPresenter extends BasePresenter<ProfileReposMvp.View> implemen
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         sendToView(view -> {
             if (view.getLoadMore().getParameter() != null) {
                 onWorkOffline(view.getLoadMore().getParameter());
@@ -54,7 +54,7 @@ class ProfileReposPresenter extends BasePresenter<ProfileReposMvp.View> implemen
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable String parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable String parameter) {
         if (currentLoggedIn == null) {
             currentLoggedIn = Login.getUser().getLogin();
         }
@@ -90,7 +90,7 @@ class ProfileReposPresenter extends BasePresenter<ProfileReposMvp.View> implemen
         return repos;
     }
 
-    @Override public void onWorkOffline(@NonNull String login) {
+    @Override public void onWorkOffline(final @NonNull String login) {
         if (repos.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Repo.getMyRepos(login).toObservable()).subscribe(repoModels ->
                              sendToView(view -> view.onNotifyAdapter(repoModels, 1))));
@@ -99,25 +99,25 @@ class ProfileReposPresenter extends BasePresenter<ProfileReposMvp.View> implemen
         }
     }
 
-    @Override public void onItemClick(int position, View v, Repo item) {
+    @Override public void onItemClick(final int position, final View v, final Repo item) {
         SchemeParser.launchUri(v.getContext(), item.getHtmlUrl());
     }
 
-    @Override public void onItemLongClick(int position, View v, Repo item) {}
+    @Override public void onItemLongClick(final int position, final View v, final Repo item) { }
 
     @Override public void onFilterApply() {
         onCallApi(1, username);
     }
 
-    @Override public void onTypeSelected(String selectedType) {
+    @Override public void onTypeSelected(final String selectedType) {
         filterOptions.setType(selectedType);
     }
 
-    @Override public void onSortOptionSelected(String selectedSortOption) {
+    @Override public void onSortOptionSelected(final String selectedSortOption) {
         filterOptions.setSort(selectedSortOption);
     }
 
-    @Override public void onSortDirectionSelected(String selectedSortDirection) {
+    @Override public void onSortDirectionSelected(final String selectedSortDirection) {
         filterOptions.setSortDirection(selectedSortDirection);
     }
 

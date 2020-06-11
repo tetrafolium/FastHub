@@ -28,13 +28,13 @@ public class GistsViewHolder extends BaseViewHolder<Gist> {
     private boolean isFromProfile;
 
 
-    private GistsViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter, boolean isFromProfile) {
+    private GistsViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter, final boolean isFromProfile) {
         super(itemView, adapter);
         title.setMaxLines(2);
         this.isFromProfile = isFromProfile;
     }
 
-    public static GistsViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter, boolean isFromProfile) {
+    public static GistsViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter, final boolean isFromProfile) {
         if (!isFromProfile) {
             return new GistsViewHolder(getView(viewGroup, R.layout.feeds_row_item), adapter, false);
         } else {
@@ -42,7 +42,7 @@ public class GistsViewHolder extends BaseViewHolder<Gist> {
         }
     }
 
-    @Override public void bind(@NonNull Gist item) {
+    @Override public void bind(final @NonNull Gist item) {
         if (!isFromProfile) {
             if (avatar != null) {
                 String url = item.getOwner() != null ? item.getOwner().getAvatarUrl() : item.getUser() != null ? item.getUser().getAvatarUrl() : null;

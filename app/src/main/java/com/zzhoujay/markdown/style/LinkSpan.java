@@ -11,13 +11,13 @@ public class LinkSpan extends URLSpan {
 
     private int color;
 
-    public LinkSpan(String url, int color) {
+    public LinkSpan(final String url, final int color) {
         super(url);
         this.color = color;
     }
 
     @Override
-    public void updateDrawState(TextPaint ds) {
+    public void updateDrawState(final TextPaint ds) {
         super.updateDrawState(ds);
         ds.setColor(color);
         ds.setUnderlineText(false);

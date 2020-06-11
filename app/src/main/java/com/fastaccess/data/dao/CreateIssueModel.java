@@ -25,7 +25,7 @@ public class CreateIssueModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.title);
         dest.writeString(this.body);
         dest.writeStringList(this.labels);
@@ -33,7 +33,7 @@ public class CreateIssueModel implements Parcelable {
         dest.writeValue(this.milestone);
     }
 
-    protected CreateIssueModel(Parcel in) {
+    protected CreateIssueModel(final Parcel in) {
         this.title = in.readString();
         this.body = in.readString();
         this.labels = in.createStringArrayList();
@@ -42,11 +42,11 @@ public class CreateIssueModel implements Parcelable {
     }
 
     public static final Creator<CreateIssueModel> CREATOR = new Creator<CreateIssueModel>() {
-        @Override public CreateIssueModel createFromParcel(Parcel source) {
+        @Override public CreateIssueModel createFromParcel(final Parcel source) {
             return new CreateIssueModel(source);
         }
 
-        @Override public CreateIssueModel[] newArray(int size) {
+        @Override public CreateIssueModel[] newArray(final int size) {
             return new CreateIssueModel[size];
         }
     };

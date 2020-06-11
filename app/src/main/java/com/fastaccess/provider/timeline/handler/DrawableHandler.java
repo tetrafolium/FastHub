@@ -32,7 +32,7 @@ import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
         return textView == null;
     }
 
-    @Override public void handleTagNode(TagNode node, SpannableStringBuilder builder, int start, int end) {
+    @Override public void handleTagNode(final TagNode node, final SpannableStringBuilder builder, final int start, final int end) {
         String src = node.getAttributeByName("src");
         if (!InputHelper.isEmpty(src)) {
             if (!PrefGetter.isAutoImageDisabled()) {

@@ -36,15 +36,15 @@ public class FilterOptionsModel implements Parcelable {
     public FilterOptionsModel() {
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
-    public void setSort(String sort) {
+    public void setSort(final String sort) {
         this.sort = sort;
     }
 
-    public void setSortDirection(String sortDirection) {
+    public void setSortDirection(final String sortDirection) {
         this.sortDirection = sortDirection;
     }
 
@@ -114,11 +114,11 @@ public class FilterOptionsModel implements Parcelable {
         return sortDirectionList;
     }
 
-    public void setIsPersonalProfile(boolean isPersonalProfile) {
+    public void setIsPersonalProfile(final boolean isPersonalProfile) {
         this.isPersonalProfile = isPersonalProfile;
     }
 
-    public void setOrg(boolean org) {
+    public void setOrg(final boolean org) {
         this.isOrg = org;
     }
 
@@ -130,7 +130,7 @@ public class FilterOptionsModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.type);
         dest.writeString(this.sort);
         dest.writeString(this.sortDirection);
@@ -148,7 +148,7 @@ public class FilterOptionsModel implements Parcelable {
         dest.writeByte(this.isOrg ? (byte) 1 : (byte) 0);
     }
 
-    private FilterOptionsModel(Parcel in) {
+    private FilterOptionsModel(final Parcel in) {
         this.type = in.readString();
         this.sort = in.readString();
         this.sortDirection = in.readString();
@@ -169,11 +169,11 @@ public class FilterOptionsModel implements Parcelable {
     }
 
     public static final Creator<FilterOptionsModel> CREATOR = new Creator<FilterOptionsModel>() {
-        @Override public FilterOptionsModel createFromParcel(Parcel source) {
+        @Override public FilterOptionsModel createFromParcel(final Parcel source) {
             return new FilterOptionsModel(source);
         }
 
-        @Override public FilterOptionsModel[] newArray(int size) {
+        @Override public FilterOptionsModel[] newArray(final int size) {
             return new FilterOptionsModel[size];
         }
     };

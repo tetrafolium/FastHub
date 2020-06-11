@@ -28,7 +28,7 @@ import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
     private final boolean isPre;
     @PrefGetter.ThemeType private int theme;
 
-    private void getPlainText(StringBuffer buffer, Object node) {
+    private void getPlainText(final StringBuffer buffer, final Object node) {
         if (node instanceof ContentNode) {
             ContentNode contentNode = (ContentNode) node;
             String text = contentNode.getContent().toString();
@@ -41,7 +41,7 @@ import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
         }
     }
 
-    private String replace(String text) {
+    private String replace(final String text) {
         return text.replaceAll("&nbsp;", "\u00A0")
                .replaceAll("&amp;", "&")
                .replaceAll("&quot;", "\"")
@@ -58,12 +58,12 @@ import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
                .replaceAll("&horbar;", "\u2015");
     }
 
-    @Override public void handleTagNode(TagNode node, SpannableStringBuilder builder, int start, int end) {
+    @Override public void handleTagNode(final TagNode node, final SpannableStringBuilder builder, final int start, final int end) {
         if (isPre) {
             StringBuffer buffer = new StringBuffer();
-            buffer.append("\n");//fake padding top + make sure, pre is always by itself
+            buffer.append("\n"); //fake padding top + make sure, pre is always by itself
             getPlainText(buffer, node);
-            buffer.append("\n");//fake padding bottom + make sure, pre is always by itself
+            buffer.append("\n"); //fake padding bottom + make sure, pre is always by itself
             builder.append(replace(buffer.toString()));
             builder.append("\n");
             builder.setSpan(new CodeBackgroundRoundedSpan(color), start, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);

@@ -22,7 +22,7 @@ public class NameParser {
     public String username;
     public boolean isEnterprise;
 
-    public NameParser(@Nullable String url) {
+    public NameParser(final @Nullable String url) {
         if (!InputHelper.isEmpty(url)) {
             boolean isEnterprise = LinkParserHelper.isEnterprise(url);
             if (isEnterprise) {
@@ -41,9 +41,9 @@ public class NameParser {
     }
 
     @Override public String toString() {
-        return "NameParser{" +
-               "name='" + name + '\'' +
-               ", username='" + username + '\'' +
-               '}';
+        return "NameParser{"
+               + "name='" + name + '\''
+               + ", username='" + username + '\''
+               + '}';
     }
 }

@@ -30,7 +30,7 @@ public interface MainMvp {
         PULL_REQUESTS,
         PROFILE
     })
-    @Retention(RetentionPolicy.SOURCE) @interface NavigationType {}
+    @Retention(RetentionPolicy.SOURCE) @interface NavigationType { }
 
     interface View extends BaseMvp.FAView {
 

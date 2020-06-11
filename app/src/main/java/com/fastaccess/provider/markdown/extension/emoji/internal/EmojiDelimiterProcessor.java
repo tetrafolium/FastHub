@@ -21,7 +21,7 @@ public class EmojiDelimiterProcessor implements DelimiterProcessor {
         return 1;
     }
 
-    @Override public int getDelimiterUse(DelimiterRun opener, DelimiterRun closer) {
+    @Override public int getDelimiterUse(final DelimiterRun opener, final DelimiterRun closer) {
         if (opener.length() >= 1 && closer.length() >= 1) {
             return 1;
         } else {
@@ -29,7 +29,7 @@ public class EmojiDelimiterProcessor implements DelimiterProcessor {
         }
     }
 
-    @Override public void process(Text opener, Text closer, int delimiterCount) {
+    @Override public void process(final Text opener, final Text closer, final int delimiterCount) {
         Node emoji = new Emoji();
         Node tmp = opener.getNext();
         while (tmp != null && tmp != closer) {

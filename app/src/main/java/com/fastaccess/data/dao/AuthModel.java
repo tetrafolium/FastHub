@@ -31,7 +31,7 @@ public class AuthModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.clientId);
         dest.writeString(this.clientSecret);
         dest.writeString(this.redirectUri);
@@ -42,7 +42,7 @@ public class AuthModel implements Parcelable {
         dest.writeString(this.otpCode);
     }
 
-    private AuthModel(Parcel in) {
+    private AuthModel(final Parcel in) {
         this.clientId = in.readString();
         this.clientSecret = in.readString();
         this.redirectUri = in.readString();
@@ -54,11 +54,11 @@ public class AuthModel implements Parcelable {
     }
 
     public static final Creator<AuthModel> CREATOR = new Creator<AuthModel>() {
-        @Override public AuthModel createFromParcel(Parcel source) {
+        @Override public AuthModel createFromParcel(final Parcel source) {
             return new AuthModel(source);
         }
 
-        @Override public AuthModel[] newArray(int size) {
+        @Override public AuthModel[] newArray(final int size) {
             return new AuthModel[size];
         }
     };

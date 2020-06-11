@@ -25,22 +25,22 @@ import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class ColorPickerPreference extends Preference implements ColorPicker.OnChooseColorListener {
 
-    public ColorPickerPreference(Context context) {
+    public ColorPickerPreference(final Context context) {
         super(context);
         init();
     }
 
-    public ColorPickerPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public ColorPickerPreference(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init();
     }
 
-    public ColorPickerPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ColorPickerPreference(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    public ColorPickerPreference(Context context, AttributeSet attrs) {
+    public ColorPickerPreference(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -69,7 +69,7 @@ public class ColorPickerPreference extends Preference implements ColorPicker.OnC
     }
 
     @Override
-    public void onBindViewHolder(PreferenceViewHolder holder) {
+    public void onBindViewHolder(final PreferenceViewHolder holder) {
         super.onBindViewHolder(holder);
         final Button colorButton = (Button) holder.findViewById(R.id.color);
         colorButton.setBackgroundResource(R.drawable.circle_shape);
@@ -87,14 +87,14 @@ public class ColorPickerPreference extends Preference implements ColorPicker.OnC
         colorTypedArray.recycle();
         HashMap<Integer, Integer> preferenceValueToColor = new HashMap<>();
 
-        for(int i=0; i<colorNames.length; i++) {
+        for (int i = 0; i < colorNames.length; i++) {
             preferenceValueToColor.put(PrefGetter.getThemeColor(getContext().getResources(), colorNames[i]), colors.get(i));
         }
         return preferenceValueToColor.get(PrefGetter.getThemeColor(getContext()));
     }
 
     @Override
-    public void onChooseColor(int position, int color) {
+    public void onChooseColor(final int position, final int color) {
         // put code
         //getOnPreferenceChangeListener().onPreferenceChange(ColorPickerPreference.this, color);
         persistString(getContext().getResources().getStringArray(R.array.theme_colors)[position]);

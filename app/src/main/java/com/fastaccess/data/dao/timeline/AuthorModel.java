@@ -13,19 +13,19 @@ import lombok.Setter;
     private String email;
     private Date date;
 
-    public AuthorModel() {}
+    public AuthorModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.name);
         dest.writeString(this.email);
         dest.writeLong(this.date != null ? this.date.getTime() : -1);
     }
 
-    private AuthorModel(Parcel in) {
+    private AuthorModel(final Parcel in) {
         this.name = in.readString();
         this.email = in.readString();
         long tmpDate = in.readLong();
@@ -33,11 +33,11 @@ import lombok.Setter;
     }
 
     public static final Creator<AuthorModel> CREATOR = new Creator<AuthorModel>() {
-        @Override public AuthorModel createFromParcel(Parcel source) {
+        @Override public AuthorModel createFromParcel(final Parcel source) {
             return new AuthorModel(source);
         }
 
-        @Override public AuthorModel[] newArray(int size) {
+        @Override public AuthorModel[] newArray(final int size) {
             return new AuthorModel[size];
         }
     };

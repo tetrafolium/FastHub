@@ -19,26 +19,26 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.email);
         dest.writeString(this.first_name);
         dest.writeString(this.last_name);
     }
 
-    public SlackInvitePostModel() {}
+    public SlackInvitePostModel() { }
 
-    private SlackInvitePostModel(Parcel in) {
+    private SlackInvitePostModel(final Parcel in) {
         this.email = in.readString();
         this.first_name = in.readString();
         this.last_name = in.readString();
     }
 
     public static final Parcelable.Creator<SlackInvitePostModel> CREATOR = new Parcelable.Creator<SlackInvitePostModel>() {
-        @Override public SlackInvitePostModel createFromParcel(Parcel source) {
+        @Override public SlackInvitePostModel createFromParcel(final Parcel source) {
             return new SlackInvitePostModel(source);
         }
 
-        @Override public SlackInvitePostModel[] newArray(int size) {
+        @Override public SlackInvitePostModel[] newArray(final int size) {
             return new SlackInvitePostModel[size];
         }
     };

@@ -20,26 +20,26 @@ public class PullRequestAdapter extends BaseRecyclerAdapter<PullRequest, PullReq
     private boolean showRepoName;
     private boolean withAvatar;
 
-    public PullRequestAdapter(@NonNull List<PullRequest> data) {
+    public PullRequestAdapter(final @NonNull List<PullRequest> data) {
         this(data, false);
     }
 
-    public PullRequestAdapter(@NonNull List<PullRequest> data, boolean withAvatar) {
+    public PullRequestAdapter(final @NonNull List<PullRequest> data, final boolean withAvatar) {
         super(data);
         this.withAvatar = withAvatar;
     }
 
-    public PullRequestAdapter(@NonNull List<PullRequest> data, boolean withAvatar, boolean showRepoName) {
+    public PullRequestAdapter(final @NonNull List<PullRequest> data, final boolean withAvatar, final boolean showRepoName) {
         super(data);
         this.withAvatar = withAvatar;
         this.showRepoName = showRepoName;
     }
 
-    @Override protected PullRequestViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected PullRequestViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return PullRequestViewHolder.newInstance(parent, this, withAvatar, showRepoName);
     }
 
-    @Override protected void onBindView(PullRequestViewHolder holder, int position) {
+    @Override protected void onBindView(final PullRequestViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 

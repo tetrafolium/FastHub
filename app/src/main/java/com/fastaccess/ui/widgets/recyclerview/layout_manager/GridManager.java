@@ -12,29 +12,29 @@ public class GridManager extends GridLayoutManager {
 
     private int iconSize;
 
-    public GridManager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public GridManager(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public GridManager(Context context, int spanCount) {
+    public GridManager(final Context context, final int spanCount) {
         super(context, spanCount);
     }
 
-    public GridManager(Context context, int spanCount, int orientation, boolean reverseLayout) {
+    public GridManager(final Context context, final int spanCount, final int orientation, final boolean reverseLayout) {
         super(context, spanCount, orientation, reverseLayout);
     }
 
-    @Override public void onLayoutChildren(RecyclerView.Recycler recycler, RecyclerView.State state) {
+    @Override public void onLayoutChildren(final RecyclerView.Recycler recycler, final RecyclerView.State state) {
         try {
             super.onLayoutChildren(recycler, state);
             updateCount();
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
     }
 
-    @Override public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec, int heightSpec) {
+    @Override public void onMeasure(final RecyclerView.Recycler recycler, final RecyclerView.State state, final int widthSpec, final int heightSpec) {
         try {
             super.onMeasure(recycler, state, widthSpec, heightSpec);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
     }
 
     private void updateCount() {
@@ -51,7 +51,7 @@ public class GridManager extends GridLayoutManager {
         return iconSize;
     }
 
-    public void setIconSize(int iconSize) {
+    public void setIconSize(final int iconSize) {
         this.iconSize = iconSize;
         updateCount();
     }

@@ -12,17 +12,17 @@ import org.commonmark.renderer.html.HtmlRenderer;
  */
 
 public class EmojiExtension implements Parser.ParserExtension, HtmlRenderer.HtmlRendererExtension {
-    private EmojiExtension() {}
+    private EmojiExtension() { }
 
     public static Extension create() {
         return new EmojiExtension();
     }
 
-    @Override public void extend(Parser.Builder parserBuilder) {
+    @Override public void extend(final Parser.Builder parserBuilder) {
         parserBuilder.customDelimiterProcessor(new EmojiDelimiterProcessor());
     }
 
-    @Override public void extend(HtmlRenderer.Builder rendererBuilder) {
+    @Override public void extend(final HtmlRenderer.Builder rendererBuilder) {
         rendererBuilder.nodeRendererFactory(EmojiNodeRenderer::new);
     }
 }

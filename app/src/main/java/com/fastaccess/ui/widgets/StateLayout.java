@@ -42,15 +42,15 @@ public class StateLayout extends NestedScrollView {
         }
     }
 
-    public StateLayout(Context context) {
+    public StateLayout(final Context context) {
         super(context);
     }
 
-    public StateLayout(Context context, AttributeSet attrs) {
+    public StateLayout(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public StateLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public StateLayout(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -75,7 +75,7 @@ public class StateLayout extends NestedScrollView {
         setVisibility(GONE);
     }
 
-    public void showReload(int adapterCount) {
+    public void showReload(final int adapterCount) {
         showReload = adapterCount == 0;
         showReload();
     }
@@ -90,11 +90,11 @@ public class StateLayout extends NestedScrollView {
         }
     }
 
-    public void setEmptyText(@StringRes int resId) {
+    public void setEmptyText(final @StringRes int resId) {
         setEmptyText(getResources().getString(resId));
     }
 
-    public void setEmptyText(@NonNull String text) {
+    public void setEmptyText(final @NonNull String text) {
         this.emptyTextValue = text;
         emptyText.setText(emptyTextValue);
     }
@@ -104,14 +104,14 @@ public class StateLayout extends NestedScrollView {
         hideReload();
         setVisibility(VISIBLE);
         emptyText.setVisibility(VISIBLE);
-        layoutState = SHOW_EMPTY_STATE;// last so it override visibility state.
+        layoutState = SHOW_EMPTY_STATE; // last so it override visibility state.
     }
 
-    public void setOnReloadListener(OnClickListener onReloadListener) {
+    public void setOnReloadListener(final OnClickListener onReloadListener) {
         this.onReloadListener = onReloadListener;
     }
 
-    @Override public void setVisibility(int visibility) {
+    @Override public void setVisibility(final int visibility) {
         super.setVisibility(visibility);
         if (visibility == GONE || visibility == INVISIBLE) {
             layoutState = HIDDEN;
@@ -137,7 +137,7 @@ public class StateLayout extends NestedScrollView {
         return StateSaver.saveInstanceState(this, super.onSaveInstanceState());
     }
 
-    @Override public void onRestoreInstanceState(Parcelable state) {
+    @Override public void onRestoreInstanceState(final Parcelable state) {
         super.onRestoreInstanceState(StateSaver.restoreInstanceState(this, state));
         onHandleLayoutState();
     }

@@ -35,13 +35,13 @@ public class TeamReposFragment extends BaseFragment<TeamReposMvp.View, TeamRepos
     private OnLoadMore<Long> onLoadMore;
     private ReposAdapter adapter;
 
-    public static TeamReposFragment newInstance(long id) {
+    public static TeamReposFragment newInstance(final long id) {
         TeamReposFragment view = new TeamReposFragment();
         view.setArguments(Bundler.start().put(BundleConstant.EXTRA, id).end());
         return view;
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Repo> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Repo> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -58,7 +58,7 @@ public class TeamReposFragment extends BaseFragment<TeamReposMvp.View, TeamRepos
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, username is required");
         }
@@ -82,7 +82,7 @@ public class TeamReposFragment extends BaseFragment<TeamReposMvp.View, TeamRepos
         return new TeamReposPresenter();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
 
@@ -94,12 +94,12 @@ public class TeamReposFragment extends BaseFragment<TeamReposMvp.View, TeamRepos
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -115,11 +115,11 @@ public class TeamReposFragment extends BaseFragment<TeamReposMvp.View, TeamRepos
         getPresenter().onCallApi(1, getArguments().getLong(BundleConstant.EXTRA));
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

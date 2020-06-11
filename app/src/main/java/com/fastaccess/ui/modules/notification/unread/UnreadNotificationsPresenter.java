@@ -27,7 +27,7 @@ import io.reactivex.Observable;
 public class UnreadNotificationsPresenter extends BasePresenter<UnreadNotificationMvp.View> implements UnreadNotificationMvp.Presenter {
     private ArrayList<GroupedNotificationModel> notifications = new ArrayList<>();
 
-    @Override public void onItemClick(int position, View v, GroupedNotificationModel model) {
+    @Override public void onItemClick(final int position, final View v, final GroupedNotificationModel model) {
         if (getView() == null) return;
         Notification item = model.getNotification();
         if (v.getId() == R.id.markAsRead) {
@@ -42,7 +42,7 @@ public class UnreadNotificationsPresenter extends BasePresenter<UnreadNotificati
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, GroupedNotificationModel item) {}
+    @Override public void onItemLongClick(final int position, final View v, final GroupedNotificationModel item) { }
 
     @Override public void onWorkOffline() {
         if (notifications.isEmpty()) {
@@ -58,7 +58,7 @@ public class UnreadNotificationsPresenter extends BasePresenter<UnreadNotificati
         return notifications;
     }
 
-    @Override public void onMarkAllAsRead(@NonNull List<GroupedNotificationModel> data) {
+    @Override public void onMarkAllAsRead(final @NonNull List<GroupedNotificationModel> data) {
         manageDisposable(RxHelper.getObservable(Observable.fromIterable(data))
                          .filter(group -> group.getType() == GroupedNotificationModel.ROW)
                          .filter(group -> group.getNotification() != null && group.getNotification().isUnread())
@@ -79,7 +79,7 @@ public class UnreadNotificationsPresenter extends BasePresenter<UnreadNotificati
         makeRestCall(observable, response -> sendToView(view -> view.onNotifyAdapter(response)));
     }
 
-    private void markAsRead(int position, View v, Notification item) {
+    private void markAsRead(final int position, final View v, final Notification item) {
         item.setUnread(false);
         manageDisposable(item.save(item));
         sendToView(view -> view.onRemove(position));

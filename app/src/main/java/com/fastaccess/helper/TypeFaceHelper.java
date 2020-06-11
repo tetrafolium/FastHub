@@ -11,11 +11,11 @@ public class TypeFaceHelper {
 
     private static Typeface typeFace;
 
-    public static void generateTypeface(Context context) {
+    public static void generateTypeface(final Context context) {
         typeFace = Typeface.createFromAsset(context.getAssets(), "fonts/app_font.ttf");
     }
 
-    public static void applyTypeface(TextView textView) {
+    public static void applyTypeface(final TextView textView) {
         textView.setTypeface(typeFace);
     }
 

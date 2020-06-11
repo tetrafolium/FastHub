@@ -27,8 +27,8 @@ import java.util.Date;
 
 public class TimelineProvider {
 
-    @NonNull public static SpannableBuilder getStyledEvents(@NonNull GenericEvent issueEventModel,
-            @NonNull Context context, boolean isMerged) {
+    @NonNull public static SpannableBuilder getStyledEvents(final @NonNull GenericEvent issueEventModel,
+            final @NonNull Context context, final boolean isMerged) {
         IssueEventType event = issueEventModel.getEvent();
         SpannableBuilder spannableBuilder = SpannableBuilder.builder();
         Date date = issueEventModel.getCreatedAt() != null
@@ -63,8 +63,8 @@ public class TimelineProvider {
                 if (user != null) {
                     spannableBuilder.bold(user.getLogin());
                 }
-                if ((event == IssueEventType.review_requested || (event == IssueEventType.review_dismissed ||
-                        event == IssueEventType.review_request_removed)) && user != null) {
+                if ((event == IssueEventType.review_requested || (event == IssueEventType.review_dismissed
+                        || event == IssueEventType.review_request_removed)) && user != null) {
                     appendReviews(issueEventModel, event, spannableBuilder, from, issueEventModel.getReviewRequester());
                 } else if (event == IssueEventType.closed || event == IssueEventType.reopened) {
                     if (isMerged) {
@@ -100,8 +100,8 @@ public class TimelineProvider {
                 } else if (event == IssueEventType.locked || event == IssueEventType.unlocked) {
                     spannableBuilder
                     .append(" ")
-                    .append(event == IssueEventType.locked ? "locked and limited conversation to collaborators" : "unlocked this " +
-                            "conversation");
+                    .append(event == IssueEventType.locked ? "locked and limited conversation to collaborators" : "unlocked this "
+                            + "conversation");
                 } else if (event == IssueEventType.head_ref_deleted || event == IssueEventType.head_ref_restored) {
                     spannableBuilder.append(" ").append(event.name().replaceAll("_", " "),
                                                         new BackgroundColorSpan(HtmlHelper.getWindowBackground(PrefGetter.getThemeType())));
@@ -165,9 +165,9 @@ public class TimelineProvider {
         return spannableBuilder;
     }
 
-    private static void appendReviews(@NonNull GenericEvent issueEventModel, @NonNull IssueEventType event,
-                                      @NonNull SpannableBuilder spannableBuilder, @NonNull String from,
-                                      @NonNull User user) {
+    private static void appendReviews(final @NonNull GenericEvent issueEventModel, final @NonNull IssueEventType event,
+                                      final @NonNull SpannableBuilder spannableBuilder, final @NonNull String from,
+                                      final @NonNull User user) {
         spannableBuilder.append(" ");
         User reviewer = issueEventModel.getRequestedReviewer();
         if (reviewer != null && user.getLogin().equalsIgnoreCase(reviewer.getLogin())) {
@@ -193,11 +193,11 @@ public class TimelineProvider {
         }
     }
 
-    @NonNull private static CharSequence getDate(@Nullable Date date) {
+    @NonNull private static CharSequence getDate(final @Nullable Date date) {
         return ParseDateFormat.getTimeAgo(date);
     }
 
-    @NonNull private static String substring(@Nullable String value) {
+    @NonNull private static String substring(final @Nullable String value) {
         if (value == null) {
             return "";
         }

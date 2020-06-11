@@ -40,13 +40,13 @@ public class FastHubAboutActivity extends MaterialAboutActivity {
 
     private View malRecyclerview;
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
         ThemeEngine.INSTANCE.applyForAbout(this);
         super.onCreate(savedInstanceState);
         malRecyclerview = findViewById(R.id.mal_recyclerview);
     }
 
-    @NonNull @Override protected MaterialAboutList getMaterialAboutList(@NonNull Context context) {
+    @NonNull @Override protected MaterialAboutList getMaterialAboutList(final @NonNull Context context) {
         MaterialAboutCard.Builder appCardBuilder = new MaterialAboutCard.Builder();
         buildApp(context, appCardBuilder);
         MaterialAboutCard.Builder miscCardBuilder = new MaterialAboutCard.Builder();
@@ -64,21 +64,21 @@ public class FastHubAboutActivity extends MaterialAboutActivity {
         return getString(R.string.app_name);
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == BundleConstant.REQUEST_CODE) {
             Toasty.success(App.getInstance(), getString(R.string.thank_you_for_feedback), Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
-        return false;//override
+        return false; //override
     }
 
-    private void buildLogo(Context context, MaterialAboutCard.Builder newLogoAuthor, MaterialAboutCard.Builder logoAuthor) {
+    private void buildLogo(final Context context, final MaterialAboutCard.Builder newLogoAuthor, final MaterialAboutCard.Builder logoAuthor) {
         newLogoAuthor.title(getString(R.string.logo_designer, "Cookicons"));
         newLogoAuthor.addItem(new MaterialAboutActionItem.Builder()
                               .text(R.string.google_plus)
@@ -114,13 +114,13 @@ public class FastHubAboutActivity extends MaterialAboutActivity {
                  .build());
     }
 
-    private void buildAuthor(Context context, MaterialAboutCard.Builder authorCardBuilder) {
+    private void buildAuthor(final Context context, final MaterialAboutCard.Builder authorCardBuilder) {
         authorCardBuilder.title(R.string.author);
         authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
                                   .text("Kosh Sergani")
                                   .subText("k0shk0sh")
                                   .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
-                                  .setOnClickAction(() -> UserPagerActivity.startActivity(context, "k0shk0sh", false, false,0))
+                                  .setOnClickAction(() -> UserPagerActivity.startActivity(context, "k0shk0sh", false, false, 0))
                                   .build())
         .addItem(new MaterialAboutActionItem.Builder()
                  .text(R.string.fork_github)
@@ -131,7 +131,7 @@ public class FastHubAboutActivity extends MaterialAboutActivity {
                  getString(R.string.send_email), true, getString(R.string.email_address), getString(R.string.question_concerning_fasthub)));
     }
 
-    private void buildMisc(Context context, MaterialAboutCard.Builder miscCardBuilder) {
+    private void buildMisc(final Context context, final MaterialAboutCard.Builder miscCardBuilder) {
         miscCardBuilder.title(R.string.about)
         .addItem(new MaterialAboutActionItem.Builder()
                  .text(R.string.support_development)
@@ -161,7 +161,7 @@ public class FastHubAboutActivity extends MaterialAboutActivity {
                  .build());
     }
 
-    private void buildApp(Context context, MaterialAboutCard.Builder appCardBuilder) {
+    private void buildApp(final Context context, final MaterialAboutCard.Builder appCardBuilder) {
         appCardBuilder.addItem(new MaterialAboutActionItem.Builder()
                                .text(getString(R.string.version))
                                .icon(ContextCompat.getDrawable(context, R.drawable.ic_update))

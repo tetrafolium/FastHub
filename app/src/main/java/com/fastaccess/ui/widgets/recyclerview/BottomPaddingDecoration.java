@@ -15,23 +15,23 @@ import com.fastaccess.helper.ViewHelper;
 class BottomPaddingDecoration extends RecyclerView.ItemDecoration {
     private final int bottomPadding;
 
-    private BottomPaddingDecoration(int bottomOffset) {
+    private BottomPaddingDecoration(final int bottomOffset) {
         bottomPadding = bottomOffset;
     }
 
-    private BottomPaddingDecoration(@NonNull Context context) {
+    private BottomPaddingDecoration(final @NonNull Context context) {
         this(ViewHelper.toPx(context, context.getResources().getDimensionPixelSize(R.dimen.fab_spacing)));
     }
 
-    public static BottomPaddingDecoration with(int bottomPadding) {
+    public static BottomPaddingDecoration with(final int bottomPadding) {
         return new BottomPaddingDecoration(bottomPadding);
     }
 
-    public static BottomPaddingDecoration with(@NonNull Context context) {
+    public static BottomPaddingDecoration with(final @NonNull Context context) {
         return new BottomPaddingDecoration(context);
     }
 
-    @Override public void getItemOffsets(@NonNull Rect outRect, View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+    @Override public void getItemOffsets(final @NonNull Rect outRect, final View view, final @NonNull RecyclerView parent, final @NonNull RecyclerView.State state) {
         super.getItemOffsets(outRect, view, parent, state);
         int dataSize = state.getItemCount();
         int position = parent.getChildAdapterPosition(view);

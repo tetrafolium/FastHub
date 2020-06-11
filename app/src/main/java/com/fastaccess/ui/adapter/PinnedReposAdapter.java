@@ -19,19 +19,19 @@ public class PinnedReposAdapter extends BaseRecyclerAdapter<PinnedRepos, PinnedR
 
     private boolean singleLine;
 
-    public PinnedReposAdapter(boolean singleLine) {
+    public PinnedReposAdapter(final boolean singleLine) {
         this.singleLine = singleLine;
     }
 
-    public PinnedReposAdapter(@NonNull List<PinnedRepos> data, @Nullable BaseViewHolder.OnItemClickListener<PinnedRepos> listener) {
+    public PinnedReposAdapter(final @NonNull List<PinnedRepos> data, final @Nullable BaseViewHolder.OnItemClickListener<PinnedRepos> listener) {
         super(data, listener);
     }
 
-    @Override protected PinnedReposViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected PinnedReposViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return PinnedReposViewHolder.newInstance(parent, this, singleLine);
     }
 
-    @Override protected void onBindView(PinnedReposViewHolder holder, int position) {
+    @Override protected void onBindView(final PinnedReposViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

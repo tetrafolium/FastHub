@@ -122,15 +122,15 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
     String reposOwner;
     @Nullable boolean hasProjects;
 
-    public Disposable save(Repo entity) {
+    public Disposable save(final Repo entity) {
         return Single.create(e -> {
             BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
             dataSource.delete(Repo.class).where(Repo.ID.eq(entity.getId())).get().value();
             dataSource.insert(entity);
-        }).subscribe(o -> {/**/}, Throwable::printStackTrace);
+        }).subscribe(o -> { /**/ }, Throwable::printStackTrace);
     }
 
-    public static Maybe<Repo> getRepo(@NonNull String name, @NonNull String login) {
+    public static Maybe<Repo> getRepo(final @NonNull String name, final @NonNull String login) {
         return App.getInstance().getDataStore()
                .select(Repo.class)
                .where(FULL_NAME.eq(login + "/" + name))
@@ -138,7 +138,7 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
                .maybe();
     }
 
-    public static Repo getRepo(long id) {
+    public static Repo getRepo(final long id) {
         return App.getInstance().getDataStore()
                .select(Repo.class)
                .where(ID.eq(id))
@@ -146,7 +146,7 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
                .firstOrNull();
     }
 
-    public static Disposable saveStarred(@NonNull List<Repo> models, @NonNull String starredUser) {
+    public static Disposable saveStarred(final @NonNull List<Repo> models, final @NonNull String starredUser) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 Login login = Login.getUser();
@@ -173,12 +173,12 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
                     }
                 }
                 s.onNext("");
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) { }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Disposable saveMyRepos(@NonNull List<Repo> models, @NonNull String reposOwner) {
+    public static Disposable saveMyRepos(final @NonNull List<Repo> models, final @NonNull String reposOwner) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 Login login = Login.getUser();
@@ -209,10 +209,10 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Single<List<Repo>> getStarred(@NonNull String starredUser) {
+    public static Single<List<Repo>> getStarred(final @NonNull String starredUser) {
         return App.getInstance().getDataStore()
                .select(Repo.class)
                .where(STARRED_USER.eq(starredUser))
@@ -222,7 +222,7 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
                .toList();
     }
 
-    public static Single<List<Repo>> getMyRepos(@NonNull String reposOwner) {
+    public static Single<List<Repo>> getMyRepos(final @NonNull String reposOwner) {
         return App.getInstance().getDataStore()
                .select(Repo.class)
                .where(REPOS_OWNER.eq(reposOwner))
@@ -232,7 +232,7 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
                .toList();
     }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AbstractRepo that = (AbstractRepo) o;
@@ -247,7 +247,7 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.name);
         dest.writeString(this.fullName);
@@ -328,7 +328,7 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
         dest.writeByte(this.hasProjects ? (byte) 1 : (byte) 0);
     }
 
-    protected AbstractRepo(Parcel in) {
+    protected AbstractRepo(final Parcel in) {
         this.id = in.readLong();
         this.name = in.readString();
         this.fullName = in.readString();
@@ -414,11 +414,11 @@ import static com.fastaccess.data.dao.model.Repo.UPDATED_AT;
     }
 
     public static final Creator<Repo> CREATOR = new Creator<Repo>() {
-        @Override public Repo createFromParcel(Parcel source) {
+        @Override public Repo createFromParcel(final Parcel source) {
             return new Repo(source);
         }
 
-        @Override public Repo[] newArray(int size) {
+        @Override public Repo[] newArray(final int size) {
             return new Repo[size];
         }
     };

@@ -29,19 +29,19 @@ class TeamReposPresenter extends BasePresenter<TeamReposMvp.View> implements Tea
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Long parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Long parameter) {
         if (parameter == null) {
             throw new NullPointerException("Username is null");
         }
@@ -66,13 +66,13 @@ class TeamReposPresenter extends BasePresenter<TeamReposMvp.View> implements Tea
         return repos;
     }
 
-    @Override public void onWorkOffline(@NonNull String login) {
+    @Override public void onWorkOffline(final @NonNull String login) {
         //TODO
     }
 
-    @Override public void onItemClick(int position, View v, Repo item) {
+    @Override public void onItemClick(final int position, final View v, final Repo item) {
         SchemeParser.launchUri(v.getContext(), item.getHtmlUrl());
     }
 
-    @Override public void onItemLongClick(int position, View v, Repo item) {}
+    @Override public void onItemLongClick(final int position, final View v, final Repo item) { }
 }

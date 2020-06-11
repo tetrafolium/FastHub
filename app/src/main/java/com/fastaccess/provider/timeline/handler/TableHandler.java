@@ -45,7 +45,7 @@ public class TableHandler extends TagNodeHandler {
         return true;
     }
 
-    @Override public void handleTagNode(TagNode node, SpannableStringBuilder builder, int start, int end) {
+    @Override public void handleTagNode(final TagNode node, final SpannableStringBuilder builder, final int start, final int end) {
         Table table = getTable(node);
         for (int i = 0; i < table.getRows().size(); i++) {
             List<Spanned> row = table.getRows().get(i);
@@ -65,15 +65,15 @@ public class TableHandler extends TagNodeHandler {
         builder.append("\n");
     }
 
-    public void setTableWidth(int tableWidth) {
+    public void setTableWidth(final int tableWidth) {
         this.tableWidth = tableWidth;
     }
 
-    public void setTextColor(int textColor) {
+    public void setTextColor(final int textColor) {
         this.textColor = textColor;
     }
 
-    private void readNode(Object node, Table table) {
+    private void readNode(final Object node, final Table table) {
         if (node instanceof TagNode) {
             TagNode tagNode = (TagNode) node;
             if (tagNode.getName().equals("td") || tagNode.getName().equals("th")) {
@@ -91,7 +91,7 @@ public class TableHandler extends TagNodeHandler {
 
     }
 
-    private Table getTable(TagNode node) {
+    private Table getTable(final TagNode node) {
 
         String border = node.getAttributeByName("border");
 
@@ -115,7 +115,7 @@ public class TableHandler extends TagNodeHandler {
         return textPaint;
     }
 
-    private int calculateRowHeight(List<Spanned> row) {
+    private int calculateRowHeight(final List<Spanned> row) {
 
         if (row.size() == 0) {
             return 0;
@@ -147,13 +147,13 @@ public class TableHandler extends TagNodeHandler {
         private int rowHeight;
         private boolean paintBorder;
 
-        TableRowDrawable(List<Spanned> tableRow, boolean paintBorder) {
+        TableRowDrawable(final List<Spanned> tableRow, final boolean paintBorder) {
             this.tableRow = tableRow;
             this.rowHeight = calculateRowHeight(tableRow);
             this.paintBorder = paintBorder;
         }
 
-        @Override public void draw(@NonNull Canvas canvas) {
+        @Override public void draw(final @NonNull Canvas canvas) {
             Paint paint = new Paint();
             paint.setColor(textColor);
             paint.setStyle(Style.STROKE);
@@ -205,12 +205,12 @@ public class TableHandler extends TagNodeHandler {
         }
 
         @Override
-        public void setAlpha(int alpha) {
+        public void setAlpha(final int alpha) {
 
         }
 
         @Override
-        public void setColorFilter(ColorFilter cf) {
+        public void setColorFilter(final ColorFilter cf) {
 
         }
     }
@@ -220,7 +220,7 @@ public class TableHandler extends TagNodeHandler {
         private boolean drawBorder;
         private List<List<Spanned>> content = new ArrayList<>();
 
-        private Table(boolean drawBorder) {
+        private Table(final boolean drawBorder) {
             this.drawBorder = drawBorder;
         }
 
@@ -240,7 +240,7 @@ public class TableHandler extends TagNodeHandler {
             return content;
         }
 
-        void addCell(Spanned text) {
+        void addCell(final Spanned text) {
             if (content.isEmpty()) {
                 throw new IllegalStateException("No rows added yet");
             }

@@ -45,20 +45,20 @@ class RepoIssuesPresenter extends BasePresenter<RepoIssuesMvp.View> implements R
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable IssueState parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable IssueState parameter) {
         if (parameter == null) {
             sendToView(RepoIssuesMvp.View::hideProgress);
             return false;
@@ -104,7 +104,7 @@ class RepoIssuesPresenter extends BasePresenter<RepoIssuesMvp.View> implements R
         return true;
     }
 
-    @Override public void onFragmentCreated(@NonNull Bundle bundle, @NonNull IssueState issueState) {
+    @Override public void onFragmentCreated(final @NonNull Bundle bundle, final @NonNull IssueState issueState) {
         repoId = bundle.getString(BundleConstant.ID);
         login = bundle.getString(BundleConstant.EXTRA);
         this.issueState = issueState;
@@ -137,29 +137,29 @@ class RepoIssuesPresenter extends BasePresenter<RepoIssuesMvp.View> implements R
         return login;
     }
 
-    @Override public void onSetSortBy(boolean isLastUpdated) {
+    @Override public void onSetSortBy(final boolean isLastUpdated) {
         this.isLastUpdated = isLastUpdated;
     }
 
-    @Override public void onItemClick(int position, View v, Issue item) {
+    @Override public void onItemClick(final int position, final View v, final Issue item) {
         PullsIssuesParser parser = PullsIssuesParser.getForIssue(item.getHtmlUrl());
         if (parser != null && getView() != null) {
             getView().onOpenIssue(parser);
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, Issue item) {
+    @Override public void onItemLongClick(final int position, final View v, final Issue item) {
         if (getView() != null) getView().onShowIssuePopup(item);
     }
 
-    private void onCallCountApi(@NonNull IssueState issueState) {
+    private void onCallCountApi(final @NonNull IssueState issueState) {
         manageDisposable(RxHelper.getObservable(RestProvider.getIssueService(isEnterprise())
                                                 .getIssuesWithCount(RepoQueryProvider.getIssuesPullRequestQuery(login, repoId, issueState, false), 1))
                          .subscribe(pullRequestPageable -> sendToView(view -> view.onUpdateCount(pullRequestPageable.getTotalCount())),
                                     Throwable::printStackTrace));
     }
 
-    private Observable<List<Issue>> grabMoreIssues(@NonNull List<Issue> issues, @NonNull String state, @NonNull String sortBy, int page) {
+    private Observable<List<Issue>> grabMoreIssues(final @NonNull List<Issue> issues, final @NonNull String state, final @NonNull String sortBy, final int page) {
         return RestProvider.getIssueService(isEnterprise()).getRepositoryIssues(login, repoId, state, sortBy, page)
         .flatMap(issuePageable -> {
             if (issuePageable != null) {

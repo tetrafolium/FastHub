@@ -31,15 +31,15 @@ public class CommitsViewHolder extends BaseViewHolder<Commit> {
     @BindView(R.id.details) FontTextView details;
     @BindView(R.id.commentsNo) FontTextView commentsNo;
 
-    private CommitsViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+    private CommitsViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
     }
 
-    public static CommitsViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter) {
+    public static CommitsViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
         return new CommitsViewHolder(getView(viewGroup, R.layout.issue_row_item), adapter);
     }
 
-    @Override public void bind(@NonNull Commit commit) {
+    @Override public void bind(final @NonNull Commit commit) {
         title.setText(commit.getGitCommit().getMessage());
         String login = commit.getAuthor() != null ? commit.getAuthor().getLogin() : commit.getGitCommit().getAuthor().getLogin();
         String avatar = commit.getAuthor() != null ? commit.getAuthor().getAvatarUrl() : null;

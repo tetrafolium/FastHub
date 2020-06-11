@@ -42,7 +42,7 @@ public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, Mil
     private MilestonesAdapter adapter;
     private MilestoneMvp.OnMilestoneSelected onMilestoneSelected;
 
-    public static MilestoneDialogFragment newInstance(@NonNull String login, @NonNull String repo) {
+    public static MilestoneDialogFragment newInstance(final @NonNull String login, final @NonNull String repo) {
         MilestoneDialogFragment fragment = new MilestoneDialogFragment();
         fragment.setArguments(Bundler.start()
                               .put(BundleConstant.EXTRA, login)
@@ -51,7 +51,7 @@ public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, Mil
         return fragment;
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() != null && getParentFragment() instanceof MilestoneMvp.OnMilestoneSelected) {
             onMilestoneSelected = (MilestoneMvp.OnMilestoneSelected) getParentFragment();
@@ -65,7 +65,7 @@ public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, Mil
         super.onDetach();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<MilestoneModel> items) {
+    @Override public void onNotifyAdapter(final @Nullable List<MilestoneModel> items) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -74,7 +74,7 @@ public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, Mil
         adapter.insertItems(items);
     }
 
-    @Override public void onMilestoneSelected(@NonNull MilestoneModel milestoneModel) {
+    @Override public void onMilestoneSelected(final @NonNull MilestoneModel milestoneModel) {
         if (onMilestoneSelected != null) onMilestoneSelected.onMilestoneSelected(milestoneModel);
         if (getParentFragment() instanceof BaseDialogFragment) {
             ((BaseDialogFragment) getParentFragment()).dismiss();
@@ -85,7 +85,7 @@ public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, Mil
         return R.layout.milestone_dialog_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             return;
         }
@@ -118,7 +118,7 @@ public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, Mil
         fastScroller.attachRecyclerView(recycler);
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
         stateLayout.showProgress();
@@ -129,12 +129,12 @@ public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, Mil
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -143,7 +143,7 @@ public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, Mil
         return new MilestonePresenter();
     }
 
-    @Override public void onMilestoneAdded(@NonNull MilestoneModel milestoneModel) {
+    @Override public void onMilestoneAdded(final @NonNull MilestoneModel milestoneModel) {
         adapter.addItem(milestoneModel, 0);
     }
 

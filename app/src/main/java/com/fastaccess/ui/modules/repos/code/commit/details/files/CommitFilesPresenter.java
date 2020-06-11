@@ -36,7 +36,7 @@ class CommitFilesPresenter extends BasePresenter<CommitFilesMvp.View> implements
     @com.evernote.android.state.State String sha;
     ArrayList<CommitFileChanges> changes = new ArrayList<>();
 
-    @Override public void onItemClick(int position, View v, CommitFileChanges model) {
+    @Override public void onItemClick(final int position, final View v, final CommitFileChanges model) {
         if (v.getId() == R.id.patchList) {
             sendToView(view -> view.onOpenForResult(position, model));
         } else if (v.getId() == R.id.open) {
@@ -69,9 +69,9 @@ class CommitFilesPresenter extends BasePresenter<CommitFilesMvp.View> implements
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, CommitFileChanges item) {}
+    @Override public void onItemLongClick(final int position, final View v, final CommitFileChanges item) { }
 
-    @Override public void onFragmentCreated(@Nullable Bundle bundle) {
+    @Override public void onFragmentCreated(final @Nullable Bundle bundle) {
         if (sha == null) {
             if (bundle != null) {
                 sha = bundle.getString(BundleConstant.ID);
@@ -93,7 +93,7 @@ class CommitFilesPresenter extends BasePresenter<CommitFilesMvp.View> implements
         }
     }
 
-    @Override public void onSubmitComment(@NonNull String comment, @NonNull CommitLinesModel item, @Nullable Bundle bundle) {
+    @Override public void onSubmitComment(final @NonNull String comment, final @NonNull CommitLinesModel item, final @Nullable Bundle bundle) {
         if (bundle != null) {
             String blob = bundle.getString(BundleConstant.ITEM);
             String path = bundle.getString(BundleConstant.EXTRA);
@@ -108,7 +108,7 @@ class CommitFilesPresenter extends BasePresenter<CommitFilesMvp.View> implements
         }
     }
 
-    @Override public void onSubmit(String username, String name, CommentRequestModel commentRequestModel) {
+    @Override public void onSubmit(final String username, final String name, final CommentRequestModel commentRequestModel) {
         makeRestCall(RestProvider.getRepoService(isEnterprise()).postCommitComment(username, name, sha,
                      commentRequestModel), newComment -> sendToView(view -> view.onCommentAdded(newComment)));
     }

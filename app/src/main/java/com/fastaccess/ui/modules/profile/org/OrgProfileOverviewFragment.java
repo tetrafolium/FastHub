@@ -49,7 +49,7 @@ public class OrgProfileOverviewFragment extends BaseFragment<OrgProfileOverviewM
 
     @State User userModel;
 
-    public static OrgProfileOverviewFragment newInstance(@NonNull String login) {
+    public static OrgProfileOverviewFragment newInstance(final @NonNull String login) {
         OrgProfileOverviewFragment view = new OrgProfileOverviewFragment();
         view.setArguments(Bundler.start().put(BundleConstant.EXTRA, login).end());
         return view;
@@ -63,7 +63,7 @@ public class OrgProfileOverviewFragment extends BaseFragment<OrgProfileOverviewM
         OrgProjectActivity.Companion.startActivity(getContext(), getPresenter().getLogin(), isEnterprise());
     }
 
-    @SuppressLint("ClickableViewAccessibility") @Override public void onInitViews(@Nullable User userModel) {
+    @SuppressLint("ClickableViewAccessibility") @Override public void onInitViews(final @Nullable User userModel) {
         if (getView() != null) {
             TransitionManager.beginDelayedTransition((ViewGroup) getView());
         }
@@ -113,7 +113,7 @@ public class OrgProfileOverviewFragment extends BaseFragment<OrgProfileOverviewM
         return R.layout.org_profile_overview_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             getPresenter().onFragmentCreated(getArguments());
         } else {
@@ -129,7 +129,7 @@ public class OrgProfileOverviewFragment extends BaseFragment<OrgProfileOverviewM
         return new OrgProfileOverviewPresenter();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         progress.setVisibility(View.VISIBLE);
     }
 
@@ -137,12 +137,12 @@ public class OrgProfileOverviewFragment extends BaseFragment<OrgProfileOverviewM
         progress.setVisibility(View.GONE);
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         onHideProgress();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         onHideProgress();
         super.showMessage(titleRes, msgRes);
     }

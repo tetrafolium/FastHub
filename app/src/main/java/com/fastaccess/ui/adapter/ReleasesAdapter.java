@@ -16,15 +16,15 @@ import java.util.List;
 
 public class ReleasesAdapter extends BaseRecyclerAdapter<Release, ReleasesViewHolder, BaseViewHolder.OnItemClickListener<Release>> {
 
-    public ReleasesAdapter(@NonNull List<Release> data) {
+    public ReleasesAdapter(final @NonNull List<Release> data) {
         super(data);
     }
 
-    @Override protected ReleasesViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected ReleasesViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return ReleasesViewHolder.newInstance(parent, this);
     }
 
-    @Override protected void onBindView(ReleasesViewHolder holder, int position) {
+    @Override protected void onBindView(final ReleasesViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

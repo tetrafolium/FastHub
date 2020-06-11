@@ -15,7 +15,7 @@ public class ContributionsDay {
     // Data is used to calculated the height of the pillar
     private int data = Integer.MIN_VALUE;
 
-    public ContributionsDay(int year, int month, int day, int level, int data) {
+    public ContributionsDay(final int year, final int month, final int day, final int level, final int data) {
         this.year = year;
         this.month = month;
         this.day = day;

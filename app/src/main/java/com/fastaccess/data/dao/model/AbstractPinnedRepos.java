@@ -39,11 +39,11 @@ import static com.fastaccess.data.dao.model.PinnedRepos.REPO_FULL_NAME;
     @io.requery.Nullable int entryCount;
     @io.requery.Nullable String login;
 
-    public static Single<PinnedRepos> update(@NonNull PinnedRepos entity) {
+    public static Single<PinnedRepos> update(final @NonNull PinnedRepos entity) {
         return RxHelper.getSingle(App.getInstance().getDataStore().update(entity));
     }
 
-    public static boolean pinUpin(@NonNull Repo repo) {
+    public static boolean pinUpin(final @NonNull Repo repo) {
         PinnedRepos pinnedRepos = get(repo.getFullName());
         if (pinnedRepos == null) {
             PinnedRepos pinned = new PinnedRepos();
@@ -53,7 +53,7 @@ import static com.fastaccess.data.dao.model.PinnedRepos.REPO_FULL_NAME;
             try {
                 App.getInstance().getDataStore().toBlocking().insert(pinned);
                 return true;
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) { }
             return false;
         } else {
             delete(pinnedRepos.getId());
@@ -61,14 +61,14 @@ import static com.fastaccess.data.dao.model.PinnedRepos.REPO_FULL_NAME;
         }
     }
 
-    @Nullable public static PinnedRepos get(long id) {
+    @Nullable public static PinnedRepos get(final long id) {
         return App.getInstance().getDataStore().select(PinnedRepos.class)
                .where(ID.eq(id))
                .get()
                .firstOrNull();
     }
 
-    @Nullable public static PinnedRepos get(@NonNull String repoFullName) {
+    @Nullable public static PinnedRepos get(final @NonNull String repoFullName) {
         return App.getInstance().getDataStore().toBlocking().select(PinnedRepos.class)
                .where(REPO_FULL_NAME.eq(repoFullName).and(LOGIN.eq(Login.getUser().getLogin()))
                       .or(REPO_FULL_NAME.eq(repoFullName)))
@@ -76,11 +76,11 @@ import static com.fastaccess.data.dao.model.PinnedRepos.REPO_FULL_NAME;
                .firstOrNull();
     }
 
-    public static boolean isPinned(@NonNull String repoFullName) {
+    public static boolean isPinned(final @NonNull String repoFullName) {
         return get(repoFullName) != null;
     }
 
-    @NonNull public static Disposable updateEntry(@NonNull String repoFullName) {
+    @NonNull public static Disposable updateEntry(final @NonNull String repoFullName) {
         return RxHelper.getObservable(Observable.fromPublisher(e -> {
             PinnedRepos pinned = get(repoFullName);
             if (pinned != null) {
@@ -89,7 +89,7 @@ import static com.fastaccess.data.dao.model.PinnedRepos.REPO_FULL_NAME;
                 e.onNext("");
             }
             e.onComplete();
-        })).subscribe(o -> {/*do nothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*do nothing*/ }, Throwable::printStackTrace);
     }
 
     @NonNull public static Single<List<PinnedRepos>> getMyPinnedRepos() {
@@ -138,10 +138,10 @@ import static com.fastaccess.data.dao.model.PinnedRepos.REPO_FULL_NAME;
                 e.onError(ignored);
             }
             e.onComplete();
-        })).subscribe(o -> {/*do nothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*do nothing*/ }, Throwable::printStackTrace);
     }
 
-    public static void delete(long id) {
+    public static void delete(final long id) {
         App.getInstance().getDataStore().delete(PinnedRepos.class)
         .where(ID.eq(id))
         .get()

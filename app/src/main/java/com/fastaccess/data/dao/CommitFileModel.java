@@ -23,7 +23,7 @@ public class CommitFileModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.sha);
         dest.writeString(this.filename);
         dest.writeString(this.status);
@@ -36,7 +36,7 @@ public class CommitFileModel implements Parcelable {
         dest.writeString(this.patch);
     }
 
-    @SuppressWarnings("WeakerAccess") protected CommitFileModel(Parcel in) {
+    @SuppressWarnings("WeakerAccess") protected CommitFileModel(final Parcel in) {
         this.sha = in.readString();
         this.filename = in.readString();
         this.status = in.readString();
@@ -50,35 +50,35 @@ public class CommitFileModel implements Parcelable {
     }
 
     public static final Creator<CommitFileModel> CREATOR = new Creator<CommitFileModel>() {
-        @Override public CommitFileModel createFromParcel(Parcel source) {
+        @Override public CommitFileModel createFromParcel(final Parcel source) {
             return new CommitFileModel(source);
         }
 
-        @Override public CommitFileModel[] newArray(int size) {
+        @Override public CommitFileModel[] newArray(final int size) {
             return new CommitFileModel[size];
         }
     };
 
     @Override public String toString() {
-        return "CommitFileModel{" +
-               "sha='" + sha + '\'' +
-               ", filename='" + filename + '\'' +
-               ", status='" + status + '\'' +
-               ", additions=" + additions +
-               ", deletions=" + deletions +
-               ", changes=" + changes +
-               ", blobUrl='" + blobUrl + '\'' +
-               ", rawUrl='" + rawUrl + '\'' +
-               ", contentsUrl='" + contentsUrl + '\'' +
-               ", patch='" + patch + '\'' +
-               '}';
+        return "CommitFileModel{"
+               + "sha='" + sha + '\''
+               + ", filename='" + filename + '\''
+               + ", status='" + status + '\''
+               + ", additions=" + additions
+               + ", deletions=" + deletions
+               + ", changes=" + changes
+               + ", blobUrl='" + blobUrl + '\''
+               + ", rawUrl='" + rawUrl + '\''
+               + ", contentsUrl='" + contentsUrl + '\''
+               + ", patch='" + patch + '\''
+               + '}';
     }
 
     public String getSha() {
         return sha;
     }
 
-    public void setSha(String sha) {
+    public void setSha(final String sha) {
         this.sha = sha;
     }
 
@@ -86,7 +86,7 @@ public class CommitFileModel implements Parcelable {
         return filename;
     }
 
-    public void setFilename(String filename) {
+    public void setFilename(final String filename) {
         this.filename = filename;
     }
 
@@ -94,7 +94,7 @@ public class CommitFileModel implements Parcelable {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(final String status) {
         this.status = status;
     }
 
@@ -102,7 +102,7 @@ public class CommitFileModel implements Parcelable {
         return additions;
     }
 
-    public void setAdditions(int additions) {
+    public void setAdditions(final int additions) {
         this.additions = additions;
     }
 
@@ -110,7 +110,7 @@ public class CommitFileModel implements Parcelable {
         return deletions;
     }
 
-    public void setDeletions(int deletions) {
+    public void setDeletions(final int deletions) {
         this.deletions = deletions;
     }
 
@@ -118,7 +118,7 @@ public class CommitFileModel implements Parcelable {
         return changes;
     }
 
-    public void setChanges(int changes) {
+    public void setChanges(final int changes) {
         this.changes = changes;
     }
 
@@ -126,7 +126,7 @@ public class CommitFileModel implements Parcelable {
         return blobUrl;
     }
 
-    public void setBlobUrl(String blobUrl) {
+    public void setBlobUrl(final String blobUrl) {
         this.blobUrl = blobUrl;
     }
 
@@ -134,7 +134,7 @@ public class CommitFileModel implements Parcelable {
         return rawUrl;
     }
 
-    public void setRawUrl(String rawUrl) {
+    public void setRawUrl(final String rawUrl) {
         this.rawUrl = rawUrl;
     }
 
@@ -142,7 +142,7 @@ public class CommitFileModel implements Parcelable {
         return contentsUrl;
     }
 
-    public void setContentsUrl(String contentsUrl) {
+    public void setContentsUrl(final String contentsUrl) {
         this.contentsUrl = contentsUrl;
     }
 
@@ -150,7 +150,7 @@ public class CommitFileModel implements Parcelable {
         return patch;
     }
 
-    public void setPatch(String patch) {
+    public void setPatch(final String patch) {
         this.patch = patch;
     }
 }

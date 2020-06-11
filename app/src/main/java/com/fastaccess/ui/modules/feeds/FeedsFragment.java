@@ -49,11 +49,11 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
     private FeedsAdapter adapter;
     private OnLoadMore onLoadMore;
 
-    public static FeedsFragment newInstance(@Nullable String user) {
+    public static FeedsFragment newInstance(final @Nullable String user) {
         return newInstance(user, false);
     }
 
-    public static FeedsFragment newInstance(@Nullable String user, boolean isOrg) {
+    public static FeedsFragment newInstance(final @Nullable String user, final boolean isOrg) {
         FeedsFragment feedsFragment = new FeedsFragment();
         feedsFragment.setArguments(Bundler.start()
                                    .put(BundleConstant.EXTRA, user)
@@ -66,7 +66,7 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         stateLayout.setEmptyText(R.string.no_feeds);
         stateLayout.setOnReloadListener(this);
         refresh.setOnRefreshListener(this);
@@ -90,7 +90,7 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
         getPresenter().onCallApi(1);
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Event> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Event> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -103,7 +103,7 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
         }
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
@@ -113,17 +113,17 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void onOpenRepoChooser(@NonNull ArrayList<SimpleUrlsModel> models) {
+    @Override public void onOpenRepoChooser(final @NonNull ArrayList<SimpleUrlsModel> models) {
         ListDialogView<SimpleUrlsModel> dialogView = new ListDialogView<>();
         dialogView.initArguments(getString(R.string.repo_chooser), models);
         dialogView.show(getChildFragmentManager(), "ListDialogView");
@@ -140,7 +140,7 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
         return onLoadMore;
     }
 
-    @Override public void onOpenCommitChooser(@NonNull List<GitCommitModel> commits) {
+    @Override public void onOpenCommitChooser(final @NonNull List<GitCommitModel> commits) {
         ListDialogView<GitCommitModel> dialogView = new ListDialogView<>();
         dialogView.initArguments(getString(R.string.commits), commits);
         dialogView.show(getChildFragmentManager(), "ListDialogView");
@@ -151,11 +151,11 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
         super.onDestroyView();
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onItemSelected(Parcelable item) {
+    @Override public void onItemSelected(final Parcelable item) {
         if (item instanceof SimpleUrlsModel) {
             SchemeParser.launchUri(getContext(), Uri.parse(((SimpleUrlsModel) item).getItem()));
         } else if (item instanceof GitCommitModel) {
@@ -167,7 +167,7 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
         }
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) {
             recycler.scrollToPosition(0);
@@ -180,7 +180,7 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
     }
 
     public boolean isProfile() {
-        return !InputHelper.isEmpty(getArguments().getString(BundleConstant.EXTRA)) &&
-               !getArguments().getBoolean(BundleConstant.EXTRA_TWO);
+        return !InputHelper.isEmpty(getArguments().getString(BundleConstant.EXTRA))
+               && !getArguments().getBoolean(BundleConstant.EXTRA_TWO);
     }
 }

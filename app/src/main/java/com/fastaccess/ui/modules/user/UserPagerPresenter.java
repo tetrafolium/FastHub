@@ -17,7 +17,7 @@ import lombok.Getter;
     @com.evernote.android.state.State boolean isUserBlocked;
     @com.evernote.android.state.State boolean isUserBlockedRequested;
 
-    @Override public void onCheckBlocking(@NonNull String login) {
+    @Override public void onCheckBlocking(final @NonNull String login) {
         makeRestCall(RestProvider.getUserService(isEnterprise()).isUserBlocked(login),
         booleanResponse -> sendToView(view -> {
             isUserBlockedRequested = true;
@@ -26,7 +26,7 @@ import lombok.Getter;
         }));
     }
 
-    @Override public void checkOrgMembership(@NonNull String org) {
+    @Override public void checkOrgMembership(final @NonNull String org) {
         makeRestCall(RestProvider.getOrgService(isEnterprise()).isMember(org, Login.getUser().getLogin()),
         booleanResponse -> sendToView(view -> {
             isMember = booleanResponse.code() == 204 ? 1 : 0;
@@ -34,7 +34,7 @@ import lombok.Getter;
         }));
     }
 
-    @Override public void onBlockUser(@NonNull String login) {
+    @Override public void onBlockUser(final @NonNull String login) {
         if (isUserBlocked()) {
             onUnblockUser(login);
         } else {
@@ -46,7 +46,7 @@ import lombok.Getter;
         }
     }
 
-    @Override public void onUnblockUser(@NonNull String login) {
+    @Override public void onUnblockUser(final @NonNull String login) {
         makeRestCall(RestProvider.getUserService(isEnterprise()).unBlockUser(login),
         booleanResponse -> sendToView(view -> {
             isUserBlocked = false;

@@ -16,15 +16,15 @@ import java.util.List;
 
 public class LabelColorsAdapter extends BaseRecyclerAdapter<String, LabelColorsViewHolder, BaseViewHolder.OnItemClickListener<String>> {
 
-    public LabelColorsAdapter(@NonNull List<String> data, @Nullable BaseViewHolder.OnItemClickListener<String> listener) {
+    public LabelColorsAdapter(final @NonNull List<String> data, final @Nullable BaseViewHolder.OnItemClickListener<String> listener) {
         super(data, listener);
     }
 
-    @Override protected LabelColorsViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected LabelColorsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return LabelColorsViewHolder.newInstance(parent, this);
     }
 
-    @Override protected void onBindView(LabelColorsViewHolder holder, int position) {
+    @Override protected void onBindView(final LabelColorsViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

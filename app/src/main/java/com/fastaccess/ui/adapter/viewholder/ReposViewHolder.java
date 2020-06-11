@@ -46,13 +46,13 @@ public class ReposViewHolder extends BaseViewHolder<Repo> {
     private boolean isStarred;
     private boolean withImage;
 
-    private ReposViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter, boolean isStarred, boolean withImage) {
+    private ReposViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter, final boolean isStarred, final boolean withImage) {
         super(itemView, adapter);
         this.isStarred = isStarred;
         this.withImage = withImage;
     }
 
-    public static ReposViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter, boolean isStarred, boolean withImage) {
+    public static ReposViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter, final boolean isStarred, final boolean withImage) {
         if (withImage) {
             return new ReposViewHolder(getView(viewGroup, R.layout.repos_row_item), adapter, isStarred, true);
         } else {
@@ -61,7 +61,7 @@ public class ReposViewHolder extends BaseViewHolder<Repo> {
 
     }
 
-    @Override public void bind(@NonNull Repo repo) {
+    @Override public void bind(final @NonNull Repo repo) {
         if (repo.isFork() && !isStarred) {
             title.setText(SpannableBuilder.builder()
                           .append(" " + forked + " ", new LabelSpan(forkColor))

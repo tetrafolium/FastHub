@@ -21,14 +21,14 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeList(this.all);
         dest.writeList(this.owner);
     }
 
-    public CommitCountModel() {}
+    public CommitCountModel() { }
 
-    private CommitCountModel(Parcel in) {
+    private CommitCountModel(final Parcel in) {
         this.all = new ArrayList<Integer>();
         in.readList(this.all, Integer.class.getClassLoader());
         this.owner = new ArrayList<Integer>();
@@ -36,11 +36,11 @@ import lombok.Setter;
     }
 
     public static final Parcelable.Creator<CommitCountModel> CREATOR = new Parcelable.Creator<CommitCountModel>() {
-        @Override public CommitCountModel createFromParcel(Parcel source) {
+        @Override public CommitCountModel createFromParcel(final Parcel source) {
             return new CommitCountModel(source);
         }
 
-        @Override public CommitCountModel[] newArray(int size) {
+        @Override public CommitCountModel[] newArray(final int size) {
             return new CommitCountModel[size];
         }
     };

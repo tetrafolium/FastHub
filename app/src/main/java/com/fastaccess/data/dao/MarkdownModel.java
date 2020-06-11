@@ -21,24 +21,24 @@ public class MarkdownModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.text);
         dest.writeString(this.mode);
         dest.writeString(this.context);
     }
 
-    @SuppressWarnings("WeakerAccess") protected MarkdownModel(Parcel in) {
+    @SuppressWarnings("WeakerAccess") protected MarkdownModel(final Parcel in) {
         this.text = in.readString();
         this.mode = in.readString();
         this.context = in.readString();
     }
 
     public static final Parcelable.Creator<MarkdownModel> CREATOR = new Parcelable.Creator<MarkdownModel>() {
-        @Override public MarkdownModel createFromParcel(Parcel source) {
+        @Override public MarkdownModel createFromParcel(final Parcel source) {
             return new MarkdownModel(source);
         }
 
-        @Override public MarkdownModel[] newArray(int size) {
+        @Override public MarkdownModel[] newArray(final int size) {
             return new MarkdownModel[size];
         }
     };

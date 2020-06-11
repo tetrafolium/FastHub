@@ -16,15 +16,15 @@ import java.util.List;
 
 public class CommitsAdapter extends BaseRecyclerAdapter<Commit, CommitsViewHolder, BaseViewHolder.OnItemClickListener<Commit>> {
 
-    public CommitsAdapter(@NonNull List<Commit> data) {
+    public CommitsAdapter(final @NonNull List<Commit> data) {
         super(data);
     }
 
-    @Override protected CommitsViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected CommitsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return CommitsViewHolder.newInstance(parent, this);
     }
 
-    @Override protected void onBindView(CommitsViewHolder holder, int position) {
+    @Override protected void onBindView(final CommitsViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

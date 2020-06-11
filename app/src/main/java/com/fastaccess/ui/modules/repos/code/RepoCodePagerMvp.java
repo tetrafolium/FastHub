@@ -15,5 +15,5 @@ public interface RepoCodePagerMvp {
         void onBackPressed();
     }
 
-    interface Presenter extends BaseMvp.FAPresenter {}
+    interface Presenter extends BaseMvp.FAPresenter { }
 }

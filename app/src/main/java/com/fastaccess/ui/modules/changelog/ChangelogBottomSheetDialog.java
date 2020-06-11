@@ -35,7 +35,7 @@ public class ChangelogBottomSheetDialog extends BaseMvpBottomSheetDialogFragment
         dismiss();
     }
 
-    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (savedInstanceState == null) {
             PrefGetter.setWhatsNewVersion();
@@ -54,7 +54,7 @@ public class ChangelogBottomSheetDialog extends BaseMvpBottomSheetDialogFragment
         return R.layout.message_dialog;
     }
 
-    @Override public void onChangelogLoaded(@Nullable String html) {
+    @Override public void onChangelogLoaded(final @Nullable String html) {
         showChangelog(html);
     }
 
@@ -62,14 +62,14 @@ public class ChangelogBottomSheetDialog extends BaseMvpBottomSheetDialogFragment
         return new ChangelogPresenter();
     }
 
-    @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @NonNull @Override public Dialog onCreateDialog(final Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setCancelable(false);
         dialog.setCanceledOnTouchOutside(false);
         return dialog;
     }
 
-    private void showChangelog(String html) {
+    private void showChangelog(final String html) {
         if (prettifyWebView == null) return;
         webProgress.setVisibility(View.GONE);
         if (html != null) {

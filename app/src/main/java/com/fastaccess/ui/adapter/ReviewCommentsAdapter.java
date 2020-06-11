@@ -25,9 +25,9 @@ public class ReviewCommentsAdapter extends BaseRecyclerAdapter<ReviewCommentMode
     private final String repoOwner;
     private final String poster;
 
-    public ReviewCommentsAdapter(@NonNull List<ReviewCommentModel> data,
-                                 @Nullable BaseViewHolder.OnItemClickListener<ReviewCommentModel> listener,
-                                 OnToggleView onToggleView, ReactionsCallback reactionsCallback, String repoOwner, String poster) {
+    public ReviewCommentsAdapter(final @NonNull List<ReviewCommentModel> data,
+                                 final @Nullable BaseViewHolder.OnItemClickListener<ReviewCommentModel> listener,
+                                 final OnToggleView onToggleView, final ReactionsCallback reactionsCallback, final String repoOwner, final String poster) {
         super(data, listener);
         this.onToggleView = onToggleView;
         this.reactionsCallback = reactionsCallback;
@@ -36,12 +36,12 @@ public class ReviewCommentsAdapter extends BaseRecyclerAdapter<ReviewCommentMode
     }
 
 
-    @Override protected ReviewCommentsViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected ReviewCommentsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return ReviewCommentsViewHolder.newInstance(parent, this, onToggleView,
                 reactionsCallback, repoOwner, poster);
     }
 
-    @Override protected void onBindView(ReviewCommentsViewHolder holder, int position) {
+    @Override protected void onBindView(final ReviewCommentsViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

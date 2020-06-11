@@ -37,21 +37,21 @@ class GistCommentsPresenter extends BasePresenter<GistCommentsMvp.View> implemen
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         //noinspection ConstantConditions
         sendToView(view -> onWorkOffline(view.getLoadMore().getParameter()));
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable String parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable String parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());
@@ -76,7 +76,7 @@ class GistCommentsPresenter extends BasePresenter<GistCommentsMvp.View> implemen
         return comments;
     }
 
-    @Override public void onHandleDeletion(@Nullable Bundle bundle) {
+    @Override public void onHandleDeletion(final @Nullable Bundle bundle) {
         if (bundle != null) {
             long commId = bundle.getLong(BundleConstant.EXTRA, 0);
             String gistId = bundle.getString(BundleConstant.ID);
@@ -95,7 +95,7 @@ class GistCommentsPresenter extends BasePresenter<GistCommentsMvp.View> implemen
         }
     }
 
-    @Override public void onWorkOffline(@NonNull String gistId) {
+    @Override public void onWorkOffline(final @NonNull String gistId) {
         if (comments.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Comment.getGistComments(gistId).toObservable())
                              .subscribe(localComments -> sendToView(view -> view.onNotifyAdapter(localComments, 1))));
@@ -104,7 +104,7 @@ class GistCommentsPresenter extends BasePresenter<GistCommentsMvp.View> implemen
         }
     }
 
-    @Override public void onHandleComment(@NonNull String text, @Nullable Bundle bundle, String gistId) {
+    @Override public void onHandleComment(final @NonNull String text, final @Nullable Bundle bundle, final String gistId) {
         CommentRequestModel model = new CommentRequestModel();
         model.setBody(text);
         manageDisposable(RxHelper.getObservable(RestProvider.getGistService(isEnterprise()).createGistComment(gistId, model))
@@ -115,7 +115,7 @@ class GistCommentsPresenter extends BasePresenter<GistCommentsMvp.View> implemen
         }));
     }
 
-    @Override public void onItemClick(int position, View v, Comment item) {
+    @Override public void onItemClick(final int position, final View v, final Comment item) {
         if (getView() == null) return;
         if (v.getId() == R.id.toggle || v.getId() == R.id.toggleHolder) {
             PopupMenu popupMenu = new PopupMenu(v.getContext(), v);
@@ -138,7 +138,7 @@ class GistCommentsPresenter extends BasePresenter<GistCommentsMvp.View> implemen
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, Comment item) {
+    @Override public void onItemLongClick(final int position, final View v, final Comment item) {
         if (v.getId() == R.id.toggle) {
             if (getView() != null) getView().onReply(item.getUser(), item.getBody());
         } else {

@@ -48,15 +48,15 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public boolean onCallApi(int page, @Nullable String parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable String parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());
@@ -85,7 +85,7 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
         return true;
     }
 
-    @Override public void onFragmentCreated(@Nullable Bundle bundle) {
+    @Override public void onFragmentCreated(final @Nullable Bundle bundle) {
         if (bundle == null) throw new NullPointerException("Bundle is null?");
         repoId = bundle.getString(BundleConstant.ID);
         login = bundle.getString(BundleConstant.EXTRA);
@@ -96,12 +96,12 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
         return comments;
     }
 
-    @Override public void onHandleDeletion(@Nullable Bundle bundle) {
+    @Override public void onHandleDeletion(final @Nullable Bundle bundle) {
         if (bundle != null) {
             long commId = bundle.getLong(BundleConstant.EXTRA, 0);
             if (commId != 0) {
                 makeRestCall(RestProvider.getRepoService(isEnterprise()).deleteComment(login, repoId, commId)
-                , booleanResponse -> sendToView(view -> {
+, booleanResponse -> sendToView(view -> {
                     if (booleanResponse.code() == 204) {
                         Comment comment = new Comment();
                         comment.setId(commId);
@@ -136,15 +136,15 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
         return sha;
     }
 
-    @Override public boolean isPreviouslyReacted(long commentId, int vId) {
+    @Override public boolean isPreviouslyReacted(final long commentId, final int vId) {
         return getReactionsProvider().isPreviouslyReacted(commentId, vId);
     }
 
-    @Override public boolean isCallingApi(long id, int vId) {
+    @Override public boolean isCallingApi(final long id, final int vId) {
         return getReactionsProvider().isCallingApi(id, vId);
     }
 
-    @Override public void onHandleComment(@NonNull String text, @Nullable Bundle bundle) {
+    @Override public void onHandleComment(final @NonNull String text, final @Nullable Bundle bundle) {
         CommentRequestModel model = new CommentRequestModel();
         model.setBody(text);
         manageDisposable(RxHelper.getObservable(RestProvider.getRepoService(isEnterprise()).postCommitComment(login, repoId, sha, model))
@@ -156,7 +156,7 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
         }));
     }
 
-    @Override public void onItemClick(int position, View v, TimelineModel timelineModel) {
+    @Override public void onItemClick(final int position, final View v, final TimelineModel timelineModel) {
         if (getView() != null) {
             Comment item = timelineModel.getComment();
             if (v.getId() == R.id.commentMenu) {
@@ -186,7 +186,7 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, TimelineModel timelineModel) {
+    @Override public void onItemLongClick(final int position, final View v, final TimelineModel timelineModel) {
         if (v.getId() == R.id.commentMenu) {
             Comment item = timelineModel.getComment();
             if (getView() != null) getView().onReply(item.getUser(), item.getBody());
@@ -207,7 +207,7 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
         return reactionsProvider;
     }
 
-    private void onHandleReaction(int viewId, long id) {
+    private void onHandleReaction(final int viewId, final long id) {
         Observable observable = getReactionsProvider().onHandleReaction(viewId, id, login, repoId, ReactionsProvider.COMMIT, isEnterprise());
         if (observable != null) manageObservable(observable);
     }

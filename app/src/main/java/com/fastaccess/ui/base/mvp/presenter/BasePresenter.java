@@ -38,27 +38,27 @@ public class BasePresenter<V extends BaseMvp.FAView> extends TiPresenter<V> impl
     private boolean apiCalled;
     private final RxTiPresenterDisposableHandler subscriptionHandler = new RxTiPresenterDisposableHandler(this);
 
-    @Override public void onSaveInstanceState(Bundle outState) {
+    @Override public void onSaveInstanceState(final Bundle outState) {
         StateSaver.saveInstanceState(this, outState);
     }
 
-    @Override public void onRestoreInstanceState(Bundle outState) {
+    @Override public void onRestoreInstanceState(final Bundle outState) {
         if (outState != null) StateSaver.restoreInstanceState(this, outState);
     }
 
-    @Override public void manageDisposable(@Nullable Disposable... disposables) {
+    @Override public void manageDisposable(final @Nullable Disposable... disposables) {
         if (disposables != null) {
             subscriptionHandler.manageDisposables(disposables);
         }
     }
 
-    @Override public <T> void manageObservable(@Nullable Observable<T> observable) {
+    @Override public <T> void manageObservable(final @Nullable Observable<T> observable) {
         if (observable != null) {
-            manageDisposable(RxHelper.getObservable(observable).subscribe(t -> {/**/}, Throwable::printStackTrace));
+            manageDisposable(RxHelper.getObservable(observable).subscribe(t -> { /**/ }, Throwable::printStackTrace));
         }
     }
 
-    @Override public void manageViewDisposable(@Nullable Disposable... disposables) {
+    @Override public void manageViewDisposable(final @Nullable Disposable... disposables) {
         if (disposables != null) {
             if (isViewAttached()) {
                 subscriptionHandler.manageViewDisposables(disposables);
@@ -72,7 +72,7 @@ public class BasePresenter<V extends BaseMvp.FAView> extends TiPresenter<V> impl
         return apiCalled;
     }
 
-    @Override public void onSubscribed(boolean cancelable) {
+    @Override public void onSubscribed(final boolean cancelable) {
         sendToView(v -> {
             if (cancelable) {
                 v.showProgress(R.string.in_progress);
@@ -82,7 +82,7 @@ public class BasePresenter<V extends BaseMvp.FAView> extends TiPresenter<V> impl
         });
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         apiCalled = true;
         throwable.printStackTrace();
         int code = RestProvider.getErrorCode(throwable);
@@ -98,11 +98,11 @@ public class BasePresenter<V extends BaseMvp.FAView> extends TiPresenter<V> impl
         }
     }
 
-    @Override public <T> void makeRestCall(@NonNull Observable<T> observable, @NonNull Consumer<T> onNext) {
+    @Override public <T> void makeRestCall(final @NonNull Observable<T> observable, final @NonNull Consumer<T> onNext) {
         makeRestCall(observable, onNext, true);
     }
 
-    @Override public <T> void makeRestCall(@NonNull Observable<T> observable, @NonNull Consumer<T> onNext, boolean cancelable) {
+    @Override public <T> void makeRestCall(final @NonNull Observable<T> observable, final @NonNull Consumer<T> onNext, final boolean cancelable) {
         manageDisposable(
             RxHelper.getObservable(observable)
             .doOnSubscribe(disposable -> onSubscribed(cancelable))
@@ -110,7 +110,7 @@ public class BasePresenter<V extends BaseMvp.FAView> extends TiPresenter<V> impl
         );
     }
 
-    @StringRes private int getPrettifiedErrorMessage(@Nullable Throwable throwable) {
+    @StringRes private int getPrettifiedErrorMessage(final @Nullable Throwable throwable) {
         int resId = R.string.network_error;
         if (throwable instanceof IOException) {
             resId = R.string.request_error;
@@ -138,7 +138,7 @@ public class BasePresenter<V extends BaseMvp.FAView> extends TiPresenter<V> impl
         return enterprise;
     }
 
-    public void setEnterprise(boolean enterprise) {
+    public void setEnterprise(final boolean enterprise) {
         this.enterprise = enterprise;
     }
 }

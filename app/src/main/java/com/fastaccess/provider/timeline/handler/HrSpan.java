@@ -14,18 +14,18 @@ public class HrSpan extends ReplacementSpan implements LineHeightSpan {
     private final int width;
     private final int color;
 
-    HrSpan(int color, int width) {
+    HrSpan(final int color, final int width) {
         this.color = color;
         this.width = width;
         Drawable drawable = new ColorDrawable(color);
     }
 
-    @Override public int getSize(@NonNull Paint paint, CharSequence text, int start, int end, Paint.FontMetricsInt fm) {
+    @Override public int getSize(final @NonNull Paint paint, final CharSequence text, final int start, final int end, final Paint.FontMetricsInt fm) {
         return (int) paint.measureText(text, start, end);
     }
 
-    @Override public void draw(@NonNull Canvas canvas, CharSequence text, int start, int end, float x, int top,
-                               int y, int bottom, @NonNull Paint paint) {
+    @Override public void draw(final @NonNull Canvas canvas, final CharSequence text, final int start, final int end, final float x, final int top,
+                               final int y, final int bottom, final @NonNull Paint paint) {
         final int currentColor = paint.getColor();
         paint.setColor(color);
         paint.setStyle(Paint.Style.FILL);
@@ -34,7 +34,7 @@ public class HrSpan extends ReplacementSpan implements LineHeightSpan {
         paint.setColor(currentColor);
     }
 
-    @Override public void chooseHeight(CharSequence text, int start, int end, int spanstartv, int v, Paint.FontMetricsInt fm) {
+    @Override public void chooseHeight(final CharSequence text, final int start, final int end, final int spanstartv, final int v, final Paint.FontMetricsInt fm) {
         fm.top /= 3;
         fm.ascent /= 3;
         fm.bottom /= 3;

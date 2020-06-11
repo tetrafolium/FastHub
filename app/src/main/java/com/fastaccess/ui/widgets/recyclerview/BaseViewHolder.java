@@ -23,15 +23,15 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implemen
 
     @Nullable protected final BaseRecyclerAdapter adapter;
 
-    public static View getView(@NonNull ViewGroup parent, @LayoutRes int layoutRes) {
+    public static View getView(final @NonNull ViewGroup parent, final @LayoutRes int layoutRes) {
         return LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
     }
 
-    protected BaseViewHolder(@NonNull View itemView) {
+    protected BaseViewHolder(final @NonNull View itemView) {
         this(itemView, null);
     }
 
-    public BaseViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+    public BaseViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.adapter = adapter;
@@ -39,7 +39,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implemen
         itemView.setOnLongClickListener(this);
     }
 
-    @SuppressWarnings("unchecked") @Override public void onClick(View v) {
+    @SuppressWarnings("unchecked") @Override public void onClick(final View v) {
         if (adapter != null && adapter.getListener() != null) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION && position < adapter.getItemCount())
@@ -47,7 +47,7 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implemen
         }
     }
 
-    @SuppressWarnings("unchecked") @Override public boolean onLongClick(View v) {
+    @SuppressWarnings("unchecked") @Override public boolean onLongClick(final View v) {
         if (adapter != null && adapter.getListener() != null) {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION && position < adapter.getItemCount())
@@ -58,6 +58,6 @@ public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implemen
 
     public abstract void bind(@NonNull T t);
 
-    protected void onViewIsDetaching() {}
+    protected void onViewIsDetaching() { }
 
 }

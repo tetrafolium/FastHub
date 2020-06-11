@@ -37,9 +37,9 @@ public class IssuesTimelineAdapter extends BaseRecyclerAdapter<TimelineModel, Ba
     private final String repoOwner;
     private final String poster;
 
-    public IssuesTimelineAdapter(@NonNull List<TimelineModel> data, OnToggleView onToggleView, boolean showEmojies,
-                                 ReactionsCallback reactionsCallback, boolean isMerged,
-                                 ReviewCommentCallback reviewCommentCallback, String repoOwner, String poster) {
+    public IssuesTimelineAdapter(final @NonNull List<TimelineModel> data, final OnToggleView onToggleView, final boolean showEmojies,
+                                 final ReactionsCallback reactionsCallback, final boolean isMerged,
+                                 final ReviewCommentCallback reviewCommentCallback, final String repoOwner, final String poster) {
         super(data);
         this.onToggleView = onToggleView;
         this.showEmojies = showEmojies;
@@ -50,12 +50,12 @@ public class IssuesTimelineAdapter extends BaseRecyclerAdapter<TimelineModel, Ba
         this.poster = poster;
     }
 
-    public IssuesTimelineAdapter(@NonNull List<TimelineModel> data, OnToggleView onToggleView, boolean showEmojies,
-                                 ReactionsCallback reactionsCallback, String repoOwner, String poster) {
+    public IssuesTimelineAdapter(final @NonNull List<TimelineModel> data, final OnToggleView onToggleView, final boolean showEmojies,
+                                 final ReactionsCallback reactionsCallback, final String repoOwner, final String poster) {
         this(data, onToggleView, showEmojies, reactionsCallback, false, null, repoOwner, poster);
     }
 
-    @Override protected BaseViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected BaseViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         if (viewType == 0) {
             return new UnknownTypeViewHolder(BaseViewHolder.getView(parent, R.layout.unknown_row_item));
         } else if (viewType == TimelineModel.HEADER) {
@@ -76,7 +76,7 @@ public class IssuesTimelineAdapter extends BaseRecyclerAdapter<TimelineModel, Ba
                 reactionsCallback, repoOwner, poster);
     }
 
-    @Override protected void onBindView(BaseViewHolder holder, int position) {
+    @Override protected void onBindView(final BaseViewHolder holder, final int position) {
         TimelineModel model = getItem(position);
         if (model.getType() == TimelineModel.HEADER) {
             ((IssueDetailsViewHolder) holder).bind(model);
@@ -99,7 +99,7 @@ public class IssuesTimelineAdapter extends BaseRecyclerAdapter<TimelineModel, Ba
         }
     }
 
-    @Override public int getItemViewType(int position) {
+    @Override public int getItemViewType(final int position) {
         TimelineModel timelineModel = getData().get(position);
         return timelineModel != null ? timelineModel.getType() : super.getItemViewType(position);
     }

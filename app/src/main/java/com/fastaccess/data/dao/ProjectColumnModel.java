@@ -23,7 +23,7 @@ public class ProjectColumnModel implements Parcelable {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -31,7 +31,7 @@ public class ProjectColumnModel implements Parcelable {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -39,7 +39,7 @@ public class ProjectColumnModel implements Parcelable {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
@@ -47,7 +47,7 @@ public class ProjectColumnModel implements Parcelable {
         return projectUrl;
     }
 
-    public void setProjectUrl(String projectUrl) {
+    public void setProjectUrl(final String projectUrl) {
         this.projectUrl = projectUrl;
     }
 
@@ -55,7 +55,7 @@ public class ProjectColumnModel implements Parcelable {
         return cardsUrl;
     }
 
-    public void setCardsUrl(String cardsUrl) {
+    public void setCardsUrl(final String cardsUrl) {
         this.cardsUrl = cardsUrl;
     }
 
@@ -63,7 +63,7 @@ public class ProjectColumnModel implements Parcelable {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(final Date createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -71,17 +71,17 @@ public class ProjectColumnModel implements Parcelable {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(final Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public ProjectColumnModel() {}
+    public ProjectColumnModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeValue(this.id);
         dest.writeString(this.name);
         dest.writeString(this.url);
@@ -91,7 +91,7 @@ public class ProjectColumnModel implements Parcelable {
         dest.writeLong(this.updatedAt != null ? this.updatedAt.getTime() : -1);
     }
 
-    protected ProjectColumnModel(Parcel in) {
+    protected ProjectColumnModel(final Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
         this.url = in.readString();
@@ -104,16 +104,16 @@ public class ProjectColumnModel implements Parcelable {
     }
 
     public static final Creator<ProjectColumnModel> CREATOR = new Creator<ProjectColumnModel>() {
-        @Override public ProjectColumnModel createFromParcel(Parcel source) {
+        @Override public ProjectColumnModel createFromParcel(final Parcel source) {
             return new ProjectColumnModel(source);
         }
 
-        @Override public ProjectColumnModel[] newArray(int size) {
+        @Override public ProjectColumnModel[] newArray(final int size) {
             return new ProjectColumnModel[size];
         }
     };
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 

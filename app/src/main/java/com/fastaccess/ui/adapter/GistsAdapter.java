@@ -18,20 +18,20 @@ public class GistsAdapter extends BaseRecyclerAdapter<Gist, GistsViewHolder, Bas
 
     private boolean isForProfile;
 
-    public GistsAdapter(@NonNull ArrayList<Gist> gistModels) {
+    public GistsAdapter(final @NonNull ArrayList<Gist> gistModels) {
         this(gistModels, false);
     }
 
-    public GistsAdapter(@NonNull ArrayList<Gist> gistsModels, boolean isForProfile) {
+    public GistsAdapter(final @NonNull ArrayList<Gist> gistsModels, final boolean isForProfile) {
         super(gistsModels);
         this.isForProfile = isForProfile;
     }
 
-    @Override protected GistsViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected GistsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return GistsViewHolder.newInstance(parent, this, isForProfile);
     }
 
-    @Override protected void onBindView(GistsViewHolder holder, int position) {
+    @Override protected void onBindView(final GistsViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

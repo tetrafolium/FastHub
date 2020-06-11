@@ -18,12 +18,12 @@ public class SimpleUrlsModel implements Parcelable {
     public String url;
     public String extension;
 
-    public SimpleUrlsModel(String item, String url) {
+    public SimpleUrlsModel(final String item, final String url) {
         this.item = item;
         this.url = url;
     }
 
-    public SimpleUrlsModel(String item, String url, String extension) {
+    public SimpleUrlsModel(final String item, final String url, final String extension) {
         this.item = item;
         this.url = url;
         this.extension = extension;
@@ -37,22 +37,22 @@ public class SimpleUrlsModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.item);
         dest.writeString(this.url);
     }
 
-    @SuppressWarnings("WeakerAccess") protected SimpleUrlsModel(Parcel in) {
+    @SuppressWarnings("WeakerAccess") protected SimpleUrlsModel(final Parcel in) {
         this.item = in.readString();
         this.url = in.readString();
     }
 
     public static final Creator<SimpleUrlsModel> CREATOR = new Creator<SimpleUrlsModel>() {
-        @Override public SimpleUrlsModel createFromParcel(Parcel source) {
+        @Override public SimpleUrlsModel createFromParcel(final Parcel source) {
             return new SimpleUrlsModel(source);
         }
 
-        @Override public SimpleUrlsModel[] newArray(int size) {
+        @Override public SimpleUrlsModel[] newArray(final int size) {
             return new SimpleUrlsModel[size];
         }
     };

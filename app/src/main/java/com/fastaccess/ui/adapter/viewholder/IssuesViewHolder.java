@@ -38,25 +38,25 @@ public class IssuesViewHolder extends BaseViewHolder<Issue> {
     private boolean showRepoName;
     private boolean showState;
 
-    private IssuesViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter,
-                             boolean withAvatar, boolean showRepoName) {
+    private IssuesViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter,
+                             final boolean withAvatar, final boolean showRepoName) {
         this(itemView, adapter, withAvatar, showRepoName, false);
     }
 
-    private IssuesViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter,
-                             boolean withAvatar, boolean showRepoName, boolean showState) {
+    private IssuesViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter,
+                             final boolean withAvatar, final boolean showRepoName, final boolean showState) {
         super(itemView, adapter);
         this.withAvatar = withAvatar;
         this.showRepoName = showRepoName;
         this.showState = showState;
     }
 
-    public static IssuesViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter, boolean withAvatar, boolean showRepoName) {
+    public static IssuesViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter, final boolean withAvatar, final boolean showRepoName) {
         return newInstance(viewGroup, adapter, withAvatar, showRepoName, false);
     }
 
-    public static IssuesViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter, boolean withAvatar,
-            boolean showRepoName, boolean showState) {
+    public static IssuesViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter, final boolean withAvatar,
+            final boolean showRepoName, final boolean showState) {
         if (withAvatar) {
             return new IssuesViewHolder(getView(viewGroup, R.layout.issue_row_item), adapter, true, showRepoName, showState);
         } else {
@@ -64,7 +64,7 @@ public class IssuesViewHolder extends BaseViewHolder<Issue> {
         }
     }
 
-    @Override public void bind(@NonNull Issue issueModel) {
+    @Override public void bind(final @NonNull Issue issueModel) {
         title.setText(issueModel.getTitle());
         if (issueModel.getState() != null) {
             CharSequence data = ParseDateFormat.getTimeAgo(issueModel.getState() == IssueState.open
@@ -111,8 +111,8 @@ public class IssuesViewHolder extends BaseViewHolder<Issue> {
         }
         if (showState) {
             issueState.setVisibility(View.VISIBLE);
-            issueState.setImageResource(issueModel.getState() == IssueState.open ?
-                                        R.drawable.ic_issue_opened_small : R.drawable.ic_issue_closed_small);
+            issueState.setImageResource(issueModel.getState() == IssueState.open
+                                        ? R.drawable.ic_issue_opened_small : R.drawable.ic_issue_closed_small);
         } else {
             issueState.setVisibility(View.GONE);
         }

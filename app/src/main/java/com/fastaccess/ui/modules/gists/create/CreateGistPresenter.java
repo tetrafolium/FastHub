@@ -15,7 +15,7 @@ import java.util.HashMap;
  */
 
 class CreateGistPresenter extends BasePresenter<CreateGistMvp.View> implements CreateGistMvp.Presenter {
-    @Override public void onSubmit(@NonNull String description, @NonNull HashMap<String, FilesListModel> files, boolean isPublic) {
+    @Override public void onSubmit(final @NonNull String description, final @NonNull HashMap<String, FilesListModel> files, final boolean isPublic) {
         if (files.isEmpty()) return;
         CreateGistModel createGistModel = new CreateGistModel();
         createGistModel.setDescription(InputHelper.toString(description));
@@ -24,12 +24,12 @@ class CreateGistPresenter extends BasePresenter<CreateGistMvp.View> implements C
         onSubmit(createGistModel);
     }
 
-    @Override public void onSubmit(@NonNull CreateGistModel model) {
+    @Override public void onSubmit(final @NonNull CreateGistModel model) {
         makeRestCall(RestProvider.getGistService(isEnterprise()).createGist(model),
                      gistsModel -> sendToView(view -> view.onSuccessSubmission(gistsModel)), false);
     }
 
-    @Override public void onSubmitUpdate(@NonNull String id, @NonNull String description, @NonNull HashMap<String, FilesListModel> files) {
+    @Override public void onSubmitUpdate(final @NonNull String id, final @NonNull String description, final @NonNull HashMap<String, FilesListModel> files) {
         boolean isEmptyDesc = InputHelper.isEmpty(description);
         if (getView() != null) {
             getView().onDescriptionError(isEmptyDesc);

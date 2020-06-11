@@ -21,7 +21,7 @@ import com.fastaccess.ui.modules.login.chooser.LoginChooserActivity;
 
 public class LinksParserActivity extends Activity {
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (Login.getUser() == null) {
             Toast.makeText(App.getInstance(), R.string.please_login, Toast.LENGTH_SHORT).show();
@@ -37,7 +37,7 @@ public class LinksParserActivity extends Activity {
         setVisible(true);
     }
 
-    private void onCreate(@Nullable Intent intent) {
+    private void onCreate(final @Nullable Intent intent) {
         if (intent == null || intent.getAction() == null) {
             finish();
             return;
@@ -49,7 +49,7 @@ public class LinksParserActivity extends Activity {
                     Uri uri = Uri.parse(sharedText);
                     onUriReceived(uri);
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) { }
         } else if (intent.getAction().equals(Intent.ACTION_VIEW)) {
             if (intent.getData() != null) {
                 onUriReceived(intent.getData());
@@ -58,7 +58,7 @@ public class LinksParserActivity extends Activity {
         finish();
     }
 
-    private void onUriReceived(@NonNull Uri uri) {
+    private void onUriReceived(final @NonNull Uri uri) {
         SchemeParser.launchUri(this, uri, false, true);
     }
 }

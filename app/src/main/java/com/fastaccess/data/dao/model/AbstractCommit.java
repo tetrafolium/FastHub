@@ -61,11 +61,11 @@ public abstract class AbstractCommit implements Parcelable {
     @Column(name = "user_column") @Convert(UserConverter.class) User user;
     @Nullable int commentCount;
 
-    public Single<Commit> save(Commit entity) {
+    public Single<Commit> save(final Commit entity) {
         return RxHelper.getSingle(App.getInstance().getDataStore().upsert(entity));
     }
 
-    public static Disposable save(@NonNull List<Commit> models, @NonNull String repoId, @NonNull String login) {
+    public static Disposable save(final @NonNull List<Commit> models, final @NonNull String repoId, final @NonNull String login) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
@@ -86,10 +86,10 @@ public abstract class AbstractCommit implements Parcelable {
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Disposable save(@NonNull List<Commit> models, @NonNull String repoId, @NonNull String login, long number) {
+    public static Disposable save(final @NonNull List<Commit> models, final @NonNull String repoId, final @NonNull String login, final long number) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
@@ -113,10 +113,10 @@ public abstract class AbstractCommit implements Parcelable {
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Single<List<Commit>> getCommits(@NonNull String repoId, @NonNull String login) {
+    public static Single<List<Commit>> getCommits(final @NonNull String repoId, final @NonNull String login) {
         return App.getInstance().getDataStore()
                .select(Commit.class)
                .where(REPO_ID.eq(repoId)
@@ -127,7 +127,7 @@ public abstract class AbstractCommit implements Parcelable {
                .toList();
     }
 
-    public static Single<List<Commit>> getCommits(@NonNull String repoId, @NonNull String login, long pullRequestNumber) {
+    public static Single<List<Commit>> getCommits(final @NonNull String repoId, final @NonNull String login, final long pullRequestNumber) {
         return App.getInstance().getDataStore()
                .select(Commit.class)
                .where(REPO_ID.eq(repoId)
@@ -138,7 +138,7 @@ public abstract class AbstractCommit implements Parcelable {
                .toList();
     }
 
-    public static Observable<Commit> getCommit(@NonNull String sha, @NonNull String repoId, @NonNull String login) {
+    public static Observable<Commit> getCommit(final @NonNull String sha, final @NonNull String repoId, final @NonNull String login) {
         return App.getInstance().getDataStore()
                .select(Commit.class)
                .where(REPO_ID.eq(repoId)
@@ -153,7 +153,7 @@ public abstract class AbstractCommit implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeString(this.sha);
@@ -174,7 +174,7 @@ public abstract class AbstractCommit implements Parcelable {
         dest.writeInt(this.commentCount);
     }
 
-    protected AbstractCommit(Parcel in) {
+    protected AbstractCommit(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         this.sha = in.readString();
@@ -198,11 +198,11 @@ public abstract class AbstractCommit implements Parcelable {
     }
 
     public static final Creator<Commit> CREATOR = new Creator<Commit>() {
-        @Override public Commit createFromParcel(Parcel source) {
+        @Override public Commit createFromParcel(final Parcel source) {
             return new Commit(source);
         }
 
-        @Override public Commit[] newArray(int size) {
+        @Override public Commit[] newArray(final int size) {
             return new Commit[size];
         }
     };

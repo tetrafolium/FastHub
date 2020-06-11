@@ -22,7 +22,7 @@ class LabelsPresenter extends BasePresenter<LabelsMvp.View> implements LabelsMvp
     @com.evernote.android.state.State String login;
     @com.evernote.android.state.State String repoId;
 
-    LabelsPresenter(@NonNull String login, @NonNull String repoId) {
+    LabelsPresenter(final @NonNull String login, final @NonNull String repoId) {
         this.login = login;
         this.repoId = repoId;
     }
@@ -39,15 +39,15 @@ class LabelsPresenter extends BasePresenter<LabelsMvp.View> implements LabelsMvp
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Object parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());

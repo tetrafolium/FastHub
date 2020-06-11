@@ -36,26 +36,26 @@ public class RecyclerViewFastScroller extends FrameLayout {
     private boolean toggled;
     private boolean registeredObserver = false;
 
-    public RecyclerViewFastScroller(Context context) {
+    public RecyclerViewFastScroller(final Context context) {
         super(context);
         init();
     }
 
-    public RecyclerViewFastScroller(Context context, AttributeSet attrs) {
+    public RecyclerViewFastScroller(final Context context, final AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public RecyclerViewFastScroller(Context context, AttributeSet attrs, int defStyleAttr) {
+    public RecyclerViewFastScroller(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
-    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    @Override protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         height = h;
     }
 
-    @SuppressLint("ClickableViewAccessibility") @Override public boolean onTouchEvent(@NonNull MotionEvent event) {
+    @SuppressLint("ClickableViewAccessibility") @Override public boolean onTouchEvent(final @NonNull MotionEvent event) {
         int action = event.getAction();
         switch (action) {
         case MotionEvent.ACTION_DOWN:
@@ -87,11 +87,11 @@ public class RecyclerViewFastScroller extends FrameLayout {
     }
 
     private void safelyUnregisterObserver() {
-        try {// rare case
+        try { // rare case
             if (registeredObserver && recyclerView.getAdapter() != null) {
                 recyclerView.getAdapter().unregisterAdapterDataObserver(observer);
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
     }
 
     protected void init() {
@@ -170,7 +170,7 @@ public class RecyclerViewFastScroller extends FrameLayout {
         setScrollerHeight(height * proportion);
     }
 
-    private void setRecyclerViewPosition(float y) {
+    private void setRecyclerViewPosition(final float y) {
         Logger.e(y);
         if (recyclerView != null) {
             int itemCount = recyclerView.getAdapter().getItemCount();
@@ -193,17 +193,17 @@ public class RecyclerViewFastScroller extends FrameLayout {
         }
     }
 
-    private static int getValueInRange(int max, int value) {
+    private static int getValueInRange(final int max, final int value) {
         return Math.min(Math.max(0, value), max);
     }
 
-    private void setScrollerHeight(float y) {
+    private void setScrollerHeight(final float y) {
         int handleHeight = scrollerView.getHeight();
         scrollerView.setY(getValueInRange(height - handleHeight, (int) (y - handleHeight / 2)));
     }
 
     private final RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
-        @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        @Override public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
             if (scrollerView.isSelected()) return;
             int verticalScrollOffset = recyclerView.computeVerticalScrollOffset();
             int verticalScrollRange = recyclerView.computeVerticalScrollRange();
@@ -213,12 +213,12 @@ public class RecyclerViewFastScroller extends FrameLayout {
     };
 
     private final RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {
-        @Override public void onItemRangeInserted(int positionStart, int itemCount) {
+        @Override public void onItemRangeInserted(final int positionStart, final int itemCount) {
             super.onItemRangeInserted(positionStart, itemCount);
             hideShow();
         }
 
-        @Override public void onItemRangeRemoved(int positionStart, int itemCount) {
+        @Override public void onItemRangeRemoved(final int positionStart, final int itemCount) {
             super.onItemRangeRemoved(positionStart, itemCount);
             hideShow();
         }

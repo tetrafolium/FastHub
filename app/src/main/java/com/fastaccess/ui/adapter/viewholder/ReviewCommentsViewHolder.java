@@ -66,7 +66,7 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
     private String repoOwner;
     private String poster;
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         if (v.getId() == R.id.toggle || v.getId() == R.id.toggleHolder) {
             if (onToggleView != null) {
                 long id = getId();
@@ -79,9 +79,9 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
         }
     }
 
-    private ReviewCommentsViewHolder(@NonNull View itemView, ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter,
-                                     @NonNull OnToggleView onToggleView, @NonNull ReactionsCallback reactionsCallback,
-                                     String repoOwner, String poster) {
+    private ReviewCommentsViewHolder(final @NonNull View itemView, final ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter,
+                                     final @NonNull OnToggleView onToggleView, final @NonNull ReactionsCallback reactionsCallback,
+                                     final String repoOwner, final String poster) {
         super(itemView, adapter);
         if (adapter != null && adapter.getRowWidth() == 0) {
             itemView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -136,14 +136,14 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
         eyes.setOnClickListener(this);
     }
 
-    public static ReviewCommentsViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter,
-            @NonNull OnToggleView onToggleView, @NonNull ReactionsCallback reactionsCallback,
-            String repoOwner, String poster) {
+    public static ReviewCommentsViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter,
+            final @NonNull OnToggleView onToggleView, final @NonNull ReactionsCallback reactionsCallback,
+            final String repoOwner, final String poster) {
         return new ReviewCommentsViewHolder(getView(viewGroup, R.layout.review_comments_row_item),
                                             viewGroup, adapter, onToggleView, reactionsCallback, repoOwner, poster);
     }
 
-    @Override public void bind(@NonNull ReviewCommentModel commentModel) {
+    @Override public void bind(final @NonNull ReviewCommentModel commentModel) {
         if (commentModel.getUser() != null) {
             avatarView.setUrl(commentModel.getUser().getAvatarUrl(), commentModel.getUser().getLogin(), commentModel.getUser()
                               .isOrganizationType(), LinkParserHelper.isEnterprise(commentModel.getHtmlUrl()));
@@ -182,7 +182,7 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
         if (onToggleView != null) onToggle(onToggleView.isCollapsed(getId()), false);
     }
 
-    private void addReactionCount(View v) {
+    private void addReactionCount(final View v) {
         if (adapter != null) {
             ReviewCommentModel comment = (ReviewCommentModel) adapter.getItem(getAdapterPosition());
             if (comment != null) {
@@ -228,7 +228,7 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
         }
     }
 
-    private void appendEmojies(ReactionsModel reaction) {
+    private void appendEmojies(final ReactionsModel reaction) {
         CommentsHelper.appendEmojies(reaction, thumbsUp, thumbsUpReaction, thumbsDown, thumbsDownReaction, hurray, hurrayReaction, sad,
                                      sadReaction, laugh, laughReaction, heart, heartReaction, rocket, rocketReaction, eyes, eyeReaction, reactionsList);
     }
@@ -241,7 +241,7 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
         return -1;
     }
 
-    private void onToggle(boolean expanded, boolean animate) {
+    private void onToggle(final boolean expanded, final boolean animate) {
         if (animate) {
             TransitionManager.beginDelayedTransition(viewGroup, new ChangeBounds());
         }

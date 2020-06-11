@@ -23,7 +23,7 @@ public class LicenseModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.key);
         dest.writeString(this.name);
         dest.writeString(this.spdxId);
@@ -31,7 +31,7 @@ public class LicenseModel implements Parcelable {
         dest.writeByte(this.featured ? (byte) 1 : (byte) 0);
     }
 
-    protected LicenseModel(Parcel in) {
+    protected LicenseModel(final Parcel in) {
         this.key = in.readString();
         this.name = in.readString();
         this.spdxId = in.readString();
@@ -40,11 +40,11 @@ public class LicenseModel implements Parcelable {
     }
 
     public static final Creator<LicenseModel> CREATOR = new Creator<LicenseModel>() {
-        @Override public LicenseModel createFromParcel(Parcel source) {
+        @Override public LicenseModel createFromParcel(final Parcel source) {
             return new LicenseModel(source);
         }
 
-        @Override public LicenseModel[] newArray(int size) {
+        @Override public LicenseModel[] newArray(final int size) {
             return new LicenseModel[size];
         }
     };

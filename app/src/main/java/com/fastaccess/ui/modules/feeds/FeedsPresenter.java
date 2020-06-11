@@ -47,7 +47,7 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
     @com.evernote.android.state.State String user;
     @com.evernote.android.state.State boolean isOrg;
 
-    @Override public void onFragmentCreated(@NonNull Bundle argument) {
+    @Override public void onFragmentCreated(final @NonNull Bundle argument) {
         user = argument.getString(BundleConstant.EXTRA);
         isOrg = argument.getBoolean(BundleConstant.EXTRA_TWO);
         if (eventsModels.isEmpty()) {
@@ -55,7 +55,7 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
         }
     }
 
-    @Override public boolean onCallApi(int page) {
+    @Override public boolean onCallApi(final int page) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());
@@ -66,7 +66,7 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
         }
         setCurrentPage(page);
         Login login = Login.getUser();
-        if (login == null) return false;// I can't understand how this could possibly be reached lol.
+        if (login == null) return false; // I can't understand how this could possibly be reached lol.
         Observable<Pageable<Event>> observable;
         Logger.e(isOrg);
         if (user != null) {
@@ -97,23 +97,23 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Object parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
         return onCallApi(page);
     }
 
-    @Override public void onSubscribed(boolean cancelable) {
+    @Override public void onSubscribed(final boolean cancelable) {
         sendToView(view -> view.showProgress(0));
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
@@ -135,7 +135,7 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
         }
     }
 
-    @Override public void onItemClick(int position, View v, Event item) {
+    @Override public void onItemClick(final int position, final View v, final Event item) {
         if (item.getType() == EventsType.ForkEvent) {
             NameParser parser = new NameParser(item.getPayload().getForkee().getHtmlUrl());
             RepoPagerActivity.startRepoPager(v.getContext(), parser);
@@ -182,7 +182,7 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, Event item) {
+    @Override public void onItemLongClick(final int position, final View v, final Event item) {
         if (item.getType() == EventsType.ForkEvent) {
             if (getView() != null) {
                 getView().onOpenRepoChooser(Stream.of(new SimpleUrlsModel(item.getRepo().getName(), item.getRepo().getUrl()),

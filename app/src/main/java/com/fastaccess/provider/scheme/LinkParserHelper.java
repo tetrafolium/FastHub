@@ -30,11 +30,11 @@ public class LinkParserHelper {
             "explore", "dashboard", "repositories", "logout", "sessions", "site", "security",
             "contact", "about", "logos", "login", "pricing", "");
 
-    @SafeVarargs static <T> Optional<T> returnNonNull(@NonNull T... t) {
+    @SafeVarargs static <T> Optional<T> returnNonNull(final @NonNull T... t) {
         return Stream.of(t).filter(ObjectsCompat::nonNull).findFirst();
     }
 
-    @NonNull static Uri getBlobBuilder(@NonNull Uri uri) {
+    @NonNull static Uri getBlobBuilder(final @NonNull Uri uri) {
         boolean isSvg = "svg".equalsIgnoreCase(MimeTypeMap.getFileExtensionFromUrl(uri.toString()));
         List<String> segments = uri.getPathSegments();
         if (isSvg) {
@@ -66,7 +66,7 @@ public class LinkParserHelper {
         return urlBuilder.build();
     }
 
-    public static boolean isEnterprise(@Nullable String url) {
+    public static boolean isEnterprise(final @Nullable String url) {
         if (InputHelper.isEmpty(url) || !PrefGetter.isEnterprise()) return false;
         String enterpriseUrl = PrefGetter.getEnterpriseUrl().toLowerCase();
         url = url.toLowerCase();
@@ -74,15 +74,15 @@ public class LinkParserHelper {
                || url.contains(enterpriseUrl) || enterpriseUrl.contains(url);
     }
 
-    public static String stripScheme(@NonNull String url) {
+    public static String stripScheme(final @NonNull String url) {
         try {
             Uri uri = Uri.parse(url);
             return !InputHelper.isEmpty(uri.getAuthority()) ? uri.getAuthority() : url;
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
         return url;
     }
 
-    @NonNull public static String getEndpoint(@NonNull String url) {
+    @NonNull public static String getEndpoint(final @NonNull String url) {
         if (url.startsWith("http://")) {
             url = url.replace("http://", "https://");
         }
@@ -92,7 +92,7 @@ public class LinkParserHelper {
         return getEnterpriseUrl(url);
     }
 
-    @NonNull private static String getEnterpriseUrl(@NonNull String url) {
+    @NonNull private static String getEnterpriseUrl(final @NonNull String url) {
         if (url.endsWith("/api/v3/")) {
             return url;
         } else if (url.endsWith("/api/")) {
@@ -109,7 +109,7 @@ public class LinkParserHelper {
         return url;
     }
 
-    public static String getEnterpriseGistUrl(@NonNull String url, boolean isEnterprise) {
+    public static String getEnterpriseGistUrl(final @NonNull String url, final boolean isEnterprise) {
         if (isEnterprise) {
             Uri uri = Uri.parse(url);
             boolean isGist = uri == null || uri.getPathSegments() == null ? url.contains("gist/") : uri.getPathSegments().get(0).equals("gist");
@@ -123,7 +123,7 @@ public class LinkParserHelper {
         return url;
     }
 
-    @Nullable public static String getGistId(@NonNull Uri uri) {
+    @Nullable public static String getGistId(final @NonNull Uri uri) {
         String gistId = null;
         if (uri.toString().contains("raw/gist")) {
             if (uri.getPathSegments().size() > 5) {

@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class SearchPresenter extends BasePresenter<SearchMvp.View> implements SearchMvp.Presenter {
     private ArrayList<SearchHistory> hints = new ArrayList<>();
 
-    @Override protected void onAttachView(@NonNull SearchMvp.View view) {
+    @Override protected void onAttachView(final @NonNull SearchMvp.View view) {
         super.onAttachView(view);
         if (hints.isEmpty()) {
             manageDisposable(SearchHistory.getHistory()
@@ -40,7 +40,7 @@ public class SearchPresenter extends BasePresenter<SearchMvp.View> implements Se
         return hints;
     }
 
-    @Override public void onSearchClicked(@NonNull ViewPager viewPager, @NonNull AutoCompleteTextView editText) {
+    @Override public void onSearchClicked(final @NonNull ViewPager viewPager, final @NonNull AutoCompleteTextView editText) {
         boolean isEmpty = InputHelper.isEmpty(editText) || InputHelper.toString(editText).length() < 2;
         editText.setError(isEmpty ? editText.getResources().getString(R.string.minimum_three_chars) : null);
         if (!isEmpty) {

@@ -21,7 +21,7 @@ public class GistFilesListPresenter extends BasePresenter<GistFilesListMvp.View>
     private ArrayList<FilesListModel> listModels;
     @Getter private HashMap<String, FilesListModel> filesMap = new HashMap<>();
 
-    @Override public void onItemClick(int position, View v, FilesListModel item) {
+    @Override public void onItemClick(final int position, final View v, final FilesListModel item) {
         if (getView() != null) {
             if (v.getId() == R.id.delete) {
                 getView().onDeleteFile(item, position);
@@ -33,9 +33,9 @@ public class GistFilesListPresenter extends BasePresenter<GistFilesListMvp.View>
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, FilesListModel item) {}
+    @Override public void onItemLongClick(final int position, final View v, final FilesListModel item) { }
 
-    @Override public void onSetList(@Nullable ArrayList<FilesListModel> files) {
+    @Override public void onSetList(final @Nullable ArrayList<FilesListModel> files) {
         this.listModels = files;
     }
 

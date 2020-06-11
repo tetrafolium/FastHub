@@ -40,14 +40,14 @@ public class PinnedIssueFragment extends BaseFragment<PinnedIssueMvp.View, Pinne
         return new PinnedIssueFragment();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Issue> items) {
+    @Override public void onNotifyAdapter(final @Nullable List<Issue> items) {
         refresh.setRefreshing(false);
         stateLayout.hideProgress();
         if (items != null) adapter.insertItems(items);
         else adapter.clear();
     }
 
-    @Override public void onDeletePinnedIssue(long id, int position) {
+    @Override public void onDeletePinnedIssue(final long id, final int position) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
                                       Bundler.start().put(BundleConstant.YES_NO_EXTRA, true)
                                       .put(BundleConstant.EXTRA, position)
@@ -60,7 +60,7 @@ public class PinnedIssueFragment extends BaseFragment<PinnedIssueMvp.View, Pinne
         return R.layout.small_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         adapter = new IssuesAdapter(getPresenter().getPinnedIssue(), true, true, true);
         adapter.setListener(getPresenter());
         stateLayout.setEmptyText(R.string.no_issues);
@@ -79,7 +79,7 @@ public class PinnedIssueFragment extends BaseFragment<PinnedIssueMvp.View, Pinne
         return new PinnedIssuePresenter();
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (bundle != null && isOk) {
             long id = bundle.getLong(BundleConstant.ID);

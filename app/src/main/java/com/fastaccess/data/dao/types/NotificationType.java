@@ -13,7 +13,7 @@ public enum NotificationType {
 
     int drawableRes;
 
-    NotificationType(int drawableRes) {
+    NotificationType(final int drawableRes) {
         this.drawableRes = drawableRes;
     }
 

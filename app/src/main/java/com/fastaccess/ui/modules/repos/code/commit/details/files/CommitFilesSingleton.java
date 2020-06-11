@@ -22,14 +22,14 @@ class CommitFilesSingleton {
 
     private Map<String, CommitFileListModel> files = new Hashtable<>();
 
-    private CommitFilesSingleton() {}
+    private CommitFilesSingleton() { }
 
-    void putFiles(@NonNull String id, @NonNull CommitFileListModel commitFiles) {
+    void putFiles(final @NonNull String id, final @NonNull CommitFileListModel commitFiles) {
         clear();
         files.put(id, commitFiles);
     }
 
-    @Nullable CommitFileListModel getByCommitId(@NonNull String id) {
+    @Nullable CommitFileListModel getByCommitId(final @NonNull String id) {
         return files.get(id);
     }
 

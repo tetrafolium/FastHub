@@ -26,13 +26,13 @@ class RepoFilePathPresenter extends BasePresenter<RepoFilePathMvp.View> implemen
     @com.evernote.android.state.State String defaultBranch;
     private ArrayList<RepoFile> paths = new ArrayList<>();
 
-    @Override public void onItemClick(int position, View v, RepoFile item) {
+    @Override public void onItemClick(final int position, final View v, final RepoFile item) {
         if (!item.getPath().equalsIgnoreCase(path)) if (getView() != null) getView().onItemClicked(item, position);
     }
 
-    @Override public void onItemLongClick(int position, View v, RepoFile item) {}
+    @Override public void onItemLongClick(final int position, final View v, final RepoFile item) { }
 
-    @Override public void onFragmentCreated(@Nullable Bundle bundle) {
+    @Override public void onFragmentCreated(final @Nullable Bundle bundle) {
         if (bundle != null) {
             repoId = bundle.getString(BundleConstant.ID);
             login = bundle.getString(BundleConstant.EXTRA);

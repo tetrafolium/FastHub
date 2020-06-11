@@ -30,11 +30,11 @@ public class ProgressDialogFragment extends BaseDialogFragment {
 
     public static final String TAG = ProgressDialogFragment.class.getSimpleName();
 
-    @NonNull public static ProgressDialogFragment newInstance(@NonNull Resources resources, @StringRes int msgId, boolean isCancelable) {
+    @NonNull public static ProgressDialogFragment newInstance(final @NonNull Resources resources, final @StringRes int msgId, final boolean isCancelable) {
         return newInstance(resources.getString(msgId), isCancelable);
     }
 
-    @NonNull public static ProgressDialogFragment newInstance(@NonNull String msg, boolean isCancelable) {
+    @NonNull public static ProgressDialogFragment newInstance(final @NonNull String msg, final boolean isCancelable) {
         ProgressDialogFragment fragment = new ProgressDialogFragment();
         fragment.setArguments(Bundler.start()
                               .put("msg", msg)
@@ -47,11 +47,11 @@ public class ProgressDialogFragment extends BaseDialogFragment {
         return R.layout.progress_dialog_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
 
     }
 
-    @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+    @NonNull @Override public Dialog onCreateDialog(final Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         dialog.setCancelable(false);
         setCancelable(false);

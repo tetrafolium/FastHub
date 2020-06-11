@@ -41,7 +41,7 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
     @State HashSet<TabsCountStateModel> counts = new HashSet<>();
     private RepoPagerMvp.View repoCallback;
 
-    public static RepoIssuesPagerFragment newInstance(@NonNull String repoId, @NonNull String login) {
+    public static RepoIssuesPagerFragment newInstance(final @NonNull String repoId, final @NonNull String login) {
         RepoIssuesPagerFragment view = new RepoIssuesPagerFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.ID, repoId)
@@ -50,7 +50,7 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
         return view;
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof RepoPagerMvp.View) {
             repoCallback = (RepoPagerMvp.View) getParentFragment();
@@ -68,7 +68,7 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
         return R.layout.centered_tabbed_viewpager;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         String repoId = getArguments().getString(BundleConstant.ID);
         String login = getArguments().getString(BundleConstant.EXTRA);
         if (login == null || repoId == null) throw new NullPointerException("repoId || login is null???");
@@ -79,7 +79,7 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
             Stream.of(counts).forEach(this::updateCount);
         }
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onScrollTop(tab.getPosition());
             }
@@ -96,7 +96,7 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
         repoOpenedIssuesView.onAddIssue();
     }
 
-    @Override public void setCurrentItem(int index, boolean refresh) {
+    @Override public void setCurrentItem(final int index, final boolean refresh) {
         if (pager == null || pager.getAdapter() == null) return;
         if (!refresh) pager.setCurrentItem(index, true);
         if (index == 1 && refresh) {
@@ -112,11 +112,11 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
         return pager != null ? pager.getCurrentItem() : 0;
     }
 
-    @Override public void onScrolled(boolean isUp) {
+    @Override public void onScrolled(final boolean isUp) {
         if (repoCallback != null) repoCallback.onScrolled(isUp);
     }
 
-    @Override public void onSetBadge(int tabIndex, int count) {
+    @Override public void onSetBadge(final int tabIndex, final int count) {
         TabsCountStateModel model = new TabsCountStateModel();
         model.setTabIndex(tabIndex);
         model.setCount(count);
@@ -126,7 +126,7 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
         }
     }
 
-    @Override public void onChangeIssueSort(boolean isLastUpdated) {
+    @Override public void onChangeIssueSort(final boolean isLastUpdated) {
         if (pager == null || pager.getAdapter() == null) return;
         RepoClosedIssuesFragment closedIssues = (RepoClosedIssuesFragment) pager.getAdapter().instantiateItem(pager, 1);
         if (closedIssues != null) closedIssues.onRefresh(isLastUpdated);
@@ -134,7 +134,7 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
         if (openedIssues != null) openedIssues.onRefresh(isLastUpdated);
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {
@@ -142,7 +142,7 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
         }
     }
 
-    private void updateCount(@NonNull TabsCountStateModel model) {
+    private void updateCount(final @NonNull TabsCountStateModel model) {
         TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
         tv.setText(SpannableBuilder.builder()
                    .append(model.getTabIndex() == 0 ? getString(R.string.opened) : getString(R.string.closed))

@@ -27,7 +27,7 @@ public class ImgurProvider {
     .setPrettyPrinting()
     .create();
 
-    private ImgurProvider() {}
+    private ImgurProvider() { }
 
     private static OkHttpClient provideOkHttpClient() {
         OkHttpClient.Builder client = new OkHttpClient.Builder();

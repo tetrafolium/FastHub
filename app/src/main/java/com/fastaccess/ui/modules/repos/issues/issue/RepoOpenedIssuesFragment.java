@@ -47,7 +47,7 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
     private RepoIssuesPagerMvp.View pagerCallback;
     private RepoPagerMvp.TabsBadgeListener tabsBadgeListener;
 
-    public static RepoOpenedIssuesFragment newInstance(@NonNull String repoId, @NonNull String login) {
+    public static RepoOpenedIssuesFragment newInstance(final @NonNull String repoId, final @NonNull String login) {
         RepoOpenedIssuesFragment view = new RepoOpenedIssuesFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.ID, repoId)
@@ -56,7 +56,7 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
         return view;
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof RepoIssuesPagerMvp.View) {
             pagerCallback = (RepoIssuesPagerMvp.View) getParentFragment();
@@ -76,7 +76,7 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
         super.onDetach();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Issue> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Issue> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -93,7 +93,7 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, therefore, issues can't be proceeded.");
         }
@@ -115,7 +115,7 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
         fastScroller.attachRecyclerView(recycler);
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == BundleConstant.REQUEST_CODE) {
@@ -143,19 +143,19 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
         stateLayout.hideProgress();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
 
         stateLayout.showProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -163,7 +163,7 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
     @NonNull @Override public OnLoadMore<IssueState> getLoadMore() {
         if (onLoadMore == null) {
             onLoadMore = new OnLoadMore<IssueState>(getPresenter()) {
-                @Override public void onScrolled(boolean isUp) {
+                @Override public void onScrolled(final boolean isUp) {
                     super.onScrolled(isUp);
                     if (pagerCallback != null) pagerCallback.onScrolled(isUp);
                 }
@@ -181,21 +181,21 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
         }
     }
 
-    @Override public void onUpdateCount(int totalCount) {
+    @Override public void onUpdateCount(final int totalCount) {
         if (tabsBadgeListener != null) tabsBadgeListener.onSetBadge(0, totalCount);
     }
 
-    @Override public void onOpenIssue(@NonNull PullsIssuesParser parser) {
+    @Override public void onOpenIssue(final @NonNull PullsIssuesParser parser) {
         startActivityForResult(IssuePagerActivity.createIntent(getContext(), parser.getRepoId(), parser.getLogin(),
                                parser.getNumber(), false, isEnterprise()), RepoIssuesMvp.ISSUE_REQUEST_CODE);
     }
 
-    @Override public void onRefresh(boolean isLastUpdated) {
+    @Override public void onRefresh(final boolean isLastUpdated) {
         getPresenter().onSetSortBy(isLastUpdated);
         getPresenter().onCallApi(1, IssueState.open);
     }
 
-    @Override public void onShowIssuePopup(@NonNull Issue item) {
+    @Override public void onShowIssuePopup(final @NonNull Issue item) {
         IssuePopupFragment.showPopup(getChildFragmentManager(), item);
     }
 
@@ -203,11 +203,11 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
         getPresenter().onCallApi(1, IssueState.open);
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

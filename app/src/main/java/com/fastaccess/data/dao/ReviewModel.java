@@ -25,9 +25,9 @@ public class ReviewModel implements Parcelable {
     private ReactionsModel reactions;
     private String bodyText;
 
-    public ReviewModel() {}
+    public ReviewModel() { }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ReviewModel that = (ReviewModel) o;
@@ -42,7 +42,7 @@ public class ReviewModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeParcelable(this.user, flags);
         dest.writeString(this.bodyHtml);
@@ -55,7 +55,7 @@ public class ReviewModel implements Parcelable {
         dest.writeString(this.bodyText);
     }
 
-    protected ReviewModel(Parcel in) {
+    protected ReviewModel(final Parcel in) {
         this.id = in.readLong();
         this.user = in.readParcelable(User.class.getClassLoader());
         this.bodyHtml = in.readString();
@@ -70,11 +70,11 @@ public class ReviewModel implements Parcelable {
     }
 
     public static final Creator<ReviewModel> CREATOR = new Creator<ReviewModel>() {
-        @Override public ReviewModel createFromParcel(Parcel source) {
+        @Override public ReviewModel createFromParcel(final Parcel source) {
             return new ReviewModel(source);
         }
 
-        @Override public ReviewModel[] newArray(int size) {
+        @Override public ReviewModel[] newArray(final int size) {
             return new ReviewModel[size];
         }
     };
@@ -83,7 +83,7 @@ public class ReviewModel implements Parcelable {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
     }
 
@@ -91,7 +91,7 @@ public class ReviewModel implements Parcelable {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(final User user) {
         this.user = user;
     }
 
@@ -99,7 +99,7 @@ public class ReviewModel implements Parcelable {
         return bodyHtml;
     }
 
-    public void setBodyHtml(String bodyHtml) {
+    public void setBodyHtml(final String bodyHtml) {
         this.bodyHtml = bodyHtml;
     }
 
@@ -107,7 +107,7 @@ public class ReviewModel implements Parcelable {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(final String state) {
         this.state = state;
     }
 
@@ -115,7 +115,7 @@ public class ReviewModel implements Parcelable {
         return submittedAt;
     }
 
-    public void setSubmittedAt(Date submittedAt) {
+    public void setSubmittedAt(final Date submittedAt) {
         this.submittedAt = submittedAt;
     }
 
@@ -123,7 +123,7 @@ public class ReviewModel implements Parcelable {
         return commitId;
     }
 
-    public void setCommitId(String commitId) {
+    public void setCommitId(final String commitId) {
         this.commitId = commitId;
     }
 
@@ -131,7 +131,7 @@ public class ReviewModel implements Parcelable {
         return diffText;
     }
 
-    public void setDiffText(String diffText) {
+    public void setDiffText(final String diffText) {
         this.diffText = diffText;
     }
 
@@ -139,7 +139,7 @@ public class ReviewModel implements Parcelable {
         return comments;
     }
 
-    public void setComments(List<ReviewCommentModel> comments) {
+    public void setComments(final List<ReviewCommentModel> comments) {
         this.comments = comments;
     }
 
@@ -147,7 +147,7 @@ public class ReviewModel implements Parcelable {
         return reactions;
     }
 
-    public void setReactions(ReactionsModel reactions) {
+    public void setReactions(final ReactionsModel reactions) {
         this.reactions = reactions;
     }
 
@@ -155,7 +155,7 @@ public class ReviewModel implements Parcelable {
         return bodyText;
     }
 
-    public void setBodyText(String bodyText) {
+    public void setBodyText(final String bodyText) {
         this.bodyText = bodyText;
     }
 }

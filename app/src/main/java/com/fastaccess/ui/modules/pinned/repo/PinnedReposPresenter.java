@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class PinnedReposPresenter extends BasePresenter<PinnedReposMvp.View> implements PinnedReposMvp.Presenter {
     private ArrayList<PinnedRepos> pinnedRepos = new ArrayList<>();
 
-    @Override protected void onAttachView(@NonNull PinnedReposMvp.View view) {
+    @Override protected void onAttachView(final @NonNull PinnedReposMvp.View view) {
         super.onAttachView(view);
         if (pinnedRepos.isEmpty()) {
             onReload();
@@ -34,11 +34,11 @@ public class PinnedReposPresenter extends BasePresenter<PinnedReposMvp.View> imp
                                     sendToView(view -> view.onNotifyAdapter(null))));
     }
 
-    @Override public void onItemClick(int position, View v, PinnedRepos item) {
+    @Override public void onItemClick(final int position, final View v, final PinnedRepos item) {
         SchemeParser.launchUri(v.getContext(), item.getPinnedRepo().getHtmlUrl());
     }
 
-    @Override public void onItemLongClick(int position, View v, PinnedRepos item) {
+    @Override public void onItemLongClick(final int position, final View v, final PinnedRepos item) {
         if (getView() != null) {
             if (item.getRepoFullName().equalsIgnoreCase("k0shk0sh/FastHub")) {
                 return;

@@ -21,24 +21,24 @@ public class GithubState implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(this.additions);
         dest.writeInt(this.deletions);
         dest.writeInt(this.total);
     }
 
-    protected GithubState(Parcel in) {
+    protected GithubState(final Parcel in) {
         this.additions = in.readInt();
         this.deletions = in.readInt();
         this.total = in.readInt();
     }
 
     public static final Creator<GithubState> CREATOR = new Creator<GithubState>() {
-        @Override public GithubState createFromParcel(Parcel source) {
+        @Override public GithubState createFromParcel(final Parcel source) {
             return new GithubState(source);
         }
 
-        @Override public GithubState[] newArray(int size) {
+        @Override public GithubState[] newArray(final int size) {
             return new GithubState[size];
         }
     };

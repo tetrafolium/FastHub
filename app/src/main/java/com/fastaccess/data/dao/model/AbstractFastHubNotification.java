@@ -32,11 +32,11 @@ import lombok.NoArgsConstructor;
     @io.requery.Nullable String title;
     @io.requery.Nullable NotificationType type;
 
-    public static void update(@NonNull FastHubNotification notification) {
+    public static void update(final @NonNull FastHubNotification notification) {
         App.getInstance().getDataStore().toBlocking().update(notification);
     }
 
-    public static void save(@NonNull FastHubNotification notification) {
+    public static void save(final @NonNull FastHubNotification notification) {
         App.getInstance().getDataStore().toBlocking().insert(notification);
     }
 
@@ -66,20 +66,20 @@ import lombok.NoArgsConstructor;
     }
 
     @Override public String toString() {
-        return "AbstractFastHubNotification{" +
-               "date=" + date +
-               ", isRead=" + read +
-               ", body='" + body + '\'' +
-               ", title='" + title + '\'' +
-               ", type=" + type +
-               '}';
+        return "AbstractFastHubNotification{"
+               + "date=" + date
+               + ", isRead=" + read
+               + ", body='" + body + '\''
+               + ", title='" + title + '\''
+               + ", type=" + type
+               + '}';
     }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeLong(this.date != null ? this.date.getTime() : -1);
         dest.writeByte(this.read ? (byte) 1 : (byte) 0);
@@ -88,7 +88,7 @@ import lombok.NoArgsConstructor;
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
     }
 
-    protected AbstractFastHubNotification(Parcel in) {
+    protected AbstractFastHubNotification(final Parcel in) {
         this.id = in.readLong();
         long tmpDate = in.readLong();
         this.date = tmpDate == -1 ? null : new Date(tmpDate);
@@ -100,11 +100,11 @@ import lombok.NoArgsConstructor;
     }
 
     public static final Creator<FastHubNotification> CREATOR = new Creator<FastHubNotification>() {
-        @Override public FastHubNotification createFromParcel(Parcel source) {
+        @Override public FastHubNotification createFromParcel(final Parcel source) {
             return new FastHubNotification(source);
         }
 
-        @Override public FastHubNotification[] newArray(int size) {
+        @Override public FastHubNotification[] newArray(final int size) {
             return new FastHubNotification[size];
         }
     };

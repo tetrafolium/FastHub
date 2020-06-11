@@ -112,7 +112,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
     private int accentColor;
     private int iconColor;
 
-    public static void startRepoPager(@NonNull Context context, @NonNull NameParser nameParser) {
+    public static void startRepoPager(final @NonNull Context context, final @NonNull NameParser nameParser) {
         if (!InputHelper.isEmpty(nameParser.getName()) && !InputHelper.isEmpty(nameParser.getUsername())) {
             Intent intent = new Intent(context, RepoPagerActivity.class);
             intent.putExtras(Bundler.start()
@@ -125,17 +125,17 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         }
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login) {
         return createIntent(context, repoId, login, RepoPagerMvp.CODE);
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login,
-                                      @RepoPagerMvp.RepoNavigationType int navType) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login,
+                                      final @RepoPagerMvp.RepoNavigationType int navType) {
         return createIntent(context, repoId, login, navType, -1);
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login,
-                                      @RepoPagerMvp.RepoNavigationType int navType, int showWhat) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login,
+                                      final @RepoPagerMvp.RepoNavigationType int navType, final int showWhat) {
         Intent intent = new Intent(context, RepoPagerActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.ID, repoId)
@@ -167,7 +167,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
     @OnClick(R.id.fab) void onFabClicked() {
         if (navType == RepoPagerMvp.ISSUES) {
             fab.hide(new FloatingActionButton.OnVisibilityChangedListener() {
-                @Override public void onHidden(FloatingActionButton fab) {
+                @Override public void onHidden(final FloatingActionButton fab) {
                     super.onHidden(fab);
                     if (appbar != null) appbar.setExpanded(false, true);
                     bottomNavigation.setExpanded(false, true);
@@ -196,7 +196,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         onSearchSelected();
     }
 
-    @Override public boolean dispatchTouchEvent(MotionEvent ev) {
+    @Override public boolean dispatchTouchEvent(final MotionEvent ev) {
         if (navType == RepoPagerMvp.ISSUES && filterLayout.isShown()) {
             Rect viewRect = ViewHelper.getLayoutPosition(filterLayout);
             if (!viewRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
@@ -223,7 +223,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
 
     @OnClick({R.id.forkRepoLayout, R.id.starRepoLayout, R.id.watchRepoLayout,
               R.id.pinLayout, R.id.wikiLayout, R.id.licenseLayout
-             }) void onClick(View view) {
+             }) void onClick(final View view) {
         switch (view.getId()) {
         case R.id.forkRepoLayout:
             MessageDialogView.newInstance(getString(R.string.fork), String.format("%s %s/%s?", getString(R.string.fork), login, repoId),
@@ -262,7 +262,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         }
     }
 
-    @OnLongClick({R.id.forkRepoLayout, R.id.starRepoLayout, R.id.watchRepoLayout}) boolean onLongClick(View view) {
+    @OnLongClick({R.id.forkRepoLayout, R.id.starRepoLayout, R.id.watchRepoLayout}) boolean onLongClick(final View view) {
         switch (view.getId()) {
         case R.id.forkRepoLayout:
             RepoMiscDialogFragment.show(getSupportFragmentManager(), login, repoId, RepoMiscMVp.FORKS);
@@ -277,7 +277,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         return false;
     }
 
-    @OnCheckedChanged(R.id.sortByUpdated) void onSortIssues(boolean isChecked) {
+    @OnCheckedChanged(R.id.sortByUpdated) void onSortIssues(final boolean isChecked) {
         RepoIssuesPagerFragment pagerView = (RepoIssuesPagerFragment) AppHelper.getFragmentByTag(getSupportFragmentManager(),
                                             RepoIssuesPagerFragment.TAG);
         if (pagerView != null) {
@@ -306,7 +306,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         return new RepoPagerPresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             if (getIntent() == null || getIntent().getExtras() == null) {
@@ -336,7 +336,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         showHideFab();
     }
 
-    @Override public void onNavigationChanged(@RepoPagerMvp.RepoNavigationType int navType) {
+    @Override public void onNavigationChanged(final @RepoPagerMvp.RepoNavigationType int navType) {
         if (navType == RepoPagerMvp.PROFILE) {
             getPresenter().onModuleChanged(getSupportFragmentManager(), navType);
             bottomNavigation.setSelectedIndex(this.navType, true);
@@ -346,7 +346,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         //noinspection WrongConstant
         try {
             if (bottomNavigation.getSelectedIndex() != navType) bottomNavigation.setSelectedIndex(navType, true);
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
         showHideFab();
         getPresenter().onModuleChanged(getSupportFragmentManager(), navType);
     }
@@ -427,58 +427,58 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
             license.setText(!InputHelper.isEmpty(licenseModel.getSpdxId()) ? licenseModel.getSpdxId() : licenseModel.getName());
         }
         supportInvalidateOptionsMenu();
-        if (!PrefGetter.isRepoGuideShowed()) {}
+        if (!PrefGetter.isRepoGuideShowed()) { }
         onRepoWatched(getPresenter().isWatched());
         onRepoStarred(getPresenter().isStarred());
         onRepoForked(getPresenter().isForked());
     }
 
-    @Override public void onRepoWatched(boolean isWatched) {
+    @Override public void onRepoWatched(final boolean isWatched) {
         watchRepoImage.tintDrawableColor(isWatched ? accentColor : iconColor);
         onEnableDisableWatch(true);
     }
 
-    @Override public void onRepoStarred(boolean isStarred) {
+    @Override public void onRepoStarred(final boolean isStarred) {
         starRepoImage.setImageResource(isStarred ? R.drawable.ic_star_filled : R.drawable.ic_star);
         starRepoImage.tintDrawableColor(isStarred ? accentColor : iconColor);
         onEnableDisableStar(true);
     }
 
-    @Override public void onRepoForked(boolean isForked) {
+    @Override public void onRepoForked(final boolean isForked) {
         forkRepoImage.tintDrawableColor(isForked ? accentColor : iconColor);
         onEnableDisableFork(true);
     }
 
-    @Override public void onRepoPinned(boolean isPinned) {
+    @Override public void onRepoPinned(final boolean isPinned) {
         pinImage.setImageResource(isPinned ? R.drawable.ic_pin_filled : R.drawable.ic_pin);
         pinLayout.setEnabled(true);
     }
 
-    @Override public void onEnableDisableWatch(boolean isEnabled) {
+    @Override public void onEnableDisableWatch(final boolean isEnabled) {
         watchRepoLayout.setEnabled(isEnabled);
     }
 
-    @Override public void onEnableDisableStar(boolean isEnabled) {
+    @Override public void onEnableDisableStar(final boolean isEnabled) {
         starRepoLayout.setEnabled(isEnabled);
     }
 
-    @Override public void onEnableDisableFork(boolean isEnabled) {
+    @Override public void onEnableDisableFork(final boolean isEnabled) {
         forkRepoLayout.setEnabled(isEnabled);
     }
 
-    @Override public void onChangeWatchedCount(boolean isWatched) {
+    @Override public void onChangeWatchedCount(final boolean isWatched) {
         long count = InputHelper.toLong(watchRepo);
         watchRepo.setText(numberFormat.format(isWatched ? (count + 1) : (count > 0 ? (count - 1) : 0)));
         updatePinnedRepo();
     }
 
-    @Override public void onChangeStarCount(boolean isStarred) {
+    @Override public void onChangeStarCount(final boolean isStarred) {
         long count = InputHelper.toLong(starRepo);
         starRepo.setText(numberFormat.format(isStarred ? (count + 1) : (count > 0 ? (count - 1) : 0)));
         updatePinnedRepo();
     }
 
-    @Override public void onChangeForkCount(boolean isForked) {
+    @Override public void onChangeForkCount(final boolean isForked) {
         long count = InputHelper.toLong(forkRepo);
         forkRepo.setText(numberFormat.format(isForked ? (count + 1) : (count > 0 ? (count - 1) : 0)));
         updatePinnedRepo();
@@ -503,7 +503,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         UserPagerActivity.startActivity(this, Login.getUser().getLogin(), false, PrefGetter.isEnterprise(), -1);
     }
 
-    @Override public void onScrolled(boolean isUp) {
+    @Override public void onScrolled(final boolean isUp) {
         if (fab != null) {
             if (isUp) {
                 fab.hide();
@@ -517,12 +517,12 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         return getPresenter().isRepoOwner();
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.repo_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override public boolean onPrepareOptionsMenu(Menu menu) {
+    @Override public boolean onPrepareOptionsMenu(final Menu menu) {
         Repo repoModel = getPresenter().getRepo();
         if (repoModel != null && repoModel.isFork() && repoModel.getParent() != null) {
             MenuItem menuItem = menu.findItem(R.id.originalRepo);
@@ -530,11 +530,11 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
             menuItem.setTitle(repoModel.getParent().getFullName());
         }
 //        menu.findItem(R.id.deleteRepo).setVisible(getPresenter().isRepoOwner());
-        if (menu.findItem(R.id.deleteRepo) != null) menu.findItem(R.id.deleteRepo).setVisible(false);//removing delete permission.
+        if (menu.findItem(R.id.deleteRepo) != null) menu.findItem(R.id.deleteRepo).setVisible(false); //removing delete permission.
         return super.onPrepareOptionsMenu(menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             startActivity(new Intent(this, MainActivity.class));
             finish();
@@ -563,7 +563,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("ConstantConditions") @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @SuppressWarnings("ConstantConditions") @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk && bundle != null) {
             boolean isDelete = bundle.getBoolean(BundleConstant.EXTRA_TWO);
@@ -620,7 +620,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         if (navType == RepoPagerMvp.ISSUES) {
             fab.setImageResource(R.drawable.ic_menu);
             fab.show();
-            if (!PrefGetter.isRepoFabHintShowed()) {}
+            if (!PrefGetter.isRepoFabHintShowed()) { }
         } else if (navType == RepoPagerMvp.PULL_REQUEST) {
             fab.setImageResource(R.drawable.ic_search);
             fab.show();
@@ -631,7 +631,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
 
     private void hideFilterLayout() {
         AnimHelper.mimicFabVisibility(false, filterLayout, new FloatingActionButton.OnVisibilityChangedListener() {
-            @Override public void onHidden(FloatingActionButton actionButton) {
+            @Override public void onHidden(final FloatingActionButton actionButton) {
                 fab.show();
             }
         });

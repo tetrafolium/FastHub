@@ -38,14 +38,14 @@ public class ProfileStarredFragment extends BaseFragment<ProfileStarredMvp.View,
     private ReposAdapter adapter;
     private RepoPagerMvp.TabsBadgeListener tabsBadgeListener;
 
-    public static ProfileStarredFragment newInstance(@NonNull String username) {
+    public static ProfileStarredFragment newInstance(final @NonNull String username) {
         ProfileStarredFragment view = new ProfileStarredFragment();
         view.setArguments(Bundler.start().put(BundleConstant.EXTRA, username).end());
         return view;
     }
 
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof RepoPagerMvp.TabsBadgeListener) {
             tabsBadgeListener = (RepoPagerMvp.TabsBadgeListener) getParentFragment();
@@ -59,7 +59,7 @@ public class ProfileStarredFragment extends BaseFragment<ProfileStarredMvp.View,
         super.onDetach();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Repo> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Repo> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -76,7 +76,7 @@ public class ProfileStarredFragment extends BaseFragment<ProfileStarredMvp.View,
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments() == null) {
             throw new NullPointerException("Bundle is null, username is required");
         }
@@ -100,7 +100,7 @@ public class ProfileStarredFragment extends BaseFragment<ProfileStarredMvp.View,
         return new ProfileStarredPresenter();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
@@ -110,12 +110,12 @@ public class ProfileStarredFragment extends BaseFragment<ProfileStarredMvp.View,
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -127,7 +127,7 @@ public class ProfileStarredFragment extends BaseFragment<ProfileStarredMvp.View,
         return onLoadMore;
     }
 
-    @Override public void onUpdateCount(int starredCount) {
+    @Override public void onUpdateCount(final int starredCount) {
         if (tabsBadgeListener != null) {
             tabsBadgeListener.onSetBadge(3, starredCount);
         }
@@ -137,11 +137,11 @@ public class ProfileStarredFragment extends BaseFragment<ProfileStarredMvp.View,
         getPresenter().onCallApi(1, getArguments().getString(BundleConstant.EXTRA));
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

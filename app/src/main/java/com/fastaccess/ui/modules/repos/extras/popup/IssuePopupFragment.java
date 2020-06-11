@@ -63,7 +63,7 @@ public class IssuePopupFragment extends BaseMvpBottomSheetDialogFragment<IssuePo
     @BindView(R.id.commentSection) LinearLayout commentSection;
     @BindView(R.id.progressBar) ProgressBar progressBar;
 
-    public static void showPopup(@NonNull FragmentManager manager, @NonNull Issue issue) {
+    public static void showPopup(final @NonNull FragmentManager manager, final @NonNull Issue issue) {
         IssuePopupFragment fragment = new IssuePopupFragment();
         PullsIssuesParser parser = PullsIssuesParser.getForIssue(issue.getHtmlUrl());
         if (parser == null) {
@@ -75,7 +75,7 @@ public class IssuePopupFragment extends BaseMvpBottomSheetDialogFragment<IssuePo
         fragment.show(manager, "");
     }
 
-    public static void showPopup(@NonNull FragmentManager manager, @NonNull PullRequest pullRequest) {
+    public static void showPopup(final @NonNull FragmentManager manager, final @NonNull PullRequest pullRequest) {
         IssuePopupFragment fragment = new IssuePopupFragment();
         PullsIssuesParser parser = PullsIssuesParser.getForPullRequest(pullRequest.getHtmlUrl());
         if (parser == null) return;
@@ -85,11 +85,11 @@ public class IssuePopupFragment extends BaseMvpBottomSheetDialogFragment<IssuePo
         fragment.show(manager, "");
     }
 
-    @NonNull private static Bundle getBundle(@NonNull String login, @NonNull String repoId,
-            int number, @NonNull String title, @NonNull String body,
-            @NonNull User user, @Nullable User assignee,
-            @Nullable LabelListModel labels, @Nullable MilestoneModel milestone,
-            boolean canComment) {
+    @NonNull private static Bundle getBundle(final @NonNull String login, final @NonNull String repoId,
+            final int number, final @NonNull String title, final @NonNull String body,
+            final @NonNull User user, final @Nullable User assignee,
+            final @Nullable LabelListModel labels, final @Nullable MilestoneModel milestone,
+            final boolean canComment) {
         return Bundler.start()
                .put(BundleConstant.EXTRA_SEVEN, login)
                .put(BundleConstant.EXTRA_EIGHT, repoId)
@@ -115,7 +115,7 @@ public class IssuePopupFragment extends BaseMvpBottomSheetDialogFragment<IssuePo
         }
     }
 
-    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         toolbar.setNavigationIcon(R.drawable.ic_clear);
         toolbar.setNavigationOnClickListener(view1 -> dismiss());
@@ -169,22 +169,22 @@ public class IssuePopupFragment extends BaseMvpBottomSheetDialogFragment<IssuePo
         return new IssuePopupPresenter();
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         hideProgress();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void showMessage(@NonNull String titleRes, @NonNull String msgRes) {
+    @Override public void showMessage(final @NonNull String titleRes, final @NonNull String msgRes) {
         hideProgress();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void showErrorMessage(@NonNull String msgRes) {
+    @Override public void showErrorMessage(final @NonNull String msgRes) {
         hideProgress();
         super.showErrorMessage(msgRes);
     }
 
-    @Override public void showProgress(int resId) {
+    @Override public void showProgress(final int resId) {
         submit.hide();
         AnimHelper.mimicFabVisibility(true, progressBar, null);
     }

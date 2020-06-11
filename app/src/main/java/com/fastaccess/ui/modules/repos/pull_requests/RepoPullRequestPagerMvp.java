@@ -17,5 +17,5 @@ public interface RepoPullRequestPagerMvp {
         void onScrolled(boolean isUp);
     }
 
-    interface Presenter extends BaseMvp.FAPresenter {}
+    interface Presenter extends BaseMvp.FAPresenter { }
 }

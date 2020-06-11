@@ -43,11 +43,11 @@ import static com.fastaccess.data.dao.model.RepoFile.TYPE;
     String login;
 
 
-    public Single<RepoFile> save(RepoFile entity) {
+    public Single<RepoFile> save(final RepoFile entity) {
         return RxHelper.getSingle(App.getInstance().getDataStore().insert(entity));
     }
 
-    public static Observable<RepoFile> save(@NonNull List<RepoFile> models, @NonNull String login, @NonNull String repoId) {
+    public static Observable<RepoFile> save(final @NonNull List<RepoFile> models, final @NonNull String login, final @NonNull String repoId) {
         ReactiveEntityStore<Persistable> singleEntityStore = App.getInstance().getDataStore();
         return RxHelper.safeObservable(singleEntityStore.delete(RepoFile.class)
                                        .where(REPO_ID.eq(repoId)
@@ -63,7 +63,7 @@ import static com.fastaccess.data.dao.model.RepoFile.TYPE;
         }));
     }
 
-    public static Single<List<RepoFile>> getFiles(@NonNull String login, @NonNull String repoId) {
+    public static Single<List<RepoFile>> getFiles(final @NonNull String login, final @NonNull String repoId) {
         return App.getInstance().getDataStore()
                .select(RepoFile.class)
                .where(REPO_ID.eq(repoId)
@@ -74,7 +74,7 @@ import static com.fastaccess.data.dao.model.RepoFile.TYPE;
                .toList();
     }
 
-    public static Observable<RepoFile> getFile(@NonNull String login, @NonNull String repoId, @NonNull String sha) {
+    public static Observable<RepoFile> getFile(final @NonNull String login, final @NonNull String repoId, final @NonNull String sha) {
         return App.getInstance().getDataStore()
                .select(RepoFile.class)
                .where(REPO_ID.eq(repoId)
@@ -89,7 +89,7 @@ import static com.fastaccess.data.dao.model.RepoFile.TYPE;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.name);
         dest.writeString(this.path);
@@ -104,7 +104,7 @@ import static com.fastaccess.data.dao.model.RepoFile.TYPE;
         dest.writeString(this.login);
     }
 
-    protected AbstractRepoFile(Parcel in) {
+    protected AbstractRepoFile(final Parcel in) {
         this.id = in.readLong();
         this.name = in.readString();
         this.path = in.readString();
@@ -121,11 +121,11 @@ import static com.fastaccess.data.dao.model.RepoFile.TYPE;
     }
 
     public static final Creator<RepoFile> CREATOR = new Creator<RepoFile>() {
-        @Override public RepoFile createFromParcel(Parcel source) {
+        @Override public RepoFile createFromParcel(final Parcel source) {
             return new RepoFile(source);
         }
 
-        @Override public RepoFile[] newArray(int size) {
+        @Override public RepoFile[] newArray(final int size) {
             return new RepoFile[size];
         }
     };

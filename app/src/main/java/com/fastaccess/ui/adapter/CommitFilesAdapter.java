@@ -24,19 +24,19 @@ public class CommitFilesAdapter extends BaseRecyclerAdapter<CommitFileChanges, P
     @NonNull private OnToggleView onToggleView;
     @Nullable private PullRequestFilesMvp.OnPatchClickListener onPatchClickListener;
 
-    public CommitFilesAdapter(@NonNull ArrayList<CommitFileChanges> eventsModels,
-                              @NonNull OnToggleView onToggleView,
-                              @Nullable PullRequestFilesMvp.OnPatchClickListener onPatchClickListener) {
+    public CommitFilesAdapter(final @NonNull ArrayList<CommitFileChanges> eventsModels,
+                              final @NonNull OnToggleView onToggleView,
+                              final @Nullable PullRequestFilesMvp.OnPatchClickListener onPatchClickListener) {
         super(eventsModels);
         this.onToggleView = onToggleView;
         this.onPatchClickListener = onPatchClickListener;
     }
 
-    @Override protected PullRequestFilesViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected PullRequestFilesViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return PullRequestFilesViewHolder.newInstance(parent, this, onToggleView, onPatchClickListener);
     }
 
-    @Override protected void onBindView(PullRequestFilesViewHolder holder, int position) {
+    @Override protected void onBindView(final PullRequestFilesViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

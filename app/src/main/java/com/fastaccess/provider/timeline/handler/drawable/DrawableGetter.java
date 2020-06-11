@@ -26,14 +26,14 @@ public class DrawableGetter implements Html.ImageGetter, Drawable.Callback {
     private final Set<GlideDrawableTarget> cachedTargets;
     private final int width;
 
-    public DrawableGetter(TextView tv, int width) {
+    public DrawableGetter(final TextView tv, final int width) {
         tv.setTag(R.id.drawable_callback, this);
         this.container = new WeakReference<>(tv);
         this.cachedTargets = new HashSet<>();
         this.width = width;
     }
 
-    @Override public Drawable getDrawable(@NonNull String url) {
+    @Override public Drawable getDrawable(final @NonNull String url) {
         final UrlDrawable urlDrawable = new UrlDrawable();
         if (container != null && container.get() != null) {
             Context context = container.get().getContext();
@@ -49,17 +49,17 @@ public class DrawableGetter implements Html.ImageGetter, Drawable.Callback {
         return urlDrawable;
     }
 
-    @Override public void invalidateDrawable(@NonNull Drawable drawable) {
+    @Override public void invalidateDrawable(final @NonNull Drawable drawable) {
         if (container != null && container.get() != null) {
             container.get().invalidate();
         }
     }
 
-    @Override public void scheduleDrawable(@NonNull Drawable drawable, @NonNull Runnable runnable, long l) {}
+    @Override public void scheduleDrawable(final @NonNull Drawable drawable, final @NonNull Runnable runnable, final long l) { }
 
-    @Override public void unscheduleDrawable(@NonNull Drawable drawable, @NonNull Runnable runnable) {}
+    @Override public void unscheduleDrawable(final @NonNull Drawable drawable, final @NonNull Runnable runnable) { }
 
-    public void clear(@NonNull DrawableGetter drawableGetter) {
+    public void clear(final @NonNull DrawableGetter drawableGetter) {
         if (drawableGetter.cachedTargets != null) {
             for (GlideDrawableTarget target : drawableGetter.cachedTargets) {
                 GlideApp.with(App.getInstance()).clear(target);

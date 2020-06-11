@@ -24,7 +24,7 @@ public class PullRequestCommitModel implements Parcelable {
         return line;
     }
 
-    public void setLine(int line) {
+    public void setLine(final int line) {
         this.line = line;
     }
 
@@ -32,7 +32,7 @@ public class PullRequestCommitModel implements Parcelable {
         return path;
     }
 
-    public void setPath(String path) {
+    public void setPath(final String path) {
         this.path = path;
     }
 
@@ -40,7 +40,7 @@ public class PullRequestCommitModel implements Parcelable {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(final int position) {
         this.position = position;
     }
 
@@ -48,7 +48,7 @@ public class PullRequestCommitModel implements Parcelable {
         return commitId;
     }
 
-    public void setCommitId(String commitId) {
+    public void setCommitId(final String commitId) {
         this.commitId = commitId;
     }
 
@@ -56,17 +56,17 @@ public class PullRequestCommitModel implements Parcelable {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(final List<Comment> comments) {
         this.comments = comments;
     }
 
-    public PullRequestCommitModel() {}
+    public PullRequestCommitModel() { }
 
     public String getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(final String login) {
         this.login = login;
     }
 
@@ -74,7 +74,7 @@ public class PullRequestCommitModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.login);
         dest.writeString(this.path);
         dest.writeInt(this.position);
@@ -83,7 +83,7 @@ public class PullRequestCommitModel implements Parcelable {
         dest.writeInt(this.line);
     }
 
-    protected PullRequestCommitModel(Parcel in) {
+    protected PullRequestCommitModel(final Parcel in) {
         this.login = in.readString();
         this.path = in.readString();
         this.position = in.readInt();
@@ -93,11 +93,11 @@ public class PullRequestCommitModel implements Parcelable {
     }
 
     public static final Creator<PullRequestCommitModel> CREATOR = new Creator<PullRequestCommitModel>() {
-        @Override public PullRequestCommitModel createFromParcel(Parcel source) {
+        @Override public PullRequestCommitModel createFromParcel(final Parcel source) {
             return new PullRequestCommitModel(source);
         }
 
-        @Override public PullRequestCommitModel[] newArray(int size) {
+        @Override public PullRequestCommitModel[] newArray(final int size) {
             return new PullRequestCommitModel[size];
         }
     };

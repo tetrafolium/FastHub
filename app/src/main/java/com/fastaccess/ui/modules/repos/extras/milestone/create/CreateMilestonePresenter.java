@@ -17,8 +17,8 @@ import java.util.Date;
  */
 
 public class CreateMilestonePresenter extends BasePresenter<CreateMilestoneMvp.View> implements CreateMilestoneMvp.Presenter {
-    @Override public void onSubmit(@Nullable String title, @Nullable String dueOn, @Nullable String description,
-                                   @NonNull String login, @NonNull String repo) {
+    @Override public void onSubmit(final @Nullable String title, final @Nullable String dueOn, final @Nullable String description,
+                                   final @NonNull String login, final @NonNull String repo) {
         if (getView() != null) {
             boolean isEmptyTitle = InputHelper.isEmpty(title);
             getView().onShowTitleError(isEmptyTitle);

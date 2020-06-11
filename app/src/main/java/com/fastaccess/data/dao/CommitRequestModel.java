@@ -11,7 +11,7 @@ public class CommitRequestModel {
     private String sha;
     private String branch;
 
-    public CommitRequestModel(String message, String content, String sha, String branch) {
+    public CommitRequestModel(final String message, final String content, final String sha, final String branch) {
         this.message = message;
         this.content = content;
         this.sha = sha;
@@ -22,7 +22,7 @@ public class CommitRequestModel {
         return sha;
     }
 
-    public void setSha(String sha) {
+    public void setSha(final String sha) {
         this.sha = sha;
     }
 
@@ -30,7 +30,7 @@ public class CommitRequestModel {
         return message;
     }
 
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         this.message = message;
     }
 
@@ -38,7 +38,7 @@ public class CommitRequestModel {
         return content;
     }
 
-    public void setContent(String content) {
+    public void setContent(final String content) {
         this.content = content;
     }
 
@@ -46,7 +46,7 @@ public class CommitRequestModel {
         return branch;
     }
 
-    public void setBranch(String branch) {
+    public void setBranch(final String branch) {
         this.branch = branch;
     }
 }

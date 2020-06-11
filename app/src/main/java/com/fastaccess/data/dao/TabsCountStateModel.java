@@ -19,7 +19,7 @@ public class TabsCountStateModel implements Parcelable, Serializable {
         return count;
     }
 
-    public void setCount(int count) {
+    public void setCount(final int count) {
         this.count = count;
     }
 
@@ -27,7 +27,7 @@ public class TabsCountStateModel implements Parcelable, Serializable {
         return tabIndex;
     }
 
-    public void setTabIndex(int tabIndex) {
+    public void setTabIndex(final int tabIndex) {
         this.tabIndex = tabIndex;
     }
 
@@ -35,11 +35,11 @@ public class TabsCountStateModel implements Parcelable, Serializable {
         return drawableId;
     }
 
-    public void setDrawableId(int drawableId) {
+    public void setDrawableId(final int drawableId) {
         this.drawableId = drawableId;
     }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -52,30 +52,30 @@ public class TabsCountStateModel implements Parcelable, Serializable {
         return tabIndex;
     }
 
-    public TabsCountStateModel() {}
+    public TabsCountStateModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(this.count);
         dest.writeInt(this.tabIndex);
         dest.writeInt(this.drawableId);
     }
 
-    protected TabsCountStateModel(Parcel in) {
+    protected TabsCountStateModel(final Parcel in) {
         this.count = in.readInt();
         this.tabIndex = in.readInt();
         this.drawableId = in.readInt();
     }
 
     public static final Creator<TabsCountStateModel> CREATOR = new Creator<TabsCountStateModel>() {
-        @Override public TabsCountStateModel createFromParcel(Parcel source) {
+        @Override public TabsCountStateModel createFromParcel(final Parcel source) {
             return new TabsCountStateModel(source);
         }
 
-        @Override public TabsCountStateModel[] newArray(int size) {
+        @Override public TabsCountStateModel[] newArray(final int size) {
             return new TabsCountStateModel[size];
         }
     };

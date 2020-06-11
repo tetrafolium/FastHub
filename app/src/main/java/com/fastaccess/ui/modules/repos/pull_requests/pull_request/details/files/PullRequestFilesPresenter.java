@@ -48,20 +48,20 @@ class PullRequestFilesPresenter extends BasePresenter<PullRequestFilesMvp.View> 
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Object parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());
@@ -86,7 +86,7 @@ class PullRequestFilesPresenter extends BasePresenter<PullRequestFilesMvp.View> 
         return true;
     }
 
-    @Override public void onFragmentCreated(@NonNull Bundle bundle) {
+    @Override public void onFragmentCreated(final @NonNull Bundle bundle) {
         repoId = bundle.getString(BundleConstant.ID);
         login = bundle.getString(BundleConstant.EXTRA);
         number = bundle.getLong(BundleConstant.EXTRA_TWO);
@@ -103,7 +103,7 @@ class PullRequestFilesPresenter extends BasePresenter<PullRequestFilesMvp.View> 
         sendToView(BaseMvp.FAView::hideProgress);
     }
 
-    @Override public void onItemClick(int position, View v, CommitFileChanges model) {
+    @Override public void onItemClick(final int position, final View v, final CommitFileChanges model) {
         if (v.getId() == R.id.patchList) {
             sendToView(view -> view.onOpenForResult(position, model));
         } else if (v.getId() == R.id.open) {
@@ -136,7 +136,7 @@ class PullRequestFilesPresenter extends BasePresenter<PullRequestFilesMvp.View> 
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, CommitFileChanges item) {
+    @Override public void onItemLongClick(final int position, final View v, final CommitFileChanges item) {
         v.getContext().startActivity(CommitPagerActivity.createIntent(v.getContext(), repoId, login,
                                      Uri.parse(item.getCommitFileModel().getContentsUrl()).getQueryParameter("ref")));
     }

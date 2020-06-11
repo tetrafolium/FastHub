@@ -38,7 +38,7 @@ public class CreateLabelDialogFragment extends BaseDialogFragment<CreateLabelMvp
     @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
     private LabelsMvp.View callback;
 
-    public static CreateLabelDialogFragment newInstance(@NonNull String login, @NonNull String repo) {
+    public static CreateLabelDialogFragment newInstance(final @NonNull String login, final @NonNull String repo) {
         CreateLabelDialogFragment fragment = new CreateLabelDialogFragment();
         fragment.setArguments(Bundler.start()
                               .put(BundleConstant.EXTRA, login)
@@ -47,7 +47,7 @@ public class CreateLabelDialogFragment extends BaseDialogFragment<CreateLabelMvp
         return fragment;
     }
 
-    @Override public void onAttach(@NotNull Context context) {
+    @Override public void onAttach(final @NotNull Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof LabelsMvp.View) {
             callback = (LabelsMvp.View) getParentFragment();
@@ -61,13 +61,13 @@ public class CreateLabelDialogFragment extends BaseDialogFragment<CreateLabelMvp
         super.onDetach();
     }
 
-    @Override public void onSuccessfullyCreated(@NonNull LabelModel labelModel1) {
+    @Override public void onSuccessfullyCreated(final @NonNull LabelModel labelModel1) {
         hideProgress();
         if (callback != null) callback.onLabelAdded(labelModel1);
         dismiss();
     }
 
-    @Override public void onColorSelected(@NonNull String color) {
+    @Override public void onColorSelected(final @NonNull String color) {
         description.getEditText().setText(color.replaceFirst("#", ""));
     }
 
@@ -75,7 +75,7 @@ public class CreateLabelDialogFragment extends BaseDialogFragment<CreateLabelMvp
         return R.layout.create_label_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         String login = getArguments().getString(BundleConstant.EXTRA);
         String repo = getArguments().getString(BundleConstant.ID);
         if (login == null || repo == null) {

@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class PinnedPullRequestPresenter extends BasePresenter<PinnedPullRequestMvp.View> implements PinnedPullRequestMvp.Presenter {
     private ArrayList<PullRequest> pullRequests = new ArrayList<>();
 
-    @Override protected void onAttachView(@NonNull PinnedPullRequestMvp.View view) {
+    @Override protected void onAttachView(final @NonNull PinnedPullRequestMvp.View view) {
         super.onAttachView(view);
         if (pullRequests.isEmpty()) {
             onReload();
@@ -35,11 +35,11 @@ public class PinnedPullRequestPresenter extends BasePresenter<PinnedPullRequestM
                                     sendToView(view -> view.onNotifyAdapter(null))));
     }
 
-    @Override public void onItemClick(int position, View v, PullRequest item) {
+    @Override public void onItemClick(final int position, final View v, final PullRequest item) {
         SchemeParser.launchUri(v.getContext(), !InputHelper.isEmpty(item.getHtmlUrl()) ? item.getHtmlUrl() : item.getUrl());
     }
 
-    @Override public void onItemLongClick(int position, View v, PullRequest item) {
+    @Override public void onItemLongClick(final int position, final View v, final PullRequest item) {
         if (getView() != null) {
             getView().onDeletePinnedPullRequest(item.getId(), position);
         }

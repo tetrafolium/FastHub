@@ -55,7 +55,7 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeString(this.commitId);
@@ -83,7 +83,7 @@ import lombok.Setter;
         dest.writeInt(this.event == null ? -1 : this.event.ordinal());
     }
 
-    private GenericEvent(Parcel in) {
+    private GenericEvent(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         this.commitId = in.readString();
@@ -114,11 +114,11 @@ import lombok.Setter;
     }
 
     public static final Creator<GenericEvent> CREATOR = new Creator<GenericEvent>() {
-        @Override public GenericEvent createFromParcel(Parcel source) {
+        @Override public GenericEvent createFromParcel(final Parcel source) {
             return new GenericEvent(source);
         }
 
-        @Override public GenericEvent[] newArray(int size) {
+        @Override public GenericEvent[] newArray(final int size) {
             return new GenericEvent[size];
         }
     };

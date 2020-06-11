@@ -24,14 +24,14 @@ public class MergeRequestModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.commitMessage);
         dest.writeString(this.sha);
         dest.writeString(this.base);
         dest.writeString(this.head);
     }
 
-    @SuppressWarnings("WeakerAccess") protected MergeRequestModel(Parcel in) {
+    @SuppressWarnings("WeakerAccess") protected MergeRequestModel(final Parcel in) {
         this.commitMessage = in.readString();
         this.sha = in.readString();
         this.base = in.readString();
@@ -39,11 +39,11 @@ public class MergeRequestModel implements Parcelable {
     }
 
     public static final Creator<MergeRequestModel> CREATOR = new Creator<MergeRequestModel>() {
-        @Override public MergeRequestModel createFromParcel(Parcel source) {
+        @Override public MergeRequestModel createFromParcel(final Parcel source) {
             return new MergeRequestModel(source);
         }
 
-        @Override public MergeRequestModel[] newArray(int size) {
+        @Override public MergeRequestModel[] newArray(final int size) {
             return new MergeRequestModel[size];
         }
     };

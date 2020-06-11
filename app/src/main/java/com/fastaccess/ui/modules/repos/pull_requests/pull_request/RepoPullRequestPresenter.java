@@ -40,20 +40,20 @@ class RepoPullRequestPresenter extends BasePresenter<RepoPullRequestMvp.View> im
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable IssueState parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable IssueState parameter) {
         if (parameter == null) {
             sendToView(RepoPullRequestMvp.View::hideProgress);
             return false;
@@ -80,7 +80,7 @@ class RepoPullRequestPresenter extends BasePresenter<RepoPullRequestMvp.View> im
         return true;
     }
 
-    @Override public void onFragmentCreated(@NonNull Bundle bundle) {
+    @Override public void onFragmentCreated(final @NonNull Bundle bundle) {
         repoId = bundle.getString(BundleConstant.ID);
         login = bundle.getString(BundleConstant.EXTRA);
         issueState = (IssueState) bundle.getSerializable(BundleConstant.EXTRA_TWO);
@@ -89,7 +89,7 @@ class RepoPullRequestPresenter extends BasePresenter<RepoPullRequestMvp.View> im
         }
     }
 
-    private void onCallCountApi(@NonNull IssueState issueState) {
+    private void onCallCountApi(final @NonNull IssueState issueState) {
         manageDisposable(RxHelper.getObservable(RestProvider.getPullRequestService(isEnterprise())
                                                 .getPullsWithCount(RepoQueryProvider.getIssuesPullRequestQuery(login, repoId, issueState, true), 0))
                          .subscribe(pullRequestPageable -> sendToView(view -> view.onUpdateCount(pullRequestPageable.getTotalCount())),
@@ -116,14 +116,14 @@ class RepoPullRequestPresenter extends BasePresenter<RepoPullRequestMvp.View> im
         return issueState;
     }
 
-    @Override public void onItemClick(int position, View v, PullRequest item) {
+    @Override public void onItemClick(final int position, final View v, final PullRequest item) {
         PullsIssuesParser parser = PullsIssuesParser.getForPullRequest(item.getHtmlUrl());
         if (parser != null && getView() != null) {
             getView().onOpenPullRequest(parser);
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, PullRequest item) {
+    @Override public void onItemLongClick(final int position, final View v, final PullRequest item) {
         if (getView() != null) getView().onShowPullRequestPopup(item);
     }
 }

@@ -42,7 +42,7 @@ import lombok.NoArgsConstructor;
     @Nullable String login;
 
     @NonNull
-    public static Disposable save(@androidx.annotation.Nullable List<Event> events, @androidx.annotation.Nullable String user) {
+    public static Disposable save(final @androidx.annotation.Nullable List<Event> events, final @androidx.annotation.Nullable String user) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 Login login = Login.getUser();
@@ -69,10 +69,10 @@ import lombok.NoArgsConstructor;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    @NonNull public static Single<List<Event>> getEvents(@NonNull String login) {
+    @NonNull public static Single<List<Event>> getEvents(final @NonNull String login) {
         return RxHelper.getSingle(
                    App.getInstance().getDataStore()
                    .select(Event.class)
@@ -87,7 +87,7 @@ import lombok.NoArgsConstructor;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeInt(this.type == null ? -1 : this.type.ordinal());
         dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
@@ -97,7 +97,7 @@ import lombok.NoArgsConstructor;
         dest.writeByte(this.publicEvent ? (byte) 1 : (byte) 0);
     }
 
-    protected AbstractEvent(Parcel in) {
+    protected AbstractEvent(final Parcel in) {
         this.id = in.readLong();
         int tmpType = in.readInt();
         this.type = tmpType == -1 ? null : EventsType.values()[tmpType];
@@ -110,11 +110,11 @@ import lombok.NoArgsConstructor;
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
-        @Override public Event createFromParcel(Parcel source) {
+        @Override public Event createFromParcel(final Parcel source) {
             return new Event(source);
         }
 
-        @Override public Event[] newArray(int size) {
+        @Override public Event[] newArray(final int size) {
             return new Event[size];
         }
     };

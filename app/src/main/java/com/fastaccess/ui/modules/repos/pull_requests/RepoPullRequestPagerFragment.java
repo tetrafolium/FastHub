@@ -41,7 +41,7 @@ public class RepoPullRequestPagerFragment extends BaseFragment<RepoPullRequestPa
     @State HashSet<TabsCountStateModel> counts = new HashSet<>();
     private RepoPagerMvp.View repoCallback;
 
-    public static RepoPullRequestPagerFragment newInstance(@NonNull String repoId, @NonNull String login) {
+    public static RepoPullRequestPagerFragment newInstance(final @NonNull String repoId, final @NonNull String login) {
         RepoPullRequestPagerFragment view = new RepoPullRequestPagerFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.ID, repoId)
@@ -50,7 +50,7 @@ public class RepoPullRequestPagerFragment extends BaseFragment<RepoPullRequestPa
         return view;
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof RepoPagerMvp.View) {
             repoCallback = (RepoPagerMvp.View) getParentFragment();
@@ -68,7 +68,7 @@ public class RepoPullRequestPagerFragment extends BaseFragment<RepoPullRequestPa
         return R.layout.centered_tabbed_viewpager;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         String repoId = getArguments().getString(BundleConstant.ID);
         String login = getArguments().getString(BundleConstant.EXTRA);
         if (login == null || repoId == null) throw new NullPointerException("repoId || login is null???");
@@ -79,14 +79,14 @@ public class RepoPullRequestPagerFragment extends BaseFragment<RepoPullRequestPa
             Stream.of(counts).forEach(this::updateCount);
         }
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onScrollTop(tab.getPosition());
             }
         });
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {
@@ -98,7 +98,7 @@ public class RepoPullRequestPagerFragment extends BaseFragment<RepoPullRequestPa
         return new RepoPullRequestPagerPresenter();
     }
 
-    @Override public void onSetBadge(int tabIndex, int count) {
+    @Override public void onSetBadge(final int tabIndex, final int count) {
         TabsCountStateModel model = new TabsCountStateModel();
         model.setTabIndex(tabIndex);
         model.setCount(count);
@@ -112,11 +112,11 @@ public class RepoPullRequestPagerFragment extends BaseFragment<RepoPullRequestPa
         return pager != null ? pager.getCurrentItem() : 0;
     }
 
-    @Override public void onScrolled(boolean isUp) {
+    @Override public void onScrolled(final boolean isUp) {
         if (repoCallback != null) repoCallback.onScrolled(isUp);
     }
 
-    private void updateCount(@NonNull TabsCountStateModel model) {
+    private void updateCount(final @NonNull TabsCountStateModel model) {
         TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
         tv.setText(SpannableBuilder.builder()
                    .append(model.getTabIndex() == 0 ? getString(R.string.opened) : getString(R.string.closed))

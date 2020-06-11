@@ -31,7 +31,7 @@ import static com.fastaccess.data.dao.model.PinnedGists.LOGIN;
     @io.requery.Nullable @Convert(GistConverter.class) Gist gist;
     @io.requery.Nullable long gistId;
 
-    public static void pinUpin(@NonNull Gist gist) {
+    public static void pinUpin(final @NonNull Gist gist) {
         PinnedGists pinnedIssues = get(gist.getGistId().hashCode());
         if (pinnedIssues == null) {
             PinnedGists pinned = new PinnedGists();
@@ -40,20 +40,20 @@ import static com.fastaccess.data.dao.model.PinnedGists.LOGIN;
             pinned.setGistId(gist.getGistId().hashCode());
             try {
                 App.getInstance().getDataStore().toBlocking().insert(pinned);
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) { }
         } else {
             delete(gist.getGistId().hashCode());
         }
     }
 
-    @Nullable public static PinnedGists get(long gistId) {
+    @Nullable public static PinnedGists get(final long gistId) {
         return App.getInstance().getDataStore().select(PinnedGists.class)
                .where(PinnedGists.GIST_ID.eq(gistId))
                .get()
                .firstOrNull();
     }
 
-    public static void delete(long gistId) {
+    public static void delete(final long gistId) {
         App.getInstance().getDataStore().delete(PinnedGists.class)
         .where(PinnedGists.GIST_ID.eq(gistId))
         .get()
@@ -70,7 +70,7 @@ import static com.fastaccess.data.dao.model.PinnedGists.LOGIN;
                .toList();
     }
 
-    public static boolean isPinned(long gistId) {
+    public static boolean isPinned(final long gistId) {
         return get(gistId) != null;
     }
 }

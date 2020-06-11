@@ -36,7 +36,7 @@ import io.reactivex.Observable;
 public class ColorsProvider {
 
     private static List<String> POPULAR_LANG = Stream.of("Java", "Kotlin", "JavaScript", "Python", "CSS", "PHP",
-            "Ruby", "C++", "C", "Go", "Swift").toList();//predefined languages.
+            "Ruby", "C++", "C", "Go", "Swift").toList(); //predefined languages.
 
     private static Map<String, LanguageColorModel> colors = new LinkedHashMap<>();
 
@@ -45,7 +45,7 @@ public class ColorsProvider {
             RxHelper.safeObservable(Observable
             .create(observableEmitter -> {
                 try {
-                    Type type = new TypeToken<Map<String, LanguageColorModel>>() {} .getType();
+                    Type type = new TypeToken<Map<String, LanguageColorModel>>() { } .getType();
                     try (InputStream stream = App.getInstance().getAssets().open("colors.json")) {
                         Gson gson = new Gson();
                         try (JsonReader reader = new JsonReader(new InputStreamReader(stream))) {
@@ -59,7 +59,7 @@ public class ColorsProvider {
                 }
                 observableEmitter.onComplete();
             }))
-            .subscribe(s -> {/**/}, Throwable::printStackTrace);
+            .subscribe(s -> { /**/ }, Throwable::printStackTrace);
         }
     }
 
@@ -74,18 +74,17 @@ public class ColorsProvider {
         return lang;
     }
 
-    @Nullable public static LanguageColorModel getColor(@NonNull String lang) {
+    @Nullable public static LanguageColorModel getColor(final @NonNull String lang) {
         return colors.get(lang);
     }
 
-    @ColorInt public static int getColorAsColor(@NonNull String lang, @NonNull Context context) {
+    @ColorInt public static int getColorAsColor(final @NonNull String lang, final @NonNull Context context) {
         LanguageColorModel color = getColor(lang);
         int langColor = ColorGenerator.getColor(context, lang);
         if (color != null && !InputHelper.isEmpty(color.getColor())) {
             try {
                 langColor = Color.parseColor(color.getColor());
-            }
-            catch (Exception ignored) {}
+            } catch (Exception ignored) { }
         }
         return langColor;
     }

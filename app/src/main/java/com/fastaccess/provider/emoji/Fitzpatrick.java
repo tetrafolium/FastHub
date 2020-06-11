@@ -34,12 +34,12 @@ public enum Fitzpatrick {
      */
     public final String unicode;
 
-    Fitzpatrick(String unicode) {
+    Fitzpatrick(final String unicode) {
         this.unicode = unicode;
     }
 
 
-    public static Fitzpatrick fitzpatrickFromUnicode(String unicode) {
+    public static Fitzpatrick fitzpatrickFromUnicode(final String unicode) {
         for (Fitzpatrick v : values()) {
             if (v.unicode.equals(unicode)) {
                 return v;
@@ -48,7 +48,7 @@ public enum Fitzpatrick {
         return null;
     }
 
-    public static Fitzpatrick fitzpatrickFromType(String type) {
+    public static Fitzpatrick fitzpatrickFromType(final String type) {
         try {
             return Fitzpatrick.valueOf(type.toUpperCase());
         } catch (IllegalArgumentException e) {

@@ -20,7 +20,7 @@ import lombok.AllArgsConstructor;
     private final int width;
     private final boolean isHeader;
 
-    @Override public void handleTagNode(TagNode tagNode, SpannableStringBuilder spannableStringBuilder, int i, int i1) {
+    @Override public void handleTagNode(final TagNode tagNode, final SpannableStringBuilder spannableStringBuilder, final int i, final int i1) {
         spannableStringBuilder.append("\n");
         SpannableStringBuilder builder = new SpannableStringBuilder("$");
         HrSpan hrSpan = new HrSpan(color, width);

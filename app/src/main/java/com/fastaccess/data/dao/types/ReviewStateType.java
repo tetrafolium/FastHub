@@ -23,7 +23,7 @@ public enum ReviewStateType {
     private int stringRes;
     private int drawableRes;
 
-    ReviewStateType(@StringRes int stringRes, @DrawableRes int drawableRes) {
+    ReviewStateType(final @StringRes int stringRes, final @DrawableRes int drawableRes) {
         this.stringRes = stringRes;
         this.drawableRes = drawableRes;
     }
@@ -36,7 +36,7 @@ public enum ReviewStateType {
         return drawableRes > 0 ? drawableRes : R.drawable.ic_eye;
     }
 
-    @Nullable public static ReviewStateType getType(@NonNull String state) {
+    @Nullable public static ReviewStateType getType(final @NonNull String state) {
         return Stream.of(values())
         .filter(value -> value.name().toLowerCase().equalsIgnoreCase(state.toLowerCase()))
         .findFirst()

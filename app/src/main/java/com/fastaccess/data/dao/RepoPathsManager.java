@@ -18,11 +18,11 @@ import lombok.NoArgsConstructor;
 public class RepoPathsManager {
     private HashMap<String, List<RepoFile>> files = new HashMap<>();
 
-    @Nullable public List<RepoFile> getPaths(@NonNull String url, @NonNull String ref) {
+    @Nullable public List<RepoFile> getPaths(final @NonNull String url, final @NonNull String ref) {
         return files.get(ref + "/" + url);
     }
 
-    public void setFiles(@NonNull String ref, @NonNull String path, @NonNull List<RepoFile> paths) {
+    public void setFiles(final @NonNull String ref, final @NonNull String path, final @NonNull List<RepoFile> paths) {
         files.put(ref + "/" + path, paths);
     }
 

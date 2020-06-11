@@ -51,7 +51,7 @@ public class GroupedReviewsViewHolder extends BaseViewHolder<TimelineModel> impl
     private String repoOwner;
     private String poster;
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         if (v.getId() == R.id.toggle || v.getId() == R.id.toggleHolder || v.getId() == R.id.bottomToggle) {
             long position = getId();
             onToggleView.onToggle(position, !onToggleView.isCollapsed(position));
@@ -61,11 +61,11 @@ public class GroupedReviewsViewHolder extends BaseViewHolder<TimelineModel> impl
         }
     }
 
-    private GroupedReviewsViewHolder(@NonNull View itemView, ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter,
-                                     @NonNull OnToggleView onToggleView,
-                                     @NonNull ReactionsCallback reactionsCallback,
-                                     @NonNull PullRequestTimelineMvp.ReviewCommentCallback reviewCommentCallback,
-                                     String repoOwner, String poster) {
+    private GroupedReviewsViewHolder(final @NonNull View itemView, final ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter,
+                                     final @NonNull OnToggleView onToggleView,
+                                     final @NonNull ReactionsCallback reactionsCallback,
+                                     final @NonNull PullRequestTimelineMvp.ReviewCommentCallback reviewCommentCallback,
+                                     final String repoOwner, final String poster) {
         super(itemView, adapter);
         this.onToggleView = onToggleView;
         this.viewGroup = viewGroup;
@@ -86,16 +86,16 @@ public class GroupedReviewsViewHolder extends BaseViewHolder<TimelineModel> impl
         itemView.setOnLongClickListener(null);
     }
 
-    public static GroupedReviewsViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter,
-            @NonNull OnToggleView onToggleView,
-            @NonNull ReactionsCallback reactionsCallback,
-            @NonNull PullRequestTimelineMvp.ReviewCommentCallback reviewCommentCallback,
-            String repoOwner, String poster) {
+    public static GroupedReviewsViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter,
+            final @NonNull OnToggleView onToggleView,
+            final @NonNull ReactionsCallback reactionsCallback,
+            final @NonNull PullRequestTimelineMvp.ReviewCommentCallback reviewCommentCallback,
+            final String repoOwner, final String poster) {
         return new GroupedReviewsViewHolder(getView(viewGroup, R.layout.grouped_review_timeline_row_item), viewGroup, adapter,
                                             onToggleView, reactionsCallback, reviewCommentCallback, repoOwner, poster);
     }
 
-    @Override public void bind(@NonNull TimelineModel model) {
+    @Override public void bind(final @NonNull TimelineModel model) {
         GroupedReviewModel groupedReviewModel = model.getGroupedReviewModel();
         this.pathText = groupedReviewModel.getDiffText();
         name.setText(groupedReviewModel.getPath());
@@ -113,19 +113,19 @@ public class GroupedReviewsViewHolder extends BaseViewHolder<TimelineModel> impl
     }
 
 
-    @Override public void onItemClick(int position, View v, ReviewCommentModel item) {
+    @Override public void onItemClick(final int position, final View v, final ReviewCommentModel item) {
         if (reviewCommentCallback != null) {
             reviewCommentCallback.onClick(getAdapterPosition(), position, v, item);
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, ReviewCommentModel item) {
+    @Override public void onItemLongClick(final int position, final View v, final ReviewCommentModel item) {
         if (reviewCommentCallback != null) {
             reviewCommentCallback.onLongClick(getAdapterPosition(), position, v, item);
         }
     }
 
-    private void onToggle(boolean expanded, boolean animate) {
+    private void onToggle(final boolean expanded, final boolean animate) {
         if (!expanded) {
             minimized.setVisibility(View.GONE);
             patch.setText("");
@@ -143,7 +143,7 @@ public class GroupedReviewsViewHolder extends BaseViewHolder<TimelineModel> impl
         return getAdapterPosition();
     }
 
-    private void setPatchText(@NonNull String text) {
+    private void setPatchText(final @NonNull String text) {
         patch.setText(DiffLineSpan.getSpannable(text, patchAdditionColor, patchDeletionColor, patchRefColor, true));
     }
 }

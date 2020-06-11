@@ -42,24 +42,24 @@ import lombok.Setter;
     private PullRequestCommitModel commit;
     private int position;
 
-    public TimelineModel(Issue issue) {
+    public TimelineModel(final Issue issue) {
         this.issue = issue;
     }
 
-    public TimelineModel(PullRequest pullRequest) {
+    public TimelineModel(final PullRequest pullRequest) {
         this.pullRequest = pullRequest;
     }
 
-    public TimelineModel(Comment comment) {
+    public TimelineModel(final Comment comment) {
         this.comment = comment;
         this.event = IssueEventType.commented;
     }
 
-    public TimelineModel(PullRequestStatusModel statusModel) {
+    public TimelineModel(final PullRequestStatusModel statusModel) {
         this.status = statusModel;
     }
 
-    public TimelineModel() {}
+    public TimelineModel() { }
 
     public int getType() {
         if (getEvent() != null) {
@@ -83,19 +83,19 @@ import lombok.Setter;
         }
     }
 
-    public static TimelineModel constructHeader(Issue issue) {
+    public static TimelineModel constructHeader(final Issue issue) {
         return new TimelineModel(issue);
     }
 
-    public static TimelineModel constructHeader(PullRequest pullRequest) {
+    public static TimelineModel constructHeader(final PullRequest pullRequest) {
         return new TimelineModel(pullRequest);
     }
 
-    public static TimelineModel constructComment(Comment comment) {
+    public static TimelineModel constructComment(final Comment comment) {
         return new TimelineModel(comment);
     }
 
-    @NonNull public static Observable<List<TimelineModel>> construct(@Nullable List<Comment> comments) {
+    @NonNull public static Observable<List<TimelineModel>> construct(final @Nullable List<Comment> comments) {
         if (comments == null || comments.isEmpty()) return Observable.empty();
         return Observable.fromIterable(comments)
                .map(TimelineModel::new)
@@ -103,7 +103,7 @@ import lombok.Setter;
                .toObservable();
     }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TimelineModel model = (TimelineModel) o;
@@ -118,7 +118,7 @@ import lombok.Setter;
         return event;
     }
 
-    public void setEvent(IssueEventType event) {
+    public void setEvent(final IssueEventType event) {
         this.event = event;
     }
 
@@ -126,7 +126,7 @@ import lombok.Setter;
         return comment;
     }
 
-    public void setComment(Comment comment) {
+    public void setComment(final Comment comment) {
         this.comment = comment;
     }
 
@@ -134,7 +134,7 @@ import lombok.Setter;
         return genericEvent;
     }
 
-    public void setGenericEvent(GenericEvent genericEvent) {
+    public void setGenericEvent(final GenericEvent genericEvent) {
         this.genericEvent = genericEvent;
     }
 
@@ -142,7 +142,7 @@ import lombok.Setter;
         return status;
     }
 
-    public void setStatus(PullRequestStatusModel status) {
+    public void setStatus(final PullRequestStatusModel status) {
         this.status = status;
     }
 
@@ -150,7 +150,7 @@ import lombok.Setter;
         return issue;
     }
 
-    public void setIssue(Issue issue) {
+    public void setIssue(final Issue issue) {
         this.issue = issue;
     }
 
@@ -158,7 +158,7 @@ import lombok.Setter;
         return pullRequest;
     }
 
-    public void setPullRequest(PullRequest pullRequest) {
+    public void setPullRequest(final PullRequest pullRequest) {
         this.pullRequest = pullRequest;
     }
 
@@ -166,7 +166,7 @@ import lombok.Setter;
         return review;
     }
 
-    public void setReview(ReviewModel review) {
+    public void setReview(final ReviewModel review) {
         this.review = review;
     }
 
@@ -174,7 +174,7 @@ import lombok.Setter;
         return groupedReviewModel;
     }
 
-    public void setGroupedReviewModel(GroupedReviewModel groupedReviewModel) {
+    public void setGroupedReviewModel(final GroupedReviewModel groupedReviewModel) {
         this.groupedReviewModel = groupedReviewModel;
     }
 
@@ -182,7 +182,7 @@ import lombok.Setter;
         return commit;
     }
 
-    public void setCommit(PullRequestCommitModel commit) {
+    public void setCommit(final PullRequestCommitModel commit) {
         this.commit = commit;
     }
 
@@ -190,7 +190,7 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeInt(this.event == null ? -1 : this.event.ordinal());
         dest.writeParcelable(this.comment, flags);
         dest.writeParcelable(this.genericEvent, flags);
@@ -203,7 +203,7 @@ import lombok.Setter;
         dest.writeInt(this.position);
     }
 
-    protected TimelineModel(Parcel in) {
+    protected TimelineModel(final Parcel in) {
         int tmpEvent = in.readInt();
         this.event = tmpEvent == -1 ? null : IssueEventType.values()[tmpEvent];
         this.comment = in.readParcelable(Comment.class.getClassLoader());
@@ -218,11 +218,11 @@ import lombok.Setter;
     }
 
     public static final Creator<TimelineModel> CREATOR = new Creator<TimelineModel>() {
-        @Override public TimelineModel createFromParcel(Parcel source) {
+        @Override public TimelineModel createFromParcel(final Parcel source) {
             return new TimelineModel(source);
         }
 
-        @Override public TimelineModel[] newArray(int size) {
+        @Override public TimelineModel[] newArray(final int size) {
             return new TimelineModel[size];
         }
     };

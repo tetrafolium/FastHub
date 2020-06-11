@@ -40,14 +40,14 @@ public class PinnedGistFragment extends BaseFragment<PinnedGistMvp.View, PinnedG
         return new PinnedGistFragment();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Gist> items) {
+    @Override public void onNotifyAdapter(final @Nullable List<Gist> items) {
         refresh.setRefreshing(false);
         stateLayout.hideProgress();
         if (items != null) adapter.insertItems(items);
         else adapter.clear();
     }
 
-    @Override public void onDeletePinnedGist(long id, int position) {
+    @Override public void onDeletePinnedGist(final long id, final int position) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
                                       Bundler.start().put(BundleConstant.YES_NO_EXTRA, true)
                                       .put(BundleConstant.EXTRA, position)
@@ -60,7 +60,7 @@ public class PinnedGistFragment extends BaseFragment<PinnedGistMvp.View, PinnedG
         return R.layout.small_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         adapter = new GistsAdapter(getPresenter().getPinnedGists());
         adapter.setListener(getPresenter());
         stateLayout.setEmptyText(R.string.no_gists);
@@ -79,7 +79,7 @@ public class PinnedGistFragment extends BaseFragment<PinnedGistMvp.View, PinnedG
         return new PinnedGistPresenter();
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (bundle != null && isOk) {
             long id = bundle.getLong(BundleConstant.ID);

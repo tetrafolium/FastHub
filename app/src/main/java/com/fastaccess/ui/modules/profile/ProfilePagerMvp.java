@@ -17,5 +17,5 @@ public interface ProfilePagerMvp {
 
     }
 
-    interface Presenter extends BaseMvp.FAPresenter {}
+    interface Presenter extends BaseMvp.FAPresenter { }
 }

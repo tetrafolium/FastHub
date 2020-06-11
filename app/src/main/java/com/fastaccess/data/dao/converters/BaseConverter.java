@@ -24,11 +24,11 @@ public abstract class BaseConverter<C> implements Converter<C, String> {
         return null;
     }
 
-    @Override public String convertToPersisted(C value) {
+    @Override public String convertToPersisted(final C value) {
         return RestProvider.gson.toJson(value);
     }
 
-    @Override public C convertToMapped(Class<? extends C> type, String value) {
+    @Override public C convertToMapped(final Class<? extends C> type, final String value) {
         return RestProvider.gson.fromJson(value, type);
     }
 }

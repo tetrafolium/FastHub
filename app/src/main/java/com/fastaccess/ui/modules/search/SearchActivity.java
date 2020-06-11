@@ -53,14 +53,14 @@ public class SearchActivity extends BaseActivity<SearchMvp.View, SearchPresenter
     private ArrayAdapter<SearchHistory> adapter;
 
 
-    public static Intent getIntent(@NonNull Context context, @Nullable String query) {
+    public static Intent getIntent(final @NonNull Context context, final @Nullable String query) {
         Intent intent = new Intent(context, SearchActivity.class);
         intent.putExtra("search", query);
         return intent;
     }
 
     @OnTextChanged(value = R.id.searchEditText, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED)
-    void onTextChange(Editable s) {
+    void onTextChange(final Editable s) {
         String text = s.toString();
         if (text.length() == 0) {
             AnimHelper.animateVisibility(clear, false);
@@ -78,7 +78,7 @@ public class SearchActivity extends BaseActivity<SearchMvp.View, SearchPresenter
         return true;
     }
 
-    @OnClick(value = {R.id.clear}) void onClear(View view) {
+    @OnClick(value = {R.id.clear}) void onClear(final View view) {
         if (view.getId() == R.id.clear) {
             searchEditText.setText("");
         }
@@ -104,7 +104,7 @@ public class SearchActivity extends BaseActivity<SearchMvp.View, SearchPresenter
         return new SearchPresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("");
         pager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapterModel.buildForSearch(this)));
@@ -121,19 +121,19 @@ public class SearchActivity extends BaseActivity<SearchMvp.View, SearchPresenter
             }
         }
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onScrollTop(tab.getPosition());
             }
         });
     }
 
-    @Override public void onNotifyAdapter(@Nullable SearchHistory query) {
+    @Override public void onNotifyAdapter(final @Nullable SearchHistory query) {
         if (query == null) getAdapter().notifyDataSetChanged();
         else getAdapter().add(query);
     }
 
-    @Override public void onSetCount(int count, int index) {
+    @Override public void onSetCount(final int count, final int index) {
         TabsCountStateModel model = new TabsCountStateModel();
         model.setCount(count);
         model.setTabIndex(index);
@@ -150,7 +150,7 @@ public class SearchActivity extends BaseActivity<SearchMvp.View, SearchPresenter
         }
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {

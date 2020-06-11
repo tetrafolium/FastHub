@@ -18,24 +18,24 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeByte(this.ok ? (byte) 1 : (byte) 0);
         dest.writeString(this.error);
     }
 
-    public SlackResponseModel() {}
+    public SlackResponseModel() { }
 
-    private SlackResponseModel(Parcel in) {
+    private SlackResponseModel(final Parcel in) {
         this.ok = in.readByte() != 0;
         this.error = in.readString();
     }
 
     public static final Parcelable.Creator<SlackResponseModel> CREATOR = new Parcelable.Creator<SlackResponseModel>() {
-        @Override public SlackResponseModel createFromParcel(Parcel source) {
+        @Override public SlackResponseModel createFromParcel(final Parcel source) {
             return new SlackResponseModel(source);
         }
 
-        @Override public SlackResponseModel[] newArray(int size) {
+        @Override public SlackResponseModel[] newArray(final int size) {
             return new SlackResponseModel[size];
         }
     };

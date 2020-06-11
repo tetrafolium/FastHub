@@ -57,7 +57,7 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
     @BindView(R.id.endpoint) TextInputLayout endpoint;
     @State boolean isBasicAuth;
 
-    public static void startOAuth(@NonNull Activity activity) {
+    public static void startOAuth(final @NonNull Activity activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.YES_NO_EXTRA, true)
@@ -68,11 +68,11 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
         activity.finish();
     }
 
-    public static void start(@NonNull Activity activity, boolean isBasicAuth) {
+    public static void start(final @NonNull Activity activity, final boolean isBasicAuth) {
         start(activity, isBasicAuth, false);
     }
 
-    public static void start(@NonNull Activity activity, boolean isBasicAuth, boolean isEnterprise) {
+    public static void start(final @NonNull Activity activity, final boolean isBasicAuth, final boolean isEnterprise) {
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.YES_NO_EXTRA, isBasicAuth)
@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
         doLogin();
     }
 
-    @OnCheckedChanged(R.id.accessTokenCheckbox) void onCheckChanged(boolean checked) {
+    @OnCheckedChanged(R.id.accessTokenCheckbox) void onCheckChanged(final boolean checked) {
         isBasicAuth = !checked;
         password.setHint(checked ? getString(R.string.access_token) : getString(R.string
                          .password));
@@ -144,7 +144,7 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
         return new LoginPresenter();
     }
 
-    @Override public void onEmptyUserName(boolean isEmpty) {
+    @Override public void onEmptyUserName(final boolean isEmpty) {
         username.setError(isEmpty ? getString(R.string.required_field) : null);
     }
 
@@ -154,22 +154,22 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
         hideProgress();
     }
 
-    @Override public void onEmptyPassword(boolean isEmpty) {
+    @Override public void onEmptyPassword(final boolean isEmpty) {
         password.setError(isEmpty ? getString(R.string.required_field) : null);
     }
 
-    @Override public void onEmptyEndpoint(boolean isEmpty) {
+    @Override public void onEmptyEndpoint(final boolean isEmpty) {
         endpoint.setError(isEmpty ? getString(R.string.required_field) : null);
     }
 
-    @Override public void onSuccessfullyLoggedIn(boolean extraLogin) {
+    @Override public void onSuccessfullyLoggedIn(final boolean extraLogin) {
         checkPurchases(() -> {
             hideProgress();
             onRestartApp();
         });
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         setTheme(R.style.LoginTheme);
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
@@ -185,7 +185,7 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
         endpoint.setVisibility(isEnterprise() ? View.VISIBLE : View.GONE);
     }
 
-    @Override protected void onNewIntent(Intent intent) {
+    @Override protected void onNewIntent(final Intent intent) {
         super.onNewIntent(intent);
         getPresenter().onHandleAuthIntent(intent);
         setIntent(null);
@@ -197,22 +197,22 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
         setIntent(null);
     }
 
-    @Override public void showErrorMessage(@NonNull String msgRes) {
+    @Override public void showErrorMessage(final @NonNull String msgRes) {
         hideProgress();
         super.showErrorMessage(msgRes);
     }
 
-    @Override public void showMessage(@StringRes int titleRes, @StringRes int msgRes) {
+    @Override public void showMessage(final @StringRes int titleRes, final @StringRes int msgRes) {
         hideProgress();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void showMessage(@NonNull String titleRes, @NonNull String msgRes) {
+    @Override public void showMessage(final @NonNull String titleRes, final @NonNull String msgRes) {
         hideProgress();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         login.hide();
         AppHelper.hideKeyboard(login);
         AnimHelper.animateVisibility(progress, true);
@@ -228,7 +228,7 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
         login.show();
     }
 
-    protected void checkPurchases(@Nullable Action action) {
+    protected void checkPurchases(final @Nullable Action action) {
         getPresenter().manageViewDisposable(RxBillingService.getInstance(this, BuildConfig.DEBUG)
                                             .getPurchases(ProductType.IN_APP)
                                             .doOnSubscribe(disposable -> showProgress(0))

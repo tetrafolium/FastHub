@@ -86,21 +86,21 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
     @State boolean isOpened;
     private CommentEditorFragment commentEditorFragment;
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login, int number) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login, final int number) {
         return createIntent(context, repoId, login, number, false);
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login, int number, boolean showRepoBtn) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login, final int number, final boolean showRepoBtn) {
         return createIntent(context, repoId, login, number, showRepoBtn, false);
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login,
-                                      int number, boolean showRepoBtn, boolean isEnterprise) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login,
+                                      final int number, final boolean showRepoBtn, final boolean isEnterprise) {
         return createIntent(context, repoId, login, number, showRepoBtn, isEnterprise, 0);
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login,
-                                      int number, boolean showRepoBtn, boolean isEnterprise, long commentId) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login,
+                                      final int number, final boolean showRepoBtn, final boolean isEnterprise, final long commentId) {
         Intent intent = new Intent(context, PullRequestPagerActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.ID, number)
@@ -120,11 +120,11 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
             .show(getSupportFragmentManager(), MessageDialogView.TAG);
     }
 
-    @OnClick(R.id.submitReviews) void onSubmitReviews(View view) {
+    @OnClick(R.id.submitReviews) void onSubmitReviews(final View view) {
         addPrReview(view);
     }
 
-    @OnClick(R.id.cancelReview) void onCancelReviews(View view) {
+    @OnClick(R.id.cancelReview) void onCancelReviews(final View view) {
         MessageDialogView.newInstance(getString(R.string.cancel_reviews), getString(R.string.confirm_message),
                                       false, Bundler.start()
                                       .put(BundleConstant.YES_NO_EXTRA, true)
@@ -153,7 +153,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         return new PullRequestPagerPresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         commentEditorFragment = (CommentEditorFragment) getSupportFragmentManager().findFragmentById(R.id.commentFragment);
         if (savedInstanceState == null) {
@@ -167,7 +167,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         if (getPresenter().showToRepoBtn()) showNavToRepoItem();
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == BundleConstant.REQUEST_CODE) {
@@ -183,13 +183,13 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         }
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.pull_request_menu, menu);
         menu.findItem(R.id.merge).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onNavToRepoClicked();
             return true;
@@ -270,7 +270,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public boolean onPrepareOptionsMenu(Menu menu) {
+    @Override public boolean onPrepareOptionsMenu(final Menu menu) {
         MenuItem closeIssue = menu.findItem(R.id.closeIssue);
         MenuItem lockIssue = menu.findItem(R.id.lockIssue);
         MenuItem milestone = menu.findItem(R.id.milestone);
@@ -309,7 +309,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         return super.onPrepareOptionsMenu(menu);
     }
 
-    @Override public void onSetupIssue(boolean update) {
+    @Override public void onSetupIssue(final boolean update) {
         hideProgress();
         if (getPresenter().getPullRequest() == null) {
             return;
@@ -329,7 +329,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
                                  pullRequest)));
                 tabs.setupWithViewPager(pager);
                 tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-                    @Override public void onTabReselected(TabLayout.Tab tab) {
+                    @Override public void onTabReselected(final TabLayout.Tab tab) {
                         super.onTabReselected(tab);
                         onScrollTop(tab.getPosition());
                     }
@@ -339,7 +339,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
             }
         }
         pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override public void onPageSelected(int position) {
+            @Override public void onPageSelected(final int position) {
                 hideShowFab();
                 super.onPageSelected(position);
 
@@ -351,7 +351,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         reviewsCount.setText(String.format("%s", getPresenter().getCommitComment().size()));
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {
@@ -359,7 +359,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         }
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk) {
             if (bundle != null) {
@@ -372,11 +372,11 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         }
     }
 
-    @Override public void onSelectedLabels(@NonNull ArrayList<LabelModel> labels) {
+    @Override public void onSelectedLabels(final @NonNull ArrayList<LabelModel> labels) {
         getPresenter().onPutLabels(labels);
     }
 
-    @Override public void showSuccessIssueActionMsg(boolean isClose) {
+    @Override public void showSuccessIssueActionMsg(final boolean isClose) {
         hideProgress();
         if (isClose) {
             isOpened = false;
@@ -389,7 +389,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         }
     }
 
-    @Override public void showErrorIssueActionMsg(boolean isClose) {
+    @Override public void showErrorIssueActionMsg(final boolean isClose) {
         hideProgress();
         if (isClose) {
             showMessage(getString(R.string.error), getString(R.string.error_closing_issue));
@@ -406,7 +406,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         }
     }
 
-    @Override public void onMileStoneSelected(@NonNull MilestoneModel milestoneModel) {
+    @Override public void onMileStoneSelected(final @NonNull MilestoneModel milestoneModel) {
         getPresenter().onPutMilestones(milestoneModel);
     }
 
@@ -419,14 +419,14 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         invalidateOptionsMenu();
     }
 
-    @Override public void onAddComment(CommentRequestModel comment) {
+    @Override public void onAddComment(final CommentRequestModel comment) {
         getPresenter().onAddComment(comment);
         AnimHelper.mimicFabVisibility(getPresenter().hasReviewComments(), prReviewHolder, null);
         reviewsCount.setText(String.format("%s", getPresenter().getCommitComment().size()));
         Logger.e(reviewsCount.getText(), prReviewHolder.getVisibility());
     }
 
-    @Override public void onMerge(@NonNull String msg, @NonNull String mergeMethod) {
+    @Override public void onMerge(final @NonNull String msg, final @NonNull String mergeMethod) {
         getPresenter().onMerge(msg, mergeMethod);
     }
 
@@ -447,7 +447,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         super.finish();
     }
 
-    @Override public void onSelectedAssignees(@NonNull ArrayList<User> users, boolean isAssignees) {
+    @Override public void onSelectedAssignees(final @NonNull ArrayList<User> users, final boolean isAssignees) {
         hideProgress();
         getPresenter().onPutAssignees(users, isAssignees);
     }
@@ -456,7 +456,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         return getPresenter().getPullRequest();
     }
 
-    @Override public void onSendActionClicked(@NonNull String text, Bundle bundle) {
+    @Override public void onSendActionClicked(final @NonNull String text, final Bundle bundle) {
         PullRequestTimelineFragment fragment = getPullRequestTimelineFragment();
         if (fragment != null) {
             fragment.onHandleComment(text, bundle);
@@ -468,11 +468,11 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         return (PullRequestTimelineFragment) pager.getAdapter().instantiateItem(pager, 0);
     }
 
-    @Override public void onTagUser(@NonNull String username) {
+    @Override public void onTagUser(final @NonNull String username) {
         commentEditorFragment.onAddUserName(username);
     }
 
-    @Override public void onCreateComment(@NonNull String text, @Nullable Bundle bundle) {
+    @Override public void onCreateComment(final @NonNull String text, final @Nullable Bundle bundle) {
         commentEditorFragment.onCreateComment(text, bundle);
     }
 
@@ -493,7 +493,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         return new ArrayList<>();
     }
 
-    @Override public void onLock(String reason) {
+    @Override public void onLock(final String reason) {
         getPresenter().onLockUnlockConversations(reason);
     }
 
@@ -508,12 +508,12 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
 
     }
 
-    private void addPrReview(@NonNull View view) {
+    private void addPrReview(final @NonNull View view) {
         PullRequest pullRequest = getPresenter().getPullRequest();
         if (pullRequest == null) return;
-        User author = pullRequest.getUser() != null ? pullRequest.getUser() :
-                      pullRequest.getHead() != null && pullRequest.getHead().getAuthor() != null ?
-                      pullRequest.getHead().getAuthor() : pullRequest.getUser();
+        User author = pullRequest.getUser() != null ? pullRequest.getUser()
+                      : pullRequest.getHead() != null && pullRequest.getHead().getAuthor() != null
+                      ? pullRequest.getHead().getAuthor() : pullRequest.getUser();
         if (author == null) return;
         ReviewRequestModel requestModel = new ReviewRequestModel();
         requestModel.setComments(getPresenter().getCommitComment().isEmpty() ? null : getPresenter().getCommitComment());
@@ -525,7 +525,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         .show(getSupportFragmentManager(), ReviewChangesActivity.class.getSimpleName());
     }
 
-    private void initTabs(@NonNull PullRequest pullRequest) {
+    private void initTabs(final @NonNull PullRequest pullRequest) {
         TabLayout.Tab tab1 = tabs.getTabAt(0);
         TabLayout.Tab tab2 = tabs.getTabAt(1);
         TabLayout.Tab tab3 = tabs.getTabAt(2);
@@ -555,7 +555,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         }
     }
 
-    private void updateViews(@NonNull PullRequest pullRequest) {
+    private void updateViews(final @NonNull PullRequest pullRequest) {
         setTitle(String.format("#%s", pullRequest.getNumber()));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setSubtitle(pullRequest.getRepoId());

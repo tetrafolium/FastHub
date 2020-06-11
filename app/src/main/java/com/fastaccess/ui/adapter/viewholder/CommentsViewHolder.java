@@ -35,7 +35,7 @@ public class CommentsViewHolder extends BaseViewHolder<Comment> {
     @BindView(R.id.toggle) AppCompatImageView toggle;
     private final ViewGroup viewGroup;
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         if (v.getId() == R.id.toggleHolder) {
             toggle.callOnClick();
         } else {
@@ -43,7 +43,7 @@ public class CommentsViewHolder extends BaseViewHolder<Comment> {
         }
     }
 
-    private CommentsViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter, @NonNull ViewGroup viewGroup) {
+    private CommentsViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter, final @NonNull ViewGroup viewGroup) {
         super(itemView, adapter);
         if (adapter != null && adapter.getRowWidth() == 0) {
             itemView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -62,11 +62,11 @@ public class CommentsViewHolder extends BaseViewHolder<Comment> {
         this.viewGroup = viewGroup;
     }
 
-    public static CommentsViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter) {
+    public static CommentsViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter) {
         return new CommentsViewHolder(getView(viewGroup, R.layout.no_emojies_comments_row_item), adapter, viewGroup);
     }
 
-    @Override public void bind(@NonNull Comment commentsModel) {
+    @Override public void bind(final @NonNull Comment commentsModel) {
         if (commentsModel.getUser() != null) {
             avatar.setUrl(commentsModel.getUser().getAvatarUrl(), commentsModel.getUser().getLogin(),
                           commentsModel.getUser().isOrganizationType(), LinkParserHelper.isEnterprise(commentsModel.getUser().getHtmlUrl()));

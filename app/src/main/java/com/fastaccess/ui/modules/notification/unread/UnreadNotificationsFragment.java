@@ -44,7 +44,7 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
     private NotificationsAdapter adapter;
     private OnNotificationChangedListener onNotificationChangedListener;
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (context instanceof OnNotificationChangedListener) {
             onNotificationChangedListener = (OnNotificationChangedListener) context;
@@ -56,12 +56,12 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
         super.onDetach();
     }
 
-    @Override public void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override public void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<GroupedNotificationModel> items) {
+    @Override public void onNotifyAdapter(final @Nullable List<GroupedNotificationModel> items) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -71,7 +71,7 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
         invalidateMenu();
     }
 
-    @Override public void onRemove(int position) {
+    @Override public void onRemove(final int position) {
         hideProgress();
         GroupedNotificationModel model = adapter.getItem(position);
         if (model != null) {
@@ -81,7 +81,7 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
         invalidateMenu();
     }
 
-    @Override public void onReadNotification(@NonNull Notification notification) {
+    @Override public void onReadNotification(final @NonNull Notification notification) {
         GroupedNotificationModel model = new GroupedNotificationModel(notification);
         if (onNotificationChangedListener != null) onNotificationChangedListener.onNotificationChanged(model, 1);
         adapter.removeItem(model);
@@ -89,11 +89,11 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
         invalidateMenu();
     }
 
-    @Override public void onClick(@NonNull String url) {
+    @Override public void onClick(final @NonNull String url) {
         SchemeParser.launchUri(getContext(), Uri.parse(url), true);
     }
 
-    @Override public void onNotifyNotificationChanged(@NonNull GroupedNotificationModel notification) {
+    @Override public void onNotifyNotificationChanged(final @NonNull GroupedNotificationModel notification) {
         if (adapter != null) {
             adapter.removeItem(notification);
         }
@@ -103,7 +103,7 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
         return R.layout.micro_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         adapter = new NotificationsAdapter(getPresenter().getNotifications(), false);
         adapter.setListener(getPresenter());
         refresh.setOnRefreshListener(this);
@@ -122,7 +122,7 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
         return new UnreadNotificationsPresenter();
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
 
@@ -134,22 +134,22 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
 
-    @Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    @Override public void onCreateOptionsMenu(final Menu menu, final MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.notification_menu, menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == R.id.readAll) {
             if (!adapter.getData().isEmpty()) {
                 MessageDialogView.newInstance(getString(R.string.mark_all_as_read), getString(R.string.confirm_message),
@@ -164,7 +164,7 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public void onPrepareOptionsMenu(Menu menu) {
+    @Override public void onPrepareOptionsMenu(final Menu menu) {
         boolean hasUnread = !adapter.getData().isEmpty();
         menu.findItem(R.id.readAll).setVisible(hasUnread);
         super.onPrepareOptionsMenu(menu);
@@ -174,12 +174,12 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
         getPresenter().onCallApi();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk) {
             getPresenter().onMarkAllAsRead(adapter.getData());

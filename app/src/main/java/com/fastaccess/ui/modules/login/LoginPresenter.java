@@ -36,7 +36,7 @@ public class LoginPresenter extends BasePresenter<LoginMvp.View> implements Logi
         super.onDestroy();
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         if (RestProvider.getErrorCode(throwable) == 401 && throwable instanceof HttpException) {
             retrofit2.Response response = ((HttpException) throwable).response();
             if (response != null && response.headers() != null) {
@@ -53,7 +53,7 @@ public class LoginPresenter extends BasePresenter<LoginMvp.View> implements Logi
         sendToView(view -> view.showErrorMessage(throwable.getMessage()));
     }
 
-    @Override public void onTokenResponse(@Nullable AccessTokenModel modelResponse) {
+    @Override public void onTokenResponse(final @Nullable AccessTokenModel modelResponse) {
         if (modelResponse != null) {
             String token = modelResponse.getToken() != null ? modelResponse.getToken() : modelResponse.getAccessToken();
             if (!InputHelper.isEmpty(token)) {
@@ -78,7 +78,7 @@ public class LoginPresenter extends BasePresenter<LoginMvp.View> implements Logi
                .build();
     }
 
-    @Override public void onHandleAuthIntent(@Nullable Intent intent) {
+    @Override public void onHandleAuthIntent(final @Nullable Intent intent) {
         if (intent != null && intent.getData() != null) {
             Uri uri = intent.getData();
             if (uri.toString().startsWith(GithubConfigHelper.getRedirectUrl())) {
@@ -95,7 +95,7 @@ public class LoginPresenter extends BasePresenter<LoginMvp.View> implements Logi
         }
     }
 
-    @Override public void onUserResponse(@Nullable Login userModel) {
+    @Override public void onUserResponse(final @Nullable Login userModel) {
         if (userModel != null) {
             manageObservable(Login.onMultipleLogin(userModel, isEnterprise(), true)
                              .doOnComplete(() -> sendToView(view -> view.onSuccessfullyLoggedIn(isEnterprise()))));
@@ -104,8 +104,8 @@ public class LoginPresenter extends BasePresenter<LoginMvp.View> implements Logi
         sendToView(view -> view.showMessage(R.string.error, R.string.failed_login));
     }
 
-    @Override public void login(@NonNull String username, @NonNull String password, @Nullable String twoFactorCode,
-                                boolean isBasicAuth, @Nullable String endpoint) {
+    @Override public void login(final @NonNull String username, final @NonNull String password, final @Nullable String twoFactorCode,
+                                final boolean isBasicAuth, final @Nullable String endpoint) {
         boolean usernameIsEmpty = InputHelper.isEmpty(username);
         boolean passwordIsEmpty = InputHelper.isEmpty(password);
         boolean endpointIsEmpty = InputHelper.isEmpty(endpoint) && isEnterprise();
@@ -141,8 +141,8 @@ public class LoginPresenter extends BasePresenter<LoginMvp.View> implements Logi
         }
     }
 
-    private void accessTokenLogin(@NonNull String password, @Nullable String endpoint, @Nullable String otp,
-                                  @NonNull String authToken) {
+    private void accessTokenLogin(final @NonNull String password, final @Nullable String endpoint, final @Nullable String otp,
+                                  final @NonNull String authToken) {
         makeRestCall(LoginProvider.getLoginRestService(authToken, otp, endpoint).loginAccessToken(),
         login -> {
             if (!isEnterprise()) {

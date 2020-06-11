@@ -14,11 +14,11 @@ public class SearchFilePresenter extends BasePresenter<SearchFileMvp.View> imple
     @com.evernote.android.state.State String repoId;
     @com.evernote.android.state.State String login;
 
-    @Override protected void onAttachView(@NonNull SearchFileMvp.View view) {
+    @Override protected void onAttachView(final @NonNull SearchFileMvp.View view) {
         super.onAttachView(view);
     }
 
-    @Override public void onSearchClicked(@NonNull FontEditText editText, boolean inPath) {
+    @Override public void onSearchClicked(final @NonNull FontEditText editText, final boolean inPath) {
         boolean isEmpty = InputHelper.isEmpty(editText) || InputHelper.toString(editText).length() < 2;
         editText.setError(isEmpty ? editText.getResources().getString(R.string.minimum_three_chars) : null);
         if (!isEmpty) {
@@ -28,12 +28,12 @@ public class SearchFilePresenter extends BasePresenter<SearchFileMvp.View> imple
         }
     }
 
-    @Override public void onActivityCreated(Bundle extras) {
+    @Override public void onActivityCreated(final Bundle extras) {
         repoId = extras.getString(BundleConstant.ID);
         login = extras.getString(BundleConstant.EXTRA);
     }
 
-    @NonNull private String modifyQueryForFileSearch(@NonNull String query, boolean inPath) {
+    @NonNull private String modifyQueryForFileSearch(final @NonNull String query, final boolean inPath) {
         //restrict the search to file paths and the current repo user is looking at
         return query + "+" + "in:" + (inPath ? "path" : "" + "file") + "+" + "repo:" + login + "/" + repoId;
     }

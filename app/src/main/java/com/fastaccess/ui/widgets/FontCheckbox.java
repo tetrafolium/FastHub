@@ -13,17 +13,17 @@ import com.fastaccess.helper.TypeFaceHelper;
  */
 public class FontCheckbox extends AppCompatCheckBox {
 
-    public FontCheckbox(@NonNull Context context) {
+    public FontCheckbox(final @NonNull Context context) {
         super(context);
         init();
     }
 
-    public FontCheckbox(@NonNull Context context, AttributeSet attrs) {
+    public FontCheckbox(final @NonNull Context context, final AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public FontCheckbox(@NonNull Context context, AttributeSet attrs, int defStyleAttr) {
+    public FontCheckbox(final @NonNull Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

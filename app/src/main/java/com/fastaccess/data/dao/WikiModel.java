@@ -19,13 +19,13 @@ import lombok.Setter;
 
     public String htmlUrl;
 
-    public WikiModel() {}
+    public WikiModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.pageName);
         dest.writeString(this.title);
         dest.writeString(this.summary);
@@ -34,7 +34,7 @@ import lombok.Setter;
         dest.writeString(this.htmlUrl);
     }
 
-    private WikiModel(Parcel in) {
+    private WikiModel(final Parcel in) {
         this.pageName = in.readString();
         this.title = in.readString();
         this.summary = in.readString();
@@ -44,11 +44,11 @@ import lombok.Setter;
     }
 
     public static final Creator<WikiModel> CREATOR = new Creator<WikiModel>() {
-        @Override public WikiModel createFromParcel(Parcel source) {
+        @Override public WikiModel createFromParcel(final Parcel source) {
             return new WikiModel(source);
         }
 
-        @Override public WikiModel[] newArray(int size) {
+        @Override public WikiModel[] newArray(final int size) {
             return new WikiModel[size];
         }
     };

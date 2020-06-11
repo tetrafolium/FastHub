@@ -40,14 +40,14 @@ import es.dmoral.toasty.Toasty;
  */
 public class ActivityHelper {
 
-    @Nullable public static Activity getActivity(@Nullable Context content) {
+    @Nullable public static Activity getActivity(final @Nullable Context content) {
         if (content == null) return null;
         else if (content instanceof Activity) return (Activity) content;
         else if (content instanceof ContextWrapper) return getActivity(((ContextWrapper) content).getBaseContext());
         return null;
     }
 
-    public static void startCustomTab(@NonNull Activity context, @NonNull Uri url) {
+    public static void startCustomTab(final @NonNull Activity context, final @NonNull Uri url) {
         String packageNameToUse = CustomTabsHelper.getPackageNameToUse(context);
         if (packageNameToUse != null) {
             CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
@@ -65,15 +65,15 @@ public class ActivityHelper {
         }
     }
 
-    public static void startCustomTab(@NonNull Activity context, @NonNull String url) {
+    public static void startCustomTab(final @NonNull Activity context, final @NonNull String url) {
         startCustomTab(context, Uri.parse(url));
     }
 
-    public static void openChooser(@NonNull Context context, @NonNull Uri url) {
+    public static void openChooser(final @NonNull Context context, final @NonNull Uri url) {
         openChooser(context, url, false);
     }
 
-    private static void openChooser(@NonNull Context context, @NonNull Uri url, boolean fromCustomTab) {
+    private static void openChooser(final @NonNull Context context, final @NonNull Uri url, final boolean fromCustomTab) {
         Intent i = new Intent(Intent.ACTION_VIEW, url);
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         Intent finalIntent = chooserIntent(context, i, url);
@@ -102,23 +102,23 @@ public class ActivityHelper {
         }
     }
 
-    public static void openChooser(@NonNull Context context, @NonNull String url) {
+    public static void openChooser(final @NonNull Context context, final @NonNull String url) {
         openChooser(context, Uri.parse(url));
     }
 
-    @SafeVarargs public static void start(@NonNull Activity activity, Class cl, Pair<View, String>... sharedElements) {
+    @SafeVarargs public static void start(final @NonNull Activity activity, final Class cl, final Pair<View, String>... sharedElements) {
         Intent intent = new Intent(activity, cl);
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedElements);
         activity.startActivity(intent, options.toBundle());
     }
 
-    public static void start(@NonNull Activity activity, Intent intent, @NonNull View sharedElement) {
+    public static void start(final @NonNull Activity activity, final Intent intent, final @NonNull View sharedElement) {
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity,
                                         sharedElement, ViewHelper.getTransitionName(sharedElement));
         activity.startActivity(intent, options.toBundle());
     }
 
-    public static void startReveal(@NonNull Activity activity, Intent intent, @NonNull View sharedElement, int requestCode) {
+    public static void startReveal(final @NonNull Activity activity, final Intent intent, final @NonNull View sharedElement, final int requestCode) {
         if (!PrefGetter.isAppAnimationDisabled()) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeClipRevealAnimation(sharedElement, sharedElement.getWidth() / 2,
                                             sharedElement.getHeight() / 2,
@@ -129,7 +129,7 @@ public class ActivityHelper {
         }
     }
 
-    public static void startReveal(@NonNull Fragment fragment, Intent intent, @NonNull View sharedElement, int requestCode) {
+    public static void startReveal(final @NonNull Fragment fragment, final Intent intent, final @NonNull View sharedElement, final int requestCode) {
         if (!PrefGetter.isAppAnimationDisabled()) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeClipRevealAnimation(sharedElement, sharedElement.getWidth() / 2,
                                             sharedElement.getHeight() / 2,
@@ -140,7 +140,7 @@ public class ActivityHelper {
         }
     }
 
-    public static void startReveal(@NonNull Activity activity, Intent intent, @NonNull View sharedElement) {
+    public static void startReveal(final @NonNull Activity activity, final Intent intent, final @NonNull View sharedElement) {
         if (!PrefGetter.isAppAnimationDisabled()) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeClipRevealAnimation(sharedElement, sharedElement.getWidth() / 2,
                                             sharedElement.getHeight() / 2,
@@ -151,14 +151,14 @@ public class ActivityHelper {
         }
     }
 
-    @SafeVarargs public static void start(@NonNull Activity activity, @NonNull Intent intent,
-                                          @NonNull Pair<View, String>... sharedElements) {
+    @SafeVarargs public static void start(final @NonNull Activity activity, final @NonNull Intent intent,
+                                          final @NonNull Pair<View, String>... sharedElements) {
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedElements);
         activity.startActivity(intent, options.toBundle());
 
     }
 
-    public static void shareUrl(@NonNull Context context, @NonNull String url) {
+    public static void shareUrl(final @NonNull Context context, final @NonNull String url) {
         Activity activity = getActivity(context);
         if (activity == null) throw new IllegalArgumentException("Context given is not an instance of activity " + context.getClass().getName());
         try {
@@ -173,12 +173,12 @@ public class ActivityHelper {
     }
 
     @SuppressWarnings("RestrictedApi")
-    @Nullable public static Fragment getVisibleFragment(@NonNull FragmentManager manager) {
+    @Nullable public static Fragment getVisibleFragment(final @NonNull FragmentManager manager) {
         List<Fragment> fragments = manager.getFragments();
         if (fragments != null && !fragments.isEmpty()) {
             for (Fragment fragment : fragments) {
-                if (fragment != null && fragment.isVisible() &&
-                        !(fragment instanceof MainDrawerFragment || fragment instanceof AccountDrawerFragment)) {
+                if (fragment != null && fragment.isVisible()
+                        && !(fragment instanceof MainDrawerFragment || fragment instanceof AccountDrawerFragment)) {
                     return fragment;
                 }
             }
@@ -186,27 +186,27 @@ public class ActivityHelper {
         return null;
     }
 
-    private static boolean isPermissionGranted(@NonNull Context context, @NonNull String permission) {
+    private static boolean isPermissionGranted(final @NonNull Context context, final @NonNull String permission) {
         return ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED;
     }
 
-    private static boolean isExplanationNeeded(@NonNull Activity context, @NonNull String permissionName) {
+    private static boolean isExplanationNeeded(final @NonNull Activity context, final @NonNull String permissionName) {
         return ActivityCompat.shouldShowRequestPermissionRationale(context, permissionName);
     }
 
-    private static boolean isReadWritePermissionIsGranted(@NonNull Context context) {
+    private static boolean isReadWritePermissionIsGranted(final @NonNull Context context) {
         return isPermissionGranted(context, Manifest.permission.READ_EXTERNAL_STORAGE)
                && isPermissionGranted(context, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     }
 
-    private static void requestReadWritePermission(@NonNull Activity context) {
+    private static void requestReadWritePermission(final @NonNull Activity context) {
         ActivityCompat.requestPermissions(context, new String[] {
                                               Manifest.permission.READ_EXTERNAL_STORAGE,
                                               Manifest.permission.WRITE_EXTERNAL_STORAGE,
                                           }, 1);
     }
 
-    public static boolean checkAndRequestReadWritePermission(@NonNull Activity activity) {
+    public static boolean checkAndRequestReadWritePermission(final @NonNull Activity activity) {
         if (!isReadWritePermissionIsGranted(activity)) {
             requestReadWritePermission(activity);
             return false;
@@ -218,7 +218,7 @@ public class ActivityHelper {
         return true;
     }
 
-    private static Intent chooserIntent(@NonNull Context context, @NonNull Intent intent, @NonNull Uri uri) {
+    private static Intent chooserIntent(final @NonNull Context context, final @NonNull Intent intent, final @NonNull Uri uri) {
         final PackageManager pm = context.getPackageManager();
         final List<ResolveInfo> activities = pm.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
         final ArrayList<Intent> chooserIntents = new ArrayList<>();
@@ -248,13 +248,13 @@ public class ActivityHelper {
         return chooserIntent;
     }
 
-    public static void activateLinkInterceptorActivity(Context context, boolean activate) {
+    public static void activateLinkInterceptorActivity(final Context context, final boolean activate) {
         final PackageManager pm = context.getPackageManager();
         final int flag = activate ? PackageManager.COMPONENT_ENABLED_STATE_ENABLED : PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
         pm.setComponentEnabledSetting(new ComponentName(context, LinksParserActivity.class), flag, PackageManager.DONT_KILL_APP);
     }
 
-    public static Intent editBundle(@NonNull Intent intent, boolean isEnterprise) {
+    public static Intent editBundle(final @NonNull Intent intent, final boolean isEnterprise) {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             bundle.putBoolean(BundleConstant.IS_ENTERPRISE, isEnterprise);

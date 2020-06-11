@@ -18,20 +18,20 @@ public class FeedsAdapter extends BaseRecyclerAdapter<Event, FeedsViewHolder, Ba
 
     private boolean noImage;
 
-    public FeedsAdapter(@NonNull ArrayList<Event> events) {
+    public FeedsAdapter(final @NonNull ArrayList<Event> events) {
         this(events, false);
     }
 
-    public FeedsAdapter(@NonNull ArrayList<Event> events, boolean noImage) {
+    public FeedsAdapter(final @NonNull ArrayList<Event> events, final boolean noImage) {
         super(events);
         this.noImage = noImage;
     }
 
-    @Override protected FeedsViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected FeedsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return new FeedsViewHolder(FeedsViewHolder.getView(parent, noImage), this);
     }
 
-    @Override protected void onBindView(FeedsViewHolder holder, int position) {
+    @Override protected void onBindView(final FeedsViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

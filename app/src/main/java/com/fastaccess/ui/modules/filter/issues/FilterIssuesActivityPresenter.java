@@ -25,7 +25,7 @@ import lombok.Getter;
     @com.evernote.android.state.State @NonNull ArrayList<MilestoneModel> milestones = new ArrayList<>();
     @com.evernote.android.state.State @NonNull ArrayList<User> assignees = new ArrayList<>();
 
-    @Override public void onStart(@NonNull String login, @NonNull String repoId) {
+    @Override public void onStart(final @NonNull String login, final @NonNull String repoId) {
         Observable<Pageable<MilestoneModel>> observable = RestProvider.getRepoService(isEnterprise()).getLabels(login, repoId)
         .flatMap(labelModelPageable -> {
             if (labelModelPageable != null && labelModelPageable.getItems() != null) {

@@ -40,7 +40,7 @@ public class ProfileGistsFragment extends BaseFragment<ProfileGistsMvp.View, Pro
     private GistsAdapter adapter;
     private OnLoadMore<String> onLoadMore;
 
-    public static ProfileGistsFragment newInstance(@NonNull String login) {
+    public static ProfileGistsFragment newInstance(final @NonNull String login) {
         ProfileGistsFragment view = new ProfileGistsFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.EXTRA, login)
@@ -53,7 +53,7 @@ public class ProfileGistsFragment extends BaseFragment<ProfileGistsMvp.View, Pro
         return R.layout.small_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         if (getArguments().getString(BundleConstant.EXTRA) == null) {
             throw new NullPointerException("Username is null");
         }
@@ -77,7 +77,7 @@ public class ProfileGistsFragment extends BaseFragment<ProfileGistsMvp.View, Pro
         getPresenter().onCallApi(1, getArguments().getString(BundleConstant.EXTRA));
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Gist> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Gist> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -90,7 +90,7 @@ public class ProfileGistsFragment extends BaseFragment<ProfileGistsMvp.View, Pro
         }
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
@@ -100,12 +100,12 @@ public class ProfileGistsFragment extends BaseFragment<ProfileGistsMvp.View, Pro
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -121,11 +121,11 @@ public class ProfileGistsFragment extends BaseFragment<ProfileGistsMvp.View, Pro
         return onLoadMore;
     }
 
-    @Override public void onStartGistView(@NonNull String gistId) {
+    @Override public void onStartGistView(final @NonNull String gistId) {
         startActivityForResult(GistActivity.createIntent(getContext(), gistId, isEnterprise()), BundleConstant.REQUEST_CODE);
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == BundleConstant.REQUEST_CODE) {
             if (data != null && data.getExtras() != null) {
@@ -139,11 +139,11 @@ public class ProfileGistsFragment extends BaseFragment<ProfileGistsMvp.View, Pro
         }
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

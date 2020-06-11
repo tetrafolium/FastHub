@@ -99,13 +99,13 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
 
     protected abstract boolean isSecured();
 
-    @Override protected void onSaveInstanceState(Bundle outState) {
+    @Override protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         StateSaver.saveInstanceState(this, outState);
         getPresenter().onSaveInstanceState(presenterStateBundle);
     }
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
         setTaskName(null);
         setupTheme();
         AppHelper.updateAppLanguage(this);
@@ -134,11 +134,11 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         setupDrawer();
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (canBack()) {
             if (item.getItemId() == android.R.id.home) {
                 onBackPressed();
@@ -150,22 +150,22 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
 
     @Override public void onDialogDismissed() {
 
-    }//pass
+    } //pass
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         if (isOk && bundle != null) {
             boolean logout = bundle.getBoolean("logout");
             if (logout) {
                 onRequireLogin();
             }
         }
-    }//pass
+    } //pass
 
-    @Override public void showMessage(@StringRes int titleRes, @StringRes int msgRes) {
+    @Override public void showMessage(final @StringRes int titleRes, final @StringRes int msgRes) {
         showMessage(getString(titleRes), getString(msgRes));
     }
 
-    @Override public void showMessage(@NonNull String titleRes, @NonNull String msgRes) {
+    @Override public void showMessage(final @NonNull String titleRes, final @NonNull String msgRes) {
         hideProgress();
         if (toast != null) toast.cancel();
         Context context = App.getInstance(); // WindowManager$BadTokenException
@@ -175,7 +175,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         toast.show();
     }
 
-    @Override public void showErrorMessage(@NonNull String msgRes) {
+    @Override public void showErrorMessage(final @NonNull String msgRes) {
         showMessage(getString(R.string.error), msgRes);
     }
 
@@ -183,11 +183,11 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         return Login.getUser() != null;
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         showProgress(resId, true);
     }
 
-    @Override public void showBlockingProgress(int resId) {
+    @Override public void showBlockingProgress(final int resId) {
         showProgress(resId, false);
     }
 
@@ -253,7 +253,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         startActivityForResult(new Intent(this, SettingsActivity.class), BundleConstant.REFRESH_CODE);
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == BundleConstant.REFRESH_CODE) {
                 onThemeChanged();
@@ -262,7 +262,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override public void onScrollTop(int index) {}
+    @Override public void onScrollTop(final int index) { }
 
     @Override public boolean isEnterprise() {
         return getPresenter() != null && getPresenter().isEnterprise();
@@ -273,7 +273,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
             ActivityHelper.startCustomTab(this, schemeUrl);
             try {
                 finish();
-            } catch (Exception ignored) {}// fragment might be committed and calling finish will crash the app.
+            } catch (Exception ignored) { } // fragment might be committed and calling finish will crash the app.
         }
     }
 
@@ -287,11 +287,11 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         super.onDestroy();
     }
 
-    protected void setTaskName(@Nullable String name) {
+    protected void setTaskName(final @Nullable String name) {
         setTaskDescription(new ActivityManager.TaskDescription(name, null, ViewHelper.getPrimaryDarkColor(this)));
     }
 
-    protected void selectHome(boolean hideRepo) {
+    protected void selectHome(final boolean hideRepo) {
         Menu menu = getMainDrawerMenu();
         if (menu != null) {
             if (hideRepo) {
@@ -333,7 +333,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         }
     }
 
-    protected void selectMenuItem(@IdRes int id) {
+    protected void selectMenuItem(final @IdRes int id) {
         Menu menu = getMainDrawerMenu();
         if (menu != null) {
             menu.findItem(id).setCheckable(true);
@@ -341,9 +341,9 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         }
     }
 
-    public void onNavToRepoClicked() {}
+    public void onNavToRepoClicked() { }
 
-    private void setupToolbarAndStatusBar(@Nullable Toolbar toolbar) {
+    private void setupToolbarAndStatusBar(final @Nullable Toolbar toolbar) {
         changeStatusBarColor(isTransparent());
         if (toolbar != null) {
             setSupportActionBar(toolbar);
@@ -367,20 +367,20 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         }
     }
 
-    protected void setToolbarIcon(@DrawableRes int res) {
+    protected void setToolbarIcon(final @DrawableRes int res) {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(res);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 
-    protected void hideShowShadow(boolean show) {
+    protected void hideShowShadow(final boolean show) {
         if (appbar != null) {
             appbar.setElevation(show ? getResources().getDimension(R.dimen.spacing_micro) : 0.0f);
         }
     }
 
-    protected void changeStatusBarColor(boolean isTransparent) {
+    protected void changeStatusBarColor(final boolean isTransparent) {
         if (!isTransparent) {
             getWindow().setStatusBarColor(ViewHelper.getPrimaryDarkColor(this));
         }
@@ -411,7 +411,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
                     @Override public boolean onPreDraw() {
                         drawer.openDrawer(GravityCompat.START);
                         drawer.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
-                            @Override public void onDrawerOpened(View drawerView) {
+                            @Override public void onDrawerOpened(final View drawerView) {
                                 super.onDrawerOpened(drawerView);
                                 drawerView.postDelayed(() -> {
                                     if (drawer != null) {
@@ -429,7 +429,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         }
     }
 
-    private void superOnBackPressed(boolean didClickTwice) {
+    private void superOnBackPressed(final boolean didClickTwice) {
         if (this instanceof MainActivity) {
             if (didClickTwice) {
                 if (canExit()) {
@@ -453,7 +453,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         return false;
     }
 
-    @Nullable private View getToolbarNavigationIcon(Toolbar toolbar) {
+    @Nullable private View getToolbarNavigationIcon(final Toolbar toolbar) {
         boolean hadContentDescription = TextUtils.isEmpty(toolbar.getNavigationContentDescription());
         String contentDescription = !hadContentDescription ? String.valueOf(toolbar.getNavigationContentDescription()) : "navigationIcon";
         toolbar.setNavigationContentDescription(contentDescription);
@@ -474,7 +474,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         finishAndRemoveTask();
     }
 
-    private void showProgress(int resId, boolean cancelable) {
+    private void showProgress(final int resId, final boolean cancelable) {
         String msg = getString(R.string.in_progress);
         if (resId != 0) {
             msg = getString(resId);
@@ -494,8 +494,8 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
      * not really needed but meh.
      */
     private void clearCachedComments() {
-        if (this instanceof IssuePagerActivity || this instanceof CommitPagerActivity ||
-                this instanceof PullRequestPagerActivity || this instanceof GistActivity) {
+        if (this instanceof IssuePagerActivity || this instanceof CommitPagerActivity
+                || this instanceof PullRequestPagerActivity || this instanceof GistActivity) {
             CachedComments.Companion.getInstance().clear();
         }
     }
@@ -510,7 +510,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         return true;
     }
 
-    private void initEnterpriseExtra(@Nullable Bundle savedInstanceState) {
+    private void initEnterpriseExtra(final @Nullable Bundle savedInstanceState) {
         if (savedInstanceState == null) {
             if (getIntent() != null) {
                 if (getIntent().getExtras() != null) {
@@ -522,7 +522,7 @@ public abstract class BaseActivity<V extends BaseMvp.FAView, P extends BasePrese
         }
     }
 
-    private void initPresenterBundle(@Nullable Bundle savedInstanceState) {
+    private void initPresenterBundle(final @Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null && !savedInstanceState.isEmpty()) {
             StateSaver.restoreInstanceState(this, savedInstanceState);
             getPresenter().onRestoreInstanceState(presenterStateBundle);

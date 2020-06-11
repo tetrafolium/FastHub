@@ -25,7 +25,7 @@ public class ProjectCardModel implements Parcelable {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
@@ -33,7 +33,7 @@ public class ProjectCardModel implements Parcelable {
         return columnUrl;
     }
 
-    public void setColumnUrl(String columnUrl) {
+    public void setColumnUrl(final String columnUrl) {
         this.columnUrl = columnUrl;
     }
 
@@ -41,7 +41,7 @@ public class ProjectCardModel implements Parcelable {
         return contentUrl;
     }
 
-    public void setContentUrl(String contentUrl) {
+    public void setContentUrl(final String contentUrl) {
         this.contentUrl = contentUrl;
     }
 
@@ -49,7 +49,7 @@ public class ProjectCardModel implements Parcelable {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -57,7 +57,7 @@ public class ProjectCardModel implements Parcelable {
         return note;
     }
 
-    public void setNote(String note) {
+    public void setNote(final String note) {
         this.note = note;
     }
 
@@ -65,7 +65,7 @@ public class ProjectCardModel implements Parcelable {
         return creator;
     }
 
-    public void setCreator(User creator) {
+    public void setCreator(final User creator) {
         this.creator = creator;
     }
 
@@ -73,7 +73,7 @@ public class ProjectCardModel implements Parcelable {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(final Date createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -81,17 +81,17 @@ public class ProjectCardModel implements Parcelable {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(final Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
-    public ProjectCardModel() {}
+    public ProjectCardModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.url);
         dest.writeString(this.columnUrl);
         dest.writeString(this.contentUrl);
@@ -102,7 +102,7 @@ public class ProjectCardModel implements Parcelable {
         dest.writeLong(this.updatedAt != null ? this.updatedAt.getTime() : -1);
     }
 
-    protected ProjectCardModel(Parcel in) {
+    protected ProjectCardModel(final Parcel in) {
         this.url = in.readString();
         this.columnUrl = in.readString();
         this.contentUrl = in.readString();
@@ -116,11 +116,11 @@ public class ProjectCardModel implements Parcelable {
     }
 
     public static final Creator<ProjectCardModel> CREATOR = new Creator<ProjectCardModel>() {
-        @Override public ProjectCardModel createFromParcel(Parcel source) {
+        @Override public ProjectCardModel createFromParcel(final Parcel source) {
             return new ProjectCardModel(source);
         }
 
-        @Override public ProjectCardModel[] newArray(int size) {
+        @Override public ProjectCardModel[] newArray(final int size) {
             return new ProjectCardModel[size];
         }
     };

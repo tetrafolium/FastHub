@@ -74,27 +74,27 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
     @State boolean isOpened;
     private CommentEditorFragment commentEditorFragment;
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login, int number) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login, final int number) {
         return createIntent(context, repoId, login, number, false);
 
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId,
-                                      @NonNull String login, int number, boolean showToRepoBtn) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId,
+                                      final @NonNull String login, final int number, final boolean showToRepoBtn) {
         return createIntent(context, repoId, login, number, showToRepoBtn, false);
 
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId,
-                                      @NonNull String login, int number, boolean showToRepoBtn,
-                                      boolean isEnterprise) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId,
+                                      final @NonNull String login, final int number, final boolean showToRepoBtn,
+                                      final boolean isEnterprise) {
         return createIntent(context, repoId, login, number, showToRepoBtn, isEnterprise, 0);
 
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId,
-                                      @NonNull String login, int number, boolean showToRepoBtn,
-                                      boolean isEnterprise, long commentId) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId,
+                                      final @NonNull String login, final int number, final boolean showToRepoBtn,
+                                      final boolean isEnterprise, final long commentId) {
         Intent intent = new Intent(context, IssuePagerActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.ID, number)
@@ -135,7 +135,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         return new IssuePagerPresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         commentEditorFragment = (CommentEditorFragment) getSupportFragmentManager().findFragmentById(R.id.commentFragment);
         tabs.setVisibility(View.GONE);
@@ -150,7 +150,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         if (getPresenter().showToRepoBtn()) showNavToRepoItem();
     }
 
-    @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && data != null) {
             if (requestCode == BundleConstant.REQUEST_CODE) {
@@ -165,7 +165,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         }
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.issue_menu, menu);
         menu.findItem(R.id.closeIssue).setVisible(getPresenter().isOwner());
         menu.findItem(R.id.lockIssue).setVisible(getPresenter().isRepoOwner() || getPresenter().isCollaborator);
@@ -173,7 +173,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onNavToRepoClicked();
             return true;
@@ -240,7 +240,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         return super.onOptionsItemSelected(item);
     }
 
-    @Override public boolean onPrepareOptionsMenu(Menu menu) {
+    @Override public boolean onPrepareOptionsMenu(final Menu menu) {
         MenuItem closeIssue = menu.findItem(R.id.closeIssue);
         MenuItem lockIssue = menu.findItem(R.id.lockIssue);
         MenuItem milestone = menu.findItem(R.id.milestone);
@@ -271,7 +271,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         return super.onPrepareOptionsMenu(menu);
     }
 
-    @Override public void onSetupIssue(boolean isUpdate) {
+    @Override public void onSetupIssue(final boolean isUpdate) {
         hideProgress();
         if (getPresenter().getIssue() == null) {
             return;
@@ -300,7 +300,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         }
         if (!getPresenter().isLocked() || getPresenter().isOwner()) {
             pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-                @Override public void onPageSelected(int position) {
+                @Override public void onPageSelected(final int position) {
                     super.onPageSelected(position);
                     hideShowFab();
                 }
@@ -309,7 +309,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         hideShowFab();
     }
 
-    @Override public void showSuccessIssueActionMsg(boolean isClose) {
+    @Override public void showSuccessIssueActionMsg(final boolean isClose) {
         hideProgress();
         if (isClose) {
             isOpened = false;
@@ -322,7 +322,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         }
     }
 
-    @Override public void showErrorIssueActionMsg(boolean isClose) {
+    @Override public void showErrorIssueActionMsg(final boolean isClose) {
         hideProgress();
         if (isClose) {
             showMessage(getString(R.string.error), getString(R.string.error_closing_issue));
@@ -342,7 +342,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         invalidateOptionsMenu();
     }
 
-    @Override public void onMileStoneSelected(@NonNull MilestoneModel milestoneModel) {
+    @Override public void onMileStoneSelected(final @NonNull MilestoneModel milestoneModel) {
         getPresenter().onPutMilestones(milestoneModel);
     }
 
@@ -355,18 +355,18 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         return getPresenter().getIssue();
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk) {
             getPresenter().onHandleConfirmDialog(bundle);
         }
     }
 
-    @Override public void onSelectedLabels(@NonNull ArrayList<LabelModel> labels) {
+    @Override public void onSelectedLabels(final @NonNull ArrayList<LabelModel> labels) {
         getPresenter().onPutLabels(labels);
     }
 
-    @Override public void onSelectedAssignees(@NonNull ArrayList<User> users, boolean isAssignee) {
+    @Override public void onSelectedAssignees(final @NonNull ArrayList<User> users, final boolean isAssignee) {
         getPresenter().onPutAssignees(users);
     }
 
@@ -391,18 +391,18 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         super.finish();
     }
 
-    @Override public void onSendActionClicked(@NonNull String text, @Nullable Bundle bundle) {
+    @Override public void onSendActionClicked(final @NonNull String text, final @Nullable Bundle bundle) {
         IssueTimelineFragment fragment = getIssueTimelineFragment();
         if (fragment != null) {
             fragment.onHandleComment(text, bundle);
         }
     }
 
-    @Override public void onTagUser(@NonNull String username) {
+    @Override public void onTagUser(final @NonNull String username) {
         commentEditorFragment.onAddUserName(username);
     }
 
-    @Override public void onCreateComment(String text, Bundle bundle) {}
+    @Override public void onCreateComment(final String text, final Bundle bundle) { }
 
     @SuppressWarnings("ConstantConditions") @Override public void onClearEditText() {
         if (commentEditorFragment != null && commentEditorFragment.commentText != null) commentEditorFragment.commentText.setText("");
@@ -416,7 +416,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         return new ArrayList<>();
     }
 
-    @Override public void onLock(@NonNull String reason) {
+    @Override public void onLock(final @NonNull String reason) {
         getPresenter().onLockUnlockIssue(reason);
     }
 
@@ -433,7 +433,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         getSupportFragmentManager().beginTransaction().show(commentEditorFragment).commit();
     }
 
-    private void updateViews(@NonNull Issue issueModel) {
+    private void updateViews(final @NonNull Issue issueModel) {
         User userModel = issueModel.getUser();
         title.setText(issueModel.getTitle());
         detailsIcon.setVisibility(View.VISIBLE);

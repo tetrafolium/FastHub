@@ -40,7 +40,7 @@ class RepoPagerPresenter extends BasePresenter<RepoPagerMvp.View> implements Rep
     @com.evernote.android.state.State int navTyp;
     @com.evernote.android.state.State boolean isCollaborator;
 
-    private void callApi(int navTyp) {
+    private void callApi(final int navTyp) {
         if (InputHelper.isEmpty(login) || InputHelper.isEmpty(repoId)) return;
         makeRestCall(Observable.zip(RestProvider.getRepoService(isEnterprise()).getRepo(login(), repoId()),
                                     RestProvider.getRepoService(isEnterprise()).isCollaborator(login, repoId, Login.getUser().getLogin()),
@@ -61,7 +61,7 @@ class RepoPagerPresenter extends BasePresenter<RepoPagerMvp.View> implements Rep
         });
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         int code = RestProvider.getErrorCode(throwable);
         if (code == 404) {
             sendToView(BaseMvp.FAView::onOpenUrlInBrowser);
@@ -71,11 +71,11 @@ class RepoPagerPresenter extends BasePresenter<RepoPagerMvp.View> implements Rep
         super.onError(throwable);
     }
 
-    @Override public void onUpdatePinnedEntry(@NonNull String repoId, @NonNull String login) {
+    @Override public void onUpdatePinnedEntry(final @NonNull String repoId, final @NonNull String login) {
         manageDisposable(PinnedRepos.updateEntry(login + "/" + repoId));
     }
 
-    @Override public void onActivityCreate(@NonNull String repoId, @NonNull String login, int navTyp) {
+    @Override public void onActivityCreate(final @NonNull String repoId, final @NonNull String login, final int navTyp) {
         this.login = login;
         this.repoId = repoId;
         this.navTyp = navTyp;
@@ -152,7 +152,7 @@ class RepoPagerPresenter extends BasePresenter<RepoPagerMvp.View> implements Rep
             manageDisposable(RxHelper.getObservable(RestProvider.getRepoService(isEnterprise()).isWatchingRepo(login, name))
                              .doOnSubscribe(disposable -> sendToView(view -> view.onEnableDisableWatch(false)))
                              .doOnNext(subscriptionModel -> sendToView(view -> view.onRepoWatched(isWatched = subscriptionModel.isSubscribed())))
-            .subscribe(o -> {/**/}, throwable -> {
+            .subscribe(o -> { /**/ }, throwable -> {
                 isWatched = false;
                 sendToView(view -> view.onRepoWatched(isWatched));
             }));
@@ -166,7 +166,7 @@ class RepoPagerPresenter extends BasePresenter<RepoPagerMvp.View> implements Rep
             manageDisposable(RxHelper.getObservable(RestProvider.getRepoService(isEnterprise()).checkStarring(login, name))
                              .doOnSubscribe(disposable -> sendToView(view -> view.onEnableDisableStar(false)))
                              .doOnNext(response -> sendToView(view -> view.onRepoStarred(isStarred = response.code() == 204)))
-            .subscribe(booleanResponse -> {/**/}, throwable -> {
+            .subscribe(booleanResponse -> { /**/ }, throwable -> {
                 isStarred = false;
                 sendToView(view -> view.onRepoStarred(isStarred));
             }));
@@ -192,7 +192,7 @@ class RepoPagerPresenter extends BasePresenter<RepoPagerMvp.View> implements Rep
         }
     }
 
-    @Override public void onModuleChanged(@NonNull FragmentManager fragmentManager, @RepoPagerMvp.RepoNavigationType int type) {
+    @Override public void onModuleChanged(final @NonNull FragmentManager fragmentManager, final @RepoPagerMvp.RepoNavigationType int type) {
         Fragment currentVisible = getVisibleFragment(fragmentManager);
         RepoCodePagerFragment codePagerView = (RepoCodePagerFragment) AppHelper.getFragmentByTag(fragmentManager, RepoCodePagerFragment.TAG);
         RepoIssuesPagerFragment repoIssuesPagerView = (RepoIssuesPagerFragment)
@@ -245,7 +245,7 @@ class RepoPagerPresenter extends BasePresenter<RepoPagerMvp.View> implements Rep
         }
     }
 
-    @Override public void onShowHideFragment(@NonNull FragmentManager fragmentManager, @NonNull Fragment toShow, @NonNull Fragment toHide) {
+    @Override public void onShowHideFragment(final @NonNull FragmentManager fragmentManager, final @NonNull Fragment toShow, final @NonNull Fragment toHide) {
         fragmentManager
         .beginTransaction()
         .hide(toHide)
@@ -255,7 +255,7 @@ class RepoPagerPresenter extends BasePresenter<RepoPagerMvp.View> implements Rep
         toShow.onHiddenChanged(false);
     }
 
-    @Override public void onAddAndHide(@NonNull FragmentManager fragmentManager, @NonNull Fragment toAdd, @NonNull Fragment toHide) {
+    @Override public void onAddAndHide(final @NonNull FragmentManager fragmentManager, final @NonNull Fragment toAdd, final @NonNull Fragment toHide) {
         fragmentManager
         .beginTransaction()
         .hide(toHide)
@@ -287,14 +287,14 @@ class RepoPagerPresenter extends BasePresenter<RepoPagerMvp.View> implements Rep
         sendToView(view -> view.onRepoPinned(isPinned));
     }
 
-    @Override public void updatePinned(int forks, int stars, int watching) {
+    @Override public void updatePinned(final int forks, final int stars, final int watching) {
         this.repo.setStargazersCount(stars);
         this.repo.setForksCount(forks);
         this.repo.setSubsCount(watching);
         updatePinned(repo);
     }
 
-    @Override public void onMenuItemSelect(@IdRes int id, int position, boolean fromUser) {
+    @Override public void onMenuItemSelect(final @IdRes int id, final int position, final boolean fromUser) {
         if (id == R.id.issues && (getRepo() != null && !getRepo().isHasIssues())) {
             sendToView(RepoPagerMvp.View::disableIssueTab);
             return;
@@ -304,9 +304,9 @@ class RepoPagerPresenter extends BasePresenter<RepoPagerMvp.View> implements Rep
         }
     }
 
-    @Override public void onMenuItemReselect(@IdRes int id, int position, boolean fromUser) {}
+    @Override public void onMenuItemReselect(final @IdRes int id, final int position, final boolean fromUser) { }
 
-    private void updatePinned(Repo repoModel) {
+    private void updatePinned(final Repo repoModel) {
         PinnedRepos pinnedRepos = PinnedRepos.get(repoModel.getFullName());
         if (pinnedRepos != null) {
             pinnedRepos.setPinnedRepo(repoModel);

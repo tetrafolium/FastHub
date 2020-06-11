@@ -25,14 +25,14 @@ public class ParseDateFormat {
         dateFormat.setTimeZone(TimeZone.getDefault());
     }
 
-    @NonNull public String format(Date date) {
+    @NonNull public String format(final Date date) {
         synchronized (lock) {
             return dateFormat.format(date);
         }
     }
 
 
-    @NonNull public static CharSequence getTimeAgo(@Nullable String toParse) {
+    @NonNull public static CharSequence getTimeAgo(final @Nullable String toParse) {
         try {
             Date parsedDate = getInstance().dateFormat.parse(toParse);
             long now = System.currentTimeMillis();
@@ -43,7 +43,7 @@ public class ParseDateFormat {
         return "N/A";
     }
 
-    @NonNull public static CharSequence getTimeAgo(@Nullable Date parsedDate) {
+    @NonNull public static CharSequence getTimeAgo(final @Nullable Date parsedDate) {
         if (parsedDate != null) {
             long now = System.currentTimeMillis();
             return DateUtils.getRelativeTimeSpanString(parsedDate.getTime(), now, DateUtils.SECOND_IN_MILLIS);
@@ -51,15 +51,15 @@ public class ParseDateFormat {
         return "N/A";
     }
 
-    @NonNull public static String toGithubDate(@NonNull Date date) {
+    @NonNull public static String toGithubDate(final @NonNull Date date) {
         return getInstance().format(date);
     }
 
-    @NonNull public static String prettifyDate(long timestamp) {
+    @NonNull public static String prettifyDate(final long timestamp) {
         return new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(new Date(timestamp));
     }
 
-    @Nullable public static Date getDateFromString(@NonNull String date) {
+    @Nullable public static Date getDateFromString(final @NonNull String date) {
         try {
             return new SimpleDateFormat("dd-MM-yyyy", Locale.US).parse(date);
         } catch (ParseException e) {
@@ -72,7 +72,7 @@ public class ParseDateFormat {
         return INSTANCE;
     }
 
-    private static String getDateByDays(int days) {
+    private static String getDateByDays(final int days) {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ENGLISH);
         cal.add(Calendar.DAY_OF_YEAR, days);

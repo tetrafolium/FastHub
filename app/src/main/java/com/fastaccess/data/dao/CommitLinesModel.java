@@ -35,7 +35,7 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
     public int position;
     private boolean hasCommentedOn;
 
-    @NonNull public static List<CommitLinesModel> getLines(@Nullable String text) {
+    @NonNull public static List<CommitLinesModel> getLines(final @Nullable String text) {
         ArrayList<CommitLinesModel> models = new ArrayList<>();
         if (!InputHelper.isEmpty(text)) {
             String[] split = text.split("\\r?\\n|\\r");
@@ -94,7 +94,7 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.text);
         dest.writeInt(this.color);
         dest.writeInt(this.leftLineNo);
@@ -103,7 +103,7 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
         dest.writeInt(this.position);
     }
 
-    private CommitLinesModel(Parcel in) {
+    private CommitLinesModel(final Parcel in) {
         this.text = in.readString();
         this.color = in.readInt();
         this.leftLineNo = in.readInt();
@@ -113,11 +113,11 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
     }
 
     public static final Creator<CommitLinesModel> CREATOR = new Creator<CommitLinesModel>() {
-        @Override public CommitLinesModel createFromParcel(Parcel source) {
+        @Override public CommitLinesModel createFromParcel(final Parcel source) {
             return new CommitLinesModel(source);
         }
 
-        @Override public CommitLinesModel[] newArray(int size) {
+        @Override public CommitLinesModel[] newArray(final int size) {
             return new CommitLinesModel[size];
         }
     };
@@ -126,7 +126,7 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
@@ -134,7 +134,7 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
         return color;
     }
 
-    public void setColor(int color) {
+    public void setColor(final int color) {
         this.color = color;
     }
 
@@ -142,7 +142,7 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
         return leftLineNo;
     }
 
-    public void setLeftLineNo(int leftLineNo) {
+    public void setLeftLineNo(final int leftLineNo) {
         this.leftLineNo = leftLineNo;
     }
 
@@ -150,7 +150,7 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
         return rightLineNo;
     }
 
-    public void setRightLineNo(int rightLineNo) {
+    public void setRightLineNo(final int rightLineNo) {
         this.rightLineNo = rightLineNo;
     }
 
@@ -158,7 +158,7 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
         return noNewLine;
     }
 
-    public void setNoNewLine(boolean noNewLine) {
+    public void setNoNewLine(final boolean noNewLine) {
         this.noNewLine = noNewLine;
     }
 
@@ -166,7 +166,7 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(final int position) {
         this.position = position;
     }
 
@@ -174,7 +174,7 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
         return hasCommentedOn;
     }
 
-    public void setHasCommentedOn(boolean hasCommentedOn) {
+    public void setHasCommentedOn(final boolean hasCommentedOn) {
         this.hasCommentedOn = hasCommentedOn;
     }
 }

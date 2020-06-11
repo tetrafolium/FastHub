@@ -29,7 +29,7 @@ public class DatesUtils {
      *         The day of month of the date.
      * @return Integer to determine the day of week.
      */
-    @SuppressLint("WrongConstant") public static int getWeekDayFromDate(int year, int month, int day) {
+    @SuppressLint("WrongConstant") public static int getWeekDayFromDate(final int year, final int month, final int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, day);
         calendar.add(Calendar.SECOND, 0);
@@ -48,7 +48,7 @@ public class DatesUtils {
      *         The day of the date.
      * @return The short name of the month.
      */
-    @SuppressLint("WrongConstant") public static String getShortMonthName(int year, int month, int day) {
+    @SuppressLint("WrongConstant") public static String getShortMonthName(final int year, final int month, final int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, day);
         calendar.add(Calendar.SECOND, 0);
@@ -67,7 +67,7 @@ public class DatesUtils {
      *         The day of the date.
      * @return true or false
      */
-    @SuppressLint("WrongConstant") public static boolean isFirstWeekOfMount(int year, int month, int day) {
+    @SuppressLint("WrongConstant") public static boolean isFirstWeekOfMount(final int year, final int month, final int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, day);
         calendar.add(Calendar.SECOND, 0);
@@ -87,7 +87,7 @@ public class DatesUtils {
      *         The day of the date.
      * @return true or false
      */
-    @SuppressLint("WrongConstant") public static boolean isFirstDayOfWeek(int year, int month, int day) {
+    @SuppressLint("WrongConstant") public static boolean isFirstDayOfWeek(final int year, final int month, final int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, day);
         calendar.add(Calendar.SECOND, 0);

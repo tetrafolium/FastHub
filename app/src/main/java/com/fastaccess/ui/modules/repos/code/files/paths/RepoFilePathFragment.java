@@ -57,14 +57,14 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
     private RepoFilePathsAdapter adapter;
     private RepoFilesFragment repoFilesView;
 
-    public static RepoFilePathFragment newInstance(@NonNull String login, @NonNull String repoId, @Nullable String path,
-            @NonNull String defaultBranch) {
+    public static RepoFilePathFragment newInstance(final @NonNull String login, final @NonNull String repoId, final @Nullable String path,
+            final @NonNull String defaultBranch) {
         return newInstance(login, repoId, path, defaultBranch, false);
     }
 
-    public static RepoFilePathFragment newInstance(@NonNull String login, @NonNull String repoId,
-            @Nullable String path, @NonNull String defaultBranch,
-            boolean forceAppendPath) {
+    public static RepoFilePathFragment newInstance(final @NonNull String login, final @NonNull String repoId,
+            final @Nullable String path, final @NonNull String defaultBranch,
+            final boolean forceAppendPath) {
         RepoFilePathFragment view = new RepoFilePathFragment();
         view.setArguments(Bundler.start()
                           .put(BundleConstant.ID, repoId)
@@ -76,7 +76,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
         return view;
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof RepoPagerMvp.View) {
             repoCallback = (RepoPagerMvp.View) getParentFragment();
@@ -130,7 +130,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
         .show(getChildFragmentManager(), "BranchesFragment");
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<RepoFile> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<RepoFile> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -144,7 +144,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
         recycler.smoothScrollToPosition(adapter.getItemCount() - 1);
     }
 
-    @Override public void onItemClicked(@NonNull RepoFile model, int position) {
+    @Override public void onItemClicked(final @NonNull RepoFile model, final int position) {
         if (getRepoFilesView().isRefreshing()) return;
         getRepoFilesView().onSetData(getPresenter().getLogin(), getPresenter().getRepoId(),
                                      Objects.toString(model.getPath(), ""), ref, false, null);
@@ -154,12 +154,12 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
         recycler.scrollToPosition(adapter.getItemCount() - 1);
     }
 
-    @Override public void onAppendPath(@NonNull RepoFile model) {
+    @Override public void onAppendPath(final @NonNull RepoFile model) {
         getRepoFilesView().onSetData(getPresenter().getLogin(), getPresenter().getRepoId(),
                                      Objects.toString(model.getPath(), ""), ref, false, model);
     }
 
-    @Override public void onAppenedtab(@Nullable RepoFile repoFile) {
+    @Override public void onAppenedtab(final @Nullable RepoFile repoFile) {
         if (repoFile != null) {
             adapter.addItem(repoFile);
             recycler.scrollToPosition(adapter.getItemCount() - 1);
@@ -191,16 +191,16 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
         }
     }
 
-    @Override public void showProgress(@StringRes int resId) {}
+    @Override public void showProgress(final @StringRes int resId) { }
 
-    @Override public void hideProgress() {}
+    @Override public void hideProgress() { }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -209,7 +209,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
         return R.layout.repo_file_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         adapter = new RepoFilePathsAdapter(getPresenter().getPaths());
         adapter.setListener(getPresenter());
         recycler.setAdapter(adapter);
@@ -225,7 +225,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
         }
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk && bundle != null) {
             boolean isDownload = bundle.getBoolean(BundleConstant.YES_NO_EXTRA);
@@ -247,7 +247,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
         return new RepoFilePathPresenter();
     }
 
-    @Override public void setUserVisibleHint(boolean isVisibleToUser) {
+    @Override public void setUserVisibleHint(final boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         //noinspection ConstantConditions (for this state, it is still null!!!)
         if (isSafe() && getRepoFilesView() != null) getRepoFilesView().onHiddenChanged(!isVisibleToUser);
@@ -260,19 +260,19 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
         return repoFilesView;
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (repoFilesView != null) repoFilesView.onScrollTop(index);
     }
 
-    @Override public void onBranchSelected(@NonNull BranchesModel branch) {
+    @Override public void onBranchSelected(final @NonNull BranchesModel branch) {
         ref = branch.getName();
         branches.setText(ref);
         getRepoFilesView().onSetData(getPresenter().getLogin(), getPresenter().getRepoId(), "", ref, true, null);
         onBackClicked();
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == EditRepoFileActivity.EDIT_RQ) {
             getRepoFilesView().onRefresh();

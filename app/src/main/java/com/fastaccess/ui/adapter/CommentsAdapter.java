@@ -16,15 +16,15 @@ import java.util.ArrayList;
 
 public class CommentsAdapter extends BaseRecyclerAdapter<Comment, CommentsViewHolder, BaseViewHolder.OnItemClickListener<Comment>> {
 
-    public CommentsAdapter(@NonNull ArrayList<Comment> eventsModels) {
+    public CommentsAdapter(final @NonNull ArrayList<Comment> eventsModels) {
         super(eventsModels);
     }
 
-    @Override protected CommentsViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected CommentsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return CommentsViewHolder.newInstance(parent, this);
     }
 
-    @Override protected void onBindView(CommentsViewHolder holder, int position) {
+    @Override protected void onBindView(final CommentsViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

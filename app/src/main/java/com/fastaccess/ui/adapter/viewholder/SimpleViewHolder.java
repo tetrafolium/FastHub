@@ -19,11 +19,11 @@ public class SimpleViewHolder<O> extends BaseViewHolder<O> {
 
     @BindView(R.id.title) FontTextView title;
 
-    public SimpleViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+    public SimpleViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
     }
 
-    @Override public void bind(@NonNull O o) {
+    @Override public void bind(final @NonNull O o) {
         title.setText(o.toString());
     }
 }

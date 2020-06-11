@@ -19,25 +19,25 @@ public class UsersAdapter extends BaseRecyclerAdapter<User, UsersViewHolder, Bas
     private boolean isContributor;
     private boolean isFilter;
 
-    public UsersAdapter(@NonNull ArrayList<User> list) {
+    public UsersAdapter(final @NonNull ArrayList<User> list) {
         this(list, false);
     }
 
-    public UsersAdapter(@NonNull ArrayList<User> list, boolean isContributor) {
+    public UsersAdapter(final @NonNull ArrayList<User> list, final boolean isContributor) {
         this(list, isContributor, false);
     }
 
-    public UsersAdapter(@NonNull ArrayList<User> list, boolean isContributor, boolean isFilter) {
+    public UsersAdapter(final @NonNull ArrayList<User> list, final boolean isContributor, final boolean isFilter) {
         super(list);
         this.isContributor = isContributor;
         this.isFilter = isFilter;
     }
 
-    @Override protected UsersViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected UsersViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return UsersViewHolder.newInstance(parent, this, isFilter);
     }
 
-    @Override protected void onBindView(UsersViewHolder holder, int position) {
+    @Override protected void onBindView(final UsersViewHolder holder, final int position) {
         holder.bind(getItem(position), isContributor);
     }
 }

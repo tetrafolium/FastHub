@@ -18,21 +18,21 @@ public class ReposAdapter extends BaseRecyclerAdapter<Repo, ReposViewHolder, Bas
     private boolean isStarred;
     private boolean withImage;
 
-    public ReposAdapter(@NonNull List<Repo> data, boolean isStarred) {
+    public ReposAdapter(final @NonNull List<Repo> data, final boolean isStarred) {
         this(data, isStarred, false);
     }
 
-    public ReposAdapter(@NonNull List<Repo> data, boolean isStarred, boolean withImage) {
+    public ReposAdapter(final @NonNull List<Repo> data, final boolean isStarred, final boolean withImage) {
         super(data);
         this.isStarred = isStarred;
         this.withImage = withImage;
     }
 
-    @Override protected ReposViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected ReposViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return ReposViewHolder.newInstance(parent, this, isStarred, withImage);
     }
 
-    @Override protected void onBindView(ReposViewHolder holder, int position) {
+    @Override protected void onBindView(final ReposViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

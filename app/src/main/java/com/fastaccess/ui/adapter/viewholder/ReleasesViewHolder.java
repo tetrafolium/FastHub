@@ -30,17 +30,17 @@ public class ReleasesViewHolder extends BaseViewHolder<Release> {
     @BindString(R.string.released) String released;
     @BindString(R.string.drafted) String drafted;
 
-    private ReleasesViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+    private ReleasesViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
         download.setOnClickListener(this);
         download.setOnLongClickListener(this);
     }
 
-    public static ReleasesViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter) {
+    public static ReleasesViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
         return new ReleasesViewHolder(getView(viewGroup, R.layout.releases_row_item), adapter);
     }
 
-    @Override public void bind(@NonNull Release item) {
+    @Override public void bind(final @NonNull Release item) {
         title.setText(SpannableBuilder.builder().bold(!InputHelper.isEmpty(item.getName()) ? item.getName() : item.getTagName()));
         if (item.getAuthor() != null) {
             details.setText(SpannableBuilder.builder()

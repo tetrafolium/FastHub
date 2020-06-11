@@ -33,15 +33,15 @@ public class FontTextView extends AppCompatTextView {
     @State int tintColor = -1;
     @State boolean selected;
 
-    public FontTextView(@NonNull Context context) {
+    public FontTextView(final @NonNull Context context) {
         this(context, null);
     }
 
-    public FontTextView(@NonNull Context context, AttributeSet attrs) {
+    public FontTextView(final @NonNull Context context, final AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public FontTextView(@NonNull Context context, AttributeSet attrs, int defStyleAttr) {
+    public FontTextView(final @NonNull Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
@@ -50,18 +50,18 @@ public class FontTextView extends AppCompatTextView {
         return StateSaver.saveInstanceState(this, super.onSaveInstanceState());
     }
 
-    @Override public void onRestoreInstanceState(Parcelable state) {
+    @Override public void onRestoreInstanceState(final Parcelable state) {
         super.onRestoreInstanceState(StateSaver.restoreInstanceState(this, state));
         tintDrawables(tintColor);
         setSelected(selected);
     }
 
-    @Override public void setSelected(boolean selected) {
+    @Override public void setSelected(final boolean selected) {
         super.setSelected(selected);
         this.selected = selected;
     }
 
-    @Override public void setTextCursorDrawable(@Nullable Drawable textCursorDrawable) {
+    @Override public void setTextCursorDrawable(final @Nullable Drawable textCursorDrawable) {
         try {
             super.setTextCursorDrawable(textCursorDrawable);
         } catch (Exception e) {
@@ -69,7 +69,7 @@ public class FontTextView extends AppCompatTextView {
         }
     }
 
-    @Override public void setTextCursorDrawable(int textCursorDrawable) {
+    @Override public void setTextCursorDrawable(final int textCursorDrawable) {
         try {
             super.setTextCursorDrawable(textCursorDrawable);
         } catch (Exception e) {
@@ -77,7 +77,7 @@ public class FontTextView extends AppCompatTextView {
         }
     }
 
-    private void init(@NonNull Context context, @Nullable AttributeSet attributeSet) {
+    private void init(final @NonNull Context context, final @Nullable AttributeSet attributeSet) {
         if (attributeSet != null) {
             TypedArray tp = context.obtainStyledAttributes(attributeSet, R.styleable.FontTextView);
             try {
@@ -92,7 +92,7 @@ public class FontTextView extends AppCompatTextView {
         TypeFaceHelper.applyTypeface(this);
     }
 
-    public void tintDrawables(@ColorInt int color) {
+    public void tintDrawables(final @ColorInt int color) {
         if (color != -1) {
             this.tintColor = color;
             Drawable[] drawables = getCompoundDrawablesRelative();
@@ -103,7 +103,7 @@ public class FontTextView extends AppCompatTextView {
         }
     }
 
-    public void setEventsIcon(@DrawableRes int drawableRes) {
+    public void setEventsIcon(final @DrawableRes int drawableRes) {
         Drawable drawable = ContextCompat.getDrawable(getContext(), drawableRes);
         int width = drawable.getIntrinsicWidth();
         int height = drawable.getIntrinsicHeight();

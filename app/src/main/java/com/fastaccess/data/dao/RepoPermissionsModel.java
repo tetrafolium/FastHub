@@ -22,24 +22,24 @@ public class RepoPermissionsModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeByte(this.admin ? (byte) 1 : (byte) 0);
         dest.writeByte(this.push ? (byte) 1 : (byte) 0);
         dest.writeByte(this.pull ? (byte) 1 : (byte) 0);
     }
 
-    protected RepoPermissionsModel(Parcel in) {
+    protected RepoPermissionsModel(final Parcel in) {
         this.admin = in.readByte() != 0;
         this.push = in.readByte() != 0;
         this.pull = in.readByte() != 0;
     }
 
     public static final Creator<RepoPermissionsModel> CREATOR = new Creator<RepoPermissionsModel>() {
-        @Override public RepoPermissionsModel createFromParcel(Parcel source) {
+        @Override public RepoPermissionsModel createFromParcel(final Parcel source) {
             return new RepoPermissionsModel(source);
         }
 
-        @Override public RepoPermissionsModel[] newArray(int size) {
+        @Override public RepoPermissionsModel[] newArray(final int size) {
             return new RepoPermissionsModel[size];
         }
     };

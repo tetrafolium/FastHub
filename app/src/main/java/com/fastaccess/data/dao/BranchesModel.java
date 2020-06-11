@@ -31,7 +31,7 @@ public class BranchesModel implements Parcelable {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.name);
         dest.writeParcelable(this.commit, flags);
         dest.writeByte(this.protectedBranch ? (byte) 1 : (byte) 0);
@@ -39,7 +39,7 @@ public class BranchesModel implements Parcelable {
         dest.writeByte(this.isTag ? (byte) 1 : (byte) 0);
     }
 
-    private BranchesModel(Parcel in) {
+    private BranchesModel(final Parcel in) {
         this.name = in.readString();
         this.commit = in.readParcelable(Commit.class.getClassLoader());
         this.protectedBranch = in.readByte() != 0;
@@ -48,11 +48,11 @@ public class BranchesModel implements Parcelable {
     }
 
     public static final Creator<BranchesModel> CREATOR = new Creator<BranchesModel>() {
-        @Override public BranchesModel createFromParcel(Parcel source) {
+        @Override public BranchesModel createFromParcel(final Parcel source) {
             return new BranchesModel(source);
         }
 
-        @Override public BranchesModel[] newArray(int size) {
+        @Override public BranchesModel[] newArray(final int size) {
             return new BranchesModel[size];
         }
     };

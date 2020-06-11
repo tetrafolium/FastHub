@@ -30,7 +30,7 @@ public class AssigneesViewHolder extends BaseViewHolder<User> {
     @BindColor(R.color.light_gray) int lightGray;
     private final AssigneesAdapter.OnSelectAssignee onSelectAssignee;
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         if (onSelectAssignee != null) {
             int position = getAdapterPosition();
             onSelectAssignee.onToggleSelection(position, !onSelectAssignee.isAssigneeSelected(position));
@@ -39,18 +39,18 @@ public class AssigneesViewHolder extends BaseViewHolder<User> {
         }
     }
 
-    private AssigneesViewHolder(@NonNull View itemView, @Nullable AssigneesAdapter.OnSelectAssignee onSelectAssignee,
-                                @NonNull BaseRecyclerAdapter adapter) {
+    private AssigneesViewHolder(final @NonNull View itemView, final @Nullable AssigneesAdapter.OnSelectAssignee onSelectAssignee,
+                                final @NonNull BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
         this.onSelectAssignee = onSelectAssignee;
     }
 
-    public static AssigneesViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable AssigneesAdapter.OnSelectAssignee onSelectAssignee,
-            @NonNull BaseRecyclerAdapter adapter) {
+    public static AssigneesViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable AssigneesAdapter.OnSelectAssignee onSelectAssignee,
+            final @NonNull BaseRecyclerAdapter adapter) {
         return new AssigneesViewHolder(getView(viewGroup, R.layout.feeds_row_item), onSelectAssignee, adapter);
     }
 
-    @Override public void bind(@NonNull User user) {
+    @Override public void bind(final @NonNull User user) {
         avatar.setUrl(user.getAvatarUrl(), user.getLogin(), user.isOrganizationType(), LinkParserHelper.isEnterprise(user.getHtmlUrl()));
         title.setText(user.getLogin());
         date.setVisibility(View.GONE);

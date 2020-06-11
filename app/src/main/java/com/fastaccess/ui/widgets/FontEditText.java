@@ -15,18 +15,18 @@ import com.fastaccess.helper.TypeFaceHelper;
  */
 public class FontEditText extends AppCompatEditText {
 
-    public FontEditText(@NonNull Context context) {
+    public FontEditText(final @NonNull Context context) {
         super(context);
         init();
     }
 
-    public FontEditText(@NonNull Context context, AttributeSet attrs) {
+    public FontEditText(final @NonNull Context context, final AttributeSet attrs) {
         super(context, attrs);
         init();
 
     }
 
-    public FontEditText(@NonNull Context context, AttributeSet attrs, int defStyleAttr) {
+    public FontEditText(final @NonNull Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
@@ -38,7 +38,7 @@ public class FontEditText extends AppCompatEditText {
         TypeFaceHelper.applyTypeface(this);
     }
 
-    @SuppressLint("SetTextI18n") public void setText(CharSequence text, BufferType type) {
+    @SuppressLint("SetTextI18n") public void setText(final CharSequence text, final BufferType type) {
         try {
             super.setText(text, type);
         } catch (Exception e) {

@@ -23,13 +23,13 @@ import lombok.Setter;
     private Commit commit;
     private Repo repository;
 
-    public SourceModel() {}
+    public SourceModel() { }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.type);
         dest.writeParcelable(this.issue, flags);
         dest.writeParcelable(this.pullRequest, flags);
@@ -37,7 +37,7 @@ import lombok.Setter;
         dest.writeParcelable(this.repository, flags);
     }
 
-    private SourceModel(Parcel in) {
+    private SourceModel(final Parcel in) {
         this.type = in.readString();
         this.issue = in.readParcelable(Issue.class.getClassLoader());
         this.pullRequest = in.readParcelable(PullRequest.class.getClassLoader());
@@ -46,11 +46,11 @@ import lombok.Setter;
     }
 
     public static final Creator<SourceModel> CREATOR = new Creator<SourceModel>() {
-        @Override public SourceModel createFromParcel(Parcel source) {
+        @Override public SourceModel createFromParcel(final Parcel source) {
             return new SourceModel(source);
         }
 
-        @Override public SourceModel[] newArray(int size) {
+        @Override public SourceModel[] newArray(final int size) {
             return new SourceModel[size];
         }
     };

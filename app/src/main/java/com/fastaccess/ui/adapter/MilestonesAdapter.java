@@ -17,15 +17,15 @@ import java.util.ArrayList;
 public class MilestonesAdapter extends BaseRecyclerAdapter<MilestoneModel, MilestonesViewHolder,
     BaseViewHolder.OnItemClickListener<MilestoneModel>> {
 
-    public MilestonesAdapter(@NonNull ArrayList<MilestoneModel> eventsModels) {
+    public MilestonesAdapter(final @NonNull ArrayList<MilestoneModel> eventsModels) {
         super(eventsModels);
     }
 
-    @Override protected MilestonesViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected MilestonesViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return MilestonesViewHolder.newInstance(parent, this);
     }
 
-    @Override protected void onBindView(MilestonesViewHolder holder, int position) {
+    @Override protected void onBindView(final MilestonesViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

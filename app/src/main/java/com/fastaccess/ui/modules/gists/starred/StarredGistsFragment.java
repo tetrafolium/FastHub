@@ -46,7 +46,7 @@ public class StarredGistsFragment extends BaseFragment<StarredGistsMvp.View, Sta
         return R.layout.small_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         stateLayout.setEmptyText(R.string.no_gists);
         refresh.setOnRefreshListener(this);
         stateLayout.setOnReloadListener(this);
@@ -67,7 +67,7 @@ public class StarredGistsFragment extends BaseFragment<StarredGistsMvp.View, Sta
         getPresenter().onCallApi(1, null);
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<Gist> items, int page) {
+    @Override public void onNotifyAdapter(final @Nullable List<Gist> items, final int page) {
         hideProgress();
         if (items == null || items.isEmpty()) {
             adapter.clear();
@@ -80,7 +80,7 @@ public class StarredGistsFragment extends BaseFragment<StarredGistsMvp.View, Sta
         }
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
         refresh.setRefreshing(true);
         stateLayout.showProgress();
     }
@@ -90,12 +90,12 @@ public class StarredGistsFragment extends BaseFragment<StarredGistsMvp.View, Sta
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -111,11 +111,11 @@ public class StarredGistsFragment extends BaseFragment<StarredGistsMvp.View, Sta
         return onLoadMore;
     }
 
-    @Override public void onStartGistView(@NonNull String gistId) {
+    @Override public void onStartGistView(final @NonNull String gistId) {
         startActivityForResult(GistActivity.createIntent(getContext(), gistId, isEnterprise()), BundleConstant.REQUEST_CODE);
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == BundleConstant.REQUEST_CODE) {
             if (data != null && data.getExtras() != null) {
@@ -129,11 +129,11 @@ public class StarredGistsFragment extends BaseFragment<StarredGistsMvp.View, Sta
         }
     }
 
-    @Override public void onClick(View view) {
+    @Override public void onClick(final View view) {
         onRefresh();
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         super.onScrollTop(index);
         if (recycler != null) recycler.scrollToPosition(0);
     }

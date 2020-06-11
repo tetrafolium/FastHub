@@ -40,7 +40,7 @@ public class EditorLinkImageDialogFragment extends BaseDialogFragment<EditorLink
     @BindView(R.id.link) TextInputLayout link;
     @BindView(R.id.select) FontButton select;
 
-    public static EditorLinkImageDialogFragment newInstance(boolean isLink, @Nullable String link) {
+    public static EditorLinkImageDialogFragment newInstance(final boolean isLink, final @Nullable String link) {
         EditorLinkImageDialogFragment fragment = new EditorLinkImageDialogFragment();
         fragment.setArguments(Bundler
                               .start()
@@ -50,7 +50,7 @@ public class EditorLinkImageDialogFragment extends BaseDialogFragment<EditorLink
         return fragment;
     }
 
-    @Override public void onAttach(@NotNull Context context) {
+    @Override public void onAttach(final @NotNull Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof EditorLinkImageMvp.EditorLinkCallback) {
             callback = (EditorLinkImageMvp.EditorLinkCallback) getParentFragment();
@@ -64,7 +64,7 @@ public class EditorLinkImageDialogFragment extends BaseDialogFragment<EditorLink
         super.onDetach();
     }
 
-    @Override public void onUploaded(@Nullable String title, @Nullable String link) {
+    @Override public void onUploaded(final @Nullable String title, final @Nullable String link) {
         hideProgress();
         if (callback != null) {
             callback.onAppendLink(title, link != null ? link.replace("http:", "https:") : null, isLink());
@@ -76,7 +76,7 @@ public class EditorLinkImageDialogFragment extends BaseDialogFragment<EditorLink
         return R.layout.markdown_link_image_dialog_layout;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         select.setVisibility(isLink() ? View.GONE : View.VISIBLE);
         if (savedInstanceState == null) {
             title.getEditText().setText(getArguments().getString(BundleConstant.ITEM));
@@ -87,7 +87,7 @@ public class EditorLinkImageDialogFragment extends BaseDialogFragment<EditorLink
         return new EditorLinkImagePresenter();
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == BundleConstant.REQUEST_CODE) {
             if (data != null && data.getData() != null) {

@@ -20,7 +20,7 @@ public class FilterChooserBottomSheetDialog extends BaseBottomSheetDialog {
         return new FilterChooserBottomSheetDialog();
     }
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof FilterAddChooserListener) {
             listener = (FilterAddChooserListener) getParentFragment();
@@ -38,7 +38,7 @@ public class FilterChooserBottomSheetDialog extends BaseBottomSheetDialog {
         return R.layout.add_filter_row_layout;
     }
 
-    @OnClick({R.id.add, R.id.search}) public void onViewClicked(View view) {
+    @OnClick({R.id.add, R.id.search}) public void onViewClicked(final View view) {
         switch (view.getId()) {
         case R.id.add:
             listener.onAddSelected();

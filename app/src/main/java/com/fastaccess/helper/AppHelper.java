@@ -34,36 +34,36 @@ import es.dmoral.toasty.Toasty;
 
 public class AppHelper {
 
-    public static void hideKeyboard(@NonNull View view) {
+    public static void hideKeyboard(final @NonNull View view) {
         InputMethodManager inputManager = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (inputManager != null) {
             inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 
-    @Nullable public static Fragment getFragmentByTag(@NonNull FragmentManager fragmentManager, @NonNull String tag) {
+    @Nullable public static Fragment getFragmentByTag(final @NonNull FragmentManager fragmentManager, final @NonNull String tag) {
         return fragmentManager.findFragmentByTag(tag);
     }
 
-    public static void cancelNotification(@NonNull Context context) {
+    public static void cancelNotification(final @NonNull Context context) {
         cancelNotification(context, BundleConstant.REQUEST_CODE);
     }
 
-    public static void cancelNotification(@NonNull Context context, int id) {
+    public static void cancelNotification(final @NonNull Context context, final int id) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
             notificationManager.cancel(id);
         }
     }
 
-    public static void cancelAllNotifications(@NonNull Context context) {
+    public static void cancelAllNotifications(final @NonNull Context context) {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
             notificationManager.cancelAll();
         }
     }
 
-    public static void copyToClipboard(@NonNull Context context, @NonNull String uri) {
+    public static void copyToClipboard(final @NonNull Context context, final @NonNull String uri) {
         ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText(context.getString(R.string.app_name), uri);
         if (clipboard != null) {
@@ -72,12 +72,12 @@ public class AppHelper {
         }
     }
 
-    public static boolean isNightMode(@NonNull Resources resources) {
+    public static boolean isNightMode(final @NonNull Resources resources) {
         @PrefGetter.ThemeType int themeType = PrefGetter.getThemeType(resources);
         return themeType != PrefGetter.LIGHT;
     }
 
-    public static String getFastHubIssueTemplate(boolean enterprise) {
+    public static String getFastHubIssueTemplate(final boolean enterprise) {
         String brand = (!isEmulator()) ? Build.BRAND : "Android Emulator";
         String model = (!isEmulator()) ? DeviceNameGetter.getInstance().getDeviceName() : "Android Emulator";
         StringBuilder builder = new StringBuilder()
@@ -105,7 +105,7 @@ public class AppHelper {
         return builder.toString();
     }
 
-    public static void updateAppLanguage(@NonNull Context context) {
+    public static void updateAppLanguage(final @NonNull Context context) {
         String lang = PrefGetter.getAppLanguage();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             updateResources(context, lang);
@@ -113,7 +113,7 @@ public class AppHelper {
         updateResourcesLegacy(context, lang);
     }
 
-    private static void updateResources(Context context, String language) {
+    private static void updateResources(final Context context, final String language) {
         Locale locale = getLocale(language);
         Locale.setDefault(locale);
         Configuration configuration = context.getResources().getConfiguration();
@@ -122,7 +122,7 @@ public class AppHelper {
     }
 
     @SuppressWarnings("deprecation")
-    private static void updateResourcesLegacy(Context context, String language) {
+    private static void updateResourcesLegacy(final Context context, final String language) {
         Locale locale = getLocale(language);
         Locale.setDefault(locale);
         Resources resources = context.getResources();
@@ -131,7 +131,7 @@ public class AppHelper {
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
     }
 
-    @NonNull private static Locale getLocale(String language) {
+    @NonNull private static Locale getLocale(final String language) {
         Locale locale = null;
         if (language.equalsIgnoreCase("zh-rCN")) {
             locale = Locale.SIMPLIFIED_CHINESE;
@@ -166,23 +166,23 @@ public class AppHelper {
                || "google_sdk".equals(Build.PRODUCT);
     }
 
-    private static boolean isInstalledFromPlaySore(@NonNull Context context) {
+    private static boolean isInstalledFromPlaySore(final @NonNull Context context) {
         final String ipn = context.getPackageManager().getInstallerPackageName(BuildConfig.APPLICATION_ID);
         return !InputHelper.isEmpty(ipn);
     }
 
-    public static boolean isGoogleAvailable(@NonNull Context context) {
+    public static boolean isGoogleAvailable(final @NonNull Context context) {
         ApplicationInfo applicationInfo = null;
         try {
             applicationInfo = context.getPackageManager().getApplicationInfo("com.google.android.gms", 0);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        return applicationInfo != null && applicationInfo.enabled &&
-               GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
+        return applicationInfo != null && applicationInfo.enabled
+               && GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context) == ConnectionResult.SUCCESS;
     }
 
-    public static boolean isDeviceAnimationEnabled(@NonNull Context context) {
+    public static boolean isDeviceAnimationEnabled(final @NonNull Context context) {
         float duration = Settings.Global.getFloat(context.getContentResolver(), Settings.Global.ANIMATOR_DURATION_SCALE, 1);
         float transition = Settings.Global.getFloat(context.getContentResolver(), Settings.Global.TRANSITION_ANIMATION_SCALE, 1);
         return (duration != 0 && transition != 0);

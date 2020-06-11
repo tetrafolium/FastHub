@@ -13,11 +13,11 @@ import com.fastaccess.R;
  */
 public class AppbarRefreshLayout extends SwipeRefreshLayout {
 
-    public AppbarRefreshLayout(@NonNull Context context) {
+    public AppbarRefreshLayout(final @NonNull Context context) {
         super(context, null);
     }
 
-    public AppbarRefreshLayout(@NonNull Context context, AttributeSet attrs) {
+    public AppbarRefreshLayout(final @NonNull Context context, final AttributeSet attrs) {
         super(context, attrs);
         setColorSchemeResources(R.color.material_amber_700, R.color.material_blue_700, R.color.material_purple_700, R.color.material_lime_700);
     }

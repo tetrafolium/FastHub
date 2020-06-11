@@ -32,30 +32,30 @@ public class DynamicRecyclerView extends RecyclerView {
             showEmptyView();
         }
 
-        @Override public void onItemRangeInserted(int positionStart, int itemCount) {
+        @Override public void onItemRangeInserted(final int positionStart, final int itemCount) {
             super.onItemRangeInserted(positionStart, itemCount);
             showEmptyView();
         }
 
-        @Override public void onItemRangeRemoved(int positionStart, int itemCount) {
+        @Override public void onItemRangeRemoved(final int positionStart, final int itemCount) {
             super.onItemRangeRemoved(positionStart, itemCount);
             showEmptyView();
         }
     };
 
-    public DynamicRecyclerView(@NonNull Context context) {
+    public DynamicRecyclerView(final @NonNull Context context) {
         this(context, null);
     }
 
-    public DynamicRecyclerView(@NonNull Context context, AttributeSet attrs) {
+    public DynamicRecyclerView(final @NonNull Context context, final AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public DynamicRecyclerView(@NonNull Context context, AttributeSet attrs, int defStyle) {
+    public DynamicRecyclerView(final @NonNull Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    @Override public void setAdapter(@Nullable Adapter adapter) {
+    @Override public void setAdapter(final @Nullable Adapter adapter) {
         super.setAdapter(adapter);
         if (isInEditMode()) return;
         if (adapter != null) {
@@ -94,28 +94,28 @@ public class DynamicRecyclerView extends RecyclerView {
         }
     }
 
-    private void showParentOrSelf(boolean showRecyclerView) {
+    private void showParentOrSelf(final boolean showRecyclerView) {
         if (parentView != null)
             parentView.setVisibility(VISIBLE);
         setVisibility(VISIBLE);
         emptyView.setVisibility(!showRecyclerView ? VISIBLE : GONE);
     }
 
-    public void setEmptyView(@NonNull StateLayout emptyView, @Nullable View parentView) {
+    public void setEmptyView(final @NonNull StateLayout emptyView, final @Nullable View parentView) {
         this.emptyView = emptyView;
         this.parentView = parentView;
         showEmptyView();
     }
 
-    public void setEmptyView(@NonNull StateLayout emptyView) {
+    public void setEmptyView(final @NonNull StateLayout emptyView) {
         setEmptyView(emptyView, null);
     }
 
-    public void hideProgress(@NonNull StateLayout view) {
+    public void hideProgress(final @NonNull StateLayout view) {
         view.hideProgress();
     }
 
-    public void showProgress(@NonNull StateLayout view) {
+    public void showProgress(final @NonNull StateLayout view) {
         view.showProgress();
     }
 
@@ -139,7 +139,7 @@ public class DynamicRecyclerView extends RecyclerView {
         addDivider();
     }
 
-    public void addDivider(@NonNull Class toDivide) {
+    public void addDivider(final @NonNull Class toDivide) {
         if (canAddDivider()) {
             Resources resources = getResources();
             addItemDecoration(new InsetDividerDecoration(resources.getDimensionPixelSize(R.dimen.divider_height), 0,

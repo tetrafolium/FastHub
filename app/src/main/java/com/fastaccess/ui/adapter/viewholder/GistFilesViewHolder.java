@@ -28,7 +28,7 @@ public class GistFilesViewHolder extends BaseViewHolder<FilesListModel> {
     @BindView(R.id.edit) ForegroundImageView edit;
     private boolean isOwner;
 
-    private GistFilesViewHolder(@NonNull View itemView, GistFilesAdapter adapter, boolean isOwner) {
+    private GistFilesViewHolder(final @NonNull View itemView, final GistFilesAdapter adapter, final boolean isOwner) {
         super(itemView, adapter);
         this.isOwner = isOwner;
         if (isOwner) {
@@ -37,11 +37,11 @@ public class GistFilesViewHolder extends BaseViewHolder<FilesListModel> {
         }
     }
 
-    public static GistFilesViewHolder newInstance(@NonNull ViewGroup parent, GistFilesAdapter adapter, boolean isOwner) {
+    public static GistFilesViewHolder newInstance(final @NonNull ViewGroup parent, final GistFilesAdapter adapter, final boolean isOwner) {
         return new GistFilesViewHolder(getView(parent, R.layout.gist_files_row_item), adapter, isOwner);
     }
 
-    @Override public void bind(@NonNull FilesListModel filesListModel) {
+    @Override public void bind(final @NonNull FilesListModel filesListModel) {
         fileName.setText(filesListModel.getFilename());
         language.setText(SpannableBuilder.builder().bold(filesListModel.getType()));
         size.setText(Formatter.formatFileSize(size.getContext(), filesListModel.getSize()));

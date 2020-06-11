@@ -26,123 +26,123 @@ public class Bundler {
         return new Bundler();
     }
 
-    public Bundler put(@NonNull String key, boolean value) {
+    public Bundler put(final @NonNull String key, final boolean value) {
         bundle.putBoolean(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, boolean[] value) {
+    public Bundler put(final @NonNull String key, final boolean[] value) {
         bundle.putBooleanArray(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, IBinder value) {
+    public Bundler put(final @NonNull String key, final IBinder value) {
         // Uncommment this line if your minimum sdk version is API level 18
         //start.putBinder(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, int value) {
+    public Bundler put(final @NonNull String key, final int value) {
         bundle.putInt(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, int[] value) {
+    public Bundler put(final @NonNull String key, final int[] value) {
         bundle.putIntArray(key, value);
         return this;
     }
 
-    public Bundler putIntegerArrayList(@NonNull String key, ArrayList<Integer> value) {
+    public Bundler putIntegerArrayList(final @NonNull String key, final ArrayList<Integer> value) {
         bundle.putIntegerArrayList(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, Bundle value) {
+    public Bundler put(final @NonNull String key, final Bundle value) {
         bundle.putBundle(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, byte value) {
+    public Bundler put(final @NonNull String key, final byte value) {
         bundle.putByte(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, byte[] value) {
+    public Bundler put(final @NonNull String key, final byte[] value) {
         bundle.putByteArray(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, String value) {
+    public Bundler put(final @NonNull String key, final String value) {
         bundle.putString(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, String[] value) {
+    public Bundler put(final @NonNull String key, final String[] value) {
         bundle.putStringArray(key, value);
         return this;
     }
 
-    public Bundler putStringArrayList(@NonNull String key, ArrayList<String> value) {
+    public Bundler putStringArrayList(final @NonNull String key, final ArrayList<String> value) {
         bundle.putStringArrayList(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, long value) {
+    public Bundler put(final @NonNull String key, final long value) {
         bundle.putLong(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, long[] value) {
+    public Bundler put(final @NonNull String key, final long[] value) {
         bundle.putLongArray(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, float value) {
+    public Bundler put(final @NonNull String key, final float value) {
         bundle.putFloat(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, float[] value) {
+    public Bundler put(final @NonNull String key, final float[] value) {
         bundle.putFloatArray(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, char value) {
+    public Bundler put(final @NonNull String key, final char value) {
         bundle.putChar(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, char[] value) {
+    public Bundler put(final @NonNull String key, final char[] value) {
         bundle.putCharArray(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, CharSequence value) {
+    public Bundler put(final @NonNull String key, final CharSequence value) {
         bundle.putCharSequence(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, CharSequence[] value) {
+    public Bundler put(final @NonNull String key, final CharSequence[] value) {
         bundle.putCharSequenceArray(key, value);
         return this;
     }
 
-    public Bundler putCharSequenceArrayList(@NonNull String key, ArrayList<CharSequence> value) {
+    public Bundler putCharSequenceArrayList(final @NonNull String key, final ArrayList<CharSequence> value) {
         bundle.putCharSequenceArrayList(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, double value) {
+    public Bundler put(final @NonNull String key, final double value) {
         bundle.putDouble(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, double[] value) {
+    public Bundler put(final @NonNull String key, final double[] value) {
         bundle.putDoubleArray(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, Parcelable value) {
+    public Bundler put(final @NonNull String key, final Parcelable value) {
         Bundle safeBundle = new Bundle();
         safeBundle.putParcelable(key, value);
         if (isValidBundleSize(safeBundle)) {
@@ -152,7 +152,7 @@ public class Bundler {
         return this;
     }
 
-    public Bundler put(@NonNull String key, Parcelable[] value) {
+    public Bundler put(final @NonNull String key, final Parcelable[] value) {
         Bundle safeBundle = new Bundle();
         safeBundle.putParcelableArray(key, value);
         if (isValidBundleSize(safeBundle)) {
@@ -162,7 +162,7 @@ public class Bundler {
         return this;
     }
 
-    public Bundler putParcelableArrayList(@NonNull String key, ArrayList<? extends Parcelable> value) {
+    public Bundler putParcelableArrayList(final @NonNull String key, final ArrayList<? extends Parcelable> value) {
         Bundle safeBundle = new Bundle();
         safeBundle.putParcelableArrayList(key, value);
         if (isValidBundleSize(safeBundle)) {
@@ -172,7 +172,7 @@ public class Bundler {
         return this;
     }
 
-    public Bundler putSparseParcelableArray(@NonNull String key, SparseArray<? extends Parcelable> value) {
+    public Bundler putSparseParcelableArray(final @NonNull String key, final SparseArray<? extends Parcelable> value) {
         Bundle safeBundle = new Bundle();
         safeBundle.putSparseParcelableArray(key, value);
         if (isValidBundleSize(safeBundle)) {
@@ -182,17 +182,17 @@ public class Bundler {
         return this;
     }
 
-    public Bundler put(@NonNull String key, short value) {
+    public Bundler put(final @NonNull String key, final short value) {
         bundle.putShort(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, short[] value) {
+    public Bundler put(final @NonNull String key, final short[] value) {
         bundle.putShortArray(key, value);
         return this;
     }
 
-    public Bundler put(@NonNull String key, Serializable value) {
+    public Bundler put(final @NonNull String key, final Serializable value) {
         Bundle safeBundle = new Bundle();
         safeBundle.putSerializable(key, value);
         if (isValidBundleSize(safeBundle)) {
@@ -202,7 +202,7 @@ public class Bundler {
         return this;
     }
 
-    public Bundler putAll(Bundle map) {
+    public Bundler putAll(final Bundle map) {
         bundle.putAll(map);
         return this;
     }
@@ -225,13 +225,13 @@ public class Bundler {
         return get();
     }
 
-    public static boolean isValidBundleSize(@NonNull Bundle bundle) {
+    public static boolean isValidBundleSize(final @NonNull Bundle bundle) {
         Parcel parcel = Parcel.obtain();
         bundle.writeToParcel(parcel, 0);
         return parcel.dataSize() < 500000;
     }
 
-    private void clearBundle(Bundle safeBundle) {
+    private void clearBundle(final Bundle safeBundle) {
         safeBundle.clear();
         safeBundle = null;
     }

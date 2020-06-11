@@ -19,7 +19,7 @@ public class ColorsUtils {
      *         Level.
      * @return The value for the level of the base color.
      */
-    public static int calculateLevelColor(int baseColor, int emptyColor, int level) {
+    public static int calculateLevelColor(final int baseColor, final int emptyColor, final int level) {
         if (level == 0) {
             return emptyColor;
         }
@@ -38,7 +38,7 @@ public class ColorsUtils {
      *         Level.
      * @return The red value for the level of the base color.
      */
-    private static int calculateR(int baseR, int level) {
+    private static int calculateR(final int baseR, final int level) {
         switch (level) {
         case 0:
             return 238;
@@ -64,7 +64,7 @@ public class ColorsUtils {
      *         Level.
      * @return The green value for the level of the base color.
      */
-    private static int calculateG(int baseG, int level) {
+    private static int calculateG(final int baseG, final int level) {
         switch (level) {
         case 0:
             return 238;
@@ -90,7 +90,7 @@ public class ColorsUtils {
      *         Level.
      * @return The blue value for the level of the base color.
      */
-    private static int calculateB(int baseB, int level) {
+    private static int calculateB(final int baseB, final int level) {
         switch (level) {
         case 0:
             return 238;

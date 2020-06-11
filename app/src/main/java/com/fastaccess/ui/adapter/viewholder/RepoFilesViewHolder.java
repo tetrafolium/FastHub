@@ -28,7 +28,7 @@ public class RepoFilesViewHolder extends BaseViewHolder<RepoFile> {
     @BindView(R.id.menu) ForegroundImageView menu;
     @BindString(R.string.file) String file;
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         if (v.getId() == R.id.contentTypeImage) {
             itemView.callOnClick();
         } else {
@@ -36,17 +36,17 @@ public class RepoFilesViewHolder extends BaseViewHolder<RepoFile> {
         }
     }
 
-    private RepoFilesViewHolder(@NonNull View itemView, @NonNull BaseRecyclerAdapter adapter) {
+    private RepoFilesViewHolder(final @NonNull View itemView, final @NonNull BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
         menu.setOnClickListener(this);
         contentTypeImage.setOnClickListener(this);
     }
 
-    public static RepoFilesViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter) {
+    public static RepoFilesViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
         return new RepoFilesViewHolder(getView(viewGroup, R.layout.repo_files_row_item), adapter);
     }
 
-    @Override public void bind(@NonNull RepoFile filesModel) {
+    @Override public void bind(final @NonNull RepoFile filesModel) {
         contentTypeImage.setContentDescription(String.format("%s %s", filesModel.getName(), file));
         title.setText(filesModel.getName());
         if (filesModel.getType() != null && filesModel.getType().getIcon() != 0) {

@@ -25,7 +25,7 @@ public class FloatingActionButtonBehavior extends CoordinatorLayout.Behavior<Flo
         super();
     }
 
-    public FloatingActionButtonBehavior(Context context, AttributeSet attrs) {
+    public FloatingActionButtonBehavior(final Context context, final AttributeSet attrs) {
         super(context, attrs);
     }
 

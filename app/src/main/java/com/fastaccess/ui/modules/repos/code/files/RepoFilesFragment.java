@@ -57,7 +57,7 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
     private RepoFilePathFragment parentFragment;
     private RepoPagerMvp.View repoCallback;
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (getParentFragment() instanceof RepoPagerMvp.View) {
             repoCallback = (RepoPagerMvp.View) getParentFragment();
@@ -76,7 +76,7 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         adapter.notifyDataSetChanged();
     }
 
-    @Override public void onItemClicked(@NonNull RepoFile model) {
+    @Override public void onItemClicked(final @NonNull RepoFile model) {
         if (refresh.isRefreshing()) return;
         if (model.getType() == FilesType.dir) {
             if (getParent() != null) {
@@ -102,7 +102,7 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         }
     }
 
-    @Override public void onMenuClicked(int position, @NonNull RepoFile item, View v) {
+    @Override public void onMenuClicked(final int position, final @NonNull RepoFile item, final View v) {
         if (login == null) {
             login = Login.getUser();
         }
@@ -157,8 +157,8 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         popup.show();
     }
 
-    @Override public void onSetData(@NonNull String login, @NonNull String repoId, @NonNull String path,
-                                    @NonNull String ref, boolean clear, @Nullable RepoFile toAppend) {
+    @Override public void onSetData(final @NonNull String login, final @NonNull String repoId, final @NonNull String path,
+                                    final @NonNull String ref, final boolean clear, final @Nullable RepoFile toAppend) {
         getPresenter().onInitDataAndRequest(login, repoId, path, ref, clear, toAppend);
     }
 
@@ -166,7 +166,7 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         return refresh.isRefreshing();
     }
 
-    @Override public void onUpdateTab(@Nullable RepoFile toAppend) {
+    @Override public void onUpdateTab(final @Nullable RepoFile toAppend) {
         getParent().onAppenedtab(toAppend);
     }
 
@@ -174,7 +174,7 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         return R.layout.vertical_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         stateLayout.setEmptyText(R.string.no_files);
         refresh.setOnRefreshListener(this);
         stateLayout.setOnReloadListener(v -> onRefresh());
@@ -185,7 +185,7 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         fastScroller.setVisibility(View.GONE);
     }
 
-    @Override public void showProgress(@StringRes int resId) {
+    @Override public void showProgress(final @StringRes int resId) {
 
         refresh.setRefreshing(true);
 
@@ -197,12 +197,12 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         stateLayout.hideProgress();
     }
 
-    @Override public void showErrorMessage(@NonNull String message) {
+    @Override public void showErrorMessage(final @NonNull String message) {
         showReload();
         super.showErrorMessage(message);
     }
 
-    @Override public void showMessage(int titleRes, int msgRes) {
+    @Override public void showMessage(final int titleRes, final int msgRes) {
         showReload();
         super.showMessage(titleRes, msgRes);
     }
@@ -215,7 +215,7 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         getPresenter().onCallApi(null);
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (isOk && bundle != null) {
             String url = bundle.getString(BundleConstant.EXTRA);
@@ -227,14 +227,14 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         }
     }
 
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK && requestCode == EditRepoFileActivity.EDIT_RQ) {
             onRefresh();
         }
     }
 
-    @Override public void onDelete(@NonNull String message, int position) {
+    @Override public void onDelete(final @NonNull String message, final int position) {
         getPresenter().onDeleteFile(message, adapter.getItem(position), getParent() != null ? getParent().getRef() : "master");
     }
 
@@ -250,7 +250,7 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         return parentFragment;
     }
 
-    private boolean canOpen(@NonNull RepoFile item) {
+    private boolean canOpen(final @NonNull RepoFile item) {
         return item.getDownloadUrl() != null && !MarkDownProvider.isImage(item.getDownloadUrl())
                && !MarkDownProvider.isArchive(item.getDownloadUrl());
     }

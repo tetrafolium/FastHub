@@ -19,15 +19,15 @@ import lombok.Setter;
     public Integer position;
     public Integer line;
 
-    public CommentRequestModel() {}
+    public CommentRequestModel() { }
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
         CommentRequestModel that = (CommentRequestModel) o;
-        return (path != null ? path.equals(that.path) : that.path == null) &&
-               (position != null ? position.equals(that.position) : that.position == null);
+        return (path != null ? path.equals(that.path) : that.path == null)
+               && (position != null ? position.equals(that.position) : that.position == null);
     }
 
     @Override public int hashCode() {
@@ -40,7 +40,7 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.body);
         dest.writeValue(this.inReplyTo);
         dest.writeString(this.path);
@@ -49,16 +49,16 @@ import lombok.Setter;
     }
 
     @Override public String toString() {
-        return "CommentRequestModel{" +
-               "body='" + body + '\'' +
-               ", inReplyTo=" + inReplyTo +
-               ", path='" + path + '\'' +
-               ", position=" + position +
-               ", line=" + line +
-               '}';
+        return "CommentRequestModel{"
+               + "body='" + body + '\''
+               + ", inReplyTo=" + inReplyTo
+               + ", path='" + path + '\''
+               + ", position=" + position
+               + ", line=" + line
+               + '}';
     }
 
-    private CommentRequestModel(Parcel in) {
+    private CommentRequestModel(final Parcel in) {
         this.body = in.readString();
         this.inReplyTo = (Long) in.readValue(Long.class.getClassLoader());
         this.path = in.readString();
@@ -67,11 +67,11 @@ import lombok.Setter;
     }
 
     public static final Creator<CommentRequestModel> CREATOR = new Creator<CommentRequestModel>() {
-        @Override public CommentRequestModel createFromParcel(Parcel source) {
+        @Override public CommentRequestModel createFromParcel(final Parcel source) {
             return new CommentRequestModel(source);
         }
 
-        @Override public CommentRequestModel[] newArray(int size) {
+        @Override public CommentRequestModel[] newArray(final int size) {
             return new CommentRequestModel[size];
         }
     };

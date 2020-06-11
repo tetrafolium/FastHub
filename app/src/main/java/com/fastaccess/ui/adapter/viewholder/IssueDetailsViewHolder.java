@@ -79,9 +79,9 @@ public class IssueDetailsViewHolder extends BaseViewHolder<TimelineModel> {
     private String repoOwner;
     private String poster;
 
-    private IssueDetailsViewHolder(@NonNull View itemView, @NonNull ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter,
-                                   @NonNull OnToggleView onToggleView, @NonNull ReactionsCallback reactionsCallback,
-                                   String repoOwner, String poster) {
+    private IssueDetailsViewHolder(final @NonNull View itemView, final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter,
+                                   final @NonNull OnToggleView onToggleView, final @NonNull ReactionsCallback reactionsCallback,
+                                   final String repoOwner, final String poster) {
         super(itemView, adapter);
         this.onToggleView = onToggleView;
         this.viewGroup = viewGroup;
@@ -127,14 +127,14 @@ public class IssueDetailsViewHolder extends BaseViewHolder<TimelineModel> {
         eyes.setOnClickListener(this);
     }
 
-    public static IssueDetailsViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter,
-            @NonNull OnToggleView onToggleView, @NonNull ReactionsCallback reactionsCallback,
-            @NonNull String repoOwner, @NonNull String poster) {
+    public static IssueDetailsViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter,
+            final @NonNull OnToggleView onToggleView, final @NonNull ReactionsCallback reactionsCallback,
+            final @NonNull String repoOwner, final @NonNull String poster) {
         return new IssueDetailsViewHolder(getView(viewGroup, R.layout.issue_detail_header_row_item), viewGroup,
                                           adapter, onToggleView, reactionsCallback, repoOwner, poster);
     }
 
-    @Override public void bind(@NonNull TimelineModel timelineModel) {
+    @Override public void bind(final @NonNull TimelineModel timelineModel) {
         if (timelineModel.getIssue() != null) {
             bind(timelineModel.getIssue());
         } else if (timelineModel.getPullRequest() != null) {
@@ -143,7 +143,7 @@ public class IssueDetailsViewHolder extends BaseViewHolder<TimelineModel> {
         if (onToggleView != null) onToggle(onToggleView.isCollapsed(getAdapterPosition()), false);
     }
 
-    @Override public void onClick(View v) {
+    @Override public void onClick(final View v) {
         if (v.getId() == R.id.toggle || v.getId() == R.id.toggleHolder) {
             if (onToggleView != null) {
                 int position = getAdapterPosition();
@@ -156,7 +156,7 @@ public class IssueDetailsViewHolder extends BaseViewHolder<TimelineModel> {
         }
     }
 
-    private void addReactionCount(View v) {
+    private void addReactionCount(final View v) {
         if (adapter != null) {
             TimelineModel timelineModel = (TimelineModel) adapter.getItem(getAdapterPosition());
             if (timelineModel == null) return;
@@ -220,19 +220,19 @@ public class IssueDetailsViewHolder extends BaseViewHolder<TimelineModel> {
         }
     }
 
-    private void bind(@NonNull Issue issueModel) {
+    private void bind(final @NonNull Issue issueModel) {
         setup(issueModel.getUser(), issueModel.getBodyHtml(), issueModel.getReactions());
         setupDate(issueModel.getCreatedAt(), issueModel.getUpdatedAt());
         setupLabels(issueModel.getLabels());
     }
 
-    private void bind(@NonNull PullRequest pullRequest) {
+    private void bind(final @NonNull PullRequest pullRequest) {
         setup(pullRequest.getUser(), pullRequest.getBodyHtml(), pullRequest.getReactions());
         setupDate(pullRequest.getCreatedAt(), pullRequest.getUpdatedAt());
         setupLabels(pullRequest.getLabels());
     }
 
-    private void setup(User user, String description, ReactionsModel reactionsModel) {
+    private void setup(final User user, final String description, final ReactionsModel reactionsModel) {
         avatar.setUrl(user.getAvatarUrl(), user.getLogin(), user.isOrganizationType(), LinkParserHelper.isEnterprise(user.getHtmlUrl()));
         name.setText(user.getLogin());
         boolean isOwner = TextUtils.equals(repoOwner, user.getLogin());
@@ -253,11 +253,11 @@ public class IssueDetailsViewHolder extends BaseViewHolder<TimelineModel> {
         }
     }
 
-    private void setupDate(@NonNull Date createdDate, @NonNull Date updated) {
+    private void setupDate(final @NonNull Date createdDate, final @NonNull Date updated) {
         date.setText(ParseDateFormat.getTimeAgo(createdDate));
     }
 
-    private void setupLabels(@Nullable List<LabelModel> labelList) {
+    private void setupLabels(final @Nullable List<LabelModel> labelList) {
         if (labelList != null && !labelList.isEmpty()) {
             SpannableBuilder builder = SpannableBuilder.builder();
             for (LabelModel labelModel : labelList) {
@@ -272,12 +272,12 @@ public class IssueDetailsViewHolder extends BaseViewHolder<TimelineModel> {
         }
     }
 
-    private void appendEmojies(ReactionsModel reaction) {
+    private void appendEmojies(final ReactionsModel reaction) {
         CommentsHelper.appendEmojies(reaction, thumbsUp, thumbsUpReaction, thumbsDown, thumbsDownReaction, hooray, hurrayReaction, sad,
                                      sadReaction, laugh, laughReaction, heart, heartReaction, rocket, rocketReaction, eyes, eyeReaction, reactionsList);
     }
 
-    private void onToggle(boolean expanded, boolean animate) {
+    private void onToggle(final boolean expanded, final boolean animate) {
         if (animate) {
             TransitionManager.beginDelayedTransition(viewGroup, new ChangeBounds());
         }

@@ -33,7 +33,7 @@ public class SearchFileActivity extends BaseActivity<SearchFileMvp.View, SearchF
 
     private SearchCodeFragment searchCodeFragment;
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String login, @NonNull String repoId, boolean isEnterprise) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String login, final @NonNull String repoId, final boolean isEnterprise) {
         Intent intent = new Intent(context, SearchFileActivity.class);
         intent.putExtra(BundleConstant.ID, repoId);
         intent.putExtra(BundleConstant.EXTRA, login);
@@ -52,7 +52,7 @@ public class SearchFileActivity extends BaseActivity<SearchFileMvp.View, SearchF
         }
     }
 
-    @OnTextChanged(value = R.id.searchEditText, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED) void onTextChange(Editable s) {
+    @OnTextChanged(value = R.id.searchEditText, callback = OnTextChanged.Callback.AFTER_TEXT_CHANGED) void onTextChange(final Editable s) {
         String text = s.toString();
         if (text.length() == 0) {
             AnimHelper.animateVisibility(clear, false);
@@ -66,7 +66,7 @@ public class SearchFileActivity extends BaseActivity<SearchFileMvp.View, SearchF
         return true;
     }
 
-    @OnClick(value = {R.id.clear}) void onClear(View view) {
+    @OnClick(value = {R.id.clear}) void onClear(final View view) {
         if (view.getId() == R.id.clear) {
             searchEditText.setText("");
         }
@@ -96,13 +96,13 @@ public class SearchFileActivity extends BaseActivity<SearchFileMvp.View, SearchF
         return new SearchFilePresenter();
     }
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getPresenter().onActivityCreated(getIntent().getExtras());
         searchCodeFragment = ((SearchCodeFragment) getSupportFragmentManager().findFragmentById(R.id.filesFragment));
     }
 
-    @Override public void onValidSearchQuery(@NonNull String query) {
+    @Override public void onValidSearchQuery(final @NonNull String query) {
         searchCodeFragment.onSetSearchQuery(query, false);
     }
 

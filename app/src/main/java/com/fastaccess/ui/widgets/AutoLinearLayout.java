@@ -22,27 +22,27 @@ public class AutoLinearLayout extends FrameLayout {
 
     private ArrayList<ViewPosition> mListPositions = new ArrayList<>();
 
-    public AutoLinearLayout(Context context) {
+    public AutoLinearLayout(final Context context) {
         super(context);
         init(context, null, 0, 0);
     }
 
-    public AutoLinearLayout(Context context, AttributeSet attrs) {
+    public AutoLinearLayout(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs, 0, 0);
     }
 
-    public AutoLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public AutoLinearLayout(final Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr, 0);
     }
 
-    public AutoLinearLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public AutoLinearLayout(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    @Override protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    @Override protected void onMeasure(final int widthMeasureSpec, final int heightMeasureSpec) {
         if (mOrientation == VERTICAL) {
             measureVertical(widthMeasureSpec, heightMeasureSpec);
         } else {
@@ -50,7 +50,7 @@ public class AutoLinearLayout extends FrameLayout {
         }
     }
 
-    @Override protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+    @Override protected void onLayout(final boolean changed, final int left, final int top, final int right, final int bottom) {
         mListPositions.clear();
         if (mOrientation == VERTICAL)
             layoutVertical(left, top, right, bottom);
@@ -58,7 +58,7 @@ public class AutoLinearLayout extends FrameLayout {
             layoutHorizontal(left, top, right, bottom);
     }
 
-    private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    private void init(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.AutoLinearLayout, defStyleAttr, defStyleRes);
         try {
             mOrientation = a.getInt(R.styleable.AutoLinearLayout_auto_orientation, HORIZONTAL);
@@ -71,7 +71,7 @@ public class AutoLinearLayout extends FrameLayout {
         }
     }
 
-    private void measureHorizontal(int widthMeasureSpec, int heightMeasureSpec) {
+    private void measureHorizontal(final int widthMeasureSpec, final int heightMeasureSpec) {
         int wSize = MeasureSpec.getSize(widthMeasureSpec) - (getPaddingLeft() + getPaddingRight());
 
         //Scrollview case
@@ -121,7 +121,7 @@ public class AutoLinearLayout extends FrameLayout {
                              resolveSize(totalHeight + getPaddingTop() + getPaddingBottom(), heightMeasureSpec));
     }
 
-    private void measureVertical(int widthMeasureSpec, int heightMeasureSpec) {
+    private void measureVertical(final int widthMeasureSpec, final int heightMeasureSpec) {
         int hSize = MeasureSpec.getSize(heightMeasureSpec) - (getPaddingTop() + getPaddingBottom());
 
         int count = getChildCount();
@@ -183,7 +183,7 @@ public class AutoLinearLayout extends FrameLayout {
      * @param bottom
      *         parent bottom
      */
-    private void layoutVertical(int left, int top, int right, int bottom) {
+    private void layoutVertical(final int left, final int top, final int right, final int bottom) {
         final int count = getChildCount();
         if (count == 0)
             return;
@@ -253,7 +253,7 @@ public class AutoLinearLayout extends FrameLayout {
      * @param bottom
      *         parent bottom
      */
-    private void layoutHorizontal(int left, int top, int right, int bottom) {
+    private void layoutHorizontal(final int left, final int top, final int right, final int bottom) {
         final int count = getChildCount();
         if (count == 0)
             return;
@@ -320,7 +320,7 @@ public class AutoLinearLayout extends FrameLayout {
      * @param maxChildWidth
      *         the biggest child width
      */
-    private void updateChildPositionVertical(int parentHeight, int totalSize, int column, int maxChildWidth) {
+    private void updateChildPositionVertical(final int parentHeight, final int totalSize, final int column, final int maxChildWidth) {
         for (int i = 0; i < mListPositions.size(); i++) {
             ViewPosition pos = mListPositions.get(i);
             final View child = getChildAt(i);
@@ -355,7 +355,7 @@ public class AutoLinearLayout extends FrameLayout {
      * @param maxChildHeight
      *         the biggest child height
      */
-    private void updateChildPositionHorizontal(int parentWidth, int totalSize, int row, int maxChildHeight) {
+    private void updateChildPositionHorizontal(final int parentWidth, final int totalSize, final int row, final int maxChildHeight) {
         for (int i = 0; i < mListPositions.size(); i++) {
             ViewPosition pos = mListPositions.get(i);
             final View child = getChildAt(i);
@@ -375,7 +375,7 @@ public class AutoLinearLayout extends FrameLayout {
         }
     }
 
-    private void updateLeftPositionByGravity(ViewPosition pos, int size, int gravity) {
+    private void updateLeftPositionByGravity(final ViewPosition pos, final int size, final int gravity) {
         switch (gravity & Gravity.HORIZONTAL_GRAVITY_MASK) {
         case GravityCompat.END:
             pos.left += (size > 0) ? size : 0;
@@ -387,7 +387,7 @@ public class AutoLinearLayout extends FrameLayout {
         }
     }
 
-    private void updateTopPositionByGravity(ViewPosition pos, int size, int gravity) {
+    private void updateTopPositionByGravity(final ViewPosition pos, final int size, final int gravity) {
         switch (gravity & Gravity.VERTICAL_GRAVITY_MASK) {
         case Gravity.BOTTOM:
             pos.top += (size > 0) ? size : 0;
@@ -399,15 +399,15 @@ public class AutoLinearLayout extends FrameLayout {
         }
     }
 
-    private void layout(View child, ViewPosition pos) {
+    private void layout(final View child, final ViewPosition pos) {
         LayoutParams lp = (LayoutParams) child.getLayoutParams();
 
         if (mOrientation == HORIZONTAL)
-            child.layout(pos.left, pos.top + lp.topMargin, pos.left + child.getMeasuredWidth(), pos.top +
-                         child.getMeasuredHeight() + lp.topMargin);
+            child.layout(pos.left, pos.top + lp.topMargin, pos.left + child.getMeasuredWidth(), pos.top
+                         + child.getMeasuredHeight() + lp.topMargin);
         else
-            child.layout(pos.left + lp.leftMargin, pos.top, pos.left + child.getMeasuredWidth() +
-                         lp.leftMargin, pos.top + child.getMeasuredHeight());
+            child.layout(pos.left + lp.leftMargin, pos.top, pos.left + child.getMeasuredWidth()
+                         + lp.leftMargin, pos.top + child.getMeasuredHeight());
     }
 
     /**
@@ -419,7 +419,7 @@ public class AutoLinearLayout extends FrameLayout {
      * @param gravity
      *         See {@link Gravity}
      */
-    private void setGravity(int gravity) {
+    private void setGravity(final int gravity) {
         if (mGravity != gravity) {
             if ((gravity & Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK) == 0) {
                 gravity |= GravityCompat.START;
@@ -434,7 +434,7 @@ public class AutoLinearLayout extends FrameLayout {
         }
     }
 
-    public void setHorizontalGravity(int horizontalGravity) {
+    public void setHorizontalGravity(final int horizontalGravity) {
         final int gravity = horizontalGravity & GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK;
         if ((mGravity & Gravity.RELATIVE_HORIZONTAL_GRAVITY_MASK) != gravity) {
             mGravity = (mGravity & ~GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK) | gravity;
@@ -442,7 +442,7 @@ public class AutoLinearLayout extends FrameLayout {
         }
     }
 
-    public void setVerticalGravity(int verticalGravity) {
+    public void setVerticalGravity(final int verticalGravity) {
         final int gravity = verticalGravity & Gravity.VERTICAL_GRAVITY_MASK;
         if ((mGravity & Gravity.VERTICAL_GRAVITY_MASK) != gravity) {
             mGravity = (mGravity & ~Gravity.VERTICAL_GRAVITY_MASK) | gravity;
@@ -456,7 +456,7 @@ public class AutoLinearLayout extends FrameLayout {
      * @param orientation
      *         Pass HORIZONTAL or VERTICAL. Default value is HORIZONTAL.
      */
-    public void setOrientation(int orientation) {
+    public void setOrientation(final int orientation) {
         if (mOrientation != orientation) {
             mOrientation = orientation;
             requestLayout();
@@ -480,7 +480,7 @@ public class AutoLinearLayout extends FrameLayout {
         int top;
         int position; //row or column
 
-        ViewPosition(int l, int t, int p) {
+        ViewPosition(final int l, final int t, final int p) {
             this.left = l;
             this.top = t;
             this.position = p;

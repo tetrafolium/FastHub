@@ -35,7 +35,7 @@ import lombok.Setter;
     private String pullRequestId;
     private ReactionsModel reactions;
 
-    @Override public boolean equals(Object o) {
+    @Override public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment that = (Comment) o;
@@ -47,36 +47,36 @@ import lombok.Setter;
         return (int) (id ^ (id >>> 32));
     }
 
-    public CommentEvent() {}
+    public CommentEvent() { }
 
     @Override public String toString() {
-        return "CommentEvent{" +
-               "id=" + id +
-               ", user=" + user +
-               ", url='" + url + '\'' +
-               ", body='" + body + '\'' +
-               ", bodyHtml='" + bodyHtml + '\'' +
-               ", htmlUrl='" + htmlUrl + '\'' +
-               ", createdAt=" + createdAt +
-               ", updatedAt=" + updatedAt +
-               ", position=" + position +
-               ", line=" + line +
-               ", path='" + path + '\'' +
-               ", commitId='" + commitId + '\'' +
-               ", repoId='" + repoId + '\'' +
-               ", login='" + login + '\'' +
-               ", gistId='" + gistId + '\'' +
-               ", issueId='" + issueId + '\'' +
-               ", pullRequestId='" + pullRequestId + '\'' +
-               ", reactions=" + reactions +
-               '}';
+        return "CommentEvent{"
+               + "id=" + id
+               + ", user=" + user
+               + ", url='" + url + '\''
+               + ", body='" + body + '\''
+               + ", bodyHtml='" + bodyHtml + '\''
+               + ", htmlUrl='" + htmlUrl + '\''
+               + ", createdAt=" + createdAt
+               + ", updatedAt=" + updatedAt
+               + ", position=" + position
+               + ", line=" + line
+               + ", path='" + path + '\''
+               + ", commitId='" + commitId + '\''
+               + ", repoId='" + repoId + '\''
+               + ", login='" + login + '\''
+               + ", gistId='" + gistId + '\''
+               + ", issueId='" + issueId + '\''
+               + ", pullRequestId='" + pullRequestId + '\''
+               + ", reactions=" + reactions
+               + '}';
     }
 
     @Override public int describeContents() {
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeParcelable(this.user, flags);
         dest.writeString(this.url);
@@ -97,7 +97,7 @@ import lombok.Setter;
         dest.writeParcelable(this.reactions, flags);
     }
 
-    private CommentEvent(Parcel in) {
+    private CommentEvent(final Parcel in) {
         this.id = in.readLong();
         this.user = in.readParcelable(User.class.getClassLoader());
         this.url = in.readString();
@@ -121,11 +121,11 @@ import lombok.Setter;
     }
 
     public static final Creator<CommentEvent> CREATOR = new Creator<CommentEvent>() {
-        @Override public CommentEvent createFromParcel(Parcel source) {
+        @Override public CommentEvent createFromParcel(final Parcel source) {
             return new CommentEvent(source);
         }
 
-        @Override public CommentEvent[] newArray(int size) {
+        @Override public CommentEvent[] newArray(final int size) {
             return new CommentEvent[size];
         }
     };

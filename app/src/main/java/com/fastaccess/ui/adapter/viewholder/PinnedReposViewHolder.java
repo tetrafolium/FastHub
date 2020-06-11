@@ -43,16 +43,16 @@ public class PinnedReposViewHolder extends BaseViewHolder<PinnedRepos> {
     @BindColor(R.color.material_indigo_700) int forkColor;
     @BindColor(R.color.material_grey_700) int privateColor;
 
-    private PinnedReposViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+    private PinnedReposViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
         super(itemView, adapter);
     }
 
-    public static PinnedReposViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter, boolean singleLine) {
+    public static PinnedReposViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter, final boolean singleLine) {
         return new PinnedReposViewHolder(getView(viewGroup,
                                          singleLine ? R.layout.repos_row_item_menu : R.layout.repos_row_item), adapter);
     }
 
-    @Override public void bind(@NonNull PinnedRepos pinnedRepos) {
+    @Override public void bind(final @NonNull PinnedRepos pinnedRepos) {
         Repo repo = pinnedRepos.getPinnedRepo();
         if (repo == null) return;
         if (repo.isFork()) {

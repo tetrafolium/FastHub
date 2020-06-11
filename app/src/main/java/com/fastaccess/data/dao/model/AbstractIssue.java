@@ -70,7 +70,7 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
     @Convert(UserConverter.class) User closedBy;
     @Convert(ReactionsConverter.class) ReactionsModel reactions;
 
-    public Single<Issue> save(Issue entity) {
+    public Single<Issue> save(final Issue entity) {
         return RxHelper.getSingle(App.getInstance().getDataStore()
                                   .delete(Issue.class)
                                   .where(Issue.ID.eq(entity.getId()))
@@ -79,7 +79,7 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
                                   .flatMap(observer -> App.getInstance().getDataStore().insert(entity)));
     }
 
-    public static Disposable save(@NonNull List<Issue> models, @NonNull String repoId, @NonNull String login) {
+    public static Disposable save(final @NonNull List<Issue> models, final @NonNull String repoId, final @NonNull String login) {
         return RxHelper.getSingle(Single.fromPublisher(s -> {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
@@ -100,10 +100,10 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
                 s.onError(e);
             }
             s.onComplete();
-        })).subscribe(o -> {/*donothing*/}, Throwable::printStackTrace);
+        })).subscribe(o -> { /*donothing*/ }, Throwable::printStackTrace);
     }
 
-    public static Single<List<Issue>> getIssues(@NonNull String repoId, @NonNull String login, @NonNull IssueState issueState) {
+    public static Single<List<Issue>> getIssues(final @NonNull String repoId, final @NonNull String login, final @NonNull IssueState issueState) {
         return App.getInstance().getDataStore().select(Issue.class)
                .where(REPO_ID.equal(repoId)
                       .and(LOGIN.equal(login))
@@ -114,7 +114,7 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
                .toList();
     }
 
-    public static Observable<Issue> getIssue(long id) {
+    public static Observable<Issue> getIssue(final long id) {
         return App.getInstance().getDataStore()
                .select(Issue.class)
                .where(ID.equal(id))
@@ -122,7 +122,7 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
                .observable();
     }
 
-    public static Observable<Issue> getIssueByNumber(int number, String repoId, String login) {
+    public static Observable<Issue> getIssueByNumber(final int number, final String repoId, final String login) {
         return App.getInstance().getDataStore()
                .select(Issue.class)
                .where(NUMBER.equal(number)
@@ -136,7 +136,7 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeLong(this.id);
         dest.writeString(this.url);
         dest.writeString(this.body);
@@ -164,7 +164,7 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
         dest.writeParcelable(this.reactions, flags);
     }
 
-    protected AbstractIssue(Parcel in) {
+    protected AbstractIssue(final Parcel in) {
         this.id = in.readLong();
         this.url = in.readString();
         this.body = in.readString();
@@ -199,11 +199,11 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
     }
 
     public static final Creator<Issue> CREATOR = new Creator<Issue>() {
-        @Override public Issue createFromParcel(Parcel source) {
+        @Override public Issue createFromParcel(final Parcel source) {
             return new Issue(source);
         }
 
-        @Override public Issue[] newArray(int size) {
+        @Override public Issue[] newArray(final int size) {
             return new Issue[size];
         }
     };

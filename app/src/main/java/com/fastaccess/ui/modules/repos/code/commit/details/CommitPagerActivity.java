@@ -67,18 +67,18 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
     @BindView(R.id.detailsIcon) View detailsIcon;
     private CommentEditorFragment commentEditorFragment;
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login, @NonNull String sha) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login, final @NonNull String sha) {
         return createIntent(context, repoId, login, sha, false);
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login,
-                                      @NonNull String sha, boolean showRepoBtn) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login,
+                                      final @NonNull String sha, final boolean showRepoBtn) {
         return createIntent(context, repoId, login, sha, showRepoBtn, false);
     }
 
-    public static Intent createIntent(@NonNull Context context, @NonNull String repoId, @NonNull String login,
-                                      @NonNull String sha, boolean showRepoBtn,
-                                      boolean isEnterprise) {
+    public static Intent createIntent(final @NonNull Context context, final @NonNull String repoId, final @NonNull String login,
+                                      final @NonNull String sha, final boolean showRepoBtn,
+                                      final boolean isEnterprise) {
         Intent intent = new Intent(context, CommitPagerActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.ID, sha)
@@ -90,7 +90,7 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
         return intent;
     }
 
-    public static void createIntentForOffline(@NonNull Context context, @NonNull Commit commitModel) {
+    public static void createIntentForOffline(final @NonNull Context context, final @NonNull Commit commitModel) {
         SchemeParser.launchUri(context, Uri.parse(commitModel.getHtmlUrl()));
     }
 
@@ -121,7 +121,7 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
         return new CommitPagerPresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fab.hide();
         commentEditorFragment = (CommentEditorFragment) getSupportFragmentManager().findFragmentById(R.id.commentFragment);
@@ -134,7 +134,7 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
         if (getPresenter().showToRepoBtn()) showNavToRepoItem();
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.share_menu, menu);
         menu.findItem(R.id.browser).setVisible(true).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         menu.findItem(R.id.copyUrl).setVisible(true).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
@@ -143,7 +143,7 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             onNavToRepoClicked();
             return true;
@@ -189,7 +189,7 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
         pager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapterModel.buildForCommit(this, commit)));
         tabs.setupWithViewPager(pager);
         pager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-            @Override public void onPageSelected(int position) {
+            @Override public void onPageSelected(final int position) {
                 super.onPageSelected(position);
                 hideShowFab();
             }
@@ -204,14 +204,14 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
             tabTwo.setText(getString(R.string.comments) + " (" + commit.getGitCommit().getCommentCount() + ")");
         }
         tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
+            @Override public void onTabReselected(final TabLayout.Tab tab) {
                 super.onTabReselected(tab);
                 onScrollTop(tab.getPosition());
             }
         });
     }
 
-    @Override public void onScrollTop(int index) {
+    @Override public void onScrollTop(final int index) {
         if (pager == null || pager.getAdapter() == null) return;
         Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
         if (fragment instanceof BaseFragment) {
@@ -224,7 +224,7 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
         finish();
     }
 
-    @Override public void onAddComment(@NonNull Comment newComment) {
+    @Override public void onAddComment(final @NonNull Comment newComment) {
         CommitCommentsFragment fragment = getCommitCommentsFragment();
         if (fragment != null) {
             fragment.addComment(newComment);
@@ -252,18 +252,18 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
         finish();
     }
 
-    @Override public void onSendActionClicked(@NonNull String text, Bundle bundle) {
+    @Override public void onSendActionClicked(final @NonNull String text, final Bundle bundle) {
         CommitCommentsFragment fragment = getCommitCommentsFragment();
         if (fragment != null) {
             fragment.onHandleComment(text, bundle);
         }
     }
 
-    @Override public void onTagUser(@NonNull String username) {
+    @Override public void onTagUser(final @NonNull String username) {
         commentEditorFragment.onAddUserName(username);
     }
 
-    @Override public void onCreateComment(String text, Bundle bundle) {
+    @Override public void onCreateComment(final String text, final Bundle bundle) {
 
     }
 

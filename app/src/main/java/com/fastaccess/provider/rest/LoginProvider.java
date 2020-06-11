@@ -33,7 +33,7 @@ public class LoginProvider {
     .setPrettyPrinting()
     .create();
 
-    private static OkHttpClient provideOkHttpClient(@Nullable String authToken, @Nullable String otp) {
+    private static OkHttpClient provideOkHttpClient(final @Nullable String authToken, final @Nullable String otp) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
             client.addInterceptor(new HttpLoggingInterceptor()
@@ -43,7 +43,7 @@ public class LoginProvider {
         return client.build();
     }
 
-    private static Retrofit provideRetrofit(@Nullable String authToken, @Nullable String otp, @Nullable String enterpriseUrl) {
+    private static Retrofit provideRetrofit(final @Nullable String authToken, final @Nullable String otp, final @Nullable String enterpriseUrl) {
         return new Retrofit.Builder()
                .baseUrl(InputHelper.isEmpty(enterpriseUrl) ? BuildConfig.REST_URL : LinkParserHelper.getEndpoint(enterpriseUrl))
                .client(provideOkHttpClient(authToken, otp))
@@ -62,8 +62,8 @@ public class LoginProvider {
                .create(LoginRestService.class);
     }
 
-    @NonNull public static LoginRestService getLoginRestService(@NonNull String authToken, @Nullable String otp,
-            @Nullable String endpoint) {
+    @NonNull public static LoginRestService getLoginRestService(final @NonNull String authToken, final @Nullable String otp,
+            final @Nullable String endpoint) {
         return provideRetrofit(authToken, otp, endpoint).create(LoginRestService.class);
     }
 }

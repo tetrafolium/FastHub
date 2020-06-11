@@ -51,10 +51,10 @@ public class GithubActionService extends IntentService {
         UNSTAR_GIST,
         FORK_GIST,
     })
-    @Retention(RetentionPolicy.SOURCE) @interface GitActionType {}
+    @Retention(RetentionPolicy.SOURCE) @interface GitActionType { }
 
-    public static void startForRepo(@NonNull Context context, @NonNull String login, @NonNull String repo,
-                                    @GitActionType int type, boolean isEnterprise) {
+    public static void startForRepo(final @NonNull Context context, final @NonNull String login, final @NonNull String repo,
+                                    final @GitActionType int type, final boolean isEnterprise) {
         Intent intent = new Intent(context.getApplicationContext(), GithubActionService.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.ID, repo)
@@ -65,7 +65,7 @@ public class GithubActionService extends IntentService {
         context.startService(intent);
     }
 
-    public static void startForGist(@NonNull Context context, @NonNull String id, @GitActionType int type, boolean isEnterprise) {
+    public static void startForGist(final @NonNull Context context, final @NonNull String id, final @GitActionType int type, final boolean isEnterprise) {
         Intent intent = new Intent(context.getApplicationContext(), GithubActionService.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.ID, id)
@@ -79,7 +79,7 @@ public class GithubActionService extends IntentService {
         super(GithubActionService.class.getName());
     }
 
-    @Override protected void onHandleIntent(@Nullable Intent intent) {
+    @Override protected void onHandleIntent(final @Nullable Intent intent) {
         if (intent != null && intent.getExtras() != null) {
             Bundle bundle = intent.getExtras();
             @GitActionType int type = bundle.getInt(BundleConstant.EXTRA_TYPE);
@@ -120,7 +120,7 @@ public class GithubActionService extends IntentService {
         super.onDestroy();
     }
 
-    private void forkGist(@Nullable String id, boolean isEnterprise) {
+    private void forkGist(final @Nullable String id, final boolean isEnterprise) {
         if (id != null) {
             String msg = getString(R.string.forking, getString(R.string.gist));
             disposable.add(
@@ -134,7 +134,7 @@ public class GithubActionService extends IntentService {
         }
     }
 
-    private void forkRepo(@Nullable String id, @Nullable String login, boolean isEnterprise) {
+    private void forkRepo(final @Nullable String id, final @Nullable String login, final boolean isEnterprise) {
         if (id != null && login != null) {
             String msg = getString(R.string.forking, id);
             disposable.add(
@@ -148,7 +148,7 @@ public class GithubActionService extends IntentService {
         }
     }
 
-    private void starGist(@Nullable String id, boolean isEnterprise) {
+    private void starGist(final @Nullable String id, final boolean isEnterprise) {
         if (id != null) {
             String msg = getString(R.string.starring, getString(R.string.gist));
             disposable.add(RestProvider.getGistService(isEnterprise)
@@ -161,7 +161,7 @@ public class GithubActionService extends IntentService {
         }
     }
 
-    private void starRepo(@Nullable String id, @Nullable String login, boolean isEnterprise) {
+    private void starRepo(final @Nullable String id, final @Nullable String login, final boolean isEnterprise) {
         if (id != null && login != null) {
             String msg = getString(R.string.starring, id);
             disposable.add(RestProvider.getRepoService(isEnterprise)
@@ -174,7 +174,7 @@ public class GithubActionService extends IntentService {
         }
     }
 
-    private void unStarGist(@Nullable String id, boolean isEnterprise) {
+    private void unStarGist(final @Nullable String id, final boolean isEnterprise) {
         if (id != null) {
             String msg = getString(R.string.un_starring, getString(R.string.gist));
             disposable.add(RestProvider.getGistService(isEnterprise)
@@ -187,7 +187,7 @@ public class GithubActionService extends IntentService {
         }
     }
 
-    private void unStarRepo(@Nullable String id, @Nullable String login, boolean isEnterprise) {
+    private void unStarRepo(final @Nullable String id, final @Nullable String login, final boolean isEnterprise) {
         if (id != null && login != null) {
             String msg = getString(R.string.un_starring, id);
             disposable.add(RestProvider.getRepoService(isEnterprise)
@@ -200,7 +200,7 @@ public class GithubActionService extends IntentService {
         }
     }
 
-    private void unWatchRepo(@Nullable String id, @Nullable String login, boolean isEnterprise) {
+    private void unWatchRepo(final @Nullable String id, final @Nullable String login, final boolean isEnterprise) {
         if (id != null && login != null) {
             String msg = getString(R.string.un_watching, id);
             disposable.add(RestProvider.getRepoService(isEnterprise)
@@ -213,7 +213,7 @@ public class GithubActionService extends IntentService {
         }
     }
 
-    private void watchRepo(@Nullable String id, @Nullable String login, boolean isEnterprise) {
+    private void watchRepo(final @Nullable String id, final @Nullable String login, final boolean isEnterprise) {
         if (id != null && login != null) {
             String msg = getString(R.string.watching, id);
             disposable.add(RestProvider.getRepoService(isEnterprise)
@@ -226,7 +226,7 @@ public class GithubActionService extends IntentService {
         }
     }
 
-    private NotificationCompat.Builder getNotification(@NonNull String title) {
+    private NotificationCompat.Builder getNotification(final @NonNull String title) {
         if (notification == null) {
             notification = new NotificationCompat.Builder(this, title)
             .setSmallIcon(R.drawable.ic_sync)
@@ -243,11 +243,11 @@ public class GithubActionService extends IntentService {
         return notificationManager;
     }
 
-    private void showNotification(@NonNull String msg) {
+    private void showNotification(final @NonNull String msg) {
         getNotificationManager().notify(msg.hashCode(), getNotification(msg).build());
     }
 
-    private void hideNotification(@NonNull String msg) {
+    private void hideNotification(final @NonNull String msg) {
         getNotificationManager().cancel(msg.hashCode());
     }
 }

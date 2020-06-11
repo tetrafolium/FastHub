@@ -26,7 +26,7 @@ public class FileHelper {
 
     public static final long ONE_MB = 1048576L;
 
-    @Nullable public static String getPath(@NonNull Context context, @NonNull Uri uri) {
+    @Nullable public static String getPath(final @NonNull Context context, final @NonNull Uri uri) {
         String filePath = null;
         try {
             String wholeID = DocumentsContract.getDocumentId(uri);
@@ -42,11 +42,11 @@ public class FileHelper {
                     }
                 }
             }
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
         return filePath;
     }
 
-    @NonNull public static String getRingtoneName(@NonNull Context context, @Nullable Uri uri) {
+    @NonNull public static String getRingtoneName(final @NonNull Context context, final @Nullable Uri uri) {
         String title = context.getString(R.string.sound_chooser_summary);
         if (uri != null) {
             Ringtone ringtone = RingtoneManager.getRingtone(context, uri);
@@ -62,13 +62,13 @@ public class FileHelper {
                             title = cur.getString(cur.getColumnIndex(MediaStore.Audio.Media.TITLE));
                         }
                     }
-                } catch (Exception ignored) {}
+                } catch (Exception ignored) { }
             }
         }
         return title;
     }
 
-    public static ArrayList<NotificationSoundModel> getNotificationSounds(Context context, @Nullable String defaultValue) {
+    public static ArrayList<NotificationSoundModel> getNotificationSounds(final Context context, final @Nullable String defaultValue) {
         ArrayList<NotificationSoundModel> notificationSounds = new ArrayList<>();
         RingtoneManager ringtoneManager = new RingtoneManager(context);
         ringtoneManager.setType(RingtoneManager.TYPE_NOTIFICATION);
@@ -77,8 +77,8 @@ public class FileHelper {
                 String title = ringsCursor.getString(RingtoneManager.TITLE_COLUMN_INDEX);
                 Uri uri = Uri.parse(ringsCursor.getString(RingtoneManager.URI_COLUMN_INDEX) + "/"
                                     + ringsCursor.getString(RingtoneManager.ID_COLUMN_INDEX));
-                boolean selected = defaultValue != null && (uri.toString().contains(defaultValue) ||
-                                   title.equalsIgnoreCase(defaultValue) || defaultValue.contains(title));
+                boolean selected = defaultValue != null && (uri.toString().contains(defaultValue)
+                                   || title.equalsIgnoreCase(defaultValue) || defaultValue.contains(title));
                 Logger.e(defaultValue, title, uri, selected);
                 notificationSounds.add(new NotificationSoundModel(title, uri, selected));
             }

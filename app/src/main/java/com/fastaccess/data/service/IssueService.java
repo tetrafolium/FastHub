@@ -54,8 +54,8 @@ public interface IssueService {
             @Path("issue_number") int issue_number);
 
     @GET("repos/{owner}/{repo}/issues/{issue_number}/timeline?per_page=100")
-    @Headers("Accept: application/vnd.github.mockingbird-preview,application/vnd.github.VERSION.full+json," +
-             " application/vnd.github.squirrel-girl-preview")
+    @Headers("Accept: application/vnd.github.mockingbird-preview,application/vnd.github.VERSION.full+json,"
+             + " application/vnd.github.squirrel-girl-preview")
     Observable<IssuesPageable<JsonObject>> getTimeline(@Path("owner") String owner, @Path("repo") String repo,
             @Path("issue_number") int issue_number, @Query("page") int page);
 
@@ -120,8 +120,8 @@ public interface IssueService {
                                       @Path("number") int number, @Body AssigneesRequestModel body);
 
     @GET("/repos/{owner}/{repo}/issues/comments/{id}")
-    @Headers("Accept: application/vnd.github.mockingbird-preview,application/vnd.github.VERSION.full+json," +
-             " application/vnd.github.squirrel-girl-preview")
+    @Headers("Accept: application/vnd.github.mockingbird-preview,application/vnd.github.VERSION.full+json,"
+             + " application/vnd.github.squirrel-girl-preview")
     Observable<Comment> getComment(@Path("owner") String owner, @Path("repo") String repo, @Path("id") long id);
 
 }

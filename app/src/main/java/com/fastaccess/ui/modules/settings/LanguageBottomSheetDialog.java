@@ -38,7 +38,7 @@ public class LanguageBottomSheetDialog extends BaseBottomSheetDialog {
     @BindView(R.id.picker) RadioGroup radioGroup;
     private LanguageDialogListener listener;
 
-    @Override public void onAttach(Context context) {
+    @Override public void onAttach(final Context context) {
         super.onAttach(context);
         if (context instanceof LanguageDialogListener) {
             listener = (LanguageDialogListener) context;
@@ -54,7 +54,7 @@ public class LanguageBottomSheetDialog extends BaseBottomSheetDialog {
         return R.layout.picker_dialog;
     }
 
-    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         String language = PrefGetter.getAppLanguage();
         String[] values = getResources().getStringArray(R.array.languages_array_values);

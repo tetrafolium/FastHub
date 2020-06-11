@@ -33,7 +33,7 @@ public class SettingsCategoryActivity extends BaseActivity implements SettingsCa
         return false;
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setResult(RESULT_CANCELED);
         if (savedInstanceState == null) {

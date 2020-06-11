@@ -17,12 +17,12 @@ import io.reactivex.Observable;
 
 public class ToGsonProvider {
 
-    public static Observable<String> getChangelog(@NonNull Context context) {
+    public static Observable<String> getChangelog(final @NonNull Context context) {
         return Observable.fromCallable(() -> {
             try (InputStream is = context.getResources().openRawResource(R.raw.changelog)) {
                 try (ByteArrayOutputStream byteStream = new ByteArrayOutputStream()) {
                     byte[] buffer = new byte[is.available()];
-                    int read = is.read(buffer);//ignore lint
+                    int read = is.read(buffer); //ignore lint
                     byteStream.write(buffer);
                     return byteStream.toString();
                 } catch (IOException e) {

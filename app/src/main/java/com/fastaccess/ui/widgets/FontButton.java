@@ -13,17 +13,17 @@ import com.fastaccess.helper.TypeFaceHelper;
  */
 public class FontButton extends AppCompatButton {
 
-    public FontButton(@NonNull Context context) {
+    public FontButton(final @NonNull Context context) {
         super(context);
         init();
     }
 
-    public FontButton(@NonNull Context context, AttributeSet attrs) {
+    public FontButton(final @NonNull Context context, final AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public FontButton(@NonNull Context context, AttributeSet attrs, int defStyleAttr) {
+    public FontButton(final @NonNull Context context, final AttributeSet attrs, final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }

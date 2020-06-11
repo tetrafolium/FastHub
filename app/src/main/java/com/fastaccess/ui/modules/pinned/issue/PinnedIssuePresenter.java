@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class PinnedIssuePresenter extends BasePresenter<PinnedIssueMvp.View> implements PinnedIssueMvp.Presenter {
     private ArrayList<Issue> issues = new ArrayList<>();
 
-    @Override protected void onAttachView(@NonNull PinnedIssueMvp.View view) {
+    @Override protected void onAttachView(final @NonNull PinnedIssueMvp.View view) {
         super.onAttachView(view);
         if (issues.isEmpty()) {
             onReload();
@@ -35,11 +35,11 @@ public class PinnedIssuePresenter extends BasePresenter<PinnedIssueMvp.View> imp
                                     sendToView(view -> view.onNotifyAdapter(null))));
     }
 
-    @Override public void onItemClick(int position, View v, Issue item) {
+    @Override public void onItemClick(final int position, final View v, final Issue item) {
         SchemeParser.launchUri(v.getContext(), !InputHelper.isEmpty(item.getHtmlUrl()) ? item.getHtmlUrl() : item.getUrl());
     }
 
-    @Override public void onItemLongClick(int position, View v, Issue item) {
+    @Override public void onItemLongClick(final int position, final View v, final Issue item) {
         if (getView() != null) {
             getView().onDeletePinnedIssue(item.getId(), position);
         }

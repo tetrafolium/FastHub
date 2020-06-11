@@ -35,15 +35,15 @@ class ProfileStarredPresenter extends BasePresenter<ProfileStarredMvp.View> impl
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         sendToView(view -> {
             if (view.getLoadMore().getParameter() != null) {
                 onWorkOffline(view.getLoadMore().getParameter());
@@ -52,7 +52,7 @@ class ProfileStarredPresenter extends BasePresenter<ProfileStarredMvp.View> impl
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable String parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable String parameter) {
         if (parameter == null) {
             throw new NullPointerException("Username is null");
         }
@@ -94,7 +94,7 @@ class ProfileStarredPresenter extends BasePresenter<ProfileStarredMvp.View> impl
         return repos;
     }
 
-    @Override public void onWorkOffline(@NonNull String login) {
+    @Override public void onWorkOffline(final @NonNull String login) {
         if (repos.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Repo.getStarred(login).toObservable()).subscribe(repoModels ->
             sendToView(view -> {
@@ -107,9 +107,9 @@ class ProfileStarredPresenter extends BasePresenter<ProfileStarredMvp.View> impl
         }
     }
 
-    @Override public void onItemClick(int position, View v, Repo item) {
+    @Override public void onItemClick(final int position, final View v, final Repo item) {
         SchemeParser.launchUri(v.getContext(), item.getHtmlUrl());
     }
 
-    @Override public void onItemLongClick(int position, View v, Repo item) {}
+    @Override public void onItemLongClick(final int position, final View v, final Repo item) { }
 }

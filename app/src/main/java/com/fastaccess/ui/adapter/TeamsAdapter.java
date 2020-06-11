@@ -15,15 +15,15 @@ import java.util.List;
 
 public class TeamsAdapter extends BaseRecyclerAdapter<TeamsModel, TeamsViewHolder, TeamsViewHolder.OnItemClickListener<TeamsModel>> {
 
-    public TeamsAdapter(@NonNull List<TeamsModel> data) {
+    public TeamsAdapter(final @NonNull List<TeamsModel> data) {
         super(data);
     }
 
-    @Override protected TeamsViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected TeamsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return TeamsViewHolder.newInstance(parent, this);
     }
 
-    @Override protected void onBindView(TeamsViewHolder holder, int position) {
+    @Override protected void onBindView(final TeamsViewHolder holder, final int position) {
         holder.bind(getItem(position));
     }
 }

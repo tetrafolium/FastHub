@@ -20,7 +20,7 @@ public class ForegroundRelativeLayout extends RelativeLayout {
     private Drawable foreground;
 
     @SuppressLint("CustomViewStyleable")
-    public ForegroundRelativeLayout(@NonNull Context context, AttributeSet attrs) {
+    public ForegroundRelativeLayout(final @NonNull Context context, final AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ForegroundView);
         final Drawable d = a.getDrawable(R.styleable.ForegroundView_android_foreground);
@@ -31,7 +31,7 @@ public class ForegroundRelativeLayout extends RelativeLayout {
         setOutlineProvider(ViewOutlineProvider.BOUNDS);
     }
 
-    @Override protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    @Override protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         if (foreground != null) {
             foreground.setBounds(0, 0, w, h);
@@ -42,7 +42,7 @@ public class ForegroundRelativeLayout extends RelativeLayout {
         return false;
     }
 
-    @Override protected boolean verifyDrawable(@NonNull Drawable who) {
+    @Override protected boolean verifyDrawable(final @NonNull Drawable who) {
         return super.verifyDrawable(who) || (who == foreground);
     }
 
@@ -63,7 +63,7 @@ public class ForegroundRelativeLayout extends RelativeLayout {
         return foreground;
     }
 
-    public void setForeground(Drawable drawable) {
+    public void setForeground(final Drawable drawable) {
         if (foreground != drawable) {
             if (foreground != null) {
                 foreground.setCallback(null);
@@ -86,14 +86,14 @@ public class ForegroundRelativeLayout extends RelativeLayout {
         }
     }
 
-    @Override public void draw(@NonNull Canvas canvas) {
+    @Override public void draw(final @NonNull Canvas canvas) {
         super.draw(canvas);
         if (foreground != null) {
             foreground.draw(canvas);
         }
     }
 
-    @Override public void drawableHotspotChanged(float x, float y) {
+    @Override public void drawableHotspotChanged(final float x, final float y) {
         super.drawableHotspotChanged(x, y);
         if (foreground != null) {
             foreground.setHotspot(x, y);

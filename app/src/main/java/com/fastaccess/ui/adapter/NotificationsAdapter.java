@@ -23,18 +23,18 @@ public class NotificationsAdapter extends BaseRecyclerAdapter<GroupedNotificatio
     private boolean showUnreadState;
     private boolean hideClear;
 
-    public NotificationsAdapter(@NonNull ArrayList<GroupedNotificationModel> eventsModels, boolean showUnreadState) {
+    public NotificationsAdapter(final @NonNull ArrayList<GroupedNotificationModel> eventsModels, final boolean showUnreadState) {
         super(eventsModels);
         this.showUnreadState = showUnreadState;
     }
 
-    public NotificationsAdapter(@NonNull ArrayList<GroupedNotificationModel> eventsModels, boolean showUnreadState, boolean hideClear) {
+    public NotificationsAdapter(final @NonNull ArrayList<GroupedNotificationModel> eventsModels, final boolean showUnreadState, final boolean hideClear) {
         super(eventsModels);
         this.showUnreadState = showUnreadState;
         this.hideClear = hideClear;
     }
 
-    @Override protected BaseViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected BaseViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         if (viewType == GroupedNotificationModel.HEADER) {
             return NotificationsHeaderViewHolder.newInstance(parent, this);
         } else {
@@ -42,7 +42,7 @@ public class NotificationsAdapter extends BaseRecyclerAdapter<GroupedNotificatio
         }
     }
 
-    @Override protected void onBindView(BaseViewHolder holder, int position) {
+    @Override protected void onBindView(final BaseViewHolder holder, final int position) {
         if (getItemViewType(position) == GroupedNotificationModel.HEADER) {
             ((NotificationsHeaderViewHolder) holder).bind(getItem(position));
             if (hideClear)
@@ -58,7 +58,7 @@ public class NotificationsAdapter extends BaseRecyclerAdapter<GroupedNotificatio
         }
     }
 
-    @Override public int getItemViewType(int position) {
+    @Override public int getItemViewType(final int position) {
         return getItem(position).getType();
     }
 }

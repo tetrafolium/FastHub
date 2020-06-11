@@ -16,12 +16,12 @@ public class FragmentsPagerAdapter extends FragmentStatePagerAdapter {
 
     private List<FragmentPagerAdapterModel> fragments;
 
-    public FragmentsPagerAdapter(FragmentManager fm, List<FragmentPagerAdapterModel> fragments) {
+    public FragmentsPagerAdapter(final FragmentManager fm, final List<FragmentPagerAdapterModel> fragments) {
         super(fm);
         this.fragments = fragments;
     }
 
-    @Override public Fragment getItem(int position) {
+    @Override public Fragment getItem(final int position) {
         return fragments.get(position).getFragment();
     }
 
@@ -29,22 +29,22 @@ public class FragmentsPagerAdapter extends FragmentStatePagerAdapter {
         return fragments.size();
     }
 
-    @Override public CharSequence getPageTitle(int position) {
+    @Override public CharSequence getPageTitle(final int position) {
         return fragments.get(position).getTitle();
     }
 
-    @Override public float getPageWidth(int position) {
+    @Override public float getPageWidth(final int position) {
         return super.getPageWidth(position);
     }
 
-    public void remove(FragmentPagerAdapterModel model) {
+    public void remove(final FragmentPagerAdapterModel model) {
         if (fragments != null) {
             fragments.remove(model);
             notifyDataSetChanged();
         }
     }
 
-    public void remove(int position) {
+    public void remove(final int position) {
         if (fragments != null) {
             fragments.remove(position);
             notifyDataSetChanged();

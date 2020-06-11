@@ -15,26 +15,26 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeString(this.sha);
         dest.writeString(this.url);
         dest.writeString(this.htmlUrl);
     }
 
-    public ParentsModel() {}
+    public ParentsModel() { }
 
-    private ParentsModel(Parcel in) {
+    private ParentsModel(final Parcel in) {
         this.sha = in.readString();
         this.url = in.readString();
         this.htmlUrl = in.readString();
     }
 
     public static final Parcelable.Creator<ParentsModel> CREATOR = new Parcelable.Creator<ParentsModel>() {
-        @Override public ParentsModel createFromParcel(Parcel source) {
+        @Override public ParentsModel createFromParcel(final Parcel source) {
             return new ParentsModel(source);
         }
 
-        @Override public ParentsModel[] newArray(int size) {
+        @Override public ParentsModel[] newArray(final int size) {
             return new ParentsModel[size];
         }
     };

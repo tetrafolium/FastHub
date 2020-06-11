@@ -19,20 +19,20 @@ public class SearchCodeAdapter extends BaseRecyclerAdapter<SearchCodeModel, Sear
 
     private boolean showRepoName;
 
-    public SearchCodeAdapter(@NonNull List<SearchCodeModel> data) {
+    public SearchCodeAdapter(final @NonNull List<SearchCodeModel> data) {
         super(data);
         this.showRepoName = showRepoName;
     }
 
-    @Override protected SearchCodeViewHolder viewHolder(ViewGroup parent, int viewType) {
+    @Override protected SearchCodeViewHolder viewHolder(final ViewGroup parent, final int viewType) {
         return SearchCodeViewHolder.newInstance(parent, this);
     }
 
-    @Override protected void onBindView(SearchCodeViewHolder holder, int position) {
+    @Override protected void onBindView(final SearchCodeViewHolder holder, final int position) {
         holder.bind(getItem(position), showRepoName);
     }
 
-    public void showRepoName(boolean showRepoName) {
+    public void showRepoName(final boolean showRepoName) {
         this.showRepoName = showRepoName;
         notifyDataSetChanged();
     }

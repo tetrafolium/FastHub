@@ -23,14 +23,14 @@ import lombok.Setter;
     public List<CommitLinesModel> linesModel;
     public CommitFileModel commitFileModel;
 
-    private CommitFileChanges() {}
+    private CommitFileChanges() { }
 
-    public static Observable<CommitFileChanges> constructToObservable(@Nullable ArrayList<CommitFileModel> files) {
+    public static Observable<CommitFileChanges> constructToObservable(final @Nullable ArrayList<CommitFileModel> files) {
         if (files == null || files.isEmpty()) return Observable.empty();
         return Observable.fromIterable(construct(files));
     }
 
-    @NonNull public static List<CommitFileChanges> construct(@Nullable List<CommitFileModel> files) {
+    @NonNull public static List<CommitFileChanges> construct(final @Nullable List<CommitFileModel> files) {
         if (files == null || files.isEmpty()) {
             return new ArrayList<>();
         }
@@ -39,7 +39,7 @@ import lombok.Setter;
                .toList();
     }
 
-    @NonNull private static CommitFileChanges getCommitFileChanges(CommitFileModel m) {
+    @NonNull private static CommitFileChanges getCommitFileChanges(final CommitFileModel m) {
         CommitFileChanges model = new CommitFileChanges();
         model.setLinesModel(CommitLinesModel.getLines(m.getPatch()));
         if (m.getPatch() != null) {
@@ -53,27 +53,27 @@ import lombok.Setter;
         return 0;
     }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override public void writeToParcel(final Parcel dest, final int flags) {
         dest.writeTypedList(this.linesModel);
         dest.writeParcelable(this.commitFileModel, flags);
     }
 
-    private CommitFileChanges(Parcel in) {
+    private CommitFileChanges(final Parcel in) {
         this.linesModel = in.createTypedArrayList(CommitLinesModel.CREATOR);
         this.commitFileModel = in.readParcelable(CommitFileModel.class.getClassLoader());
     }
 
     public static final Creator<CommitFileChanges> CREATOR = new Creator<CommitFileChanges>() {
-        @Override public CommitFileChanges createFromParcel(Parcel source) {
+        @Override public CommitFileChanges createFromParcel(final Parcel source) {
             return new CommitFileChanges(source);
         }
 
-        @Override public CommitFileChanges[] newArray(int size) {
+        @Override public CommitFileChanges[] newArray(final int size) {
             return new CommitFileChanges[size];
         }
     };
 
-    public static boolean canAttachToBundle(CommitFileChanges model) {
+    public static boolean canAttachToBundle(final CommitFileChanges model) {
         Parcel parcel = Parcel.obtain();
         model.writeToParcel(parcel, 0);
         int size = parcel.dataSize();
@@ -81,9 +81,9 @@ import lombok.Setter;
     }
 
     @Override public String toString() {
-        return "CommitFileChanges{" +
-               "linesModel=" + linesModel +
-               ", commitFileModel=" + commitFileModel +
-               '}';
+        return "CommitFileChanges{"
+               + "linesModel=" + linesModel
+               + ", commitFileModel=" + commitFileModel
+               + '}';
     }
 }

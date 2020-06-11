@@ -40,14 +40,14 @@ public class PinnedReposFragment extends BaseFragment<PinnedReposMvp.View, Pinne
         return new PinnedReposFragment();
     }
 
-    @Override public void onNotifyAdapter(@Nullable List<PinnedRepos> items) {
+    @Override public void onNotifyAdapter(final @Nullable List<PinnedRepos> items) {
         refresh.setRefreshing(false);
         stateLayout.hideProgress();
         if (items != null) adapter.insertItems(items);
         else adapter.clear();
     }
 
-    @Override public void onDeletePinnedRepo(long id, int position) {
+    @Override public void onDeletePinnedRepo(final long id, final int position) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
                                       Bundler.start().put(BundleConstant.YES_NO_EXTRA, true)
                                       .put(BundleConstant.EXTRA, position)
@@ -60,7 +60,7 @@ public class PinnedReposFragment extends BaseFragment<PinnedReposMvp.View, Pinne
         return R.layout.small_grid_refresh_list;
     }
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         adapter = new PinnedReposAdapter(getPresenter().getPinnedRepos(), getPresenter());
         stateLayout.setEmptyText(R.string.empty_pinned_repos);
         recycler.setEmptyView(stateLayout, refresh);
@@ -78,7 +78,7 @@ public class PinnedReposFragment extends BaseFragment<PinnedReposMvp.View, Pinne
         return new PinnedReposPresenter();
     }
 
-    @Override public void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle) {
+    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
         super.onMessageDialogActionClicked(isOk, bundle);
         if (bundle != null && isOk) {
             long id = bundle.getLong(BundleConstant.ID);

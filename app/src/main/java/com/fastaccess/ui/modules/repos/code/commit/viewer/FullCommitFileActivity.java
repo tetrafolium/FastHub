@@ -47,7 +47,7 @@ public class FullCommitFileActivity extends BaseActivity {
     @BindString(R.string.deletion) String deletionText;
     @BindString(R.string.status) String statusText;
 
-    public static void start(@NonNull Context context, @NonNull CommitFileModel fileModel) {
+    public static void start(final @NonNull Context context, final @NonNull CommitFileModel fileModel) {
         Intent starter = new Intent(context, FullCommitFileActivity.class);
         starter.putExtras(Bundler.start()
                           .put(BundleConstant.ITEM, fileModel)
@@ -75,7 +75,7 @@ public class FullCommitFileActivity extends BaseActivity {
         return new BasePresenter();
     }
 
-    @Override protected void onCreate(Bundle savedInstanceState) {
+    @Override protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             commitFileModel = getIntent().getExtras().getParcelable(BundleConstant.ITEM);
@@ -107,12 +107,12 @@ public class FullCommitFileActivity extends BaseActivity {
                          ViewHelper.getPatchRefColor(this)));
     }
 
-    @Override public boolean onCreateOptionsMenu(Menu menu) {
+    @Override public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.commit_row_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         switch (item.getItemId()) {
         case R.id.open:
             startActivity(CodeViewerActivity.createIntent(this, commitFileModel.getContentsUrl(), commitFileModel.getBlobUrl()));

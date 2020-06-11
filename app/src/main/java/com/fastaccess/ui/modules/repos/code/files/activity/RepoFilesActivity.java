@@ -37,14 +37,14 @@ public class RepoFilesActivity extends BaseActivity {
     @State String login;
     @State String repoId;
 
-    public static void startActivity(@NonNull Context context, @NonNull String url, boolean isEnterprise) {
+    public static void startActivity(final @NonNull Context context, final @NonNull String url, final boolean isEnterprise) {
         if (!InputHelper.isEmpty(url)) {
             Intent intent = ActivityHelper.editBundle(getIntent(context, url), isEnterprise);
             context.startActivity(intent);
         }
     }
 
-    public static Intent getIntent(@NonNull Context context, @NonNull String url) {
+    public static Intent getIntent(final @NonNull Context context, final @NonNull String url) {
         boolean isEnterprise = LinkParserHelper.isEnterprise(url);
         if (isEnterprise) {
             url = url.replace("api/v3/", "");
@@ -127,7 +127,7 @@ public class RepoFilesActivity extends BaseActivity {
         return new BasePresenter();
     }
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState == null) {
             Bundle bundle = getIntent().getExtras();
@@ -142,7 +142,7 @@ public class RepoFilesActivity extends BaseActivity {
         setTitle(String.format("%s/%s", login, repoId));
     }
 
-    @Override public boolean onOptionsItemSelected(MenuItem item) {
+    @Override public boolean onOptionsItemSelected(final MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Intent intent = ActivityHelper.editBundle(RepoPagerActivity.createIntent(this, repoId, login), isEnterprise());
             startActivity(intent);

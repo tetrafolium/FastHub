@@ -35,15 +35,15 @@ class RepoContributorsPresenter extends BasePresenter<RepoContributorsMvp.View> 
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Object parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());
@@ -63,7 +63,7 @@ class RepoContributorsPresenter extends BasePresenter<RepoContributorsMvp.View> 
         return true;
     }
 
-    @Override public void onFragmentCreated(@NonNull Bundle bundle) {
+    @Override public void onFragmentCreated(final @NonNull Bundle bundle) {
         repoId = bundle.getString(BundleConstant.ID);
         login = bundle.getString(BundleConstant.EXTRA);
         if (!InputHelper.isEmpty(login) && !InputHelper.isEmpty(repoId)) {
@@ -71,7 +71,7 @@ class RepoContributorsPresenter extends BasePresenter<RepoContributorsMvp.View> 
         }
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
@@ -84,7 +84,7 @@ class RepoContributorsPresenter extends BasePresenter<RepoContributorsMvp.View> 
         return users;
     }
 
-    @Override public void onItemClick(int position, View v, User item) {}
+    @Override public void onItemClick(final int position, final View v, final User item) { }
 
-    @Override public void onItemLongClick(int position, View v, User item) {}
+    @Override public void onItemLongClick(final int position, final View v, final User item) { }
 }

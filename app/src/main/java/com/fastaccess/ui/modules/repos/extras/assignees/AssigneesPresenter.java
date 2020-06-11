@@ -15,7 +15,7 @@ import java.util.ArrayList;
 class AssigneesPresenter extends BasePresenter<AssigneesMvp.View> implements AssigneesMvp.Presenter {
     private ArrayList<User> users = new ArrayList<>();
 
-    @Override public void onCallApi(@NonNull String login, @NonNull String repo, boolean isAssignees) {
+    @Override public void onCallApi(final @NonNull String login, final @NonNull String repo, final boolean isAssignees) {
         makeRestCall(isAssignees ? RestProvider.getRepoService(isEnterprise()).getAssignees(login, repo)
                      : RestProvider.getRepoService(isEnterprise()).getCollaborator(login, repo),
                      response -> sendToView(view -> view.onNotifyAdapter(response != null ? response.getItems() : null)));

@@ -17,7 +17,7 @@ public enum FilesType {
 
     int icon;
 
-    FilesType(int icon) {
+    FilesType(final int icon) {
         this.icon = icon;
     }
 

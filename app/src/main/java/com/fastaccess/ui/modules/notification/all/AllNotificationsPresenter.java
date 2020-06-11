@@ -29,7 +29,7 @@ import io.reactivex.Observable;
 public class AllNotificationsPresenter extends BasePresenter<AllNotificationsMvp.View> implements AllNotificationsMvp.Presenter {
     private final ArrayList<GroupedNotificationModel> notifications = new ArrayList<>();
 
-    @Override public void onItemClick(int position, View v, GroupedNotificationModel model) {
+    @Override public void onItemClick(final int position, final View v, final GroupedNotificationModel model) {
         if (getView() == null) return;
         if (model.getType() == GroupedNotificationModel.ROW) {
             Notification item = model.getNotification();
@@ -56,16 +56,16 @@ public class AllNotificationsPresenter extends BasePresenter<AllNotificationsMvp
         }
     }
 
-    private void markAsRead(int position, View v, Notification item) {
+    private void markAsRead(final int position, final View v, final Notification item) {
         item.setUnread(false);
         manageDisposable(item.save(item));
         sendToView(view -> view.onUpdateReadState(new GroupedNotificationModel(item), position));
         ReadNotificationService.start(v.getContext(), item.getId());
     }
 
-    @Override public void onItemLongClick(int position, View v, GroupedNotificationModel item) {}
+    @Override public void onItemLongClick(final int position, final View v, final GroupedNotificationModel item) { }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
@@ -111,7 +111,7 @@ public class AllNotificationsPresenter extends BasePresenter<AllNotificationsMvp
                      (response)));
     }
 
-    @Override public void onMarkAllAsRead(@NonNull List<GroupedNotificationModel> data) {
+    @Override public void onMarkAllAsRead(final @NonNull List<GroupedNotificationModel> data) {
         manageDisposable(RxHelper.getObservable(Observable.fromIterable(data))
                          .filter(group -> group.getType() == GroupedNotificationModel.ROW)
                          .filter(group -> group.getNotification() != null && group.getNotification().isUnread())
@@ -123,7 +123,7 @@ public class AllNotificationsPresenter extends BasePresenter<AllNotificationsMvp
         }, this::onError));
     }
 
-    @Override public void onMarkReadByRepo(@NonNull List<GroupedNotificationModel> data, @NonNull Repo repo) {
+    @Override public void onMarkReadByRepo(final @NonNull List<GroupedNotificationModel> data, final @NonNull Repo repo) {
         manageDisposable(RxHelper.getObservable(Observable.fromIterable(data))
                          .filter(group -> group.getType() == GroupedNotificationModel.ROW)
                          .filter(group -> group.getNotification() != null && group.getNotification().isUnread())

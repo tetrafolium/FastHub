@@ -57,7 +57,7 @@ public class App extends Application {
         DeviceNameGetter.getInstance().loadDevice();
         try {
             FirebaseMessaging.getInstance().subscribeToTopic("FastHub");
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) { }
     }
 
     private void setupPreference() {

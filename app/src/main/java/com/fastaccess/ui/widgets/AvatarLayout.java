@@ -37,24 +37,24 @@ public class AvatarLayout extends FrameLayout {
     private boolean isOrg;
     private boolean isEnterprise;
 
-    @OnClick(R.id.avatar) void onClick(@NonNull View view) {
+    @OnClick(R.id.avatar) void onClick(final @NonNull View view) {
         if (InputHelper.isEmpty(login)) return;
         UserPagerActivity.startActivity(view.getContext(), login, isOrg, isEnterprise, -1);
     }
 
-    public AvatarLayout(@NonNull Context context) {
+    public AvatarLayout(final @NonNull Context context) {
         super(context);
     }
 
-    public AvatarLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public AvatarLayout(final @NonNull Context context, final @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public AvatarLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr) {
+    public AvatarLayout(final @NonNull Context context, final @Nullable AttributeSet attrs, final @AttrRes int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public AvatarLayout(@NonNull Context context, @Nullable AttributeSet attrs, @AttrRes int defStyleAttr, @StyleRes int defStyleRes) {
+    public AvatarLayout(final @NonNull Context context, final @Nullable AttributeSet attrs, final @AttrRes int defStyleAttr, final @StyleRes int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
@@ -73,11 +73,11 @@ public class AvatarLayout extends FrameLayout {
         }
     }
 
-    public void setUrl(@Nullable String url, @Nullable String login, boolean isOrg, boolean isEnterprise) {
+    public void setUrl(final @Nullable String url, final @Nullable String login, final boolean isOrg, final boolean isEnterprise) {
         setUrl(url, login, isOrg, isEnterprise, false);
     }
 
-    public void setUrl(@Nullable String url, @Nullable String login, boolean isOrg, boolean isEnterprise, boolean reload) {
+    public void setUrl(final @Nullable String url, final @Nullable String login, final boolean isOrg, final boolean isEnterprise, final boolean reload) {
         this.login = login;
         this.isOrg = isOrg;
         this.isEnterprise = isEnterprise;

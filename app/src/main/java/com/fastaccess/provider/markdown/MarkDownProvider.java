@@ -45,9 +45,9 @@ public class MarkDownProvider {
         ".dmg", ".pdf", ".ico", ".docx", ".doc", ".xlsx", ".hwp", ".pptx", ".show", ".mp3", ".ogg", ".ipynb"
     };
 
-    private MarkDownProvider() {}
+    private MarkDownProvider() { }
 
-    public static void setMdText(@NonNull TextView textView, String markdown) {
+    public static void setMdText(final @NonNull TextView textView, final String markdown) {
         if (!InputHelper.isEmpty(markdown)) {
             int width = textView.getMeasuredWidth();
             if (width > 0) {
@@ -64,13 +64,13 @@ public class MarkDownProvider {
         }
     }
 
-    public static void setMdText(@NonNull TextView textView, String markdown, int width) {
+    public static void setMdText(final @NonNull TextView textView, final String markdown, final int width) {
         if (!InputHelper.isEmpty(markdown)) {
             render(textView, markdown, width);
         }
     }
 
-    protected static void render(@NonNull TextView textView, String markdown, int width) {
+    protected static void render(final @NonNull TextView textView, final String markdown, final int width) {
         List<Extension> extensions = Arrays.asList(
                                          StrikethroughExtension.create(),
                                          AutolinkExtension.create(),
@@ -95,7 +95,7 @@ public class MarkDownProvider {
         }
     }
 
-    public static void stripMdText(@NonNull TextView textView, String markdown) {
+    public static void stripMdText(final @NonNull TextView textView, final String markdown) {
         if (!InputHelper.isEmpty(markdown)) {
             Parser parser = Parser.builder().build();
             Node node = parser.parse(markdown);
@@ -103,7 +103,7 @@ public class MarkDownProvider {
         }
     }
 
-    @NonNull public static String stripMdText(String markdown) {
+    @NonNull public static String stripMdText(final String markdown) {
         if (!InputHelper.isEmpty(markdown)) {
             Parser parser = Parser.builder().build();
             Node node = parser.parse(markdown);
@@ -112,7 +112,7 @@ public class MarkDownProvider {
         return "";
     }
 
-    public static String stripHtml(String html) {
+    public static String stripHtml(final String html) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
             return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString();
         } else {
@@ -120,7 +120,7 @@ public class MarkDownProvider {
         }
     }
 
-    public static void addList(@NonNull EditText editText, @NonNull String list) {
+    public static void addList(final @NonNull EditText editText, final @NonNull String list) {
         String tag = list + " ";
         String source = editText.getText().toString();
         int selectionStart = editText.getSelectionStart();
@@ -157,7 +157,7 @@ public class MarkDownProvider {
         editText.setSelection(stringBuffer.length() + selectionStart);
     }
 
-    public static void addHeader(@NonNull EditText editText, int level) {
+    public static void addHeader(final @NonNull EditText editText, final int level) {
         String source = editText.getText().toString();
         int selectionStart = editText.getSelectionStart();
         int selectionEnd = editText.getSelectionEnd();
@@ -172,7 +172,7 @@ public class MarkDownProvider {
 
     }
 
-    public static void addItalic(@NonNull EditText editText) {
+    public static void addItalic(final @NonNull EditText editText) {
         String source = editText.getText().toString();
         int selectionStart = editText.getSelectionStart();
         int selectionEnd = editText.getSelectionEnd();
@@ -183,7 +183,7 @@ public class MarkDownProvider {
 
     }
 
-    public static void addBold(@NonNull EditText editText) {
+    public static void addBold(final @NonNull EditText editText) {
         String source = editText.getText().toString();
         int selectionStart = editText.getSelectionStart();
         int selectionEnd = editText.getSelectionEnd();
@@ -194,7 +194,7 @@ public class MarkDownProvider {
 
     }
 
-    public static void addCode(@NonNull EditText editText) {
+    public static void addCode(final @NonNull EditText editText) {
         try {
             String source = editText.getText().toString();
             int selectionStart = editText.getSelectionStart();
@@ -214,7 +214,7 @@ public class MarkDownProvider {
         }
     }
 
-    public static void addInlinleCode(@NonNull EditText editText) {
+    public static void addInlinleCode(final @NonNull EditText editText) {
         String source = editText.getText().toString();
         int selectionStart = editText.getSelectionStart();
         int selectionEnd = editText.getSelectionEnd();
@@ -225,7 +225,7 @@ public class MarkDownProvider {
 
     }
 
-    public static void addStrikeThrough(@NonNull EditText editText) {
+    public static void addStrikeThrough(final @NonNull EditText editText) {
         String source = editText.getText().toString();
         int selectionStart = editText.getSelectionStart();
         int selectionEnd = editText.getSelectionEnd();
@@ -236,7 +236,7 @@ public class MarkDownProvider {
 
     }
 
-    public static void addQuote(@NonNull EditText editText) {
+    public static void addQuote(final @NonNull EditText editText) {
         String source = editText.getText().toString();
         int selectionStart = editText.getSelectionStart();
         int selectionEnd = editText.getSelectionEnd();
@@ -253,7 +253,7 @@ public class MarkDownProvider {
 
     }
 
-    public static void addDivider(@NonNull EditText editText) {
+    public static void addDivider(final @NonNull EditText editText) {
         String source = editText.getText().toString();
         int selectionStart = editText.getSelectionStart();
         String result;
@@ -267,17 +267,17 @@ public class MarkDownProvider {
 
     }
 
-    public static void addPhoto(@NonNull EditText editText, @NonNull String title, @NonNull String link) {
+    public static void addPhoto(final @NonNull EditText editText, final @NonNull String title, final @NonNull String link) {
         String result = "![" + InputHelper.toString(title) + "](" + InputHelper.toString(link) + ")";
         insertAtCursor(editText, result);
     }
 
-    public static void addLink(@NonNull EditText editText, @NonNull String title, @NonNull String link) {
+    public static void addLink(final @NonNull EditText editText, final @NonNull String title, final @NonNull String link) {
         String result = "[" + InputHelper.toString(title) + "](" + InputHelper.toString(link) + ")";
         insertAtCursor(editText, result);
     }
 
-    private static boolean hasNewLine(@NonNull String source, int selectionStart) {
+    private static boolean hasNewLine(final @NonNull String source, final int selectionStart) {
         try {
             if (source.isEmpty()) return true;
             source = source.substring(0, selectionStart);
@@ -287,7 +287,7 @@ public class MarkDownProvider {
         }
     }
 
-    public static boolean isImage(@Nullable String name) {
+    public static boolean isImage(final @Nullable String name) {
         if (InputHelper.isEmpty(name)) return false;
         name = name.toLowerCase();
         for (String value : IMAGE_EXTENSIONS) {
@@ -297,19 +297,19 @@ public class MarkDownProvider {
         return false;
     }
 
-    public static boolean isMarkdown(@Nullable String name) {
+    public static boolean isMarkdown(final @Nullable String name) {
         if (InputHelper.isEmpty(name)) return false;
         name = name.toLowerCase();
         for (String value : MARKDOWN_EXTENSIONS) {
             String extension = MimeTypeMap.getFileExtensionFromUrl(name);
-            if ((extension != null && value.replace(".", "").equals(extension)) ||
-                    name.equalsIgnoreCase("README") || name.endsWith(value))
+            if ((extension != null && value.replace(".", "").equals(extension))
+                    || name.equalsIgnoreCase("README") || name.endsWith(value))
                 return true;
         }
         return false;
     }
 
-    public static boolean isArchive(@Nullable String name) {
+    public static boolean isArchive(final @Nullable String name) {
         if (InputHelper.isEmpty(name)) return false;
         name = name.toLowerCase();
         for (String value : ARCHIVE_EXTENSIONS) {
@@ -320,7 +320,7 @@ public class MarkDownProvider {
         return false;
     }
 
-    public static void insertAtCursor(@NonNull EditText editText, @NonNull String text) {
+    public static void insertAtCursor(final @NonNull EditText editText, final @NonNull String text) {
         String oriContent = editText.getText().toString();
         int start = editText.getSelectionStart();
         int end = editText.getSelectionEnd();

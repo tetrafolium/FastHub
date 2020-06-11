@@ -15,14 +15,14 @@ import okhttp3.ResponseBody;
 
 public class PaginationInterceptor implements Interceptor {
 
-    @Override public Response intercept(@NonNull Chain chain) throws IOException {
+    @Override public Response intercept(final @NonNull Chain chain) throws IOException {
         Request request = chain.request();
         Response response = chain.proceed(request);
         Headers headers = chain.request().headers();
         if (headers != null) {
-            if ((headers.values("Accept").contains("application/vnd.github.html") ||
-                    headers.values("Accept").contains("application/vnd.github.VERSION.raw"))) {
-                return response;//return them as they are.
+            if ((headers.values("Accept").contains("application/vnd.github.html")
+                    || headers.values("Accept").contains("application/vnd.github.VERSION.raw"))) {
+                return response; //return them as they are.
             }
         }
         if (response.isSuccessful()) {
@@ -50,7 +50,7 @@ public class PaginationInterceptor implements Interceptor {
                     String rel = pageLink[1].replaceAll("\"", "").replace("rel=", "");
                     if (page != null) pagination += String.format("\"%s\":\"%s\",", rel.trim(), page);
                 }
-                if (!InputHelper.isEmpty(pagination)) {//hacking for search pagination.
+                if (!InputHelper.isEmpty(pagination)) { //hacking for search pagination.
                     String body = response.body().string();
                     return response.newBuilder().body(ResponseBody.create(response.body().contentType(),
                                                       "{" + pagination + body.substring(1, body.length()))).build();

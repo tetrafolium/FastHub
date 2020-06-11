@@ -30,20 +30,20 @@ class GistsPresenter extends BasePresenter<GistsMvp.View> implements GistsMvp.Pr
         return previousTotal;
     }
 
-    @Override public void setCurrentPage(int page) {
+    @Override public void setCurrentPage(final int page) {
         this.page = page;
     }
 
-    @Override public void setPreviousTotal(int previousTotal) {
+    @Override public void setPreviousTotal(final int previousTotal) {
         this.previousTotal = previousTotal;
     }
 
-    @Override public void onError(@NonNull Throwable throwable) {
+    @Override public void onError(final @NonNull Throwable throwable) {
         onWorkOffline();
         super.onError(throwable);
     }
 
-    @Override public boolean onCallApi(int page, @Nullable Object parameter) {
+    @Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
         if (page == 1) {
             lastPage = Integer.MAX_VALUE;
             sendToView(view -> view.getLoadMore().reset());
@@ -74,9 +74,9 @@ class GistsPresenter extends BasePresenter<GistsMvp.View> implements GistsMvp.Pr
         }
     }
 
-    @Override public void onItemClick(int position, View v, Gist item) {
+    @Override public void onItemClick(final int position, final View v, final Gist item) {
         v.getContext().startActivity(GistActivity.createIntent(v.getContext(), item.getGistId(), isEnterprise()));
     }
 
-    @Override public void onItemLongClick(int position, View v, Gist item) {}
+    @Override public void onItemLongClick(final int position, final View v, final Gist item) { }
 }

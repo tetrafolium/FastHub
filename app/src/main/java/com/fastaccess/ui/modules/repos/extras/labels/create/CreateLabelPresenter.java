@@ -13,15 +13,15 @@ import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
 
 public class CreateLabelPresenter extends BasePresenter<CreateLabelMvp.View> implements CreateLabelMvp.Presenter {
 
-    @Override public void onItemClick(int position, View v, String item) {
+    @Override public void onItemClick(final int position, final View v, final String item) {
         if (getView() != null) {
             getView().onColorSelected(item);
         }
     }
 
-    @Override public void onItemLongClick(int position, View v, String item) {}
+    @Override public void onItemLongClick(final int position, final View v, final String item) { }
 
-    @Override public void onSubmitLabel(@NonNull String name, @NonNull String color, @NonNull String repo, @NonNull String login) {
+    @Override public void onSubmitLabel(final @NonNull String name, final @NonNull String color, final @NonNull String repo, final @NonNull String login) {
         LabelModel labelModel = new LabelModel();
         labelModel.setColor(color.replaceAll("#", ""));
         labelModel.setName(name);

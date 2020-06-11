@@ -51,7 +51,7 @@ public class PrefGetter {
         MID_NIGHT_BLUE,
         BLUISH
     })
-    @Retention(RetentionPolicy.SOURCE) public @interface ThemeType {}
+    @Retention(RetentionPolicy.SOURCE) public @interface ThemeType { }
 
     @IntDef({
         RED,
@@ -71,7 +71,7 @@ public class PrefGetter {
         ORANGE,
         DEEP_ORANGE
     })
-    @Retention(RetentionPolicy.SOURCE) @interface ThemeColor {}
+    @Retention(RetentionPolicy.SOURCE) @interface ThemeColor { }
 
 
     private static final String WHATS_NEW_VERSION = "whats_new";
@@ -106,11 +106,11 @@ public class PrefGetter {
     private static final String DISABLE_AUTO_LOAD_IMAGE = "disable_auto_loading_image";
     private static final String PLAY_STORE_REVIEW_ACTIVITY = "play_store_review_activity";
 
-    public static void setToken(@Nullable String token) {
+    public static void setToken(final @Nullable String token) {
         PrefHelper.set(TOKEN, token);
     }
 
-    public static void setTokenEnterprise(@Nullable String token) {
+    public static void setTokenEnterprise(final @Nullable String token) {
         PrefHelper.set(ENTERPRISE_TOKEN, token);
     }
 
@@ -126,7 +126,7 @@ public class PrefGetter {
         return PrefHelper.getString(ENTERPRISE_OTP_CODE);
     }
 
-    public static void setEnterpriseOtpCode(@Nullable String otp) {
+    public static void setEnterpriseOtpCode(final @Nullable String otp) {
         PrefHelper.set(ENTERPRISE_OTP_CODE, otp);
     }
 
@@ -134,7 +134,7 @@ public class PrefGetter {
         return PrefHelper.getString(OTP_CODE);
     }
 
-    public static void setOtpCode(@Nullable String otp) {
+    public static void setOtpCode(final @Nullable String otp) {
         PrefHelper.set(OTP_CODE, otp);
     }
 
@@ -142,7 +142,7 @@ public class PrefGetter {
         return PrefHelper.getBoolean(ADS);
     }
 
-    public static void setAdsEnabled(boolean isEnabled) {
+    public static void setAdsEnabled(final boolean isEnabled) {
         PrefHelper.set(ADS, isEnabled);
     }
 
@@ -224,7 +224,7 @@ public class PrefGetter {
         return -1;
     }
 
-    public static int notificationDurationMillis(@NonNull String prefValue) {
+    public static int notificationDurationMillis(final @NonNull String prefValue) {
         if (!InputHelper.isEmpty(prefValue)) {
             switch (prefValue) {
             case "1":
@@ -272,7 +272,7 @@ public class PrefGetter {
         return PrefHelper.getBoolean(SENT_VIA_BOX);
     }
 
-    @ThemeType public static int getThemeType(@NonNull Context context) {
+    @ThemeType public static int getThemeType(final @NonNull Context context) {
         return getThemeType(context.getResources());
     }
 
@@ -280,11 +280,11 @@ public class PrefGetter {
         return getThemeType(App.getInstance().getResources());
     }
 
-    @ThemeColor public static int getThemeColor(@NonNull Context context) {
+    @ThemeColor public static int getThemeColor(final @NonNull Context context) {
         return getThemeColor(context.getResources());
     }
 
-    @ThemeType static int getThemeType(@NonNull Resources resources) {
+    @ThemeType static int getThemeType(final @NonNull Resources resources) {
         String appTheme = PrefHelper.getString("appTheme");
         if (!InputHelper.isEmpty(appTheme)) {
             if (appTheme.equalsIgnoreCase(resources.getString(R.string.dark_theme_mode))) {
@@ -302,13 +302,13 @@ public class PrefGetter {
         return LIGHT;
     }
 
-    @ThemeColor private static int getThemeColor(@NonNull Resources resources) {
+    @ThemeColor private static int getThemeColor(final @NonNull Resources resources) {
         String appColor = PrefHelper.getString("appColor");
         return getThemeColor(resources, appColor);
     }
 
     // used for color picker to get the index of the color (enum) from the name of the color
-    public static int getThemeColor(@NonNull Resources resources, String appColor) {
+    public static int getThemeColor(final @NonNull Resources resources, final String appColor) {
         if (!InputHelper.isEmpty(appColor)) {
             if (appColor.equalsIgnoreCase(resources.getString(R.string.red_theme_mode)))
                 return RED;
@@ -351,11 +351,11 @@ public class PrefGetter {
         return appLanguage == null ? "en" : appLanguage;
     }
 
-    public static void setAppLangauge(@Nullable String language) {
+    public static void setAppLangauge(final @Nullable String language) {
         PrefHelper.set(APP_LANGUAGE, language == null ? "en" : language);
     }
 
-    public static void setProfileBackgroundUrl(@Nullable String url) {
+    public static void setProfileBackgroundUrl(final @Nullable String url) {
         if (url == null) {
             PrefHelper.clearKey(PROFILE_BACKGROUND_URL);
         } else {
@@ -434,7 +434,7 @@ public class PrefGetter {
         return PrefHelper.getString(CODE_THEME);
     }
 
-    public static void setCodeTheme(@NonNull String theme) {
+    public static void setCodeTheme(final @NonNull String theme) {
         PrefHelper.set(CODE_THEME, theme);
     }
 
@@ -442,7 +442,7 @@ public class PrefGetter {
         return PrefHelper.getString(ENTERPRISE_URL);
     }
 
-    public static void setEnterpriseUrl(@Nullable String value) {
+    public static void setEnterpriseUrl(final @Nullable String value) {
         PrefHelper.set(ENTERPRISE_URL, value);
     }
 
@@ -465,7 +465,7 @@ public class PrefGetter {
         return !InputHelper.isEmpty(nsp) ? Uri.parse(nsp) : RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     }
 
-    public static void setNotificationSound(@NonNull Uri uri) {
+    public static void setNotificationSound(final @NonNull Uri uri) {
         PrefHelper.set(NOTIFICATION_SOUND_PATH, uri.toString());
     }
 
