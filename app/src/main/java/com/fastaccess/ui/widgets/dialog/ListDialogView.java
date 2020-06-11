@@ -33,74 +33,75 @@ import butterknife.BindView;
 
 public class ListDialogView<O extends Parcelable> extends BaseDialogFragment implements BaseViewHolder.OnItemClickListener<O> {
 
-    public static final String TAG = ListDialogView.class.getSimpleName();
+public static final String TAG = ListDialogView.class.getSimpleName();
 
-    @BindView(R.id.title) FontTextView title;
-    @BindView(R.id.recycler) DynamicRecyclerView recycler;
-    @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
+@BindView(R.id.title) FontTextView title;
+@BindView(R.id.recycler) DynamicRecyclerView recycler;
+@BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
 
-    public interface onSimpleItemSelection<O extends Parcelable> {
-        void onItemSelected(O item);
-    }
+public interface onSimpleItemSelection<O extends Parcelable> {
+void onItemSelected(O item);
+}
 
-    @Nullable private onSimpleItemSelection onSimpleItemSelection;
+@Nullable private onSimpleItemSelection onSimpleItemSelection;
 
-    @Override protected int fragmentLayout() {
-        return R.layout.simple_list_dialog;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.simple_list_dialog;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        ArrayList<O> objects = getArguments().getParcelableArrayList(BundleConstant.ITEM);
-        String titleText = getArguments().getString(BundleConstant.EXTRA);
-        title.setText(titleText);
-        if (objects != null) {
-            SimpleListAdapter<O> adapter = new SimpleListAdapter<>(objects, this);
-            recycler.addDivider();
-            recycler.setAdapter(adapter);
-        } else {
-            dismiss();
-        }
-        fastScroller.attachRecyclerView(recycler);
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	ArrayList<O> objects = getArguments().getParcelableArrayList(BundleConstant.ITEM);
+	String titleText = getArguments().getString(BundleConstant.EXTRA);
+	title.setText(titleText);
+	if (objects != null) {
+		SimpleListAdapter<O> adapter = new SimpleListAdapter<>(objects, this);
+		recycler.addDivider();
+		recycler.setAdapter(adapter);
+	} else {
+		dismiss();
+	}
+	fastScroller.attachRecyclerView(recycler);
+}
 
-    @Override public void onAttach(final @NotNull Context context) {
-        super.onAttach(context);
-        if (getParentFragment() != null && getParentFragment() instanceof onSimpleItemSelection) {
-            onSimpleItemSelection = (onSimpleItemSelection) getParentFragment();
-        } else if (context instanceof onSimpleItemSelection) {
-            onSimpleItemSelection = (onSimpleItemSelection) context;
-        }
-    }
+@Override public void onAttach(final @NotNull Context context) {
+	super.onAttach(context);
+	if (getParentFragment() != null && getParentFragment() instanceof onSimpleItemSelection) {
+		onSimpleItemSelection = (onSimpleItemSelection) getParentFragment();
+	} else if (context instanceof onSimpleItemSelection) {
+		onSimpleItemSelection = (onSimpleItemSelection) context;
+	}
+}
 
-    @Override public void onDetach() {
-        super.onDetach();
-        onSimpleItemSelection = null;
-    }
+@Override public void onDetach() {
+	super.onDetach();
+	onSimpleItemSelection = null;
+}
 
-    @NonNull @Override public TiPresenter providePresenter() {
-        return new BasePresenter();
-    }
+@NonNull @Override public TiPresenter providePresenter() {
+	return new BasePresenter();
+}
 
-    @SuppressWarnings("unchecked") @Override public void onItemClick(final int position, final View v, final O item) {
-        if (onSimpleItemSelection != null) {
-            onSimpleItemSelection.onItemSelected(item);
-        }
-        dismiss();
-    }
+@SuppressWarnings("unchecked") @Override public void onItemClick(final int position, final View v, final O item) {
+	if (onSimpleItemSelection != null) {
+		onSimpleItemSelection.onItemSelected(item);
+	}
+	dismiss();
+}
 
-    @Override public void onItemLongClick(final int position, final View v, final O item) { }
+@Override public void onItemLongClick(final int position, final View v, final O item) {
+}
 
-    public void initArguments(final @NonNull String title, final @NonNull ArrayList<O> objects) {
-        setArguments(Bundler.start()
-                     .put(BundleConstant.EXTRA, title)
-                     .putParcelableArrayList(BundleConstant.ITEM, objects)
-                     .end());
-    }
+public void initArguments(final @NonNull String title, final @NonNull ArrayList<O> objects) {
+	setArguments(Bundler.start()
+	             .put(BundleConstant.EXTRA, title)
+	             .putParcelableArrayList(BundleConstant.ITEM, objects)
+	             .end());
+}
 
-    public void initArguments(final @NonNull String title, final @NonNull List<O> objects) {
-        setArguments(Bundler.start()
-                     .put(BundleConstant.EXTRA, title)
-                     .putParcelableArrayList(BundleConstant.ITEM, (ArrayList<? extends Parcelable>) objects)
-                     .end());
-    }
+public void initArguments(final @NonNull String title, final @NonNull List<O> objects) {
+	setArguments(Bundler.start()
+	             .put(BundleConstant.EXTRA, title)
+	             .putParcelableArrayList(BundleConstant.ITEM, (ArrayList<? extends Parcelable>) objects)
+	             .end());
+}
 }

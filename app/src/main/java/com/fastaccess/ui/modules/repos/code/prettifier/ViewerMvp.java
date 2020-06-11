@@ -14,43 +14,43 @@ import com.prettifier.pretty.PrettifyWebView;
 
 interface ViewerMvp {
 
-    interface View extends BaseMvp.FAView, PrettifyWebView.OnContentChangedListener {
+interface View extends BaseMvp.FAView, PrettifyWebView.OnContentChangedListener {
 
-        void onSetImageUrl(@NonNull String url, boolean isSvg);
+void onSetImageUrl(@NonNull String url, boolean isSvg);
 
-        void onSetMdText(@NonNull String text, String baseUrl, boolean replace);
+void onSetMdText(@NonNull String text, String baseUrl, boolean replace);
 
-        void onSetCode(@NonNull String text);
+void onSetCode(@NonNull String text);
 
-        void onShowError(@NonNull String msg);
+void onShowError(@NonNull String msg);
 
-        void onShowError(@StringRes int msg);
+void onShowError(@StringRes int msg);
 
-        void onShowMdProgress();
+void onShowMdProgress();
 
-        void openUrl(@NonNull String url);
+void openUrl(@NonNull String url);
 
-        void onViewAsCode();
-    }
+void onViewAsCode();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter {
+interface Presenter extends BaseMvp.FAPresenter {
 
-        void onHandleIntent(@Nullable Bundle intent);
+void onHandleIntent(@Nullable Bundle intent);
 
-        void onLoadContentAsStream();
+void onLoadContentAsStream();
 
-        String downloadedStream();
+String downloadedStream();
 
-        boolean isMarkDown();
+boolean isMarkDown();
 
-        void onWorkOffline();
+void onWorkOffline();
 
-        void onWorkOnline();
+void onWorkOnline();
 
-        boolean isRepo();
+boolean isRepo();
 
-        boolean isImage();
+boolean isImage();
 
-        @NonNull String url();
-    }
+@NonNull String url();
+}
 }

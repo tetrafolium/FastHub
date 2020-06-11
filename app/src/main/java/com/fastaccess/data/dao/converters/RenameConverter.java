@@ -7,7 +7,7 @@ import com.fastaccess.data.dao.RenameModel;
  */
 
 public class RenameConverter extends BaseConverter<RenameModel> {
-    @Override protected Class<? extends RenameModel> getTypeClass() {
-        return RenameModel.class;
-    }
+@Override protected Class<? extends RenameModel> getTypeClass() {
+	return RenameModel.class;
+}
 }

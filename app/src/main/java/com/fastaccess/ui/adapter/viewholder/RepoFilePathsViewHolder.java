@@ -18,17 +18,17 @@ import butterknife.BindView;
 
 public class RepoFilePathsViewHolder extends BaseViewHolder<RepoFile> {
 
-    @BindView(R.id.pathName) FontTextView pathName;
+@BindView(R.id.pathName) FontTextView pathName;
 
-    private RepoFilePathsViewHolder(final @NonNull View itemView, final @NonNull BaseRecyclerAdapter baseAdapter) {
-        super(itemView, baseAdapter);
-    }
+private RepoFilePathsViewHolder(final @NonNull View itemView, final @NonNull BaseRecyclerAdapter baseAdapter) {
+	super(itemView, baseAdapter);
+}
 
-    public static RepoFilePathsViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
-        return new RepoFilePathsViewHolder(getView(viewGroup, R.layout.file_path_row_item), adapter);
-    }
+public static RepoFilePathsViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
+	return new RepoFilePathsViewHolder(getView(viewGroup, R.layout.file_path_row_item), adapter);
+}
 
-    @Override public void bind(final @NonNull RepoFile filesModel) {
-        pathName.setText(filesModel.getName());
-    }
+@Override public void bind(final @NonNull RepoFile filesModel) {
+	pathName.setText(filesModel.getName());
+}
 }

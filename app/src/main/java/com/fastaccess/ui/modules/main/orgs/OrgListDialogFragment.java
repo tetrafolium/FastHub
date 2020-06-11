@@ -26,83 +26,83 @@ import butterknife.BindView;
  */
 
 public class OrgListDialogFragment extends BaseDialogFragment<OrgListDialogMvp.View, OrgListDialogPresenter>
-    implements OrgListDialogMvp.View {
+	implements OrgListDialogMvp.View {
 
-    @BindView(R.id.recycler) DynamicRecyclerView recycler;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.stateLayout) StateLayout stateLayout;
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
-    private UsersAdapter adapter;
+@BindView(R.id.recycler) DynamicRecyclerView recycler;
+@BindView(R.id.refresh) SwipeRefreshLayout refresh;
+@BindView(R.id.stateLayout) StateLayout stateLayout;
+@BindView(R.id.toolbar) Toolbar toolbar;
+@BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
+private UsersAdapter adapter;
 
-    public static OrgListDialogFragment newInstance() {
-        return new OrgListDialogFragment();
-    }
+public static OrgListDialogFragment newInstance() {
+	return new OrgListDialogFragment();
+}
 
-    @Override public void onNotifyAdapter(final @Nullable List<User> items) {
-        hideProgress();
-        if (items == null || items.isEmpty()) {
-            adapter.clear();
-            return;
-        }
-        adapter.insertItems(items);
-    }
+@Override public void onNotifyAdapter(final @Nullable List<User> items) {
+	hideProgress();
+	if (items == null || items.isEmpty()) {
+		adapter.clear();
+		return;
+	}
+	adapter.insertItems(items);
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.milestone_dialog_layout;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.milestone_dialog_layout;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        toolbar.setTitle(R.string.organizations);
-        toolbar.inflateMenu(R.menu.add_menu);
-        toolbar.getMenu().findItem(R.id.add).setIcon(R.drawable.ic_info_outline).setTitle(R.string.no_orgs_dialog_title);
-        toolbar.setOnMenuItemClickListener(item -> {
-            MessageDialogView.newInstance(getString(R.string.no_orgs_dialog_title), getString(R.string.no_orgs_description), false, true)
-            .show(getChildFragmentManager(), MessageDialogView.TAG);
-            return true;
-        });
-        toolbar.setNavigationIcon(R.drawable.ic_clear);
-        toolbar.setNavigationOnClickListener(v -> dismiss());
-        stateLayout.setEmptyText(R.string.no_orgs);
-        stateLayout.setOnReloadListener(v -> getPresenter().onLoadOrgs());
-        refresh.setOnRefreshListener(() -> getPresenter().onLoadOrgs());
-        recycler.setEmptyView(stateLayout, refresh);
-        adapter = new UsersAdapter(getPresenter().getOrgs());
-        recycler.setAdapter(adapter);
-        recycler.addKeyLineDivider();
-        if (savedInstanceState == null) {
-            getPresenter().onLoadOrgs();
-        }
-        fastScroller.attachRecyclerView(recycler);
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	toolbar.setTitle(R.string.organizations);
+	toolbar.inflateMenu(R.menu.add_menu);
+	toolbar.getMenu().findItem(R.id.add).setIcon(R.drawable.ic_info_outline).setTitle(R.string.no_orgs_dialog_title);
+	toolbar.setOnMenuItemClickListener(item->{
+			MessageDialogView.newInstance(getString(R.string.no_orgs_dialog_title), getString(R.string.no_orgs_description), false, true)
+			.show(getChildFragmentManager(), MessageDialogView.TAG);
+			return true;
+		});
+	toolbar.setNavigationIcon(R.drawable.ic_clear);
+	toolbar.setNavigationOnClickListener(v->dismiss());
+	stateLayout.setEmptyText(R.string.no_orgs);
+	stateLayout.setOnReloadListener(v->getPresenter().onLoadOrgs());
+	refresh.setOnRefreshListener(()->getPresenter().onLoadOrgs());
+	recycler.setEmptyView(stateLayout, refresh);
+	adapter = new UsersAdapter(getPresenter().getOrgs());
+	recycler.setAdapter(adapter);
+	recycler.addKeyLineDivider();
+	if (savedInstanceState == null) {
+		getPresenter().onLoadOrgs();
+	}
+	fastScroller.attachRecyclerView(recycler);
+}
 
-    @Override public void showProgress(final @StringRes int resId) {
+@Override public void showProgress(final @StringRes int resId) {
 
-        refresh.setRefreshing(true);
-        stateLayout.showProgress();
-    }
+	refresh.setRefreshing(true);
+	stateLayout.showProgress();
+}
 
-    @Override public void hideProgress() {
-        refresh.setRefreshing(false);
-        stateLayout.hideProgress();
-    }
+@Override public void hideProgress() {
+	refresh.setRefreshing(false);
+	stateLayout.hideProgress();
+}
 
-    @Override public void showErrorMessage(final @NonNull String message) {
-        showReload();
-        super.showErrorMessage(message);
-    }
+@Override public void showErrorMessage(final @NonNull String message) {
+	showReload();
+	super.showErrorMessage(message);
+}
 
-    @Override public void showMessage(final int titleRes, final int msgRes) {
-        showReload();
-        super.showMessage(titleRes, msgRes);
-    }
+@Override public void showMessage(final int titleRes, final int msgRes) {
+	showReload();
+	super.showMessage(titleRes, msgRes);
+}
 
-    @NonNull @Override public OrgListDialogPresenter providePresenter() {
-        return new OrgListDialogPresenter();
-    }
+@NonNull @Override public OrgListDialogPresenter providePresenter() {
+	return new OrgListDialogPresenter();
+}
 
-    private void showReload() {
-        hideProgress();
-        stateLayout.showReload(adapter.getItemCount());
-    }
+private void showReload() {
+	hideProgress();
+	stateLayout.showReload(adapter.getItemCount());
+}
 }

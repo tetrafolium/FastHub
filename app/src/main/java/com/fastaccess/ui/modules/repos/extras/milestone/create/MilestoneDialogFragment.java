@@ -26,67 +26,67 @@ import org.jetbrains.annotations.NotNull;
 
 public class MilestoneDialogFragment extends BaseDialogFragment implements MilestoneMvp.OnMilestoneSelected {
 
-    private IssuePagerMvp.View issueCallback;
-    private PullRequestPagerMvp.View pullRequestCallback;
-    private MilestoneMvp.OnMilestoneSelected milestoneCallback;
+private IssuePagerMvp.View issueCallback;
+private PullRequestPagerMvp.View pullRequestCallback;
+private MilestoneMvp.OnMilestoneSelected milestoneCallback;
 
-    public static MilestoneDialogFragment newInstance(final @NonNull String login, final @NonNull String repo) {
-        MilestoneDialogFragment view = new MilestoneDialogFragment();
-        view.setArguments(Bundler.start()
-                          .put(BundleConstant.EXTRA, login)
-                          .put(BundleConstant.ID, repo)
-                          .end());
-        return view;
-    }
+public static MilestoneDialogFragment newInstance(final @NonNull String login, final @NonNull String repo) {
+	MilestoneDialogFragment view = new MilestoneDialogFragment();
+	view.setArguments(Bundler.start()
+	                  .put(BundleConstant.EXTRA, login)
+	                  .put(BundleConstant.ID, repo)
+	                  .end());
+	return view;
+}
 
-    @Override public void onAttach(final @NotNull Context context) {
-        super.onAttach(context);
-        if (context instanceof IssuePagerMvp.View) {
-            issueCallback = (IssuePagerMvp.View) context;
-        } else if (getParentFragment() instanceof IssuePagerMvp.View) {
-            issueCallback = (IssuePagerMvp.View) getParentFragment();
-        }
-        if (context instanceof PullRequestPagerMvp.View) {
-            pullRequestCallback = (PullRequestPagerMvp.View) context;
-        } else if (getParentFragment() instanceof PullRequestPagerMvp.View) {
-            pullRequestCallback = (PullRequestPagerMvp.View) getParentFragment();
-        }
+@Override public void onAttach(final @NotNull Context context) {
+	super.onAttach(context);
+	if (context instanceof IssuePagerMvp.View) {
+		issueCallback = (IssuePagerMvp.View) context;
+	} else if (getParentFragment() instanceof IssuePagerMvp.View) {
+		issueCallback = (IssuePagerMvp.View) getParentFragment();
+	}
+	if (context instanceof PullRequestPagerMvp.View) {
+		pullRequestCallback = (PullRequestPagerMvp.View) context;
+	} else if (getParentFragment() instanceof PullRequestPagerMvp.View) {
+		pullRequestCallback = (PullRequestPagerMvp.View) getParentFragment();
+	}
 
-        if (context instanceof MilestoneMvp.OnMilestoneSelected) {
-            milestoneCallback = (MilestoneMvp.OnMilestoneSelected) context;
-        } else if (getParentFragment() instanceof MilestoneMvp.OnMilestoneSelected) {
-            milestoneCallback = (MilestoneMvp.OnMilestoneSelected) getParentFragment();
-        }
-    }
+	if (context instanceof MilestoneMvp.OnMilestoneSelected) {
+		milestoneCallback = (MilestoneMvp.OnMilestoneSelected) context;
+	} else if (getParentFragment() instanceof MilestoneMvp.OnMilestoneSelected) {
+		milestoneCallback = (MilestoneMvp.OnMilestoneSelected) getParentFragment();
+	}
+}
 
-    @Override public void onDetach() {
-        super.onDetach();
-    }
+@Override public void onDetach() {
+	super.onDetach();
+}
 
-    @NonNull @Override public TiPresenter providePresenter() {
-        return new BasePresenter();
-    }
+@NonNull @Override public TiPresenter providePresenter() {
+	return new BasePresenter();
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.single_container_layout;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.single_container_layout;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            Bundle bundle = getArguments();
-            com.fastaccess.ui.modules.repos.extras.milestone.MilestoneDialogFragment milestoneView = new com.fastaccess.ui.modules.repos.extras
-            .milestone.MilestoneDialogFragment();
-            milestoneView.setArguments(bundle);
-            getChildFragmentManager()
-            .beginTransaction()
-            .replace(R.id.singleContainer, milestoneView, com.fastaccess.ui.modules.repos.extras.milestone.MilestoneDialogFragment.TAG)
-            .commit();
-        }
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	if (savedInstanceState == null) {
+		Bundle bundle = getArguments();
+		com.fastaccess.ui.modules.repos.extras.milestone.MilestoneDialogFragment milestoneView = new com.fastaccess.ui.modules.repos.extras
+		                                                                                         .milestone.MilestoneDialogFragment();
+		milestoneView.setArguments(bundle);
+		getChildFragmentManager()
+		.beginTransaction()
+		.replace(R.id.singleContainer, milestoneView, com.fastaccess.ui.modules.repos.extras.milestone.MilestoneDialogFragment.TAG)
+		.commit();
+	}
+}
 
-    @Override public void onMilestoneSelected(final @NonNull MilestoneModel milestoneModel) {
-        if (issueCallback != null) issueCallback.onMileStoneSelected(milestoneModel);
-        if (pullRequestCallback != null) pullRequestCallback.onMileStoneSelected(milestoneModel);
-        if (milestoneCallback != null) milestoneCallback.onMilestoneSelected(milestoneModel);
-    }
+@Override public void onMilestoneSelected(final @NonNull MilestoneModel milestoneModel) {
+	if (issueCallback != null) issueCallback.onMileStoneSelected(milestoneModel);
+	if (pullRequestCallback != null) pullRequestCallback.onMileStoneSelected(milestoneModel);
+	if (milestoneCallback != null) milestoneCallback.onMilestoneSelected(milestoneModel);
+}
 }

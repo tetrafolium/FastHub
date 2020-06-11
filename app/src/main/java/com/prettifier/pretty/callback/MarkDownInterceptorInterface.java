@@ -9,29 +9,29 @@ import com.prettifier.pretty.PrettifyWebView;
  */
 
 public class MarkDownInterceptorInterface {
-    private PrettifyWebView prettifyWebView;
-    private boolean toggleNestScrolling;
+private PrettifyWebView prettifyWebView;
+private boolean toggleNestScrolling;
 
-    public MarkDownInterceptorInterface(final PrettifyWebView prettifyWebView) {
-        this(prettifyWebView, false);
-    }
+public MarkDownInterceptorInterface(final PrettifyWebView prettifyWebView) {
+	this(prettifyWebView, false);
+}
 
-    public MarkDownInterceptorInterface(final PrettifyWebView prettifyWebView, final boolean toggleNestScrolling) {
-        this.prettifyWebView = prettifyWebView;
-        this.toggleNestScrolling = toggleNestScrolling;
-    }
+public MarkDownInterceptorInterface(final PrettifyWebView prettifyWebView, final boolean toggleNestScrolling) {
+	this.prettifyWebView = prettifyWebView;
+	this.toggleNestScrolling = toggleNestScrolling;
+}
 
-    @JavascriptInterface public void startIntercept() {
-        if (prettifyWebView != null) {
-            prettifyWebView.setInterceptTouch(true);
-            if (toggleNestScrolling) prettifyWebView.setEnableNestedScrolling(false);
-        }
-    }
+@JavascriptInterface public void startIntercept() {
+	if (prettifyWebView != null) {
+		prettifyWebView.setInterceptTouch(true);
+		if (toggleNestScrolling) prettifyWebView.setEnableNestedScrolling(false);
+	}
+}
 
-    @JavascriptInterface public void stopIntercept() {
-        if (prettifyWebView != null) {
-            prettifyWebView.setInterceptTouch(false);
-            if (toggleNestScrolling) prettifyWebView.setEnableNestedScrolling(true);
-        }
-    }
+@JavascriptInterface public void stopIntercept() {
+	if (prettifyWebView != null) {
+		prettifyWebView.setInterceptTouch(false);
+		if (toggleNestScrolling) prettifyWebView.setEnableNestedScrolling(true);
+	}
+}
 }

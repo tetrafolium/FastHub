@@ -38,142 +38,144 @@ import butterknife.OnClick;
 
 public class CreateGistActivity extends BaseActivity<CreateGistMvp.View, CreateGistPresenter> implements CreateGistMvp.View {
 
-    @BindView(R.id.description) TextInputLayout description;
-    @BindView(R.id.buttonsHolder) View buttonsHolder;
-    @State String id;
+@BindView(R.id.description) TextInputLayout description;
+@BindView(R.id.buttonsHolder) View buttonsHolder;
+@State String id;
 
-    private GistFilesListFragment filesListFragment;
+private GistFilesListFragment filesListFragment;
 
 
-    public static void start(final @NonNull Activity context, final @NonNull Gist gistsModel) {
-        Intent starter = new Intent(context, CreateGistActivity.class);
-        putBundle(gistsModel, starter);
-        context.startActivityForResult(starter, BundleConstant.REQUEST_CODE);
-    }
+public static void start(final @NonNull Activity context, final @NonNull Gist gistsModel) {
+	Intent starter = new Intent(context, CreateGistActivity.class);
+	putBundle(gistsModel, starter);
+	context.startActivityForResult(starter, BundleConstant.REQUEST_CODE);
+}
 
-    public static void start(final @NonNull Fragment context, final @NonNull Gist gistsModel) {
-        Intent starter = new Intent(context.getContext(), CreateGistActivity.class);
-        putBundle(gistsModel, starter);
-        context.startActivityForResult(starter, BundleConstant.REQUEST_CODE);
-    }
+public static void start(final @NonNull Fragment context, final @NonNull Gist gistsModel) {
+	Intent starter = new Intent(context.getContext(), CreateGistActivity.class);
+	putBundle(gistsModel, starter);
+	context.startActivityForResult(starter, BundleConstant.REQUEST_CODE);
+}
 
-    private static void putBundle(final @NonNull Gist gistsModel, final @NonNull Intent starter) {
-        String login = gistsModel.getOwner() != null ? gistsModel.getOwner().getLogin()
-                       : gistsModel.getUser() != null ? gistsModel.getUser().getLogin() : "";
-        starter.putExtras(Bundler.start()
-                          .putParcelableArrayList(BundleConstant.ITEM, gistsModel.getFilesAsList())
-                          .put(BundleConstant.EXTRA, Login.getUser().getLogin().equalsIgnoreCase(login))
-                          .put(BundleConstant.ID, gistsModel.getGistId())
-                          .put(BundleConstant.EXTRA_TWO, gistsModel.getDescription())
-                          .end());
-    }
+private static void putBundle(final @NonNull Gist gistsModel, final @NonNull Intent starter) {
+	String login = gistsModel.getOwner() != null ? gistsModel.getOwner().getLogin()
+	               : gistsModel.getUser() != null ? gistsModel.getUser().getLogin() : "";
+	starter.putExtras(Bundler.start()
+	                  .putParcelableArrayList(BundleConstant.ITEM, gistsModel.getFilesAsList())
+	                  .put(BundleConstant.EXTRA, Login.getUser().getLogin().equalsIgnoreCase(login))
+	                  .put(BundleConstant.ID, gistsModel.getGistId())
+	                  .put(BundleConstant.EXTRA_TWO, gistsModel.getDescription())
+	                  .end());
+}
 
-    @OnClick(value = {R.id.createPublicGist, R.id.createSecretGist}) void onClick(final View view) {
-        getPresenter().onSubmit(InputHelper.toString(description),
-                                getFilesFragment().getFiles(), view.getId() == R.id.createPublicGist);
-    }
+@OnClick(value = {
+		R.id.createPublicGist, R.id.createSecretGist
+	}) void onClick(final View view) {
+	getPresenter().onSubmit(InputHelper.toString(description),
+	                        getFilesFragment().getFiles(), view.getId() == R.id.createPublicGist);
+}
 
-    @OnClick(R.id.addFile) public void onViewClicked() {
-        Logger.e(getFilesFragment());
-        getFilesFragment().onAddNewFile();
-    }
+@OnClick(R.id.addFile) public void onViewClicked() {
+	Logger.e(getFilesFragment());
+	getFilesFragment().onAddNewFile();
+}
 
-    @Override public void onDescriptionError(final boolean isEmptyDesc) {
-        description.setError(isEmptyDesc ? getString(R.string.required_field) : null);
-    }
+@Override public void onDescriptionError(final boolean isEmptyDesc) {
+	description.setError(isEmptyDesc ? getString(R.string.required_field) : null);
+}
 
-    @Override public void onFileNameError(final boolean isEmptyDesc) {
+@Override public void onFileNameError(final boolean isEmptyDesc) {
 //        fileName.setError(isEmptyDesc ? getString(R.string.required_field) : null);
-    }
+}
 
-    @Override public void onFileContentError(final boolean isEmptyDesc) {
+@Override public void onFileContentError(final boolean isEmptyDesc) {
 //        fileContent.setError(isEmptyDesc ? getString(R.string.required_field) : null);
-    }
+}
 
-    @Override public void onSuccessSubmission(final Gist gistsModel) {
-        hideProgress();
-        setResult(RESULT_OK);
-        finish();
-        showMessage(R.string.success, R.string.successfully_submitted);
-    }
+@Override public void onSuccessSubmission(final Gist gistsModel) {
+	hideProgress();
+	setResult(RESULT_OK);
+	finish();
+	showMessage(R.string.success, R.string.successfully_submitted);
+}
 
-    @Override protected int layout() {
-        return R.layout.create_gist_layout;
-    }
+@Override protected int layout() {
+	return R.layout.create_gist_layout;
+}
 
-    @Override protected boolean isTransparent() {
-        return false;
-    }
+@Override protected boolean isTransparent() {
+	return false;
+}
 
-    @Override protected boolean canBack() {
-        return true;
-    }
+@Override protected boolean canBack() {
+	return true;
+}
 
-    @Override protected boolean isSecured() {
-        return false;
-    }
+@Override protected boolean isSecured() {
+	return false;
+}
 
-    @NonNull @Override public CreateGistPresenter providePresenter() {
-        return new CreateGistPresenter();
-    }
+@NonNull @Override public CreateGistPresenter providePresenter() {
+	return new CreateGistPresenter();
+}
 
-    @Override protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getPresenter().setEnterprise(PrefGetter.isEnterprise());
-        setTaskName(getString(R.string.create_gist));
-        if (savedInstanceState == null) {
-            if (getIntent() != null && getIntent().getExtras() != null) {
-                Bundle bundle = getIntent().getExtras();
-                ArrayList<FilesListModel> models = bundle.getParcelableArrayList(BundleConstant.ITEM);
-                boolean isOwner = bundle.getBoolean(BundleConstant.EXTRA);
-                id = bundle.getString(BundleConstant.ID);
-                String descriptionText = bundle.getString(BundleConstant.EXTRA_TWO);
-                if (description.getEditText() != null) description.getEditText().setText(descriptionText);
-                getFilesFragment().onInitFiles(models, isOwner);
-            } else {
-                getFilesFragment().onInitFiles(new ArrayList<>(), true);
-            }
-        }
-        buttonsHolder.setVisibility(!InputHelper.isEmpty(id) ? View.GONE : View.VISIBLE);
-    }
+@Override protected void onCreate(final Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	getPresenter().setEnterprise(PrefGetter.isEnterprise());
+	setTaskName(getString(R.string.create_gist));
+	if (savedInstanceState == null) {
+		if (getIntent() != null && getIntent().getExtras() != null) {
+			Bundle bundle = getIntent().getExtras();
+			ArrayList<FilesListModel> models = bundle.getParcelableArrayList(BundleConstant.ITEM);
+			boolean isOwner = bundle.getBoolean(BundleConstant.EXTRA);
+			id = bundle.getString(BundleConstant.ID);
+			String descriptionText = bundle.getString(BundleConstant.EXTRA_TWO);
+			if (description.getEditText() != null) description.getEditText().setText(descriptionText);
+			getFilesFragment().onInitFiles(models, isOwner);
+		} else {
+			getFilesFragment().onInitFiles(new ArrayList<>(), true);
+		}
+	}
+	buttonsHolder.setVisibility(!InputHelper.isEmpty(id) ? View.GONE : View.VISIBLE);
+}
 
-    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
-        super.onMessageDialogActionClicked(isOk, bundle);
-        if (isOk && bundle != null) {
-            finish();
-        }
-    }
+@Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
+	super.onMessageDialogActionClicked(isOk, bundle);
+	if (isOk && bundle != null) {
+		finish();
+	}
+}
 
-    @Override public void onBackPressed() {
-        if (InputHelper.isEmpty(description)) {
-            super.onBackPressed();
-        } else {
-            ViewHelper.hideKeyboard(description);
-            MessageDialogView.newInstance(getString(R.string.close), getString(R.string.unsaved_data_warning),
-                                          Bundler.start().put("primary_extra", getString(R.string.discard)).put("secondary_extra", getString(R.string.cancel))
-                                          .put(BundleConstant.EXTRA, true).end()).show(getSupportFragmentManager(), MessageDialogView.TAG);
-        }
-    }
+@Override public void onBackPressed() {
+	if (InputHelper.isEmpty(description)) {
+		super.onBackPressed();
+	} else {
+		ViewHelper.hideKeyboard(description);
+		MessageDialogView.newInstance(getString(R.string.close), getString(R.string.unsaved_data_warning),
+		                              Bundler.start().put("primary_extra", getString(R.string.discard)).put("secondary_extra", getString(R.string.cancel))
+		                              .put(BundleConstant.EXTRA, true).end()).show(getSupportFragmentManager(), MessageDialogView.TAG);
+	}
+}
 
-    @Override public boolean onCreateOptionsMenu(final Menu menu) {
-        if (!InputHelper.isEmpty(id)) {
-            getMenuInflater().inflate(R.menu.done_menu, menu);
-        }
-        return super.onCreateOptionsMenu(menu);
-    }
+@Override public boolean onCreateOptionsMenu(final Menu menu) {
+	if (!InputHelper.isEmpty(id)) {
+		getMenuInflater().inflate(R.menu.done_menu, menu);
+	}
+	return super.onCreateOptionsMenu(menu);
+}
 
-    @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        if (item.getItemId() == R.id.submit) {
-            getPresenter().onSubmitUpdate(id, InputHelper.toString(description), getFilesFragment().getFiles());
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+@Override public boolean onOptionsItemSelected(final MenuItem item) {
+	if (item.getItemId() == R.id.submit) {
+		getPresenter().onSubmitUpdate(id, InputHelper.toString(description), getFilesFragment().getFiles());
+		return true;
+	}
+	return super.onOptionsItemSelected(item);
+}
 
-    private GistFilesListFragment getFilesFragment() {
-        if (filesListFragment == null) {
-            filesListFragment = (GistFilesListFragment) getSupportFragmentManager().findFragmentById(R.id.files);
-        }
-        return filesListFragment;
-    }
+private GistFilesListFragment getFilesFragment() {
+	if (filesListFragment == null) {
+		filesListFragment = (GistFilesListFragment) getSupportFragmentManager().findFragmentById(R.id.files);
+	}
+	return filesListFragment;
+}
 }

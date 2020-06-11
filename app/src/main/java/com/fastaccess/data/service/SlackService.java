@@ -14,7 +14,7 @@ import io.reactivex.Observable;
 
 public interface SlackService {
 
-    @POST("FastHubSlackInvite")
-    @Headers("X-API-Key: MvFQyrJ9703DYmKHvk13I3agw3AdH8vh1lKbKGx4")
-    Observable<SlackResponseModel> invite(@Body SlackInvitePostModel body);
+@POST("FastHubSlackInvite")
+@Headers("X-API-Key: MvFQyrJ9703DYmKHvk13I3agw3AdH8vh1lKbKGx4")
+Observable<SlackResponseModel> invite(@Body SlackInvitePostModel body);
 }

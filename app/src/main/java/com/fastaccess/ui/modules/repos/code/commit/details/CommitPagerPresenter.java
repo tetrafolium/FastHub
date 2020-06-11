@@ -22,82 +22,82 @@ import io.reactivex.Observable;
  */
 
 class CommitPagerPresenter extends BasePresenter<CommitPagerMvp.View> implements CommitPagerMvp.Presenter {
-    @com.evernote.android.state.State Commit commitModel;
-    @com.evernote.android.state.State String sha;
-    @com.evernote.android.state.State String login;
-    @com.evernote.android.state.State String repoId;
-    @com.evernote.android.state.State boolean showToRepoBtn;
-    @com.evernote.android.state.State ArrayList<CommentRequestModel> reviewComments = new ArrayList<>();
+@com.evernote.android.state.State Commit commitModel;
+@com.evernote.android.state.State String sha;
+@com.evernote.android.state.State String login;
+@com.evernote.android.state.State String repoId;
+@com.evernote.android.state.State boolean showToRepoBtn;
+@com.evernote.android.state.State ArrayList<CommentRequestModel> reviewComments = new ArrayList<>();
 
-    @Nullable @Override public Commit getCommit() {
-        return commitModel;
-    }
+@Nullable @Override public Commit getCommit() {
+	return commitModel;
+}
 
-    @Override public void onError(final @NonNull Throwable throwable) {
-        if (RestProvider.getErrorCode(throwable) == 404) {
-            sendToView(CommitPagerMvp.View::onFinishActivity);
-        } else {
-            onWorkOffline(sha, repoId, login);
-        }
-        super.onError(throwable);
-    }
+@Override public void onError(final @NonNull Throwable throwable) {
+	if (RestProvider.getErrorCode(throwable) == 404) {
+		sendToView(CommitPagerMvp.View::onFinishActivity);
+	} else {
+		onWorkOffline(sha, repoId, login);
+	}
+	super.onError(throwable);
+}
 
-    @Override public void onActivityCreated(final @Nullable Intent intent) {
-        if (intent != null && intent.getExtras() != null) {
-            sha = intent.getExtras().getString(BundleConstant.ID);
-            login = intent.getExtras().getString(BundleConstant.EXTRA);
-            repoId = intent.getExtras().getString(BundleConstant.EXTRA_TWO);
-            showToRepoBtn = intent.getExtras().getBoolean(BundleConstant.EXTRA_THREE);
-            if (commitModel != null) {
-                sendToView(CommitPagerMvp.View::onSetup);
-                return;
-            } else if (!InputHelper.isEmpty(sha) && !InputHelper.isEmpty(login) && !InputHelper.isEmpty(repoId)) {
-                makeRestCall(RestProvider.getRepoService(isEnterprise())
-                             .getCommit(login, repoId, sha)
-                .flatMap(commit -> {
-                    if (commit.getGitCommit() != null && commit.getGitCommit().getMessage() != null) {
-                        MarkdownModel markdownModel = new MarkdownModel();
-                        markdownModel.setContext(login + "/" + repoId);
-                        markdownModel.setText(commit.getGitCommit().getMessage());
-                        return RestProvider.getRepoService(isEnterprise()).convertReadmeToHtml(markdownModel);
-                    }
-                    return Observable.just(commit);
-                }, (commit, u) -> {
-                    if (!InputHelper.isEmpty(u) && u instanceof String) {
-                        commit.getGitCommit().setMessage(u.toString());
-                    }
-                    return commit;
-                }), commit -> {
-                    commitModel = commit;
-                    commitModel.setRepoId(repoId);
-                    commitModel.setLogin(login);
-                    sendToView(CommitPagerMvp.View::onSetup);
-                    manageObservable(commitModel.save(commitModel).toObservable());
-                });
-                return;
-            }
-        }
-        sendToView(CommitPagerMvp.View::onSetup);
-    }
+@Override public void onActivityCreated(final @Nullable Intent intent) {
+	if (intent != null && intent.getExtras() != null) {
+		sha = intent.getExtras().getString(BundleConstant.ID);
+		login = intent.getExtras().getString(BundleConstant.EXTRA);
+		repoId = intent.getExtras().getString(BundleConstant.EXTRA_TWO);
+		showToRepoBtn = intent.getExtras().getBoolean(BundleConstant.EXTRA_THREE);
+		if (commitModel != null) {
+			sendToView(CommitPagerMvp.View::onSetup);
+			return;
+		} else if (!InputHelper.isEmpty(sha) && !InputHelper.isEmpty(login) && !InputHelper.isEmpty(repoId)) {
+			makeRestCall(RestProvider.getRepoService(isEnterprise())
+			             .getCommit(login, repoId, sha)
+			             .flatMap(commit->{
+					if (commit.getGitCommit() != null && commit.getGitCommit().getMessage() != null) {
+					        MarkdownModel markdownModel = new MarkdownModel();
+					        markdownModel.setContext(login + "/" + repoId);
+					        markdownModel.setText(commit.getGitCommit().getMessage());
+					        return RestProvider.getRepoService(isEnterprise()).convertReadmeToHtml(markdownModel);
+					}
+					return Observable.just(commit);
+				}, (commit, u)->{
+					if (!InputHelper.isEmpty(u) && u instanceof String) {
+					        commit.getGitCommit().setMessage(u.toString());
+					}
+					return commit;
+				}), commit->{
+					commitModel = commit;
+					commitModel.setRepoId(repoId);
+					commitModel.setLogin(login);
+					sendToView(CommitPagerMvp.View::onSetup);
+					manageObservable(commitModel.save(commitModel).toObservable());
+				});
+			return;
+		}
+	}
+	sendToView(CommitPagerMvp.View::onSetup);
+}
 
-    @Override public void onWorkOffline(final @NonNull String sha, final @NonNull String repoId, final @NonNull String login) {
-        manageDisposable(RxHelper.getObservable(Commit.getCommit(sha, repoId, login))
-        .subscribe(commit -> {
-            commitModel = commit;
-            sendToView(CommitPagerMvp.View::onSetup);
-        }));
-    }
+@Override public void onWorkOffline(final @NonNull String sha, final @NonNull String repoId, final @NonNull String login) {
+	manageDisposable(RxHelper.getObservable(Commit.getCommit(sha, repoId, login))
+	                 .subscribe(commit->{
+			commitModel = commit;
+			sendToView(CommitPagerMvp.View::onSetup);
+		}));
+}
 
-    @Override public String getLogin() {
-        return login;
-    }
+@Override public String getLogin() {
+	return login;
+}
 
-    @Override public String getRepoId() {
-        return repoId;
-    }
+@Override public String getRepoId() {
+	return repoId;
+}
 
-    @Override public boolean showToRepoBtn() {
-        return showToRepoBtn;
-    }
+@Override public boolean showToRepoBtn() {
+	return showToRepoBtn;
+}
 
 }

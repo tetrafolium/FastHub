@@ -14,48 +14,48 @@ import lombok.Setter;
 
 @Getter @Setter
 public class FilesListModel implements Parcelable, Serializable {
-    public String filename;
-    public String type;
-    public String rawUrl;
-    public Long size;
-    public String content;
-    public Boolean needFetching;
-    public String language;
+public String filename;
+public String type;
+public String rawUrl;
+public Long size;
+public String content;
+public Boolean needFetching;
+public String language;
 
-    public FilesListModel() {
-    }
+public FilesListModel() {
+}
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(this.filename);
-        dest.writeString(this.type);
-        dest.writeString(this.rawUrl);
-        dest.writeValue(this.size);
-        dest.writeString(this.content);
-        dest.writeValue(this.needFetching);
-        dest.writeString(this.language);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeString(this.filename);
+	dest.writeString(this.type);
+	dest.writeString(this.rawUrl);
+	dest.writeValue(this.size);
+	dest.writeString(this.content);
+	dest.writeValue(this.needFetching);
+	dest.writeString(this.language);
+}
 
-    protected FilesListModel(final Parcel in) {
-        this.filename = in.readString();
-        this.type = in.readString();
-        this.rawUrl = in.readString();
-        this.size = (Long) in.readValue(Long.class.getClassLoader());
-        this.content = in.readString();
-        this.needFetching = (Boolean) in.readValue(Boolean.class.getClassLoader());
-        this.language = in.readString();
-    }
+protected FilesListModel(final Parcel in) {
+	this.filename = in.readString();
+	this.type = in.readString();
+	this.rawUrl = in.readString();
+	this.size = (Long) in.readValue(Long.class.getClassLoader());
+	this.content = in.readString();
+	this.needFetching = (Boolean) in.readValue(Boolean.class.getClassLoader());
+	this.language = in.readString();
+}
 
-    public static final Creator<FilesListModel> CREATOR = new Creator<FilesListModel>() {
-        @Override public FilesListModel createFromParcel(final Parcel source) {
-            return new FilesListModel(source);
-        }
+public static final Creator<FilesListModel> CREATOR = new Creator<FilesListModel>() {
+	@Override public FilesListModel createFromParcel(final Parcel source) {
+		return new FilesListModel(source);
+	}
 
-        @Override public FilesListModel[] newArray(final int size) {
-            return new FilesListModel[size];
-        }
-    };
+	@Override public FilesListModel[] newArray(final int size) {
+		return new FilesListModel[size];
+	}
+};
 }

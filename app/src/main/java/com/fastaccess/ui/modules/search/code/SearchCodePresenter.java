@@ -17,62 +17,63 @@ import java.util.ArrayList;
 
 class SearchCodePresenter extends BasePresenter<SearchCodeMvp.View> implements SearchCodeMvp.Presenter {
 
-    private ArrayList<SearchCodeModel> codes = new ArrayList<>();
-    private int page;
-    private int previousTotal;
-    private int lastPage = Integer.MAX_VALUE;
+private ArrayList<SearchCodeModel> codes = new ArrayList<>();
+private int page;
+private int previousTotal;
+private int lastPage = Integer.MAX_VALUE;
 
-    @Override public int getCurrentPage() {
-        return page;
-    }
+@Override public int getCurrentPage() {
+	return page;
+}
 
-    @Override public int getPreviousTotal() {
-        return previousTotal;
-    }
+@Override public int getPreviousTotal() {
+	return previousTotal;
+}
 
-    @Override public void setCurrentPage(final int page) {
-        this.page = page;
-    }
+@Override public void setCurrentPage(final int page) {
+	this.page = page;
+}
 
-    @Override public void setPreviousTotal(final int previousTotal) {
-        this.previousTotal = previousTotal;
-    }
+@Override public void setPreviousTotal(final int previousTotal) {
+	this.previousTotal = previousTotal;
+}
 
-    @Override public boolean onCallApi(final int page, final @Nullable String parameter) {
-        if (page == 1) {
-            lastPage = Integer.MAX_VALUE;
-            sendToView(view -> view.getLoadMore().reset());
-        }
-        setCurrentPage(page);
-        if (page > lastPage || lastPage == 0 || parameter == null) {
-            sendToView(SearchCodeMvp.View::hideProgress);
-            return false;
-        }
-        makeRestCall(RestProvider.getSearchService(isEnterprise()).searchCode(parameter, page),
-        response -> {
-            lastPage = response.getLast();
-            sendToView(view -> {
-                view.onNotifyAdapter(response.isIncompleteResults() ? null : response.getItems(), page);
-                if (!response.isIncompleteResults()) {
-                    view.onSetTabCount(response.getTotalCount());
-                } else {
-                    view.onSetTabCount(0);
-                    view.showMessage(R.string.error, R.string.search_results_warning);
-                }
-            });
-        });
-        return true;
-    }
+@Override public boolean onCallApi(final int page, final @Nullable String parameter) {
+	if (page == 1) {
+		lastPage = Integer.MAX_VALUE;
+		sendToView(view->view.getLoadMore().reset());
+	}
+	setCurrentPage(page);
+	if (page > lastPage || lastPage == 0 || parameter == null) {
+		sendToView(SearchCodeMvp.View::hideProgress);
+		return false;
+	}
+	makeRestCall(RestProvider.getSearchService(isEnterprise()).searchCode(parameter, page),
+	             response->{
+			lastPage = response.getLast();
+			sendToView(view->{
+				view.onNotifyAdapter(response.isIncompleteResults() ? null : response.getItems(), page);
+				if (!response.isIncompleteResults()) {
+				        view.onSetTabCount(response.getTotalCount());
+				} else {
+				        view.onSetTabCount(0);
+				        view.showMessage(R.string.error, R.string.search_results_warning);
+				}
+			});
+		});
+	return true;
+}
 
-    @NonNull @Override public ArrayList<SearchCodeModel> getCodes() {
-        return codes;
-    }
+@NonNull @Override public ArrayList<SearchCodeModel> getCodes() {
+	return codes;
+}
 
-    @Override public void onItemClick(final int position, final View v, final SearchCodeModel item) {
-        if (getView() != null) {
-            getView().onItemClicked(item);
-        }
-    }
+@Override public void onItemClick(final int position, final View v, final SearchCodeModel item) {
+	if (getView() != null) {
+		getView().onItemClicked(item);
+	}
+}
 
-    @Override public void onItemLongClick(final int position, final View v, final SearchCodeModel item) { }
+@Override public void onItemLongClick(final int position, final View v, final SearchCodeModel item) {
+}
 }

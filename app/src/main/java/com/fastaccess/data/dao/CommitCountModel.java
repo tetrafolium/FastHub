@@ -14,34 +14,35 @@ import lombok.Setter;
  */
 @Getter @Setter public class CommitCountModel implements Parcelable {
 
-    private List<Integer> all;
-    private List<Integer> owner;
+private List<Integer> all;
+private List<Integer> owner;
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeList(this.all);
-        dest.writeList(this.owner);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeList(this.all);
+	dest.writeList(this.owner);
+}
 
-    public CommitCountModel() { }
+public CommitCountModel() {
+}
 
-    private CommitCountModel(final Parcel in) {
-        this.all = new ArrayList<Integer>();
-        in.readList(this.all, Integer.class.getClassLoader());
-        this.owner = new ArrayList<Integer>();
-        in.readList(this.owner, Integer.class.getClassLoader());
-    }
+private CommitCountModel(final Parcel in) {
+	this.all = new ArrayList<Integer>();
+	in.readList(this.all, Integer.class.getClassLoader());
+	this.owner = new ArrayList<Integer>();
+	in.readList(this.owner, Integer.class.getClassLoader());
+}
 
-    public static final Parcelable.Creator<CommitCountModel> CREATOR = new Parcelable.Creator<CommitCountModel>() {
-        @Override public CommitCountModel createFromParcel(final Parcel source) {
-            return new CommitCountModel(source);
-        }
+public static final Parcelable.Creator<CommitCountModel> CREATOR = new Parcelable.Creator<CommitCountModel>() {
+	@Override public CommitCountModel createFromParcel(final Parcel source) {
+		return new CommitCountModel(source);
+	}
 
-        @Override public CommitCountModel[] newArray(final int size) {
-            return new CommitCountModel[size];
-        }
-    };
+	@Override public CommitCountModel[] newArray(final int size) {
+		return new CommitCountModel[size];
+	}
+};
 }

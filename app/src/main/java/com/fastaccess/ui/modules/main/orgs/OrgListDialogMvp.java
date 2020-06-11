@@ -15,14 +15,14 @@ import java.util.List;
 
 public interface OrgListDialogMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onNotifyAdapter(@Nullable List<User> items);
+interface View extends BaseMvp.FAView {
+void onNotifyAdapter(@Nullable List<User> items);
 
-    }
+}
 
-    interface Presenter {
-        void onLoadOrgs();
+interface Presenter {
+void onLoadOrgs();
 
-        @NonNull ArrayList<User> getOrgs();
-    }
+@NonNull ArrayList<User> getOrgs();
+}
 }

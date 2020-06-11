@@ -28,64 +28,64 @@ import butterknife.BindView;
 
 public class PinnedIssueFragment extends BaseFragment<PinnedIssueMvp.View, PinnedIssuePresenter> implements PinnedIssueMvp.View {
 
-    public static final String TAG = PinnedIssueFragment.class.getSimpleName();
+public static final String TAG = PinnedIssueFragment.class.getSimpleName();
 
-    @BindView(R.id.recycler) DynamicRecyclerView recycler;
-    @BindView(R.id.refresh) AppbarRefreshLayout refresh;
-    @BindView(R.id.stateLayout) StateLayout stateLayout;
-    @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
-    private IssuesAdapter adapter;
+@BindView(R.id.recycler) DynamicRecyclerView recycler;
+@BindView(R.id.refresh) AppbarRefreshLayout refresh;
+@BindView(R.id.stateLayout) StateLayout stateLayout;
+@BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
+private IssuesAdapter adapter;
 
-    public static PinnedIssueFragment newInstance() {
-        return new PinnedIssueFragment();
-    }
+public static PinnedIssueFragment newInstance() {
+	return new PinnedIssueFragment();
+}
 
-    @Override public void onNotifyAdapter(final @Nullable List<Issue> items) {
-        refresh.setRefreshing(false);
-        stateLayout.hideProgress();
-        if (items != null) adapter.insertItems(items);
-        else adapter.clear();
-    }
+@Override public void onNotifyAdapter(final @Nullable List<Issue> items) {
+	refresh.setRefreshing(false);
+	stateLayout.hideProgress();
+	if (items != null) adapter.insertItems(items);
+	else adapter.clear();
+}
 
-    @Override public void onDeletePinnedIssue(final long id, final int position) {
-        MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
-                                      Bundler.start().put(BundleConstant.YES_NO_EXTRA, true)
-                                      .put(BundleConstant.EXTRA, position)
-                                      .put(BundleConstant.ID, id)
-                                      .end())
-        .show(getChildFragmentManager(), MessageDialogView.TAG);
-    }
+@Override public void onDeletePinnedIssue(final long id, final int position) {
+	MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
+	                              Bundler.start().put(BundleConstant.YES_NO_EXTRA, true)
+	                              .put(BundleConstant.EXTRA, position)
+	                              .put(BundleConstant.ID, id)
+	                              .end())
+	.show(getChildFragmentManager(), MessageDialogView.TAG);
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.small_grid_refresh_list;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.small_grid_refresh_list;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        adapter = new IssuesAdapter(getPresenter().getPinnedIssue(), true, true, true);
-        adapter.setListener(getPresenter());
-        stateLayout.setEmptyText(R.string.no_issues);
-        recycler.setEmptyView(stateLayout, refresh);
-        recycler.setAdapter(adapter);
-        recycler.addKeyLineDivider();
-        refresh.setOnRefreshListener(() -> getPresenter().onReload());
-        stateLayout.setOnReloadListener(v -> getPresenter().onReload());
-        if (savedInstanceState == null) {
-            stateLayout.showProgress();
-        }
-        fastScroller.attachRecyclerView(recycler);
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	adapter = new IssuesAdapter(getPresenter().getPinnedIssue(), true, true, true);
+	adapter.setListener(getPresenter());
+	stateLayout.setEmptyText(R.string.no_issues);
+	recycler.setEmptyView(stateLayout, refresh);
+	recycler.setAdapter(adapter);
+	recycler.addKeyLineDivider();
+	refresh.setOnRefreshListener(()->getPresenter().onReload());
+	stateLayout.setOnReloadListener(v->getPresenter().onReload());
+	if (savedInstanceState == null) {
+		stateLayout.showProgress();
+	}
+	fastScroller.attachRecyclerView(recycler);
+}
 
-    @NonNull @Override public PinnedIssuePresenter providePresenter() {
-        return new PinnedIssuePresenter();
-    }
+@NonNull @Override public PinnedIssuePresenter providePresenter() {
+	return new PinnedIssuePresenter();
+}
 
-    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
-        super.onMessageDialogActionClicked(isOk, bundle);
-        if (bundle != null && isOk) {
-            long id = bundle.getLong(BundleConstant.ID);
-            int position = bundle.getInt(BundleConstant.EXTRA);
-            PinnedIssues.delete(id);
-            adapter.removeItem(position);
-        }
-    }
+@Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
+	super.onMessageDialogActionClicked(isOk, bundle);
+	if (bundle != null && isOk) {
+		long id = bundle.getLong(BundleConstant.ID);
+		int position = bundle.getInt(BundleConstant.EXTRA);
+		PinnedIssues.delete(id);
+		adapter.removeItem(position);
+	}
+}
 }

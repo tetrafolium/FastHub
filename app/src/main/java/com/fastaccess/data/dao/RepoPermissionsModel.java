@@ -14,33 +14,33 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class RepoPermissionsModel implements Parcelable {
 
-    boolean admin;
-    boolean push;
-    boolean pull;
+boolean admin;
+boolean push;
+boolean pull;
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeByte(this.admin ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.push ? (byte) 1 : (byte) 0);
-        dest.writeByte(this.pull ? (byte) 1 : (byte) 0);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeByte(this.admin ? (byte) 1 : (byte) 0);
+	dest.writeByte(this.push ? (byte) 1 : (byte) 0);
+	dest.writeByte(this.pull ? (byte) 1 : (byte) 0);
+}
 
-    protected RepoPermissionsModel(final Parcel in) {
-        this.admin = in.readByte() != 0;
-        this.push = in.readByte() != 0;
-        this.pull = in.readByte() != 0;
-    }
+protected RepoPermissionsModel(final Parcel in) {
+	this.admin = in.readByte() != 0;
+	this.push = in.readByte() != 0;
+	this.pull = in.readByte() != 0;
+}
 
-    public static final Creator<RepoPermissionsModel> CREATOR = new Creator<RepoPermissionsModel>() {
-        @Override public RepoPermissionsModel createFromParcel(final Parcel source) {
-            return new RepoPermissionsModel(source);
-        }
+public static final Creator<RepoPermissionsModel> CREATOR = new Creator<RepoPermissionsModel>() {
+	@Override public RepoPermissionsModel createFromParcel(final Parcel source) {
+		return new RepoPermissionsModel(source);
+	}
 
-        @Override public RepoPermissionsModel[] newArray(final int size) {
-            return new RepoPermissionsModel[size];
-        }
-    };
+	@Override public RepoPermissionsModel[] newArray(final int size) {
+		return new RepoPermissionsModel[size];
+	}
+};
 }

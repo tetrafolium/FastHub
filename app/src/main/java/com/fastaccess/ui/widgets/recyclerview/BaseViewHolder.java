@@ -15,49 +15,50 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseViewHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
 
-    public interface OnItemClickListener<T> {
-        void onItemClick(int position, View v, T item);
+public interface OnItemClickListener<T> {
+void onItemClick(int position, View v, T item);
 
-        void onItemLongClick(int position, View v, T item);
-    }
+void onItemLongClick(int position, View v, T item);
+}
 
-    @Nullable protected final BaseRecyclerAdapter adapter;
+@Nullable protected final BaseRecyclerAdapter adapter;
 
-    public static View getView(final @NonNull ViewGroup parent, final @LayoutRes int layoutRes) {
-        return LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
-    }
+public static View getView(final @NonNull ViewGroup parent, final @LayoutRes int layoutRes) {
+	return LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
+}
 
-    protected BaseViewHolder(final @NonNull View itemView) {
-        this(itemView, null);
-    }
+protected BaseViewHolder(final @NonNull View itemView) {
+	this(itemView, null);
+}
 
-    public BaseViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-        this.adapter = adapter;
-        itemView.setOnClickListener(this);
-        itemView.setOnLongClickListener(this);
-    }
+public BaseViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
+	super(itemView);
+	ButterKnife.bind(this, itemView);
+	this.adapter = adapter;
+	itemView.setOnClickListener(this);
+	itemView.setOnLongClickListener(this);
+}
 
-    @SuppressWarnings("unchecked") @Override public void onClick(final View v) {
-        if (adapter != null && adapter.getListener() != null) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION && position < adapter.getItemCount())
-                adapter.getListener().onItemClick(position, v, adapter.getItem(position));
-        }
-    }
+@SuppressWarnings("unchecked") @Override public void onClick(final View v) {
+	if (adapter != null && adapter.getListener() != null) {
+		int position = getAdapterPosition();
+		if (position != RecyclerView.NO_POSITION && position < adapter.getItemCount())
+			adapter.getListener().onItemClick(position, v, adapter.getItem(position));
+	}
+}
 
-    @SuppressWarnings("unchecked") @Override public boolean onLongClick(final View v) {
-        if (adapter != null && adapter.getListener() != null) {
-            int position = getAdapterPosition();
-            if (position != RecyclerView.NO_POSITION && position < adapter.getItemCount())
-                adapter.getListener().onItemLongClick(position, v, adapter.getItem(position));
-        }
-        return true;
-    }
+@SuppressWarnings("unchecked") @Override public boolean onLongClick(final View v) {
+	if (adapter != null && adapter.getListener() != null) {
+		int position = getAdapterPosition();
+		if (position != RecyclerView.NO_POSITION && position < adapter.getItemCount())
+			adapter.getListener().onItemLongClick(position, v, adapter.getItem(position));
+	}
+	return true;
+}
 
-    public abstract void bind(@NonNull T t);
+public abstract void bind(@NonNull T t);
 
-    protected void onViewIsDetaching() { }
+protected void onViewIsDetaching() {
+}
 
 }

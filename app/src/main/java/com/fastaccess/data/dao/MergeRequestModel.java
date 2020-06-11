@@ -14,37 +14,37 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 public class MergeRequestModel implements Parcelable {
 
-    private String commitMessage;
-    private String sha;
-    private String base;
-    private String head;
-    private String mergeMethod = "merge";
+private String commitMessage;
+private String sha;
+private String base;
+private String head;
+private String mergeMethod = "merge";
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(this.commitMessage);
-        dest.writeString(this.sha);
-        dest.writeString(this.base);
-        dest.writeString(this.head);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeString(this.commitMessage);
+	dest.writeString(this.sha);
+	dest.writeString(this.base);
+	dest.writeString(this.head);
+}
 
-    @SuppressWarnings("WeakerAccess") protected MergeRequestModel(final Parcel in) {
-        this.commitMessage = in.readString();
-        this.sha = in.readString();
-        this.base = in.readString();
-        this.head = in.readString();
-    }
+@SuppressWarnings("WeakerAccess") protected MergeRequestModel(final Parcel in) {
+	this.commitMessage = in.readString();
+	this.sha = in.readString();
+	this.base = in.readString();
+	this.head = in.readString();
+}
 
-    public static final Creator<MergeRequestModel> CREATOR = new Creator<MergeRequestModel>() {
-        @Override public MergeRequestModel createFromParcel(final Parcel source) {
-            return new MergeRequestModel(source);
-        }
+public static final Creator<MergeRequestModel> CREATOR = new Creator<MergeRequestModel>() {
+	@Override public MergeRequestModel createFromParcel(final Parcel source) {
+		return new MergeRequestModel(source);
+	}
 
-        @Override public MergeRequestModel[] newArray(final int size) {
-            return new MergeRequestModel[size];
-        }
-    };
+	@Override public MergeRequestModel[] newArray(final int size) {
+		return new MergeRequestModel[size];
+	}
+};
 }

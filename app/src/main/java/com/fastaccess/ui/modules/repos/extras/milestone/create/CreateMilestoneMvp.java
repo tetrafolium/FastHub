@@ -12,18 +12,18 @@ import com.fastaccess.ui.base.mvp.BaseMvp;
 
 public interface CreateMilestoneMvp {
 
-    interface OnMilestoneAdded {
-        void onMilestoneAdded(@NonNull MilestoneModel milestoneModel);
-    }
+interface OnMilestoneAdded {
+void onMilestoneAdded(@NonNull MilestoneModel milestoneModel);
+}
 
-    interface View extends BaseMvp.FAView {
-        void onShowTitleError(boolean isError);
+interface View extends BaseMvp.FAView {
+void onShowTitleError(boolean isError);
 
-        void onMilestoneAdded(@NonNull MilestoneModel milestoneModel);
-    }
+void onMilestoneAdded(@NonNull MilestoneModel milestoneModel);
+}
 
-    interface Presenter {
-        void onSubmit(@Nullable String title, @Nullable String dueOn, @Nullable String description,
-                      @NonNull String login, @NonNull String repo);
-    }
+interface Presenter {
+void onSubmit(@Nullable String title, @Nullable String dueOn, @Nullable String description,
+              @NonNull String login, @NonNull String repo);
+}
 }

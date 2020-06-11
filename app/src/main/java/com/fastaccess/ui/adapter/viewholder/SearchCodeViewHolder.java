@@ -19,29 +19,30 @@ import butterknife.BindView;
 
 public class SearchCodeViewHolder extends BaseViewHolder<SearchCodeModel> {
 
-    @BindView(R.id.title) FontTextView title;
-    @BindView(R.id.details) FontTextView details;
-    @BindView(R.id.commentsNo) View commentsNo;
+@BindView(R.id.title) FontTextView title;
+@BindView(R.id.details) FontTextView details;
+@BindView(R.id.commentsNo) View commentsNo;
 
-    private SearchCodeViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
-        super(itemView, adapter);
-    }
+private SearchCodeViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
+	super(itemView, adapter);
+}
 
-    public static SearchCodeViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
-        return new SearchCodeViewHolder(getView(viewGroup, R.layout.issue_no_image_row_item), adapter);
-    }
+public static SearchCodeViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter) {
+	return new SearchCodeViewHolder(getView(viewGroup, R.layout.issue_no_image_row_item), adapter);
+}
 
-    public void bind(final @NonNull SearchCodeModel codeModel, final boolean showRepoName) {
-        if (showRepoName) {
-            title.setText(codeModel.getRepository() != null ? codeModel.getRepository().getFullName() : "N/A");
-            details.setText(codeModel.getName());
-            commentsNo.setVisibility(View.GONE);
-        } else {
-            title.setText(codeModel.getName());
-            details.setText(codeModel.getPath());
-            commentsNo.setVisibility(View.GONE);
-        }
-    }
+public void bind(final @NonNull SearchCodeModel codeModel, final boolean showRepoName) {
+	if (showRepoName) {
+		title.setText(codeModel.getRepository() != null ? codeModel.getRepository().getFullName() : "N/A");
+		details.setText(codeModel.getName());
+		commentsNo.setVisibility(View.GONE);
+	} else {
+		title.setText(codeModel.getName());
+		details.setText(codeModel.getPath());
+		commentsNo.setVisibility(View.GONE);
+	}
+}
 
-    @Override public void bind(final @NonNull SearchCodeModel searchCodeModel) { }
+@Override public void bind(final @NonNull SearchCodeModel searchCodeModel) {
+}
 }

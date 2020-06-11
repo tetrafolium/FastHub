@@ -22,92 +22,92 @@ import com.fastaccess.ui.modules.repos.RepoPagerActivity;
 
 public class ReleasesListActivity extends BaseActivity {
 
-    @State String repoId;
-    @State String login;
+@State String repoId;
+@State String login;
 
 
-    public static Intent getIntent(final @NonNull Context context, final @NonNull String username, final @NonNull String repoId) {
-        Intent intent = new Intent(context, ReleasesListActivity.class);
-        intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
-                         .put(BundleConstant.EXTRA, username)
-                         .end());
-        return intent;
-    }
+public static Intent getIntent(final @NonNull Context context, final @NonNull String username, final @NonNull String repoId) {
+	Intent intent = new Intent(context, ReleasesListActivity.class);
+	intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
+	                 .put(BundleConstant.EXTRA, username)
+	                 .end());
+	return intent;
+}
 
-    public static Intent getIntent(final @NonNull Context context, final @NonNull String username, final @NonNull String repoId,
-                                   final @NonNull String tag, final boolean isEnterprise) {
-        Intent intent = new Intent(context, ReleasesListActivity.class);
-        intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
-                         .put(BundleConstant.EXTRA, username)
-                         .put(BundleConstant.EXTRA_THREE, tag)
-                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                         .end());
-        return intent;
-    }
+public static Intent getIntent(final @NonNull Context context, final @NonNull String username, final @NonNull String repoId,
+                               final @NonNull String tag, final boolean isEnterprise) {
+	Intent intent = new Intent(context, ReleasesListActivity.class);
+	intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
+	                 .put(BundleConstant.EXTRA, username)
+	                 .put(BundleConstant.EXTRA_THREE, tag)
+	                 .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+	                 .end());
+	return intent;
+}
 
-    public static Intent getIntent(final @NonNull Context context, final @NonNull String username, final @NonNull String repoId,
-                                   final long id, final boolean isEnterprise) {
-        Intent intent = new Intent(context, ReleasesListActivity.class);
-        intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
-                         .put(BundleConstant.EXTRA, username)
-                         .put(BundleConstant.EXTRA_TWO, id)
-                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                         .end());
-        return intent;
-    }
+public static Intent getIntent(final @NonNull Context context, final @NonNull String username, final @NonNull String repoId,
+                               final long id, final boolean isEnterprise) {
+	Intent intent = new Intent(context, ReleasesListActivity.class);
+	intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
+	                 .put(BundleConstant.EXTRA, username)
+	                 .put(BundleConstant.EXTRA_TWO, id)
+	                 .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+	                 .end());
+	return intent;
+}
 
-    @Override protected int layout() {
-        return R.layout.activity_fragment_layout;
-    }
+@Override protected int layout() {
+	return R.layout.activity_fragment_layout;
+}
 
-    @Override protected boolean isTransparent() {
-        return true;
-    }
+@Override protected boolean isTransparent() {
+	return true;
+}
 
-    @Override protected boolean canBack() {
-        return true;
-    }
+@Override protected boolean canBack() {
+	return true;
+}
 
-    @Override protected boolean isSecured() {
-        return false;
-    }
+@Override protected boolean isSecured() {
+	return false;
+}
 
-    @NonNull @Override public BasePresenter providePresenter() {
-        return new BasePresenter();
-    }
+@NonNull @Override public BasePresenter providePresenter() {
+	return new BasePresenter();
+}
 
-    @Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (savedInstanceState == null) {
-            if (getIntent() == null || getIntent().getExtras() == null) {
-                finish();
-            } else {
-                Bundle bundle = getIntent().getExtras();
-                repoId = bundle.getString(BundleConstant.ID);
-                login = bundle.getString(BundleConstant.EXTRA);
-                //noinspection ConstantConditions
-                getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, RepoReleasesFragment
-                         .newInstance(repoId, login, bundle.getString(BundleConstant.EXTRA_THREE),
-                                      bundle.getLong(BundleConstant.EXTRA_TWO)))
-                .commit();
+@Override protected void onCreate(final @Nullable Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	if (savedInstanceState == null) {
+		if (getIntent() == null || getIntent().getExtras() == null) {
+			finish();
+		} else {
+			Bundle bundle = getIntent().getExtras();
+			repoId = bundle.getString(BundleConstant.ID);
+			login = bundle.getString(BundleConstant.EXTRA);
+			//noinspection ConstantConditions
+			getSupportFragmentManager()
+			.beginTransaction()
+			.replace(R.id.container, RepoReleasesFragment
+			         .newInstance(repoId, login, bundle.getString(BundleConstant.EXTRA_THREE),
+			                      bundle.getLong(BundleConstant.EXTRA_TWO)))
+			.commit();
 
-                setTaskName(repoId + "/" + login + " " + getString(R.string.releases));
-            }
-        }
-    }
+			setTaskName(repoId + "/" + login + " " + getString(R.string.releases));
+		}
+	}
+}
 
-    @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            NameParser parser = new NameParser("");
-            parser.setName(repoId);
-            parser.setUsername(login);
-            parser.setEnterprise(isEnterprise());
-            RepoPagerActivity.startRepoPager(this, parser);
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+@Override public boolean onOptionsItemSelected(final MenuItem item) {
+	if (item.getItemId() == android.R.id.home) {
+		NameParser parser = new NameParser("");
+		parser.setName(repoId);
+		parser.setUsername(login);
+		parser.setEnterprise(isEnterprise());
+		RepoPagerActivity.startRepoPager(this, parser);
+		finish();
+		return true;
+	}
+	return super.onOptionsItemSelected(item);
+}
 }

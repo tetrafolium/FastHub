@@ -16,67 +16,67 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor @AllArgsConstructor public class ListsHandler extends TagNodeHandler {
 
-    @Nullable private Drawable checked;
-    @Nullable private Drawable unchecked;
+@Nullable private Drawable checked;
+@Nullable private Drawable unchecked;
 
-    private int getMyIndex(final TagNode node) {
-        if (node.getParent() == null) {
-            return -1;
-        } else {
-            int i = 1;
-            for (Object child : node.getParent().getChildren()) {
-                if (child == node) {
-                    return i;
-                }
-                if (child instanceof TagNode) {
-                    TagNode childNode = (TagNode) child;
-                    if ("li".equals(childNode.getName())) {
-                        ++i;
-                    }
-                }
-            }
-            return -1;
-        }
-    }
+private int getMyIndex(final TagNode node) {
+	if (node.getParent() == null) {
+		return -1;
+	} else {
+		int i = 1;
+		for (Object child : node.getParent().getChildren()) {
+			if (child == node) {
+				return i;
+			}
+			if (child instanceof TagNode) {
+				TagNode childNode = (TagNode) child;
+				if ("li".equals(childNode.getName())) {
+					++i;
+				}
+			}
+		}
+		return -1;
+	}
+}
 
-    private String getParentName(final TagNode node) {
-        return node.getParent() == null ? null : node.getParent().getName();
-    }
+private String getParentName(final TagNode node) {
+	return node.getParent() == null ? null : node.getParent().getName();
+}
 
-    @Override public void beforeChildren(final TagNode node, final SpannableStringBuilder builder) {
-        TodoItems todoItem = null;
-        if (node.getChildTags() != null && node.getChildTags().length > 0) {
-            for (TagNode tagNode : node.getChildTags()) {
-                Logger.e(tagNode.getName(), tagNode.getText());
-                if (tagNode.getName() != null && tagNode.getName().equals("input")) {
-                    todoItem = new TodoItems();
-                    todoItem.isChecked = tagNode.getAttributeByName("checked") != null;
-                    break;
-                }
-            }
-        }
-        if ("ol".equals(getParentName(node))) {
-            builder.append(String.valueOf(getMyIndex(node))).append(". ");
-        } else if ("ul".equals(getParentName(node))) {
-            if (todoItem != null) {
-                if (checked == null || unchecked == null) {
-                    builder.append(todoItem.isChecked ? "☑" : "☐");
-                } else {
-                    builder.append(SpannableBuilder.builder()
-                                   .append(todoItem.isChecked ? checked : unchecked))
-                    .append(" ");
-                }
-            } else {
-                builder.append("\u2022 ");
-            }
-        }
-    }
+@Override public void beforeChildren(final TagNode node, final SpannableStringBuilder builder) {
+	TodoItems todoItem = null;
+	if (node.getChildTags() != null && node.getChildTags().length > 0) {
+		for (TagNode tagNode : node.getChildTags()) {
+			Logger.e(tagNode.getName(), tagNode.getText());
+			if (tagNode.getName() != null && tagNode.getName().equals("input")) {
+				todoItem = new TodoItems();
+				todoItem.isChecked = tagNode.getAttributeByName("checked") != null;
+				break;
+			}
+		}
+	}
+	if ("ol".equals(getParentName(node))) {
+		builder.append(String.valueOf(getMyIndex(node))).append(". ");
+	} else if ("ul".equals(getParentName(node))) {
+		if (todoItem != null) {
+			if (checked == null || unchecked == null) {
+				builder.append(todoItem.isChecked ? "☑" : "☐");
+			} else {
+				builder.append(SpannableBuilder.builder()
+				               .append(todoItem.isChecked ? checked : unchecked))
+				.append(" ");
+			}
+		} else {
+			builder.append("\u2022 ");
+		}
+	}
+}
 
-    @Override public void handleTagNode(final TagNode tagNode, final SpannableStringBuilder spannableStringBuilder, final int i, final int i1) {
-        appendNewLine(spannableStringBuilder);
-    }
+@Override public void handleTagNode(final TagNode tagNode, final SpannableStringBuilder spannableStringBuilder, final int i, final int i1) {
+	appendNewLine(spannableStringBuilder);
+}
 
-    static class TodoItems {
-        boolean isChecked;
-    }
+static class TodoItems {
+boolean isChecked;
+}
 }

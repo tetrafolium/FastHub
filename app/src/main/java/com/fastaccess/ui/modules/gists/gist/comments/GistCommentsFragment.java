@@ -42,230 +42,230 @@ import static com.fastaccess.helper.BundleConstant.ExtraType.EDIT_GIST_COMMENT_E
 
 public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, GistCommentsPresenter> implements GistCommentsMvp.View {
 
-    @BindView(R.id.recycler) DynamicRecyclerView recycler;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.stateLayout) StateLayout stateLayout;
-    @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
-    @State SparseBooleanArrayParcelable sparseBooleanArray;
-    private CommentEditorFragment.CommentListener commentsCallback;
-    private String gistId;
-    private CommentsAdapter adapter;
-    private OnLoadMore<String> onLoadMore;
+@BindView(R.id.recycler) DynamicRecyclerView recycler;
+@BindView(R.id.refresh) SwipeRefreshLayout refresh;
+@BindView(R.id.stateLayout) StateLayout stateLayout;
+@BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
+@State SparseBooleanArrayParcelable sparseBooleanArray;
+private CommentEditorFragment.CommentListener commentsCallback;
+private String gistId;
+private CommentsAdapter adapter;
+private OnLoadMore<String> onLoadMore;
 
-    public static GistCommentsFragment newInstance(final @NonNull String gistId) {
-        GistCommentsFragment view = new GistCommentsFragment();
-        view.setArguments(Bundler.start().put("gistId", gistId).end());
-        return view;
-    }
+public static GistCommentsFragment newInstance(final @NonNull String gistId) {
+	GistCommentsFragment view = new GistCommentsFragment();
+	view.setArguments(Bundler.start().put("gistId", gistId).end());
+	return view;
+}
 
-    @SuppressWarnings("unchecked") @Override public void onAttach(final Context context) {
-        super.onAttach(context);
-        if (getParentFragment() instanceof CommentEditorFragment.CommentListener) {
-            commentsCallback = (CommentEditorFragment.CommentListener) getParentFragment();
-        } else if (context instanceof CommentEditorFragment.CommentListener) {
-            commentsCallback = (CommentEditorFragment.CommentListener) context;
-        } else {
-            throw new IllegalArgumentException(String.format("%s or parent fragment must implement CommentEditorFragment.CommentListener",
-                                               context.getClass().getSimpleName()));
-        }
-    }
+@SuppressWarnings("unchecked") @Override public void onAttach(final Context context) {
+	super.onAttach(context);
+	if (getParentFragment() instanceof CommentEditorFragment.CommentListener) {
+		commentsCallback = (CommentEditorFragment.CommentListener) getParentFragment();
+	} else if (context instanceof CommentEditorFragment.CommentListener) {
+		commentsCallback = (CommentEditorFragment.CommentListener) context;
+	} else {
+		throw new IllegalArgumentException(String.format("%s or parent fragment must implement CommentEditorFragment.CommentListener",
+		                                                 context.getClass().getSimpleName()));
+	}
+}
 
-    @Override public void onDetach() {
-        commentsCallback = null;
-        super.onDetach();
-    }
+@Override public void onDetach() {
+	commentsCallback = null;
+	super.onDetach();
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.fab_micro_grid_refresh_list;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.fab_micro_grid_refresh_list;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        gistId = getArguments().getString("gistId");
-        recycler.setEmptyView(stateLayout, refresh);
-        if (gistId == null) return;
-        stateLayout.setEmptyText(R.string.no_comments);
-        recycler.setItemViewCacheSize(30);
-        refresh.setOnRefreshListener(this);
-        stateLayout.setOnReloadListener(this);
-        adapter = new CommentsAdapter(getPresenter().getComments());
-        adapter.setListener(getPresenter());
-        getLoadMore().initialize(getPresenter().getCurrentPage(), getPresenter().getPreviousTotal());
-        recycler.setAdapter(adapter);
-        recycler.addKeyLineDivider();
-        recycler.addOnScrollListener(getLoadMore());
-        recycler.addNormalSpacingDivider();
-        if (getPresenter().getComments().isEmpty() && !getPresenter().isApiCalled()) {
-            sparseBooleanArray = new SparseBooleanArrayParcelable();
-            onRefresh();
-        }
-        fastScroller.attachRecyclerView(recycler);
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	gistId = getArguments().getString("gistId");
+	recycler.setEmptyView(stateLayout, refresh);
+	if (gistId == null) return;
+	stateLayout.setEmptyText(R.string.no_comments);
+	recycler.setItemViewCacheSize(30);
+	refresh.setOnRefreshListener(this);
+	stateLayout.setOnReloadListener(this);
+	adapter = new CommentsAdapter(getPresenter().getComments());
+	adapter.setListener(getPresenter());
+	getLoadMore().initialize(getPresenter().getCurrentPage(), getPresenter().getPreviousTotal());
+	recycler.setAdapter(adapter);
+	recycler.addKeyLineDivider();
+	recycler.addOnScrollListener(getLoadMore());
+	recycler.addNormalSpacingDivider();
+	if (getPresenter().getComments().isEmpty() && !getPresenter().isApiCalled()) {
+		sparseBooleanArray = new SparseBooleanArrayParcelable();
+		onRefresh();
+	}
+	fastScroller.attachRecyclerView(recycler);
+}
 
-    @Override public void onRefresh() {
-        getPresenter().onCallApi(1, gistId);
-    }
+@Override public void onRefresh() {
+	getPresenter().onCallApi(1, gistId);
+}
 
-    @Override public void onNotifyAdapter(final @Nullable List<Comment> items, final int page) {
-        hideProgress();
-        if (items == null || items.isEmpty()) {
-            adapter.clear();
-            return;
-        }
-        if (page <= 1) {
-            adapter.insertItems(items);
-        } else {
-            adapter.addItems(items);
-        }
-    }
+@Override public void onNotifyAdapter(final @Nullable List<Comment> items, final int page) {
+	hideProgress();
+	if (items == null || items.isEmpty()) {
+		adapter.clear();
+		return;
+	}
+	if (page <= 1) {
+		adapter.insertItems(items);
+	} else {
+		adapter.addItems(items);
+	}
+}
 
-    @Override public void onRemove(final @NonNull Comment comment) {
-        hideProgress();
-        adapter.removeItem(comment);
-    }
+@Override public void onRemove(final @NonNull Comment comment) {
+	hideProgress();
+	adapter.removeItem(comment);
+}
 
-    @Override public void hideProgress() {
-        super.hideProgress();
-        refresh.setRefreshing(false);
-        stateLayout.hideProgress();
-    }
+@Override public void hideProgress() {
+	super.hideProgress();
+	refresh.setRefreshing(false);
+	stateLayout.hideProgress();
+}
 
-    @Override public void showProgress(final @StringRes int resId) {
+@Override public void showProgress(final @StringRes int resId) {
 
-        refresh.setRefreshing(true);
+	refresh.setRefreshing(true);
 
-        stateLayout.showProgress();
-    }
+	stateLayout.showProgress();
+}
 
-    @Override public void showErrorMessage(final @NonNull String message) {
-        showReload();
-        super.showErrorMessage(message);
-    }
+@Override public void showErrorMessage(final @NonNull String message) {
+	showReload();
+	super.showErrorMessage(message);
+}
 
-    @Override public void showMessage(final int titleRes, final int msgRes) {
-        showReload();
-        super.showMessage(titleRes, msgRes);
-    }
+@Override public void showMessage(final int titleRes, final int msgRes) {
+	showReload();
+	super.showMessage(titleRes, msgRes);
+}
 
-    @NonNull @Override public GistCommentsPresenter providePresenter() {
-        return new GistCommentsPresenter();
-    }
+@NonNull @Override public GistCommentsPresenter providePresenter() {
+	return new GistCommentsPresenter();
+}
 
-    @NonNull @Override public OnLoadMore<String> getLoadMore() {
-        if (onLoadMore == null) {
-            onLoadMore = new OnLoadMore<>(getPresenter(), gistId);
-        }
-        return onLoadMore;
-    }
+@NonNull @Override public OnLoadMore<String> getLoadMore() {
+	if (onLoadMore == null) {
+		onLoadMore = new OnLoadMore<>(getPresenter(), gistId);
+	}
+	return onLoadMore;
+}
 
-    @Override public void onEditComment(final @NonNull Comment item) {
-        Intent intent = new Intent(getContext(), EditorActivity.class);
-        intent.putExtras(Bundler
-                         .start()
-                         .put(BundleConstant.ID, gistId)
-                         .put(BundleConstant.EXTRA, item.getBody())
-                         .put(BundleConstant.EXTRA_FOUR, item.getId())
-                         .put(BundleConstant.EXTRA_TYPE, EDIT_GIST_COMMENT_EXTRA)
-                         .putStringArrayList("participants", CommentsHelper.getUsers(adapter.getData()))
-                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
-                         .end());
-        View view = getActivity() != null && getActivity().findViewById(R.id.fab) != null ? getActivity().findViewById(R.id.fab) : recycler;
-        ActivityHelper.startReveal(this, intent, view, BundleConstant.REQUEST_CODE);
-    }
+@Override public void onEditComment(final @NonNull Comment item) {
+	Intent intent = new Intent(getContext(), EditorActivity.class);
+	intent.putExtras(Bundler
+	                 .start()
+	                 .put(BundleConstant.ID, gistId)
+	                 .put(BundleConstant.EXTRA, item.getBody())
+	                 .put(BundleConstant.EXTRA_FOUR, item.getId())
+	                 .put(BundleConstant.EXTRA_TYPE, EDIT_GIST_COMMENT_EXTRA)
+	                 .putStringArrayList("participants", CommentsHelper.getUsers(adapter.getData()))
+	                 .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
+	                 .end());
+	View view = getActivity() != null && getActivity().findViewById(R.id.fab) != null ? getActivity().findViewById(R.id.fab) : recycler;
+	ActivityHelper.startReveal(this, intent, view, BundleConstant.REQUEST_CODE);
+}
 
-    @Override public void onShowDeleteMsg(final long id) {
-        MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
-                                      Bundler.start()
-                                      .put(BundleConstant.EXTRA, id)
-                                      .put(BundleConstant.ID, gistId)
-                                      .put(BundleConstant.YES_NO_EXTRA, true)
-                                      .putStringArrayList("participants", CommentsHelper.getUsers(adapter.getData()))
-                                      .end())
-        .show(getChildFragmentManager(), MessageDialogView.TAG);
-    }
+@Override public void onShowDeleteMsg(final long id) {
+	MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
+	                              Bundler.start()
+	                              .put(BundleConstant.EXTRA, id)
+	                              .put(BundleConstant.ID, gistId)
+	                              .put(BundleConstant.YES_NO_EXTRA, true)
+	                              .putStringArrayList("participants", CommentsHelper.getUsers(adapter.getData()))
+	                              .end())
+	.show(getChildFragmentManager(), MessageDialogView.TAG);
+}
 
-    @Override public void onTagUser(final @Nullable User user) {
-        if (commentsCallback != null && user != null) {
-            commentsCallback.onTagUser(user.getLogin());
-        }
-    }
+@Override public void onTagUser(final @Nullable User user) {
+	if (commentsCallback != null && user != null) {
+		commentsCallback.onTagUser(user.getLogin());
+	}
+}
 
-    @Override public void onReply(final User user, final String message) {
-        onTagUser(user);
-    }
+@Override public void onReply(final User user, final String message) {
+	onTagUser(user);
+}
 
-    @Override public void onHandleComment(final @NonNull String text, final @Nullable Bundle bundle) {
-        getPresenter().onHandleComment(text, bundle, gistId);
-    }
+@Override public void onHandleComment(final @NonNull String text, final @Nullable Bundle bundle) {
+	getPresenter().onHandleComment(text, bundle, gistId);
+}
 
-    @Override public void onAddNewComment(final @NonNull Comment comment) {
-        hideBlockingProgress();
-        adapter.addItem(comment);
-        if (commentsCallback != null) commentsCallback.onClearEditText();
-    }
+@Override public void onAddNewComment(final @NonNull Comment comment) {
+	hideBlockingProgress();
+	adapter.addItem(comment);
+	if (commentsCallback != null) commentsCallback.onClearEditText();
+}
 
-    @NonNull @Override public ArrayList<String> getNamesToTag() {
-        return CommentsHelper.getUsers(adapter.getData());
-    }
+@NonNull @Override public ArrayList<String> getNamesToTag() {
+	return CommentsHelper.getUsers(adapter.getData());
+}
 
-    @Override public void hideBlockingProgress() {
-        hideProgress();
-        super.hideProgress();
-    }
+@Override public void hideBlockingProgress() {
+	hideProgress();
+	super.hideProgress();
+}
 
-    @Override public void onDestroyView() {
-        recycler.removeOnScrollListener(getLoadMore());
-        super.onDestroyView();
-    }
+@Override public void onDestroyView() {
+	recycler.removeOnScrollListener(getLoadMore());
+	super.onDestroyView();
+}
 
-    @Override public void onClick(final View view) {
-        onRefresh();
-    }
+@Override public void onClick(final View view) {
+	onRefresh();
+}
 
-    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == BundleConstant.REQUEST_CODE) {
-                if (data == null) {
-                    onRefresh();
-                    return;
-                }
-                Bundle bundle = data.getExtras();
-                if (bundle != null) {
-                    boolean isNew = bundle.getBoolean(BundleConstant.EXTRA);
-                    Comment commentsModel = bundle.getParcelable(BundleConstant.ITEM);
-                    if (commentsModel == null) return;
-                    if (isNew) {
-                        adapter.addItem(commentsModel);
-                        recycler.smoothScrollToPosition(adapter.getItemCount());
-                    } else {
-                        int position = adapter.getItem(commentsModel);
-                        if (position != -1) {
-                            adapter.swapItem(commentsModel, position);
-                            recycler.smoothScrollToPosition(position);
-                        } else {
-                            adapter.addItem(commentsModel);
-                            recycler.smoothScrollToPosition(adapter.getItemCount());
-                        }
-                    }
-                }
-            }
-        }
-    }
+@Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+	super.onActivityResult(requestCode, resultCode, data);
+	if (resultCode == Activity.RESULT_OK) {
+		if (requestCode == BundleConstant.REQUEST_CODE) {
+			if (data == null) {
+				onRefresh();
+				return;
+			}
+			Bundle bundle = data.getExtras();
+			if (bundle != null) {
+				boolean isNew = bundle.getBoolean(BundleConstant.EXTRA);
+				Comment commentsModel = bundle.getParcelable(BundleConstant.ITEM);
+				if (commentsModel == null) return;
+				if (isNew) {
+					adapter.addItem(commentsModel);
+					recycler.smoothScrollToPosition(adapter.getItemCount());
+				} else {
+					int position = adapter.getItem(commentsModel);
+					if (position != -1) {
+						adapter.swapItem(commentsModel, position);
+						recycler.smoothScrollToPosition(position);
+					} else {
+						adapter.addItem(commentsModel);
+						recycler.smoothScrollToPosition(adapter.getItemCount());
+					}
+				}
+			}
+		}
+	}
+}
 
-    @Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
-        super.onMessageDialogActionClicked(isOk, bundle);
-        if (isOk) {
-            getPresenter().onHandleDeletion(bundle);
-        }
-    }
+@Override public void onMessageDialogActionClicked(final boolean isOk, final @Nullable Bundle bundle) {
+	super.onMessageDialogActionClicked(isOk, bundle);
+	if (isOk) {
+		getPresenter().onHandleDeletion(bundle);
+	}
+}
 
-    @Override public void onScrollTop(final int index) {
-        super.onScrollTop(index);
-        if (recycler != null) recycler.scrollToPosition(0);
-    }
+@Override public void onScrollTop(final int index) {
+	super.onScrollTop(index);
+	if (recycler != null) recycler.scrollToPosition(0);
+}
 
-    private void showReload() {
-        hideProgress();
-        stateLayout.showReload(adapter.getItemCount());
-    }
+private void showReload() {
+	hideProgress();
+	stateLayout.showReload(adapter.getItemCount());
+}
 }

@@ -11,18 +11,18 @@ import com.fastaccess.ui.modules.repos.RepoPagerMvp;
 
 public interface RepoIssuesPagerMvp {
 
-    interface View extends BaseMvp.FAView, RepoPagerMvp.TabsBadgeListener {
-        void onAddIssue();
+interface View extends BaseMvp.FAView, RepoPagerMvp.TabsBadgeListener {
+void onAddIssue();
 
-        void setCurrentItem(int index, boolean refresh);
+void setCurrentItem(int index, boolean refresh);
 
-        void onChangeIssueSort(boolean isLastUpdated);
+void onChangeIssueSort(boolean isLastUpdated);
 
-        @IntRange(from = 0, to = 1) int getCurrentItem();
+@IntRange(from = 0, to = 1) int getCurrentItem();
 
-        void onScrolled(boolean isUp);
-    }
+void onScrolled(boolean isUp);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter { }
+interface Presenter extends BaseMvp.FAPresenter { }
 
 }

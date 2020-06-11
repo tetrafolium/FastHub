@@ -16,15 +16,15 @@ import java.util.List;
 
 public interface PinnedIssueMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onNotifyAdapter(@Nullable List<Issue> items);
+interface View extends BaseMvp.FAView {
+void onNotifyAdapter(@Nullable List<Issue> items);
 
-        void onDeletePinnedIssue(long id, int position);
-    }
+void onDeletePinnedIssue(long id, int position);
+}
 
-    interface Presenter extends BaseViewHolder.OnItemClickListener<Issue> {
-        @NonNull ArrayList<Issue> getPinnedIssue();
+interface Presenter extends BaseViewHolder.OnItemClickListener<Issue> {
+@NonNull ArrayList<Issue> getPinnedIssue();
 
-        void onReload();
-    }
+void onReload();
+}
 }

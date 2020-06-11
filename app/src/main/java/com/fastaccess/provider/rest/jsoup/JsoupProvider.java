@@ -19,39 +19,39 @@ import tech.linjiang.pandora.Pandora;
 
 public class JsoupProvider {
 
-    private static OkHttpClient okHttpClient;
+private static OkHttpClient okHttpClient;
 
-    private static OkHttpClient provideOkHttpClient() {
-        if (okHttpClient == null) {
-            OkHttpClient.Builder client = new OkHttpClient.Builder();
-            if (BuildConfig.DEBUG) {
-                client.addInterceptor(new HttpLoggingInterceptor()
-                                      .setLevel(HttpLoggingInterceptor.Level.BODY));
-            }
-            client.addInterceptor(Pandora.get().getInterceptor());
-            client.addInterceptor(new AuthenticationInterceptor(true));
-            okHttpClient = client.build();
-        }
-        return okHttpClient;
-    }
+private static OkHttpClient provideOkHttpClient() {
+	if (okHttpClient == null) {
+		OkHttpClient.Builder client = new OkHttpClient.Builder();
+		if (BuildConfig.DEBUG) {
+			client.addInterceptor(new HttpLoggingInterceptor()
+			                      .setLevel(HttpLoggingInterceptor.Level.BODY));
+		}
+		client.addInterceptor(Pandora.get().getInterceptor());
+		client.addInterceptor(new AuthenticationInterceptor(true));
+		okHttpClient = client.build();
+	}
+	return okHttpClient;
+}
 
-    public static ScrapService getTrendingService(final @NonNull String url) {
-        return new Retrofit.Builder()
-               .baseUrl(url)
-               .client(provideOkHttpClient())
-               .addConverterFactory(ScalarsConverterFactory.create())
-               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-               .build()
-               .create(ScrapService.class);
-    }
+public static ScrapService getTrendingService(final @NonNull String url) {
+	return new Retrofit.Builder()
+	       .baseUrl(url)
+	       .client(provideOkHttpClient())
+	       .addConverterFactory(ScalarsConverterFactory.create())
+	       .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+	       .build()
+	       .create(ScrapService.class);
+}
 
-    public static ScrapService getWiki() {
-        return new Retrofit.Builder()
-               .baseUrl("https://github.com/")
-               .client(provideOkHttpClient())
-               .addConverterFactory(ScalarsConverterFactory.create())
-               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-               .build()
-               .create(ScrapService.class);
-    }
+public static ScrapService getWiki() {
+	return new Retrofit.Builder()
+	       .baseUrl("https://github.com/")
+	       .client(provideOkHttpClient())
+	       .addConverterFactory(ScalarsConverterFactory.create())
+	       .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+	       .build()
+	       .create(ScrapService.class);
+}
 }

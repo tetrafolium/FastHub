@@ -9,19 +9,19 @@ import com.fastaccess.R;
  */
 
 public enum FilesType {
-    file(R.drawable.ic_file_document),
-    dir(R.drawable.ic_folder),
-    blob(R.drawable.ic_file_document),
-    tree(R.drawable.ic_folder),
-    symlink(R.drawable.ic_submodule);
+	file(R.drawable.ic_file_document),
+	dir(R.drawable.ic_folder),
+	blob(R.drawable.ic_file_document),
+	tree(R.drawable.ic_folder),
+	symlink(R.drawable.ic_submodule);
 
-    int icon;
+	int icon;
 
-    FilesType(final int icon) {
-        this.icon = icon;
-    }
+	FilesType(final int icon) {
+		this.icon = icon;
+	}
 
-    @DrawableRes public int getIcon() {
-        return icon > 0 ? icon : R.drawable.ic_file_document;
-    }
+	@DrawableRes public int getIcon() {
+		return icon > 0 ? icon : R.drawable.ic_file_document;
+	}
 }

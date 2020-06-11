@@ -12,43 +12,43 @@ import lombok.Setter;
  */
 
 @Getter @Setter @AllArgsConstructor public class AppLanguageModel implements Parcelable {
-    private String value;
-    private String label;
+private String value;
+private String label;
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(this.value);
-        dest.writeString(this.label);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeString(this.value);
+	dest.writeString(this.label);
+}
 
-    private AppLanguageModel(final Parcel in) {
-        this.value = in.readString();
-        this.label = in.readString();
-    }
+private AppLanguageModel(final Parcel in) {
+	this.value = in.readString();
+	this.label = in.readString();
+}
 
-    @Override public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+@Override public boolean equals(final Object o) {
+	if (this == o) return true;
+	if (o == null || getClass() != o.getClass()) return false;
 
-        AppLanguageModel that = (AppLanguageModel) o;
+	AppLanguageModel that = (AppLanguageModel) o;
 
-        return label != null ? label.equals(that.label) : that.label == null;
-    }
+	return label != null ? label.equals(that.label) : that.label == null;
+}
 
-    @Override public int hashCode() {
-        return label != null ? label.hashCode() : 0;
-    }
+@Override public int hashCode() {
+	return label != null ? label.hashCode() : 0;
+}
 
-    public static final Parcelable.Creator<AppLanguageModel> CREATOR = new Parcelable.Creator<AppLanguageModel>() {
-        @Override public AppLanguageModel createFromParcel(final Parcel source) {
-            return new AppLanguageModel(source);
-        }
+public static final Parcelable.Creator<AppLanguageModel> CREATOR = new Parcelable.Creator<AppLanguageModel>() {
+	@Override public AppLanguageModel createFromParcel(final Parcel source) {
+		return new AppLanguageModel(source);
+	}
 
-        @Override public AppLanguageModel[] newArray(final int size) {
-            return new AppLanguageModel[size];
-        }
-    };
+	@Override public AppLanguageModel[] newArray(final int size) {
+		return new AppLanguageModel[size];
+	}
+};
 }

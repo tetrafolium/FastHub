@@ -12,16 +12,16 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
 import java.util.List;
 
 public class SimpleListAdapter<O> extends BaseRecyclerAdapter<O, SimpleViewHolder<O>,
-    SimpleViewHolder.OnItemClickListener<O>> {
-    public SimpleListAdapter(final @NonNull List<O> data, final @Nullable SimpleViewHolder.OnItemClickListener<O> listener) {
-        super(data, listener);
-    }
+	                                                      SimpleViewHolder.OnItemClickListener<O> > {
+public SimpleListAdapter(final @NonNull List<O> data, final @Nullable SimpleViewHolder.OnItemClickListener<O> listener) {
+	super(data, listener);
+}
 
-    @Override protected SimpleViewHolder<O> viewHolder(final ViewGroup parent, final int viewType) {
-        return new SimpleViewHolder<>(BaseViewHolder.getView(parent, R.layout.simple_row_item), this);
-    }
+@Override protected SimpleViewHolder<O> viewHolder(final ViewGroup parent, final int viewType) {
+	return new SimpleViewHolder<>(BaseViewHolder.getView(parent, R.layout.simple_row_item), this);
+}
 
-    @Override protected void onBindView(final SimpleViewHolder<O> holder, final int position) {
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(final SimpleViewHolder<O> holder, final int position) {
+	holder.bind(getItem(position));
+}
 }

@@ -14,17 +14,17 @@ import java.util.ArrayList;
  * Created by Kosh on 11 Nov 2016, 2:07 PM
  */
 
-public class CommentsAdapter extends BaseRecyclerAdapter<Comment, CommentsViewHolder, BaseViewHolder.OnItemClickListener<Comment>> {
+public class CommentsAdapter extends BaseRecyclerAdapter<Comment, CommentsViewHolder, BaseViewHolder.OnItemClickListener<Comment> > {
 
-    public CommentsAdapter(final @NonNull ArrayList<Comment> eventsModels) {
-        super(eventsModels);
-    }
+public CommentsAdapter(final @NonNull ArrayList<Comment> eventsModels) {
+	super(eventsModels);
+}
 
-    @Override protected CommentsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
-        return CommentsViewHolder.newInstance(parent, this);
-    }
+@Override protected CommentsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
+	return CommentsViewHolder.newInstance(parent, this);
+}
 
-    @Override protected void onBindView(final CommentsViewHolder holder, final int position) {
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(final CommentsViewHolder holder, final int position) {
+	holder.bind(getItem(position));
+}
 }

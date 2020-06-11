@@ -18,30 +18,30 @@ import java.util.List;
  */
 
 public class ReviewCommentsAdapter extends BaseRecyclerAdapter<ReviewCommentModel, ReviewCommentsViewHolder, BaseViewHolder
-    .OnItemClickListener<ReviewCommentModel>> {
+	                                                       .OnItemClickListener<ReviewCommentModel> > {
 
-    private final OnToggleView onToggleView;
-    private final ReactionsCallback reactionsCallback;
-    private final String repoOwner;
-    private final String poster;
+private final OnToggleView onToggleView;
+private final ReactionsCallback reactionsCallback;
+private final String repoOwner;
+private final String poster;
 
-    public ReviewCommentsAdapter(final @NonNull List<ReviewCommentModel> data,
-                                 final @Nullable BaseViewHolder.OnItemClickListener<ReviewCommentModel> listener,
-                                 final OnToggleView onToggleView, final ReactionsCallback reactionsCallback, final String repoOwner, final String poster) {
-        super(data, listener);
-        this.onToggleView = onToggleView;
-        this.reactionsCallback = reactionsCallback;
-        this.repoOwner = repoOwner;
-        this.poster = poster;
-    }
+public ReviewCommentsAdapter(final @NonNull List<ReviewCommentModel> data,
+                             final @Nullable BaseViewHolder.OnItemClickListener<ReviewCommentModel> listener,
+                             final OnToggleView onToggleView, final ReactionsCallback reactionsCallback, final String repoOwner, final String poster) {
+	super(data, listener);
+	this.onToggleView = onToggleView;
+	this.reactionsCallback = reactionsCallback;
+	this.repoOwner = repoOwner;
+	this.poster = poster;
+}
 
 
-    @Override protected ReviewCommentsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
-        return ReviewCommentsViewHolder.newInstance(parent, this, onToggleView,
-                reactionsCallback, repoOwner, poster);
-    }
+@Override protected ReviewCommentsViewHolder viewHolder(final ViewGroup parent, final int viewType) {
+	return ReviewCommentsViewHolder.newInstance(parent, this, onToggleView,
+	                                            reactionsCallback, repoOwner, poster);
+}
 
-    @Override protected void onBindView(final ReviewCommentsViewHolder holder, final int position) {
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(final ReviewCommentsViewHolder holder, final int position) {
+	holder.bind(getItem(position));
+}
 }

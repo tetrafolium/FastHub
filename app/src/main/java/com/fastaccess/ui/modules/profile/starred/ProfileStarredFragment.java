@@ -30,124 +30,124 @@ import butterknife.BindView;
 
 public class ProfileStarredFragment extends BaseFragment<ProfileStarredMvp.View, ProfileStarredPresenter> implements ProfileStarredMvp.View {
 
-    @BindView(R.id.recycler) DynamicRecyclerView recycler;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.stateLayout) StateLayout stateLayout;
-    @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
-    private OnLoadMore<String> onLoadMore;
-    private ReposAdapter adapter;
-    private RepoPagerMvp.TabsBadgeListener tabsBadgeListener;
+@BindView(R.id.recycler) DynamicRecyclerView recycler;
+@BindView(R.id.refresh) SwipeRefreshLayout refresh;
+@BindView(R.id.stateLayout) StateLayout stateLayout;
+@BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
+private OnLoadMore<String> onLoadMore;
+private ReposAdapter adapter;
+private RepoPagerMvp.TabsBadgeListener tabsBadgeListener;
 
-    public static ProfileStarredFragment newInstance(final @NonNull String username) {
-        ProfileStarredFragment view = new ProfileStarredFragment();
-        view.setArguments(Bundler.start().put(BundleConstant.EXTRA, username).end());
-        return view;
-    }
+public static ProfileStarredFragment newInstance(final @NonNull String username) {
+	ProfileStarredFragment view = new ProfileStarredFragment();
+	view.setArguments(Bundler.start().put(BundleConstant.EXTRA, username).end());
+	return view;
+}
 
 
-    @Override public void onAttach(final Context context) {
-        super.onAttach(context);
-        if (getParentFragment() instanceof RepoPagerMvp.TabsBadgeListener) {
-            tabsBadgeListener = (RepoPagerMvp.TabsBadgeListener) getParentFragment();
-        } else if (context instanceof RepoPagerMvp.TabsBadgeListener) {
-            tabsBadgeListener = (RepoPagerMvp.TabsBadgeListener) context;
-        }
-    }
+@Override public void onAttach(final Context context) {
+	super.onAttach(context);
+	if (getParentFragment() instanceof RepoPagerMvp.TabsBadgeListener) {
+		tabsBadgeListener = (RepoPagerMvp.TabsBadgeListener) getParentFragment();
+	} else if (context instanceof RepoPagerMvp.TabsBadgeListener) {
+		tabsBadgeListener = (RepoPagerMvp.TabsBadgeListener) context;
+	}
+}
 
-    @Override public void onDetach() {
-        tabsBadgeListener = null;
-        super.onDetach();
-    }
+@Override public void onDetach() {
+	tabsBadgeListener = null;
+	super.onDetach();
+}
 
-    @Override public void onNotifyAdapter(final @Nullable List<Repo> items, final int page) {
-        hideProgress();
-        if (items == null || items.isEmpty()) {
-            adapter.clear();
-            return;
-        }
-        if (page <= 1) {
-            adapter.insertItems(items);
-        } else {
-            adapter.addItems(items);
-        }
-    }
+@Override public void onNotifyAdapter(final @Nullable List<Repo> items, final int page) {
+	hideProgress();
+	if (items == null || items.isEmpty()) {
+		adapter.clear();
+		return;
+	}
+	if (page <= 1) {
+		adapter.insertItems(items);
+	} else {
+		adapter.addItems(items);
+	}
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.micro_grid_refresh_list;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.micro_grid_refresh_list;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        if (getArguments() == null) {
-            throw new NullPointerException("Bundle is null, username is required");
-        }
-        stateLayout.setEmptyText(R.string.no_starred_repos);
-        stateLayout.setOnReloadListener(this);
-        refresh.setOnRefreshListener(this);
-        recycler.setEmptyView(stateLayout, refresh);
-        getLoadMore().initialize(getPresenter().getCurrentPage(), getPresenter().getPreviousTotal());
-        adapter = new ReposAdapter(getPresenter().getRepos(), true);
-        adapter.setListener(getPresenter());
-        recycler.setAdapter(adapter);
-        recycler.addOnScrollListener(getLoadMore());
-        recycler.addDivider();
-        if (getPresenter().getRepos().isEmpty() && !getPresenter().isApiCalled()) {
-            onRefresh();
-        }
-        fastScroller.attachRecyclerView(recycler);
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	if (getArguments() == null) {
+		throw new NullPointerException("Bundle is null, username is required");
+	}
+	stateLayout.setEmptyText(R.string.no_starred_repos);
+	stateLayout.setOnReloadListener(this);
+	refresh.setOnRefreshListener(this);
+	recycler.setEmptyView(stateLayout, refresh);
+	getLoadMore().initialize(getPresenter().getCurrentPage(), getPresenter().getPreviousTotal());
+	adapter = new ReposAdapter(getPresenter().getRepos(), true);
+	adapter.setListener(getPresenter());
+	recycler.setAdapter(adapter);
+	recycler.addOnScrollListener(getLoadMore());
+	recycler.addDivider();
+	if (getPresenter().getRepos().isEmpty() && !getPresenter().isApiCalled()) {
+		onRefresh();
+	}
+	fastScroller.attachRecyclerView(recycler);
+}
 
-    @NonNull @Override public ProfileStarredPresenter providePresenter() {
-        return new ProfileStarredPresenter();
-    }
+@NonNull @Override public ProfileStarredPresenter providePresenter() {
+	return new ProfileStarredPresenter();
+}
 
-    @Override public void showProgress(final @StringRes int resId) {
-        refresh.setRefreshing(true);
-        stateLayout.showProgress();
-    }
+@Override public void showProgress(final @StringRes int resId) {
+	refresh.setRefreshing(true);
+	stateLayout.showProgress();
+}
 
-    @Override public void hideProgress() {
-        refresh.setRefreshing(false);
-        stateLayout.hideProgress();
-    }
+@Override public void hideProgress() {
+	refresh.setRefreshing(false);
+	stateLayout.hideProgress();
+}
 
-    @Override public void showErrorMessage(final @NonNull String message) {
-        showReload();
-        super.showErrorMessage(message);
-    }
+@Override public void showErrorMessage(final @NonNull String message) {
+	showReload();
+	super.showErrorMessage(message);
+}
 
-    @Override public void showMessage(final int titleRes, final int msgRes) {
-        showReload();
-        super.showMessage(titleRes, msgRes);
-    }
+@Override public void showMessage(final int titleRes, final int msgRes) {
+	showReload();
+	super.showMessage(titleRes, msgRes);
+}
 
-    @NonNull @Override public OnLoadMore<String> getLoadMore() {
-        if (onLoadMore == null) {
-            onLoadMore = new OnLoadMore<>(getPresenter(), getArguments().getString(BundleConstant.EXTRA));
-        }
-        return onLoadMore;
-    }
+@NonNull @Override public OnLoadMore<String> getLoadMore() {
+	if (onLoadMore == null) {
+		onLoadMore = new OnLoadMore<>(getPresenter(), getArguments().getString(BundleConstant.EXTRA));
+	}
+	return onLoadMore;
+}
 
-    @Override public void onUpdateCount(final int starredCount) {
-        if (tabsBadgeListener != null) {
-            tabsBadgeListener.onSetBadge(3, starredCount);
-        }
-    }
+@Override public void onUpdateCount(final int starredCount) {
+	if (tabsBadgeListener != null) {
+		tabsBadgeListener.onSetBadge(3, starredCount);
+	}
+}
 
-    @Override public void onRefresh() {
-        getPresenter().onCallApi(1, getArguments().getString(BundleConstant.EXTRA));
-    }
+@Override public void onRefresh() {
+	getPresenter().onCallApi(1, getArguments().getString(BundleConstant.EXTRA));
+}
 
-    @Override public void onClick(final View view) {
-        onRefresh();
-    }
+@Override public void onClick(final View view) {
+	onRefresh();
+}
 
-    @Override public void onScrollTop(final int index) {
-        super.onScrollTop(index);
-        if (recycler != null) recycler.scrollToPosition(0);
-    }
+@Override public void onScrollTop(final int index) {
+	super.onScrollTop(index);
+	if (recycler != null) recycler.scrollToPosition(0);
+}
 
-    private void showReload() {
-        hideProgress();
-        stateLayout.showReload(adapter.getItemCount());
-    }
+private void showReload() {
+	hideProgress();
+	stateLayout.showReload(adapter.getItemCount());
+}
 }

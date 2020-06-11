@@ -15,35 +15,35 @@ import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
  */
 
 public class OrgProfileOverviewPresenter extends BasePresenter<OrgProfileOverviewMvp.View> implements OrgProfileOverviewMvp.Presenter {
-    @com.evernote.android.state.State String login;
+@com.evernote.android.state.State String login;
 
-    @Override public void onError(final @NonNull Throwable throwable) {
-        if (!InputHelper.isEmpty(login)) {
-            onWorkOffline(login);
-        }
-        super.onError(throwable);
-    }
+@Override public void onError(final @NonNull Throwable throwable) {
+	if (!InputHelper.isEmpty(login)) {
+		onWorkOffline(login);
+	}
+	super.onError(throwable);
+}
 
-    @Override public void onFragmentCreated(final @Nullable Bundle bundle) {
-        if (bundle == null || bundle.getString(BundleConstant.EXTRA) == null) {
-            throw new NullPointerException("Either bundle or User is null");
-        }
-        login = bundle.getString(BundleConstant.EXTRA);
-        if (login != null) {
-            makeRestCall(RestProvider.getOrgService(isEnterprise()).getOrganization(login),
-                         this::onSendUserToView);
-        }
-    }
+@Override public void onFragmentCreated(final @Nullable Bundle bundle) {
+	if (bundle == null || bundle.getString(BundleConstant.EXTRA) == null) {
+		throw new NullPointerException("Either bundle or User is null");
+	}
+	login = bundle.getString(BundleConstant.EXTRA);
+	if (login != null) {
+		makeRestCall(RestProvider.getOrgService(isEnterprise()).getOrganization(login),
+		             this::onSendUserToView);
+	}
+}
 
-    @Override public void onWorkOffline(final @NonNull String login) {
-        onSendUserToView(User.getUser(login));
-    }
+@Override public void onWorkOffline(final @NonNull String login) {
+	onSendUserToView(User.getUser(login));
+}
 
-    @NonNull @Override public String getLogin() {
-        return login;
-    }
+@NonNull @Override public String getLogin() {
+	return login;
+}
 
-    private void onSendUserToView(final User userModel) {
-        sendToView(view -> view.onInitViews(userModel));
-    }
+private void onSendUserToView(final User userModel) {
+	sendToView(view->view.onInitViews(userModel));
+}
 }

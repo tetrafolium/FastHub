@@ -15,26 +15,27 @@ import java.util.ArrayList;
  */
 
 public class MilestonePresenter extends BasePresenter<MilestoneMvp.View> implements MilestoneMvp.Presenter {
-    private ArrayList<MilestoneModel> milestoneModels = new ArrayList<>();
+private ArrayList<MilestoneModel> milestoneModels = new ArrayList<>();
 
-    @Override public void onItemClick(final int position, final View v, final MilestoneModel item) {
-        if (getView() != null) getView().onMilestoneSelected(item);
-    }
+@Override public void onItemClick(final int position, final View v, final MilestoneModel item) {
+	if (getView() != null) getView().onMilestoneSelected(item);
+}
 
-    @Override public void onItemLongClick(final int position, final View v, final MilestoneModel item) { }
+@Override public void onItemLongClick(final int position, final View v, final MilestoneModel item) {
+}
 
-    @Override public void onLoadMilestones(final @NonNull String login, final @NonNull String repo) {
-        makeRestCall(RestProvider.getRepoService(isEnterprise()).getMilestones(login, repo),
-        response -> {
-            if (response == null || response.getItems() == null || response.getItems().isEmpty()) {
-                sendToView(view -> view.showMessage(R.string.error, R.string.no_milestones));
-                return;
-            }
-            sendToView(view -> view.onNotifyAdapter(response.getItems()));
-        });
-    }
+@Override public void onLoadMilestones(final @NonNull String login, final @NonNull String repo) {
+	makeRestCall(RestProvider.getRepoService(isEnterprise()).getMilestones(login, repo),
+	             response->{
+			if (response == null || response.getItems() == null || response.getItems().isEmpty()) {
+			        sendToView(view->view.showMessage(R.string.error, R.string.no_milestones));
+			        return;
+			}
+			sendToView(view->view.onNotifyAdapter(response.getItems()));
+		});
+}
 
-    @NonNull @Override public ArrayList<MilestoneModel> getMilestones() {
-        return milestoneModels;
-    }
+@NonNull @Override public ArrayList<MilestoneModel> getMilestones() {
+	return milestoneModels;
+}
 }

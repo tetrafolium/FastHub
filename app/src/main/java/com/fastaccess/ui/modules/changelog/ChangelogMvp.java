@@ -10,11 +10,11 @@ import com.fastaccess.ui.base.mvp.BaseMvp;
 
 public interface ChangelogMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onChangelogLoaded(@Nullable String html);
-    }
+interface View extends BaseMvp.FAView {
+void onChangelogLoaded(@Nullable String html);
+}
 
-    interface Presenter {
-        void onLoadChangelog();
-    }
+interface Presenter {
+void onLoadChangelog();
+}
 }

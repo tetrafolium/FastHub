@@ -13,54 +13,54 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 public class LabelModel implements Parcelable {
-    String url;
-    String name;
-    String color;
+String url;
+String name;
+String color;
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(this.url);
-        dest.writeString(this.name);
-        dest.writeString(this.color);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeString(this.url);
+	dest.writeString(this.name);
+	dest.writeString(this.color);
+}
 
-    protected LabelModel(final Parcel in) {
-        this.url = in.readString();
-        this.name = in.readString();
-        this.color = in.readString();
-    }
+protected LabelModel(final Parcel in) {
+	this.url = in.readString();
+	this.name = in.readString();
+	this.color = in.readString();
+}
 
-    public static final Creator<LabelModel> CREATOR = new Creator<LabelModel>() {
-        @Override public LabelModel createFromParcel(final Parcel source) {
-            return new LabelModel(source);
-        }
+public static final Creator<LabelModel> CREATOR = new Creator<LabelModel>() {
+	@Override public LabelModel createFromParcel(final Parcel source) {
+		return new LabelModel(source);
+	}
 
-        @Override public LabelModel[] newArray(final int size) {
-            return new LabelModel[size];
-        }
-    };
+	@Override public LabelModel[] newArray(final int size) {
+		return new LabelModel[size];
+	}
+};
 
-    @Override public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+@Override public boolean equals(final Object o) {
+	if (this == o) return true;
+	if (o == null || getClass() != o.getClass()) return false;
 
-        LabelModel that = (LabelModel) o;
+	LabelModel that = (LabelModel) o;
 
-        return name != null ? name.equals(that.name) : that.name == null;
-    }
+	return name != null ? name.equals(that.name) : that.name == null;
+}
 
-    @Override public int hashCode() {
-        return name != null ? name.hashCode() : 0;
-    }
+@Override public int hashCode() {
+	return name != null ? name.hashCode() : 0;
+}
 
-    @Override public String toString() {
-        return "LabelModel{"
-               + "url='" + url + '\''
-               + ", name='" + name + '\''
-               + ", color='" + color + '\''
-               + '}';
-    }
+@Override public String toString() {
+	return "LabelModel{"
+	       + "url='" + url + '\''
+	       + ", name='" + name + '\''
+	       + ", color='" + color + '\''
+	       + '}';
+}
 }

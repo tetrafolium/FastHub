@@ -9,11 +9,11 @@ import com.fastaccess.ui.modules.repos.RepoPagerMvp;
 
 public interface RepoCodePagerMvp {
 
-    interface View extends BaseMvp.FAView, RepoPagerMvp.TabsBadgeListener {
-        boolean canPressBack();
+interface View extends BaseMvp.FAView, RepoPagerMvp.TabsBadgeListener {
+boolean canPressBack();
 
-        void onBackPressed();
-    }
+void onBackPressed();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter { }
+interface Presenter extends BaseMvp.FAPresenter { }
 }

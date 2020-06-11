@@ -28,65 +28,65 @@ import static com.fastaccess.data.dao.model.PinnedPullRequests.LOGIN;
 
 @Entity @NoArgsConstructor public class AbstractPinnedPullRequests {
 
-    @Key @Generated long id;
-    @io.requery.Nullable int entryCount;
-    @io.requery.Nullable String login;
-    @io.requery.Nullable @Convert(PullRequestConverter.class) PullRequest pullRequest;
-    @io.requery.Nullable long pullRequestId;
+@Key @Generated long id;
+@io.requery.Nullable int entryCount;
+@io.requery.Nullable String login;
+@io.requery.Nullable @Convert(PullRequestConverter.class) PullRequest pullRequest;
+@io.requery.Nullable long pullRequestId;
 
-    public static void pinUpin(final @NonNull PullRequest pullRequest) {
-        PinnedPullRequests pinnedPullRequests = get(pullRequest.getId());
-        if (pinnedPullRequests == null) {
-            PinnedPullRequests pinned = new PinnedPullRequests();
-            pinned.setLogin(Login.getUser().getLogin());
-            pinned.setPullRequest(pullRequest);
-            pinned.setPullRequestId(pullRequest.getId());
-            try {
-                App.getInstance().getDataStore().toBlocking().insert(pinned);
-            } catch (Exception ignored) { }
-        } else {
-            delete(pullRequest.getId());
-        }
-    }
+public static void pinUpin(final @NonNull PullRequest pullRequest) {
+	PinnedPullRequests pinnedPullRequests = get(pullRequest.getId());
+	if (pinnedPullRequests == null) {
+		PinnedPullRequests pinned = new PinnedPullRequests();
+		pinned.setLogin(Login.getUser().getLogin());
+		pinned.setPullRequest(pullRequest);
+		pinned.setPullRequestId(pullRequest.getId());
+		try {
+			App.getInstance().getDataStore().toBlocking().insert(pinned);
+		} catch (Exception ignored) { }
+	} else {
+		delete(pullRequest.getId());
+	}
+}
 
-    @Nullable public static PinnedPullRequests get(final long pullRequestId) {
-        return App.getInstance().getDataStore().select(PinnedPullRequests.class)
-               .where(PinnedPullRequests.PULL_REQUEST_ID.eq(pullRequestId))
-               .get()
-               .firstOrNull();
-    }
+@Nullable public static PinnedPullRequests get(final long pullRequestId) {
+	return App.getInstance().getDataStore().select(PinnedPullRequests.class)
+	       .where(PinnedPullRequests.PULL_REQUEST_ID.eq(pullRequestId))
+	       .get()
+	       .firstOrNull();
+}
 
-    public static void delete(final long pullRequestId) {
-        App.getInstance().getDataStore().delete(PinnedPullRequests.class)
-        .where(PinnedPullRequests.PULL_REQUEST_ID.eq(pullRequestId))
-        .get()
-        .value();
-    }
+public static void delete(final long pullRequestId) {
+	App.getInstance().getDataStore().delete(PinnedPullRequests.class)
+	.where(PinnedPullRequests.PULL_REQUEST_ID.eq(pullRequestId))
+	.get()
+	.value();
+}
 
-    @NonNull public static Disposable updateEntry(final @NonNull long pullRequestId) {
-        return RxHelper.getObservable(Observable.fromPublisher(e -> {
-            PinnedPullRequests pinned = get(pullRequestId);
-            if (pinned != null) {
-                pinned.setEntryCount(pinned.getEntryCount() + 1);
-                App.getInstance().getDataStore().toBlocking().update(pinned);
-                e.onNext("");
-            }
-            e.onComplete();
-        })).subscribe(o -> { /*do nothing*/ }, Throwable::printStackTrace);
-    }
+@NonNull public static Disposable updateEntry(final @NonNull long pullRequestId) {
+	return RxHelper.getObservable(Observable.fromPublisher(e->{
+			PinnedPullRequests pinned = get(pullRequestId);
+			if (pinned != null) {
+			        pinned.setEntryCount(pinned.getEntryCount() + 1);
+			        App.getInstance().getDataStore().toBlocking().update(pinned);
+			        e.onNext("");
+			}
+			e.onComplete();
+		})).subscribe(o->{ /*do nothing*/ }, Throwable::printStackTrace);
+}
 
-    @NonNull public static Single<List<PullRequest>> getMyPinnedPullRequests() {
-        return App.getInstance().getDataStore().select(PinnedPullRequests.class)
-               .where(LOGIN.eq(Login.getUser().getLogin()).or(LOGIN.isNull()))
-               .orderBy(ENTRY_COUNT.desc(), ID.desc())
-               .get()
-               .observable()
-               .map(PinnedPullRequests::getPullRequest)
-               .toList();
-    }
+@NonNull public static Single<List<PullRequest> > getMyPinnedPullRequests() {
+	return App.getInstance().getDataStore().select(PinnedPullRequests.class)
+	       .where(LOGIN.eq(Login.getUser().getLogin()).or(LOGIN.isNull()))
+	       .orderBy(ENTRY_COUNT.desc(), ID.desc())
+	       .get()
+	       .observable()
+	       .map(PinnedPullRequests::getPullRequest)
+	       .toList();
+}
 
-    public static boolean isPinned(final long pullRequestId) {
-        return get(pullRequestId) != null;
-    }
+public static boolean isPinned(final long pullRequestId) {
+	return get(pullRequestId) != null;
+}
 
 }

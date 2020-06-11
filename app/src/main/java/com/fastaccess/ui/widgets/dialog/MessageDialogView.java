@@ -24,151 +24,153 @@ import butterknife.OnClick;
 
 public class MessageDialogView extends BaseBottomSheetDialog {
 
-    public static final String TAG = MessageDialogView.class.getSimpleName();
+public static final String TAG = MessageDialogView.class.getSimpleName();
 
-    public interface MessageDialogViewActionCallback {
+public interface MessageDialogViewActionCallback {
 
-        void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle);
+void onMessageDialogActionClicked(boolean isOk, @Nullable Bundle bundle);
 
-        void onDialogDismissed();
+void onDialogDismissed();
 
-    }
+}
 
-    @BindView(R.id.prettifyWebView) PrettifyWebView prettifyWebView;
-    @BindView(R.id.title) FontTextView title;
-    @BindView(R.id.message) FontTextView message;
-    @BindView(R.id.cancel) FontButton cancel;
-    @BindView(R.id.ok) FontButton ok;
+@BindView(R.id.prettifyWebView) PrettifyWebView prettifyWebView;
+@BindView(R.id.title) FontTextView title;
+@BindView(R.id.message) FontTextView message;
+@BindView(R.id.cancel) FontButton cancel;
+@BindView(R.id.ok) FontButton ok;
 
-    @Nullable private MessageDialogViewActionCallback callback;
+@Nullable private MessageDialogViewActionCallback callback;
 
-    @Override public void onAttach(final Context context) {
-        super.onAttach(context);
-        if (getParentFragment() != null && getParentFragment() instanceof MessageDialogViewActionCallback) {
-            callback = (MessageDialogViewActionCallback) getParentFragment();
-        } else if (context instanceof MessageDialogViewActionCallback) {
-            callback = (MessageDialogViewActionCallback) context;
-        }
-    }
+@Override public void onAttach(final Context context) {
+	super.onAttach(context);
+	if (getParentFragment() != null && getParentFragment() instanceof MessageDialogViewActionCallback) {
+		callback = (MessageDialogViewActionCallback) getParentFragment();
+	} else if (context instanceof MessageDialogViewActionCallback) {
+		callback = (MessageDialogViewActionCallback) context;
+	}
+}
 
-    @Override public void onDetach() {
-        super.onDetach();
-        callback = null;
-    }
+@Override public void onDetach() {
+	super.onDetach();
+	callback = null;
+}
 
-    @OnClick({R.id.cancel, R.id.ok}) public void onClick(final @NonNull View view) {
-        if (callback != null) {
-            isAlreadyHidden = true;
-            callback.onMessageDialogActionClicked(view.getId() == R.id.ok, getArguments().getBundle("bundle"));
-        }
-        dismiss();
-    }
+@OnClick({
+		R.id.cancel, R.id.ok
+	}) public void onClick(final @NonNull View view) {
+	if (callback != null) {
+		isAlreadyHidden = true;
+		callback.onMessageDialogActionClicked(view.getId() == R.id.ok, getArguments().getBundle("bundle"));
+	}
+	dismiss();
+}
 
-    @Override protected int layoutRes() {
-        return R.layout.message_dialog;
-    }
+@Override protected int layoutRes() {
+	return R.layout.message_dialog;
+}
 
-    @SuppressWarnings("ConstantConditions") @Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        Bundle bundle = getArguments();
-        title.setText(bundle.getString("bundleTitle"));
-        String msg = bundle.getString("bundleMsg");
-        if (bundle.getBoolean("isMarkDown")) {
-            if (msg != null) {
-                message.setVisibility(View.GONE);
-                prettifyWebView.setVisibility(View.VISIBLE);
-                prettifyWebView.setGithubContent(msg, null, false, false);
-                prettifyWebView.setNestedScrollingEnabled(false);
-            }
-        } else {
-            message.setText(msg);
-        }
-        if (bundle != null) {
-            boolean hideCancel = bundle.getBoolean("hideCancel");
-            if (hideCancel) cancel.setVisibility(View.GONE);
-            initButton(bundle);
-        }
-    }
+@SuppressWarnings("ConstantConditions") @Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	super.onViewCreated(view, savedInstanceState);
+	Bundle bundle = getArguments();
+	title.setText(bundle.getString("bundleTitle"));
+	String msg = bundle.getString("bundleMsg");
+	if (bundle.getBoolean("isMarkDown")) {
+		if (msg != null) {
+			message.setVisibility(View.GONE);
+			prettifyWebView.setVisibility(View.VISIBLE);
+			prettifyWebView.setGithubContent(msg, null, false, false);
+			prettifyWebView.setNestedScrollingEnabled(false);
+		}
+	} else {
+		message.setText(msg);
+	}
+	if (bundle != null) {
+		boolean hideCancel = bundle.getBoolean("hideCancel");
+		if (hideCancel) cancel.setVisibility(View.GONE);
+		initButton(bundle);
+	}
+}
 
-    private void initButton(final @NonNull Bundle bundle) {
-        Bundle extra = bundle.getBundle("bundle");
-        if (extra != null) {
-            boolean yesNo = extra.getBoolean(BundleConstant.YES_NO_EXTRA);
-            if (yesNo) {
-                ok.setText(R.string.yes);
-                cancel.setText(R.string.no);
-            } else {
-                boolean hideButtons = extra.getBoolean("hide_buttons");
-                String primaryExtra = extra.getString("primary_extra");
-                String secondaryExtra = extra.getString("secondary_extra");
-                if (hideButtons) {
-                    ok.setVisibility(View.GONE);
-                    cancel.setVisibility(View.GONE);
-                } else if (!InputHelper.isEmpty(primaryExtra)) {
-                    ok.setText(primaryExtra);
-                    if (!InputHelper.isEmpty(secondaryExtra)) cancel.setText(secondaryExtra);
-                    ok.setVisibility(View.VISIBLE);
-                    cancel.setVisibility(View.VISIBLE);
-                }
-            }
-        }
-    }
+private void initButton(final @NonNull Bundle bundle) {
+	Bundle extra = bundle.getBundle("bundle");
+	if (extra != null) {
+		boolean yesNo = extra.getBoolean(BundleConstant.YES_NO_EXTRA);
+		if (yesNo) {
+			ok.setText(R.string.yes);
+			cancel.setText(R.string.no);
+		} else {
+			boolean hideButtons = extra.getBoolean("hide_buttons");
+			String primaryExtra = extra.getString("primary_extra");
+			String secondaryExtra = extra.getString("secondary_extra");
+			if (hideButtons) {
+				ok.setVisibility(View.GONE);
+				cancel.setVisibility(View.GONE);
+			} else if (!InputHelper.isEmpty(primaryExtra)) {
+				ok.setText(primaryExtra);
+				if (!InputHelper.isEmpty(secondaryExtra)) cancel.setText(secondaryExtra);
+				ok.setVisibility(View.VISIBLE);
+				cancel.setVisibility(View.VISIBLE);
+			}
+		}
+	}
+}
 
-    @Override protected void onDismissedByScrolling() {
-        super.onDismissedByScrolling();
-        if (callback != null) callback.onDialogDismissed();
-    }
+@Override protected void onDismissedByScrolling() {
+	super.onDismissedByScrolling();
+	if (callback != null) callback.onDialogDismissed();
+}
 
-    @Override protected void onHidden() {
-        if (callback != null) callback.onDialogDismissed();
-        super.onHidden();
-    }
+@Override protected void onHidden() {
+	if (callback != null) callback.onDialogDismissed();
+	super.onHidden();
+}
 
-    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg) {
-        return newInstance(bundleTitle, bundleMsg, null);
-    }
+@NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg) {
+	return newInstance(bundleTitle, bundleMsg, null);
+}
 
-    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final boolean isMarkDown) {
-        return newInstance(bundleTitle, bundleMsg, isMarkDown, null);
-    }
+@NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final boolean isMarkDown) {
+	return newInstance(bundleTitle, bundleMsg, isMarkDown, null);
+}
 
-    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg,
-            final boolean isMarkDown, final boolean hideCancel) {
-        return newInstance(bundleTitle, bundleMsg, isMarkDown, hideCancel, null);
-    }
+@NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg,
+                                                     final boolean isMarkDown, final boolean hideCancel) {
+	return newInstance(bundleTitle, bundleMsg, isMarkDown, hideCancel, null);
+}
 
-    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final boolean isMarkDown,
-            final @Nullable Bundle bundle) {
-        MessageDialogView messageDialogView = new MessageDialogView();
-        messageDialogView.setArguments(getBundle(bundleTitle, bundleMsg, isMarkDown, bundle, false));
-        return messageDialogView;
-    }
+@NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final boolean isMarkDown,
+                                                     final @Nullable Bundle bundle) {
+	MessageDialogView messageDialogView = new MessageDialogView();
+	messageDialogView.setArguments(getBundle(bundleTitle, bundleMsg, isMarkDown, bundle, false));
+	return messageDialogView;
+}
 
-    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final boolean isMarkDown,
-            final boolean hideCancel, final @Nullable Bundle bundle) {
-        MessageDialogView messageDialogView = new MessageDialogView();
-        messageDialogView.setArguments(getBundle(bundleTitle, bundleMsg, isMarkDown, bundle, hideCancel));
-        return messageDialogView;
-    }
+@NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final boolean isMarkDown,
+                                                     final boolean hideCancel, final @Nullable Bundle bundle) {
+	MessageDialogView messageDialogView = new MessageDialogView();
+	messageDialogView.setArguments(getBundle(bundleTitle, bundleMsg, isMarkDown, bundle, hideCancel));
+	return messageDialogView;
+}
 
-    @NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final @Nullable Bundle bundle) {
-        return newInstance(bundleTitle, bundleMsg, false, bundle);
-    }
+@NonNull public static MessageDialogView newInstance(final @NonNull String bundleTitle, final @NonNull String bundleMsg, final @Nullable Bundle bundle) {
+	return newInstance(bundleTitle, bundleMsg, false, bundle);
+}
 
-    private static Bundle getBundle(final String bundleTitle, final String bundleMsg, final boolean isMarkDown, final Bundle bundle, final boolean hideCancel) {
-        return Bundler.start()
-               .put("bundleTitle", bundleTitle)
-               .put("bundleMsg", bundleMsg)
-               .put("bundle", bundle)
-               .put("isMarkDown", isMarkDown)
-               .put("hideCancel", hideCancel)
-               .end();
-    }
+private static Bundle getBundle(final String bundleTitle, final String bundleMsg, final boolean isMarkDown, final Bundle bundle, final boolean hideCancel) {
+	return Bundler.start()
+	       .put("bundleTitle", bundleTitle)
+	       .put("bundleMsg", bundleMsg)
+	       .put("bundle", bundle)
+	       .put("isMarkDown", isMarkDown)
+	       .put("hideCancel", hideCancel)
+	       .end();
+}
 
-    @NonNull public static Bundle getYesNoBundle(final @NonNull Context context) {
-        return Bundler.start()
-               .put("primary_extra", context.getString(R.string.yes))
-               .put("secondary_extra", context.getString(R.string.no))
-               .end();
-    }
+@NonNull public static Bundle getYesNoBundle(final @NonNull Context context) {
+	return Bundler.start()
+	       .put("primary_extra", context.getString(R.string.yes))
+	       .put("secondary_extra", context.getString(R.string.no))
+	       .end();
+}
 }

@@ -17,17 +17,17 @@ import java.util.ArrayList;
 
 public interface SearchMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onNotifyAdapter(@Nullable SearchHistory query);
+interface View extends BaseMvp.FAView {
+void onNotifyAdapter(@Nullable SearchHistory query);
 
-        void onSetCount(int count, @IntRange(from = 0, to = 3) int index);
-    }
+void onSetCount(int count, @IntRange(from = 0, to = 3) int index);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter {
+interface Presenter extends BaseMvp.FAPresenter {
 
-        @NonNull ArrayList<SearchHistory> getHints();
+@NonNull ArrayList<SearchHistory> getHints();
 
-        void onSearchClicked(@NonNull ViewPager viewPager, @NonNull AutoCompleteTextView editText);
+void onSearchClicked(@NonNull ViewPager viewPager, @NonNull AutoCompleteTextView editText);
 
-    }
+}
 }

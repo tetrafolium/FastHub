@@ -20,25 +20,25 @@ import butterknife.BindView;
 
 public class MilestonesViewHolder extends BaseViewHolder<MilestoneModel> {
 
-    @BindView(R.id.title) FontTextView title;
-    @BindView(R.id.date) FontTextView date;
-    @BindView(R.id.notificationTitle) FontTextView notificationTitle;
+@BindView(R.id.title) FontTextView title;
+@BindView(R.id.date) FontTextView date;
+@BindView(R.id.notificationTitle) FontTextView notificationTitle;
 
-    private MilestonesViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
-        super(itemView, adapter);
-    }
+private MilestonesViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
+	super(itemView, adapter);
+}
 
-    public static MilestonesViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter) {
-        return new MilestonesViewHolder(getView(viewGroup, R.layout.milestone_row_item), adapter);
-    }
+public static MilestonesViewHolder newInstance(final @NonNull ViewGroup viewGroup, final @Nullable BaseRecyclerAdapter adapter) {
+	return new MilestonesViewHolder(getView(viewGroup, R.layout.milestone_row_item), adapter);
+}
 
-    @Override public void bind(final @NonNull MilestoneModel milestoneModel) {
-        title.setText(milestoneModel.getTitle());
-        notificationTitle.setText(milestoneModel.getDescription());
-        if (milestoneModel.getDueOn() != null) {
-            date.setText(ParseDateFormat.getTimeAgo(milestoneModel.getDueOn()));
-        } else if (milestoneModel.getCreatedAt() != null) {
-            date.setText(ParseDateFormat.getTimeAgo(milestoneModel.getCreatedAt()));
-        }
-    }
+@Override public void bind(final @NonNull MilestoneModel milestoneModel) {
+	title.setText(milestoneModel.getTitle());
+	notificationTitle.setText(milestoneModel.getDescription());
+	if (milestoneModel.getDueOn() != null) {
+		date.setText(ParseDateFormat.getTimeAgo(milestoneModel.getDueOn()));
+	} else if (milestoneModel.getCreatedAt() != null) {
+		date.setText(ParseDateFormat.getTimeAgo(milestoneModel.getCreatedAt()));
+	}
+}
 }

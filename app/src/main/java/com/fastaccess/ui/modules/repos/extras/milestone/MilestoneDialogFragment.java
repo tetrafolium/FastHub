@@ -31,131 +31,131 @@ import butterknife.BindView;
  */
 
 public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, MilestonePresenter> implements MilestoneMvp.View {
-    public static final String TAG = MilestoneDialogFragment.class.getSimpleName();
+public static final String TAG = MilestoneDialogFragment.class.getSimpleName();
 
-    @BindView(R.id.toolbar) Toolbar toolbar;
-    @BindView(R.id.appbar) AppBarLayout appbar;
-    @BindView(R.id.recycler) DynamicRecyclerView recycler;
-    @BindView(R.id.refresh) AppbarRefreshLayout refresh;
-    @BindView(R.id.stateLayout) StateLayout stateLayout;
-    @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
-    private MilestonesAdapter adapter;
-    private MilestoneMvp.OnMilestoneSelected onMilestoneSelected;
+@BindView(R.id.toolbar) Toolbar toolbar;
+@BindView(R.id.appbar) AppBarLayout appbar;
+@BindView(R.id.recycler) DynamicRecyclerView recycler;
+@BindView(R.id.refresh) AppbarRefreshLayout refresh;
+@BindView(R.id.stateLayout) StateLayout stateLayout;
+@BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
+private MilestonesAdapter adapter;
+private MilestoneMvp.OnMilestoneSelected onMilestoneSelected;
 
-    public static MilestoneDialogFragment newInstance(final @NonNull String login, final @NonNull String repo) {
-        MilestoneDialogFragment fragment = new MilestoneDialogFragment();
-        fragment.setArguments(Bundler.start()
-                              .put(BundleConstant.EXTRA, login)
-                              .put(BundleConstant.ID, repo)
-                              .end());
-        return fragment;
-    }
+public static MilestoneDialogFragment newInstance(final @NonNull String login, final @NonNull String repo) {
+	MilestoneDialogFragment fragment = new MilestoneDialogFragment();
+	fragment.setArguments(Bundler.start()
+	                      .put(BundleConstant.EXTRA, login)
+	                      .put(BundleConstant.ID, repo)
+	                      .end());
+	return fragment;
+}
 
-    @Override public void onAttach(final Context context) {
-        super.onAttach(context);
-        if (getParentFragment() != null && getParentFragment() instanceof MilestoneMvp.OnMilestoneSelected) {
-            onMilestoneSelected = (MilestoneMvp.OnMilestoneSelected) getParentFragment();
-        } else if (context instanceof MilestoneMvp.OnMilestoneSelected) {
-            onMilestoneSelected = (MilestoneMvp.OnMilestoneSelected) context;
-        }
-    }
+@Override public void onAttach(final Context context) {
+	super.onAttach(context);
+	if (getParentFragment() != null && getParentFragment() instanceof MilestoneMvp.OnMilestoneSelected) {
+		onMilestoneSelected = (MilestoneMvp.OnMilestoneSelected) getParentFragment();
+	} else if (context instanceof MilestoneMvp.OnMilestoneSelected) {
+		onMilestoneSelected = (MilestoneMvp.OnMilestoneSelected) context;
+	}
+}
 
-    @Override public void onDetach() {
-        onMilestoneSelected = null;
-        super.onDetach();
-    }
+@Override public void onDetach() {
+	onMilestoneSelected = null;
+	super.onDetach();
+}
 
-    @Override public void onNotifyAdapter(final @Nullable List<MilestoneModel> items) {
-        hideProgress();
-        if (items == null || items.isEmpty()) {
-            adapter.clear();
-            return;
-        }
-        adapter.insertItems(items);
-    }
+@Override public void onNotifyAdapter(final @Nullable List<MilestoneModel> items) {
+	hideProgress();
+	if (items == null || items.isEmpty()) {
+		adapter.clear();
+		return;
+	}
+	adapter.insertItems(items);
+}
 
-    @Override public void onMilestoneSelected(final @NonNull MilestoneModel milestoneModel) {
-        if (onMilestoneSelected != null) onMilestoneSelected.onMilestoneSelected(milestoneModel);
-        if (getParentFragment() instanceof BaseDialogFragment) {
-            ((BaseDialogFragment) getParentFragment()).dismiss();
-        }
-    }
+@Override public void onMilestoneSelected(final @NonNull MilestoneModel milestoneModel) {
+	if (onMilestoneSelected != null) onMilestoneSelected.onMilestoneSelected(milestoneModel);
+	if (getParentFragment() instanceof BaseDialogFragment) {
+		((BaseDialogFragment) getParentFragment()).dismiss();
+	}
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.milestone_dialog_layout;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.milestone_dialog_layout;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        if (getArguments() == null) {
-            return;
-        }
-        String login = getArguments().getString(BundleConstant.EXTRA);
-        String repo = getArguments().getString(BundleConstant.ID);
-        if (login == null || repo == null) {
-            return;
-        }
-        stateLayout.setEmptyText(R.string.no_milestones);
-        toolbar.setTitle(R.string.milestone);
-        toolbar.setOnMenuItemClickListener(item -> onAddMilestone());
-        if (onMilestoneSelected != null) toolbar.inflateMenu(R.menu.add_menu);
-        toolbar.setNavigationIcon(R.drawable.ic_clear);
-        toolbar.setNavigationOnClickListener(v -> {
-            if (getParentFragment() instanceof BaseDialogFragment) {
-                ((BaseDialogFragment) getParentFragment()).dismiss();
-            }
-        });
-        recycler.addDivider();
-        adapter = new MilestonesAdapter(getPresenter().getMilestones());
-        if (onMilestoneSelected != null) adapter.setListener(getPresenter());
-        recycler.setEmptyView(stateLayout, refresh);
-        recycler.setAdapter(adapter);
-        recycler.addKeyLineDivider();
-        if (savedInstanceState == null || (getPresenter().getMilestones().isEmpty() && !getPresenter().isApiCalled())) {
-            getPresenter().onLoadMilestones(login, repo);
-        }
-        stateLayout.setOnReloadListener(v -> getPresenter().onLoadMilestones(login, repo));
-        refresh.setOnRefreshListener(() -> getPresenter().onLoadMilestones(login, repo));
-        fastScroller.attachRecyclerView(recycler);
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	if (getArguments() == null) {
+		return;
+	}
+	String login = getArguments().getString(BundleConstant.EXTRA);
+	String repo = getArguments().getString(BundleConstant.ID);
+	if (login == null || repo == null) {
+		return;
+	}
+	stateLayout.setEmptyText(R.string.no_milestones);
+	toolbar.setTitle(R.string.milestone);
+	toolbar.setOnMenuItemClickListener(item->onAddMilestone());
+	if (onMilestoneSelected != null) toolbar.inflateMenu(R.menu.add_menu);
+	toolbar.setNavigationIcon(R.drawable.ic_clear);
+	toolbar.setNavigationOnClickListener(v->{
+			if (getParentFragment() instanceof BaseDialogFragment) {
+			        ((BaseDialogFragment) getParentFragment()).dismiss();
+			}
+		});
+	recycler.addDivider();
+	adapter = new MilestonesAdapter(getPresenter().getMilestones());
+	if (onMilestoneSelected != null) adapter.setListener(getPresenter());
+	recycler.setEmptyView(stateLayout, refresh);
+	recycler.setAdapter(adapter);
+	recycler.addKeyLineDivider();
+	if (savedInstanceState == null || (getPresenter().getMilestones().isEmpty() && !getPresenter().isApiCalled())) {
+		getPresenter().onLoadMilestones(login, repo);
+	}
+	stateLayout.setOnReloadListener(v->getPresenter().onLoadMilestones(login, repo));
+	refresh.setOnRefreshListener(()->getPresenter().onLoadMilestones(login, repo));
+	fastScroller.attachRecyclerView(recycler);
+}
 
-    @Override public void showProgress(final @StringRes int resId) {
+@Override public void showProgress(final @StringRes int resId) {
 
-        refresh.setRefreshing(true);
-        stateLayout.showProgress();
-    }
+	refresh.setRefreshing(true);
+	stateLayout.showProgress();
+}
 
-    @Override public void hideProgress() {
-        refresh.setRefreshing(false);
-        stateLayout.hideProgress();
-    }
+@Override public void hideProgress() {
+	refresh.setRefreshing(false);
+	stateLayout.hideProgress();
+}
 
-    @Override public void showErrorMessage(final @NonNull String message) {
-        showReload();
-        super.showErrorMessage(message);
-    }
+@Override public void showErrorMessage(final @NonNull String message) {
+	showReload();
+	super.showErrorMessage(message);
+}
 
-    @Override public void showMessage(final int titleRes, final int msgRes) {
-        showReload();
-        super.showMessage(titleRes, msgRes);
-    }
+@Override public void showMessage(final int titleRes, final int msgRes) {
+	showReload();
+	super.showMessage(titleRes, msgRes);
+}
 
-    @NonNull @Override public MilestonePresenter providePresenter() {
-        return new MilestonePresenter();
-    }
+@NonNull @Override public MilestonePresenter providePresenter() {
+	return new MilestonePresenter();
+}
 
-    @Override public void onMilestoneAdded(final @NonNull MilestoneModel milestoneModel) {
-        adapter.addItem(milestoneModel, 0);
-    }
+@Override public void onMilestoneAdded(final @NonNull MilestoneModel milestoneModel) {
+	adapter.addItem(milestoneModel, 0);
+}
 
-    private void showReload() {
-        hideProgress();
-        stateLayout.showReload(adapter.getItemCount());
-    }
+private void showReload() {
+	hideProgress();
+	stateLayout.showReload(adapter.getItemCount());
+}
 
-    private boolean onAddMilestone() {
-        //noinspection ConstantConditions
-        CreateMilestoneDialogFragment.newInstance(getArguments().getString(BundleConstant.EXTRA), getArguments().getString(BundleConstant.ID))
-        .show(getChildFragmentManager(), CreateMilestoneDialogFragment.TAG);
-        return true;
-    }
+private boolean onAddMilestone() {
+	//noinspection ConstantConditions
+	CreateMilestoneDialogFragment.newInstance(getArguments().getString(BundleConstant.EXTRA), getArguments().getString(BundleConstant.ID))
+	.show(getChildFragmentManager(), CreateMilestoneDialogFragment.TAG);
+	return true;
+}
 }

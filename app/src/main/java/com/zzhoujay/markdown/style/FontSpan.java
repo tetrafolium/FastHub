@@ -12,31 +12,31 @@ import android.text.style.StyleSpan;
 @SuppressLint("ParcelCreator")
 public class FontSpan extends StyleSpan implements ParcelableSpan {
 
-    private final float size;
-    private final int color;
+private final float size;
+private final int color;
 
-    public FontSpan(final float size, final int style) {
-        super(style);
-        this.size = size;
-        this.color = -1;
-    }
+public FontSpan(final float size, final int style) {
+	super(style);
+	this.size = size;
+	this.color = -1;
+}
 
-    public FontSpan(final float size, final int style, final int color) {
-        super(style);
-        this.size = size;
-        this.color = color;
-    }
+public FontSpan(final float size, final int style, final int color) {
+	super(style);
+	this.size = size;
+	this.color = color;
+}
 
-    @Override
-    public void updateMeasureState(final TextPaint p) {
-        super.updateMeasureState(p);
-        p.setTextSize(p.getTextSize() * size);
-    }
+@Override
+public void updateMeasureState(final TextPaint p) {
+	super.updateMeasureState(p);
+	p.setTextSize(p.getTextSize() * size);
+}
 
-    @Override
-    public void updateDrawState(final TextPaint tp) {
-        super.updateDrawState(tp);
-        updateMeasureState(tp);
-        if (color != -1) tp.setColor(color);
-    }
+@Override
+public void updateDrawState(final TextPaint tp) {
+	super.updateDrawState(tp);
+	updateMeasureState(tp);
+	if (color != -1) tp.setColor(color);
+}
 }

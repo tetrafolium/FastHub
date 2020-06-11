@@ -14,26 +14,27 @@ import java.util.Map;
  */
 
 class CommitFilesSingleton {
-    private static final CommitFilesSingleton SINGLETON = new CommitFilesSingleton();
+private static final CommitFilesSingleton SINGLETON = new CommitFilesSingleton();
 
-    static CommitFilesSingleton getInstance() {
-        return SINGLETON;
-    }
+static CommitFilesSingleton getInstance() {
+	return SINGLETON;
+}
 
-    private Map<String, CommitFileListModel> files = new Hashtable<>();
+private Map<String, CommitFileListModel> files = new Hashtable<>();
 
-    private CommitFilesSingleton() { }
+private CommitFilesSingleton() {
+}
 
-    void putFiles(final @NonNull String id, final @NonNull CommitFileListModel commitFiles) {
-        clear();
-        files.put(id, commitFiles);
-    }
+void putFiles(final @NonNull String id, final @NonNull CommitFileListModel commitFiles) {
+	clear();
+	files.put(id, commitFiles);
+}
 
-    @Nullable CommitFileListModel getByCommitId(final @NonNull String id) {
-        return files.get(id);
-    }
+@Nullable CommitFileListModel getByCommitId(final @NonNull String id) {
+	return files.get(id);
+}
 
-    void clear() {
-        files.clear();
-    }
+void clear() {
+	files.clear();
+}
 }

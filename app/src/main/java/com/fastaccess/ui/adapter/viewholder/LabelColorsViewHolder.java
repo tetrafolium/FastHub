@@ -20,21 +20,21 @@ import butterknife.BindView;
 
 public class LabelColorsViewHolder extends BaseViewHolder<String> {
 
-    @BindView(R.id.color) FontTextView color;
+@BindView(R.id.color) FontTextView color;
 
-    private LabelColorsViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
-        super(itemView, adapter);
-    }
+private LabelColorsViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter) {
+	super(itemView, adapter);
+}
 
-    public static LabelColorsViewHolder newInstance(final ViewGroup parent, final BaseRecyclerAdapter adapter) {
-        return new LabelColorsViewHolder(getView(parent, R.layout.simple_color_row_item), adapter);
-    }
+public static LabelColorsViewHolder newInstance(final ViewGroup parent, final BaseRecyclerAdapter adapter) {
+	return new LabelColorsViewHolder(getView(parent, R.layout.simple_color_row_item), adapter);
+}
 
-    @Override public void bind(final @NonNull String labelModel) {
-        int labelColor = Color.parseColor(labelModel);
-        itemView.setBackgroundColor(labelColor);
-        color.setTextColor(ViewHelper.generateTextColor(labelColor));
-        color.setText(labelModel);
-    }
+@Override public void bind(final @NonNull String labelModel) {
+	int labelColor = Color.parseColor(labelModel);
+	itemView.setBackgroundColor(labelColor);
+	color.setTextColor(ViewHelper.generateTextColor(labelColor));
+	color.setText(labelModel);
+}
 
 }

@@ -29,104 +29,104 @@ import static com.fastaccess.data.dao.model.RepoFile.TYPE;
  */
 
 @Entity @NoArgsConstructor public abstract class AbstractRepoFile implements Parcelable {
-    @Key @Generated long id;
-    String name;
-    String path;
-    String sha;
-    long size;
-    String url;
-    String htmlUrl;
-    String gitUrl;
-    String downloadUrl;
-    FilesType type;
-    String repoId;
-    String login;
+@Key @Generated long id;
+String name;
+String path;
+String sha;
+long size;
+String url;
+String htmlUrl;
+String gitUrl;
+String downloadUrl;
+FilesType type;
+String repoId;
+String login;
 
 
-    public Single<RepoFile> save(final RepoFile entity) {
-        return RxHelper.getSingle(App.getInstance().getDataStore().insert(entity));
-    }
+public Single<RepoFile> save(final RepoFile entity) {
+	return RxHelper.getSingle(App.getInstance().getDataStore().insert(entity));
+}
 
-    public static Observable<RepoFile> save(final @NonNull List<RepoFile> models, final @NonNull String login, final @NonNull String repoId) {
-        ReactiveEntityStore<Persistable> singleEntityStore = App.getInstance().getDataStore();
-        return RxHelper.safeObservable(singleEntityStore.delete(RepoFile.class)
-                                       .where(REPO_ID.eq(repoId)
-                                              .and(LOGIN.eq(login)))
-                                       .get()
-                                       .single()
-                                       .toObservable()
-                                       .flatMap(integer -> Observable.fromIterable(models))
-        .flatMap(filesModel -> {
-            filesModel.setRepoId(repoId);
-            filesModel.setLogin(login);
-            return filesModel.save(filesModel).toObservable();
-        }));
-    }
+public static Observable<RepoFile> save(final @NonNull List<RepoFile> models, final @NonNull String login, final @NonNull String repoId) {
+	ReactiveEntityStore<Persistable> singleEntityStore = App.getInstance().getDataStore();
+	return RxHelper.safeObservable(singleEntityStore.delete(RepoFile.class)
+	                               .where(REPO_ID.eq(repoId)
+	                                      .and(LOGIN.eq(login)))
+	                               .get()
+	                               .single()
+	                               .toObservable()
+	                               .flatMap(integer->Observable.fromIterable(models))
+	                               .flatMap(filesModel->{
+			filesModel.setRepoId(repoId);
+			filesModel.setLogin(login);
+			return filesModel.save(filesModel).toObservable();
+		}));
+}
 
-    public static Single<List<RepoFile>> getFiles(final @NonNull String login, final @NonNull String repoId) {
-        return App.getInstance().getDataStore()
-               .select(RepoFile.class)
-               .where(REPO_ID.eq(repoId)
-                      .and(LOGIN.eq(login)))
-               .orderBy(TYPE.asc())
-               .get()
-               .observable()
-               .toList();
-    }
+public static Single<List<RepoFile> > getFiles(final @NonNull String login, final @NonNull String repoId) {
+	return App.getInstance().getDataStore()
+	       .select(RepoFile.class)
+	       .where(REPO_ID.eq(repoId)
+	              .and(LOGIN.eq(login)))
+	       .orderBy(TYPE.asc())
+	       .get()
+	       .observable()
+	       .toList();
+}
 
-    public static Observable<RepoFile> getFile(final @NonNull String login, final @NonNull String repoId, final @NonNull String sha) {
-        return App.getInstance().getDataStore()
-               .select(RepoFile.class)
-               .where(REPO_ID.eq(repoId)
-                      .and(LOGIN.eq(login))
-                      .and(SHA.eq(sha)))
-               .orderBy(TYPE.asc())
-               .get()
-               .observable();
-    }
+public static Observable<RepoFile> getFile(final @NonNull String login, final @NonNull String repoId, final @NonNull String sha) {
+	return App.getInstance().getDataStore()
+	       .select(RepoFile.class)
+	       .where(REPO_ID.eq(repoId)
+	              .and(LOGIN.eq(login))
+	              .and(SHA.eq(sha)))
+	       .orderBy(TYPE.asc())
+	       .get()
+	       .observable();
+}
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeLong(this.id);
-        dest.writeString(this.name);
-        dest.writeString(this.path);
-        dest.writeString(this.sha);
-        dest.writeLong(this.size);
-        dest.writeString(this.url);
-        dest.writeString(this.htmlUrl);
-        dest.writeString(this.gitUrl);
-        dest.writeString(this.downloadUrl);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-        dest.writeString(this.repoId);
-        dest.writeString(this.login);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeLong(this.id);
+	dest.writeString(this.name);
+	dest.writeString(this.path);
+	dest.writeString(this.sha);
+	dest.writeLong(this.size);
+	dest.writeString(this.url);
+	dest.writeString(this.htmlUrl);
+	dest.writeString(this.gitUrl);
+	dest.writeString(this.downloadUrl);
+	dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+	dest.writeString(this.repoId);
+	dest.writeString(this.login);
+}
 
-    protected AbstractRepoFile(final Parcel in) {
-        this.id = in.readLong();
-        this.name = in.readString();
-        this.path = in.readString();
-        this.sha = in.readString();
-        this.size = in.readLong();
-        this.url = in.readString();
-        this.htmlUrl = in.readString();
-        this.gitUrl = in.readString();
-        this.downloadUrl = in.readString();
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : FilesType.values()[tmpType];
-        this.repoId = in.readString();
-        this.login = in.readString();
-    }
+protected AbstractRepoFile(final Parcel in) {
+	this.id = in.readLong();
+	this.name = in.readString();
+	this.path = in.readString();
+	this.sha = in.readString();
+	this.size = in.readLong();
+	this.url = in.readString();
+	this.htmlUrl = in.readString();
+	this.gitUrl = in.readString();
+	this.downloadUrl = in.readString();
+	int tmpType = in.readInt();
+	this.type = tmpType == -1 ? null : FilesType.values()[tmpType];
+	this.repoId = in.readString();
+	this.login = in.readString();
+}
 
-    public static final Creator<RepoFile> CREATOR = new Creator<RepoFile>() {
-        @Override public RepoFile createFromParcel(final Parcel source) {
-            return new RepoFile(source);
-        }
+public static final Creator<RepoFile> CREATOR = new Creator<RepoFile>() {
+	@Override public RepoFile createFromParcel(final Parcel source) {
+		return new RepoFile(source);
+	}
 
-        @Override public RepoFile[] newArray(final int size) {
-            return new RepoFile[size];
-        }
-    };
+	@Override public RepoFile[] newArray(final int size) {
+		return new RepoFile[size];
+	}
+};
 }

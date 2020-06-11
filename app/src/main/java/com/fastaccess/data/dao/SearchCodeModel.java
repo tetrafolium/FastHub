@@ -14,49 +14,50 @@ import lombok.Setter;
 
 @Getter @Setter
 public class SearchCodeModel implements Parcelable {
-    private String name;
-    private String path;
-    private String sha;
-    private String url;
-    private String gitUrl;
-    private Repo repository;
-    private double score;
-    private String htmlUrl;
+private String name;
+private String path;
+private String sha;
+private String url;
+private String gitUrl;
+private Repo repository;
+private double score;
+private String htmlUrl;
 
 
-    public SearchCodeModel() { }
+public SearchCodeModel() {
+}
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.path);
-        dest.writeString(this.sha);
-        dest.writeString(this.url);
-        dest.writeString(this.gitUrl);
-        dest.writeParcelable(this.repository, flags);
-        dest.writeDouble(this.score);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeString(this.name);
+	dest.writeString(this.path);
+	dest.writeString(this.sha);
+	dest.writeString(this.url);
+	dest.writeString(this.gitUrl);
+	dest.writeParcelable(this.repository, flags);
+	dest.writeDouble(this.score);
+}
 
-    protected SearchCodeModel(final Parcel in) {
-        this.name = in.readString();
-        this.path = in.readString();
-        this.sha = in.readString();
-        this.url = in.readString();
-        this.gitUrl = in.readString();
-        this.repository = in.readParcelable(Repo.class.getClassLoader());
-        this.score = in.readDouble();
-    }
+protected SearchCodeModel(final Parcel in) {
+	this.name = in.readString();
+	this.path = in.readString();
+	this.sha = in.readString();
+	this.url = in.readString();
+	this.gitUrl = in.readString();
+	this.repository = in.readParcelable(Repo.class.getClassLoader());
+	this.score = in.readDouble();
+}
 
-    public static final Creator<SearchCodeModel> CREATOR = new Creator<SearchCodeModel>() {
-        @Override public SearchCodeModel createFromParcel(final Parcel source) {
-            return new SearchCodeModel(source);
-        }
+public static final Creator<SearchCodeModel> CREATOR = new Creator<SearchCodeModel>() {
+	@Override public SearchCodeModel createFromParcel(final Parcel source) {
+		return new SearchCodeModel(source);
+	}
 
-        @Override public SearchCodeModel[] newArray(final int size) {
-            return new SearchCodeModel[size];
-        }
-    };
+	@Override public SearchCodeModel[] newArray(final int size) {
+		return new SearchCodeModel[size];
+	}
+};
 }

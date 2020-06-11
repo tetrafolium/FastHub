@@ -10,49 +10,49 @@ import android.util.AttributeSet;
  */
 public class GridManager extends GridLayoutManager {
 
-    private int iconSize;
+private int iconSize;
 
-    public GridManager(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
+public GridManager(final Context context, final AttributeSet attrs, final int defStyleAttr, final int defStyleRes) {
+	super(context, attrs, defStyleAttr, defStyleRes);
+}
 
-    public GridManager(final Context context, final int spanCount) {
-        super(context, spanCount);
-    }
+public GridManager(final Context context, final int spanCount) {
+	super(context, spanCount);
+}
 
-    public GridManager(final Context context, final int spanCount, final int orientation, final boolean reverseLayout) {
-        super(context, spanCount, orientation, reverseLayout);
-    }
+public GridManager(final Context context, final int spanCount, final int orientation, final boolean reverseLayout) {
+	super(context, spanCount, orientation, reverseLayout);
+}
 
-    @Override public void onLayoutChildren(final RecyclerView.Recycler recycler, final RecyclerView.State state) {
-        try {
-            super.onLayoutChildren(recycler, state);
-            updateCount();
-        } catch (Exception ignored) { }
-    }
+@Override public void onLayoutChildren(final RecyclerView.Recycler recycler, final RecyclerView.State state) {
+	try {
+		super.onLayoutChildren(recycler, state);
+		updateCount();
+	} catch (Exception ignored) { }
+}
 
-    @Override public void onMeasure(final RecyclerView.Recycler recycler, final RecyclerView.State state, final int widthSpec, final int heightSpec) {
-        try {
-            super.onMeasure(recycler, state, widthSpec, heightSpec);
-        } catch (Exception ignored) { }
-    }
+@Override public void onMeasure(final RecyclerView.Recycler recycler, final RecyclerView.State state, final int widthSpec, final int heightSpec) {
+	try {
+		super.onMeasure(recycler, state, widthSpec, heightSpec);
+	} catch (Exception ignored) { }
+}
 
-    private void updateCount() {
-        if (iconSize > 1) {
-            int spanCount = Math.max(1, getWidth() / iconSize);
-            if (spanCount < 1) {
-                spanCount = 1;
-            }
-            this.setSpanCount(spanCount);
-        }
-    }
+private void updateCount() {
+	if (iconSize > 1) {
+		int spanCount = Math.max(1, getWidth() / iconSize);
+		if (spanCount < 1) {
+			spanCount = 1;
+		}
+		this.setSpanCount(spanCount);
+	}
+}
 
-    public int getIconSize() {
-        return iconSize;
-    }
+public int getIconSize() {
+	return iconSize;
+}
 
-    public void setIconSize(final int iconSize) {
-        this.iconSize = iconSize;
-        updateCount();
-    }
+public void setIconSize(final int iconSize) {
+	this.iconSize = iconSize;
+	updateCount();
+}
 }

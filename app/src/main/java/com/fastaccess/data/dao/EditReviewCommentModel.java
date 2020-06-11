@@ -14,42 +14,43 @@ import lombok.Setter;
 
 @Getter @Setter public class EditReviewCommentModel implements Parcelable {
 
-    public int groupPosition;
-    public int commentPosition;
-    public String comment;
-    public ReviewCommentModel commentModel;
-    @SerializedName("in_reply_to") public long inReplyTo;
+public int groupPosition;
+public int commentPosition;
+public String comment;
+public ReviewCommentModel commentModel;
+@SerializedName("in_reply_to") public long inReplyTo;
 
 
-    public EditReviewCommentModel() { }
+public EditReviewCommentModel() {
+}
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeInt(this.groupPosition);
-        dest.writeInt(this.commentPosition);
-        dest.writeString(this.comment);
-        dest.writeParcelable(this.commentModel, flags);
-        dest.writeLong(this.inReplyTo);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeInt(this.groupPosition);
+	dest.writeInt(this.commentPosition);
+	dest.writeString(this.comment);
+	dest.writeParcelable(this.commentModel, flags);
+	dest.writeLong(this.inReplyTo);
+}
 
-    private EditReviewCommentModel(final Parcel in) {
-        this.groupPosition = in.readInt();
-        this.commentPosition = in.readInt();
-        this.comment = in.readString();
-        this.commentModel = in.readParcelable(ReviewCommentModel.class.getClassLoader());
-        this.inReplyTo = in.readLong();
-    }
+private EditReviewCommentModel(final Parcel in) {
+	this.groupPosition = in.readInt();
+	this.commentPosition = in.readInt();
+	this.comment = in.readString();
+	this.commentModel = in.readParcelable(ReviewCommentModel.class.getClassLoader());
+	this.inReplyTo = in.readLong();
+}
 
-    public static final Creator<EditReviewCommentModel> CREATOR = new Creator<EditReviewCommentModel>() {
-        @Override public EditReviewCommentModel createFromParcel(final Parcel source) {
-            return new EditReviewCommentModel(source);
-        }
+public static final Creator<EditReviewCommentModel> CREATOR = new Creator<EditReviewCommentModel>() {
+	@Override public EditReviewCommentModel createFromParcel(final Parcel source) {
+		return new EditReviewCommentModel(source);
+	}
 
-        @Override public EditReviewCommentModel[] newArray(final int size) {
-            return new EditReviewCommentModel[size];
-        }
-    };
+	@Override public EditReviewCommentModel[] newArray(final int size) {
+		return new EditReviewCommentModel[size];
+	}
+};
 }

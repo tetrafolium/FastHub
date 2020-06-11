@@ -19,46 +19,46 @@ import java.util.ArrayList;
  */
 
 public class NotificationsAdapter extends BaseRecyclerAdapter<GroupedNotificationModel, BaseViewHolder,
-    BaseViewHolder.OnItemClickListener<GroupedNotificationModel>> {
-    private boolean showUnreadState;
-    private boolean hideClear;
+	                                                      BaseViewHolder.OnItemClickListener<GroupedNotificationModel> > {
+private boolean showUnreadState;
+private boolean hideClear;
 
-    public NotificationsAdapter(final @NonNull ArrayList<GroupedNotificationModel> eventsModels, final boolean showUnreadState) {
-        super(eventsModels);
-        this.showUnreadState = showUnreadState;
-    }
+public NotificationsAdapter(final @NonNull ArrayList<GroupedNotificationModel> eventsModels, final boolean showUnreadState) {
+	super(eventsModels);
+	this.showUnreadState = showUnreadState;
+}
 
-    public NotificationsAdapter(final @NonNull ArrayList<GroupedNotificationModel> eventsModels, final boolean showUnreadState, final boolean hideClear) {
-        super(eventsModels);
-        this.showUnreadState = showUnreadState;
-        this.hideClear = hideClear;
-    }
+public NotificationsAdapter(final @NonNull ArrayList<GroupedNotificationModel> eventsModels, final boolean showUnreadState, final boolean hideClear) {
+	super(eventsModels);
+	this.showUnreadState = showUnreadState;
+	this.hideClear = hideClear;
+}
 
-    @Override protected BaseViewHolder viewHolder(final ViewGroup parent, final int viewType) {
-        if (viewType == GroupedNotificationModel.HEADER) {
-            return NotificationsHeaderViewHolder.newInstance(parent, this);
-        } else {
-            return NotificationsViewHolder.newInstance(parent, this, showUnreadState);
-        }
-    }
+@Override protected BaseViewHolder viewHolder(final ViewGroup parent, final int viewType) {
+	if (viewType == GroupedNotificationModel.HEADER) {
+		return NotificationsHeaderViewHolder.newInstance(parent, this);
+	} else {
+		return NotificationsViewHolder.newInstance(parent, this, showUnreadState);
+	}
+}
 
-    @Override protected void onBindView(final BaseViewHolder holder, final int position) {
-        if (getItemViewType(position) == GroupedNotificationModel.HEADER) {
-            ((NotificationsHeaderViewHolder) holder).bind(getItem(position));
-            if (hideClear)
-                if (getItem(Math.min(position + 1, getItemCount() - 1)).getNotification().isUnread()) {
-                    (((NotificationsHeaderViewHolder) holder).itemView).findViewById(R.id.markAsRead).setVisibility(View.VISIBLE);
-                }
-        } else {
-            ((NotificationsViewHolder) holder).bind(getItem(position));
-        }
-        if (getItem(position).getType() == GroupedNotificationModel.HEADER) {
-            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
-            layoutParams.setFullSpan(true);
-        }
-    }
+@Override protected void onBindView(final BaseViewHolder holder, final int position) {
+	if (getItemViewType(position) == GroupedNotificationModel.HEADER) {
+		((NotificationsHeaderViewHolder) holder).bind(getItem(position));
+		if (hideClear)
+			if (getItem(Math.min(position + 1, getItemCount() - 1)).getNotification().isUnread()) {
+				(((NotificationsHeaderViewHolder) holder).itemView).findViewById(R.id.markAsRead).setVisibility(View.VISIBLE);
+			}
+	} else {
+		((NotificationsViewHolder) holder).bind(getItem(position));
+	}
+	if (getItem(position).getType() == GroupedNotificationModel.HEADER) {
+		StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+		layoutParams.setFullSpan(true);
+	}
+}
 
-    @Override public int getItemViewType(final int position) {
-        return getItem(position).getType();
-    }
+@Override public int getItemViewType(final int position) {
+	return getItem(position).getType();
+}
 }

@@ -16,32 +16,32 @@ import java.util.ArrayList;
  */
 
 public class PinnedGistPresenter extends BasePresenter<PinnedGistMvp.View> implements PinnedGistMvp.Presenter {
-    private ArrayList<Gist> issues = new ArrayList<>();
+private ArrayList<Gist> issues = new ArrayList<>();
 
-    @Override protected void onAttachView(final @NonNull PinnedGistMvp.View view) {
-        super.onAttachView(view);
-        if (issues.isEmpty()) {
-            onReload();
-        }
-    }
+@Override protected void onAttachView(final @NonNull PinnedGistMvp.View view) {
+	super.onAttachView(view);
+	if (issues.isEmpty()) {
+		onReload();
+	}
+}
 
-    @NonNull @Override public ArrayList<Gist> getPinnedGists() {
-        return issues;
-    }
+@NonNull @Override public ArrayList<Gist> getPinnedGists() {
+	return issues;
+}
 
-    @Override public void onReload() {
-        manageDisposable(PinnedGists.getMyPinnedGists()
-                         .subscribe(repos -> sendToView(view -> view.onNotifyAdapter(repos)), throwable ->
-                                    sendToView(view -> view.onNotifyAdapter(null))));
-    }
+@Override public void onReload() {
+	manageDisposable(PinnedGists.getMyPinnedGists()
+	                 .subscribe(repos->sendToView(view->view.onNotifyAdapter(repos)), throwable->
+	                            sendToView(view->view.onNotifyAdapter(null))));
+}
 
-    @Override public void onItemClick(final int position, final View v, final Gist item) {
-        SchemeParser.launchUri(v.getContext(), !InputHelper.isEmpty(item.getHtmlUrl()) ? item.getHtmlUrl() : item.getUrl());
-    }
+@Override public void onItemClick(final int position, final View v, final Gist item) {
+	SchemeParser.launchUri(v.getContext(), !InputHelper.isEmpty(item.getHtmlUrl()) ? item.getHtmlUrl() : item.getUrl());
+}
 
-    @Override public void onItemLongClick(final int position, final View v, final Gist item) {
-        if (getView() != null) {
-            getView().onDeletePinnedGist(item.getId(), position);
-        }
-    }
+@Override public void onItemLongClick(final int position, final View v, final Gist item) {
+	if (getView() != null) {
+		getView().onDeletePinnedGist(item.getId(), position);
+	}
+}
 }

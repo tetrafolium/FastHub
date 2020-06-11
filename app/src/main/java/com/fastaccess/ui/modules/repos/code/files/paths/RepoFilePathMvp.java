@@ -18,37 +18,37 @@ import java.util.List;
 
 interface RepoFilePathMvp {
 
-    interface View extends BaseMvp.FAView, BranchesMvp.BranchSelectionListener {
-        void onNotifyAdapter(@Nullable List<RepoFile> items, int page);
+interface View extends BaseMvp.FAView, BranchesMvp.BranchSelectionListener {
+void onNotifyAdapter(@Nullable List<RepoFile> items, int page);
 
-        void onItemClicked(@NonNull RepoFile model, int position);
+void onItemClicked(@NonNull RepoFile model, int position);
 
-        void onAppendPath(@NonNull RepoFile model);
+void onAppendPath(@NonNull RepoFile model);
 
-        void onAppenedtab(@Nullable RepoFile repoFile);
+void onAppenedtab(@Nullable RepoFile repoFile);
 
-        void onSendData();
+void onSendData();
 
-        boolean canPressBack();
+boolean canPressBack();
 
-        void onBackPressed();
-    }
+void onBackPressed();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<RepoFile> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<RepoFile> {
 
-        void onFragmentCreated(@Nullable Bundle bundle);
+void onFragmentCreated(@Nullable Bundle bundle);
 
-        @NonNull String getRepoId();
+@NonNull String getRepoId();
 
-        @NonNull String getLogin();
+@NonNull String getLogin();
 
-        @Nullable String getPath();
+@Nullable String getPath();
 
-        @NonNull ArrayList<RepoFile> getPaths();
+@NonNull ArrayList<RepoFile> getPaths();
 
-        String getDefaultBranch();
-    }
+String getDefaultBranch();
+}
 
 
 }

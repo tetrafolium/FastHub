@@ -13,39 +13,39 @@ import lombok.Setter;
  */
 
 @Getter @Setter public class ReviewRequestModel implements Parcelable {
-    public String commitId;
-    public String body;
-    public String event;
-    public List<CommentRequestModel> comments;
+public String commitId;
+public String body;
+public String event;
+public List<CommentRequestModel> comments;
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(this.commitId);
-        dest.writeString(this.body);
-        dest.writeString(this.event);
-        dest.writeTypedList(this.comments);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeString(this.commitId);
+	dest.writeString(this.body);
+	dest.writeString(this.event);
+	dest.writeTypedList(this.comments);
+}
 
-    private ReviewRequestModel(final Parcel in) {
-        this.commitId = in.readString();
-        this.body = in.readString();
-        this.event = in.readString();
-        this.comments = in.createTypedArrayList(CommentRequestModel.CREATOR);
-    }
+private ReviewRequestModel(final Parcel in) {
+	this.commitId = in.readString();
+	this.body = in.readString();
+	this.event = in.readString();
+	this.comments = in.createTypedArrayList(CommentRequestModel.CREATOR);
+}
 
-    public ReviewRequestModel() {
-    }
+public ReviewRequestModel() {
+}
 
-    public static final Parcelable.Creator<ReviewRequestModel> CREATOR = new Parcelable.Creator<ReviewRequestModel>() {
-        @Override public ReviewRequestModel createFromParcel(final Parcel source) {
-            return new ReviewRequestModel(source);
-        }
+public static final Parcelable.Creator<ReviewRequestModel> CREATOR = new Parcelable.Creator<ReviewRequestModel>() {
+	@Override public ReviewRequestModel createFromParcel(final Parcel source) {
+		return new ReviewRequestModel(source);
+	}
 
-        @Override public ReviewRequestModel[] newArray(final int size) {
-            return new ReviewRequestModel[size];
-        }
-    };
+	@Override public ReviewRequestModel[] newArray(final int size) {
+		return new ReviewRequestModel[size];
+	}
+};
 }

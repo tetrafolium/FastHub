@@ -16,26 +16,26 @@ import lombok.Setter;
 @Getter @Setter @AllArgsConstructor public class SettingsModel {
 
 
-    public static final int THEME = 0;
-    public static final int NOTIFICATION = 1;
-    public static final int BEHAVIOR = 2;
-    public static final int CUSTOMIZATION = 3;
-    public static final int BACKUP = 4;
-    public static final int LANGUAGE = 5;
-    public static final int CODE_THEME = 6;
+public static final int THEME = 0;
+public static final int NOTIFICATION = 1;
+public static final int BEHAVIOR = 2;
+public static final int CUSTOMIZATION = 3;
+public static final int BACKUP = 4;
+public static final int LANGUAGE = 5;
+public static final int CODE_THEME = 6;
 
-    @IntDef({
-        THEME,
-        NOTIFICATION,
-        CUSTOMIZATION,
-        BEHAVIOR,
-        BACKUP,
-        LANGUAGE,
-        CODE_THEME
-    })
-    @Retention(RetentionPolicy.SOURCE) public @interface SettingsType { }
+@IntDef({
+		THEME,
+		NOTIFICATION,
+		CUSTOMIZATION,
+		BEHAVIOR,
+		BACKUP,
+		LANGUAGE,
+		CODE_THEME
+	})
+@Retention(RetentionPolicy.SOURCE) public @interface SettingsType { }
 
-    private int image;
-    private String title;
-    @SettingsType private int settingsType;
+private int image;
+private String title;
+@SettingsType private int settingsType;
 }

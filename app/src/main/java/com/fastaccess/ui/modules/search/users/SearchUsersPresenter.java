@@ -17,60 +17,61 @@ import java.util.ArrayList;
 
 class SearchUsersPresenter extends BasePresenter<SearchUsersMvp.View> implements SearchUsersMvp.Presenter {
 
-    private ArrayList<User> users = new ArrayList<>();
-    private int page;
-    private int previousTotal;
-    private int lastPage = Integer.MAX_VALUE;
+private ArrayList<User> users = new ArrayList<>();
+private int page;
+private int previousTotal;
+private int lastPage = Integer.MAX_VALUE;
 
-    @Override public int getCurrentPage() {
-        return page;
-    }
+@Override public int getCurrentPage() {
+	return page;
+}
 
-    @Override public int getPreviousTotal() {
-        return previousTotal;
-    }
+@Override public int getPreviousTotal() {
+	return previousTotal;
+}
 
-    @Override public void setCurrentPage(final int page) {
-        this.page = page;
-    }
+@Override public void setCurrentPage(final int page) {
+	this.page = page;
+}
 
-    @Override public void setPreviousTotal(final int previousTotal) {
-        this.previousTotal = previousTotal;
-    }
+@Override public void setPreviousTotal(final int previousTotal) {
+	this.previousTotal = previousTotal;
+}
 
-    @Override public boolean onCallApi(final int page, final @Nullable String parameter) {
-        if (page == 1) {
-            lastPage = Integer.MAX_VALUE;
-            sendToView(view -> view.getLoadMore().reset());
-        }
-        setCurrentPage(page);
-        if (page > lastPage || lastPage == 0 || parameter == null) {
-            sendToView(SearchUsersMvp.View::hideProgress);
-            return false;
-        }
-        makeRestCall(RestProvider.getSearchService(isEnterprise()).searchUsers(parameter, page),
-        response -> {
-            lastPage = response.getLast();
-            sendToView(view -> {
-                view.onNotifyAdapter(response.isIncompleteResults() ? null : response.getItems(), page);
-                if (!response.isIncompleteResults()) {
-                    view.onSetTabCount(response.getTotalCount());
-                } else {
-                    view.onSetTabCount(0);
-                    view.showMessage(R.string.error, R.string.search_results_warning);
-                }
-            });
-        });
-        return true;
-    }
+@Override public boolean onCallApi(final int page, final @Nullable String parameter) {
+	if (page == 1) {
+		lastPage = Integer.MAX_VALUE;
+		sendToView(view->view.getLoadMore().reset());
+	}
+	setCurrentPage(page);
+	if (page > lastPage || lastPage == 0 || parameter == null) {
+		sendToView(SearchUsersMvp.View::hideProgress);
+		return false;
+	}
+	makeRestCall(RestProvider.getSearchService(isEnterprise()).searchUsers(parameter, page),
+	             response->{
+			lastPage = response.getLast();
+			sendToView(view->{
+				view.onNotifyAdapter(response.isIncompleteResults() ? null : response.getItems(), page);
+				if (!response.isIncompleteResults()) {
+				        view.onSetTabCount(response.getTotalCount());
+				} else {
+				        view.onSetTabCount(0);
+				        view.showMessage(R.string.error, R.string.search_results_warning);
+				}
+			});
+		});
+	return true;
+}
 
-    @NonNull @Override public ArrayList<User> getUsers() {
-        return users;
-    }
+@NonNull @Override public ArrayList<User> getUsers() {
+	return users;
+}
 
-    @Override public void onItemClick(final int position, final View v, final User item) {
+@Override public void onItemClick(final int position, final View v, final User item) {
 
-    }
+}
 
-    @Override public void onItemLongClick(final int position, final View v, final User item) { }
+@Override public void onItemLongClick(final int position, final View v, final User item) {
+}
 }

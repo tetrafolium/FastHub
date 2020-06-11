@@ -45,136 +45,136 @@ import butterknife.BindView;
 
 public class CommitFilesFragment extends BaseFragment<CommitFilesMvp.View, CommitFilesPresenter> implements CommitFilesMvp.View {
 
-    @BindView(R.id.recycler) DynamicRecyclerView recycler;
-    @BindView(R.id.refresh) AppbarRefreshLayout refresh;
-    @BindView(R.id.stateLayout) StateLayout stateLayout;
-    @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
-    @State HashMap<Long, Boolean> toggleMap = new LinkedHashMap<>();
+@BindView(R.id.recycler) DynamicRecyclerView recycler;
+@BindView(R.id.refresh) AppbarRefreshLayout refresh;
+@BindView(R.id.stateLayout) StateLayout stateLayout;
+@BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
+@State HashMap<Long, Boolean> toggleMap = new LinkedHashMap<>();
 
-    private CommitPagerMvp.View viewCallback;
-    private CommitFilesAdapter adapter;
+private CommitPagerMvp.View viewCallback;
+private CommitFilesAdapter adapter;
 
-    public static CommitFilesFragment newInstance(final @NonNull String sha, final @Nullable CommitFileListModel commitFileModels) {
-        CommitFilesFragment view = new CommitFilesFragment();
-        if (commitFileModels != null) {
-            CommitFilesSingleton.getInstance().putFiles(sha, commitFileModels);
-        }
-        Bundle bundle = Bundler.start().put(BundleConstant.ID, sha).end();
-        view.setArguments(bundle);
-        return view;
-    }
+public static CommitFilesFragment newInstance(final @NonNull String sha, final @Nullable CommitFileListModel commitFileModels) {
+	CommitFilesFragment view = new CommitFilesFragment();
+	if (commitFileModels != null) {
+		CommitFilesSingleton.getInstance().putFiles(sha, commitFileModels);
+	}
+	Bundle bundle = Bundler.start().put(BundleConstant.ID, sha).end();
+	view.setArguments(bundle);
+	return view;
+}
 
-    @Override public void onAttach(final Context context) {
-        super.onAttach(context);
-        if (getParentFragment() instanceof CommitPagerMvp.View) {
-            viewCallback = (CommitPagerMvp.View) getParentFragment();
-        } else if (context instanceof CommitPagerMvp.View) {
-            viewCallback = (CommitPagerMvp.View) context;
-        }
-    }
+@Override public void onAttach(final Context context) {
+	super.onAttach(context);
+	if (getParentFragment() instanceof CommitPagerMvp.View) {
+		viewCallback = (CommitPagerMvp.View) getParentFragment();
+	} else if (context instanceof CommitPagerMvp.View) {
+		viewCallback = (CommitPagerMvp.View) context;
+	}
+}
 
-    @Override public void onDetach() {
-        viewCallback = null;
-        super.onDetach();
-    }
+@Override public void onDetach() {
+	viewCallback = null;
+	super.onDetach();
+}
 
-    @Override public void onNotifyAdapter(final @Nullable List<CommitFileChanges> items) {
-        hideProgress();
-        if (items != null) {
-            adapter.insertItems(items);
-        }
-    }
+@Override public void onNotifyAdapter(final @Nullable List<CommitFileChanges> items) {
+	hideProgress();
+	if (items != null) {
+		adapter.insertItems(items);
+	}
+}
 
-    @Override public void onCommentAdded(final @NonNull Comment newComment) {
-        hideProgress();
-        if (viewCallback != null) {
-            viewCallback.onAddComment(newComment);
-        }
-    }
+@Override public void onCommentAdded(final @NonNull Comment newComment) {
+	hideProgress();
+	if (viewCallback != null) {
+		viewCallback.onAddComment(newComment);
+	}
+}
 
-    @Override public void clearAdapter() {
-        refresh.setRefreshing(true);
-        adapter.clear();
-    }
+@Override public void clearAdapter() {
+	refresh.setRefreshing(true);
+	adapter.clear();
+}
 
-    @Override public void onOpenForResult(final int position, final CommitFileChanges model) {
-        FullScreenFileChangeActivity.Companion.startActivityForResult(this, model, position, true);
-    }
+@Override public void onOpenForResult(final int position, final CommitFileChanges model) {
+	FullScreenFileChangeActivity.Companion.startActivityForResult(this, model, position, true);
+}
 
-    @Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == FullScreenFileChangeActivity.Companion.getFOR_RESULT_CODE() && data != null) {
-                List<CommentRequestModel> comments = data.getParcelableArrayListExtra(BundleConstant.ITEM);
-                if (comments != null && !comments.isEmpty()) {
-                    if (viewCallback != null && !InputHelper.isEmpty(viewCallback.getLogin())) {
-                        getPresenter().onSubmit(viewCallback.getLogin(), viewCallback.getRepoId(), comments.get(0));
-                    }
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
+@Override public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+	if (resultCode == Activity.RESULT_OK) {
+		if (requestCode == FullScreenFileChangeActivity.Companion.getFOR_RESULT_CODE() && data != null) {
+			List<CommentRequestModel> comments = data.getParcelableArrayListExtra(BundleConstant.ITEM);
+			if (comments != null && !comments.isEmpty()) {
+				if (viewCallback != null && !InputHelper.isEmpty(viewCallback.getLogin())) {
+					getPresenter().onSubmit(viewCallback.getLogin(), viewCallback.getRepoId(), comments.get(0));
+				}
+			}
+		}
+	}
+	super.onActivityResult(requestCode, resultCode, data);
+}
 
-    @Override public void hideProgress() {
-        if (refresh != null) refresh.setRefreshing(false);
-    }
+@Override public void hideProgress() {
+	if (refresh != null) refresh.setRefreshing(false);
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.micro_grid_refresh_list;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.micro_grid_refresh_list;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        refresh.setEnabled(false);
-        stateLayout.setEmptyText(R.string.no_files);
-        recycler.setEmptyView(stateLayout, refresh);
-        adapter = new CommitFilesAdapter(getPresenter().changes, this, this);
-        adapter.setListener(getPresenter());
-        recycler.setAdapter(adapter);
-        if (getPresenter().changes.isEmpty()) getPresenter().onFragmentCreated(getArguments());
-        fastScroller.attachRecyclerView(recycler);
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	refresh.setEnabled(false);
+	stateLayout.setEmptyText(R.string.no_files);
+	recycler.setEmptyView(stateLayout, refresh);
+	adapter = new CommitFilesAdapter(getPresenter().changes, this, this);
+	adapter.setListener(getPresenter());
+	recycler.setAdapter(adapter);
+	if (getPresenter().changes.isEmpty()) getPresenter().onFragmentCreated(getArguments());
+	fastScroller.attachRecyclerView(recycler);
+}
 
-    @NonNull @Override public CommitFilesPresenter providePresenter() {
-        return new CommitFilesPresenter();
-    }
+@NonNull @Override public CommitFilesPresenter providePresenter() {
+	return new CommitFilesPresenter();
+}
 
-    @Override public void onToggle(final long position, final boolean isCollapsed) {
-        CommitFileChanges model = adapter.getItem((int) position);
-        if (model == null) return;
-        if (model.getCommitFileModel().getPatch() == null) {
-            if ("renamed".equalsIgnoreCase(model.getCommitFileModel().getStatus())) {
-                SchemeParser.launchUri(getContext(), model.getCommitFileModel().getBlobUrl());
-                return;
-            }
-            ActivityHelper.startCustomTab(getActivity(), adapter.getItem((int) position).getCommitFileModel().getBlobUrl());
-        }
-        toggleMap.put(position, isCollapsed);
-    }
+@Override public void onToggle(final long position, final boolean isCollapsed) {
+	CommitFileChanges model = adapter.getItem((int) position);
+	if (model == null) return;
+	if (model.getCommitFileModel().getPatch() == null) {
+		if ("renamed".equalsIgnoreCase(model.getCommitFileModel().getStatus())) {
+			SchemeParser.launchUri(getContext(), model.getCommitFileModel().getBlobUrl());
+			return;
+		}
+		ActivityHelper.startCustomTab(getActivity(), adapter.getItem((int) position).getCommitFileModel().getBlobUrl());
+	}
+	toggleMap.put(position, isCollapsed);
+}
 
-    @Override public boolean isCollapsed(final long position) {
-        Boolean toggle = toggleMap.get(position);
-        return toggle != null && toggle;
-    }
+@Override public boolean isCollapsed(final long position) {
+	Boolean toggle = toggleMap.get(position);
+	return toggle != null && toggle;
+}
 
-    @Override public void onScrollTop(final int index) {
-        super.onScrollTop(index);
-        if (recycler != null) recycler.scrollToPosition(0);
-    }
+@Override public void onScrollTop(final int index) {
+	super.onScrollTop(index);
+	if (recycler != null) recycler.scrollToPosition(0);
+}
 
-    @Override public void onPatchClicked(final int groupPosition, final int childPosition, final View v, final CommitFileModel commit, final CommitLinesModel item) {
-        if (item.getText().startsWith("@@")) return;
-        if (PrefGetter.isProEnabled()) {
-            AddReviewDialogFragment.Companion.newInstance(item, Bundler.start()
-                    .put(BundleConstant.ITEM, commit.getBlobUrl())
-                    .put(BundleConstant.EXTRA, commit.getFilename())
-                    .end())
-            .show(getChildFragmentManager(), "AddReviewDialogFragment");
-        } else {
-            PremiumActivity.Companion.startActivity(getContext());
-        }
-    }
+@Override public void onPatchClicked(final int groupPosition, final int childPosition, final View v, final CommitFileModel commit, final CommitLinesModel item) {
+	if (item.getText().startsWith("@@")) return;
+	if (PrefGetter.isProEnabled()) {
+		AddReviewDialogFragment.Companion.newInstance(item, Bundler.start()
+		                                              .put(BundleConstant.ITEM, commit.getBlobUrl())
+		                                              .put(BundleConstant.EXTRA, commit.getFilename())
+		                                              .end())
+		.show(getChildFragmentManager(), "AddReviewDialogFragment");
+	} else {
+		PremiumActivity.Companion.startActivity(getContext());
+	}
+}
 
-    @Override public void onCommentAdded(final @NonNull String comment, final @NonNull CommitLinesModel item, final Bundle bundle) {
-        getPresenter().onSubmitComment(comment, item, bundle);
-    }
+@Override public void onCommentAdded(final @NonNull String comment, final @NonNull CommitLinesModel item, final Bundle bundle) {
+	getPresenter().onSubmitComment(comment, item, bundle);
+}
 }

@@ -15,50 +15,51 @@ import lombok.Setter;
  */
 
 @Getter @Setter public class StatusesModel implements Parcelable {
-    private String url;
-    private StatusStateType state;
-    private String description;
-    private String targetUrl;
-    private String context;
-    private Date createdAt;
-    private Date updatedAt;
+private String url;
+private StatusStateType state;
+private String description;
+private String targetUrl;
+private String context;
+private Date createdAt;
+private Date updatedAt;
 
-    public StatusesModel() { }
+public StatusesModel() {
+}
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(this.url);
-        dest.writeInt(this.state == null ? -1 : this.state.ordinal());
-        dest.writeString(this.description);
-        dest.writeString(this.targetUrl);
-        dest.writeString(this.context);
-        dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
-        dest.writeLong(this.updatedAt != null ? this.updatedAt.getTime() : -1);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeString(this.url);
+	dest.writeInt(this.state == null ? -1 : this.state.ordinal());
+	dest.writeString(this.description);
+	dest.writeString(this.targetUrl);
+	dest.writeString(this.context);
+	dest.writeLong(this.createdAt != null ? this.createdAt.getTime() : -1);
+	dest.writeLong(this.updatedAt != null ? this.updatedAt.getTime() : -1);
+}
 
-    private StatusesModel(final Parcel in) {
-        this.url = in.readString();
-        int tmpState = in.readInt();
-        this.state = tmpState == -1 ? null : StatusStateType.values()[tmpState];
-        this.description = in.readString();
-        this.targetUrl = in.readString();
-        this.context = in.readString();
-        long tmpCreatedAt = in.readLong();
-        this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
-        long tmpUpdatedAt = in.readLong();
-        this.updatedAt = tmpUpdatedAt == -1 ? null : new Date(tmpUpdatedAt);
-    }
+private StatusesModel(final Parcel in) {
+	this.url = in.readString();
+	int tmpState = in.readInt();
+	this.state = tmpState == -1 ? null : StatusStateType.values()[tmpState];
+	this.description = in.readString();
+	this.targetUrl = in.readString();
+	this.context = in.readString();
+	long tmpCreatedAt = in.readLong();
+	this.createdAt = tmpCreatedAt == -1 ? null : new Date(tmpCreatedAt);
+	long tmpUpdatedAt = in.readLong();
+	this.updatedAt = tmpUpdatedAt == -1 ? null : new Date(tmpUpdatedAt);
+}
 
-    public static final Creator<StatusesModel> CREATOR = new Creator<StatusesModel>() {
-        @Override public StatusesModel createFromParcel(final Parcel source) {
-            return new StatusesModel(source);
-        }
+public static final Creator<StatusesModel> CREATOR = new Creator<StatusesModel>() {
+	@Override public StatusesModel createFromParcel(final Parcel source) {
+		return new StatusesModel(source);
+	}
 
-        @Override public StatusesModel[] newArray(final int size) {
-            return new StatusesModel[size];
-        }
-    };
+	@Override public StatusesModel[] newArray(final int size) {
+		return new StatusesModel[size];
+	}
+};
 }

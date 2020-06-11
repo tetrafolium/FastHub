@@ -24,106 +24,106 @@ import java.util.ArrayList;
 
 class RepoPullRequestPresenter extends BasePresenter<RepoPullRequestMvp.View> implements RepoPullRequestMvp.Presenter {
 
-    @com.evernote.android.state.State String login;
-    @com.evernote.android.state.State String repoId;
-    @com.evernote.android.state.State IssueState issueState;
-    private ArrayList<PullRequest> pullRequests = new ArrayList<>();
-    private int page;
-    private int previousTotal;
-    private int lastPage = Integer.MAX_VALUE;
+@com.evernote.android.state.State String login;
+@com.evernote.android.state.State String repoId;
+@com.evernote.android.state.State IssueState issueState;
+private ArrayList<PullRequest> pullRequests = new ArrayList<>();
+private int page;
+private int previousTotal;
+private int lastPage = Integer.MAX_VALUE;
 
-    @Override public int getCurrentPage() {
-        return page;
-    }
+@Override public int getCurrentPage() {
+	return page;
+}
 
-    @Override public int getPreviousTotal() {
-        return previousTotal;
-    }
+@Override public int getPreviousTotal() {
+	return previousTotal;
+}
 
-    @Override public void setCurrentPage(final int page) {
-        this.page = page;
-    }
+@Override public void setCurrentPage(final int page) {
+	this.page = page;
+}
 
-    @Override public void setPreviousTotal(final int previousTotal) {
-        this.previousTotal = previousTotal;
-    }
+@Override public void setPreviousTotal(final int previousTotal) {
+	this.previousTotal = previousTotal;
+}
 
-    @Override public void onError(final @NonNull Throwable throwable) {
-        onWorkOffline();
-        super.onError(throwable);
-    }
+@Override public void onError(final @NonNull Throwable throwable) {
+	onWorkOffline();
+	super.onError(throwable);
+}
 
-    @Override public boolean onCallApi(final int page, final @Nullable IssueState parameter) {
-        if (parameter == null) {
-            sendToView(RepoPullRequestMvp.View::hideProgress);
-            return false;
-        }
-        this.issueState = parameter;
-        if (page == 1) {
-            onCallCountApi(issueState);
-            lastPage = Integer.MAX_VALUE;
-            sendToView(view -> view.getLoadMore().reset());
-        }
-        setCurrentPage(page);
-        if (page > lastPage || lastPage == 0) {
-            sendToView(RepoPullRequestMvp.View::hideProgress);
-            return false;
-        }
-        if (repoId == null || login == null) return false;
-        makeRestCall(RestProvider.getPullRequestService(isEnterprise()).getPullRequests(login, repoId, parameter.name(), page), response -> {
-            lastPage = response.getLast();
-            if (getCurrentPage() == 1) {
-                manageDisposable(PullRequest.save(response.getItems(), login, repoId));
-            }
-            sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
-        });
-        return true;
-    }
+@Override public boolean onCallApi(final int page, final @Nullable IssueState parameter) {
+	if (parameter == null) {
+		sendToView(RepoPullRequestMvp.View::hideProgress);
+		return false;
+	}
+	this.issueState = parameter;
+	if (page == 1) {
+		onCallCountApi(issueState);
+		lastPage = Integer.MAX_VALUE;
+		sendToView(view->view.getLoadMore().reset());
+	}
+	setCurrentPage(page);
+	if (page > lastPage || lastPage == 0) {
+		sendToView(RepoPullRequestMvp.View::hideProgress);
+		return false;
+	}
+	if (repoId == null || login == null) return false;
+	makeRestCall(RestProvider.getPullRequestService(isEnterprise()).getPullRequests(login, repoId, parameter.name(), page), response->{
+			lastPage = response.getLast();
+			if (getCurrentPage() == 1) {
+			        manageDisposable(PullRequest.save(response.getItems(), login, repoId));
+			}
+			sendToView(view->view.onNotifyAdapter(response.getItems(), page));
+		});
+	return true;
+}
 
-    @Override public void onFragmentCreated(final @NonNull Bundle bundle) {
-        repoId = bundle.getString(BundleConstant.ID);
-        login = bundle.getString(BundleConstant.EXTRA);
-        issueState = (IssueState) bundle.getSerializable(BundleConstant.EXTRA_TWO);
-        if (!InputHelper.isEmpty(login) && !InputHelper.isEmpty(repoId)) {
-            onCallApi(1, issueState);
-        }
-    }
+@Override public void onFragmentCreated(final @NonNull Bundle bundle) {
+	repoId = bundle.getString(BundleConstant.ID);
+	login = bundle.getString(BundleConstant.EXTRA);
+	issueState = (IssueState) bundle.getSerializable(BundleConstant.EXTRA_TWO);
+	if (!InputHelper.isEmpty(login) && !InputHelper.isEmpty(repoId)) {
+		onCallApi(1, issueState);
+	}
+}
 
-    private void onCallCountApi(final @NonNull IssueState issueState) {
-        manageDisposable(RxHelper.getObservable(RestProvider.getPullRequestService(isEnterprise())
-                                                .getPullsWithCount(RepoQueryProvider.getIssuesPullRequestQuery(login, repoId, issueState, true), 0))
-                         .subscribe(pullRequestPageable -> sendToView(view -> view.onUpdateCount(pullRequestPageable.getTotalCount())),
-                                    Throwable::printStackTrace));
-    }
+private void onCallCountApi(final @NonNull IssueState issueState) {
+	manageDisposable(RxHelper.getObservable(RestProvider.getPullRequestService(isEnterprise())
+	                                        .getPullsWithCount(RepoQueryProvider.getIssuesPullRequestQuery(login, repoId, issueState, true), 0))
+	                 .subscribe(pullRequestPageable->sendToView(view->view.onUpdateCount(pullRequestPageable.getTotalCount())),
+	                            Throwable::printStackTrace));
+}
 
-    @Override public void onWorkOffline() {
-        if (pullRequests.isEmpty()) {
-            manageDisposable(RxHelper.getSingle(PullRequest.getPullRequests(repoId, login, issueState))
-            .subscribe(pulls -> sendToView(view -> {
-                view.onNotifyAdapter(pulls, 1);
-                view.onUpdateCount(pulls.size());
-            })));
-        } else {
-            sendToView(BaseMvp.FAView::hideProgress);
-        }
-    }
+@Override public void onWorkOffline() {
+	if (pullRequests.isEmpty()) {
+		manageDisposable(RxHelper.getSingle(PullRequest.getPullRequests(repoId, login, issueState))
+		                 .subscribe(pulls->sendToView(view->{
+				view.onNotifyAdapter(pulls, 1);
+				view.onUpdateCount(pulls.size());
+			})));
+	} else {
+		sendToView(BaseMvp.FAView::hideProgress);
+	}
+}
 
-    @NonNull public ArrayList<PullRequest> getPullRequests() {
-        return pullRequests;
-    }
+@NonNull public ArrayList<PullRequest> getPullRequests() {
+	return pullRequests;
+}
 
-    @NonNull @Override public IssueState getIssueState() {
-        return issueState;
-    }
+@NonNull @Override public IssueState getIssueState() {
+	return issueState;
+}
 
-    @Override public void onItemClick(final int position, final View v, final PullRequest item) {
-        PullsIssuesParser parser = PullsIssuesParser.getForPullRequest(item.getHtmlUrl());
-        if (parser != null && getView() != null) {
-            getView().onOpenPullRequest(parser);
-        }
-    }
+@Override public void onItemClick(final int position, final View v, final PullRequest item) {
+	PullsIssuesParser parser = PullsIssuesParser.getForPullRequest(item.getHtmlUrl());
+	if (parser != null && getView() != null) {
+		getView().onOpenPullRequest(parser);
+	}
+}
 
-    @Override public void onItemLongClick(final int position, final View v, final PullRequest item) {
-        if (getView() != null) getView().onShowPullRequestPopup(item);
-    }
+@Override public void onItemLongClick(final int position, final View v, final PullRequest item) {
+	if (getView() != null) getView().onShowPullRequestPopup(item);
+}
 }

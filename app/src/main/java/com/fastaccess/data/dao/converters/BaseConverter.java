@@ -10,25 +10,25 @@ import io.requery.Converter;
 
 public abstract class BaseConverter<C> implements Converter<C, String> {
 
-    protected abstract Class<? extends C> getTypeClass();
+protected abstract Class<? extends C> getTypeClass();
 
-    @SuppressWarnings("unchecked") @Override public Class<C> getMappedType() {
-        return (Class<C>) getTypeClass();
-    }
+@SuppressWarnings("unchecked") @Override public Class<C> getMappedType() {
+	return (Class<C>) getTypeClass();
+}
 
-    @Override public Class<String> getPersistedType() {
-        return String.class;
-    }
+@Override public Class<String> getPersistedType() {
+	return String.class;
+}
 
-    @Override public Integer getPersistedSize() {
-        return null;
-    }
+@Override public Integer getPersistedSize() {
+	return null;
+}
 
-    @Override public String convertToPersisted(final C value) {
-        return RestProvider.gson.toJson(value);
-    }
+@Override public String convertToPersisted(final C value) {
+	return RestProvider.gson.toJson(value);
+}
 
-    @Override public C convertToMapped(final Class<? extends C> type, final String value) {
-        return RestProvider.gson.fromJson(value, type);
-    }
+@Override public C convertToMapped(final Class<? extends C> type, final String value) {
+	return RestProvider.gson.fromJson(value, type);
+}
 }

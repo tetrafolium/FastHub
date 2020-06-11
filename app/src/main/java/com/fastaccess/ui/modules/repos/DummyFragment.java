@@ -15,7 +15,7 @@ import com.fastaccess.R;
 
 public class DummyFragment extends Fragment {
 
-    @Nullable @Override public View onCreateView(final LayoutInflater inflater, final @Nullable ViewGroup container, final @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.single_container_layout, container, false);
-    }
+@Nullable @Override public View onCreateView(final LayoutInflater inflater, final @Nullable ViewGroup container, final @Nullable Bundle savedInstanceState) {
+	return inflater.inflate(R.layout.single_container_layout, container, false);
+}
 }

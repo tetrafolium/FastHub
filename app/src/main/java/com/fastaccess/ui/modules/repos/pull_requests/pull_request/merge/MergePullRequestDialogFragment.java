@@ -27,68 +27,70 @@ import butterknife.OnItemSelected;
  */
 
 public class MergePullRequestDialogFragment extends BaseDialogFragment<MergePullReqeustMvp.View, MergePullRequestPresenter>
-    implements MergePullReqeustMvp.View {
+	implements MergePullReqeustMvp.View {
 
-    @BindView(R.id.title) TextInputLayout title;
-    @BindView(R.id.mergeMethod) AppCompatSpinner mergeMethod;
+@BindView(R.id.title) TextInputLayout title;
+@BindView(R.id.mergeMethod) AppCompatSpinner mergeMethod;
 
-    private MergePullReqeustMvp.MergeCallback mergeCallback;
+private MergePullReqeustMvp.MergeCallback mergeCallback;
 
-    public static MergePullRequestDialogFragment newInstance(final @Nullable String title) {
-        MergePullRequestDialogFragment view = new MergePullRequestDialogFragment();
-        view.setArguments(Bundler.start()
-                          .put(BundleConstant.EXTRA, title)
-                          .end());
-        return view;
-    }
+public static MergePullRequestDialogFragment newInstance(final @Nullable String title) {
+	MergePullRequestDialogFragment view = new MergePullRequestDialogFragment();
+	view.setArguments(Bundler.start()
+	                  .put(BundleConstant.EXTRA, title)
+	                  .end());
+	return view;
+}
 
-    @Override public void onAttach(final @NotNull Context context) {
-        super.onAttach(context);
-        if (context instanceof MergePullReqeustMvp.MergeCallback) {
-            mergeCallback = (MergePullReqeustMvp.MergeCallback) context;
-        } else if (getParentFragment() instanceof MergePullReqeustMvp.MergeCallback) {
-            mergeCallback = (MergePullReqeustMvp.MergeCallback) getParentFragment();
-        }
-    }
+@Override public void onAttach(final @NotNull Context context) {
+	super.onAttach(context);
+	if (context instanceof MergePullReqeustMvp.MergeCallback) {
+		mergeCallback = (MergePullReqeustMvp.MergeCallback) context;
+	} else if (getParentFragment() instanceof MergePullReqeustMvp.MergeCallback) {
+		mergeCallback = (MergePullReqeustMvp.MergeCallback) getParentFragment();
+	}
+}
 
-    @Override public void onDetach() {
-        mergeCallback = null;
-        super.onDetach();
-    }
+@Override public void onDetach() {
+	mergeCallback = null;
+	super.onDetach();
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.merge_dialog_layout;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.merge_dialog_layout;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            String titleMsg = getArguments().getString(BundleConstant.EXTRA);
-            if (!InputHelper.isEmpty(titleMsg)) {
-                if (title.getEditText() != null) title.getEditText().setText(titleMsg);
-            }
-        }
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	if (savedInstanceState == null) {
+		String titleMsg = getArguments().getString(BundleConstant.EXTRA);
+		if (!InputHelper.isEmpty(titleMsg)) {
+			if (title.getEditText() != null) title.getEditText().setText(titleMsg);
+		}
+	}
+}
 
-    @NonNull @Override public MergePullRequestPresenter providePresenter() {
-        return new MergePullRequestPresenter();
-    }
+@NonNull @Override public MergePullRequestPresenter providePresenter() {
+	return new MergePullRequestPresenter();
+}
 
-    @OnClick({R.id.cancel, R.id.ok}) public void onClick(final View view) {
-        if (view.getId() == R.id.ok) {
-            boolean isEmpty = InputHelper.isEmpty(title);
-            title.setError(isEmpty ? getString(R.string.required_field) : null);
-            if (isEmpty) return;
-            mergeCallback.onMerge(InputHelper.toString(title), mergeMethod.getSelectedItem().toString().toLowerCase());
-        }
-        dismiss();
-    }
+@OnClick({
+		R.id.cancel, R.id.ok
+	}) public void onClick(final View view) {
+	if (view.getId() == R.id.ok) {
+		boolean isEmpty = InputHelper.isEmpty(title);
+		title.setError(isEmpty ? getString(R.string.required_field) : null);
+		if (isEmpty) return;
+		mergeCallback.onMerge(InputHelper.toString(title), mergeMethod.getSelectedItem().toString().toLowerCase());
+	}
+	dismiss();
+}
 
-    @OnItemSelected(R.id.mergeMethod) void onItemSelect(final int position) {
-        if (position > 0) {
-            if (!PrefGetter.isProEnabled()) {
-                mergeMethod.setSelection(0);
-                PremiumActivity.Companion.startActivity(getContext());
-            }
-        }
-    }
+@OnItemSelected(R.id.mergeMethod) void onItemSelect(final int position) {
+	if (position > 0) {
+		if (!PrefGetter.isProEnabled()) {
+			mergeMethod.setSelection(0);
+			PremiumActivity.Companion.startActivity(getContext());
+		}
+	}
+}
 }

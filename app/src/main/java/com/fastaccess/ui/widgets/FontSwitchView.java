@@ -13,24 +13,24 @@ import com.fastaccess.helper.TypeFaceHelper;
  */
 public class FontSwitchView extends SwitchCompat {
 
-    public FontSwitchView(final @NonNull Context context) {
-        super(context);
-        init();
-    }
+public FontSwitchView(final @NonNull Context context) {
+	super(context);
+	init();
+}
 
-    public FontSwitchView(final @NonNull Context context, final AttributeSet attrs) {
-        super(context, attrs);
-        init();
+public FontSwitchView(final @NonNull Context context, final AttributeSet attrs) {
+	super(context, attrs);
+	init();
 
-    }
+}
 
-    public FontSwitchView(final @NonNull Context context, final AttributeSet attrs, final int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
+public FontSwitchView(final @NonNull Context context, final AttributeSet attrs, final int defStyleAttr) {
+	super(context, attrs, defStyleAttr);
+	init();
+}
 
-    private void init() {
-        if (isInEditMode()) return;
-        TypeFaceHelper.applyTypeface(this);
-    }
+private void init() {
+	if (isInEditMode()) return;
+	TypeFaceHelper.applyTypeface(this);
+}
 }

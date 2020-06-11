@@ -25,216 +25,216 @@ import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 public class RecyclerViewFastScroller extends FrameLayout {
 
-    private static final int TRACK_SNAP_RANGE = 5;
-    private ImageView scrollerView;
-    private ImageButton scrollTop;
-    private int height;
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
-    private AppBarLayout appBarLayout;
-    private BottomNavigation bottomNavigation;
-    private boolean toggled;
-    private boolean registeredObserver = false;
+private static final int TRACK_SNAP_RANGE = 5;
+private ImageView scrollerView;
+private ImageButton scrollTop;
+private int height;
+private RecyclerView recyclerView;
+private RecyclerView.LayoutManager layoutManager;
+private AppBarLayout appBarLayout;
+private BottomNavigation bottomNavigation;
+private boolean toggled;
+private boolean registeredObserver = false;
 
-    public RecyclerViewFastScroller(final Context context) {
-        super(context);
-        init();
-    }
+public RecyclerViewFastScroller(final Context context) {
+	super(context);
+	init();
+}
 
-    public RecyclerViewFastScroller(final Context context, final AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+public RecyclerViewFastScroller(final Context context, final AttributeSet attrs) {
+	this(context, attrs, 0);
+}
 
-    public RecyclerViewFastScroller(final Context context, final AttributeSet attrs, final int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
+public RecyclerViewFastScroller(final Context context, final AttributeSet attrs, final int defStyleAttr) {
+	super(context, attrs, defStyleAttr);
+	init();
+}
 
-    @Override protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        height = h;
-    }
+@Override protected void onSizeChanged(final int w, final int h, final int oldw, final int oldh) {
+	super.onSizeChanged(w, h, oldw, oldh);
+	height = h;
+}
 
-    @SuppressLint("ClickableViewAccessibility") @Override public boolean onTouchEvent(final @NonNull MotionEvent event) {
-        int action = event.getAction();
-        switch (action) {
-        case MotionEvent.ACTION_DOWN:
-            if (event.getX() < (scrollerView.getX() - scrollerView.getPaddingStart())) return false;
-            scrollerView.setSelected(true);
-            hideAppbar();
-        case MotionEvent.ACTION_MOVE:
-            float y = event.getY();
-            setScrollerHeight(y);
-            setRecyclerViewPosition(y);
-            return true;
-        case MotionEvent.ACTION_UP:
-        case MotionEvent.ACTION_CANCEL:
-            scrollerView.setSelected(false);
-            showAppbar();
-            return true;
-        }
-        return super.onTouchEvent(event);
-    }
+@SuppressLint("ClickableViewAccessibility") @Override public boolean onTouchEvent(final @NonNull MotionEvent event) {
+	int action = event.getAction();
+	switch (action) {
+	case MotionEvent.ACTION_DOWN:
+		if (event.getX() < (scrollerView.getX() - scrollerView.getPaddingStart())) return false;
+		scrollerView.setSelected(true);
+		hideAppbar();
+	case MotionEvent.ACTION_MOVE:
+		float y = event.getY();
+		setScrollerHeight(y);
+		setRecyclerViewPosition(y);
+		return true;
+	case MotionEvent.ACTION_UP:
+	case MotionEvent.ACTION_CANCEL:
+		scrollerView.setSelected(false);
+		showAppbar();
+		return true;
+	}
+	return super.onTouchEvent(event);
+}
 
-    @Override protected void onDetachedFromWindow() {
-        if (recyclerView != null) {
-            recyclerView.removeOnScrollListener(onScrollListener);
-            safelyUnregisterObserver();
-        }
-        appBarLayout = null;
-        bottomNavigation = null;
-        super.onDetachedFromWindow();
-    }
+@Override protected void onDetachedFromWindow() {
+	if (recyclerView != null) {
+		recyclerView.removeOnScrollListener(onScrollListener);
+		safelyUnregisterObserver();
+	}
+	appBarLayout = null;
+	bottomNavigation = null;
+	super.onDetachedFromWindow();
+}
 
-    private void safelyUnregisterObserver() {
-        try { // rare case
-            if (registeredObserver && recyclerView.getAdapter() != null) {
-                recyclerView.getAdapter().unregisterAdapterDataObserver(observer);
-            }
-        } catch (Exception ignored) { }
-    }
+private void safelyUnregisterObserver() {
+	try { // rare case
+		if (registeredObserver && recyclerView.getAdapter() != null) {
+			recyclerView.getAdapter().unregisterAdapterDataObserver(observer);
+		}
+	} catch (Exception ignored) { }
+}
 
-    protected void init() {
-        setVisibility(GONE);
-        setClipChildren(false);
-        LayoutInflater inflater = LayoutInflater.from(getContext());
-        inflater.inflate(R.layout.fastscroller_layout, this);
-        scrollerView = findViewById(R.id.fast_scroller_handle);
-        setVisibility(VISIBLE);
-        Activity activity = ActivityHelper.getActivity(getContext());
-        if (activity != null) {
-            appBarLayout = activity.findViewById(R.id.appbar);
-            bottomNavigation = activity.findViewById(R.id.bottomNavigation);
-        }
-    }
+protected void init() {
+	setVisibility(GONE);
+	setClipChildren(false);
+	LayoutInflater inflater = LayoutInflater.from(getContext());
+	inflater.inflate(R.layout.fastscroller_layout, this);
+	scrollerView = findViewById(R.id.fast_scroller_handle);
+	setVisibility(VISIBLE);
+	Activity activity = ActivityHelper.getActivity(getContext());
+	if (activity != null) {
+		appBarLayout = activity.findViewById(R.id.appbar);
+		bottomNavigation = activity.findViewById(R.id.bottomNavigation);
+	}
+}
 
-    protected void hideAppbar() {
-        if (!toggled) {
-            if (appBarLayout != null) {
-                appBarLayout.setExpanded(false, true);
-            }
-            if (bottomNavigation != null) {
-                bottomNavigation.setExpanded(false, true);
-            }
-            toggled = true;
-        }
-    }
+protected void hideAppbar() {
+	if (!toggled) {
+		if (appBarLayout != null) {
+			appBarLayout.setExpanded(false, true);
+		}
+		if (bottomNavigation != null) {
+			bottomNavigation.setExpanded(false, true);
+		}
+		toggled = true;
+	}
+}
 
-    protected void showAppbar() {
-        if (toggled) {
-            if (scrollerView.getY() == 0) {
-                if (appBarLayout != null) {
-                    appBarLayout.setExpanded(true, true);
-                }
-                if (bottomNavigation != null) {
-                    bottomNavigation.setExpanded(true, true);
-                }
-                toggled = false;
-            }
-        }
-    }
+protected void showAppbar() {
+	if (toggled) {
+		if (scrollerView.getY() == 0) {
+			if (appBarLayout != null) {
+				appBarLayout.setExpanded(true, true);
+			}
+			if (bottomNavigation != null) {
+				bottomNavigation.setExpanded(true, true);
+			}
+			toggled = false;
+		}
+	}
+}
 
-    public void attachRecyclerView(final RecyclerView recyclerView) {
-        if (this.recyclerView == null) {
-            this.recyclerView = recyclerView;
-            this.layoutManager = recyclerView.getLayoutManager();
-            this.recyclerView.addOnScrollListener(onScrollListener);
-            if (recyclerView.getAdapter() != null && !registeredObserver) {
-                recyclerView.getAdapter().registerAdapterDataObserver(observer);
-                registeredObserver = true;
-            }
-            hideShow();
-            initScrollHeight();
-        }
-    }
+public void attachRecyclerView(final RecyclerView recyclerView) {
+	if (this.recyclerView == null) {
+		this.recyclerView = recyclerView;
+		this.layoutManager = recyclerView.getLayoutManager();
+		this.recyclerView.addOnScrollListener(onScrollListener);
+		if (recyclerView.getAdapter() != null && !registeredObserver) {
+			recyclerView.getAdapter().registerAdapterDataObserver(observer);
+			registeredObserver = true;
+		}
+		hideShow();
+		initScrollHeight();
+	}
+}
 
-    private void initScrollHeight() {
-        if (recyclerView.computeVerticalScrollOffset() == 0) {
-            this.recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override public boolean onPreDraw() {
-                    RecyclerViewFastScroller.this.recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
-                    iniHeight();
-                    return true;
-                }
-            });
-        } else {
-            iniHeight();
-        }
-    }
+private void initScrollHeight() {
+	if (recyclerView.computeVerticalScrollOffset() == 0) {
+		this.recyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+				@Override public boolean onPreDraw() {
+				        RecyclerViewFastScroller.this.recyclerView.getViewTreeObserver().removeOnPreDrawListener(this);
+				        iniHeight();
+				        return true;
+				}
+			});
+	} else {
+		iniHeight();
+	}
+}
 
-    protected void iniHeight() {
-        if (scrollerView.isSelected()) return;
-        int verticalScrollOffset = RecyclerViewFastScroller.this.recyclerView.computeVerticalScrollOffset();
-        int verticalScrollRange = RecyclerViewFastScroller.this.computeVerticalScrollRange();
-        float proportion = (float) verticalScrollOffset / ((float) verticalScrollRange - height);
-        setScrollerHeight(height * proportion);
-    }
+protected void iniHeight() {
+	if (scrollerView.isSelected()) return;
+	int verticalScrollOffset = RecyclerViewFastScroller.this.recyclerView.computeVerticalScrollOffset();
+	int verticalScrollRange = RecyclerViewFastScroller.this.computeVerticalScrollRange();
+	float proportion = (float) verticalScrollOffset / ((float) verticalScrollRange - height);
+	setScrollerHeight(height * proportion);
+}
 
-    private void setRecyclerViewPosition(final float y) {
-        Logger.e(y);
-        if (recyclerView != null) {
-            int itemCount = recyclerView.getAdapter().getItemCount();
-            float proportion;
-            if (scrollerView.getY() == 0) {
-                proportion = 0f;
-            } else if (scrollerView.getY() + scrollerView.getHeight() >= height - TRACK_SNAP_RANGE) {
-                proportion = 1f;
-            } else {
-                proportion = y / (float) height;
-            }
-            int targetPos = getValueInRange(itemCount - 1, (int) (proportion * (float) itemCount));
-            if (layoutManager instanceof StaggeredGridLayoutManager) {
-                ((StaggeredGridLayoutManager) layoutManager).scrollToPositionWithOffset(targetPos, 0);
-            } else if (layoutManager instanceof GridLayoutManager) {
-                ((GridLayoutManager) layoutManager).scrollToPositionWithOffset(targetPos, 0);
-            } else {
-                ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(targetPos, 0);
-            }
-        }
-    }
+private void setRecyclerViewPosition(final float y) {
+	Logger.e(y);
+	if (recyclerView != null) {
+		int itemCount = recyclerView.getAdapter().getItemCount();
+		float proportion;
+		if (scrollerView.getY() == 0) {
+			proportion = 0f;
+		} else if (scrollerView.getY() + scrollerView.getHeight() >= height - TRACK_SNAP_RANGE) {
+			proportion = 1f;
+		} else {
+			proportion = y / (float) height;
+		}
+		int targetPos = getValueInRange(itemCount - 1, (int) (proportion * (float) itemCount));
+		if (layoutManager instanceof StaggeredGridLayoutManager) {
+			((StaggeredGridLayoutManager) layoutManager).scrollToPositionWithOffset(targetPos, 0);
+		} else if (layoutManager instanceof GridLayoutManager) {
+			((GridLayoutManager) layoutManager).scrollToPositionWithOffset(targetPos, 0);
+		} else {
+			((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(targetPos, 0);
+		}
+	}
+}
 
-    private static int getValueInRange(final int max, final int value) {
-        return Math.min(Math.max(0, value), max);
-    }
+private static int getValueInRange(final int max, final int value) {
+	return Math.min(Math.max(0, value), max);
+}
 
-    private void setScrollerHeight(final float y) {
-        int handleHeight = scrollerView.getHeight();
-        scrollerView.setY(getValueInRange(height - handleHeight, (int) (y - handleHeight / 2)));
-    }
+private void setScrollerHeight(final float y) {
+	int handleHeight = scrollerView.getHeight();
+	scrollerView.setY(getValueInRange(height - handleHeight, (int) (y - handleHeight / 2)));
+}
 
-    private final RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
-        @Override public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
-            if (scrollerView.isSelected()) return;
-            int verticalScrollOffset = recyclerView.computeVerticalScrollOffset();
-            int verticalScrollRange = recyclerView.computeVerticalScrollRange();
-            float proportion = (float) verticalScrollOffset / ((float) verticalScrollRange - height);
-            setScrollerHeight(height * proportion);
-        }
-    };
+private final RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+	@Override public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
+		if (scrollerView.isSelected()) return;
+		int verticalScrollOffset = recyclerView.computeVerticalScrollOffset();
+		int verticalScrollRange = recyclerView.computeVerticalScrollRange();
+		float proportion = (float) verticalScrollOffset / ((float) verticalScrollRange - height);
+		setScrollerHeight(height * proportion);
+	}
+};
 
-    private final RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {
-        @Override public void onItemRangeInserted(final int positionStart, final int itemCount) {
-            super.onItemRangeInserted(positionStart, itemCount);
-            hideShow();
-        }
+private final RecyclerView.AdapterDataObserver observer = new RecyclerView.AdapterDataObserver() {
+	@Override public void onItemRangeInserted(final int positionStart, final int itemCount) {
+		super.onItemRangeInserted(positionStart, itemCount);
+		hideShow();
+	}
 
-        @Override public void onItemRangeRemoved(final int positionStart, final int itemCount) {
-            super.onItemRangeRemoved(positionStart, itemCount);
-            hideShow();
-        }
+	@Override public void onItemRangeRemoved(final int positionStart, final int itemCount) {
+		super.onItemRangeRemoved(positionStart, itemCount);
+		hideShow();
+	}
 
-        @Override public void onChanged() {
-            super.onChanged();
-            hideShow();
+	@Override public void onChanged() {
+		super.onChanged();
+		hideShow();
 
-        }
-    };
+	}
+};
 
-    protected void hideShow() {
-        if (recyclerView != null && recyclerView.getAdapter() != null) {
-            setVisibility(recyclerView.getAdapter().getItemCount() > 10 ? VISIBLE : GONE);
-        } else {
-            setVisibility(GONE);
-        }
-    }
+protected void hideShow() {
+	if (recyclerView != null && recyclerView.getAdapter() != null) {
+		setVisibility(recyclerView.getAdapter().getItemCount() > 10 ? VISIBLE : GONE);
+	} else {
+		setVisibility(GONE);
+	}
+}
 }

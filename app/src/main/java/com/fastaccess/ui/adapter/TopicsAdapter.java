@@ -20,30 +20,30 @@ import java.util.List;
  * Created by Kosh on 11 May 2017, 6:58 PM
  */
 
-public class TopicsAdapter extends BaseRecyclerAdapter<String, SimpleViewHolder<String>, BaseViewHolder.OnItemClickListener<String>> {
-    private boolean isLightTheme = true;
-    @ColorInt private int cardBackground;
+public class TopicsAdapter extends BaseRecyclerAdapter<String, SimpleViewHolder<String>, BaseViewHolder.OnItemClickListener<String> > {
+private boolean isLightTheme = true;
+@ColorInt private int cardBackground;
 
-    public TopicsAdapter(final @NonNull List<String> data) {
-        super(data);
-    }
+public TopicsAdapter(final @NonNull List<String> data) {
+	super(data);
+}
 
-    @Override protected SimpleViewHolder<String> viewHolder(final ViewGroup parent, final int viewType) {
-        isLightTheme = !AppHelper.isNightMode(parent.getResources());
-        cardBackground = ViewHelper.getCardBackground(parent.getContext());
-        return new SimpleViewHolder<>(BaseViewHolder.getView(parent, R.layout.topics_row_item), null);
-    }
+@Override protected SimpleViewHolder<String> viewHolder(final ViewGroup parent, final int viewType) {
+	isLightTheme = !AppHelper.isNightMode(parent.getResources());
+	cardBackground = ViewHelper.getCardBackground(parent.getContext());
+	return new SimpleViewHolder<>(BaseViewHolder.getView(parent, R.layout.topics_row_item), null);
+}
 
-    @Override protected void onBindView(final SimpleViewHolder<String> holder, final int position) {
-        if (isLightTheme) {
-            holder.itemView.setBackgroundColor(cardBackground);
-        }
-        String item = getItem(position);
-        holder.itemView.setOnClickListener((view) -> {
-            Intent intent = new Intent(new Intent(App.getInstance().getApplicationContext(), SearchActivity.class));
-            intent.putExtra("search", "topic:\"" + item + "\"");
-            view.getContext().startActivity(intent);
-        });
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(final SimpleViewHolder<String> holder, final int position) {
+	if (isLightTheme) {
+		holder.itemView.setBackgroundColor(cardBackground);
+	}
+	String item = getItem(position);
+	holder.itemView.setOnClickListener((view)->{
+			Intent intent = new Intent(new Intent(App.getInstance().getApplicationContext(), SearchActivity.class));
+			intent.putExtra("search", "topic:\"" + item + "\"");
+			view.getContext().startActivity(intent);
+		});
+	holder.bind(getItem(position));
+}
 }

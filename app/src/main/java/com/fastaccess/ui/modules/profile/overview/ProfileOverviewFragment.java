@@ -56,264 +56,267 @@ import static android.view.View.VISIBLE;
 
 public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.View, ProfileOverviewPresenter> implements ProfileOverviewMvp.View {
 
-    @BindView(R.id.contributionsCaption) FontTextView contributionsCaption;
-    @BindView(R.id.organizationsCaption) FontTextView organizationsCaption;
-    @BindView(R.id.userInformation) LinearLayout userInformation;
-    @BindView(R.id.username) FontTextView username;
-    @BindView(R.id.fullname) FontTextView fullname;
-    @BindView(R.id.description) FontTextView description;
-    @BindView(R.id.avatarLayout) AvatarLayout avatarLayout;
-    @BindView(R.id.organization) FontTextView organization;
-    @BindView(R.id.location) FontTextView location;
-    @BindView(R.id.email) FontTextView email;
-    @BindView(R.id.link) FontTextView link;
-    @BindView(R.id.joined) FontTextView joined;
-    @BindView(R.id.following) FontButton following;
-    @BindView(R.id.followers) FontButton followers;
-    @BindView(R.id.progress) View progress;
-    @BindView(R.id.followBtn) Button followBtn;
-    @BindView(R.id.orgsList) DynamicRecyclerView orgsList;
-    @BindView(R.id.orgsCard) CardView orgsCard;
-    @BindView(R.id.parentView) NestedScrollView parentView;
-    @BindView(R.id.contributionView) GitHubContributionsView contributionView;
-    @BindView(R.id.contributionCard) CardView contributionCard;
-    @BindView(R.id.pinnedReposTextView) FontTextView pinnedReposTextView;
-    @BindView(R.id.pinnedList) DynamicRecyclerView pinnedList;
-    @BindView(R.id.pinnedReposCard) CardView pinnedReposCard;
-    @State User userModel;
-    private ProfilePagerMvp.View profileCallback;
+@BindView(R.id.contributionsCaption) FontTextView contributionsCaption;
+@BindView(R.id.organizationsCaption) FontTextView organizationsCaption;
+@BindView(R.id.userInformation) LinearLayout userInformation;
+@BindView(R.id.username) FontTextView username;
+@BindView(R.id.fullname) FontTextView fullname;
+@BindView(R.id.description) FontTextView description;
+@BindView(R.id.avatarLayout) AvatarLayout avatarLayout;
+@BindView(R.id.organization) FontTextView organization;
+@BindView(R.id.location) FontTextView location;
+@BindView(R.id.email) FontTextView email;
+@BindView(R.id.link) FontTextView link;
+@BindView(R.id.joined) FontTextView joined;
+@BindView(R.id.following) FontButton following;
+@BindView(R.id.followers) FontButton followers;
+@BindView(R.id.progress) View progress;
+@BindView(R.id.followBtn) Button followBtn;
+@BindView(R.id.orgsList) DynamicRecyclerView orgsList;
+@BindView(R.id.orgsCard) CardView orgsCard;
+@BindView(R.id.parentView) NestedScrollView parentView;
+@BindView(R.id.contributionView) GitHubContributionsView contributionView;
+@BindView(R.id.contributionCard) CardView contributionCard;
+@BindView(R.id.pinnedReposTextView) FontTextView pinnedReposTextView;
+@BindView(R.id.pinnedList) DynamicRecyclerView pinnedList;
+@BindView(R.id.pinnedReposCard) CardView pinnedReposCard;
+@State User userModel;
+private ProfilePagerMvp.View profileCallback;
 
-    public static ProfileOverviewFragment newInstance(final @NonNull String login) {
-        ProfileOverviewFragment view = new ProfileOverviewFragment();
-        view.setArguments(Bundler.start().put(BundleConstant.EXTRA, login).end());
-        return view;
-    }
+public static ProfileOverviewFragment newInstance(final @NonNull String login) {
+	ProfileOverviewFragment view = new ProfileOverviewFragment();
+	view.setArguments(Bundler.start().put(BundleConstant.EXTRA, login).end());
+	return view;
+}
 
-    @OnClick({R.id.following, R.id.followers, R.id.followBtn}) void onClick(final View view) {
-        if (view.getId() == R.id.followers) {
-            profileCallback.onNavigateToFollowers();
-        } else if (view.getId() == R.id.following) {
-            profileCallback.onNavigateToFollowing();
-        } else if (view.getId() == R.id.followBtn) {
-            getPresenter().onFollowButtonClicked(getPresenter().getLogin());
-            followBtn.setEnabled(false);
-        }
-    }
+@OnClick({
+		R.id.following, R.id.followers, R.id.followBtn
+	}) void onClick(final View view) {
+	if (view.getId() == R.id.followers) {
+		profileCallback.onNavigateToFollowers();
+	} else if (view.getId() == R.id.following) {
+		profileCallback.onNavigateToFollowing();
+	} else if (view.getId() == R.id.followBtn) {
+		getPresenter().onFollowButtonClicked(getPresenter().getLogin());
+		followBtn.setEnabled(false);
+	}
+}
 
-    @OnClick(R.id.userInformation) void onOpenAvatar() {
-        if (userModel != null) ActivityHelper.startCustomTab(getActivity(), userModel.getAvatarUrl());
-    }
+@OnClick(R.id.userInformation) void onOpenAvatar() {
+	if (userModel != null) ActivityHelper.startCustomTab(getActivity(), userModel.getAvatarUrl());
+}
 
-    @Override public void onAttach(final Context context) {
-        super.onAttach(context);
-        if (getParentFragment() instanceof ProfilePagerMvp.View) {
-            profileCallback = (ProfilePagerMvp.View) getParentFragment();
-        } else {
-            profileCallback = (ProfilePagerMvp.View) context;
-        }
-    }
+@Override public void onAttach(final Context context) {
+	super.onAttach(context);
+	if (getParentFragment() instanceof ProfilePagerMvp.View) {
+		profileCallback = (ProfilePagerMvp.View) getParentFragment();
+	} else {
+		profileCallback = (ProfilePagerMvp.View) context;
+	}
+}
 
-    @Override public void onDetach() {
-        profileCallback = null;
-        super.onDetach();
-    }
+@Override public void onDetach() {
+	profileCallback = null;
+	super.onDetach();
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.profile_overview_layout;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.profile_overview_layout;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        onInitOrgs(getPresenter().getOrgs());
-        onInitPinnedRepos(getPresenter().getNodes());
-        if (savedInstanceState == null) {
-            getPresenter().onFragmentCreated(getArguments());
-        } else {
-            if (userModel != null) {
-                invalidateFollowBtn();
-                onInitViews(userModel);
-            } else {
-                getPresenter().onFragmentCreated(getArguments());
-            }
-        }
-        if (isMeOrOrganization()) {
-            followBtn.setVisibility(GONE);
-        }
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	onInitOrgs(getPresenter().getOrgs());
+	onInitPinnedRepos(getPresenter().getNodes());
+	if (savedInstanceState == null) {
+		getPresenter().onFragmentCreated(getArguments());
+	} else {
+		if (userModel != null) {
+			invalidateFollowBtn();
+			onInitViews(userModel);
+		} else {
+			getPresenter().onFragmentCreated(getArguments());
+		}
+	}
+	if (isMeOrOrganization()) {
+		followBtn.setVisibility(GONE);
+	}
+}
 
-    @NonNull @Override public ProfileOverviewPresenter providePresenter() {
-        return new ProfileOverviewPresenter();
-    }
+@NonNull @Override public ProfileOverviewPresenter providePresenter() {
+	return new ProfileOverviewPresenter();
+}
 
-    @SuppressLint("ClickableViewAccessibility") @Override public void onInitViews(final @Nullable User userModel) {
-        progress.setVisibility(GONE);
-        if (userModel == null) return;
-        if (profileCallback != null) profileCallback.onCheckType(userModel.isOrganizationType());
-        if (getView() != null) {
-            if (this.userModel == null) {
-                TransitionManager.beginDelayedTransition((ViewGroup) getView(),
-                new AutoTransition().addListener(new Transition.TransitionListener() {
+@SuppressLint("ClickableViewAccessibility") @Override public void onInitViews(final @Nullable User userModel) {
+	progress.setVisibility(GONE);
+	if (userModel == null) return;
+	if (profileCallback != null) profileCallback.onCheckType(userModel.isOrganizationType());
+	if (getView() != null) {
+		if (this.userModel == null) {
+			TransitionManager.beginDelayedTransition((ViewGroup) getView(),
+			                                         new AutoTransition().addListener(new Transition.TransitionListener() {
 
-                    @Override public void onTransitionStart(final @NonNull Transition transition) {
+					@Override public void onTransitionStart(final @NonNull Transition transition) {
 
-                    }
+					}
 
-                    @Override public void onTransitionEnd(final @NonNull Transition transition) {
-                        if (contributionView != null) getPresenter().onLoadContributionWidget(contributionView);
-                    }
+					@Override public void onTransitionEnd(final @NonNull Transition transition) {
+					        if (contributionView != null) getPresenter().onLoadContributionWidget(contributionView);
+					}
 
-                    @Override public void onTransitionCancel(final @NonNull Transition transition) {
+					@Override public void onTransitionCancel(final @NonNull Transition transition) {
 
-                    }
+					}
 
-                    @Override public void onTransitionPause(final @NonNull Transition transition) {
+					@Override public void onTransitionPause(final @NonNull Transition transition) {
 
-                    }
+					}
 
-                    @Override public void onTransitionResume(final @NonNull Transition transition) {
+					@Override public void onTransitionResume(final @NonNull Transition transition) {
 
-                    }
-                }));
-            } else {
-                getPresenter().onLoadContributionWidget(contributionView);
-            }
-        }
-        this.userModel = userModel;
-        followBtn.setVisibility(!isMeOrOrganization() ? VISIBLE : GONE);
-        username.setText(userModel.getLogin());
-        fullname.setText(userModel.getName());
-        if (userModel.getBio() != null) {
-            description.setText(EmojiParser.parseToUnicode(userModel.getBio()));
-        } else {
-            description.setVisibility(GONE);
-        }
-        avatarLayout.setUrl(userModel.getAvatarUrl(), null, false, false, true);
-        avatarLayout.findViewById(R.id.avatar).setOnTouchListener((v, event) -> {
-            if (event.getAction() == MotionEvent.ACTION_UP) {
-                ActivityHelper.startCustomTab(getActivity(), userModel.getAvatarUrl());
-                return true;
-            }
-            return false;
-        });
-        organization.setText(userModel.getCompany());
-        location.setText(userModel.getLocation());
-        email.setText(userModel.getEmail());
-        link.setText(userModel.getBlog());
-        joined.setText(ParseDateFormat.getTimeAgo(userModel.getCreatedAt()));
-        if (InputHelper.isEmpty(userModel.getCompany())) {
-            organization.setVisibility(GONE);
-        }
-        if (InputHelper.isEmpty(userModel.getLocation())) {
-            location.setVisibility(GONE);
-        }
-        if (InputHelper.isEmpty(userModel.getEmail())) {
-            email.setVisibility(GONE);
-        }
-        if (InputHelper.isEmpty(userModel.getBlog())) {
-            link.setVisibility(GONE);
-        }
-        if (InputHelper.isEmpty(userModel.getCreatedAt())) {
-            joined.setVisibility(GONE);
-        }
-        followers.setText(SpannableBuilder.builder()
-                          .append(getString(R.string.followers))
-                          .append(" (")
-                          .bold(String.valueOf(userModel.getFollowers()))
-                          .append(")"));
-        following.setText(SpannableBuilder.builder()
-                          .append(getString(R.string.following))
-                          .append(" (")
-                          .bold(String.valueOf(userModel.getFollowing()))
-                          .append(")"));
-    }
+					}
+				}));
+		} else {
+			getPresenter().onLoadContributionWidget(contributionView);
+		}
+	}
+	this.userModel = userModel;
+	followBtn.setVisibility(!isMeOrOrganization() ? VISIBLE : GONE);
+	username.setText(userModel.getLogin());
+	fullname.setText(userModel.getName());
+	if (userModel.getBio() != null) {
+		description.setText(EmojiParser.parseToUnicode(userModel.getBio()));
+	} else {
+		description.setVisibility(GONE);
+	}
+	avatarLayout.setUrl(userModel.getAvatarUrl(), null, false, false, true);
+	avatarLayout.findViewById(R.id.avatar).setOnTouchListener((v, event)->{
+			if (event.getAction() == MotionEvent.ACTION_UP) {
+			        ActivityHelper.startCustomTab(getActivity(), userModel.getAvatarUrl());
+			        return true;
+			}
+			return false;
+		});
+	organization.setText(userModel.getCompany());
+	location.setText(userModel.getLocation());
+	email.setText(userModel.getEmail());
+	link.setText(userModel.getBlog());
+	joined.setText(ParseDateFormat.getTimeAgo(userModel.getCreatedAt()));
+	if (InputHelper.isEmpty(userModel.getCompany())) {
+		organization.setVisibility(GONE);
+	}
+	if (InputHelper.isEmpty(userModel.getLocation())) {
+		location.setVisibility(GONE);
+	}
+	if (InputHelper.isEmpty(userModel.getEmail())) {
+		email.setVisibility(GONE);
+	}
+	if (InputHelper.isEmpty(userModel.getBlog())) {
+		link.setVisibility(GONE);
+	}
+	if (InputHelper.isEmpty(userModel.getCreatedAt())) {
+		joined.setVisibility(GONE);
+	}
+	followers.setText(SpannableBuilder.builder()
+	                  .append(getString(R.string.followers))
+	                  .append(" (")
+	                  .bold(String.valueOf(userModel.getFollowers()))
+	                  .append(")"));
+	following.setText(SpannableBuilder.builder()
+	                  .append(getString(R.string.following))
+	                  .append(" (")
+	                  .bold(String.valueOf(userModel.getFollowing()))
+	                  .append(")"));
+}
 
-    @Override public void invalidateFollowBtn() {
-        hideProgress();
-        if (isMeOrOrganization()) return;
-        if (getPresenter().isSuccessResponse()) {
-            followBtn.setEnabled(true);
-            followBtn.setActivated(getPresenter().isFollowing());
-            followBtn.setText(getPresenter().isFollowing() ? getString(R.string.unfollow) : getString(R.string.follow));
-        }
-    }
+@Override public void invalidateFollowBtn() {
+	hideProgress();
+	if (isMeOrOrganization()) return;
+	if (getPresenter().isSuccessResponse()) {
+		followBtn.setEnabled(true);
+		followBtn.setActivated(getPresenter().isFollowing());
+		followBtn.setText(getPresenter().isFollowing() ? getString(R.string.unfollow) : getString(R.string.follow));
+	}
+}
 
-    @Override public void onInitContributions(final boolean show) {
-        if (contributionView == null) return;
-        if (show) {
-            contributionView.onResponse();
-        }
-        contributionCard.setVisibility(show ? VISIBLE : GONE);
-        contributionsCaption.setVisibility(show ? VISIBLE : GONE);
-    }
+@Override public void onInitContributions(final boolean show) {
+	if (contributionView == null) return;
+	if (show) {
+		contributionView.onResponse();
+	}
+	contributionCard.setVisibility(show ? VISIBLE : GONE);
+	contributionsCaption.setVisibility(show ? VISIBLE : GONE);
+}
 
-    @Override public void onInitOrgs(final @Nullable List<User> orgs) {
-        if (orgs != null && !orgs.isEmpty()) {
-            orgsList.setNestedScrollingEnabled(false);
-            ProfileOrgsAdapter adapter = new ProfileOrgsAdapter();
-            adapter.addItems(orgs);
-            orgsList.setAdapter(adapter);
-            orgsCard.setVisibility(VISIBLE);
-            organizationsCaption.setVisibility(VISIBLE);
-            ((GridManager) orgsList.getLayoutManager()).setIconSize(getResources().getDimensionPixelSize(R.dimen.header_icon_zie) + getResources()
-                    .getDimensionPixelSize(R.dimen.spacing_xs_large));
-        } else {
-            organizationsCaption.setVisibility(GONE);
-            orgsCard.setVisibility(GONE);
-        }
-    }
+@Override public void onInitOrgs(final @Nullable List<User> orgs) {
+	if (orgs != null && !orgs.isEmpty()) {
+		orgsList.setNestedScrollingEnabled(false);
+		ProfileOrgsAdapter adapter = new ProfileOrgsAdapter();
+		adapter.addItems(orgs);
+		orgsList.setAdapter(adapter);
+		orgsCard.setVisibility(VISIBLE);
+		organizationsCaption.setVisibility(VISIBLE);
+		((GridManager) orgsList.getLayoutManager()).setIconSize(getResources().getDimensionPixelSize(R.dimen.header_icon_zie) + getResources()
+		                                                        .getDimensionPixelSize(R.dimen.spacing_xs_large));
+	} else {
+		organizationsCaption.setVisibility(GONE);
+		orgsCard.setVisibility(GONE);
+	}
+}
 
-    @Override public void onUserNotFound() {
-        showMessage(R.string.error, R.string.no_user_found);
-    }
+@Override public void onUserNotFound() {
+	showMessage(R.string.error, R.string.no_user_found);
+}
 
-    @Override public void onInitPinnedRepos(final @NonNull List<GetPinnedReposQuery.Node> nodes) {
-        if (pinnedReposTextView == null) return;
-        if (!nodes.isEmpty()) {
-            pinnedReposTextView.setVisibility(VISIBLE);
-            pinnedReposCard.setVisibility(VISIBLE);
-            ProfilePinnedReposAdapter adapter = new ProfilePinnedReposAdapter(nodes);
-            adapter.setListener(new BaseViewHolder.OnItemClickListener<GetPinnedReposQuery.Node>() {
-                @Override public void onItemClick(final int position, final View v, final GetPinnedReposQuery.Node item) {
-                    SchemeParser.launchUri(getContext(), item.url().toString());
-                }
+@Override public void onInitPinnedRepos(final @NonNull List<GetPinnedReposQuery.Node> nodes) {
+	if (pinnedReposTextView == null) return;
+	if (!nodes.isEmpty()) {
+		pinnedReposTextView.setVisibility(VISIBLE);
+		pinnedReposCard.setVisibility(VISIBLE);
+		ProfilePinnedReposAdapter adapter = new ProfilePinnedReposAdapter(nodes);
+		adapter.setListener(new BaseViewHolder.OnItemClickListener<GetPinnedReposQuery.Node>() {
+				@Override public void onItemClick(final int position, final View v, final GetPinnedReposQuery.Node item) {
+				        SchemeParser.launchUri(getContext(), item.url().toString());
+				}
 
-                @Override public void onItemLongClick(final int position, final View v, final GetPinnedReposQuery.Node item) { }
-            });
-            pinnedList.addDivider();
-            pinnedList.setAdapter(adapter);
-        } else {
-            pinnedReposTextView.setVisibility(GONE);
-            pinnedReposCard.setVisibility(GONE);
-        }
-    }
+				@Override public void onItemLongClick(final int position, final View v, final GetPinnedReposQuery.Node item) {
+				}
+			});
+		pinnedList.addDivider();
+		pinnedList.setAdapter(adapter);
+	} else {
+		pinnedReposTextView.setVisibility(GONE);
+		pinnedReposCard.setVisibility(GONE);
+	}
+}
 
-    @Override public void showProgress(final @StringRes int resId) {
-        progress.setVisibility(VISIBLE);
-    }
+@Override public void showProgress(final @StringRes int resId) {
+	progress.setVisibility(VISIBLE);
+}
 
-    @Override public void hideProgress() {
-        progress.setVisibility(GONE);
-    }
+@Override public void hideProgress() {
+	progress.setVisibility(GONE);
+}
 
-    @Override public void showErrorMessage(final @NonNull String message) {
-        onHideProgress();
-        super.showErrorMessage(message);
-    }
+@Override public void showErrorMessage(final @NonNull String message) {
+	onHideProgress();
+	super.showErrorMessage(message);
+}
 
-    @Override public void showMessage(final int titleRes, final int msgRes) {
-        onHideProgress();
-        super.showMessage(titleRes, msgRes);
-    }
+@Override public void showMessage(final int titleRes, final int msgRes) {
+	onHideProgress();
+	super.showMessage(titleRes, msgRes);
+}
 
-    @Override public void onScrollTop(final int index) {
-        super.onScrollTop(index);
-    }
+@Override public void onScrollTop(final int index) {
+	super.onScrollTop(index);
+}
 
-    private void onHideProgress() {
-        hideProgress();
-    }
+private void onHideProgress() {
+	hideProgress();
+}
 
-    private boolean isMeOrOrganization() {
-        return Login.getUser() != null && Login.getUser().getLogin().equalsIgnoreCase(getPresenter().getLogin())
-               || (userModel != null && userModel.getType() != null && !userModel.getType().equalsIgnoreCase("user"));
-    }
+private boolean isMeOrOrganization() {
+	return Login.getUser() != null && Login.getUser().getLogin().equalsIgnoreCase(getPresenter().getLogin())
+	       || (userModel != null && userModel.getType() != null && !userModel.getType().equalsIgnoreCase("user"));
+}
 }

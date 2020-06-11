@@ -55,174 +55,174 @@ import tech.linjiang.pandora.Pandora;
 
 public class RestProvider {
 
-    public static final int PAGE_SIZE = 30;
+public static final int PAGE_SIZE = 30;
 
-    private static OkHttpClient okHttpClient;
-    public final static Gson gson = new GsonBuilder()
-    .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-    .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
-    .setDateFormat("yyyy-MM-dd HH:mm:ss")
-    .disableHtmlEscaping()
-    .setPrettyPrinting()
-    .create();
+private static OkHttpClient okHttpClient;
+public final static Gson gson = new GsonBuilder()
+                                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                                .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
+                                .setDateFormat("yyyy-MM-dd HH:mm:ss")
+                                .disableHtmlEscaping()
+                                .setPrettyPrinting()
+                                .create();
 
-    public static OkHttpClient provideOkHttpClient() {
-        if (okHttpClient == null) {
-            OkHttpClient.Builder client = new OkHttpClient.Builder();
-            if (BuildConfig.DEBUG) {
-                client.addInterceptor(new HttpLoggingInterceptor()
-                                      .setLevel(HttpLoggingInterceptor.Level.BODY));
-            }
-            client.addInterceptor(new AuthenticationInterceptor());
-            client.addInterceptor(new PaginationInterceptor());
-            client.addInterceptor(new ContentTypeInterceptor());
-            client.addInterceptor(Pandora.get().getInterceptor());
-            okHttpClient = client.build();
-        }
-        return okHttpClient;
-    }
+public static OkHttpClient provideOkHttpClient() {
+	if (okHttpClient == null) {
+		OkHttpClient.Builder client = new OkHttpClient.Builder();
+		if (BuildConfig.DEBUG) {
+			client.addInterceptor(new HttpLoggingInterceptor()
+			                      .setLevel(HttpLoggingInterceptor.Level.BODY));
+		}
+		client.addInterceptor(new AuthenticationInterceptor());
+		client.addInterceptor(new PaginationInterceptor());
+		client.addInterceptor(new ContentTypeInterceptor());
+		client.addInterceptor(Pandora.get().getInterceptor());
+		okHttpClient = client.build();
+	}
+	return okHttpClient;
+}
 
-    private static Retrofit provideRetrofit(final boolean enterprise) {
-        return new Retrofit.Builder()
-               .baseUrl(enterprise && PrefGetter.isEnterprise() ? LinkParserHelper.getEndpoint(PrefGetter.getEnterpriseUrl()) : BuildConfig.REST_URL)
-               .client(provideOkHttpClient())
-               .addConverterFactory(new GithubResponseConverter(gson))
-               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-               .build();
-    }
+private static Retrofit provideRetrofit(final boolean enterprise) {
+	return new Retrofit.Builder()
+	       .baseUrl(enterprise && PrefGetter.isEnterprise() ? LinkParserHelper.getEndpoint(PrefGetter.getEnterpriseUrl()) : BuildConfig.REST_URL)
+	       .client(provideOkHttpClient())
+	       .addConverterFactory(new GithubResponseConverter(gson))
+	       .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+	       .build();
+}
 
-    public static void downloadFile(final @NonNull Context context, final @NonNull String url) {
-        downloadFile(context, url, null);
-    }
+public static void downloadFile(final @NonNull Context context, final @NonNull String url) {
+	downloadFile(context, url, null);
+}
 
-    public static void downloadFile(final @NonNull Context context, final @NonNull String url, final @Nullable String extension) {
-        try {
-            if (InputHelper.isEmpty(url)) return;
-            boolean isEnterprise = LinkParserHelper.isEnterprise(url);
-            Uri uri = Uri.parse(url);
-            DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
-            DownloadManager.Request request = new DownloadManager.Request(uri);
-            String authToken = isEnterprise ? PrefGetter.getEnterpriseToken() : PrefGetter.getToken();
-            if (!TextUtils.isEmpty(authToken)) {
-                request.addRequestHeader("Authorization", authToken.startsWith("Basic") ? authToken : "token " + authToken);
-            }
-            String fileName = new File(url).getName();
-            if (!InputHelper.isEmpty(extension)) {
-                fileName += extension;
-            }
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
-            request.setTitle(fileName);
-            request.setDescription(context.getString(R.string.downloading_file));
-            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-            if (downloadManager != null) {
-                downloadManager.enqueue(request);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Crashlytics.logException(e);
-        }
-    }
+public static void downloadFile(final @NonNull Context context, final @NonNull String url, final @Nullable String extension) {
+	try {
+		if (InputHelper.isEmpty(url)) return;
+		boolean isEnterprise = LinkParserHelper.isEnterprise(url);
+		Uri uri = Uri.parse(url);
+		DownloadManager downloadManager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
+		DownloadManager.Request request = new DownloadManager.Request(uri);
+		String authToken = isEnterprise ? PrefGetter.getEnterpriseToken() : PrefGetter.getToken();
+		if (!TextUtils.isEmpty(authToken)) {
+			request.addRequestHeader("Authorization", authToken.startsWith("Basic") ? authToken : "token " + authToken);
+		}
+		String fileName = new File(url).getName();
+		if (!InputHelper.isEmpty(extension)) {
+			fileName += extension;
+		}
+		request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName);
+		request.setTitle(fileName);
+		request.setDescription(context.getString(R.string.downloading_file));
+		request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
+		request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+		if (downloadManager != null) {
+			downloadManager.enqueue(request);
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+		Crashlytics.logException(e);
+	}
+}
 
-    public static int getErrorCode(final Throwable throwable) {
-        if (throwable instanceof HttpException) {
-            return ((HttpException) throwable).code();
-        }
-        return -1;
-    }
+public static int getErrorCode(final Throwable throwable) {
+	if (throwable instanceof HttpException) {
+		return ((HttpException) throwable).code();
+	}
+	return -1;
+}
 
-    @NonNull public static UserRestService getUserService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(UserRestService.class);
-    }
+@NonNull public static UserRestService getUserService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(UserRestService.class);
+}
 
-    @NonNull public static GistService getGistService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(GistService.class);
-    }
+@NonNull public static GistService getGistService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(GistService.class);
+}
 
-    @NonNull public static RepoService getRepoService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(RepoService.class);
-    }
+@NonNull public static RepoService getRepoService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(RepoService.class);
+}
 
-    @NonNull public static IssueService getIssueService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(IssueService.class);
-    }
+@NonNull public static IssueService getIssueService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(IssueService.class);
+}
 
-    @NonNull public static PullRequestService getPullRequestService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(PullRequestService.class);
-    }
+@NonNull public static PullRequestService getPullRequestService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(PullRequestService.class);
+}
 
-    @NonNull public static NotificationService getNotificationService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(NotificationService.class);
-    }
+@NonNull public static NotificationService getNotificationService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(NotificationService.class);
+}
 
-    @NonNull public static ReactionsService getReactionsService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(ReactionsService.class);
-    }
+@NonNull public static ReactionsService getReactionsService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(ReactionsService.class);
+}
 
-    @NonNull public static OrganizationService getOrgService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(OrganizationService.class);
-    }
+@NonNull public static OrganizationService getOrgService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(OrganizationService.class);
+}
 
-    @NonNull public static ReviewService getReviewService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(ReviewService.class);
-    }
+@NonNull public static ReviewService getReviewService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(ReviewService.class);
+}
 
-    @NonNull public static UserRestService getContribution() {
-        return new Retrofit.Builder()
-               .baseUrl(BuildConfig.REST_URL)
-               .addConverterFactory(new GithubResponseConverter(gson))
-               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-               .build()
-               .create(UserRestService.class);
-    }
+@NonNull public static UserRestService getContribution() {
+	return new Retrofit.Builder()
+	       .baseUrl(BuildConfig.REST_URL)
+	       .addConverterFactory(new GithubResponseConverter(gson))
+	       .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+	       .build()
+	       .create(UserRestService.class);
+}
 
-    @NonNull public static SearchService getSearchService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(SearchService.class);
-    }
+@NonNull public static SearchService getSearchService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(SearchService.class);
+}
 
-    @NonNull public static SlackService getSlackService() {
-        return new Retrofit.Builder()
-               .baseUrl("https://ok13pknpj4.execute-api.eu-central-1.amazonaws.com/prod/")
-               .addConverterFactory(new GithubResponseConverter(gson))
-               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-               .build()
-               .create(SlackService.class);
-    }
+@NonNull public static SlackService getSlackService() {
+	return new Retrofit.Builder()
+	       .baseUrl("https://ok13pknpj4.execute-api.eu-central-1.amazonaws.com/prod/")
+	       .addConverterFactory(new GithubResponseConverter(gson))
+	       .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+	       .build()
+	       .create(SlackService.class);
+}
 
-    @NonNull public static ContentService getContentService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(ContentService.class);
-    }
+@NonNull public static ContentService getContentService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(ContentService.class);
+}
 
-    @NonNull public static ProjectsService getProjectsService(final boolean enterprise) {
-        return provideRetrofit(enterprise).create(ProjectsService.class);
-    }
+@NonNull public static ProjectsService getProjectsService(final boolean enterprise) {
+	return provideRetrofit(enterprise).create(ProjectsService.class);
+}
 
-    @Nullable public static GitHubErrorResponse getErrorResponse(final @NonNull Throwable throwable) {
-        ResponseBody body = null;
-        if (throwable instanceof HttpException) {
-            body = ((HttpException) throwable).response().errorBody();
-        }
-        if (body != null) {
-            try {
-                return gson.fromJson(body.string(), GitHubErrorResponse.class);
-            } catch (Exception ignored) { }
-        }
-        return null;
-    }
+@Nullable public static GitHubErrorResponse getErrorResponse(final @NonNull Throwable throwable) {
+	ResponseBody body = null;
+	if (throwable instanceof HttpException) {
+		body = ((HttpException) throwable).response().errorBody();
+	}
+	if (body != null) {
+		try {
+			return gson.fromJson(body.string(), GitHubErrorResponse.class);
+		} catch (Exception ignored) { }
+	}
+	return null;
+}
 
-    @NonNull public static Observable<GitHubStatusModel> gitHubStatus() {
-        return new Retrofit.Builder()
-               .baseUrl("https://kctbh9vrtdwd.statuspage.io/")
-               .client(provideOkHttpClient())
-               .addConverterFactory(new GithubResponseConverter(gson))
-               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-               .build()
-               .create(ContentService.class)
-               .checkStatus();
-    }
+@NonNull public static Observable<GitHubStatusModel> gitHubStatus() {
+	return new Retrofit.Builder()
+	       .baseUrl("https://kctbh9vrtdwd.statuspage.io/")
+	       .client(provideOkHttpClient())
+	       .addConverterFactory(new GithubResponseConverter(gson))
+	       .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+	       .build()
+	       .create(ContentService.class)
+	       .checkStatus();
+}
 
-    public static void clearHttpClient() {
-        okHttpClient = null;
-    }
+public static void clearHttpClient() {
+	okHttpClient = null;
+}
 
 }

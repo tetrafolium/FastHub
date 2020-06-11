@@ -17,64 +17,65 @@ import java.util.List;
  * @author Vincent DURMONT [vdurmont@gmail.com]
  */
 class EmojiLoader {
-    private EmojiLoader() { }
+private EmojiLoader() {
+}
 
-    static List<Emoji> loadEmojis(final InputStream stream) throws IOException {
-        try {
-            JSONArray emojisJSON = new JSONArray(inputStreamToString(stream));
-            List<Emoji> emojis = new ArrayList<Emoji>(emojisJSON.length());
-            for (int i = 0; i < emojisJSON.length(); i++) {
-                Emoji emoji = buildEmojiFromJSON(emojisJSON.getJSONObject(i));
-                if (emoji != null) {
-                    emojis.add(emoji);
-                }
-            }
-            return emojis;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return Collections.emptyList();
-    }
+static List<Emoji> loadEmojis(final InputStream stream) throws IOException {
+	try {
+		JSONArray emojisJSON = new JSONArray(inputStreamToString(stream));
+		List<Emoji> emojis = new ArrayList<Emoji>(emojisJSON.length());
+		for (int i = 0; i < emojisJSON.length(); i++) {
+			Emoji emoji = buildEmojiFromJSON(emojisJSON.getJSONObject(i));
+			if (emoji != null) {
+				emojis.add(emoji);
+			}
+		}
+		return emojis;
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return Collections.emptyList();
+}
 
-    private static String inputStreamToString(final InputStream stream) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        InputStreamReader isr = new InputStreamReader(stream, "UTF-8");
-        BufferedReader br = new BufferedReader(isr);
-        String read;
-        while ((read = br.readLine()) != null) {
-            sb.append(read);
-        }
-        br.close();
-        return sb.toString();
-    }
+private static String inputStreamToString(final InputStream stream) throws IOException {
+	StringBuilder sb = new StringBuilder();
+	InputStreamReader isr = new InputStreamReader(stream, "UTF-8");
+	BufferedReader br = new BufferedReader(isr);
+	String read;
+	while ((read = br.readLine()) != null) {
+		sb.append(read);
+	}
+	br.close();
+	return sb.toString();
+}
 
-    private static Emoji buildEmojiFromJSON(final JSONObject json) throws Exception {
-        if (!json.has("emoji")) {
-            return null;
-        }
-        byte[] bytes = json.getString("emoji").getBytes("UTF-8");
-        String description = null;
-        if (json.has("description")) {
-            description = json.getString("description");
-        }
-        boolean supportsFitzpatrick = false;
-        if (json.has("supports_fitzpatrick")) {
-            supportsFitzpatrick = json.getBoolean("supports_fitzpatrick");
-        }
-        List<String> aliases = jsonArrayToStringList(json.getJSONArray("aliases"));
-        List<String> tags = jsonArrayToStringList(json.getJSONArray("tags"));
-        return new Emoji(description, supportsFitzpatrick, aliases, tags, bytes);
-    }
+private static Emoji buildEmojiFromJSON(final JSONObject json) throws Exception {
+	if (!json.has("emoji")) {
+		return null;
+	}
+	byte[] bytes = json.getString("emoji").getBytes("UTF-8");
+	String description = null;
+	if (json.has("description")) {
+		description = json.getString("description");
+	}
+	boolean supportsFitzpatrick = false;
+	if (json.has("supports_fitzpatrick")) {
+		supportsFitzpatrick = json.getBoolean("supports_fitzpatrick");
+	}
+	List<String> aliases = jsonArrayToStringList(json.getJSONArray("aliases"));
+	List<String> tags = jsonArrayToStringList(json.getJSONArray("tags"));
+	return new Emoji(description, supportsFitzpatrick, aliases, tags, bytes);
+}
 
-    private static List<String> jsonArrayToStringList(final JSONArray array) {
-        List<String> strings = new ArrayList<String>(array.length());
-        try {
-            for (int i = 0; i < array.length(); i++) {
-                strings.add(array.getString(i));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return strings;
-    }
+private static List<String> jsonArrayToStringList(final JSONArray array) {
+	List<String> strings = new ArrayList<String>(array.length());
+	try {
+		for (int i = 0; i < array.length(); i++) {
+			strings.add(array.getString(i));
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
+	return strings;
+}
 }

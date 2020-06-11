@@ -32,80 +32,80 @@ import butterknife.OnClick;
 
 public class GistsListActivity extends BaseActivity {
 
-    @BindView(R.id.tabs) TabLayout tabs;
-    @BindView(R.id.gistsContainer) ViewPagerView pager;
-    @BindView(R.id.fab) FloatingActionButton fab;
+@BindView(R.id.tabs) TabLayout tabs;
+@BindView(R.id.gistsContainer) ViewPagerView pager;
+@BindView(R.id.fab) FloatingActionButton fab;
 
-    public static void startActivity(final @NonNull Context context) {
-        context.startActivity(new Intent(context, GistsListActivity.class));
-    }
+public static void startActivity(final @NonNull Context context) {
+	context.startActivity(new Intent(context, GistsListActivity.class));
+}
 
-    @Override protected int layout() {
-        return R.layout.gists_activity_layout;
-    }
+@Override protected int layout() {
+	return R.layout.gists_activity_layout;
+}
 
-    @Override protected boolean isTransparent() {
-        return true;
-    }
+@Override protected boolean isTransparent() {
+	return true;
+}
 
-    @Override protected boolean canBack() {
-        return true;
-    }
+@Override protected boolean canBack() {
+	return true;
+}
 
-    @Override protected boolean isSecured() {
-        return false;
-    }
+@Override protected boolean isSecured() {
+	return false;
+}
 
-    @NonNull @Override public TiPresenter providePresenter() {
-        return new BasePresenter();
-    }
+@NonNull @Override public TiPresenter providePresenter() {
+	return new BasePresenter();
+}
 
-    @Override protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTitle(R.string.gists);
-        setTaskName(getString(R.string.gists));
-        setupTabs();
-        fab.show();
-        tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(final TabLayout.Tab tab) {
-                super.onTabReselected(tab);
-                onScrollTop(tab.getPosition());
-            }
-        });
-    }
+@Override protected void onCreate(final Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	setTitle(R.string.gists);
+	setTaskName(getString(R.string.gists));
+	setupTabs();
+	fab.show();
+	tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
+			@Override public void onTabReselected(final TabLayout.Tab tab) {
+			        super.onTabReselected(tab);
+			        onScrollTop(tab.getPosition());
+			}
+		});
+}
 
-    @Override public void onScrollTop(final int index) {
-        if (pager == null || pager.getAdapter() == null) return;
-        Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
-        if (fragment instanceof BaseFragment) {
-            ((BaseFragment) fragment).onScrollTop(index);
-        }
-    }
+@Override public void onScrollTop(final int index) {
+	if (pager == null || pager.getAdapter() == null) return;
+	Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
+	if (fragment instanceof BaseFragment) {
+		((BaseFragment) fragment).onScrollTop(index);
+	}
+}
 
-    @OnClick(R.id.fab) public void onViewClicked() {
-        ActivityHelper.startReveal(this, new Intent(this, CreateGistActivity.class), fab, BundleConstant.REQUEST_CODE);
-    }
+@OnClick(R.id.fab) public void onViewClicked() {
+	ActivityHelper.startReveal(this, new Intent(this, CreateGistActivity.class), fab, BundleConstant.REQUEST_CODE);
+}
 
-    @Override protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == BundleConstant.REQUEST_CODE) {
-            if (pager != null && pager.getAdapter() != null) {
-                ((Fragment) pager.getAdapter().instantiateItem(pager, 0)).onActivityResult(resultCode, resultCode, data);
-            }
-        }
-    }
+@Override protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+	super.onActivityResult(requestCode, resultCode, data);
+	if (resultCode == RESULT_OK && requestCode == BundleConstant.REQUEST_CODE) {
+		if (pager != null && pager.getAdapter() != null) {
+			((Fragment) pager.getAdapter().instantiateItem(pager, 0)).onActivityResult(resultCode, resultCode, data);
+		}
+	}
+}
 
-    @Override public boolean onOptionsItemSelected(final MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+@Override public boolean onOptionsItemSelected(final MenuItem item) {
+	if (item.getItemId() == android.R.id.home) {
+		startActivity(new Intent(this, MainActivity.class));
+		finish();
+		return true;
+	}
+	return super.onOptionsItemSelected(item);
+}
 
-    private void setupTabs() {
-        pager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapterModel.buildForGists(this)));
-        tabs.setupWithViewPager(pager);
-    }
+private void setupTabs() {
+	pager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapterModel.buildForGists(this)));
+	tabs.setupWithViewPager(pager);
+}
 }

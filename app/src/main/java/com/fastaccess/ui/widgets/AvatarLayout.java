@@ -32,76 +32,76 @@ import cn.gavinliu.android.lib.shapedimageview.ShapedImageView;
 
 public class AvatarLayout extends FrameLayout {
 
-    @BindView(R.id.avatar) ShapedImageView avatar;
-    @Nullable private String login;
-    private boolean isOrg;
-    private boolean isEnterprise;
+@BindView(R.id.avatar) ShapedImageView avatar;
+@Nullable private String login;
+private boolean isOrg;
+private boolean isEnterprise;
 
-    @OnClick(R.id.avatar) void onClick(final @NonNull View view) {
-        if (InputHelper.isEmpty(login)) return;
-        UserPagerActivity.startActivity(view.getContext(), login, isOrg, isEnterprise, -1);
-    }
+@OnClick(R.id.avatar) void onClick(final @NonNull View view) {
+	if (InputHelper.isEmpty(login)) return;
+	UserPagerActivity.startActivity(view.getContext(), login, isOrg, isEnterprise, -1);
+}
 
-    public AvatarLayout(final @NonNull Context context) {
-        super(context);
-    }
+public AvatarLayout(final @NonNull Context context) {
+	super(context);
+}
 
-    public AvatarLayout(final @NonNull Context context, final @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
+public AvatarLayout(final @NonNull Context context, final @Nullable AttributeSet attrs) {
+	super(context, attrs);
+}
 
-    public AvatarLayout(final @NonNull Context context, final @Nullable AttributeSet attrs, final @AttrRes int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
+public AvatarLayout(final @NonNull Context context, final @Nullable AttributeSet attrs, final @AttrRes int defStyleAttr) {
+	super(context, attrs, defStyleAttr);
+}
 
-    public AvatarLayout(final @NonNull Context context, final @Nullable AttributeSet attrs, final @AttrRes int defStyleAttr, final @StyleRes int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
+public AvatarLayout(final @NonNull Context context, final @Nullable AttributeSet attrs, final @AttrRes int defStyleAttr, final @StyleRes int defStyleRes) {
+	super(context, attrs, defStyleAttr, defStyleRes);
+}
 
-    @Override protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-    }
+@Override protected void onAttachedToWindow() {
+	super.onAttachedToWindow();
+}
 
-    @Override protected void onFinishInflate() {
-        super.onFinishInflate();
-        inflate(getContext(), R.layout.avatar_layout, this);
-        if (isInEditMode()) return;
-        ButterKnife.bind(this);
-        setBackground();
-        if (PrefGetter.isRectAvatar()) {
-            avatar.setShape(ShapedImageView.SHAPE_MODE_ROUND_RECT, 15);
-        }
-    }
+@Override protected void onFinishInflate() {
+	super.onFinishInflate();
+	inflate(getContext(), R.layout.avatar_layout, this);
+	if (isInEditMode()) return;
+	ButterKnife.bind(this);
+	setBackground();
+	if (PrefGetter.isRectAvatar()) {
+		avatar.setShape(ShapedImageView.SHAPE_MODE_ROUND_RECT, 15);
+	}
+}
 
-    public void setUrl(final @Nullable String url, final @Nullable String login, final boolean isOrg, final boolean isEnterprise) {
-        setUrl(url, login, isOrg, isEnterprise, false);
-    }
+public void setUrl(final @Nullable String url, final @Nullable String login, final boolean isOrg, final boolean isEnterprise) {
+	setUrl(url, login, isOrg, isEnterprise, false);
+}
 
-    public void setUrl(final @Nullable String url, final @Nullable String login, final boolean isOrg, final boolean isEnterprise, final boolean reload) {
-        this.login = login;
-        this.isOrg = isOrg;
-        this.isEnterprise = isEnterprise;
-        avatar.setContentDescription(login);
-        if (login != null) {
-            TooltipCompat.setTooltipText(avatar, login);
-        } else {
-            avatar.setOnClickListener(null);
-            avatar.setOnLongClickListener(null);
-        }
-        Glide.with(getContext())
-        .load(url)
-        .fallback(ContextCompat.getDrawable(getContext(), R.drawable.ic_fasthub_mascot))
-        .diskCacheStrategy(DiskCacheStrategy.ALL)
-        .signature(new ObjectKey(reload ? String.valueOf(System.currentTimeMillis()) : "0"))
-        .dontAnimate()
-        .into(avatar);
-    }
+public void setUrl(final @Nullable String url, final @Nullable String login, final boolean isOrg, final boolean isEnterprise, final boolean reload) {
+	this.login = login;
+	this.isOrg = isOrg;
+	this.isEnterprise = isEnterprise;
+	avatar.setContentDescription(login);
+	if (login != null) {
+		TooltipCompat.setTooltipText(avatar, login);
+	} else {
+		avatar.setOnClickListener(null);
+		avatar.setOnLongClickListener(null);
+	}
+	Glide.with(getContext())
+	.load(url)
+	.fallback(ContextCompat.getDrawable(getContext(), R.drawable.ic_fasthub_mascot))
+	.diskCacheStrategy(DiskCacheStrategy.ALL)
+	.signature(new ObjectKey(reload ? String.valueOf(System.currentTimeMillis()) : "0"))
+	.dontAnimate()
+	.into(avatar);
+}
 
-    private void setBackground() {
-        if (PrefGetter.isRectAvatar()) {
-            setBackgroundResource(R.drawable.rect_shape);
-        } else {
-            setBackgroundResource(R.drawable.circle_shape);
-        }
-    }
+private void setBackground() {
+	if (PrefGetter.isRectAvatar()) {
+		setBackgroundResource(R.drawable.rect_shape);
+	} else {
+		setBackgroundResource(R.drawable.circle_shape);
+	}
+}
 }

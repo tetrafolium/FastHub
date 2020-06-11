@@ -16,15 +16,15 @@ import java.util.List;
 
 public interface PinnedGistMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onNotifyAdapter(@Nullable List<Gist> items);
+interface View extends BaseMvp.FAView {
+void onNotifyAdapter(@Nullable List<Gist> items);
 
-        void onDeletePinnedGist(long id, int position);
-    }
+void onDeletePinnedGist(long id, int position);
+}
 
-    interface Presenter extends BaseViewHolder.OnItemClickListener<Gist> {
-        @NonNull ArrayList<Gist> getPinnedGists();
+interface Presenter extends BaseViewHolder.OnItemClickListener<Gist> {
+@NonNull ArrayList<Gist> getPinnedGists();
 
-        void onReload();
-    }
+void onReload();
+}
 }

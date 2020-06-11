@@ -22,61 +22,61 @@ import butterknife.OnClick;
  */
 
 public class ChangelogBottomSheetDialog extends BaseMvpBottomSheetDialogFragment<ChangelogMvp.View, ChangelogPresenter> implements
-    ChangelogMvp.View {
+	ChangelogMvp.View {
 
-    @BindView(R.id.title) FontTextView title;
-    @BindView(R.id.message) FontTextView message;
-    @BindView(R.id.cancel) FontButton cancel;
-    @BindView(R.id.messageLayout) View messageLayout;
-    @BindView(R.id.prettifyWebView) PrettifyWebView prettifyWebView;
-    @BindView(R.id.webProgress) ProgressBar webProgress;
+@BindView(R.id.title) FontTextView title;
+@BindView(R.id.message) FontTextView message;
+@BindView(R.id.cancel) FontButton cancel;
+@BindView(R.id.messageLayout) View messageLayout;
+@BindView(R.id.prettifyWebView) PrettifyWebView prettifyWebView;
+@BindView(R.id.webProgress) ProgressBar webProgress;
 
-    @OnClick(R.id.ok) void onOk() {
-        dismiss();
-    }
+@OnClick(R.id.ok) void onOk() {
+	dismiss();
+}
 
-    @Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        if (savedInstanceState == null) {
-            PrefGetter.setWhatsNewVersion();
-        }
-        webProgress.setVisibility(View.VISIBLE);
-        cancel.setVisibility(View.GONE);
-        title.setText(R.string.changelog);
-        if (getPresenter().getHtml() == null) {
-            getPresenter().onLoadChangelog();
-        } else {
-            showChangelog(getPresenter().getHtml());
-        }
-    }
+@Override public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	super.onViewCreated(view, savedInstanceState);
+	if (savedInstanceState == null) {
+		PrefGetter.setWhatsNewVersion();
+	}
+	webProgress.setVisibility(View.VISIBLE);
+	cancel.setVisibility(View.GONE);
+	title.setText(R.string.changelog);
+	if (getPresenter().getHtml() == null) {
+		getPresenter().onLoadChangelog();
+	} else {
+		showChangelog(getPresenter().getHtml());
+	}
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.message_dialog;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.message_dialog;
+}
 
-    @Override public void onChangelogLoaded(final @Nullable String html) {
-        showChangelog(html);
-    }
+@Override public void onChangelogLoaded(final @Nullable String html) {
+	showChangelog(html);
+}
 
-    @NonNull @Override public ChangelogPresenter providePresenter() {
-        return new ChangelogPresenter();
-    }
+@NonNull @Override public ChangelogPresenter providePresenter() {
+	return new ChangelogPresenter();
+}
 
-    @NonNull @Override public Dialog onCreateDialog(final Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setCancelable(false);
-        dialog.setCanceledOnTouchOutside(false);
-        return dialog;
-    }
+@NonNull @Override public Dialog onCreateDialog(final Bundle savedInstanceState) {
+	Dialog dialog = super.onCreateDialog(savedInstanceState);
+	dialog.setCancelable(false);
+	dialog.setCanceledOnTouchOutside(false);
+	return dialog;
+}
 
-    private void showChangelog(final String html) {
-        if (prettifyWebView == null) return;
-        webProgress.setVisibility(View.GONE);
-        if (html != null) {
-            message.setVisibility(View.GONE);
-            prettifyWebView.setVisibility(View.VISIBLE);
-            prettifyWebView.setGithubContent(html, null, false, false);
-            prettifyWebView.setNestedScrollingEnabled(false);
-        }
-    }
+private void showChangelog(final String html) {
+	if (prettifyWebView == null) return;
+	webProgress.setVisibility(View.GONE);
+	if (html != null) {
+		message.setVisibility(View.GONE);
+		prettifyWebView.setVisibility(View.VISIBLE);
+		prettifyWebView.setGithubContent(html, null, false, false);
+		prettifyWebView.setNestedScrollingEnabled(false);
+	}
+}
 }

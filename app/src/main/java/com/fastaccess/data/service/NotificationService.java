@@ -29,38 +29,38 @@ import retrofit2.http.Url;
  */
 
 public interface NotificationService {
-    String SUBSCRIPTION_URL = "https://github.com/notifications/thread";
+String SUBSCRIPTION_URL = "https://github.com/notifications/thread";
 
-    String ISSUE_THREAD_CLASS = "Issue";
-    String PULL_REQUEST_THREAD_CLASS = "PullRequest";
-    String SUBSCRIBE = "subscribe";
-    String MUTE = "mute";
-    String UTF8 = "✓";
+String ISSUE_THREAD_CLASS = "Issue";
+String PULL_REQUEST_THREAD_CLASS = "PullRequest";
+String SUBSCRIBE = "subscribe";
+String MUTE = "mute";
+String UTF8 = "✓";
 
-    @StringDef({
-        ISSUE_THREAD_CLASS,
-        PULL_REQUEST_THREAD_CLASS
-    })
-    @Retention(RetentionPolicy.SOURCE) @interface ThreadClass { }
+@StringDef({
+		ISSUE_THREAD_CLASS,
+		PULL_REQUEST_THREAD_CLASS
+	})
+@Retention(RetentionPolicy.SOURCE) @interface ThreadClass { }
 
-    @StringDef({
-        SUBSCRIBE,
-        MUTE
-    })
-    @Retention(RetentionPolicy.SOURCE) @interface ThreadId { }
+@StringDef({
+		SUBSCRIBE,
+		MUTE
+	})
+@Retention(RetentionPolicy.SOURCE) @interface ThreadId { }
 
-    @GET("notifications") Observable<Pageable<Notification>> getNotifications(@Query("since") String date);
+@GET("notifications") Observable<Pageable<Notification> > getNotifications(@Query("since") String date);
 
-    @GET("notifications?all=true&per_page=200") Observable<Pageable<Notification>> getAllNotifications();
+@GET("notifications?all=true&per_page=200") Observable<Pageable<Notification> > getAllNotifications();
 
-    @PATCH("notifications/threads/{id}") Observable<Response<Boolean>> markAsRead(@Path("id") String id);
+@PATCH("notifications/threads/{id}") Observable<Response<Boolean> > markAsRead(@Path("id") String id);
 
-    @GET() Observable<Comment> getComment(@Url @NonNull String commentUrl);
+@GET() Observable<Comment> getComment(@Url @NonNull String commentUrl);
 
-    @GET("notifications/threads/{id}/subscription") Observable<RepoSubscriptionModel> isSubscribed(@Path("id") long id);
+@GET("notifications/threads/{id}/subscription") Observable<RepoSubscriptionModel> isSubscribed(@Path("id") long id);
 
-    @DELETE("notifications/threads/{id}/subscription") Observable<Response<Boolean>> unSubscribe(@Path("id") long id);
+@DELETE("notifications/threads/{id}/subscription") Observable<Response<Boolean> > unSubscribe(@Path("id") long id);
 
-    @PUT("notifications/threads/{id}/subscription")
-    Observable<Response<Boolean>> subscribe(@Path("id") long id, @Body NotificationSubscriptionBodyModel body);
+@PUT("notifications/threads/{id}/subscription")
+Observable<Response<Boolean> > subscribe(@Path("id") long id, @Body NotificationSubscriptionBodyModel body);
 }

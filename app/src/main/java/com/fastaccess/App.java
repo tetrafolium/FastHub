@@ -30,55 +30,55 @@ import shortbread.Shortbread;
  */
 
 public class App extends Application {
-    private static App instance;
-    private ReactiveEntityStore<Persistable> dataStore;
+private static App instance;
+private ReactiveEntityStore<Persistable> dataStore;
 
-    @Override public void onCreate() {
-        super.onCreate();
-        instance = this;
-        init();
-    }
+@Override public void onCreate() {
+	super.onCreate();
+	instance = this;
+	init();
+}
 
-    @NonNull public static App getInstance() {
-        return instance;
-    }
+@NonNull public static App getInstance() {
+	return instance;
+}
 
-    private void init() {
-        FabricProvider.INSTANCE.initFabric(this);
-        RxBillingService.register(this);
-        deleteDatabase("database.db");
-        getDataStore();
-        setupPreference();
-        TypeFaceHelper.generateTypeface(this);
-        NotificationSchedulerJobTask.scheduleJob(this);
-        Shortbread.create(this);
-        EmojiManager.load();
-        ColorsProvider.load();
-        DeviceNameGetter.getInstance().loadDevice();
-        try {
-            FirebaseMessaging.getInstance().subscribeToTopic("FastHub");
-        } catch (Exception ignored) { }
-    }
+private void init() {
+	FabricProvider.INSTANCE.initFabric(this);
+	RxBillingService.register(this);
+	deleteDatabase("database.db");
+	getDataStore();
+	setupPreference();
+	TypeFaceHelper.generateTypeface(this);
+	NotificationSchedulerJobTask.scheduleJob(this);
+	Shortbread.create(this);
+	EmojiManager.load();
+	ColorsProvider.load();
+	DeviceNameGetter.getInstance().loadDevice();
+	try {
+		FirebaseMessaging.getInstance().subscribeToTopic("FastHub");
+	} catch (Exception ignored) { }
+}
 
-    private void setupPreference() {
-        PreferenceManager.setDefaultValues(this, R.xml.fasthub_settings, false);
-        PreferenceManager.setDefaultValues(this, R.xml.about_settings, false);
-        PreferenceManager.setDefaultValues(this, R.xml.behaviour_settings, false);
-        PreferenceManager.setDefaultValues(this, R.xml.customization_settings, false);
-        PreferenceManager.setDefaultValues(this, R.xml.language_settings, false);
-        PreferenceManager.setDefaultValues(this, R.xml.notification_settings, false);
-    }
+private void setupPreference() {
+	PreferenceManager.setDefaultValues(this, R.xml.fasthub_settings, false);
+	PreferenceManager.setDefaultValues(this, R.xml.about_settings, false);
+	PreferenceManager.setDefaultValues(this, R.xml.behaviour_settings, false);
+	PreferenceManager.setDefaultValues(this, R.xml.customization_settings, false);
+	PreferenceManager.setDefaultValues(this, R.xml.language_settings, false);
+	PreferenceManager.setDefaultValues(this, R.xml.notification_settings, false);
+}
 
-    public ReactiveEntityStore<Persistable> getDataStore() {
-        if (dataStore == null) {
-            EntityModel model = Models.DEFAULT;
-            DatabaseSource source = new DatabaseSource(this, model, "FastHub-DB", 18);
-            Configuration configuration = source.getConfiguration();
-            if (BuildConfig.DEBUG) {
-                source.setTableCreationMode(TableCreationMode.CREATE_NOT_EXISTS);
-            }
-            dataStore = ReactiveSupport.toReactiveStore(new EntityDataStore<Persistable>(configuration));
-        }
-        return dataStore;
-    }
+public ReactiveEntityStore<Persistable> getDataStore() {
+	if (dataStore == null) {
+		EntityModel model = Models.DEFAULT;
+		DatabaseSource source = new DatabaseSource(this, model, "FastHub-DB", 18);
+		Configuration configuration = source.getConfiguration();
+		if (BuildConfig.DEBUG) {
+			source.setTableCreationMode(TableCreationMode.CREATE_NOT_EXISTS);
+		}
+		dataStore = ReactiveSupport.toReactiveStore(new EntityDataStore<Persistable>(configuration));
+	}
+	return dataStore;
+}
 }

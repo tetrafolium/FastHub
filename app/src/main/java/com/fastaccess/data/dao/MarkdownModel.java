@@ -13,33 +13,33 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 public class MarkdownModel implements Parcelable {
-    private String text;
-    private String mode = "gfm";
-    private String context;
+private String text;
+private String mode = "gfm";
+private String context;
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(final Parcel dest, final int flags) {
-        dest.writeString(this.text);
-        dest.writeString(this.mode);
-        dest.writeString(this.context);
-    }
+@Override public void writeToParcel(final Parcel dest, final int flags) {
+	dest.writeString(this.text);
+	dest.writeString(this.mode);
+	dest.writeString(this.context);
+}
 
-    @SuppressWarnings("WeakerAccess") protected MarkdownModel(final Parcel in) {
-        this.text = in.readString();
-        this.mode = in.readString();
-        this.context = in.readString();
-    }
+@SuppressWarnings("WeakerAccess") protected MarkdownModel(final Parcel in) {
+	this.text = in.readString();
+	this.mode = in.readString();
+	this.context = in.readString();
+}
 
-    public static final Parcelable.Creator<MarkdownModel> CREATOR = new Parcelable.Creator<MarkdownModel>() {
-        @Override public MarkdownModel createFromParcel(final Parcel source) {
-            return new MarkdownModel(source);
-        }
+public static final Parcelable.Creator<MarkdownModel> CREATOR = new Parcelable.Creator<MarkdownModel>() {
+	@Override public MarkdownModel createFromParcel(final Parcel source) {
+		return new MarkdownModel(source);
+	}
 
-        @Override public MarkdownModel[] newArray(final int size) {
-            return new MarkdownModel[size];
-        }
-    };
+	@Override public MarkdownModel[] newArray(final int size) {
+		return new MarkdownModel[size];
+	}
+};
 }

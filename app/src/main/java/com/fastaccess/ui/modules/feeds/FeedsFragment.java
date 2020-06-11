@@ -40,147 +40,147 @@ import butterknife.BindView;
 
 public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> implements FeedsMvp.View {
 
-    public static final String TAG = FeedsFragment.class.getSimpleName();
+public static final String TAG = FeedsFragment.class.getSimpleName();
 
-    @BindView(R.id.recycler) DynamicRecyclerView recycler;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.stateLayout) StateLayout stateLayout;
-    @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
-    private FeedsAdapter adapter;
-    private OnLoadMore onLoadMore;
+@BindView(R.id.recycler) DynamicRecyclerView recycler;
+@BindView(R.id.refresh) SwipeRefreshLayout refresh;
+@BindView(R.id.stateLayout) StateLayout stateLayout;
+@BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
+private FeedsAdapter adapter;
+private OnLoadMore onLoadMore;
 
-    public static FeedsFragment newInstance(final @Nullable String user) {
-        return newInstance(user, false);
-    }
+public static FeedsFragment newInstance(final @Nullable String user) {
+	return newInstance(user, false);
+}
 
-    public static FeedsFragment newInstance(final @Nullable String user, final boolean isOrg) {
-        FeedsFragment feedsFragment = new FeedsFragment();
-        feedsFragment.setArguments(Bundler.start()
-                                   .put(BundleConstant.EXTRA, user)
-                                   .put(BundleConstant.EXTRA_TWO, isOrg)
-                                   .end());
-        return feedsFragment;
-    }
+public static FeedsFragment newInstance(final @Nullable String user, final boolean isOrg) {
+	FeedsFragment feedsFragment = new FeedsFragment();
+	feedsFragment.setArguments(Bundler.start()
+	                           .put(BundleConstant.EXTRA, user)
+	                           .put(BundleConstant.EXTRA_TWO, isOrg)
+	                           .end());
+	return feedsFragment;
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.micro_grid_refresh_list;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.micro_grid_refresh_list;
+}
 
-    @Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
-        stateLayout.setEmptyText(R.string.no_feeds);
-        stateLayout.setOnReloadListener(this);
-        refresh.setOnRefreshListener(this);
-        recycler.setEmptyView(stateLayout, refresh);
-        adapter = new FeedsAdapter(getPresenter().getEvents(), isProfile());
-        adapter.setListener(getPresenter());
-        getLoadMore().initialize(getPresenter().getCurrentPage(), getPresenter()
-                                 .getPreviousTotal());
-        recycler.setAdapter(adapter);
-        if (isProfile()) {
-            recycler.addDivider();
-        }
-        recycler.addOnScrollListener(getLoadMore());
-        fastScroller.attachRecyclerView(recycler);
-        if (getPresenter().getEvents().isEmpty() && !getPresenter().isApiCalled()) {
-            getPresenter().onFragmentCreated(getArguments());
-        }
-    }
+@Override protected void onFragmentCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
+	stateLayout.setEmptyText(R.string.no_feeds);
+	stateLayout.setOnReloadListener(this);
+	refresh.setOnRefreshListener(this);
+	recycler.setEmptyView(stateLayout, refresh);
+	adapter = new FeedsAdapter(getPresenter().getEvents(), isProfile());
+	adapter.setListener(getPresenter());
+	getLoadMore().initialize(getPresenter().getCurrentPage(), getPresenter()
+	                         .getPreviousTotal());
+	recycler.setAdapter(adapter);
+	if (isProfile()) {
+		recycler.addDivider();
+	}
+	recycler.addOnScrollListener(getLoadMore());
+	fastScroller.attachRecyclerView(recycler);
+	if (getPresenter().getEvents().isEmpty() && !getPresenter().isApiCalled()) {
+		getPresenter().onFragmentCreated(getArguments());
+	}
+}
 
-    @Override public void onRefresh() {
-        getPresenter().onCallApi(1);
-    }
+@Override public void onRefresh() {
+	getPresenter().onCallApi(1);
+}
 
-    @Override public void onNotifyAdapter(final @Nullable List<Event> items, final int page) {
-        hideProgress();
-        if (items == null || items.isEmpty()) {
-            adapter.clear();
-            return;
-        }
-        if (page <= 1) {
-            adapter.insertItems(items);
-        } else {
-            adapter.addItems(items);
-        }
-    }
+@Override public void onNotifyAdapter(final @Nullable List<Event> items, final int page) {
+	hideProgress();
+	if (items == null || items.isEmpty()) {
+		adapter.clear();
+		return;
+	}
+	if (page <= 1) {
+		adapter.insertItems(items);
+	} else {
+		adapter.addItems(items);
+	}
+}
 
-    @Override public void showProgress(final @StringRes int resId) {
-        refresh.setRefreshing(true);
-        stateLayout.showProgress();
-    }
+@Override public void showProgress(final @StringRes int resId) {
+	refresh.setRefreshing(true);
+	stateLayout.showProgress();
+}
 
-    @Override public void hideProgress() {
-        refresh.setRefreshing(false);
-        stateLayout.hideProgress();
-    }
+@Override public void hideProgress() {
+	refresh.setRefreshing(false);
+	stateLayout.hideProgress();
+}
 
-    @Override public void showErrorMessage(final @NonNull String message) {
-        showReload();
-        super.showErrorMessage(message);
-    }
+@Override public void showErrorMessage(final @NonNull String message) {
+	showReload();
+	super.showErrorMessage(message);
+}
 
-    @Override public void showMessage(final int titleRes, final int msgRes) {
-        showReload();
-        super.showMessage(titleRes, msgRes);
-    }
+@Override public void showMessage(final int titleRes, final int msgRes) {
+	showReload();
+	super.showMessage(titleRes, msgRes);
+}
 
-    @Override public void onOpenRepoChooser(final @NonNull ArrayList<SimpleUrlsModel> models) {
-        ListDialogView<SimpleUrlsModel> dialogView = new ListDialogView<>();
-        dialogView.initArguments(getString(R.string.repo_chooser), models);
-        dialogView.show(getChildFragmentManager(), "ListDialogView");
-    }
+@Override public void onOpenRepoChooser(final @NonNull ArrayList<SimpleUrlsModel> models) {
+	ListDialogView<SimpleUrlsModel> dialogView = new ListDialogView<>();
+	dialogView.initArguments(getString(R.string.repo_chooser), models);
+	dialogView.show(getChildFragmentManager(), "ListDialogView");
+}
 
-    @NonNull @Override public FeedsPresenter providePresenter() {
-        return new FeedsPresenter();
-    }
+@NonNull @Override public FeedsPresenter providePresenter() {
+	return new FeedsPresenter();
+}
 
-    @SuppressWarnings("unchecked") @NonNull @Override public OnLoadMore getLoadMore() {
-        if (onLoadMore == null) {
-            onLoadMore = new OnLoadMore(getPresenter());
-        }
-        return onLoadMore;
-    }
+@SuppressWarnings("unchecked") @NonNull @Override public OnLoadMore getLoadMore() {
+	if (onLoadMore == null) {
+		onLoadMore = new OnLoadMore(getPresenter());
+	}
+	return onLoadMore;
+}
 
-    @Override public void onOpenCommitChooser(final @NonNull List<GitCommitModel> commits) {
-        ListDialogView<GitCommitModel> dialogView = new ListDialogView<>();
-        dialogView.initArguments(getString(R.string.commits), commits);
-        dialogView.show(getChildFragmentManager(), "ListDialogView");
-    }
+@Override public void onOpenCommitChooser(final @NonNull List<GitCommitModel> commits) {
+	ListDialogView<GitCommitModel> dialogView = new ListDialogView<>();
+	dialogView.initArguments(getString(R.string.commits), commits);
+	dialogView.show(getChildFragmentManager(), "ListDialogView");
+}
 
-    @Override public void onDestroyView() {
-        recycler.removeOnScrollListener(getLoadMore());
-        super.onDestroyView();
-    }
+@Override public void onDestroyView() {
+	recycler.removeOnScrollListener(getLoadMore());
+	super.onDestroyView();
+}
 
-    @Override public void onClick(final View view) {
-        onRefresh();
-    }
+@Override public void onClick(final View view) {
+	onRefresh();
+}
 
-    @Override public void onItemSelected(final Parcelable item) {
-        if (item instanceof SimpleUrlsModel) {
-            SchemeParser.launchUri(getContext(), Uri.parse(((SimpleUrlsModel) item).getItem()));
-        } else if (item instanceof GitCommitModel) {
-            GitCommitModel model = (GitCommitModel) item;
-            NameParser nameParser = new NameParser(model.getUrl());
-            Intent intent = CommitPagerActivity.createIntent(getContext(), nameParser.getName(),
-                            nameParser.getUsername(), model.getSha(), true, LinkParserHelper.isEnterprise(model.getUrl()));
-            getContext().startActivity(intent);
-        }
-    }
+@Override public void onItemSelected(final Parcelable item) {
+	if (item instanceof SimpleUrlsModel) {
+		SchemeParser.launchUri(getContext(), Uri.parse(((SimpleUrlsModel) item).getItem()));
+	} else if (item instanceof GitCommitModel) {
+		GitCommitModel model = (GitCommitModel) item;
+		NameParser nameParser = new NameParser(model.getUrl());
+		Intent intent = CommitPagerActivity.createIntent(getContext(), nameParser.getName(),
+		                                                 nameParser.getUsername(), model.getSha(), true, LinkParserHelper.isEnterprise(model.getUrl()));
+		getContext().startActivity(intent);
+	}
+}
 
-    @Override public void onScrollTop(final int index) {
-        super.onScrollTop(index);
-        if (recycler != null) {
-            recycler.scrollToPosition(0);
-        }
-    }
+@Override public void onScrollTop(final int index) {
+	super.onScrollTop(index);
+	if (recycler != null) {
+		recycler.scrollToPosition(0);
+	}
+}
 
-    private void showReload() {
-        hideProgress();
-        stateLayout.showReload(adapter.getItemCount());
-    }
+private void showReload() {
+	hideProgress();
+	stateLayout.showReload(adapter.getItemCount());
+}
 
-    public boolean isProfile() {
-        return !InputHelper.isEmpty(getArguments().getString(BundleConstant.EXTRA))
-               && !getArguments().getBoolean(BundleConstant.EXTRA_TWO);
-    }
+public boolean isProfile() {
+	return !InputHelper.isEmpty(getArguments().getString(BundleConstant.EXTRA))
+	       && !getArguments().getBoolean(BundleConstant.EXTRA_TWO);
+}
 }

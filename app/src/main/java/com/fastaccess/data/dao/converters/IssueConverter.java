@@ -7,7 +7,7 @@ import com.fastaccess.data.dao.model.Issue;
  */
 
 public class IssueConverter extends BaseConverter<Issue> {
-    @Override protected Class<? extends Issue> getTypeClass() {
-        return Issue.class;
-    }
+@Override protected Class<? extends Issue> getTypeClass() {
+	return Issue.class;
+}
 }

@@ -25,27 +25,27 @@ import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
 
 @AllArgsConstructor public class DrawableHandler extends TagNodeHandler {
 
-    private TextView textView;
-    private int width;
+private TextView textView;
+private int width;
 
-    @SuppressWarnings("ConstantConditions") private boolean isNull() {
-        return textView == null;
-    }
+@SuppressWarnings("ConstantConditions") private boolean isNull() {
+	return textView == null;
+}
 
-    @Override public void handleTagNode(final TagNode node, final SpannableStringBuilder builder, final int start, final int end) {
-        String src = node.getAttributeByName("src");
-        if (!InputHelper.isEmpty(src)) {
-            if (!PrefGetter.isAutoImageDisabled()) {
-                builder.append("￼");
-                if (isNull()) return;
-                builder.append("\n");
-                DrawableGetter imageGetter = new DrawableGetter(textView, width);
-                builder.setSpan(new ImageSpan(imageGetter.getDrawable(src)), start, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
-                builder.append("\n");
-            } else {
-                builder.append(SpannableBuilder.builder().clickable("Image", v -> SchemeParser.launchUri(v.getContext(), src)));
-                builder.append("\n");
-            }
-        }
-    }
+@Override public void handleTagNode(final TagNode node, final SpannableStringBuilder builder, final int start, final int end) {
+	String src = node.getAttributeByName("src");
+	if (!InputHelper.isEmpty(src)) {
+		if (!PrefGetter.isAutoImageDisabled()) {
+			builder.append("￼");
+			if (isNull()) return;
+			builder.append("\n");
+			DrawableGetter imageGetter = new DrawableGetter(textView, width);
+			builder.setSpan(new ImageSpan(imageGetter.getDrawable(src)), start, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
+			builder.append("\n");
+		} else {
+			builder.append(SpannableBuilder.builder().clickable("Image", v->SchemeParser.launchUri(v.getContext(), src)));
+			builder.append("\n");
+		}
+	}
+}
 }

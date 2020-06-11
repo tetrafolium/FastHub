@@ -27,82 +27,82 @@ import java.util.List;
  */
 
 public class IssuesTimelineAdapter extends BaseRecyclerAdapter<TimelineModel, BaseViewHolder,
-    BaseViewHolder.OnItemClickListener<TimelineModel>> {
+	                                                       BaseViewHolder.OnItemClickListener<TimelineModel> > {
 
-    private final OnToggleView onToggleView;
-    private final boolean showEmojies;
-    private final ReactionsCallback reactionsCallback;
-    private final boolean isMerged;
-    private final ReviewCommentCallback reviewCommentCallback;
-    private final String repoOwner;
-    private final String poster;
+private final OnToggleView onToggleView;
+private final boolean showEmojies;
+private final ReactionsCallback reactionsCallback;
+private final boolean isMerged;
+private final ReviewCommentCallback reviewCommentCallback;
+private final String repoOwner;
+private final String poster;
 
-    public IssuesTimelineAdapter(final @NonNull List<TimelineModel> data, final OnToggleView onToggleView, final boolean showEmojies,
-                                 final ReactionsCallback reactionsCallback, final boolean isMerged,
-                                 final ReviewCommentCallback reviewCommentCallback, final String repoOwner, final String poster) {
-        super(data);
-        this.onToggleView = onToggleView;
-        this.showEmojies = showEmojies;
-        this.reactionsCallback = reactionsCallback;
-        this.isMerged = isMerged;
-        this.reviewCommentCallback = reviewCommentCallback;
-        this.repoOwner = repoOwner;
-        this.poster = poster;
-    }
+public IssuesTimelineAdapter(final @NonNull List<TimelineModel> data, final OnToggleView onToggleView, final boolean showEmojies,
+                             final ReactionsCallback reactionsCallback, final boolean isMerged,
+                             final ReviewCommentCallback reviewCommentCallback, final String repoOwner, final String poster) {
+	super(data);
+	this.onToggleView = onToggleView;
+	this.showEmojies = showEmojies;
+	this.reactionsCallback = reactionsCallback;
+	this.isMerged = isMerged;
+	this.reviewCommentCallback = reviewCommentCallback;
+	this.repoOwner = repoOwner;
+	this.poster = poster;
+}
 
-    public IssuesTimelineAdapter(final @NonNull List<TimelineModel> data, final OnToggleView onToggleView, final boolean showEmojies,
-                                 final ReactionsCallback reactionsCallback, final String repoOwner, final String poster) {
-        this(data, onToggleView, showEmojies, reactionsCallback, false, null, repoOwner, poster);
-    }
+public IssuesTimelineAdapter(final @NonNull List<TimelineModel> data, final OnToggleView onToggleView, final boolean showEmojies,
+                             final ReactionsCallback reactionsCallback, final String repoOwner, final String poster) {
+	this(data, onToggleView, showEmojies, reactionsCallback, false, null, repoOwner, poster);
+}
 
-    @Override protected BaseViewHolder viewHolder(final ViewGroup parent, final int viewType) {
-        if (viewType == 0) {
-            return new UnknownTypeViewHolder(BaseViewHolder.getView(parent, R.layout.unknown_row_item));
-        } else if (viewType == TimelineModel.HEADER) {
-            return IssueDetailsViewHolder.newInstance(parent, this, onToggleView, reactionsCallback, repoOwner, poster);
-        } else if (viewType == TimelineModel.EVENT) {
-            return IssueTimelineViewHolder.newInstance(parent, this, isMerged);
-        } else if (viewType == TimelineModel.REVIEW) {
-            return ReviewsViewHolder.Companion.newInstance(parent, this);
-        } else if (viewType == TimelineModel.GROUP) {
-            return GroupedReviewsViewHolder.newInstance(parent, this, onToggleView, reactionsCallback,
-                    reviewCommentCallback, repoOwner, poster);
-        } else if (viewType == TimelineModel.COMMIT_COMMENTS) {
-            return CommitThreadViewHolder.Companion.newInstance(parent, this, onToggleView);
-        } else if (viewType == TimelineModel.STATUS) {
-            return PullStatusViewHolder.newInstance(parent);
-        }
-        return TimelineCommentsViewHolder.newInstance(parent, this, onToggleView, showEmojies,
-                reactionsCallback, repoOwner, poster);
-    }
+@Override protected BaseViewHolder viewHolder(final ViewGroup parent, final int viewType) {
+	if (viewType == 0) {
+		return new UnknownTypeViewHolder(BaseViewHolder.getView(parent, R.layout.unknown_row_item));
+	} else if (viewType == TimelineModel.HEADER) {
+		return IssueDetailsViewHolder.newInstance(parent, this, onToggleView, reactionsCallback, repoOwner, poster);
+	} else if (viewType == TimelineModel.EVENT) {
+		return IssueTimelineViewHolder.newInstance(parent, this, isMerged);
+	} else if (viewType == TimelineModel.REVIEW) {
+		return ReviewsViewHolder.Companion.newInstance(parent, this);
+	} else if (viewType == TimelineModel.GROUP) {
+		return GroupedReviewsViewHolder.newInstance(parent, this, onToggleView, reactionsCallback,
+		                                            reviewCommentCallback, repoOwner, poster);
+	} else if (viewType == TimelineModel.COMMIT_COMMENTS) {
+		return CommitThreadViewHolder.Companion.newInstance(parent, this, onToggleView);
+	} else if (viewType == TimelineModel.STATUS) {
+		return PullStatusViewHolder.newInstance(parent);
+	}
+	return TimelineCommentsViewHolder.newInstance(parent, this, onToggleView, showEmojies,
+	                                              reactionsCallback, repoOwner, poster);
+}
 
-    @Override protected void onBindView(final BaseViewHolder holder, final int position) {
-        TimelineModel model = getItem(position);
-        if (model.getType() == TimelineModel.HEADER) {
-            ((IssueDetailsViewHolder) holder).bind(model);
-        } else if (model.getType() == TimelineModel.EVENT) {
-            ((IssueTimelineViewHolder) holder).bind(model);
-        } else if (model.getType() == TimelineModel.COMMENT) {
-            ((TimelineCommentsViewHolder) holder).bind(model);
-        } else if (model.getType() == TimelineModel.GROUP) {
-            ((GroupedReviewsViewHolder) holder).bind(model);
-        } else if (model.getType() == TimelineModel.REVIEW) {
-            ((ReviewsViewHolder) holder).bind(model);
-        } else if (model.getType() == TimelineModel.COMMIT_COMMENTS) {
-            ((CommitThreadViewHolder) holder).bind(model);
-        } else if (model.getType() == TimelineModel.STATUS && model.getStatus() != null) {
-            ((PullStatusViewHolder) holder).bind(model.getStatus());
-        }
-        if (model.getType() != TimelineModel.COMMENT) {
-            StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
-            layoutParams.setFullSpan(true);
-        }
-    }
+@Override protected void onBindView(final BaseViewHolder holder, final int position) {
+	TimelineModel model = getItem(position);
+	if (model.getType() == TimelineModel.HEADER) {
+		((IssueDetailsViewHolder) holder).bind(model);
+	} else if (model.getType() == TimelineModel.EVENT) {
+		((IssueTimelineViewHolder) holder).bind(model);
+	} else if (model.getType() == TimelineModel.COMMENT) {
+		((TimelineCommentsViewHolder) holder).bind(model);
+	} else if (model.getType() == TimelineModel.GROUP) {
+		((GroupedReviewsViewHolder) holder).bind(model);
+	} else if (model.getType() == TimelineModel.REVIEW) {
+		((ReviewsViewHolder) holder).bind(model);
+	} else if (model.getType() == TimelineModel.COMMIT_COMMENTS) {
+		((CommitThreadViewHolder) holder).bind(model);
+	} else if (model.getType() == TimelineModel.STATUS && model.getStatus() != null) {
+		((PullStatusViewHolder) holder).bind(model.getStatus());
+	}
+	if (model.getType() != TimelineModel.COMMENT) {
+		StaggeredGridLayoutManager.LayoutParams layoutParams = (StaggeredGridLayoutManager.LayoutParams) holder.itemView.getLayoutParams();
+		layoutParams.setFullSpan(true);
+	}
+}
 
-    @Override public int getItemViewType(final int position) {
-        TimelineModel timelineModel = getData().get(position);
-        return timelineModel != null ? timelineModel.getType() : super.getItemViewType(position);
-    }
+@Override public int getItemViewType(final int position) {
+	TimelineModel timelineModel = getData().get(position);
+	return timelineModel != null ? timelineModel.getType() : super.getItemViewType(position);
+}
 
 
 }

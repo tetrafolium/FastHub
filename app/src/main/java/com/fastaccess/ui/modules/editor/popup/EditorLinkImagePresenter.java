@@ -17,20 +17,20 @@ import okhttp3.RequestBody;
  */
 
 public class EditorLinkImagePresenter extends BasePresenter<EditorLinkImageMvp.View> implements EditorLinkImageMvp.Presenter {
-    @Override public void onSubmit(final @Nullable String title, final @NonNull File file) {
-        if (file.exists()) {
-            RequestBody image = RequestBody.create(MediaType.parse("image/*"), file);
-            makeRestCall(ImgurProvider.getImgurService().postImage(title, image),
-            imgurReponseModel -> {
-                if (imgurReponseModel.getData() != null) {
-                    ImgurReponseModel.ImgurImage imageResponse = imgurReponseModel.getData();
-                    sendToView(view -> view.onUploaded(title == null ? imageResponse.getTitle() : title, imageResponse.getLink()));
-                    return;
-                }
-                sendToView(view -> view.onUploaded(null, null));
-            }, false);
-        } else {
-            if (getView() != null) getView().onUploaded(null, null);
-        }
-    }
+@Override public void onSubmit(final @Nullable String title, final @NonNull File file) {
+	if (file.exists()) {
+		RequestBody image = RequestBody.create(MediaType.parse("image/*"), file);
+		makeRestCall(ImgurProvider.getImgurService().postImage(title, image),
+		             imgurReponseModel->{
+				if (imgurReponseModel.getData() != null) {
+				        ImgurReponseModel.ImgurImage imageResponse = imgurReponseModel.getData();
+				        sendToView(view->view.onUploaded(title == null ? imageResponse.getTitle() : title, imageResponse.getLink()));
+				        return;
+				}
+				sendToView(view->view.onUploaded(null, null));
+			}, false);
+	} else {
+		if (getView() != null) getView().onUploaded(null, null);
+	}
+}
 }

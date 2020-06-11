@@ -40,161 +40,161 @@ import io.reactivex.Observable;
  */
 
 public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements FeedsMvp.Presenter {
-    private ArrayList<Event> eventsModels = new ArrayList<>();
-    private int page;
-    private int previousTotal;
-    private int lastPage = Integer.MAX_VALUE;
-    @com.evernote.android.state.State String user;
-    @com.evernote.android.state.State boolean isOrg;
+private ArrayList<Event> eventsModels = new ArrayList<>();
+private int page;
+private int previousTotal;
+private int lastPage = Integer.MAX_VALUE;
+@com.evernote.android.state.State String user;
+@com.evernote.android.state.State boolean isOrg;
 
-    @Override public void onFragmentCreated(final @NonNull Bundle argument) {
-        user = argument.getString(BundleConstant.EXTRA);
-        isOrg = argument.getBoolean(BundleConstant.EXTRA_TWO);
-        if (eventsModels.isEmpty()) {
-            onCallApi(1);
-        }
-    }
+@Override public void onFragmentCreated(final @NonNull Bundle argument) {
+	user = argument.getString(BundleConstant.EXTRA);
+	isOrg = argument.getBoolean(BundleConstant.EXTRA_TWO);
+	if (eventsModels.isEmpty()) {
+		onCallApi(1);
+	}
+}
 
-    @Override public boolean onCallApi(final int page) {
-        if (page == 1) {
-            lastPage = Integer.MAX_VALUE;
-            sendToView(view -> view.getLoadMore().reset());
-        }
-        if (page > lastPage || lastPage == 0) {
-            sendToView(FeedsMvp.View::hideProgress);
-            return false;
-        }
-        setCurrentPage(page);
-        Login login = Login.getUser();
-        if (login == null) return false; // I can't understand how this could possibly be reached lol.
-        Observable<Pageable<Event>> observable;
-        Logger.e(isOrg);
-        if (user != null) {
-            if (isOrg) {
-                observable = RestProvider.getOrgService(isEnterprise()).getReceivedEvents(login.getLogin(), user, page);
-            } else {
-                observable = RestProvider.getUserService(login.getLogin().equalsIgnoreCase(user)
-                             ? PrefGetter.isEnterprise() : isEnterprise()).getUserEvents(user, page);
-            }
-        } else {
-            observable = RestProvider.getUserService(PrefGetter.isEnterprise()).getReceivedEvents(login.getLogin(), page);
-        }
-        makeRestCall(observable, response -> {
-            lastPage = response.getLast();
-            if (getCurrentPage() == 1) {
-                manageDisposable(Event.save(response.getItems(), user));
-            }
-            sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
-        });
-        return true;
-    }
+@Override public boolean onCallApi(final int page) {
+	if (page == 1) {
+		lastPage = Integer.MAX_VALUE;
+		sendToView(view->view.getLoadMore().reset());
+	}
+	if (page > lastPage || lastPage == 0) {
+		sendToView(FeedsMvp.View::hideProgress);
+		return false;
+	}
+	setCurrentPage(page);
+	Login login = Login.getUser();
+	if (login == null) return false; // I can't understand how this could possibly be reached lol.
+	Observable<Pageable<Event> > observable;
+	Logger.e(isOrg);
+	if (user != null) {
+		if (isOrg) {
+			observable = RestProvider.getOrgService(isEnterprise()).getReceivedEvents(login.getLogin(), user, page);
+		} else {
+			observable = RestProvider.getUserService(login.getLogin().equalsIgnoreCase(user)
+			     ? PrefGetter.isEnterprise() : isEnterprise()).getUserEvents(user, page);
+		}
+	} else {
+		observable = RestProvider.getUserService(PrefGetter.isEnterprise()).getReceivedEvents(login.getLogin(), page);
+	}
+	makeRestCall(observable, response->{
+			lastPage = response.getLast();
+			if (getCurrentPage() == 1) {
+			        manageDisposable(Event.save(response.getItems(), user));
+			}
+			sendToView(view->view.onNotifyAdapter(response.getItems(), page));
+		});
+	return true;
+}
 
-    @Override public int getCurrentPage() {
-        return page;
-    }
+@Override public int getCurrentPage() {
+	return page;
+}
 
-    @Override public int getPreviousTotal() {
-        return previousTotal;
-    }
+@Override public int getPreviousTotal() {
+	return previousTotal;
+}
 
-    @Override public void setCurrentPage(final int page) {
-        this.page = page;
-    }
+@Override public void setCurrentPage(final int page) {
+	this.page = page;
+}
 
-    @Override public void setPreviousTotal(final int previousTotal) {
-        this.previousTotal = previousTotal;
-    }
+@Override public void setPreviousTotal(final int previousTotal) {
+	this.previousTotal = previousTotal;
+}
 
-    @Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
-        return onCallApi(page);
-    }
+@Override public boolean onCallApi(final int page, final @Nullable Object parameter) {
+	return onCallApi(page);
+}
 
-    @Override public void onSubscribed(final boolean cancelable) {
-        sendToView(view -> view.showProgress(0));
-    }
+@Override public void onSubscribed(final boolean cancelable) {
+	sendToView(view->view.showProgress(0));
+}
 
-    @Override public void onError(final @NonNull Throwable throwable) {
-        onWorkOffline();
-        super.onError(throwable);
-    }
+@Override public void onError(final @NonNull Throwable throwable) {
+	onWorkOffline();
+	super.onError(throwable);
+}
 
-    @NonNull @Override public ArrayList<Event> getEvents() {
-        return eventsModels;
-    }
+@NonNull @Override public ArrayList<Event> getEvents() {
+	return eventsModels;
+}
 
-    @Override public void onWorkOffline() {
-        if (eventsModels.isEmpty() && InputHelper.isEmpty(user)) {
-            manageDisposable(RxHelper.getObservable(Event.getEvents(Login.getUser().getLogin()).toObservable())
-            .subscribe(modelList -> {
-                if (modelList != null) {
-                    sendToView(view -> view.onNotifyAdapter(modelList, 1));
-                }
-            }, Throwable::printStackTrace));
-        } else {
-            sendToView(FeedsMvp.View::hideProgress);
-        }
-    }
+@Override public void onWorkOffline() {
+	if (eventsModels.isEmpty() && InputHelper.isEmpty(user)) {
+		manageDisposable(RxHelper.getObservable(Event.getEvents(Login.getUser().getLogin()).toObservable())
+		                 .subscribe(modelList->{
+				if (modelList != null) {
+				        sendToView(view->view.onNotifyAdapter(modelList, 1));
+				}
+			}, Throwable::printStackTrace));
+	} else {
+		sendToView(FeedsMvp.View::hideProgress);
+	}
+}
 
-    @Override public void onItemClick(final int position, final View v, final Event item) {
-        if (item.getType() == EventsType.ForkEvent) {
-            NameParser parser = new NameParser(item.getPayload().getForkee().getHtmlUrl());
-            RepoPagerActivity.startRepoPager(v.getContext(), parser);
-        } else {
-            PayloadModel payloadModel = item.getPayload();
-            if (payloadModel != null) {
-                if (payloadModel.getHead() != null) {
-                    if (payloadModel.getCommits() != null && payloadModel.getCommits().size() > 1) {
-                        sendToView(view -> view.onOpenCommitChooser(payloadModel.getCommits()));
-                    } else {
-                        Repo repoModel = item.getRepo();
-                        NameParser nameParser = new NameParser(repoModel.getUrl());
-                        Intent intent = CommitPagerActivity.createIntent(v.getContext(), nameParser.getName(),
-                                        nameParser.getUsername(), payloadModel.getHead(), true,
-                                        LinkParserHelper.isEnterprise(repoModel.getUrl()));
-                        v.getContext().startActivity(intent);
-                    }
-                } else if (payloadModel.getIssue() != null) {
-                    SchemeParser.launchUri(v.getContext(), Uri.parse(payloadModel.getIssue().getHtmlUrl()), true);
-                } else if (payloadModel.getPullRequest() != null) {
-                    SchemeParser.launchUri(v.getContext(), Uri.parse(payloadModel.getPullRequest().getHtmlUrl()), true);
-                } else if (payloadModel.getComment() != null) {
-                    SchemeParser.launchUri(v.getContext(), Uri.parse(payloadModel.getComment().getHtmlUrl()), true);
-                } else if (item.getType() == EventsType.ReleaseEvent && payloadModel.getRelease() != null) {
-                    NameParser nameParser = new NameParser(payloadModel.getRelease().getHtmlUrl());
-                    v.getContext().startActivity(ReleasesListActivity.getIntent(v.getContext(), nameParser.getUsername(), nameParser.getName(),
-                                                 payloadModel.getRelease().getId(), LinkParserHelper.isEnterprise(payloadModel.getRelease().getHtmlUrl())));
+@Override public void onItemClick(final int position, final View v, final Event item) {
+	if (item.getType() == EventsType.ForkEvent) {
+		NameParser parser = new NameParser(item.getPayload().getForkee().getHtmlUrl());
+		RepoPagerActivity.startRepoPager(v.getContext(), parser);
+	} else {
+		PayloadModel payloadModel = item.getPayload();
+		if (payloadModel != null) {
+			if (payloadModel.getHead() != null) {
+				if (payloadModel.getCommits() != null && payloadModel.getCommits().size() > 1) {
+					sendToView(view->view.onOpenCommitChooser(payloadModel.getCommits()));
+				} else {
+					Repo repoModel = item.getRepo();
+					NameParser nameParser = new NameParser(repoModel.getUrl());
+					Intent intent = CommitPagerActivity.createIntent(v.getContext(), nameParser.getName(),
+					                                                 nameParser.getUsername(), payloadModel.getHead(), true,
+					                                                 LinkParserHelper.isEnterprise(repoModel.getUrl()));
+					v.getContext().startActivity(intent);
+				}
+			} else if (payloadModel.getIssue() != null) {
+				SchemeParser.launchUri(v.getContext(), Uri.parse(payloadModel.getIssue().getHtmlUrl()), true);
+			} else if (payloadModel.getPullRequest() != null) {
+				SchemeParser.launchUri(v.getContext(), Uri.parse(payloadModel.getPullRequest().getHtmlUrl()), true);
+			} else if (payloadModel.getComment() != null) {
+				SchemeParser.launchUri(v.getContext(), Uri.parse(payloadModel.getComment().getHtmlUrl()), true);
+			} else if (item.getType() == EventsType.ReleaseEvent && payloadModel.getRelease() != null) {
+				NameParser nameParser = new NameParser(payloadModel.getRelease().getHtmlUrl());
+				v.getContext().startActivity(ReleasesListActivity.getIntent(v.getContext(), nameParser.getUsername(), nameParser.getName(),
+				                                                            payloadModel.getRelease().getId(), LinkParserHelper.isEnterprise(payloadModel.getRelease().getHtmlUrl())));
 
-                } else if (item.getType() == EventsType.CreateEvent && "tag".equalsIgnoreCase(payloadModel.getRefType())) {
-                    Repo repoModel = item.getRepo();
-                    NameParser nameParser = new NameParser(repoModel.getUrl());
-                    v.getContext().startActivity(ReleasesListActivity.getIntent(v.getContext(), nameParser.getUsername(), nameParser.getName(),
-                                                 payloadModel.getRef(), LinkParserHelper.isEnterprise(repoModel.getUrl())));
-                } else if (item.getType() == EventsType.GollumEvent) {
-                    Repo repoModel = item.getRepo();
-                    NameParser parser = new NameParser(repoModel.getUrl());
-                    v.getContext().startActivity(WikiActivity.Companion.getWiki(v.getContext(), parser.getName(), parser.getUsername()));
-                } else {
-                    Repo repoModel = item.getRepo();
-                    NameParser parser = new NameParser(repoModel.getUrl());
-                    RepoPagerActivity.startRepoPager(v.getContext(), parser);
-                }
-            }
-        }
-    }
+			} else if (item.getType() == EventsType.CreateEvent && "tag".equalsIgnoreCase(payloadModel.getRefType())) {
+				Repo repoModel = item.getRepo();
+				NameParser nameParser = new NameParser(repoModel.getUrl());
+				v.getContext().startActivity(ReleasesListActivity.getIntent(v.getContext(), nameParser.getUsername(), nameParser.getName(),
+				                                                            payloadModel.getRef(), LinkParserHelper.isEnterprise(repoModel.getUrl())));
+			} else if (item.getType() == EventsType.GollumEvent) {
+				Repo repoModel = item.getRepo();
+				NameParser parser = new NameParser(repoModel.getUrl());
+				v.getContext().startActivity(WikiActivity.Companion.getWiki(v.getContext(), parser.getName(), parser.getUsername()));
+			} else {
+				Repo repoModel = item.getRepo();
+				NameParser parser = new NameParser(repoModel.getUrl());
+				RepoPagerActivity.startRepoPager(v.getContext(), parser);
+			}
+		}
+	}
+}
 
-    @Override public void onItemLongClick(final int position, final View v, final Event item) {
-        if (item.getType() == EventsType.ForkEvent) {
-            if (getView() != null) {
-                getView().onOpenRepoChooser(Stream.of(new SimpleUrlsModel(item.getRepo().getName(), item.getRepo().getUrl()),
-                                                      new SimpleUrlsModel(item.getPayload().getForkee().getFullName(), item.getPayload().getForkee().getHtmlUrl()))
-                                            .collect(Collectors.toCollection(ArrayList::new)));
-            }
-        } else {
-            Repo repo = item.getRepo();
-            if (repo != null) {
-                NameParser parser = new NameParser(repo.getUrl());
-                RepoPagerActivity.startRepoPager(v.getContext(), parser);
-            }
-        }
-    }
+@Override public void onItemLongClick(final int position, final View v, final Event item) {
+	if (item.getType() == EventsType.ForkEvent) {
+		if (getView() != null) {
+			getView().onOpenRepoChooser(Stream.of(new SimpleUrlsModel(item.getRepo().getName(), item.getRepo().getUrl()),
+			                                      new SimpleUrlsModel(item.getPayload().getForkee().getFullName(), item.getPayload().getForkee().getHtmlUrl()))
+			                            .collect(Collectors.toCollection(ArrayList::new)));
+		}
+	} else {
+		Repo repo = item.getRepo();
+		if (repo != null) {
+			NameParser parser = new NameParser(repo.getUrl());
+			RepoPagerActivity.startRepoPager(v.getContext(), parser);
+		}
+	}
+}
 }

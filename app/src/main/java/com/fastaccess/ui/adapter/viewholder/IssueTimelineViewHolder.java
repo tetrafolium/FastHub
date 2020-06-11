@@ -26,57 +26,57 @@ import butterknife.BindView;
 
 public class IssueTimelineViewHolder extends BaseViewHolder<TimelineModel> {
 
-    @BindView(R.id.stateImage) ForegroundImageView stateImage;
-    @BindView(R.id.avatarLayout) AvatarLayout avatarLayout;
-    @BindView(R.id.stateText) FontTextView stateText;
-    private boolean isMerged;
+@BindView(R.id.stateImage) ForegroundImageView stateImage;
+@BindView(R.id.avatarLayout) AvatarLayout avatarLayout;
+@BindView(R.id.stateText) FontTextView stateText;
+private boolean isMerged;
 
-    private IssueTimelineViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter, final boolean isMerged) {
-        super(itemView, adapter);
-        this.isMerged = isMerged;
-    }
+private IssueTimelineViewHolder(final @NonNull View itemView, final @Nullable BaseRecyclerAdapter adapter, final boolean isMerged) {
+	super(itemView, adapter);
+	this.isMerged = isMerged;
+}
 
-    public static IssueTimelineViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter, final boolean isMerged) {
-        return new IssueTimelineViewHolder(getView(viewGroup, R.layout.issue_timeline_row_item), adapter, isMerged);
-    }
+public static IssueTimelineViewHolder newInstance(final ViewGroup viewGroup, final BaseRecyclerAdapter adapter, final boolean isMerged) {
+	return new IssueTimelineViewHolder(getView(viewGroup, R.layout.issue_timeline_row_item), adapter, isMerged);
+}
 
-    @Override public void bind(final @NonNull TimelineModel timelineModel) {
-        GenericEvent issueEventModel = timelineModel.getGenericEvent();
-        IssueEventType event = issueEventModel.getEvent();
-        if (issueEventModel.getAssignee() != null && issueEventModel.getAssigner() != null) {
-            avatarLayout.setUrl(issueEventModel.getAssigner().getAvatarUrl(), issueEventModel.getAssigner().getLogin(),
-                                false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
-        } else {
-            if (event != IssueEventType.committed) {
-                avatarLayout.setVisibility(View.VISIBLE);
-                if (issueEventModel.getActor() != null) {
-                    avatarLayout.setUrl(issueEventModel.getActor().getAvatarUrl(), issueEventModel.getActor().getLogin(),
-                                        false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
-                } else if (issueEventModel.getAuthor() != null) {
-                    avatarLayout.setUrl(issueEventModel.getAuthor().getAvatarUrl(), issueEventModel.getAuthor().getLogin(),
-                                        false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
-                }
-            } else {
-                avatarLayout.setVisibility(View.GONE);
-            }
-        }
-        if (event != null) {
-            stateImage.setContentDescription(event.name());
-            stateImage.setImageResource(event.getIconResId());
-        }
-        if (event != null) {
-            stateText.setText(TimelineProvider.getStyledEvents(issueEventModel, itemView.getContext(), isMerged));
-        } else {
-            stateText.setText("");
-            stateImage.setImageResource(R.drawable.ic_label);
-        }
-    }
+@Override public void bind(final @NonNull TimelineModel timelineModel) {
+	GenericEvent issueEventModel = timelineModel.getGenericEvent();
+	IssueEventType event = issueEventModel.getEvent();
+	if (issueEventModel.getAssignee() != null && issueEventModel.getAssigner() != null) {
+		avatarLayout.setUrl(issueEventModel.getAssigner().getAvatarUrl(), issueEventModel.getAssigner().getLogin(),
+		                    false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
+	} else {
+		if (event != IssueEventType.committed) {
+			avatarLayout.setVisibility(View.VISIBLE);
+			if (issueEventModel.getActor() != null) {
+				avatarLayout.setUrl(issueEventModel.getActor().getAvatarUrl(), issueEventModel.getActor().getLogin(),
+				                    false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
+			} else if (issueEventModel.getAuthor() != null) {
+				avatarLayout.setUrl(issueEventModel.getAuthor().getAvatarUrl(), issueEventModel.getAuthor().getLogin(),
+				                    false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
+			}
+		} else {
+			avatarLayout.setVisibility(View.GONE);
+		}
+	}
+	if (event != null) {
+		stateImage.setContentDescription(event.name());
+		stateImage.setImageResource(event.getIconResId());
+	}
+	if (event != null) {
+		stateText.setText(TimelineProvider.getStyledEvents(issueEventModel, itemView.getContext(), isMerged));
+	} else {
+		stateText.setText("");
+		stateImage.setImageResource(R.drawable.ic_label);
+	}
+}
 
-    @Override protected void onViewIsDetaching() {
-        DrawableGetter drawableGetter = (DrawableGetter) stateText.getTag(R.id.drawable_callback);
-        if (drawableGetter != null) {
-            drawableGetter.clear(drawableGetter);
-        }
-    }
+@Override protected void onViewIsDetaching() {
+	DrawableGetter drawableGetter = (DrawableGetter) stateText.getTag(R.id.drawable_callback);
+	if (drawableGetter != null) {
+		drawableGetter.clear(drawableGetter);
+	}
+}
 
 }

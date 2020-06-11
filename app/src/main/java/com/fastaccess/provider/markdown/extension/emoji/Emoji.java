@@ -9,13 +9,13 @@ import org.commonmark.node.Delimited;
 
 public class Emoji extends CustomNode implements Delimited {
 
-    private static final String DELIMITER = ":";
+private static final String DELIMITER = ":";
 
-    @Override public String getOpeningDelimiter() {
-        return DELIMITER;
-    }
+@Override public String getOpeningDelimiter() {
+	return DELIMITER;
+}
 
-    @Override public String getClosingDelimiter() {
-        return DELIMITER;
-    }
+@Override public String getClosingDelimiter() {
+	return DELIMITER;
+}
 }
