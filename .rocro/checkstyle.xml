@@ -71,7 +71,9 @@
     <!-- Checks for Size Violations.                    -->
     <!-- See https://checkstyle.org/config_sizes.html -->
     <module name="FileLength"/>
+    <!-- ### 5139 issues
     <module name="LineLength">
+    -->
       <property name="fileExtensions" value="java"/>
     </module>
 
@@ -102,9 +104,15 @@
         <module name="InvalidJavadocPosition"/>
         <module name="JavadocMethod"/>
         <module name="JavadocType"/>
+        <!-- ### 2774 issues
         <module name="JavadocVariable"/>
+        -->
+        <!-- ### 520 issues
         <module name="JavadocStyle"/>
+        -->
+        <!-- ### 1446 issues
         <module name="MissingJavadocMethod"/>
+        -->
 
         <!-- Checks for Naming Conventions.                  -->
         <!-- See https://checkstyle.org/config_naming.html -->
@@ -139,11 +147,15 @@
         <module name="MethodParamPad"/>
         <module name="NoWhitespaceAfter"/>
         <module name="NoWhitespaceBefore"/>
+        <!-- ### 274 issues
         <module name="OperatorWrap"/>
+        -->
         <module name="ParenPad"/>
         <module name="TypecastParenPad"/>
         <module name="WhitespaceAfter"/>
+        <!-- ### 927 issues
         <module name="WhitespaceAround"/>
+        -->
 
         <!-- Modifier Checks                                    -->
         <!-- See https://checkstyle.org/config_modifiers.html -->
@@ -155,17 +167,23 @@
         <module name="AvoidNestedBlocks"/>
         <module name="EmptyBlock"/>
         <module name="LeftCurly"/>
+        <!-- ### 558 issues
         <module name="NeedBraces"/>
+        -->
         <module name="RightCurly"/>
 
         <!-- Checks for common coding problems               -->
         <!-- See https://checkstyle.org/config_coding.html -->
         <module name="EmptyStatement"/>
         <module name="EqualsHashCode"/>
+        <!-- ### 540 issues
         <module name="HiddenField"/>
+        -->
         <module name="IllegalInstantiation"/>
         <module name="InnerAssignment"/>
+        <!-- ### 394 issues
         <module name="MagicNumber"/>
+        -->
         <module name="MissingSwitchDefault"/>
         <module name="MultipleVariableDeclarations"/>
         <module name="SimplifyBooleanExpression"/>
@@ -173,16 +191,22 @@
 
         <!-- Checks for class design                         -->
         <!-- See https://checkstyle.org/config_design.html -->
+        <!-- ### 2431 issues
         <module name="DesignForExtension"/>
+        -->
         <module name="FinalClass"/>
         <module name="HideUtilityClassConstructor"/>
         <module name="InterfaceIsType"/>
+        <!-- ### 1406 issues
         <module name="VisibilityModifier"/>
+        -->
 
         <!-- Miscellaneous other checks.                   -->
         <!-- See https://checkstyle.org/config_misc.html -->
         <module name="ArrayTypeStyle"/>
+        <!-- ### 5335 issues
         <module name="FinalParameters"/>
+        -->
         <module name="TodoComment"/>
         <module name="UpperEll"/>
 

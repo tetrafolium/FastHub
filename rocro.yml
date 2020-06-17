@@ -5,6 +5,7 @@ inspecode:
     thresholds: { num-issues: 382 }
 
   checkstyle:
+    #config-file: .rocro/checkstyle.xml  # (auto-detected)
     auto-fix: true
     thresholds: { num-issues: 999 } # too many issues detected: 22631 > 1000
 
