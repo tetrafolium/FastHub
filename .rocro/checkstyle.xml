@@ -73,9 +73,9 @@
     <module name="FileLength"/>
     <!-- ### 5139 issues
     <module name="LineLength">
-    -->
       <property name="fileExtensions" value="java"/>
     </module>
+    -->
 
     <!-- Checks for whitespace                               -->
     <!-- See https://checkstyle.org/config_whitespace.html -->
