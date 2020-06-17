@@ -48,8 +48,9 @@ inspecode:
 
   spotbugs:
     options:
-      -targets: app/build/intermediates/merged_java_res/debug/out.jar
-    thresholds: { num-issues: 999 }
+      -targets: app
+      -high:
+    thresholds: { num-issues: 286 }
 
   uncrustify:
     auto-fix: true
