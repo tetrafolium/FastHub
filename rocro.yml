@@ -1,65 +1,70 @@
+---
 inspecode:
 
-  astyle:
-    auto-fix: true
-    thresholds: { num-issues: 382 }
+  tasks:
 
-  checkstyle:
-    #config-file: .rocro/checkstyle.xml  # (auto-detected)
-    auto-fix: true
-    thresholds: { num-issues: 887 }
+  tools:
 
-  clang-format:
-    auto-fix: true
-    thresholds: { num-issues: 603 }
+    astyle:
+      auto-fix: true
+      thresholds: {num-issues: 382}
 
-  cpd:
-    thresholds: { num-issues: 139 }
+    checkstyle:
+      # config-file: .rocro/checkstyle.xml  # (auto-detected)
+      auto-fix: true
+      thresholds: {num-issues: 887}
 
-  detekt:
-    thresholds: { num-issues: 310 }
+    clang-format:
+      auto-fix: true
+      thresholds: {num-issues: 603}
 
-  #### not supported yet ??
-  #fortify:
-  #  thresholds: { num-issues: 999 }
+    cpd:
+      thresholds: {num-issues: 139}
 
-  fossology:
-    thresholds: { num-issues: 7 }
+    detekt:
+      thresholds: {num-issues: 310}
 
-  grep:
-    thresholds: { num-issues: 2 }
+    #### not supported yet ??
+    # fortify:
+    #   thresholds: {num-issues: 999}
 
-  infer:
-    thresholds: { num-issues: 116 }
+    fossology:
+      thresholds: {num-issues: 7}
 
-  jscpd:
-    thresholds: { num-issues: 837 }
+    grep:
+      thresholds: {num-issues: 2}
 
-  ktlint:
-    auto-fix: true
-    thresholds: { num-issues: 315 }
+    infer:
+      thresholds: {num-issues: 116}
 
-  misspell:
-    auto-fix: true
-    thresholds: { num-issues: 13 }
+    jscpd:
+      thresholds: {num-issues: 837}
 
-  pmd:
-    auto-fix: true
-    thresholds: { num-issues: 96 }
+    ktlint:
+      auto-fix: true
+      thresholds: {num-issues: 315}
 
-  spotbugs:
-    options:
-      -targets: app
-      -high:
-    thresholds: { num-issues: 286 }
+    misspell:
+      auto-fix: true
+      thresholds: {num-issues: 13}
 
-  uncrustify:
-    auto-fix: true
-    thresholds: { num-issues: 588 }
+    pmd:
+      auto-fix: true
+      thresholds: {num-issues: 96}
 
-  #### not supported yet ??
-  #understand:
-  #  thresholds: { num-issues: 999 }
+    spotbugs:
+      options:
+        -targets: app
+        -high:
+      thresholds: {num-issues: 286}
 
-  unused:
-    thresholds: { num-issues: 197 }
+    uncrustify:
+      auto-fix: true
+      thresholds: {num-issues: 588}
+
+    #### not supported yet ??
+    # understand:
+    #   thresholds: {num-issues: 999}
+
+    unused:
+      thresholds: {num-issues: 197}
