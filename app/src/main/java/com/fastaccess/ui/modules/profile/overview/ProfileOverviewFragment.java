@@ -151,28 +151,28 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
         if (getView() != null) {
             if (this.userModel == null) {
                 TransitionManager.beginDelayedTransition((ViewGroup) getView(),
-                        new AutoTransition().addListener(new Transition.TransitionListener() {
+                new AutoTransition().addListener(new Transition.TransitionListener() {
 
-                            @Override public void onTransitionStart(@NonNull Transition transition) {
+                    @Override public void onTransitionStart(@NonNull Transition transition) {
 
-                            }
+                    }
 
-                            @Override public void onTransitionEnd(@NonNull Transition transition) {
-                                if (contributionView != null) getPresenter().onLoadContributionWidget(contributionView);
-                            }
+                    @Override public void onTransitionEnd(@NonNull Transition transition) {
+                        if (contributionView != null) getPresenter().onLoadContributionWidget(contributionView);
+                    }
 
-                            @Override public void onTransitionCancel(@NonNull Transition transition) {
+                    @Override public void onTransitionCancel(@NonNull Transition transition) {
 
-                            }
+                    }
 
-                            @Override public void onTransitionPause(@NonNull Transition transition) {
+                    @Override public void onTransitionPause(@NonNull Transition transition) {
 
-                            }
+                    }
 
-                            @Override public void onTransitionResume(@NonNull Transition transition) {
+                    @Override public void onTransitionResume(@NonNull Transition transition) {
 
-                            }
-                        }));
+                    }
+                }));
             } else {
                 getPresenter().onLoadContributionWidget(contributionView);
             }
@@ -215,15 +215,15 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
             joined.setVisibility(GONE);
         }
         followers.setText(SpannableBuilder.builder()
-                .append(getString(R.string.followers))
-                .append(" (")
-                .bold(String.valueOf(userModel.getFollowers()))
-                .append(")"));
+                          .append(getString(R.string.followers))
+                          .append(" (")
+                          .bold(String.valueOf(userModel.getFollowers()))
+                          .append(")"));
         following.setText(SpannableBuilder.builder()
-                .append(getString(R.string.following))
-                .append(" (")
-                .bold(String.valueOf(userModel.getFollowing()))
-                .append(")"));
+                          .append(getString(R.string.following))
+                          .append(" (")
+                          .bold(String.valueOf(userModel.getFollowing()))
+                          .append(")"));
     }
 
     @Override public void invalidateFollowBtn() {
@@ -314,6 +314,6 @@ public class ProfileOverviewFragment extends BaseFragment<ProfileOverviewMvp.Vie
 
     private boolean isMeOrOrganization() {
         return Login.getUser() != null && Login.getUser().getLogin().equalsIgnoreCase(getPresenter().getLogin()) ||
-                (userModel != null && userModel.getType() != null && !userModel.getType().equalsIgnoreCase("user"));
+               (userModel != null && userModel.getType() != null && !userModel.getType().equalsIgnoreCase("user"));
     }
 }

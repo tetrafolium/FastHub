@@ -53,10 +53,10 @@ import lombok.NoArgsConstructor;
                 }
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                 dataSource.delete(Event.class)
-                        .where(Event.LOGIN.isNull()
-                                .or(Event.LOGIN.eq(login.getLogin())))
-                        .get()
-                        .value();
+                .where(Event.LOGIN.isNull()
+                       .or(Event.LOGIN.eq(login.getLogin())))
+                .get()
+                .value();
                 if (events != null && !events.isEmpty() && TextUtils.equals(login.getLogin(), user)) {
                     for (Event event : events) {
                         dataSource.delete(Event.class).where(Event.ID.eq(event.getId())).get().value();
@@ -74,16 +74,18 @@ import lombok.NoArgsConstructor;
 
     @NonNull public static Single<List<Event>> getEvents(@NonNull String login) {
         return RxHelper.getSingle(
-                App.getInstance().getDataStore()
-                        .select(Event.class)
-                        .where(Event.LOGIN.eq(login))
-                        .orderBy(Event.CREATED_AT.desc())
-                        .get()
-                        .observable()
-                        .toList());
+                   App.getInstance().getDataStore()
+                   .select(Event.class)
+                   .where(Event.LOGIN.eq(login))
+                   .orderBy(Event.CREATED_AT.desc())
+                   .get()
+                   .observable()
+                   .toList());
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -108,8 +110,12 @@ import lombok.NoArgsConstructor;
     }
 
     public static final Creator<Event> CREATOR = new Creator<Event>() {
-        @Override public Event createFromParcel(Parcel source) {return new Event(source);}
+        @Override public Event createFromParcel(Parcel source) {
+            return new Event(source);
+        }
 
-        @Override public Event[] newArray(int size) {return new Event[size];}
+        @Override public Event[] newArray(int size) {
+            return new Event[size];
+        }
     };
 }

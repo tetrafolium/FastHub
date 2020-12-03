@@ -53,7 +53,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import static android.app.Activity.RESULT_OK;
 
 public class SettingsCategoryFragment extends PreferenceFragmentCompat implements
-        Preference.OnPreferenceChangeListener, NotificationSoundMvp.NotificationSoundListener {
+    Preference.OnPreferenceChangeListener, NotificationSoundMvp.NotificationSoundListener {
 
     public static final String TAG = SettingsCategoryFragment.class.getSimpleName();
 
@@ -96,20 +96,20 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
 
     @Override public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         switch (settingsCallback.getSettingsType()) {
-            case SettingsModel.BACKUP:
-                addBackup();
-                break;
-            case SettingsModel.BEHAVIOR:
-                addBehaviour();
-                break;
-            case SettingsModel.CUSTOMIZATION:
-                addCustomization();
-                break;
-            case SettingsModel.NOTIFICATION:
-                addNotifications();
-                break;
-            default:
-                Toast.makeText(App.getInstance(), "You reached the impossible :'(", Toast.LENGTH_SHORT).show();
+        case SettingsModel.BACKUP:
+            addBackup();
+            break;
+        case SettingsModel.BEHAVIOR:
+            addBehaviour();
+            break;
+        case SettingsModel.CUSTOMIZATION:
+            addCustomization();
+            break;
+        case SettingsModel.NOTIFICATION:
+            addNotifications();
+            break;
+        default:
+            Toast.makeText(App.getInstance(), "You reached the impossible :'(", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -256,15 +256,15 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
                 PrefHelper.set("backed_up", new SimpleDateFormat("MM/dd", Locale.ENGLISH).format(new Date()));
                 Toasty.success(App.getInstance(), getString(R.string.backed_up)).show();
             } else {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+                requestPermissions(new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
             }
             return true;
         });
         if (PrefHelper.getString("backed_up") != null) {
             findPreference("backup").setSummary(SpannableBuilder.builder()
-                    .append(getString(R.string.backup_summary, PrefHelper.getString("backed_up")))
-                    .append("\n")
-                    .append(FileHelper.PATH));
+                                                .append(getString(R.string.backup_summary, PrefHelper.getString("backed_up")))
+                                                .append("\n")
+                                                .append(FileHelper.PATH));
         } else {
             findPreference("backup").setSummary("");
         }
@@ -272,7 +272,7 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 showFileChooser();
             } else {
-                requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+                requestPermissions(new String[] {Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
             }
             return true;
         });
@@ -317,7 +317,7 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
         notificationSoundPath.setSummary(FileHelper.getRingtoneName(getContext(), PrefGetter.getNotificationSound()));
         notificationSoundPath.setOnPreferenceClickListener(preference -> {
             NotificationSoundBottomSheet.Companion.newInstance(FileHelper.getRingtoneName(getContext(), PrefGetter.getNotificationSound()))
-                    .show(getChildFragmentManager(), "NotificationSoundBottomSheet");
+            .show(getChildFragmentManager(), "NotificationSoundBottomSheet");
             return true;
         });
         if (!PrefHelper.getBoolean("notificationEnabled")) {
@@ -347,7 +347,7 @@ public class SettingsCategoryFragment extends PreferenceFragmentCompat implement
         if (!InputHelper.isEmpty(json)) {
             try {
                 Gson gson = new Gson();
-                Type typeOfHashMap = new TypeToken<Map<String, ?>>() {}.getType();
+                Type typeOfHashMap = new TypeToken<Map<String, ?>>() {} .getType();
                 Map<String, ?> savedPref = gson.fromJson(json.toString(), typeOfHashMap);
                 if (savedPref != null && !savedPref.isEmpty()) {
                     for (Map.Entry<String, ?> stringEntry : savedPref.entrySet()) {

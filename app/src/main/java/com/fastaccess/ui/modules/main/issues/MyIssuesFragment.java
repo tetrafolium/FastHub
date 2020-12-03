@@ -47,9 +47,9 @@ public class MyIssuesFragment extends BaseFragment<MyIssuesMvp.View, MyIssuesPre
     public static MyIssuesFragment newInstance(@NonNull IssueState issueState, @NonNull MyIssuesType issuesType) {
         MyIssuesFragment view = new MyIssuesFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, issueState)
-                .put(BundleConstant.EXTRA_TWO, issuesType)
-                .end());
+                          .put(BundleConstant.EXTRA, issueState)
+                          .put(BundleConstant.EXTRA_TWO, issuesType)
+                          .end());
         return view;
     }
 
@@ -149,18 +149,18 @@ public class MyIssuesFragment extends BaseFragment<MyIssuesMvp.View, MyIssuesPre
     @Override public void onSetCount(int totalCount) {
         if (tabsBadgeListener != null) {
             switch (getIssuesType()) {
-                case CREATED:
-                    tabsBadgeListener.onSetBadge(0, totalCount);
-                    break;
-                case ASSIGNED:
-                    tabsBadgeListener.onSetBadge(1, totalCount);
-                    break;
-                case MENTIONED:
-                    tabsBadgeListener.onSetBadge(2, totalCount);
-                    break;
-                case PARTICIPATED:
-                    tabsBadgeListener.onSetBadge(3, totalCount);
-                    break;
+            case CREATED:
+                tabsBadgeListener.onSetBadge(0, totalCount);
+                break;
+            case ASSIGNED:
+                tabsBadgeListener.onSetBadge(1, totalCount);
+                break;
+            case MENTIONED:
+                tabsBadgeListener.onSetBadge(2, totalCount);
+                break;
+            case PARTICIPATED:
+                tabsBadgeListener.onSetBadge(3, totalCount);
+                break;
             }
         }
     }

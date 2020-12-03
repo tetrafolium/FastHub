@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class RepoFilePathsAdapter extends BaseRecyclerAdapter<RepoFile, RepoFilePathsViewHolder, BaseViewHolder
-        .OnItemClickListener<RepoFile>> {
+    .OnItemClickListener<RepoFile>> {
 
 
     public RepoFilePathsAdapter(@NonNull ArrayList<RepoFile> eventsModels) {

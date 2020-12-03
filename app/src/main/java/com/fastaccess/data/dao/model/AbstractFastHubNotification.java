@@ -42,40 +42,42 @@ import lombok.NoArgsConstructor;
 
     @Nullable public static FastHubNotification getLatest() {
         return App.getInstance().getDataStore().toBlocking()
-                .select(FastHubNotification.class)
-                .where(FastHubNotification.READ.eq(false))
-                .orderBy(FastHubNotification.DATE.desc())
-                .limit(1)
-                .get()
-                .firstOrNull();
+               .select(FastHubNotification.class)
+               .where(FastHubNotification.READ.eq(false))
+               .orderBy(FastHubNotification.DATE.desc())
+               .limit(1)
+               .get()
+               .firstOrNull();
     }
 
     @NonNull public static Observable<FastHubNotification> getNotifications() {
         return App.getInstance().getDataStore()
-                .select(FastHubNotification.class)
-                .orderBy(FastHubNotification.DATE.desc())
-                .get()
-                .observable();
+               .select(FastHubNotification.class)
+               .orderBy(FastHubNotification.DATE.desc())
+               .get()
+               .observable();
     }
 
     public static boolean hasNotifications() {
         return App.getInstance().getDataStore()
-                .count(FastHubNotification.class)
-                .get()
-                .value() > 0;
+               .count(FastHubNotification.class)
+               .get()
+               .value() > 0;
     }
 
     @Override public String toString() {
         return "AbstractFastHubNotification{" +
-                "date=" + date +
-                ", isRead=" + read +
-                ", body='" + body + '\'' +
-                ", title='" + title + '\'' +
-                ", type=" + type +
-                '}';
+               "date=" + date +
+               ", isRead=" + read +
+               ", body='" + body + '\'' +
+               ", title='" + title + '\'' +
+               ", type=" + type +
+               '}';
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -98,8 +100,12 @@ import lombok.NoArgsConstructor;
     }
 
     public static final Creator<FastHubNotification> CREATOR = new Creator<FastHubNotification>() {
-        @Override public FastHubNotification createFromParcel(Parcel source) {return new FastHubNotification(source);}
+        @Override public FastHubNotification createFromParcel(Parcel source) {
+            return new FastHubNotification(source);
+        }
 
-        @Override public FastHubNotification[] newArray(int size) {return new FastHubNotification[size];}
+        @Override public FastHubNotification[] newArray(int size) {
+            return new FastHubNotification[size];
+        }
     };
 }

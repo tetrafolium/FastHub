@@ -23,7 +23,7 @@ import java.util.List;
 
 public interface FeedsMvp {
     interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-            android.view.View.OnClickListener, ListDialogView.onSimpleItemSelection<Parcelable> {
+        android.view.View.OnClickListener, ListDialogView.onSimpleItemSelection<Parcelable> {
 
         void onNotifyAdapter(@Nullable List<Event> events, int page);
 
@@ -35,8 +35,8 @@ public interface FeedsMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<Event>,
-            BaseMvp.PaginationListener {
+        BaseViewHolder.OnItemClickListener<Event>,
+        BaseMvp.PaginationListener {
 
         void onFragmentCreated(@NonNull Bundle argument);
 

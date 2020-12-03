@@ -47,13 +47,13 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
     }
 
     public static RepoCommitsFragment newInstance(@NonNull String repoId, @NonNull String login, @NonNull String branch,
-                                                  @Nullable String path) {
+            @Nullable String path) {
         return newInstance(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, branch)
-                .put(BundleConstant.EXTRA_THREE, path)
-                .end());
+                           .put(BundleConstant.ID, repoId)
+                           .put(BundleConstant.EXTRA, login)
+                           .put(BundleConstant.EXTRA_TWO, branch)
+                           .put(BundleConstant.EXTRA_THREE, path)
+                           .end());
     }
 
     public static RepoCommitsFragment newInstance(@NonNull Bundle bundle) {
@@ -64,7 +64,7 @@ public class RepoCommitsFragment extends BaseFragment<RepoCommitsMvp.View, RepoC
 
     @OnClick(R.id.branches) void onBranchesClicked() {
         BranchesPagerFragment.Companion.newInstance(getPresenter().login, getPresenter().repoId)
-                .show(getChildFragmentManager(), "BranchesFragment");
+        .show(getChildFragmentManager(), "BranchesFragment");
     }
 
     @Override public void onAttach(Context context) {

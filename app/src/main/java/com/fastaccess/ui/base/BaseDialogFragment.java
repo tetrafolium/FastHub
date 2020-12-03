@@ -37,7 +37,7 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseDialogFragment<V extends BaseMvp.FAView, P extends BasePresenter<V>> extends TiDialogFragment<P, V>
-        implements BaseMvp.FAView {
+    implements BaseMvp.FAView {
     protected BaseMvp.FAView callback;
 
     @Nullable private Unbinder unbinder;
@@ -84,12 +84,12 @@ public abstract class BaseDialogFragment<V extends BaseMvp.FAView, P extends Bas
             super.dismiss();
         } else {
             AnimHelper.dismissDialog(this, getResources().getInteger(android.R.integer.config_shortAnimTime),
-                    new AnimatorListenerAdapter() {
-                        @Override public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            BaseDialogFragment.super.dismiss();
-                        }
-                    });
+            new AnimatorListenerAdapter() {
+                @Override public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    BaseDialogFragment.super.dismiss();
+                }
+            });
         }
     }
 
@@ -109,7 +109,7 @@ public abstract class BaseDialogFragment<V extends BaseMvp.FAView, P extends Bas
         final Dialog dialog = super.onCreateDialog(savedInstanceState);
         if (!PrefGetter.isAppAnimationDisabled() && !(this instanceof ProgressDialogFragment) && !suppressAnimation) {
             dialog.setOnShowListener(dialogInterface -> AnimHelper.revealDialog(dialog,
-                    App.getInstance().getResources().getInteger(android.R.integer.config_longAnimTime)));
+                                     App.getInstance().getResources().getInteger(android.R.integer.config_longAnimTime)));
         }
         return dialog;
     }

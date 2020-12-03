@@ -52,7 +52,7 @@ public class TableHandler extends TagNodeHandler {
             builder.append("\uFFFC");
             TableRowDrawable drawable = new TableRowDrawable(row, table.isDrawBorder());
             drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-                    drawable.getIntrinsicHeight());
+                               drawable.getIntrinsicHeight());
             builder.setSpan(new ImageSpan(drawable), start + i, builder.length(), 33);
 
         }
@@ -60,7 +60,7 @@ public class TableHandler extends TagNodeHandler {
         Drawable drawable = new TableRowDrawable(new ArrayList<Spanned>(), table.isDrawBorder());
         drawable.setBounds(0, 0, tableWidth, 1);
         builder.setSpan(new ImageSpan(drawable), builder.length() - 1, builder.length(),
-                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan((AlignmentSpan) () -> Alignment.ALIGN_CENTER, start, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.append("\n");
     }
@@ -130,7 +130,7 @@ public class TableHandler extends TagNodeHandler {
         for (Spanned cell : row) {
 
             StaticLayout layout = new StaticLayout(cell, textPaint, columnWidth
-                    - 2 * PADDING, Alignment.ALIGN_NORMAL, 1.5f, 0.5f, true);
+                                                   - 2 * PADDING, Alignment.ALIGN_NORMAL, 1.5f, 0.5f, true);
 
             if (layout.getHeight() > rowHeight) {
                 rowHeight = layout.getHeight();
@@ -179,8 +179,8 @@ public class TableHandler extends TagNodeHandler {
                 }
 
                 StaticLayout layout = new StaticLayout(tableRow.get(i),
-                        getTextPaint(), (columnWidth - 2 * PADDING),
-                        Alignment.ALIGN_NORMAL, 1.5f, 0.5f, true);
+                                                       getTextPaint(), (columnWidth - 2 * PADDING),
+                                                       Alignment.ALIGN_NORMAL, 1.5f, 0.5f, true);
 
                 canvas.translate(offset + PADDING, 0);
                 layout.draw(canvas);

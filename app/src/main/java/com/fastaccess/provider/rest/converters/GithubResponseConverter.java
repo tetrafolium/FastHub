@@ -35,7 +35,7 @@ public class GithubResponseConverter extends Converter.Factory {
     }
 
     @Override public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations,
-                                                                    Annotation[] methodAnnotations, Retrofit retrofit) {
+            Annotation[] methodAnnotations, Retrofit retrofit) {
         return GsonConverterFactory.create(gson).requestBodyConverter(type, parameterAnnotations, methodAnnotations, retrofit);
     }
 

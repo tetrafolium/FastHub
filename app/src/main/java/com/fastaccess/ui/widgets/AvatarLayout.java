@@ -89,12 +89,12 @@ public class AvatarLayout extends FrameLayout {
             avatar.setOnLongClickListener(null);
         }
         Glide.with(getContext())
-                .load(url)
-                .fallback(ContextCompat.getDrawable(getContext(), R.drawable.ic_fasthub_mascot))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .signature(new ObjectKey(reload ? String.valueOf(System.currentTimeMillis()) : "0"))
-                .dontAnimate()
-                .into(avatar);
+        .load(url)
+        .fallback(ContextCompat.getDrawable(getContext(), R.drawable.ic_fasthub_mascot))
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .signature(new ObjectKey(reload ? String.valueOf(System.currentTimeMillis()) : "0"))
+        .dontAnimate()
+        .into(avatar);
     }
 
     private void setBackground() {

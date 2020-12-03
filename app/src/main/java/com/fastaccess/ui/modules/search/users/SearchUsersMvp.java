@@ -31,8 +31,8 @@ interface SearchUsersMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<User>,
-            BaseMvp.PaginationListener<String> {
+        BaseViewHolder.OnItemClickListener<User>,
+        BaseMvp.PaginationListener<String> {
 
         @NonNull ArrayList<User> getUsers();
 

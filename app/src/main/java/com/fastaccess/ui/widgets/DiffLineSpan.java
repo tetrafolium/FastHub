@@ -57,13 +57,13 @@ public class DiffLineSpan extends MetricAffectingSpan implements LineBackgroundS
     }
 
     @NonNull public static SpannableStringBuilder getSpannable(@Nullable String text, @ColorInt int patchAdditionColor,
-                                                               @ColorInt int patchDeletionColor, @ColorInt int patchRefColor) {
+            @ColorInt int patchDeletionColor, @ColorInt int patchRefColor) {
         return getSpannable(text, patchAdditionColor, patchDeletionColor, patchRefColor, false);
     }
 
     @NonNull public static SpannableStringBuilder getSpannable(@Nullable String text, @ColorInt int patchAdditionColor,
-                                                               @ColorInt int patchDeletionColor, @ColorInt int patchRefColor,
-                                                               boolean truncate) {
+            @ColorInt int patchDeletionColor, @ColorInt int patchRefColor,
+            boolean truncate) {
         SpannableStringBuilder builder = new SpannableStringBuilder();
         if (!InputHelper.isEmpty(text)) {
             String[] split = text.split("\\r?\\n|\\r");
@@ -98,7 +98,7 @@ public class DiffLineSpan extends MetricAffectingSpan implements LineBackgroundS
                 }
                 if (index != -1) {
                     builder.insert(builder.length() - 1,
-                            SpannableBuilder.builder().append(ContextCompat.getDrawable(App.getInstance(), R.drawable.ic_newline)));
+                                   SpannableBuilder.builder().append(ContextCompat.getDrawable(App.getInstance(), R.drawable.ic_newline)));
                 }
             }
         }

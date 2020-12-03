@@ -45,11 +45,11 @@ public class CommitsViewHolder extends BaseViewHolder<Commit> {
         String avatar = commit.getAuthor() != null ? commit.getAuthor().getAvatarUrl() : null;
         Date date = commit.getGitCommit().getAuthor().getDate();
         details.setText(SpannableBuilder.builder()
-                .bold(InputHelper.toNA(login))
-                .append(" ")
-                .append(ParseDateFormat.getTimeAgo(date)));
+                        .bold(InputHelper.toNA(login))
+                        .append(" ")
+                        .append(ParseDateFormat.getTimeAgo(date)));
         avatarLayout.setUrl(avatar, login, false, LinkParserHelper
-                .isEnterprise(commit.getAuthor() != null ? commit.getAuthor().getUrl() : commit.getGitCommit().getAuthor().getHtmlUrl()));
+                            .isEnterprise(commit.getAuthor() != null ? commit.getAuthor().getUrl() : commit.getGitCommit().getAuthor().getHtmlUrl()));
         avatarLayout.setVisibility(View.VISIBLE);
         if (commit.getGitCommit() != null && commit.getGitCommit().getCommentCount() > 0) {
             commentsNo.setText(String.valueOf(commit.getGitCommit() != null ? commit.getGitCommit().getCommentCount() : 0));

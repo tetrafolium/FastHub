@@ -67,7 +67,7 @@ public class GitHubContributionsView extends View {
     private void init(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         ((WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getSize(point);
         final TypedArray attributes = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.GitHubContributionsView, defStyleAttr, defStyleRes);
+                                          attrs, R.styleable.GitHubContributionsView, defStyleAttr, defStyleRes);
         initAttributes(attributes);
 
         rect = new Rect();
@@ -287,9 +287,9 @@ public class GitHubContributionsView extends View {
             monthTextPaint.setTextSize(monthTextHeight);
             // draw the blocks
             int currentWeekDay = DatesUtils.getWeekDayFromDate(
-                    contributions.get(0).year,
-                    contributions.get(0).month,
-                    contributions.get(0).day);
+                                     contributions.get(0).year,
+                                     contributions.get(0).month,
+                                     contributions.get(0).day);
             float x = 0;
             float y = (currentWeekDay - 7) % 7 * (blockWidth + spaceWidth) + (topMargin + monthTextHeight);
             for (ContributionsDay day : contributionsFilter) {
@@ -301,7 +301,7 @@ public class GitHubContributionsView extends View {
                     y = topMargin + monthTextHeight;
                     if (DatesUtils.isFirstWeekOfMount(day.year, day.month, day.day + 1)) {
                         canvas1.drawText(DatesUtils.getShortMonthName(day.year, day.month, day.day + 1), x, monthTextHeight,
-                                monthTextPaint);
+                                         monthTextPaint);
                     }
 
                 } else {
@@ -347,8 +347,8 @@ public class GitHubContributionsView extends View {
 
         float x = 0;
         float y = 0
-                * (blockWidth + spaceWidth)
-                + (topMargin + monthTextHeight);
+                  * (blockWidth + spaceWidth)
+                  + (topMargin + monthTextHeight);
 
         for (int i = 1; i < (lastWeeks * 7) + 1; i++) {
 

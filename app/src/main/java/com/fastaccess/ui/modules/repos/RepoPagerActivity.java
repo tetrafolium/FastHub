@@ -116,11 +116,11 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         if (!InputHelper.isEmpty(nameParser.getName()) && !InputHelper.isEmpty(nameParser.getUsername())) {
             Intent intent = new Intent(context, RepoPagerActivity.class);
             intent.putExtras(Bundler.start()
-                    .put(BundleConstant.ID, nameParser.getName())
-                    .put(BundleConstant.EXTRA_TWO, nameParser.getUsername())
-                    .put(BundleConstant.EXTRA_TYPE, RepoPagerMvp.CODE)
-                    .put(BundleConstant.IS_ENTERPRISE, nameParser.isEnterprise())
-                    .end());
+                             .put(BundleConstant.ID, nameParser.getName())
+                             .put(BundleConstant.EXTRA_TWO, nameParser.getUsername())
+                             .put(BundleConstant.EXTRA_TYPE, RepoPagerMvp.CODE)
+                             .put(BundleConstant.IS_ENTERPRISE, nameParser.isEnterprise())
+                             .end());
             context.startActivity(intent);
         }
     }
@@ -138,11 +138,11 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
                                       @RepoPagerMvp.RepoNavigationType int navType, int showWhat) {
         Intent intent = new Intent(context, RepoPagerActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA_TWO, login)
-                .put(BundleConstant.EXTRA_TYPE, navType)
-                .put(BundleConstant.EXTRA_THREE, showWhat)
-                .end());
+                         .put(BundleConstant.ID, repoId)
+                         .put(BundleConstant.EXTRA_TWO, login)
+                         .put(BundleConstant.EXTRA_TYPE, navType)
+                         .put(BundleConstant.EXTRA_THREE, showWhat)
+                         .end());
         return intent;
     }
 
@@ -179,7 +179,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
                     RepoPullRequestPagerFragment.TAG);
             if (pullRequestPagerView != null) {
                 FilterIssuesActivity.startActivity(this, getPresenter().login(), getPresenter().repoId(), false,
-                        pullRequestPagerView.getCurrentItem() == 0, isEnterprise());
+                                                   pullRequestPagerView.getCurrentItem() == 0, isEnterprise());
             }
         } else {
             fab.hide();
@@ -210,7 +210,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         Repo repoModel = getPresenter().getRepo();
         if (repoModel != null && !InputHelper.isEmpty(repoModel.getDescription())) {
             MessageDialogView.newInstance(repoModel.getFullName(), repoModel.getDescription(), false, true)
-                    .show(getSupportFragmentManager(), MessageDialogView.TAG);
+            .show(getSupportFragmentManager(), MessageDialogView.TAG);
         }
     }
 
@@ -222,63 +222,64 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
     }
 
     @OnClick({R.id.forkRepoLayout, R.id.starRepoLayout, R.id.watchRepoLayout,
-            R.id.pinLayout, R.id.wikiLayout, R.id.licenseLayout}) void onClick(View view) {
+              R.id.pinLayout, R.id.wikiLayout, R.id.licenseLayout
+             }) void onClick(View view) {
         switch (view.getId()) {
-            case R.id.forkRepoLayout:
-                MessageDialogView.newInstance(getString(R.string.fork), String.format("%s %s/%s?", getString(R.string.fork), login, repoId),
-                        Bundler.start().put(BundleConstant.EXTRA, true).put(BundleConstant.YES_NO_EXTRA, true).end())
-                        .show(getSupportFragmentManager(), MessageDialogView.TAG);
-                break;
-            case R.id.starRepoLayout:
-                if (!InputHelper.isEmpty(getPresenter().login()) && !InputHelper.isEmpty(getPresenter().repoId())) {
-                    GithubActionService.startForRepo(this, getPresenter().login(), getPresenter().repoId(),
-                            getPresenter().isStarred() ? GithubActionService.UNSTAR_REPO : GithubActionService.STAR_REPO, isEnterprise());
-                    getPresenter().onStar();
-                }
-                break;
-            case R.id.watchRepoLayout:
-                if (!InputHelper.isEmpty(getPresenter().login()) && !InputHelper.isEmpty(getPresenter().repoId())) {
-                    GithubActionService.startForRepo(this, getPresenter().login(), getPresenter().repoId(),
-                            getPresenter().isWatched() ? GithubActionService.UNWATCH_REPO : GithubActionService.WATCH_REPO, isEnterprise());
-                    getPresenter().onWatch();
-                }
-                break;
-            case R.id.pinLayout:
-                pinLayout.setEnabled(false);
-                getPresenter().onPinUnpinRepo();
-                break;
-            case R.id.wikiLayout:
-                ActivityHelper.startReveal(this, WikiActivity.Companion.getWiki(this, repoId, login), wikiLayout);
-                break;
-            case R.id.licenseLayout:
-                if (getPresenter().getRepo() != null) {
-                    LicenseModel licenseModel = getPresenter().getRepo().getLicense();
-                    String license = !InputHelper.isEmpty(licenseModel.getSpdxId()) ? licenseModel.getSpdxId() : licenseModel.getName();
-                    RepoLicenseBottomSheet.Companion.newInstance(getPresenter().login(), getPresenter().repoId(), license)
-                            .show(getSupportFragmentManager(), "RepoLicenseBottomSheet");
-                }
-                break;
+        case R.id.forkRepoLayout:
+            MessageDialogView.newInstance(getString(R.string.fork), String.format("%s %s/%s?", getString(R.string.fork), login, repoId),
+                                          Bundler.start().put(BundleConstant.EXTRA, true).put(BundleConstant.YES_NO_EXTRA, true).end())
+            .show(getSupportFragmentManager(), MessageDialogView.TAG);
+            break;
+        case R.id.starRepoLayout:
+            if (!InputHelper.isEmpty(getPresenter().login()) && !InputHelper.isEmpty(getPresenter().repoId())) {
+                GithubActionService.startForRepo(this, getPresenter().login(), getPresenter().repoId(),
+                                                 getPresenter().isStarred() ? GithubActionService.UNSTAR_REPO : GithubActionService.STAR_REPO, isEnterprise());
+                getPresenter().onStar();
+            }
+            break;
+        case R.id.watchRepoLayout:
+            if (!InputHelper.isEmpty(getPresenter().login()) && !InputHelper.isEmpty(getPresenter().repoId())) {
+                GithubActionService.startForRepo(this, getPresenter().login(), getPresenter().repoId(),
+                                                 getPresenter().isWatched() ? GithubActionService.UNWATCH_REPO : GithubActionService.WATCH_REPO, isEnterprise());
+                getPresenter().onWatch();
+            }
+            break;
+        case R.id.pinLayout:
+            pinLayout.setEnabled(false);
+            getPresenter().onPinUnpinRepo();
+            break;
+        case R.id.wikiLayout:
+            ActivityHelper.startReveal(this, WikiActivity.Companion.getWiki(this, repoId, login), wikiLayout);
+            break;
+        case R.id.licenseLayout:
+            if (getPresenter().getRepo() != null) {
+                LicenseModel licenseModel = getPresenter().getRepo().getLicense();
+                String license = !InputHelper.isEmpty(licenseModel.getSpdxId()) ? licenseModel.getSpdxId() : licenseModel.getName();
+                RepoLicenseBottomSheet.Companion.newInstance(getPresenter().login(), getPresenter().repoId(), license)
+                .show(getSupportFragmentManager(), "RepoLicenseBottomSheet");
+            }
+            break;
         }
     }
 
     @OnLongClick({R.id.forkRepoLayout, R.id.starRepoLayout, R.id.watchRepoLayout}) boolean onLongClick(View view) {
         switch (view.getId()) {
-            case R.id.forkRepoLayout:
-                RepoMiscDialogFragment.show(getSupportFragmentManager(), login, repoId, RepoMiscMVp.FORKS);
-                return true;
-            case R.id.starRepoLayout:
-                RepoMiscDialogFragment.show(getSupportFragmentManager(), login, repoId, RepoMiscMVp.STARS);
-                return true;
-            case R.id.watchRepoLayout:
-                RepoMiscDialogFragment.show(getSupportFragmentManager(), login, repoId, RepoMiscMVp.WATCHERS);
-                return true;
+        case R.id.forkRepoLayout:
+            RepoMiscDialogFragment.show(getSupportFragmentManager(), login, repoId, RepoMiscMVp.FORKS);
+            return true;
+        case R.id.starRepoLayout:
+            RepoMiscDialogFragment.show(getSupportFragmentManager(), login, repoId, RepoMiscMVp.STARS);
+            return true;
+        case R.id.watchRepoLayout:
+            RepoMiscDialogFragment.show(getSupportFragmentManager(), login, repoId, RepoMiscMVp.WATCHERS);
+            return true;
         }
         return false;
     }
 
     @OnCheckedChanged(R.id.sortByUpdated) void onSortIssues(boolean isChecked) {
         RepoIssuesPagerFragment pagerView = (RepoIssuesPagerFragment) AppHelper.getFragmentByTag(getSupportFragmentManager(),
-                RepoIssuesPagerFragment.TAG);
+                                            RepoIssuesPagerFragment.TAG);
         if (pagerView != null) {
             pagerView.onChangeIssueSort(isChecked);
         }
@@ -325,9 +326,9 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         iconColor = ViewHelper.getIconColor(this);
         if (savedInstanceState == null) {
             getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.container, new DummyFragment(), "DummyFragment")
-                    .commit();
+            .beginTransaction()
+            .add(R.id.container, new DummyFragment(), "DummyFragment")
+            .commit();
         }
         Typeface myTypeface = TypeFaceHelper.getTypeface();
         bottomNavigation.setDefaultTypeface(myTypeface);
@@ -360,23 +361,23 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
             return;
         }
         switch (showWhich) {
-            case 1:
-                onLongClick(watchRepoLayout);
-                break;
-            case 2:
-                onLongClick(starRepoLayout);
-                break;
-            case 3:
-                onLongClick(forkRepoLayout);
-                break;
-            case 4:
-                MilestoneDialogFragment.newInstance(login, repoId)
-                        .show(getSupportFragmentManager(), "MilestoneDialogFragment");
-                break;
-            case 5:
-                LabelsDialogFragment.newInstance(null, repoId, login)
-                        .show(getSupportFragmentManager(), "LabelsDialogFragment");
-                break;
+        case 1:
+            onLongClick(watchRepoLayout);
+            break;
+        case 2:
+            onLongClick(starRepoLayout);
+            break;
+        case 3:
+            onLongClick(forkRepoLayout);
+            break;
+        case 4:
+            MilestoneDialogFragment.newInstance(login, repoId)
+            .show(getSupportFragmentManager(), "MilestoneDialogFragment");
+            break;
+        case 5:
+            LabelsDialogFragment.newInstance(null, repoId, login)
+            .show(getSupportFragmentManager(), "LabelsDialogFragment");
+            break;
         }
         showWhich = -1;
         setTaskName(getPresenter().getRepo().getFullName());
@@ -405,17 +406,17 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
         watchRepo.setText(numberFormat.format(repoModel.getSubsCount()));
         if (repoModel.getOwner() != null) {
             avatarLayout.setUrl(repoModel.getOwner().getAvatarUrl(), repoModel.getOwner().getLogin(),
-                    repoModel.getOwner().isOrganizationType(), LinkParserHelper.isEnterprise(repoModel.getHtmlUrl()));
+                                repoModel.getOwner().isOrganizationType(), LinkParserHelper.isEnterprise(repoModel.getHtmlUrl()));
         } else if (repoModel.getOrganization() != null) {
             avatarLayout.setUrl(repoModel.getOrganization().getAvatarUrl(), repoModel.getOrganization().getLogin(), true,
-                    LinkParserHelper.isEnterprise(repoModel.getHtmlUrl()));
+                                LinkParserHelper.isEnterprise(repoModel.getHtmlUrl()));
         }
         long repoSize = repoModel.getSize() > 0 ? (repoModel.getSize() * 1000) : repoModel.getSize();
         date.setText(SpannableBuilder.builder()
-                .append(ParseDateFormat.getTimeAgo(repoModel.getPushedAt()))
-                .append(" ,")
-                .append(" ")
-                .append(Formatter.formatFileSize(this, repoSize)));
+                     .append(ParseDateFormat.getTimeAgo(repoModel.getPushedAt()))
+                     .append(" ,")
+                     .append(" ")
+                     .append(Formatter.formatFileSize(this, repoSize)));
         size.setVisibility(View.GONE);
         title.setText(repoModel.getFullName());
         TextViewCompat.setTextAppearance(title, R.style.TextAppearance_AppCompat_Medium);
@@ -554,9 +555,9 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
             return true;
         } else if (item.getItemId() == R.id.deleteRepo) {
             MessageDialogView.newInstance(getString(R.string.delete_repo), getString(R.string.delete_repo_warning),
-                    Bundler.start().put(BundleConstant.EXTRA_TWO, true)
-                            .put(BundleConstant.YES_NO_EXTRA, true)
-                            .end()).show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                          Bundler.start().put(BundleConstant.EXTRA_TWO, true)
+                                          .put(BundleConstant.YES_NO_EXTRA, true)
+                                          .end()).show(getSupportFragmentManager(), MessageDialogView.TAG);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -570,7 +571,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
             if (fork) {
                 if (getPresenter().login() != null && getPresenter().repoId() != null && !getPresenter().isForked()) {
                     GithubActionService.startForRepo(this, getPresenter().login(), getPresenter().repoId(),
-                            GithubActionService.FORK_REPO, isEnterprise());
+                                                     GithubActionService.FORK_REPO, isEnterprise());
                     getPresenter().onFork();
                 }
             }
@@ -581,7 +582,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
     @Override public void onBackPressed() {
         if (navType == RepoPagerMvp.CODE) {
             RepoCodePagerFragment codePagerView = (RepoCodePagerFragment) AppHelper.getFragmentByTag(getSupportFragmentManager(),
-                    RepoCodePagerFragment.TAG);
+                                                  RepoCodePagerFragment.TAG);
             if (codePagerView != null) {
                 if (codePagerView.canPressBack()) {
                     super.onBackPressed();
@@ -599,7 +600,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
 
     @Override public void onAddSelected() {
         RepoIssuesPagerFragment pagerView = (RepoIssuesPagerFragment) AppHelper.getFragmentByTag(getSupportFragmentManager(),
-                RepoIssuesPagerFragment.TAG);
+                                            RepoIssuesPagerFragment.TAG);
         if (pagerView != null) {
             pagerView.onAddIssue();
         }
@@ -608,7 +609,7 @@ public class RepoPagerActivity extends BaseActivity<RepoPagerMvp.View, RepoPager
     @Override public void onSearchSelected() {
         boolean isOpen = true;
         RepoIssuesPagerFragment pagerView = (RepoIssuesPagerFragment) AppHelper.getFragmentByTag(getSupportFragmentManager(),
-                RepoIssuesPagerFragment.TAG);
+                                            RepoIssuesPagerFragment.TAG);
         if (pagerView != null) {
             isOpen = pagerView.getCurrentItem() == 0;
         }

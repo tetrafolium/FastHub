@@ -35,7 +35,7 @@ public class IssueRequestModel implements Parcelable {
         IssueRequestModel model = new IssueRequestModel();
         if (issue.getLabels() != null) {
             model.setLabels(Stream.of(issue.getLabels()).filter(value -> value.getName() != null)
-                    .map(LabelModel::getName).collect(Collectors.toList()));
+                            .map(LabelModel::getName).collect(Collectors.toList()));
         }
         model.setAssignee(issue.getAssignee() != null ? issue.getAssignee().getLogin() : null);
         model.setBody(issue.getBody());
@@ -49,7 +49,7 @@ public class IssueRequestModel implements Parcelable {
         IssueRequestModel model = new IssueRequestModel();
         if (issue.getLabels() != null) {
             model.setLabels(Stream.of(issue.getLabels()).filter(value -> value.getName() != null)
-                    .map(LabelModel::getName).collect(Collectors.toList()));
+                            .map(LabelModel::getName).collect(Collectors.toList()));
         }
         model.setBase(issue.getBase() != null ? issue.getBase().getRef() : "master");
         model.setAssignee(issue.getAssignee() != null ? issue.getAssignee().getLogin() : null);
@@ -60,7 +60,9 @@ public class IssueRequestModel implements Parcelable {
         return model;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.state == null ? -1 : this.state.ordinal());
@@ -82,8 +84,12 @@ public class IssueRequestModel implements Parcelable {
     }
 
     public static final Creator<IssueRequestModel> CREATOR = new Creator<IssueRequestModel>() {
-        @Override public IssueRequestModel createFromParcel(Parcel source) {return new IssueRequestModel(source);}
+        @Override public IssueRequestModel createFromParcel(Parcel source) {
+            return new IssueRequestModel(source);
+        }
 
-        @Override public IssueRequestModel[] newArray(int size) {return new IssueRequestModel[size];}
+        @Override public IssueRequestModel[] newArray(int size) {
+            return new IssueRequestModel[size];
+        }
     };
 }

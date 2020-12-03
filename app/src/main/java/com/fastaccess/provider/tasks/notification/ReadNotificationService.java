@@ -40,9 +40,9 @@ public class ReadNotificationService extends IntentService {
     public static void start(@NonNull Context context, long id) {
         Intent intent = new Intent(context.getApplicationContext(), ReadNotificationService.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA_TYPE, READ_SINGLE)
-                .put(BundleConstant.ID, id)
-                .end());
+                         .put(BundleConstant.EXTRA_TYPE, READ_SINGLE)
+                         .put(BundleConstant.ID, id)
+                         .end());
         context.startService(intent);
     }
 
@@ -53,29 +53,29 @@ public class ReadNotificationService extends IntentService {
     public static Intent start(@NonNull Context context, long id, @NonNull String url, boolean onlyRead) {
         Intent intent = new Intent(context.getApplicationContext(), ReadNotificationService.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA_TYPE, OPEN_NOTIFICATION)
-                .put(BundleConstant.EXTRA, url)
-                .put(BundleConstant.ID, id)
-                .put(BundleConstant.YES_NO_EXTRA, onlyRead)
-                .end());
+                         .put(BundleConstant.EXTRA_TYPE, OPEN_NOTIFICATION)
+                         .put(BundleConstant.EXTRA, url)
+                         .put(BundleConstant.ID, id)
+                         .put(BundleConstant.YES_NO_EXTRA, onlyRead)
+                         .end());
         return intent;
     }
 
     public static void unSubscribe(@NonNull Context context, long id) {
         Intent intent = new Intent(context.getApplicationContext(), ReadNotificationService.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA_TYPE, UN_SUBSCRIBE)
-                .put(BundleConstant.ID, id)
-                .end());
+                         .put(BundleConstant.EXTRA_TYPE, UN_SUBSCRIBE)
+                         .put(BundleConstant.ID, id)
+                         .end());
         context.startService(intent);
     }
 
     public static void start(@NonNull Context context, @NonNull long[] ids) {
         Intent intent = new Intent(context.getApplicationContext(), ReadNotificationService.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA_TYPE, READ_ALL)
-                .put(BundleConstant.ID, ids)
-                .end());
+                         .put(BundleConstant.EXTRA_TYPE, READ_ALL)
+                         .put(BundleConstant.ID, ids)
+                         .end());
         context.startService(intent);
     }
 
@@ -98,7 +98,7 @@ public class ReadNotificationService extends IntentService {
                 markMultiAsRead(bundle.getLongArray(BundleConstant.ID));
             } else if (type == OPEN_NOTIFICATION) {
                 openNotification(bundle.getLong(BundleConstant.ID), bundle.getString(BundleConstant.EXTRA),
-                        bundle.getBoolean(BundleConstant.YES_NO_EXTRA));
+                                 bundle.getBoolean(BundleConstant.YES_NO_EXTRA));
             } else if (type == UN_SUBSCRIBE) {
                 unSubscribeFromThread(bundle.getLong(BundleConstant.ID));
             }
@@ -107,11 +107,11 @@ public class ReadNotificationService extends IntentService {
 
     private void unSubscribeFromThread(long id) {
         RestProvider.getNotificationService(PrefGetter.isEnterprise())
-                .unSubscribe(id)
-                .doOnSubscribe(disposable -> notify(id, getNotification().build()))
-                .subscribeOn(Schedulers.io())
-                .flatMap(notification1 -> Observable.create(subscriber -> markSingleAsRead(id)))
-                .subscribe(booleanResponse -> cancel(id), throwable -> cancel(id));
+        .unSubscribe(id)
+        .doOnSubscribe(disposable -> notify(id, getNotification().build()))
+        .subscribeOn(Schedulers.io())
+        .flatMap(notification1 -> Observable.create(subscriber -> markSingleAsRead(id)))
+        .subscribe(booleanResponse -> cancel(id), throwable -> cancel(id));
     }
 
     private void openNotification(long id, @Nullable String url, boolean readOnly) {
@@ -137,18 +137,18 @@ public class ReadNotificationService extends IntentService {
     private void markSingleAsRead(long id) {
         com.fastaccess.data.dao.model.Notification.markAsRead(id);
         RestProvider.getNotificationService(PrefGetter.isEnterprise())
-                .markAsRead(String.valueOf(id))
-                .doOnSubscribe(disposable -> notify(id, getNotification().build()))
-                .subscribeOn(Schedulers.io())
-                .subscribe(booleanResponse -> cancel(id), throwable -> cancel(id));
+        .markAsRead(String.valueOf(id))
+        .doOnSubscribe(disposable -> notify(id, getNotification().build()))
+        .subscribeOn(Schedulers.io())
+        .subscribe(booleanResponse -> cancel(id), throwable -> cancel(id));
     }
 
     private NotificationCompat.Builder getNotification() {
         if (notification == null) {
             notification = new NotificationCompat.Builder(this, "read-notification")
-                    .setContentTitle(getString(R.string.marking_as_read))
-                    .setSmallIcon(R.drawable.ic_sync)
-                    .setProgress(0, 100, true);
+            .setContentTitle(getString(R.string.marking_as_read))
+            .setSmallIcon(R.drawable.ic_sync)
+            .setProgress(0, 100, true);
         }
         return notification;
     }

@@ -88,15 +88,15 @@ public class DonationActivity extends BaseActivity {
     private void checkPurchase() {
         ((BasePresenter) getPresenter()).manageViewDisposable(RxBillingService.getInstance(this, BuildConfig.DEBUG)
                 .getPurchases(ProductType.IN_APP)
-                .subscribe((purchases, throwable) -> {
-                    if (purchases != null && !purchases.isEmpty()) {
-                        for (Purchase purchase : purchases) {
-                            String sku = purchase.sku();
-                            if (!InputHelper.isEmpty(sku)) {
-                                DonateActivity.Companion.enableProduct(sku, App.getInstance());
-                            }
-                        }
+        .subscribe((purchases, throwable) -> {
+            if (purchases != null && !purchases.isEmpty()) {
+                for (Purchase purchase : purchases) {
+                    String sku = purchase.sku();
+                    if (!InputHelper.isEmpty(sku)) {
+                        DonateActivity.Companion.enableProduct(sku, App.getInstance());
                     }
-                }));
+                }
+            }
+        }));
     }
 }

@@ -63,8 +63,8 @@ import lombok.NoArgsConstructor;
                     builder.append(todoItem.isChecked ? "☑" : "☐");
                 } else {
                     builder.append(SpannableBuilder.builder()
-                            .append(todoItem.isChecked ? checked : unchecked))
-                            .append(" ");
+                                   .append(todoItem.isChecked ? checked : unchecked))
+                    .append(" ");
                 }
             } else {
                 builder.append("\u2022 ");

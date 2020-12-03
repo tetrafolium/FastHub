@@ -27,8 +27,8 @@ interface ProfileStarredMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<Repo>,
-            BaseMvp.PaginationListener<String> {
+        BaseViewHolder.OnItemClickListener<Repo>,
+        BaseMvp.PaginationListener<String> {
 
         @NonNull ArrayList<Repo> getRepos();
 

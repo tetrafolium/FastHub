@@ -26,7 +26,7 @@ import butterknife.BindView;
  */
 
 public class OrgListDialogFragment extends BaseDialogFragment<OrgListDialogMvp.View, OrgListDialogPresenter>
-        implements OrgListDialogMvp.View {
+    implements OrgListDialogMvp.View {
 
     @BindView(R.id.recycler) DynamicRecyclerView recycler;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
@@ -58,7 +58,7 @@ public class OrgListDialogFragment extends BaseDialogFragment<OrgListDialogMvp.V
         toolbar.getMenu().findItem(R.id.add).setIcon(R.drawable.ic_info_outline).setTitle(R.string.no_orgs_dialog_title);
         toolbar.setOnMenuItemClickListener(item -> {
             MessageDialogView.newInstance(getString(R.string.no_orgs_dialog_title), getString(R.string.no_orgs_description), false, true)
-                    .show(getChildFragmentManager(), MessageDialogView.TAG);
+            .show(getChildFragmentManager(), MessageDialogView.TAG);
             return true;
         });
         toolbar.setNavigationIcon(R.drawable.ic_clear);

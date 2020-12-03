@@ -25,9 +25,9 @@ public interface RepoMiscMVp {
     int STARS = 2;
 
     @IntDef({
-            WATCHERS,
-            FORKS,
-            STARS
+        WATCHERS,
+        FORKS,
+        STARS
     })
     @Retention(RetentionPolicy.SOURCE) @interface MiscType {}
 

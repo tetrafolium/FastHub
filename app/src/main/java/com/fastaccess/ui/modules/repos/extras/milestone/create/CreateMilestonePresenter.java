@@ -33,13 +33,13 @@ public class CreateMilestonePresenter extends BasePresenter<CreateMilestoneMvp.V
                     createMilestoneModel.setDescription(description);
                 }
                 makeRestCall(RestProvider.getRepoService(isEnterprise()).createMilestone(login, repo, createMilestoneModel),
-                        milestoneModel -> {
-                            if (milestoneModel != null) {
-                                sendToView(view -> view.onMilestoneAdded(milestoneModel));
-                            } else {
-                                sendToView(view -> view.showMessage(R.string.error, R.string.error_creating_milestone));
-                            }
-                        });
+                milestoneModel -> {
+                    if (milestoneModel != null) {
+                        sendToView(view -> view.onMilestoneAdded(milestoneModel));
+                    } else {
+                        sendToView(view -> view.showMessage(R.string.error, R.string.error_creating_milestone));
+                    }
+                });
             }
         }
     }

@@ -66,7 +66,7 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
             commentsCallback = (CommentEditorFragment.CommentListener) context;
         } else {
             throw new IllegalArgumentException(String.format("%s or parent fragment must implement CommentEditorFragment.CommentListener",
-                    context.getClass().getSimpleName()));
+                                               context.getClass().getSimpleName()));
         }
     }
 
@@ -160,27 +160,27 @@ public class GistCommentsFragment extends BaseFragment<GistCommentsMvp.View, Gis
     @Override public void onEditComment(@NonNull Comment item) {
         Intent intent = new Intent(getContext(), EditorActivity.class);
         intent.putExtras(Bundler
-                .start()
-                .put(BundleConstant.ID, gistId)
-                .put(BundleConstant.EXTRA, item.getBody())
-                .put(BundleConstant.EXTRA_FOUR, item.getId())
-                .put(BundleConstant.EXTRA_TYPE, EDIT_GIST_COMMENT_EXTRA)
-                .putStringArrayList("participants", CommentsHelper.getUsers(adapter.getData()))
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
-                .end());
+                         .start()
+                         .put(BundleConstant.ID, gistId)
+                         .put(BundleConstant.EXTRA, item.getBody())
+                         .put(BundleConstant.EXTRA_FOUR, item.getId())
+                         .put(BundleConstant.EXTRA_TYPE, EDIT_GIST_COMMENT_EXTRA)
+                         .putStringArrayList("participants", CommentsHelper.getUsers(adapter.getData()))
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
+                         .end());
         View view = getActivity() != null && getActivity().findViewById(R.id.fab) != null ? getActivity().findViewById(R.id.fab) : recycler;
         ActivityHelper.startReveal(this, intent, view, BundleConstant.REQUEST_CODE);
     }
 
     @Override public void onShowDeleteMsg(long id) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
-                Bundler.start()
-                        .put(BundleConstant.EXTRA, id)
-                        .put(BundleConstant.ID, gistId)
-                        .put(BundleConstant.YES_NO_EXTRA, true)
-                        .putStringArrayList("participants", CommentsHelper.getUsers(adapter.getData()))
-                        .end())
-                .show(getChildFragmentManager(), MessageDialogView.TAG);
+                                      Bundler.start()
+                                      .put(BundleConstant.EXTRA, id)
+                                      .put(BundleConstant.ID, gistId)
+                                      .put(BundleConstant.YES_NO_EXTRA, true)
+                                      .putStringArrayList("participants", CommentsHelper.getUsers(adapter.getData()))
+                                      .end())
+        .show(getChildFragmentManager(), MessageDialogView.TAG);
     }
 
     @Override public void onTagUser(@Nullable User user) {

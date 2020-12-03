@@ -27,7 +27,7 @@ import butterknife.BindView;
  */
 
 public class ProfileReposFragment extends BaseFragment<ProfileReposMvp.View, ProfileReposPresenter> implements ProfileReposMvp.View,
-        ProfileReposFilterBottomSheetDialog.ProfileReposFilterChangeListener {
+    ProfileReposFilterBottomSheetDialog.ProfileReposFilterChangeListener {
 
     @BindView(R.id.recycler) DynamicRecyclerView recycler;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
@@ -114,7 +114,7 @@ public class ProfileReposFragment extends BaseFragment<ProfileReposMvp.View, Pro
 
     @Override public void onRepoFilterClicked() {
         ProfileReposFilterBottomSheetDialog.newInstance(getPresenter().getFilterOptions())
-                .show(getChildFragmentManager(), "ProfileReposFilterBottomSheetDialog");
+        .show(getChildFragmentManager(), "ProfileReposFilterBottomSheetDialog");
     }
 
     @Override public void onRefresh() {

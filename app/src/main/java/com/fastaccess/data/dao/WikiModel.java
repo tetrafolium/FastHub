@@ -21,7 +21,9 @@ import lombok.Setter;
 
     public WikiModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.pageName);
@@ -42,8 +44,12 @@ import lombok.Setter;
     }
 
     public static final Creator<WikiModel> CREATOR = new Creator<WikiModel>() {
-        @Override public WikiModel createFromParcel(Parcel source) {return new WikiModel(source);}
+        @Override public WikiModel createFromParcel(Parcel source) {
+            return new WikiModel(source);
+        }
 
-        @Override public WikiModel[] newArray(int size) {return new WikiModel[size];}
+        @Override public WikiModel[] newArray(int size) {
+            return new WikiModel[size];
+        }
     };
 }

@@ -51,28 +51,30 @@ import lombok.Setter;
 
     @Override public String toString() {
         return "CommentEvent{" +
-                "id=" + id +
-                ", user=" + user +
-                ", url='" + url + '\'' +
-                ", body='" + body + '\'' +
-                ", bodyHtml='" + bodyHtml + '\'' +
-                ", htmlUrl='" + htmlUrl + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", position=" + position +
-                ", line=" + line +
-                ", path='" + path + '\'' +
-                ", commitId='" + commitId + '\'' +
-                ", repoId='" + repoId + '\'' +
-                ", login='" + login + '\'' +
-                ", gistId='" + gistId + '\'' +
-                ", issueId='" + issueId + '\'' +
-                ", pullRequestId='" + pullRequestId + '\'' +
-                ", reactions=" + reactions +
-                '}';
+               "id=" + id +
+               ", user=" + user +
+               ", url='" + url + '\'' +
+               ", body='" + body + '\'' +
+               ", bodyHtml='" + bodyHtml + '\'' +
+               ", htmlUrl='" + htmlUrl + '\'' +
+               ", createdAt=" + createdAt +
+               ", updatedAt=" + updatedAt +
+               ", position=" + position +
+               ", line=" + line +
+               ", path='" + path + '\'' +
+               ", commitId='" + commitId + '\'' +
+               ", repoId='" + repoId + '\'' +
+               ", login='" + login + '\'' +
+               ", gistId='" + gistId + '\'' +
+               ", issueId='" + issueId + '\'' +
+               ", pullRequestId='" + pullRequestId + '\'' +
+               ", reactions=" + reactions +
+               '}';
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -119,8 +121,12 @@ import lombok.Setter;
     }
 
     public static final Creator<CommentEvent> CREATOR = new Creator<CommentEvent>() {
-        @Override public CommentEvent createFromParcel(Parcel source) {return new CommentEvent(source);}
+        @Override public CommentEvent createFromParcel(Parcel source) {
+            return new CommentEvent(source);
+        }
 
-        @Override public CommentEvent[] newArray(int size) {return new CommentEvent[size];}
+        @Override public CommentEvent[] newArray(int size) {
+            return new CommentEvent[size];
+        }
     };
 }

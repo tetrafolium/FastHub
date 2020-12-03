@@ -25,7 +25,9 @@ public class Pageable<M extends Parcelable> implements Parcelable {
     public boolean incompleteResults;
     public List<M> items;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.first);
@@ -48,8 +50,12 @@ public class Pageable<M extends Parcelable> implements Parcelable {
     }
 
     public static final Creator<Pageable> CREATOR = new Creator<Pageable>() {
-        @Override public Pageable createFromParcel(Parcel source) {return new Pageable(source);}
+        @Override public Pageable createFromParcel(Parcel source) {
+            return new Pageable(source);
+        }
 
-        @Override public Pageable[] newArray(int size) {return new Pageable[size];}
+        @Override public Pageable[] newArray(int size) {
+            return new Pageable[size];
+        }
     };
 }

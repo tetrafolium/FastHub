@@ -64,14 +64,14 @@ public class ReposViewHolder extends BaseViewHolder<Repo> {
     @Override public void bind(@NonNull Repo repo) {
         if (repo.isFork() && !isStarred) {
             title.setText(SpannableBuilder.builder()
-                    .append(" " + forked + " ", new LabelSpan(forkColor))
-                    .append(" ")
-                    .append(repo.getName(), new LabelSpan(Color.TRANSPARENT)));
+                          .append(" " + forked + " ", new LabelSpan(forkColor))
+                          .append(" ")
+                          .append(repo.getName(), new LabelSpan(Color.TRANSPARENT)));
         } else if (repo.isPrivateX()) {
             title.setText(SpannableBuilder.builder()
-                    .append(" " + privateRepo + " ", new LabelSpan(privateColor))
-                    .append(" ")
-                    .append(repo.getName(), new LabelSpan(Color.TRANSPARENT)));
+                          .append(" " + privateRepo + " ", new LabelSpan(privateColor))
+                          .append(" ")
+                          .append(repo.getName(), new LabelSpan(Color.TRANSPARENT)));
         } else {
             title.setText(!isStarred ? repo.getName() : repo.getFullName());
         }

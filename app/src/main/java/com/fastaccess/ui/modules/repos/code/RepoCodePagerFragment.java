@@ -40,15 +40,15 @@ public class RepoCodePagerFragment extends BaseFragment<RepoCodePagerMvp.View, R
     @State HashSet<TabsCountStateModel> counts = new HashSet<>();
 
     public static RepoCodePagerFragment newInstance(@NonNull String repoId, @NonNull String login,
-                                                    @NonNull String htmlLink, @NonNull String url, @NonNull String defaultBranch) {
+            @NonNull String htmlLink, @NonNull String url, @NonNull String defaultBranch) {
         RepoCodePagerFragment view = new RepoCodePagerFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, url)
-                .put(BundleConstant.EXTRA_THREE, defaultBranch)
-                .put(BundleConstant.EXTRA_FOUR, htmlLink)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .put(BundleConstant.EXTRA_TWO, url)
+                          .put(BundleConstant.EXTRA_THREE, defaultBranch)
+                          .put(BundleConstant.EXTRA_FOUR, htmlLink)
+                          .end());
         return view;
     }
 
@@ -67,8 +67,8 @@ public class RepoCodePagerFragment extends BaseFragment<RepoCodePagerMvp.View, R
                 return;
             }
             pager.setAdapter(new FragmentsPagerAdapter(getChildFragmentManager(),
-                    FragmentPagerAdapterModel.buildForRepoCode(getContext(), repoId, login, url,
-                            Objects.toString(defaultBranch, "master"), htmlUrl)));
+                             FragmentPagerAdapterModel.buildForRepoCode(getContext(), repoId, login, url,
+                                     Objects.toString(defaultBranch, "master"), htmlUrl)));
             tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
             tabs.setupWithViewPager(pager);
         }
@@ -123,10 +123,10 @@ public class RepoCodePagerFragment extends BaseFragment<RepoCodePagerMvp.View, R
     private void updateCount(@NonNull TabsCountStateModel model) {
         TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
         tv.setText(SpannableBuilder.builder()
-                .append(getString(R.string.commits))
-                .append("   ")
-                .append("(")
-                .bold(String.valueOf(model.getCount()))
-                .append(")"));
+                   .append(getString(R.string.commits))
+                   .append("   ")
+                   .append("(")
+                   .bold(String.valueOf(model.getCount()))
+                   .append(")"));
     }
 }

@@ -12,7 +12,7 @@ import com.fastaccess.ui.widgets.recyclerview.BaseRecyclerAdapter;
 import java.util.List;
 
 public class CommitLinesAdapter extends BaseRecyclerAdapter<CommitLinesModel, CommitLinesViewHolder,
-        SimpleViewHolder.OnItemClickListener<CommitLinesModel>> {
+    SimpleViewHolder.OnItemClickListener<CommitLinesModel>> {
 
     public CommitLinesAdapter(@NonNull List<CommitLinesModel> data, @Nullable CommitLinesViewHolder.OnItemClickListener<CommitLinesModel> listener) {
         super(data, listener);

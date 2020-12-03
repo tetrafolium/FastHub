@@ -50,9 +50,9 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
     public static RepoOpenedIssuesFragment newInstance(@NonNull String repoId, @NonNull String login) {
         RepoOpenedIssuesFragment view = new RepoOpenedIssuesFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .end());
         return view;
     }
 
@@ -187,7 +187,7 @@ public class RepoOpenedIssuesFragment extends BaseFragment<RepoIssuesMvp.View, R
 
     @Override public void onOpenIssue(@NonNull PullsIssuesParser parser) {
         startActivityForResult(IssuePagerActivity.createIntent(getContext(), parser.getRepoId(), parser.getLogin(),
-                parser.getNumber(), false, isEnterprise()), RepoIssuesMvp.ISSUE_REQUEST_CODE);
+                               parser.getNumber(), false, isEnterprise()), RepoIssuesMvp.ISSUE_REQUEST_CODE);
     }
 
     @Override public void onRefresh(boolean isLastUpdated) {

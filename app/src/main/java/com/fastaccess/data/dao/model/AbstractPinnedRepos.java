@@ -63,17 +63,17 @@ import static com.fastaccess.data.dao.model.PinnedRepos.REPO_FULL_NAME;
 
     @Nullable public static PinnedRepos get(long id) {
         return App.getInstance().getDataStore().select(PinnedRepos.class)
-                .where(ID.eq(id))
-                .get()
-                .firstOrNull();
+               .where(ID.eq(id))
+               .get()
+               .firstOrNull();
     }
 
     @Nullable public static PinnedRepos get(@NonNull String repoFullName) {
         return App.getInstance().getDataStore().toBlocking().select(PinnedRepos.class)
-                .where(REPO_FULL_NAME.eq(repoFullName).and(LOGIN.eq(Login.getUser().getLogin()))
-                        .or(REPO_FULL_NAME.eq(repoFullName)))
-                .get()
-                .firstOrNull();
+               .where(REPO_FULL_NAME.eq(repoFullName).and(LOGIN.eq(Login.getUser().getLogin()))
+                      .or(REPO_FULL_NAME.eq(repoFullName)))
+               .get()
+               .firstOrNull();
     }
 
     public static boolean isPinned(@NonNull String repoFullName) {
@@ -94,24 +94,24 @@ import static com.fastaccess.data.dao.model.PinnedRepos.REPO_FULL_NAME;
 
     @NonNull public static Single<List<PinnedRepos>> getMyPinnedRepos() {
         return App.getInstance().getDataStore().select(PinnedRepos.class)
-                .where(LOGIN.eq(Login.getUser().getLogin())
-                        .or(LOGIN.isNull()))
-                .orderBy(ENTRY_COUNT.desc(), ID.desc())
-                .get()
-                .observable()
-                .toList();
+               .where(LOGIN.eq(Login.getUser().getLogin())
+                      .or(LOGIN.isNull()))
+               .orderBy(ENTRY_COUNT.desc(), ID.desc())
+               .get()
+               .observable()
+               .toList();
 
     }
 
     @NonNull public static Observable<List<PinnedRepos>> getMenuRepos() {
         return App.getInstance().getDataStore().select(PinnedRepos.class)
-                .where(LOGIN.eq(Login.getUser().getLogin()))
-                .orderBy(ENTRY_COUNT.desc(), ID.desc())
-                .limit(5)
-                .get()
-                .observable()
-                .toList()
-                .toObservable();
+               .where(LOGIN.eq(Login.getUser().getLogin()))
+               .orderBy(ENTRY_COUNT.desc(), ID.desc())
+               .limit(5)
+               .get()
+               .observable()
+               .toList()
+               .toObservable();
     }
 
     public static void migrateToVersion4() {
@@ -124,9 +124,9 @@ import static com.fastaccess.data.dao.model.PinnedRepos.REPO_FULL_NAME;
                 }
                 BlockingEntityStore<Persistable> reactiveEntityStore = App.getInstance().getDataStore().toBlocking();
                 List<PinnedRepos> pinnedRepos = reactiveEntityStore.select(PinnedRepos.class)
-                        .where(LOGIN.isNull())
-                        .get()
-                        .toList();
+                                                .where(LOGIN.isNull())
+                                                .get()
+                                                .toList();
                 if (pinnedRepos != null) {
                     for (PinnedRepos pinnedRepo : pinnedRepos) {
                         pinnedRepo.setRepoFullName(login.getLogin());
@@ -143,8 +143,8 @@ import static com.fastaccess.data.dao.model.PinnedRepos.REPO_FULL_NAME;
 
     public static void delete(long id) {
         App.getInstance().getDataStore().delete(PinnedRepos.class)
-                .where(ID.eq(id))
-                .get()
-                .value();
+        .where(ID.eq(id))
+        .get()
+        .value();
     }
 }

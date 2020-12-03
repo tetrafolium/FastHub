@@ -87,7 +87,9 @@ public class ProjectCardModel implements Parcelable {
 
     public ProjectCardModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.url);
@@ -114,8 +116,12 @@ public class ProjectCardModel implements Parcelable {
     }
 
     public static final Creator<ProjectCardModel> CREATOR = new Creator<ProjectCardModel>() {
-        @Override public ProjectCardModel createFromParcel(Parcel source) {return new ProjectCardModel(source);}
+        @Override public ProjectCardModel createFromParcel(Parcel source) {
+            return new ProjectCardModel(source);
+        }
 
-        @Override public ProjectCardModel[] newArray(int size) {return new ProjectCardModel[size];}
+        @Override public ProjectCardModel[] newArray(int size) {
+            return new ProjectCardModel[size];
+        }
     };
 }

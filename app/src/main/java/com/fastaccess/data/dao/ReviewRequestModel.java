@@ -18,7 +18,9 @@ import lombok.Setter;
     public String event;
     public List<CommentRequestModel> comments;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.commitId);
@@ -38,8 +40,12 @@ import lombok.Setter;
     }
 
     public static final Parcelable.Creator<ReviewRequestModel> CREATOR = new Parcelable.Creator<ReviewRequestModel>() {
-        @Override public ReviewRequestModel createFromParcel(Parcel source) {return new ReviewRequestModel(source);}
+        @Override public ReviewRequestModel createFromParcel(Parcel source) {
+            return new ReviewRequestModel(source);
+        }
 
-        @Override public ReviewRequestModel[] newArray(int size) {return new ReviewRequestModel[size];}
+        @Override public ReviewRequestModel[] newArray(int size) {
+            return new ReviewRequestModel[size];
+        }
     };
 }

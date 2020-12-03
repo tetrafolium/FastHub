@@ -46,7 +46,7 @@ public class LabelsViewHolder extends BaseViewHolder<LabelModel> {
     }
 
     public static LabelsViewHolder newInstance(@NonNull ViewGroup parent, @Nullable LabelsAdapter.OnSelectLabel onSelectLabel,
-                                               @NonNull BaseRecyclerAdapter adapter) {
+            @NonNull BaseRecyclerAdapter adapter) {
         return new LabelsViewHolder(getView(parent, R.layout.label_row_item), onSelectLabel, adapter);
     }
 

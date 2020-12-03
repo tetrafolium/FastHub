@@ -11,7 +11,9 @@ import lombok.Setter;
     private String url;
     private String htmlUrl;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.sha);
@@ -28,8 +30,12 @@ import lombok.Setter;
     }
 
     public static final Parcelable.Creator<ParentsModel> CREATOR = new Parcelable.Creator<ParentsModel>() {
-        @Override public ParentsModel createFromParcel(Parcel source) {return new ParentsModel(source);}
+        @Override public ParentsModel createFromParcel(Parcel source) {
+            return new ParentsModel(source);
+        }
 
-        @Override public ParentsModel[] newArray(int size) {return new ParentsModel[size];}
+        @Override public ParentsModel[] newArray(int size) {
+            return new ParentsModel[size];
+        }
     };
 }

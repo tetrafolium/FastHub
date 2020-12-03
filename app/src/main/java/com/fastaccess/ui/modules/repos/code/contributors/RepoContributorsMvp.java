@@ -26,8 +26,8 @@ interface RepoContributorsMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<User>,
-            BaseMvp.PaginationListener {
+        BaseViewHolder.OnItemClickListener<User>,
+        BaseMvp.PaginationListener {
 
         void onFragmentCreated(@NonNull Bundle bundle);
 

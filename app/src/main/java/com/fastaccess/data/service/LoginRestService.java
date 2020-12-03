@@ -23,8 +23,8 @@ public interface LoginRestService {
     @FormUrlEncoded @POST("access_token")
     @Headers("Accept: application/json")
     Observable<AccessTokenModel> getAccessToken(@NonNull @Field("code") String code,
-                                                @NonNull @Field("client_id") String clientId,
-                                                @NonNull @Field("client_secret") String clientSecret,
-                                                @NonNull @Field("state") String state,
-                                                @NonNull @Field("redirect_uri") String redirectUrl);
+            @NonNull @Field("client_id") String clientId,
+            @NonNull @Field("client_secret") String clientSecret,
+            @NonNull @Field("state") String state,
+            @NonNull @Field("redirect_uri") String redirectUrl);
 }

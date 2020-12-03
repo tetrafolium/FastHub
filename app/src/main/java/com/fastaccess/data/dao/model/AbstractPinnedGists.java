@@ -48,26 +48,26 @@ import static com.fastaccess.data.dao.model.PinnedGists.LOGIN;
 
     @Nullable public static PinnedGists get(long gistId) {
         return App.getInstance().getDataStore().select(PinnedGists.class)
-                .where(PinnedGists.GIST_ID.eq(gistId))
-                .get()
-                .firstOrNull();
+               .where(PinnedGists.GIST_ID.eq(gistId))
+               .get()
+               .firstOrNull();
     }
 
     public static void delete(long gistId) {
         App.getInstance().getDataStore().delete(PinnedGists.class)
-                .where(PinnedGists.GIST_ID.eq(gistId))
-                .get()
-                .value();
+        .where(PinnedGists.GIST_ID.eq(gistId))
+        .get()
+        .value();
     }
 
     @NonNull public static Single<List<Gist>> getMyPinnedGists() {
         return App.getInstance().getDataStore().select(PinnedGists.class)
-                .where(LOGIN.eq(Login.getUser().getLogin()).or(LOGIN.isNull()))
-                .orderBy(ENTRY_COUNT.desc(), ID.desc())
-                .get()
-                .observable()
-                .map(PinnedGists::getGist)
-                .toList();
+               .where(LOGIN.eq(Login.getUser().getLogin()).or(LOGIN.isNull()))
+               .orderBy(ENTRY_COUNT.desc(), ID.desc())
+               .get()
+               .observable()
+               .map(PinnedGists::getGist)
+               .toList();
     }
 
     public static boolean isPinned(long gistId) {

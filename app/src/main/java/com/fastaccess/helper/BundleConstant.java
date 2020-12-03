@@ -42,15 +42,15 @@ public class BundleConstant {
 
 
     @StringDef({
-            FOR_RESULT_EXTRA,
-            EDIT_GIST_COMMENT_EXTRA,
-            NEW_GIST_COMMENT_EXTRA,
-            EDIT_ISSUE_COMMENT_EXTRA,
-            NEW_ISSUE_COMMENT_EXTRA,
-            EDIT_COMMIT_COMMENT_EXTRA,
-            NEW_COMMIT_COMMENT_EXTRA,
-            NEW_REVIEW_COMMENT_EXTRA,
-            EDIT_REVIEW_COMMENT_EXTRA
+        FOR_RESULT_EXTRA,
+        EDIT_GIST_COMMENT_EXTRA,
+        NEW_GIST_COMMENT_EXTRA,
+        EDIT_ISSUE_COMMENT_EXTRA,
+        NEW_ISSUE_COMMENT_EXTRA,
+        EDIT_COMMIT_COMMENT_EXTRA,
+        NEW_COMMIT_COMMENT_EXTRA,
+        NEW_REVIEW_COMMENT_EXTRA,
+        EDIT_REVIEW_COMMENT_EXTRA
     })
 
     @Retention(RetentionPolicy.SOURCE) public @interface ExtraType {

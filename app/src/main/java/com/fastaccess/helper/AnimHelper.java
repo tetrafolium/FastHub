@@ -60,34 +60,34 @@ public class AnimHelper {
     @UiThread private static void animateSafeVisibility(final boolean show, @NonNull final View view, int visibility) {
         view.animate().cancel();
         ViewPropertyAnimator animator = view.animate().setDuration(200).alpha(show ? 1F : 0F).setInterpolator(new AccelerateInterpolator())
-                .setListener(new AnimatorListenerAdapter() {
-                    @Override public void onAnimationStart(Animator animation) {
-                        super.onAnimationStart(animation);
-                        if (show) {
-                            view.setScaleX(1);
-                            view.setScaleY(1);
-                            view.setVisibility(View.VISIBLE);
-                        }
-                    }
+        .setListener(new AnimatorListenerAdapter() {
+            @Override public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                if (show) {
+                    view.setScaleX(1);
+                    view.setScaleY(1);
+                    view.setVisibility(View.VISIBLE);
+                }
+            }
 
-                    @Override public void onAnimationEnd(@NonNull Animator animation) {
-                        super.onAnimationEnd(animation);
-                        if (!show) {
-                            view.setVisibility(visibility);
-                            view.setScaleX(0);
-                            view.setScaleY(0);
-                        }
-                        animation.removeListener(this);
-                        view.clearAnimation();
-                    }
-                });
+            @Override public void onAnimationEnd(@NonNull Animator animation) {
+                super.onAnimationEnd(animation);
+                if (!show) {
+                    view.setVisibility(visibility);
+                    view.setScaleX(0);
+                    view.setScaleY(0);
+                }
+                animation.removeListener(this);
+                view.clearAnimation();
+            }
+        });
         animator.scaleX(show ? 1 : 0).scaleY(show ? 1 : 0);
     }
 
     @UiThread @NonNull private static List<ObjectAnimator> getBeats(@NonNull View view) {
-        ObjectAnimator[] animator = new ObjectAnimator[]{
-                ObjectAnimator.ofFloat(view, "scaleY", 1, 1.1f, 1),
-                ObjectAnimator.ofFloat(view, "scaleX", 1, 1.1f, 1)
+        ObjectAnimator[] animator = new ObjectAnimator[] {
+            ObjectAnimator.ofFloat(view, "scaleY", 1, 1.1f, 1),
+            ObjectAnimator.ofFloat(view, "scaleX", 1, 1.1f, 1)
         };
         return Arrays.asList(animator);
     }
@@ -168,7 +168,7 @@ public class AnimHelper {
     }
 
     @UiThread public static void mimicFabVisibility(boolean show, @NonNull View view,
-                                                    @Nullable FloatingActionButton.OnVisibilityChangedListener listener) {
+            @Nullable FloatingActionButton.OnVisibilityChangedListener listener) {
         if (show) {
             view.animate().cancel();
             if (ViewCompat.isLaidOut(view)) {
@@ -178,15 +178,15 @@ public class AnimHelper {
                     view.setScaleX(0f);
                 }
                 view.animate()
-                        .scaleX(1f)
-                        .scaleY(1f)
-                        .alpha(1f)
-                        .setDuration(200)
-                        .setInterpolator(LINEAR_OUT_SLOW_IN_INTERPOLATOR)
-                        .withStartAction(() -> {
-                            view.setVisibility(View.VISIBLE);
-                            if (listener != null) listener.onShown(null);
-                        });
+                .scaleX(1f)
+                .scaleY(1f)
+                .alpha(1f)
+                .setDuration(200)
+                .setInterpolator(LINEAR_OUT_SLOW_IN_INTERPOLATOR)
+                .withStartAction(() -> {
+                    view.setVisibility(View.VISIBLE);
+                    if (listener != null) listener.onShown(null);
+                });
             } else {
                 view.setVisibility(View.VISIBLE);
                 view.setAlpha(1f);
@@ -196,11 +196,11 @@ public class AnimHelper {
             }
         } else {
             view.animate()
-                    .scaleX(0f)
-                    .scaleY(0f)
-                    .alpha(0f)
-                    .setDuration(40)
-                    .setInterpolator(FAST_OUT_LINEAR_IN_INTERPOLATOR);
+            .scaleX(0f)
+            .scaleY(0f)
+            .alpha(0f)
+            .setDuration(40)
+            .setInterpolator(FAST_OUT_LINEAR_IN_INTERPOLATOR);
             view.setVisibility(View.GONE);
             if (listener != null) listener.onHidden(null);
         }

@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 public class GistFilesAdapter extends BaseRecyclerAdapter<FilesListModel, GistFilesViewHolder, BaseViewHolder
-        .OnItemClickListener<FilesListModel>> {
+    .OnItemClickListener<FilesListModel>> {
     private boolean isOwner;
 
     public GistFilesAdapter(@NonNull List<FilesListModel> data,

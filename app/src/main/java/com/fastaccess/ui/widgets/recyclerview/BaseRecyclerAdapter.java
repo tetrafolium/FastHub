@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Kosh on 17 May 2016, 7:10 PM
  */
 public abstract class BaseRecyclerAdapter<M, VH extends BaseViewHolder,
-        P extends BaseViewHolder.OnItemClickListener<M>> extends RecyclerView.Adapter<VH> {
+    P extends BaseViewHolder.OnItemClickListener<M>> extends RecyclerView.Adapter<VH> {
 
     private final static int PROGRESS_TYPE = 2017;
 

@@ -53,7 +53,7 @@ public class PaginationInterceptor implements Interceptor {
                 if (!InputHelper.isEmpty(pagination)) {//hacking for search pagination.
                     String body = response.body().string();
                     return response.newBuilder().body(ResponseBody.create(response.body().contentType(),
-                            "{" + pagination + body.substring(1, body.length()))).build();
+                                                      "{" + pagination + body.substring(1, body.length()))).build();
                 }
             }
         }

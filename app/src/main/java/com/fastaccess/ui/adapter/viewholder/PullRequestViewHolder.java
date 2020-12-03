@@ -37,7 +37,7 @@ public class PullRequestViewHolder extends BaseViewHolder<PullRequest> {
     }
 
     public static PullRequestViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter, boolean withAvatar,
-                                                    boolean showRepoName) {
+            boolean showRepoName) {
         if (withAvatar) {
             return new PullRequestViewHolder(getView(viewGroup, R.layout.issue_row_item), adapter, true, showRepoName);
         }
@@ -55,7 +55,7 @@ public class PullRequestViewHolder extends BaseViewHolder<PullRequest> {
         }
         if (withAvatar && avatarLayout != null) {
             avatarLayout.setUrl(pullRequest.getUser().getAvatarUrl(), pullRequest.getUser().getLogin(),
-                    false, LinkParserHelper.isEnterprise(pullRequest.getHtmlUrl()));
+                                false, LinkParserHelper.isEnterprise(pullRequest.getHtmlUrl()));
             avatarLayout.setVisibility(View.VISIBLE);
         }
     }

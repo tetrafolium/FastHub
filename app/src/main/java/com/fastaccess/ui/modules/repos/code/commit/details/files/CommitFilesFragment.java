@@ -168,7 +168,7 @@ public class CommitFilesFragment extends BaseFragment<CommitFilesMvp.View, Commi
                     .put(BundleConstant.ITEM, commit.getBlobUrl())
                     .put(BundleConstant.EXTRA, commit.getFilename())
                     .end())
-                    .show(getChildFragmentManager(), "AddReviewDialogFragment");
+            .show(getChildFragmentManager(), "AddReviewDialogFragment");
         } else {
             PremiumActivity.Companion.startActivity(getContext());
         }

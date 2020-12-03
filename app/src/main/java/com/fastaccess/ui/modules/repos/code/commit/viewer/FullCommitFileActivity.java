@@ -50,8 +50,8 @@ public class FullCommitFileActivity extends BaseActivity {
     public static void start(@NonNull Context context, @NonNull CommitFileModel fileModel) {
         Intent starter = new Intent(context, FullCommitFileActivity.class);
         starter.putExtras(Bundler.start()
-                .put(BundleConstant.ITEM, fileModel)
-                .end());
+                          .put(BundleConstant.ITEM, fileModel)
+                          .end());
         context.startActivity(starter);
     }
 
@@ -85,26 +85,26 @@ public class FullCommitFileActivity extends BaseActivity {
             return;
         }
         changes.setText(SpannableBuilder.builder()
-                .append(changesText)
-                .append("\n")
-                .bold(String.valueOf(commitFileModel.getChanges())));
+                        .append(changesText)
+                        .append("\n")
+                        .bold(String.valueOf(commitFileModel.getChanges())));
         addition.setText(SpannableBuilder.builder()
-                .append(additionText)
-                .append("\n")
-                .bold(String.valueOf(commitFileModel.getAdditions())));
+                         .append(additionText)
+                         .append("\n")
+                         .bold(String.valueOf(commitFileModel.getAdditions())));
         deletion.setText(SpannableBuilder.builder()
-                .append(deletionText)
-                .append("\n")
-                .bold(String.valueOf(commitFileModel.getDeletions())));
+                         .append(deletionText)
+                         .append("\n")
+                         .bold(String.valueOf(commitFileModel.getDeletions())));
         status.setText(SpannableBuilder.builder()
-                .append(statusText)
-                .append("\n")
-                .bold(String.valueOf(commitFileModel.getStatus())));
+                       .append(statusText)
+                       .append("\n")
+                       .bold(String.valueOf(commitFileModel.getStatus())));
         setTitle(Uri.parse(commitFileModel.getFilename()).getLastPathSegment());
         textView.setText(DiffLineSpan.getSpannable(commitFileModel.getPatch(),
-                ViewHelper.getPatchAdditionColor(this),
-                ViewHelper.getPatchDeletionColor(this),
-                ViewHelper.getPatchRefColor(this)));
+                         ViewHelper.getPatchAdditionColor(this),
+                         ViewHelper.getPatchDeletionColor(this),
+                         ViewHelper.getPatchRefColor(this)));
     }
 
     @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,22 +114,22 @@ public class FullCommitFileActivity extends BaseActivity {
 
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.open:
-                startActivity(CodeViewerActivity.createIntent(this, commitFileModel.getContentsUrl(), commitFileModel.getBlobUrl()));
-                return true;
-            case R.id.share:
-                ActivityHelper.shareUrl(this, commitFileModel.getBlobUrl());
-                return true;
-            case R.id.download:
-                if (ActivityHelper.checkAndRequestReadWritePermission(this)) {
-                    RestProvider.downloadFile(this, commitFileModel.getRawUrl());
-                }
-                return true;
-            case R.id.copy:
-                AppHelper.copyToClipboard(this, commitFileModel.getBlobUrl());
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        case R.id.open:
+            startActivity(CodeViewerActivity.createIntent(this, commitFileModel.getContentsUrl(), commitFileModel.getBlobUrl()));
+            return true;
+        case R.id.share:
+            ActivityHelper.shareUrl(this, commitFileModel.getBlobUrl());
+            return true;
+        case R.id.download:
+            if (ActivityHelper.checkAndRequestReadWritePermission(this)) {
+                RestProvider.downloadFile(this, commitFileModel.getRawUrl());
+            }
+            return true;
+        case R.id.copy:
+            AppHelper.copyToClipboard(this, commitFileModel.getBlobUrl());
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
         }
     }
 }

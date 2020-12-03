@@ -68,7 +68,7 @@ import butterknife.OnClick;
  */
 
 public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.View, PullRequestPagerPresenter>
-        implements PullRequestPagerMvp.View {
+    implements PullRequestPagerMvp.View {
 
     @BindView(R.id.startGist) ForegroundImageView startGist;
     @BindView(R.id.forkGist) ForegroundImageView forkGist;
@@ -103,21 +103,21 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
                                       int number, boolean showRepoBtn, boolean isEnterprise, long commentId) {
         Intent intent = new Intent(context, PullRequestPagerActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.ID, number)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, repoId)
-                .put(BundleConstant.EXTRA_THREE, showRepoBtn)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .put(BundleConstant.EXTRA_SIX, commentId)
-                .end());
+                         .put(BundleConstant.ID, number)
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.EXTRA_TWO, repoId)
+                         .put(BundleConstant.EXTRA_THREE, showRepoBtn)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .put(BundleConstant.EXTRA_SIX, commentId)
+                         .end());
         return intent;
     }
 
     @OnClick(R.id.detailsIcon) void onTitleClick() {
         if (getPresenter().getPullRequest() != null && !InputHelper.isEmpty(getPresenter().getPullRequest().getTitle()))
             MessageDialogView.newInstance(String.format("%s/%s", getPresenter().getLogin(), getPresenter().getRepoId()),
-                    getPresenter().getPullRequest().getTitle(), false, true)
-                    .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                          getPresenter().getPullRequest().getTitle(), false, true)
+            .show(getSupportFragmentManager(), MessageDialogView.TAG);
     }
 
     @OnClick(R.id.submitReviews) void onSubmitReviews(View view) {
@@ -126,11 +126,11 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
 
     @OnClick(R.id.cancelReview) void onCancelReviews(View view) {
         MessageDialogView.newInstance(getString(R.string.cancel_reviews), getString(R.string.confirm_message),
-                false, Bundler.start()
-                        .put(BundleConstant.YES_NO_EXTRA, true)
-                        .put(BundleConstant.EXTRA_TYPE, true)
-                        .end())
-                .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                      false, Bundler.start()
+                                      .put(BundleConstant.YES_NO_EXTRA, true)
+                                      .put(BundleConstant.EXTRA_TYPE, true)
+                                      .end())
+        .show(getSupportFragmentManager(), MessageDialogView.TAG);
     }
 
     @Override protected int layout() {
@@ -201,42 +201,42 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
             return true;
         } else if (item.getItemId() == R.id.closeIssue) {
             MessageDialogView.newInstance(
-                    pullRequest.getState() == IssueState.open ? getString(R.string.close_issue) : getString(R.string.re_open_issue),
-                    getString(R.string.confirm_message), Bundler.start().put(BundleConstant.EXTRA, true).end())
-                    .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                pullRequest.getState() == IssueState.open ? getString(R.string.close_issue) : getString(R.string.re_open_issue),
+                getString(R.string.confirm_message), Bundler.start().put(BundleConstant.EXTRA, true).end())
+            .show(getSupportFragmentManager(), MessageDialogView.TAG);
             return true;
         } else if (item.getItemId() == R.id.lockIssue) {
             if (!getPresenter().isLocked()) {
                 LockIssuePrBottomSheetDialog.Companion
-                        .newInstance()
-                        .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                .newInstance()
+                .show(getSupportFragmentManager(), MessageDialogView.TAG);
             } else {
                 MessageDialogView.newInstance(getString(R.string.unlock_issue), getString(R.string.unlock_issue_details),
-                        Bundler.start().put(BundleConstant.EXTRA_TWO, true)
-                                .put(BundleConstant.YES_NO_EXTRA, true)
-                                .end())
-                        .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                              Bundler.start().put(BundleConstant.EXTRA_TWO, true)
+                                              .put(BundleConstant.YES_NO_EXTRA, true)
+                                              .end())
+                .show(getSupportFragmentManager(), MessageDialogView.TAG);
             }
             return true;
         } else if (item.getItemId() == R.id.labels) {
             LabelsDialogFragment.newInstance(getPresenter().getPullRequest() != null ? getPresenter().getPullRequest().getLabels() : null,
-                    getPresenter().getRepoId(), getPresenter().getLogin())
-                    .show(getSupportFragmentManager(), "LabelsDialogFragment");
+                                             getPresenter().getRepoId(), getPresenter().getLogin())
+            .show(getSupportFragmentManager(), "LabelsDialogFragment");
             return true;
         } else if (item.getItemId() == R.id.edit) {
             CreateIssueActivity.startForResult(this, getPresenter().getLogin(), getPresenter().getRepoId(), pullRequest, isEnterprise());
             return true;
         } else if (item.getItemId() == R.id.milestone) {
             MilestoneDialogFragment.newInstance(getPresenter().getLogin(), getPresenter().getRepoId())
-                    .show(getSupportFragmentManager(), "MilestoneDialogFragment");
+            .show(getSupportFragmentManager(), "MilestoneDialogFragment");
             return true;
         } else if (item.getItemId() == R.id.assignees) {
             AssigneesDialogFragment.newInstance(getPresenter().getLogin(), getPresenter().getRepoId(), true)
-                    .show(getSupportFragmentManager(), "AssigneesDialogFragment");
+            .show(getSupportFragmentManager(), "AssigneesDialogFragment");
             return true;
         } else if (item.getItemId() == R.id.reviewers) {
             AssigneesDialogFragment.newInstance(getPresenter().getLogin(), getPresenter().getRepoId(), false)
-                    .show(getSupportFragmentManager(), "AssigneesDialogFragment");
+            .show(getSupportFragmentManager(), "AssigneesDialogFragment");
             return true;
         } else if (item.getItemId() == R.id.merge) {
             if (getPresenter().getPullRequest() != null) {
@@ -296,11 +296,11 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         if (getPresenter().getPullRequest() != null) {
             boolean isPinned = PinnedPullRequests.isPinned(getPresenter().getPullRequest().getId());
             pinUnpin.setIcon(isPinned ? ContextCompat.getDrawable(this, R.drawable.ic_pin_filled)
-                                      : ContextCompat.getDrawable(this, R.drawable.ic_pin));
+                             : ContextCompat.getDrawable(this, R.drawable.ic_pin));
             closeIssue.setVisible(isRepoOwner || (isOwner || isCollaborator) && getPresenter().getPullRequest().getState() == IssueState.open);
             lockIssue.setVisible(isRepoOwner || isCollaborator && getPresenter().getPullRequest().getState() == IssueState.open);
             closeIssue.setTitle(getPresenter().getPullRequest().getState() == IssueState.closed ? getString(R.string.re_open) : getString(R.string
-                    .close));
+                                .close));
             lockIssue.setTitle(isLocked ? getString(R.string.unlock_issue) : getString(R.string.lock_issue));
         } else {
             closeIssue.setVisible(false);
@@ -326,7 +326,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         } else {
             if (pager.getAdapter() == null) {
                 pager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapterModel.buildForPullRequest(this,
-                        pullRequest)));
+                                 pullRequest)));
                 tabs.setupWithViewPager(pager);
                 tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
                     @Override public void onTabReselected(TabLayout.Tab tab) {
@@ -432,7 +432,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
 
     @Override public void onNavToRepoClicked() {
         Intent intent = ActivityHelper.editBundle(RepoPagerActivity.createIntent(this, getPresenter().getRepoId(),
-                getPresenter().getLogin(), RepoPagerMvp.PULL_REQUEST), isEnterprise());
+                        getPresenter().getLogin(), RepoPagerMvp.PULL_REQUEST), isEnterprise());
         startActivity(intent);
         finish();
     }
@@ -440,9 +440,9 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
     @Override public void finish() {
         Intent intent = new Intent();
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA, isClosed)
-                .put(BundleConstant.EXTRA_TWO, isOpened)
-                .end());
+                         .put(BundleConstant.EXTRA, isClosed)
+                         .put(BundleConstant.EXTRA_TWO, isOpened)
+                         .end());
         setResult(RESULT_OK, intent);
         super.finish();
     }
@@ -521,8 +521,8 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         boolean isAuthor = Login.getUser().getLogin().equalsIgnoreCase(author.getLogin());
         ReviewChangesActivity.Companion.startForResult(requestModel, getPresenter().getRepoId(),
                 getPresenter().getLogin(), pullRequest.getNumber(), isAuthor, isEnterprise(), pullRequest.isMerged()
-                        || pullRequest.getState() == IssueState.closed)
-                .show(getSupportFragmentManager(), ReviewChangesActivity.class.getSimpleName());
+                || pullRequest.getState() == IssueState.closed)
+        .show(getSupportFragmentManager(), ReviewChangesActivity.class.getSimpleName());
     }
 
     private void initTabs(@NonNull PullRequest pullRequest) {
@@ -531,27 +531,27 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         TabLayout.Tab tab3 = tabs.getTabAt(2);
         if (tab3 != null) {
             tab3.setText(SpannableBuilder.builder()
-                    .append(getString(R.string.files))
-                    .append(" ")
-                    .append("(")
-                    .append(String.valueOf(pullRequest.getChangedFiles()))
-                    .append(")"));
+                         .append(getString(R.string.files))
+                         .append(" ")
+                         .append("(")
+                         .append(String.valueOf(pullRequest.getChangedFiles()))
+                         .append(")"));
         }
         if (tab2 != null) {
             tab2.setText(SpannableBuilder.builder()
-                    .append(getString(R.string.commits))
-                    .append(" ")
-                    .append("(")
-                    .append(String.valueOf(pullRequest.getCommits()))
-                    .append(")"));
+                         .append(getString(R.string.commits))
+                         .append(" ")
+                         .append("(")
+                         .append(String.valueOf(pullRequest.getCommits()))
+                         .append(")"));
         }
         if (tab1 != null) {
             tab1.setText(SpannableBuilder.builder()
-                    .append(getString(R.string.details))
-                    .append(" ")
-                    .append("(")
-                    .append(String.valueOf(pullRequest.getComments()))
-                    .append(")"));
+                         .append(getString(R.string.details))
+                         .append(" ")
+                         .append("(")
+                         .append(String.valueOf(pullRequest.getComments()))
+                         .append(")"));
         }
     }
 
@@ -566,7 +566,7 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
         if (userModel != null) {
             title.setText(SpannableBuilder.builder().append(userModel.getLogin()).append("/").append(pullRequest.getTitle()));
             avatarLayout.setUrl(userModel.getAvatarUrl(), userModel.getLogin(), false,
-                    LinkParserHelper.isEnterprise(pullRequest.getUrl()));
+                                LinkParserHelper.isEnterprise(pullRequest.getUrl()));
         } else {
             title.setText(SpannableBuilder.builder().append(pullRequest.getTitle()));
         }
@@ -576,18 +576,18 @@ public class PullRequestPagerActivity extends BaseActivity<PullRequestPagerMvp.V
     private void hideShowFab() {
         if (getPresenter().isLocked() && !getPresenter().isOwner() && !getPresenter().isCollaborator()) {
             getSupportFragmentManager().beginTransaction()
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .hide(commentEditorFragment).commit();
+            .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+            .hide(commentEditorFragment).commit();
             return;
         }
         if (pager.getCurrentItem() == 0) {
             getSupportFragmentManager().beginTransaction().show(commentEditorFragment)
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .commit();
+            .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+            .commit();
         } else {
             getSupportFragmentManager().beginTransaction().hide(commentEditorFragment)
-                    .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                    .commit();
+            .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+            .commit();
         }
     }
 }

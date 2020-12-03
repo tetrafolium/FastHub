@@ -36,7 +36,7 @@ import butterknife.BindView;
  */
 
 public class UnreadNotificationsFragment extends BaseFragment<UnreadNotificationMvp.View, UnreadNotificationsPresenter>
-        implements UnreadNotificationMvp.View {
+    implements UnreadNotificationMvp.View {
     @BindView(R.id.recycler) DynamicRecyclerView recycler;
     @BindView(R.id.refresh) AppbarRefreshLayout refresh;
     @BindView(R.id.stateLayout) StateLayout stateLayout;
@@ -153,11 +153,11 @@ public class UnreadNotificationsFragment extends BaseFragment<UnreadNotification
         if (item.getItemId() == R.id.readAll) {
             if (!adapter.getData().isEmpty()) {
                 MessageDialogView.newInstance(getString(R.string.mark_all_as_read), getString(R.string.confirm_message),
-                        false, false, Bundler.start()
-                                .put("primary_button", getString(R.string.yes))
-                                .put("secondary_button", getString(R.string.no))
-                                .end())
-                        .show(getChildFragmentManager(), MessageDialogView.TAG);
+                                              false, false, Bundler.start()
+                                              .put("primary_button", getString(R.string.yes))
+                                              .put("secondary_button", getString(R.string.no))
+                                              .end())
+                .show(getChildFragmentManager(), MessageDialogView.TAG);
             }
             return true;
         }

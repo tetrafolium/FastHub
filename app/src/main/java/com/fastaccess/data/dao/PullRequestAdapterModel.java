@@ -47,7 +47,9 @@ public class PullRequestAdapterModel implements Parcelable {
 
     public PullRequestAdapterModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.type);
@@ -62,8 +64,12 @@ public class PullRequestAdapterModel implements Parcelable {
     }
 
     public static final Creator<PullRequestAdapterModel> CREATOR = new Creator<PullRequestAdapterModel>() {
-        @Override public PullRequestAdapterModel createFromParcel(Parcel source) {return new PullRequestAdapterModel(source);}
+        @Override public PullRequestAdapterModel createFromParcel(Parcel source) {
+            return new PullRequestAdapterModel(source);
+        }
 
-        @Override public PullRequestAdapterModel[] newArray(int size) {return new PullRequestAdapterModel[size];}
+        @Override public PullRequestAdapterModel[] newArray(int size) {
+            return new PullRequestAdapterModel[size];
+        }
     };
 }

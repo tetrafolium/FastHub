@@ -31,8 +31,8 @@ public class PinnedIssuePresenter extends BasePresenter<PinnedIssueMvp.View> imp
 
     @Override public void onReload() {
         manageDisposable(PinnedIssues.getMyPinnedIssues()
-                .subscribe(repos -> sendToView(view -> view.onNotifyAdapter(repos)), throwable ->
-                        sendToView(view -> view.onNotifyAdapter(null))));
+                         .subscribe(repos -> sendToView(view -> view.onNotifyAdapter(repos)), throwable ->
+                                    sendToView(view -> view.onNotifyAdapter(null))));
     }
 
     @Override public void onItemClick(int position, View v, Issue item) {

@@ -151,8 +151,8 @@ public class SchemeParser {
                 Intent label = getLabel(context, data);
                 Intent search = getSearchIntent(context, data);
                 Optional<Intent> intentOptional = returnNonNull(trending, projects, search, userIntent, repoIssues, repoPulls,
-                        pullRequestIntent, label, commit, commits, createIssueIntent, issueIntent, releasesIntent, repoIntent,
-                        repoWikiIntent, blob);
+                                                  pullRequestIntent, label, commit, commits, createIssueIntent, issueIntent, releasesIntent, repoIntent,
+                                                  repoWikiIntent, blob);
                 Optional<Intent> empty = Optional.empty();
                 if (intentOptional != null && intentOptional.isPresent() && intentOptional != empty) {
                     Intent intent = intentOptional.get();
@@ -269,7 +269,7 @@ public class SchemeParser {
         }
         if (issueNumber < 1) return null;
         return IssuePagerActivity.createIntent(context, repo, owner, issueNumber, showRepoBtn,
-                LinkParserHelper.isEnterprise(uri.toString()), commentId == null ? 0 : commentId);
+                                               LinkParserHelper.isEnterprise(uri.toString()), commentId == null ? 0 : commentId);
     }
 
     @Nullable private static Intent getLabel(@NonNull Context context, @NonNull Uri uri) {
@@ -338,7 +338,7 @@ public class SchemeParser {
             String owner = segments.get(0);
             String repoName = segments.get(1);
             return WikiActivity.Companion.getWiki(context, repoName, owner,
-                    "wiki".equalsIgnoreCase(uri.getLastPathSegment()) ? null : uri.getLastPathSegment());
+                                                  "wiki".equalsIgnoreCase(uri.getLastPathSegment()) ? null : uri.getLastPathSegment());
         }
         return null;
     }
@@ -352,7 +352,7 @@ public class SchemeParser {
             return null;
         }
         boolean isEnterprise = PrefGetter.isEnterprise() && Uri.parse(LinkParserHelper.getEndpoint(PrefGetter.getEnterpriseUrl())).getAuthority()
-                .equalsIgnoreCase(uri.getAuthority());
+                               .equalsIgnoreCase(uri.getAuthority());
         if (uri.getAuthority().equals(HOST_DEFAULT) || uri.getAuthority().equals(API_AUTHORITY) || isEnterprise) {
             List<String> segments = uri.getPathSegments();
             if (segments == null || segments.isEmpty()) return null;
@@ -377,8 +377,8 @@ public class SchemeParser {
 
     @Nullable private static Intent getCommits(@NonNull Context context, @NonNull Uri uri, boolean showRepoBtn) {
         List<String> segments = Stream.of(uri.getPathSegments())
-                .filter(value -> !value.equalsIgnoreCase("api") || !value.equalsIgnoreCase("v3"))
-                .toList();
+                                .filter(value -> !value.equalsIgnoreCase("api") || !value.equalsIgnoreCase("v3"))
+                                .toList();
         if (segments == null || segments.isEmpty() || segments.size() < 3) return null;
         String login = null;
         String repoId = null;
@@ -400,8 +400,8 @@ public class SchemeParser {
 
     @Nullable private static Intent getCommit(@NonNull Context context, @NonNull Uri uri, boolean showRepoBtn) {
         List<String> segments = Stream.of(uri.getPathSegments())
-                .filter(value -> !value.equalsIgnoreCase("api") || !value.equalsIgnoreCase("v3"))
-                .toList();
+                                .filter(value -> !value.equalsIgnoreCase("api") || !value.equalsIgnoreCase("v3"))
+                                .toList();
         if (segments.size() < 3 || !"commit".equals(segments.get(2))) return null;
         String login = segments.get(0);
         String repoId = segments.get(1);

@@ -55,10 +55,10 @@ public class ViewerFragment extends BaseFragment<ViewerMvp.View, ViewerPresenter
 
     public static ViewerFragment newInstance(@NonNull String url, @Nullable String htmlUrl, boolean isRepo) {
         return newInstance(Bundler.start()
-                .put(BundleConstant.ITEM, url)
-                .put(BundleConstant.EXTRA_TWO, htmlUrl)
-                .put(BundleConstant.EXTRA, isRepo)
-                .end());
+                           .put(BundleConstant.ITEM, url)
+                           .put(BundleConstant.EXTRA_TWO, htmlUrl)
+                           .put(BundleConstant.EXTRA, isRepo)
+                           .end());
     }
 
     private static ViewerFragment newInstance(@NonNull Bundle bundle) {

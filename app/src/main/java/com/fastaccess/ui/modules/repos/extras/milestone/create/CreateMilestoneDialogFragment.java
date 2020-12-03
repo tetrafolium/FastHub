@@ -30,7 +30,7 @@ import butterknife.OnTouch;
  */
 
 public class CreateMilestoneDialogFragment extends BaseDialogFragment<CreateMilestoneMvp.View, CreateMilestonePresenter>
-        implements CreateMilestoneMvp.View, DatePickerCallback {
+    implements CreateMilestoneMvp.View, DatePickerCallback {
 
     public static final String TAG = CreateMilestoneDialogFragment.class.getSimpleName();
 
@@ -44,9 +44,9 @@ public class CreateMilestoneDialogFragment extends BaseDialogFragment<CreateMile
     public static CreateMilestoneDialogFragment newInstance(@NonNull String login, @NonNull String repo) {
         CreateMilestoneDialogFragment fragment = new CreateMilestoneDialogFragment();
         fragment.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.ID, repo)
-                .end());
+                              .put(BundleConstant.EXTRA, login)
+                              .put(BundleConstant.ID, repo)
+                              .end());
         return fragment;
     }
 

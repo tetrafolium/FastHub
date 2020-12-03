@@ -34,7 +34,7 @@ interface RepoFilesMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<RepoFile> {
+        BaseViewHolder.OnItemClickListener<RepoFile> {
 
         @NonNull ArrayList<RepoFile> getFiles();
 

@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class RepoFilesAdapter extends BaseRecyclerAdapter<RepoFile, RepoFilesViewHolder, BaseViewHolder
-        .OnItemClickListener<RepoFile>> {
+    .OnItemClickListener<RepoFile>> {
 
 
     public RepoFilesAdapter(@NonNull ArrayList<RepoFile> eventsModels) {

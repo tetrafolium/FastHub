@@ -61,13 +61,13 @@ class ProfileFollowingPresenter extends BasePresenter<ProfileFollowingMvp.View> 
             return false;
         }
         makeRestCall(RestProvider.getUserService(isEnterprise()).getFollowing(parameter, page),
-                response -> {
-                    lastPage = response.getLast();
-                    if (getCurrentPage() == 1) {
-                        manageDisposable(User.saveUserFollowingList(response.getItems(), parameter));
-                    }
-                    sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
-                });
+        response -> {
+            lastPage = response.getLast();
+            if (getCurrentPage() == 1) {
+                manageDisposable(User.saveUserFollowingList(response.getItems(), parameter));
+            }
+            sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
+        });
         return true;
     }
 
@@ -78,7 +78,7 @@ class ProfileFollowingPresenter extends BasePresenter<ProfileFollowingMvp.View> 
     @Override public void onWorkOffline(@NonNull String login) {
         if (users.isEmpty()) {
             manageDisposable(RxHelper.getSingle(User.getUserFollowingList(login)).subscribe(userModels ->
-                    sendToView(view -> view.onNotifyAdapter(userModels, 1))));
+                             sendToView(view -> view.onNotifyAdapter(userModels, 1))));
         } else {
             sendToView(ProfileFollowingMvp.View::hideProgress);
         }

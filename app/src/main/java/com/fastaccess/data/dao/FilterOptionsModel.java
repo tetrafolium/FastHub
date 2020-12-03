@@ -126,7 +126,9 @@ public class FilterOptionsModel implements Parcelable {
         return isOrg;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.type);
@@ -167,8 +169,12 @@ public class FilterOptionsModel implements Parcelable {
     }
 
     public static final Creator<FilterOptionsModel> CREATOR = new Creator<FilterOptionsModel>() {
-        @Override public FilterOptionsModel createFromParcel(Parcel source) {return new FilterOptionsModel(source);}
+        @Override public FilterOptionsModel createFromParcel(Parcel source) {
+            return new FilterOptionsModel(source);
+        }
 
-        @Override public FilterOptionsModel[] newArray(int size) {return new FilterOptionsModel[size];}
+        @Override public FilterOptionsModel[] newArray(int size) {
+            return new FilterOptionsModel[size];
+        }
     };
 }

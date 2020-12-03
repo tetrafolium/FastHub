@@ -55,10 +55,10 @@ class TeamMembersPresenter extends BasePresenter<TeamMembersMvp.View> implements
             return false;
         }
         makeRestCall(RestProvider.getOrgService(isEnterprise()).getTeamMembers(parameter, page),
-                response -> {
-                    lastPage = response.getLast();
-                    sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
-                });
+        response -> {
+            lastPage = response.getLast();
+            sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
+        });
         return true;
     }
 

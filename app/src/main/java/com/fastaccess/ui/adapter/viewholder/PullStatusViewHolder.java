@@ -55,9 +55,9 @@ public class PullStatusViewHolder extends BaseViewHolder<PullRequestStatusModel>
                     status.setText(R.string.checks_failed);
                 } else {
                     status.setText(SpannableBuilder.builder()
-                            .append(status.getResources().getString(R.string.checks_failed))
-                            .append("\n")
-                            .append(status.getResources().getString(R.string.can_not_merge_pr)));
+                                   .append(status.getResources().getString(R.string.checks_failed))
+                                   .append("\n")
+                                   .append(status.getResources().getString(R.string.can_not_merge_pr)));
                 }
             } else if (stateType == StatusStateType.pending) {
                 if (pullRequestStatusModel.isMergable()) {
@@ -81,16 +81,16 @@ public class PullStatusViewHolder extends BaseViewHolder<PullRequestStatusModel>
         if (pullRequestStatusModel.getStatuses() != null && !pullRequestStatusModel.getStatuses().isEmpty()) {
             SpannableBuilder builder = SpannableBuilder.builder();
             Stream.of(pullRequestStatusModel.getStatuses())
-                    .filter(statusesModel -> statusesModel != null && statusesModel.getState() != null && statusesModel.getTargetUrl() != null)
-                    .forEach(statusesModel -> {
-                        if (!InputHelper.isEmpty(statusesModel.getTargetUrl())) {
-                            builder.append(ContextCompat.getDrawable(statuses.getContext(), statusesModel.getState().getDrawableRes()));
-                            builder.append(" ")
-                                    .append(statusesModel.getContext() != null ? statusesModel.getContext() + " " : "")
-                                    .url(statusesModel.getDescription(), v -> SchemeParser.launchUri(v.getContext(), statusesModel.getTargetUrl()))
-                                    .append("\n");
-                        }
-                    });
+            .filter(statusesModel -> statusesModel != null && statusesModel.getState() != null && statusesModel.getTargetUrl() != null)
+            .forEach(statusesModel -> {
+                if (!InputHelper.isEmpty(statusesModel.getTargetUrl())) {
+                    builder.append(ContextCompat.getDrawable(statuses.getContext(), statusesModel.getState().getDrawableRes()));
+                    builder.append(" ")
+                    .append(statusesModel.getContext() != null ? statusesModel.getContext() + " " : "")
+                    .url(statusesModel.getDescription(), v -> SchemeParser.launchUri(v.getContext(), statusesModel.getTargetUrl()))
+                    .append("\n");
+                }
+            });
             if (!InputHelper.isEmpty(builder)) {
                 statuses.setMovementMethod(LinkMovementMethod.getInstance());
                 statuses.setText(builder);

@@ -114,33 +114,33 @@ import lombok.NoArgsConstructor;
 
     public static Single<List<Notification>> getUnreadNotifications() {
         return App.getInstance()
-                .getDataStore()
-                .select(Notification.class)
-                .where(Notification.UNREAD.eq(true))
-                .orderBy(Notification.UPDATED_AT.desc())
-                .get()
-                .observable()
-                .toList();
+               .getDataStore()
+               .select(Notification.class)
+               .where(Notification.UNREAD.eq(true))
+               .orderBy(Notification.UPDATED_AT.desc())
+               .get()
+               .observable()
+               .toList();
     }
 
     public static Single<List<Notification>> getAllNotifications() {
         return App.getInstance()
-                .getDataStore()
-                .select(Notification.class)
-                .orderBy(Notification.UPDATED_AT.desc(), Notification.UNREAD.eq(false).getLeftOperand())
-                .get()
-                .observable()
-                .toList();
+               .getDataStore()
+               .select(Notification.class)
+               .orderBy(Notification.UPDATED_AT.desc(), Notification.UNREAD.eq(false).getLeftOperand())
+               .get()
+               .observable()
+               .toList();
     }
 
     public static boolean hasUnreadNotifications() {
         return App.getInstance()
-                .getDataStore()
-                .toBlocking()
-                .count(Notification.class)
-                .where(Notification.UNREAD.equal(true))
-                .get()
-                .value() > 0;
+               .getDataStore()
+               .toBlocking()
+               .count(Notification.class)
+               .where(Notification.UNREAD.equal(true))
+               .get()
+               .value() > 0;
     }
 
     public static void deleteAll() {
@@ -158,7 +158,9 @@ import lombok.NoArgsConstructor;
         return repository != null ? (int) repository.getId() : 0;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -188,8 +190,12 @@ import lombok.NoArgsConstructor;
     }
 
     public static final Creator<Notification> CREATOR = new Creator<Notification>() {
-        @Override public Notification createFromParcel(Parcel source) {return new Notification(source);}
+        @Override public Notification createFromParcel(Parcel source) {
+            return new Notification(source);
+        }
 
-        @Override public Notification[] newArray(int size) {return new Notification[size];}
+        @Override public Notification[] newArray(int size) {
+            return new Notification[size];
+        }
     };
 }
