@@ -22,7 +22,7 @@ public class ToGsonProvider {
             try (InputStream is = context.getResources().openRawResource(R.raw.changelog)) {
                 try (ByteArrayOutputStream byteStream = new ByteArrayOutputStream()) {
                     byte[] buffer = new byte[is.available()];
-                    int read = is.read(buffer);//ignore lint
+                    int read = is.read(buffer); //ignore lint
                     byteStream.write(buffer);
                     return byteStream.toString();
                 } catch (IOException e) {

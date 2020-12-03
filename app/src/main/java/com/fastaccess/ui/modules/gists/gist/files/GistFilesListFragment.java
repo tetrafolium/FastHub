@@ -75,7 +75,7 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
             ArrayList<FilesListModel> filesListModel = getArguments().getParcelableArrayList(BundleConstant.ITEM);
             isOwner = getArguments().getBoolean(BundleConstant.EXTRA_TYPE);
             onInitFiles(filesListModel, isOwner);
-            setArguments(null);//CLEAR
+            setArguments(null); //CLEAR
         } else {
             onInitFiles(getPresenter().getFiles(), isOwner);
         }
@@ -105,7 +105,7 @@ public class GistFilesListFragment extends BaseFragment<GistFilesListMvp.View, G
 
     @Override public void onInitFiles(@Nullable ArrayList<FilesListModel> filesListModel, boolean isOwner) {
         if (filesListModel == null) {
-            filesListModel = new ArrayList<>();//DO NOT PASS NULL TO ADAPTER
+            filesListModel = new ArrayList<>(); //DO NOT PASS NULL TO ADAPTER
         }
         if (getPresenter().getFilesMap().isEmpty()) {
             for (FilesListModel listModel : filesListModel) {
