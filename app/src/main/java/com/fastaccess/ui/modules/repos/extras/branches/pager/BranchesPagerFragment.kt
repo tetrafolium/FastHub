@@ -2,10 +2,9 @@ package com.fastaccess.ui.modules.repos.extras.branches.pager
 
 import android.content.Context
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
-import androidx.viewpager.widget.ViewPager
-import androidx.appcompat.widget.Toolbar
 import android.view.View
+import androidx.appcompat.widget.Toolbar
+import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.BranchesModel
@@ -17,6 +16,7 @@ import com.fastaccess.ui.base.BaseDialogFragment
 import com.fastaccess.ui.base.mvp.BaseMvp
 import com.fastaccess.ui.base.mvp.presenter.BasePresenter
 import com.fastaccess.ui.modules.repos.extras.branches.BranchesMvp
+import com.google.android.material.tabs.TabLayout
 
 /**
  * Created by kosh on 15/07/2017.
@@ -61,7 +61,8 @@ class BranchesPagerFragment : BaseDialogFragment<BaseMvp.FAView, BasePresenter<B
             val repoId = it.getString(BundleConstant.ID)
             if (!login.isNullOrEmpty() && !repoId.isNullOrEmpty()) {
                 pager.adapter = FragmentsPagerAdapter(
-                    childFragmentManager, FragmentPagerAdapterModel
+                    childFragmentManager,
+                    FragmentPagerAdapterModel
                         .buildForBranches(requireContext(), repoId, login)
                 )
                 tabs.setupWithViewPager(pager)

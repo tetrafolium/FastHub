@@ -17,11 +17,12 @@ import com.prettifier.pretty.PrettifyWebView
 /**
  * Created by Kosh on 30 Jun 2017, 12:38 PM
  */
-class RepoLicenseBottomSheet : BaseMvpBottomSheetDialogFragment<RepoLicenseMvp.View, RepoLicensePresenter>(), RepoLicenseMvp.View,
+class RepoLicenseBottomSheet :
+    BaseMvpBottomSheetDialogFragment<RepoLicenseMvp.View, RepoLicensePresenter>(),
+    RepoLicenseMvp.View,
     PrettifyWebView.OnContentChangedListener {
 
     @State var content: String? = null
-
 
     @BindView(R.id.stateLayout) lateinit var stateLayout: StateLayout
     @BindView(R.id.readmeLoader) lateinit var loader: ProgressBar

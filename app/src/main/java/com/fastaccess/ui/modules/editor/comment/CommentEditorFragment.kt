@@ -5,11 +5,11 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.transition.TransitionManager
-import androidx.fragment.app.FragmentManager
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.fragment.app.FragmentManager
+import androidx.transition.TransitionManager
 import butterknife.BindView
 import butterknife.OnClick
 import com.fastaccess.R
@@ -32,8 +32,11 @@ import net.yslibrary.android.keyboardvisibilityevent.Unregistrar
 /**
  * Created by kosh on 21/08/2017.
  */
-class CommentEditorFragment : BaseFragment<BaseMvp.FAView, BasePresenter<BaseMvp.FAView>>(), MarkDownLayout.MarkdownListener,
-        EmojiMvp.EmojiCallback, EditorLinkImageMvp.EditorLinkCallback {
+class CommentEditorFragment :
+    BaseFragment<BaseMvp.FAView, BasePresenter<BaseMvp.FAView>>(),
+    MarkDownLayout.MarkdownListener,
+    EmojiMvp.EmojiCallback,
+    EditorLinkImageMvp.EditorLinkCallback {
 
     @BindView(R.id.commentBox) lateinit var commentBox: View
     @BindView(R.id.markdDownLayout) lateinit var markdDownLayout: MarkDownLayout
@@ -54,11 +57,13 @@ class CommentEditorFragment : BaseFragment<BaseMvp.FAView, BasePresenter<BaseMvp
 
     @OnClick(R.id.fullScreenComment) internal fun onExpandScreen() {
         val intent = Intent(context, EditorActivity::class.java)
-        intent.putExtras(Bundler.start()
+        intent.putExtras(
+            Bundler.start()
                 .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.FOR_RESULT_EXTRA)
                 .put(BundleConstant.EXTRA, getEditText().text.toString())
                 .putStringArrayList("participants", commentListener?.getNamesToTag())
-                .end())
+                .end()
+        )
         startActivityForResult(intent, BundleConstant.REQUEST_CODE)
     }
 
@@ -101,11 +106,14 @@ class CommentEditorFragment : BaseFragment<BaseMvp.FAView, BasePresenter<BaseMvp
 
     override fun onStart() {
         super.onStart()
-        keyboardListener = KeyboardVisibilityEvent.registerEventListener(activity, {
-            TransitionManager.beginDelayedTransition((view as ViewGroup?)!!)
-            toggleButtons.isActivated = it
-            markdownBtnHolder.visibility = if (!it) View.GONE else View.VISIBLE
-        })
+        keyboardListener = KeyboardVisibilityEvent.registerEventListener(
+            activity,
+            {
+                TransitionManager.beginDelayedTransition((view as ViewGroup?)!!)
+                toggleButtons.isActivated = it
+                markdownBtnHolder.visibility = if (!it) View.GONE else View.VISIBLE
+            }
+        )
     }
 
     override fun onStop() {
@@ -131,11 +139,13 @@ class CommentEditorFragment : BaseFragment<BaseMvp.FAView, BasePresenter<BaseMvp
     }
 
     fun onAddUserName(username: String) {
-        getEditText().setText(if (getEditText().text.isNullOrBlank()) {
-            "@$username"
-        } else {
-            "${getEditText().text} @$username"
-        })
+        getEditText().setText(
+            if (getEditText().text.isNullOrBlank()) {
+                "@$username"
+            } else {
+                "${getEditText().text} @$username"
+            }
+        )
         getEditText().setSelection(getEditText().text.length)
     }
 

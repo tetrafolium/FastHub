@@ -78,24 +78,25 @@ class RepoProjectPresenter : BasePresenter<RepoProjectMvp.View>(), RepoProjectMv
                     .owner(login)
                     .page(getPage())
                     .build()
-                makeRestCall(Rx2Apollo.from(apollo.query(query))
-                    .flatMap { response ->
-                        val list = arrayListOf<RepoProjectsOpenQuery.Node>()
-                        response.data()?.repository()?.let { repos ->
-                            repos.projects().let {
-                                lastPage = if (it.pageInfo().hasNextPage()) Int.MAX_VALUE else 0
-                                pages.clear()
-                                count = it.totalCount()
-                                it.edges()?.let {
-                                    pages.addAll(it.map { it.cursor() })
-                                }
-                                it.nodes()?.let {
-                                    list.addAll(it)
+                makeRestCall(
+                    Rx2Apollo.from(apollo.query(query))
+                        .flatMap { response ->
+                            val list = arrayListOf<RepoProjectsOpenQuery.Node>()
+                            response.data()?.repository()?.let { repos ->
+                                repos.projects().let {
+                                    lastPage = if (it.pageInfo().hasNextPage()) Int.MAX_VALUE else 0
+                                    pages.clear()
+                                    count = it.totalCount()
+                                    it.edges()?.let {
+                                        pages.addAll(it.map { it.cursor() })
+                                    }
+                                    it.nodes()?.let {
+                                        list.addAll(it)
+                                    }
                                 }
                             }
+                            return@flatMap Observable.just(list)
                         }
-                        return@flatMap Observable.just(list)
-                    }
                 ) {
                     sendToView { v ->
                         v.onNotifyAdapter(it, page)
@@ -108,33 +109,34 @@ class RepoProjectPresenter : BasePresenter<RepoProjectMvp.View>(), RepoProjectMv
                     .owner(login)
                     .page(getPage())
                     .build()
-                makeRestCall(Rx2Apollo.from(apollo.query(query))
-                    .flatMap { response ->
-                        val list = arrayListOf<RepoProjectsOpenQuery.Node>()
-                        response.data()?.repository()?.let { repository ->
-                            repository.projects().let { projects1 ->
-                                lastPage = if (projects1.pageInfo().hasNextPage()) Int.MAX_VALUE else 0
-                                pages.clear()
-                                count = projects1.totalCount()
-                                projects1.edges()?.let { edges ->
-                                    pages.addAll(edges.map { it.cursor() })
-                                }
-                                projects1.nodes()?.let { nodesList ->
-                                    val toConvert = arrayListOf<RepoProjectsOpenQuery.Node>()
-                                    nodesList.onEach {
-                                        val columns = RepoProjectsOpenQuery.Columns(it.columns().__typename(), it.columns().totalCount())
-                                        val node = RepoProjectsOpenQuery.Node(
-                                            it.__typename(), it.name(), it.number(), it.body(),
-                                            it.createdAt(), it.id(), it.viewerCanUpdate(), columns, it.databaseId()
-                                        )
-                                        toConvert.add(node)
+                makeRestCall(
+                    Rx2Apollo.from(apollo.query(query))
+                        .flatMap { response ->
+                            val list = arrayListOf<RepoProjectsOpenQuery.Node>()
+                            response.data()?.repository()?.let { repository ->
+                                repository.projects().let { projects1 ->
+                                    lastPage = if (projects1.pageInfo().hasNextPage()) Int.MAX_VALUE else 0
+                                    pages.clear()
+                                    count = projects1.totalCount()
+                                    projects1.edges()?.let { edges ->
+                                        pages.addAll(edges.map { it.cursor() })
                                     }
-                                    list.addAll(toConvert)
+                                    projects1.nodes()?.let { nodesList ->
+                                        val toConvert = arrayListOf<RepoProjectsOpenQuery.Node>()
+                                        nodesList.onEach {
+                                            val columns = RepoProjectsOpenQuery.Columns(it.columns().__typename(), it.columns().totalCount())
+                                            val node = RepoProjectsOpenQuery.Node(
+                                                it.__typename(), it.name(), it.number(), it.body(),
+                                                it.createdAt(), it.id(), it.viewerCanUpdate(), columns, it.databaseId()
+                                            )
+                                            toConvert.add(node)
+                                        }
+                                        list.addAll(toConvert)
+                                    }
                                 }
                             }
+                            return@flatMap Observable.just(list)
                         }
-                        return@flatMap Observable.just(list)
-                    }
                 ) {
                     sendToView { v ->
                         v.onNotifyAdapter(it, page)
@@ -148,33 +150,34 @@ class RepoProjectPresenter : BasePresenter<RepoProjectMvp.View>(), RepoProjectMv
                     .owner(login)
                     .page(getPage())
                     .build()
-                makeRestCall(Rx2Apollo.from(apollo.query(query))
-                    .flatMap {
-                        val list = arrayListOf<RepoProjectsOpenQuery.Node>()
-                        it.data()?.organization()?.let {
-                            it.projects().let {
-                                lastPage = if (it.pageInfo().hasNextPage()) Int.MAX_VALUE else 0
-                                pages.clear()
-                                count = it.totalCount()
-                                it.edges()?.let {
-                                    pages.addAll(it.map { it.cursor() })
-                                }
-                                it.nodes()?.let {
-                                    val toConvert = arrayListOf<RepoProjectsOpenQuery.Node>()
-                                    it.onEach {
-                                        val columns = RepoProjectsOpenQuery.Columns(it.columns().__typename(), it.columns().totalCount())
-                                        val node = RepoProjectsOpenQuery.Node(
-                                            it.__typename(), it.name(), it.number(), it.body(),
-                                            it.createdAt(), it.id(), it.viewerCanUpdate(), columns, it.databaseId()
-                                        )
-                                        toConvert.add(node)
+                makeRestCall(
+                    Rx2Apollo.from(apollo.query(query))
+                        .flatMap {
+                            val list = arrayListOf<RepoProjectsOpenQuery.Node>()
+                            it.data()?.organization()?.let {
+                                it.projects().let {
+                                    lastPage = if (it.pageInfo().hasNextPage()) Int.MAX_VALUE else 0
+                                    pages.clear()
+                                    count = it.totalCount()
+                                    it.edges()?.let {
+                                        pages.addAll(it.map { it.cursor() })
                                     }
-                                    list.addAll(toConvert)
+                                    it.nodes()?.let {
+                                        val toConvert = arrayListOf<RepoProjectsOpenQuery.Node>()
+                                        it.onEach {
+                                            val columns = RepoProjectsOpenQuery.Columns(it.columns().__typename(), it.columns().totalCount())
+                                            val node = RepoProjectsOpenQuery.Node(
+                                                it.__typename(), it.name(), it.number(), it.body(),
+                                                it.createdAt(), it.id(), it.viewerCanUpdate(), columns, it.databaseId()
+                                            )
+                                            toConvert.add(node)
+                                        }
+                                        list.addAll(toConvert)
+                                    }
                                 }
                             }
+                            return@flatMap Observable.just(list)
                         }
-                        return@flatMap Observable.just(list)
-                    }
                 ) {
                     sendToView { v ->
                         v.onNotifyAdapter(it, page)
@@ -186,33 +189,34 @@ class RepoProjectPresenter : BasePresenter<RepoProjectMvp.View>(), RepoProjectMv
                     .owner(login)
                     .page(getPage())
                     .build()
-                makeRestCall(Rx2Apollo.from(apollo.query(query))
-                    .flatMap {
-                        val list = arrayListOf<RepoProjectsOpenQuery.Node>()
-                        it.data()?.organization()?.let {
-                            it.projects().let {
-                                lastPage = if (it.pageInfo().hasNextPage()) Int.MAX_VALUE else 0
-                                pages.clear()
-                                count = it.totalCount()
-                                it.edges()?.let {
-                                    pages.addAll(it.map { it.cursor() })
-                                }
-                                it.nodes()?.let {
-                                    val toConvert = arrayListOf<RepoProjectsOpenQuery.Node>()
-                                    it.onEach {
-                                        val columns = RepoProjectsOpenQuery.Columns(it.columns().__typename(), it.columns().totalCount())
-                                        val node = RepoProjectsOpenQuery.Node(
-                                            it.__typename(), it.name(), it.number(), it.body(),
-                                            it.createdAt(), it.id(), it.viewerCanUpdate(), columns, it.databaseId()
-                                        )
-                                        toConvert.add(node)
+                makeRestCall(
+                    Rx2Apollo.from(apollo.query(query))
+                        .flatMap {
+                            val list = arrayListOf<RepoProjectsOpenQuery.Node>()
+                            it.data()?.organization()?.let {
+                                it.projects().let {
+                                    lastPage = if (it.pageInfo().hasNextPage()) Int.MAX_VALUE else 0
+                                    pages.clear()
+                                    count = it.totalCount()
+                                    it.edges()?.let {
+                                        pages.addAll(it.map { it.cursor() })
                                     }
-                                    list.addAll(toConvert)
+                                    it.nodes()?.let {
+                                        val toConvert = arrayListOf<RepoProjectsOpenQuery.Node>()
+                                        it.onEach {
+                                            val columns = RepoProjectsOpenQuery.Columns(it.columns().__typename(), it.columns().totalCount())
+                                            val node = RepoProjectsOpenQuery.Node(
+                                                it.__typename(), it.name(), it.number(), it.body(),
+                                                it.createdAt(), it.id(), it.viewerCanUpdate(), columns, it.databaseId()
+                                            )
+                                            toConvert.add(node)
+                                        }
+                                        list.addAll(toConvert)
+                                    }
                                 }
                             }
+                            return@flatMap Observable.just(list)
                         }
-                        return@flatMap Observable.just(list)
-                    }
                 ) {
                     sendToView { v ->
                         v.onNotifyAdapter(it, page)

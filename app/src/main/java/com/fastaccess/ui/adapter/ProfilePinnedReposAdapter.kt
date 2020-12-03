@@ -12,7 +12,7 @@ import java.text.NumberFormat
  */
 
 class ProfilePinnedReposAdapter(data: List<GetPinnedReposQuery.Node>) : BaseRecyclerAdapter<GetPinnedReposQuery.Node,
-        ProfilePinnedReposViewHolder, BaseViewHolder.OnItemClickListener<GetPinnedReposQuery.Node>>(data) {
+    ProfilePinnedReposViewHolder, BaseViewHolder.OnItemClickListener<GetPinnedReposQuery.Node>>(data) {
 
     private val numberFormat = NumberFormat.getNumberInstance()!!
 
@@ -23,5 +23,4 @@ class ProfilePinnedReposAdapter(data: List<GetPinnedReposQuery.Node>) : BaseRecy
     override fun onBindView(holder: ProfilePinnedReposViewHolder, position: Int) {
         holder.bind(data[position], numberFormat)
     }
-
 }

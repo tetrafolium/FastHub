@@ -12,7 +12,7 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
  */
 
 class FastHubNotificationsAdapter(data: List<FastHubNotification>) : BaseRecyclerAdapter<FastHubNotification,
-        FastHubNotificationViewHolder, BaseViewHolder.OnItemClickListener<FastHubNotification>>(data) {
+    FastHubNotificationViewHolder, BaseViewHolder.OnItemClickListener<FastHubNotification>>(data) {
 
     override fun viewHolder(parent: ViewGroup?, viewType: Int): FastHubNotificationViewHolder {
         return FastHubNotificationViewHolder(BaseViewHolder.getView(parent!!, R.layout.fasthub_notification_row_item), this)
@@ -21,5 +21,4 @@ class FastHubNotificationsAdapter(data: List<FastHubNotification>) : BaseRecycle
     override fun onBindView(holder: FastHubNotificationViewHolder?, position: Int) {
         holder?.bind(getItem(position))
     }
-
 }

@@ -11,13 +11,15 @@ import io.reactivex.Observable
  */
 class NotificationSoundPresenter : BasePresenter<NotificationSoundMvp.View>(), NotificationSoundMvp.Presenter {
     override fun loadSounds(default: String?) {
-        manageObservable(Observable.fromPublisher<NotificationSoundModel> { s ->
-            val sounds = FileHelper.getNotificationSounds(App.getInstance(), default)
-            sounds.filterNotNull()
+        manageObservable(
+            Observable.fromPublisher<NotificationSoundModel> { s ->
+                val sounds = FileHelper.getNotificationSounds(App.getInstance(), default)
+                sounds.filterNotNull()
                     .sortedBy { !it.isSelected }
                     .onEach { s.onNext(it) }
-            s.onComplete()
-        }.doOnNext({ t -> sendToView { it.onAddSound(t) } })
-                .doOnComplete { sendToView { it.onCompleted() } })
+                s.onComplete()
+            }.doOnNext({ t -> sendToView { it.onAddSound(t) } })
+                .doOnComplete { sendToView { it.onCompleted() } }
+        )
     }
 }

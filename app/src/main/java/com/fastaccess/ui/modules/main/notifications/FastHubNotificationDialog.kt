@@ -1,9 +1,9 @@
 package com.fastaccess.ui.modules.main.notifications
 
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
 import android.text.Html
 import android.view.View
+import androidx.fragment.app.FragmentManager
 import butterknife.OnClick
 import com.fastaccess.R
 import com.fastaccess.data.dao.model.AbstractFastHubNotification.NotificationType
@@ -51,8 +51,8 @@ class FastHubNotificationDialog : BaseDialogFragment<BaseMvp.FAView, BasePresent
         fun newInstance(model: FastHubNotification): FastHubNotificationDialog {
             val fragment = FastHubNotificationDialog()
             fragment.arguments = Bundler.start()
-                    .put(BundleConstant.ITEM, model)
-                    .end()
+                .put(BundleConstant.ITEM, model)
+                .end()
             return fragment
         }
 

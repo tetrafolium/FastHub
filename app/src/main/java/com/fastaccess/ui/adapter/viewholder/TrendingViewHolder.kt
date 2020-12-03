@@ -15,8 +15,11 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
  * Created: FontTextView by Kosh on 02 Jun 2017, 1:27 PM
  */
 
-open class TrendingViewHolder(itemView: View, adapter: BaseRecyclerAdapter<TrendingModel,
-        TrendingViewHolder, OnItemClickListener<TrendingModel>>) : BaseViewHolder<TrendingModel>(itemView, adapter) {
+open class TrendingViewHolder(
+    itemView: View,
+    adapter: BaseRecyclerAdapter<TrendingModel,    
+        TrendingViewHolder, OnItemClickListener<TrendingModel>>
+) : BaseViewHolder<TrendingModel>(itemView, adapter) {
 
     @BindView(R.id.title) lateinit var title: FontTextView
     @BindView(R.id.description) lateinit var description: FontTextView
@@ -24,7 +27,6 @@ open class TrendingViewHolder(itemView: View, adapter: BaseRecyclerAdapter<Trend
     @BindView(R.id.stars) lateinit var stars: FontTextView
     @BindView(R.id.forks) lateinit var fork: FontTextView
     @BindView(R.id.language) lateinit var lang: FontTextView
-
 
     override fun bind(t: TrendingModel) {
         title.text = t.title
@@ -50,5 +52,4 @@ open class TrendingViewHolder(itemView: View, adapter: BaseRecyclerAdapter<Trend
             lang.visibility = View.VISIBLE
         }
     }
-
 }

@@ -12,8 +12,9 @@ import io.reactivex.Observable
 class ThemeCodePresenter : BasePresenter<ThemeCodeMvp.View>(), ThemeCodeMvp.Presenter {
 
     override fun onLoadThemes() {
-        manageDisposable(RxHelper.getObservable(Observable.just(CodeThemesHelper.listThemes()))
-                .subscribe({ list -> sendToView { it.onInitAdapter(list) } }, { onError(it) }))
+        manageDisposable(
+            RxHelper.getObservable(Observable.just(CodeThemesHelper.listThemes()))
+                .subscribe({ list -> sendToView { it.onInitAdapter(list) } }, { onError(it) })
+        )
     }
-
 }

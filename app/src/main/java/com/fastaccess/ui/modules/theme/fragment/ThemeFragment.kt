@@ -5,12 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.appcompat.widget.Toolbar
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.Unbinder
@@ -20,6 +19,7 @@ import com.fastaccess.ui.base.BaseFragment
 import com.fastaccess.ui.modules.main.donation.DonateActivity
 import com.fastaccess.ui.modules.main.premium.PremiumActivity
 import com.fastaccess.ui.widgets.SpannableBuilder
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * Created by Kosh on 08 Jun 2017, 10:53 PM
@@ -101,8 +101,8 @@ class ThemeFragment : BaseFragment<ThemeFragmentMvp.View, ThemeFragmentPresenter
         fun newInstance(style: Int): ThemeFragment {
             val fragment = ThemeFragment()
             fragment.arguments = Bundler.start()
-                    .put(BundleConstant.ITEM, style)
-                    .end()
+                .put(BundleConstant.ITEM, style)
+                .end()
             return fragment
         }
     }

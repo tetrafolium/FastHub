@@ -2,8 +2,8 @@ package com.fastaccess.ui.modules.repos.extras.branches
 
 import android.content.Context
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.View
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.BranchesModel
@@ -110,10 +110,10 @@ class BranchesFragment : BaseFragment<BranchesMvp.View, BranchesPresenter>(), Br
         fun newInstance(login: String, repoId: String, branch: Boolean): BranchesFragment {
             val fragment = BranchesFragment()
             fragment.arguments = Bundler.start()
-                    .put(BundleConstant.ID, repoId)
-                    .put(BundleConstant.EXTRA, login)
-                    .put(BundleConstant.EXTRA_TYPE, branch)
-                    .end()
+                .put(BundleConstant.ID, repoId)
+                .put(BundleConstant.EXTRA, login)
+                .put(BundleConstant.EXTRA_TYPE, branch)
+                .end()
             return fragment
         }
     }

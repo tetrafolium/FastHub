@@ -1,11 +1,11 @@
 package com.fastaccess.ui.adapter.viewholder
 
-import androidx.transition.ChangeBounds
-import androidx.transition.TransitionManager
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.TextView
+import androidx.transition.ChangeBounds
+import androidx.transition.TransitionManager
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.model.Comment
@@ -25,9 +25,13 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
 /**
  * Created by kosh on 15/08/2017.
  */
-class CommitCommentsViewHolder private constructor(view: View, adapter: BaseRecyclerAdapter<*, *, *>,
-                                                   val viewGroup: ViewGroup, val onToggleView: OnToggleView)
-    : BaseViewHolder<Comment>(view, adapter) {
+class CommitCommentsViewHolder private constructor(
+    view: View,
+    adapter: BaseRecyclerAdapter<*, *, *>,
+    val viewGroup: ViewGroup,
+    val onToggleView: OnToggleView
+) :
+    BaseViewHolder<Comment>(view, adapter) {
 
     init {
         if (adapter.getRowWidth() == 0) {
@@ -93,8 +97,11 @@ class CommitCommentsViewHolder private constructor(view: View, adapter: BaseRecy
             owner.visibility = View.GONE
         }
         if (t.createdAt == t.updatedAt) {
-            date.text = String.format("%s %s", ParseDateFormat.getTimeAgo(t.updatedAt), itemView
-                    .resources.getString(R.string.edited))
+            date.text = String.format(
+                "%s %s", ParseDateFormat.getTimeAgo(t.updatedAt),
+                itemView
+                    .resources.getString(R.string.edited)
+            )
         } else {
             date.text = ParseDateFormat.getTimeAgo(t.createdAt)
         }

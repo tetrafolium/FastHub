@@ -25,8 +25,9 @@ import kotlinx.android.synthetic.main.accounts_menu_layout.*
 /**
  * Created by Kosh on 25.03.18.
  */
-class AccountDrawerFragment : BaseFragment<MainMvp.View, BasePresenter<MainMvp.View>>(),
-        BaseViewHolder.OnItemClickListener<PinnedRepos> {
+class AccountDrawerFragment :
+    BaseFragment<MainMvp.View, BasePresenter<MainMvp.View>>(),
+    BaseViewHolder.OnItemClickListener<PinnedRepos> {
 
     private val pinnedListAdapter = PinnedReposAdapter(true)
     private val adapter = LoginAdapter(true)
@@ -44,10 +45,12 @@ class AccountDrawerFragment : BaseFragment<MainMvp.View, BasePresenter<MainMvp.V
             override fun onItemLongClick(position: Int, v: View?, item: Login?) {}
 
             override fun onItemClick(position: Int, v: View?, item: Login) {
-                presenter.manageViewDisposable(RxHelper.getObservable(Login.onMultipleLogin(item, item.isIsEnterprise, false))
+                presenter.manageViewDisposable(
+                    RxHelper.getObservable(Login.onMultipleLogin(item, item.isIsEnterprise, false))
                         .doOnSubscribe { showProgress(0) }
                         .doOnComplete { hideProgress() }
-                        .subscribe({ (activity as? BaseActivity<*, *>?)?.onRestartApp() }, ::println))
+                        .subscribe({ (activity as? BaseActivity<*, *>?)?.onRestartApp() }, ::println)
+                )
             }
         }
         accLists.adapter = adapter
@@ -104,7 +107,8 @@ class AccountDrawerFragment : BaseFragment<MainMvp.View, BasePresenter<MainMvp.V
     }
 
     private fun loadAccount() {
-        presenter.manageViewDisposable(Login.getAccounts()
+        presenter.manageViewDisposable(
+            Login.getAccounts()
                 .doOnComplete {
                     if (!adapter.isEmpty) {
                         toggleAccountsLayout.visibility = View.VISIBLE
@@ -112,12 +116,15 @@ class AccountDrawerFragment : BaseFragment<MainMvp.View, BasePresenter<MainMvp.V
                         toggleAccountsLayout.visibility = View.GONE
                     }
                 }
-                .subscribe({ adapter.addItem(it) }, ::print))
+                .subscribe({ adapter.addItem(it) }, ::print)
+        )
     }
 
     private fun loadPinned() {
-        presenter?.manageViewDisposable(PinnedRepos.getMenuRepos()
-                .subscribe({ pinnedListAdapter.insertItems(it) }, ::println))
+        presenter?.manageViewDisposable(
+            PinnedRepos.getMenuRepos()
+                .subscribe({ pinnedListAdapter.insertItems(it) }, ::println)
+        )
     }
 
     private fun closeDrawer() {

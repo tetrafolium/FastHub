@@ -36,30 +36,36 @@ class ProjectPagerPresenter : BasePresenter<ProjectPagerMvp.View>(), ProjectPage
     override fun onRetrieveColumns() {
         val repoId = repoId
         if (repoId != null && !repoId.isNullOrBlank()) {
-            makeRestCall(Observable.zip(RestProvider.getProjectsService(isEnterprise).getProjectColumns(projectId),
-                RestProvider.getRepoService(isEnterprise).isCollaborator(login, repoId, Login.getUser().login),
-                BiFunction { items: Pageable<ProjectColumnModel>, response: Response<Boolean> ->
-                    viewerCanUpdate = response.code() == 204
-                    return@BiFunction items
-                })
-                .flatMap {
-                    if (it.items != null) {
-                        return@flatMap Observable.just(it.items)
+            makeRestCall(
+                Observable.zip(
+                    RestProvider.getProjectsService(isEnterprise).getProjectColumns(projectId),
+                    RestProvider.getRepoService(isEnterprise).isCollaborator(login, repoId, Login.getUser().login),
+                    BiFunction { items: Pageable<ProjectColumnModel>, response: Response<Boolean> ->
+                        viewerCanUpdate = response.code() == 204
+                        return@BiFunction items
                     }
-                    return@flatMap Observable.just(listOf<ProjectColumnModel>())
-                }) { t ->
+                )
+                    .flatMap {
+                        if (it.items != null) {
+                            return@flatMap Observable.just(it.items)
+                        }
+                        return@flatMap Observable.just(listOf<ProjectColumnModel>())
+                    }
+            ) { t ->
                 columns.clear()
                 columns.addAll(t)
                 sendToView { it.onInitPager(columns) }
             }
         } else {
-            makeRestCall(RestProvider.getProjectsService(isEnterprise).getProjectColumns(projectId)
-                .flatMap {
-                    if (it.items != null) {
-                        return@flatMap Observable.just(it.items)
+            makeRestCall(
+                RestProvider.getProjectsService(isEnterprise).getProjectColumns(projectId)
+                    .flatMap {
+                        if (it.items != null) {
+                            return@flatMap Observable.just(it.items)
+                        }
+                        return@flatMap Observable.just(listOf<ProjectColumnModel>())
                     }
-                    return@flatMap Observable.just(listOf<ProjectColumnModel>())
-                }) { t ->
+            ) { t ->
                 columns.clear()
                 columns.addAll(t)
                 sendToView { it.onInitPager(columns) }

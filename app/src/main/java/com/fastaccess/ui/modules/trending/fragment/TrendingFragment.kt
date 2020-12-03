@@ -1,8 +1,8 @@
 package com.fastaccess.ui.modules.trending.fragment
 
 import android.os.Bundle
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.View
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.evernote.android.state.State
 import com.fastaccess.R
@@ -13,7 +13,6 @@ import com.fastaccess.ui.base.BaseFragment
 import com.fastaccess.ui.widgets.StateLayout
 import com.fastaccess.ui.widgets.recyclerview.DynamicRecyclerView
 import com.fastaccess.ui.widgets.recyclerview.scroll.RecyclerViewFastScroller
-import kotlin.math.sin
 
 /**
  * Created by Kosh on 30 May 2017, 11:37 PM

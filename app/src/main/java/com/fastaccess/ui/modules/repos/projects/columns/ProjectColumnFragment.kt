@@ -2,9 +2,9 @@ package com.fastaccess.ui.modules.repos.projects.columns
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import android.view.View
 import butterknife.BindView
 import butterknife.OnClick
 import com.fastaccess.R
@@ -44,7 +44,6 @@ class ProjectColumnFragment : BaseFragment<ProjectColumnMvp.View, ProjectColumnP
     private var onLoadMore: OnLoadMore<Long>? = null
     private val adapter by lazy { ColumnCardAdapter(presenter.getCards(), isOwner()) }
     private var pageCallback: ProjectPagerMvp.DeletePageListener? = null
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

@@ -2,10 +2,10 @@ package com.fastaccess.ui.modules.reviews.changes
 
 import android.content.Context
 import android.os.Bundle
-import androidx.core.content.ContextCompat
-import androidx.appcompat.widget.Toolbar
 import android.view.View
 import android.widget.Spinner
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import butterknife.BindView
 import com.evernote.android.state.State
 import com.fastaccess.R
@@ -60,8 +60,8 @@ class ReviewChangesActivity : BaseDialogFragment<ReviewChangesMvp.View, ReviewCh
             val fragment = CommentEditorFragment()
             fragment.arguments = Bundler.start().put(BundleConstant.YES_NO_EXTRA, true).end()
             childFragmentManager.beginTransaction()
-                    .replace(R.id.commentContainer, fragment, "commentContainer")
-                    .commit()
+                .replace(R.id.commentContainer, fragment, "commentContainer")
+                .commit()
             val bundle = arguments!!
             reviewRequest = bundle.getParcelable(BundleConstant.EXTRA)
             repoId = bundle.getString(BundleConstant.EXTRA_TWO)
@@ -79,8 +79,7 @@ class ReviewChangesActivity : BaseDialogFragment<ReviewChangesMvp.View, ReviewCh
                     commentEditorFragment?.getEditText()?.error = getString(R.string.required_field)
                 } else {
                     commentEditorFragment?.getEditText()?.error = null
-                    presenter.onSubmit(reviewRequest!!, repoId!!, owner!!, number!!, InputHelper.toString(commentEditorFragment?.getEditText()?.text)
-                            , spinner.selectedItem as String)
+                    presenter.onSubmit(reviewRequest!!, repoId!!, owner!!, number!!, InputHelper.toString(commentEditorFragment?.getEditText()?.text), spinner.selectedItem as String)
                 }
             }
             return@setOnMenuItemClickListener true
@@ -130,22 +129,27 @@ class ReviewChangesActivity : BaseDialogFragment<ReviewChangesMvp.View, ReviewCh
     }
 
     companion object {
-        fun startForResult(reviewChanges: ReviewRequestModel, repoId: String, owner: String, number: Long,
-                           isAuthor: Boolean, isEnterprise: Boolean, isClosed: Boolean): ReviewChangesActivity {
+        fun startForResult(
+            reviewChanges: ReviewRequestModel,
+            repoId: String,
+            owner: String,
+            number: Long,
+            isAuthor: Boolean,
+            isEnterprise: Boolean,
+            isClosed: Boolean
+        ): ReviewChangesActivity {
             val fragment = ReviewChangesActivity()
             val bundle = Bundler.start()
-                    .put(BundleConstant.EXTRA, reviewChanges)
-                    .put(BundleConstant.EXTRA_TWO, repoId)
-                    .put(BundleConstant.EXTRA_THREE, owner)
-                    .put(BundleConstant.EXTRA_FOUR, isAuthor)
-                    .put(BundleConstant.ID, number)
-                    .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                    .put(BundleConstant.EXTRA_FIVE, isClosed)
-                    .end()
+                .put(BundleConstant.EXTRA, reviewChanges)
+                .put(BundleConstant.EXTRA_TWO, repoId)
+                .put(BundleConstant.EXTRA_THREE, owner)
+                .put(BundleConstant.EXTRA_FOUR, isAuthor)
+                .put(BundleConstant.ID, number)
+                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                .put(BundleConstant.EXTRA_FIVE, isClosed)
+                .end()
             fragment.arguments = bundle
             return fragment
         }
     }
-
-
 }
