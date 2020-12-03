@@ -25,52 +25,52 @@ import static com.fastaccess.data.dao.model.PinnedGists.LOGIN;
 
 @Entity @NoArgsConstructor public class AbstractPinnedGists {
 
-    @Key @Generated long id;
-    @io.requery.Nullable int entryCount;
-    @io.requery.Nullable String login;
-    @io.requery.Nullable @Convert(GistConverter.class) Gist gist;
-    @io.requery.Nullable long gistId;
+@Key @Generated long id;
+@io.requery.Nullable int entryCount;
+@io.requery.Nullable String login;
+@io.requery.Nullable @Convert(GistConverter.class) Gist gist;
+@io.requery.Nullable long gistId;
 
-    public static void pinUpin(@NonNull Gist gist) {
-        PinnedGists pinnedIssues = get(gist.getGistId().hashCode());
-        if (pinnedIssues == null) {
-            PinnedGists pinned = new PinnedGists();
-            pinned.setLogin(Login.getUser().getLogin());
-            pinned.setGist(gist);
-            pinned.setGistId(gist.getGistId().hashCode());
-            try {
-                App.getInstance().getDataStore().toBlocking().insert(pinned);
-            } catch (Exception ignored) {}
-        } else {
-            delete(gist.getGistId().hashCode());
-        }
-    }
+public static void pinUpin(@NonNull Gist gist) {
+	PinnedGists pinnedIssues = get(gist.getGistId().hashCode());
+	if (pinnedIssues == null) {
+		PinnedGists pinned = new PinnedGists();
+		pinned.setLogin(Login.getUser().getLogin());
+		pinned.setGist(gist);
+		pinned.setGistId(gist.getGistId().hashCode());
+		try {
+			App.getInstance().getDataStore().toBlocking().insert(pinned);
+		} catch (Exception ignored) {}
+	} else {
+		delete(gist.getGistId().hashCode());
+	}
+}
 
-    @Nullable public static PinnedGists get(long gistId) {
-        return App.getInstance().getDataStore().select(PinnedGists.class)
-               .where(PinnedGists.GIST_ID.eq(gistId))
-               .get()
-               .firstOrNull();
-    }
+@Nullable public static PinnedGists get(long gistId) {
+	return App.getInstance().getDataStore().select(PinnedGists.class)
+	       .where(PinnedGists.GIST_ID.eq(gistId))
+	       .get()
+	       .firstOrNull();
+}
 
-    public static void delete(long gistId) {
-        App.getInstance().getDataStore().delete(PinnedGists.class)
-        .where(PinnedGists.GIST_ID.eq(gistId))
-        .get()
-        .value();
-    }
+public static void delete(long gistId) {
+	App.getInstance().getDataStore().delete(PinnedGists.class)
+	.where(PinnedGists.GIST_ID.eq(gistId))
+	.get()
+	.value();
+}
 
-    @NonNull public static Single<List<Gist>> getMyPinnedGists() {
-        return App.getInstance().getDataStore().select(PinnedGists.class)
-               .where(LOGIN.eq(Login.getUser().getLogin()).or(LOGIN.isNull()))
-               .orderBy(ENTRY_COUNT.desc(), ID.desc())
-               .get()
-               .observable()
-               .map(PinnedGists::getGist)
-               .toList();
-    }
+@NonNull public static Single<List<Gist> > getMyPinnedGists() {
+	return App.getInstance().getDataStore().select(PinnedGists.class)
+	       .where(LOGIN.eq(Login.getUser().getLogin()).or(LOGIN.isNull()))
+	       .orderBy(ENTRY_COUNT.desc(), ID.desc())
+	       .get()
+	       .observable()
+	       .map(PinnedGists::getGist)
+	       .toList();
+}
 
-    public static boolean isPinned(long gistId) {
-        return get(gistId) != null;
-    }
+public static boolean isPinned(long gistId) {
+	return get(gistId) != null;
+}
 }

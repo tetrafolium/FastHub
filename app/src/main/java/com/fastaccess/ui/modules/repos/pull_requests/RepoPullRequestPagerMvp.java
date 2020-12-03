@@ -11,11 +11,11 @@ import com.fastaccess.ui.modules.repos.RepoPagerMvp;
 
 public interface RepoPullRequestPagerMvp {
 
-    interface View extends BaseMvp.FAView, RepoPagerMvp.TabsBadgeListener {
-        @IntRange(from = 0, to = 1) int getCurrentItem();
+interface View extends BaseMvp.FAView, RepoPagerMvp.TabsBadgeListener {
+@IntRange(from = 0, to = 1) int getCurrentItem();
 
-        void onScrolled(boolean isUp);
-    }
+void onScrolled(boolean isUp);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter {}
+interface Presenter extends BaseMvp.FAPresenter {}
 }

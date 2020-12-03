@@ -15,33 +15,33 @@ import java.util.List;
  */
 
 public class PullRequestAdapter extends BaseRecyclerAdapter<PullRequest, PullRequestViewHolder, BaseViewHolder
-    .OnItemClickListener<PullRequest>> {
+	                                                    .OnItemClickListener<PullRequest> > {
 
-    private boolean showRepoName;
-    private boolean withAvatar;
+private boolean showRepoName;
+private boolean withAvatar;
 
-    public PullRequestAdapter(@NonNull List<PullRequest> data) {
-        this(data, false);
-    }
+public PullRequestAdapter(@NonNull List<PullRequest> data) {
+	this(data, false);
+}
 
-    public PullRequestAdapter(@NonNull List<PullRequest> data, boolean withAvatar) {
-        super(data);
-        this.withAvatar = withAvatar;
-    }
+public PullRequestAdapter(@NonNull List<PullRequest> data, boolean withAvatar) {
+	super(data);
+	this.withAvatar = withAvatar;
+}
 
-    public PullRequestAdapter(@NonNull List<PullRequest> data, boolean withAvatar, boolean showRepoName) {
-        super(data);
-        this.withAvatar = withAvatar;
-        this.showRepoName = showRepoName;
-    }
+public PullRequestAdapter(@NonNull List<PullRequest> data, boolean withAvatar, boolean showRepoName) {
+	super(data);
+	this.withAvatar = withAvatar;
+	this.showRepoName = showRepoName;
+}
 
-    @Override protected PullRequestViewHolder viewHolder(ViewGroup parent, int viewType) {
-        return PullRequestViewHolder.newInstance(parent, this, withAvatar, showRepoName);
-    }
+@Override protected PullRequestViewHolder viewHolder(ViewGroup parent, int viewType) {
+	return PullRequestViewHolder.newInstance(parent, this, withAvatar, showRepoName);
+}
 
-    @Override protected void onBindView(PullRequestViewHolder holder, int position) {
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(PullRequestViewHolder holder, int position) {
+	holder.bind(getItem(position));
+}
 
 
 }

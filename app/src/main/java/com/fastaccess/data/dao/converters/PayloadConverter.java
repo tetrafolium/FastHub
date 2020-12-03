@@ -7,7 +7,7 @@ import com.fastaccess.data.dao.PayloadModel;
  */
 
 public class PayloadConverter extends BaseConverter<PayloadModel> {
-    @Override protected Class<? extends PayloadModel> getTypeClass() {
-        return PayloadModel.class;
-    }
+@Override protected Class<? extends PayloadModel> getTypeClass() {
+	return PayloadModel.class;
+}
 }

@@ -6,5 +6,5 @@ import com.fastaccess.data.dao.GroupedNotificationModel;
 
 public interface OnNotificationChangedListener {
 
-    void onNotificationChanged(@NonNull GroupedNotificationModel notification, int index);
+void onNotificationChanged(@NonNull GroupedNotificationModel notification, int index);
 }

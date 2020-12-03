@@ -14,27 +14,27 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor public class PostReactionModel implements Parcelable {
 
-    private String content;
+private String content;
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.content);
-    }
+@Override public void writeToParcel(Parcel dest, int flags) {
+	dest.writeString(this.content);
+}
 
-    private PostReactionModel(Parcel in) {
-        this.content = in.readString();
-    }
+private PostReactionModel(Parcel in) {
+	this.content = in.readString();
+}
 
-    public static final Parcelable.Creator<PostReactionModel> CREATOR = new Parcelable.Creator<PostReactionModel>() {
-        @Override public PostReactionModel createFromParcel(Parcel source) {
-            return new PostReactionModel(source);
-        }
+public static final Parcelable.Creator<PostReactionModel> CREATOR = new Parcelable.Creator<PostReactionModel>() {
+	@Override public PostReactionModel createFromParcel(Parcel source) {
+		return new PostReactionModel(source);
+	}
 
-        @Override public PostReactionModel[] newArray(int size) {
-            return new PostReactionModel[size];
-        }
-    };
+	@Override public PostReactionModel[] newArray(int size) {
+		return new PostReactionModel[size];
+	}
+};
 }

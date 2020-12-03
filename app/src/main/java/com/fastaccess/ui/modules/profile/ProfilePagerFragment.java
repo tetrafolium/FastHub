@@ -22,48 +22,49 @@ import butterknife.BindView;
 
 public class ProfilePagerFragment extends BaseFragment<ProfilePagerMvp.View, ProfilePagerPresenter> implements ProfilePagerMvp.View {
 
-    public static final String TAG = ProfilePagerFragment.class.getSimpleName();
+public static final String TAG = ProfilePagerFragment.class.getSimpleName();
 
-    @BindView(R.id.tabs) TabLayout tabs;
-    @BindView(R.id.pager) ViewPagerView pager;
+@BindView(R.id.tabs) TabLayout tabs;
+@BindView(R.id.pager) ViewPagerView pager;
 
-    public static ProfilePagerFragment newInstance(@NonNull String login) {
-        ProfilePagerFragment profileView = new ProfilePagerFragment();
-        profileView.setArguments(Bundler.start().put(BundleConstant.EXTRA, login).end());
-        return profileView;
-    }
+public static ProfilePagerFragment newInstance(@NonNull String login) {
+	ProfilePagerFragment profileView = new ProfilePagerFragment();
+	profileView.setArguments(Bundler.start().put(BundleConstant.EXTRA, login).end());
+	return profileView;
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.tabbed_viewpager;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.tabbed_viewpager;
+}
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        if (getArguments() == null) {
-            throw new RuntimeException("Bundle is null?");
-        }
-        String login = getArguments().getString(BundleConstant.EXTRA);
-        if (login == null) {
-            throw new RuntimeException("user is null?");
-        }
-        FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(getChildFragmentManager(),
-                FragmentPagerAdapterModel.buildForProfile(getContext(), login));
-        tabs.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
-        pager.setAdapter(adapter);
-        tabs.setupWithViewPager(pager);
-    }
+@Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+	if (getArguments() == null) {
+		throw new RuntimeException("Bundle is null?");
+	}
+	String login = getArguments().getString(BundleConstant.EXTRA);
+	if (login == null) {
+		throw new RuntimeException("user is null?");
+	}
+	FragmentsPagerAdapter adapter = new FragmentsPagerAdapter(getChildFragmentManager(),
+	                                                          FragmentPagerAdapterModel.buildForProfile(getContext(), login));
+	tabs.setTabGravity(TabLayout.GRAVITY_FILL);
+	tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+	pager.setAdapter(adapter);
+	tabs.setupWithViewPager(pager);
+}
 
-    @NonNull @Override public ProfilePagerPresenter providePresenter() {
-        return new ProfilePagerPresenter();
-    }
+@NonNull @Override public ProfilePagerPresenter providePresenter() {
+	return new ProfilePagerPresenter();
+}
 
-    @Override public void onNavigateToFollowers() {
-        pager.setCurrentItem(4);
-    }
+@Override public void onNavigateToFollowers() {
+	pager.setCurrentItem(4);
+}
 
-    @Override public void onNavigateToFollowing() {
-        pager.setCurrentItem(5);
-    }
+@Override public void onNavigateToFollowing() {
+	pager.setCurrentItem(5);
+}
 
-    @Override public void onCheckType(boolean isOrg) {}
+@Override public void onCheckType(boolean isOrg) {
+}
 }

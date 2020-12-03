@@ -20,44 +20,44 @@ import github.GetPinnedReposQuery;
 
 public interface ProfileOverviewMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onInitViews(@Nullable User userModel);
+interface View extends BaseMvp.FAView {
+void onInitViews(@Nullable User userModel);
 
-        void invalidateFollowBtn();
+void invalidateFollowBtn();
 
-        void onInitContributions(boolean show);
+void onInitContributions(boolean show);
 
-        void onInitOrgs(@Nullable List<User> orgs);
+void onInitOrgs(@Nullable List<User> orgs);
 
-        void onUserNotFound();
+void onUserNotFound();
 
-        void onInitPinnedRepos(@NonNull List<GetPinnedReposQuery.Node> nodes);
-    }
+void onInitPinnedRepos(@NonNull List<GetPinnedReposQuery.Node> nodes);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter {
+interface Presenter extends BaseMvp.FAPresenter {
 
-        void onFragmentCreated(@Nullable Bundle bundle);
+void onFragmentCreated(@Nullable Bundle bundle);
 
-        void onWorkOffline(@NonNull String login);
+void onWorkOffline(@NonNull String login);
 
-        void onCheckFollowStatus(@NonNull String login);
+void onCheckFollowStatus(@NonNull String login);
 
-        boolean isSuccessResponse();
+boolean isSuccessResponse();
 
-        boolean isFollowing();
+boolean isFollowing();
 
-        void onFollowButtonClicked(@NonNull String login);
+void onFollowButtonClicked(@NonNull String login);
 
-        void onSendUserToView(@Nullable User userModel);
+void onSendUserToView(@Nullable User userModel);
 
-        void onLoadContributionWidget(@NonNull GitHubContributionsView view);
+void onLoadContributionWidget(@NonNull GitHubContributionsView view);
 
-        @NonNull ArrayList<User> getOrgs();
+@NonNull ArrayList<User> getOrgs();
 
-        @NonNull ArrayList<ContributionsDay> getContributions();
+@NonNull ArrayList<ContributionsDay> getContributions();
 
-        @NonNull ArrayList<GetPinnedReposQuery.Node> getNodes();
+@NonNull ArrayList<GetPinnedReposQuery.Node> getNodes();
 
-        @NonNull String getLogin();
-    }
+@NonNull String getLogin();
+}
 }

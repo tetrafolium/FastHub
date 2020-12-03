@@ -12,6 +12,6 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 public class AssigneesRequestModel {
-    private List<String> assignees;
-    private List<String> reviewers;
+private List<String> assignees;
+private List<String> reviewers;
 }

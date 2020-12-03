@@ -20,59 +20,61 @@ import butterknife.OnClick;
  */
 
 public class SlackBottomSheetDialog extends BaseBottomSheetDialog {
-    public interface SlackDialogListener {
-        void onDismissed();
-    }
+public interface SlackDialogListener {
+void onDismissed();
+}
 
-    public static final String TAG = SlackBottomSheetDialog.class.getSimpleName();
+public static final String TAG = SlackBottomSheetDialog.class.getSimpleName();
 
-    @BindView(R.id.title) FontTextView title;
-    @BindView(R.id.message) FontTextView message;
-    @BindView(R.id.cancel) FontButton cancel;
-    @BindView(R.id.ok) FontButton ok;
-    private SlackDialogListener listener;
+@BindView(R.id.title) FontTextView title;
+@BindView(R.id.message) FontTextView message;
+@BindView(R.id.cancel) FontButton cancel;
+@BindView(R.id.ok) FontButton ok;
+private SlackDialogListener listener;
 
-    @Override public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof SlackDialogListener) {
-            listener = (SlackDialogListener) context;
-        }
-    }
+@Override public void onAttach(Context context) {
+	super.onAttach(context);
+	if (context instanceof SlackDialogListener) {
+		listener = (SlackDialogListener) context;
+	}
+}
 
-    @Override public void onDetach() {
-        listener = null;
-        super.onDetach();
-    }
+@Override public void onDetach() {
+	listener = null;
+	super.onDetach();
+}
 
-    @Override protected int layoutRes() {
-        return R.layout.message_dialog;
-    }
+@Override protected int layoutRes() {
+	return R.layout.message_dialog;
+}
 
-    @OnClick({R.id.cancel, R.id.ok}) public void onViewClicked(View view) {
-        switch (view.getId()) {
-        case R.id.ok:
-            ActivityHelper.startCustomTab(getActivity(), "http://rebrand.ly/fasthub");
-            break;
-        }
-        if (listener != null) listener.onDismissed();
-        dismiss();
-    }
+@OnClick({
+		R.id.cancel, R.id.ok
+	}) public void onViewClicked(View view) {
+	switch (view.getId()) {
+	case R.id.ok:
+		ActivityHelper.startCustomTab(getActivity(), "http://rebrand.ly/fasthub");
+		break;
+	}
+	if (listener != null) listener.onDismissed();
+	dismiss();
+}
 
-    @Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        cancel.setText(R.string.no);
-        ok.setText(R.string.yes);
-        title.setText(R.string.join_slack);
-        message.setText(getString(R.string.join_slack_message));
-    }
+@Override public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+	super.onViewCreated(view, savedInstanceState);
+	cancel.setText(R.string.no);
+	ok.setText(R.string.yes);
+	title.setText(R.string.join_slack);
+	message.setText(getString(R.string.join_slack_message));
+}
 
-    @Override protected void onHidden() {
-        if (listener != null) listener.onDismissed();
-        super.onHidden();
-    }
+@Override protected void onHidden() {
+	if (listener != null) listener.onDismissed();
+	super.onHidden();
+}
 
-    @Override protected void onDismissedByScrolling() {
-        if (listener != null) listener.onDismissed();
-        super.onDismissedByScrolling();
-    }
+@Override protected void onDismissedByScrolling() {
+	if (listener != null) listener.onDismissed();
+	super.onDismissedByScrolling();
+}
 }

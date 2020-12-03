@@ -8,7 +8,7 @@ import com.fastaccess.data.dao.MilestoneModel;
 
 public class MilestoneConverter extends BaseConverter<MilestoneModel> {
 
-    @Override protected Class<? extends MilestoneModel> getTypeClass() {
-        return MilestoneModel.class;
-    }
+@Override protected Class<? extends MilestoneModel> getTypeClass() {
+	return MilestoneModel.class;
+}
 }

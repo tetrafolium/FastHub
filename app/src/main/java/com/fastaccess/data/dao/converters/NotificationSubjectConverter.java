@@ -8,7 +8,7 @@ import com.fastaccess.data.dao.NotificationSubjectModel;
 
 public class NotificationSubjectConverter extends BaseConverter<NotificationSubjectModel> {
 
-    @Override protected Class<? extends NotificationSubjectModel> getTypeClass() {
-        return NotificationSubjectModel.class;
-    }
+@Override protected Class<? extends NotificationSubjectModel> getTypeClass() {
+	return NotificationSubjectModel.class;
+}
 }

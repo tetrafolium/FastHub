@@ -17,15 +17,15 @@ import java.util.List;
 
 public interface ReactionsDialogMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onNotifyAdapter(@Nullable List<User> items, int page);
+interface View extends BaseMvp.FAView {
+void onNotifyAdapter(@Nullable List<User> items, int page);
 
-        @NonNull OnLoadMore getLoadMore();
-    }
+@NonNull OnLoadMore getLoadMore();
+}
 
-    interface Presenter extends BaseMvp.PaginationListener {
-        void onFragmentCreated(@Nullable Bundle bundle);
+interface Presenter extends BaseMvp.PaginationListener {
+void onFragmentCreated(@Nullable Bundle bundle);
 
-        @NonNull ArrayList<User> getUsers();
-    }
+@NonNull ArrayList<User> getUsers();
+}
 }

@@ -18,21 +18,21 @@ import java.util.List;
 
 public interface OrgReposMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<Repo> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<Repo> items, int page);
 
-        @NonNull OnLoadMore<String> getLoadMore();
-        void onRepoFilterClicked();
-    }
+@NonNull OnLoadMore<String> getLoadMore();
+void onRepoFilterClicked();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Repo>,
-        BaseMvp.PaginationListener<String> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Repo>,
+	                    BaseMvp.PaginationListener<String> {
 
-        @NonNull ArrayList<Repo> getRepos();
+@NonNull ArrayList<Repo> getRepos();
 
-        void onWorkOffline(@NonNull String login);
-        void onFilterApply(String org);
-        void onTypeSelected(String selectedType);
-    }
+void onWorkOffline(@NonNull String login);
+void onFilterApply(String org);
+void onTypeSelected(String selectedType);
+}
 }

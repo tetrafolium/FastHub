@@ -22,25 +22,25 @@ import java.util.List;
 
 interface CommitFilesMvp {
 
-    interface View extends BaseMvp.FAView, OnToggleView, PullRequestFilesMvp.OnPatchClickListener, ReviewCommentListener {
+interface View extends BaseMvp.FAView, OnToggleView, PullRequestFilesMvp.OnPatchClickListener, ReviewCommentListener {
 
-        void onNotifyAdapter(@Nullable List<CommitFileChanges> items);
+void onNotifyAdapter(@Nullable List<CommitFileChanges> items);
 
-        void onCommentAdded(@NonNull Comment newComment);
+void onCommentAdded(@NonNull Comment newComment);
 
-        void clearAdapter();
+void clearAdapter();
 
-        void onOpenForResult(int position, CommitFileChanges model);
-    }
+void onOpenForResult(int position, CommitFileChanges model);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter, BaseViewHolder.OnItemClickListener<CommitFileChanges> {
+interface Presenter extends BaseMvp.FAPresenter, BaseViewHolder.OnItemClickListener<CommitFileChanges> {
 
-        void onFragmentCreated(@Nullable Bundle bundle);
+void onFragmentCreated(@Nullable Bundle bundle);
 
-        void onSubmitComment(@NonNull String comment, @NonNull CommitLinesModel item, @Nullable Bundle bundle);
+void onSubmitComment(@NonNull String comment, @NonNull CommitLinesModel item, @Nullable Bundle bundle);
 
-        void onSubmit(String username, String name, CommentRequestModel commentRequestModel);
-    }
+void onSubmit(String username, String name, CommentRequestModel commentRequestModel);
+}
 
 
 }

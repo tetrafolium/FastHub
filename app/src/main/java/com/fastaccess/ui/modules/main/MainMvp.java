@@ -19,41 +19,41 @@ import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 public interface MainMvp {
 
-    int FEEDS = 0;
-    int ISSUES = 1;
-    int PULL_REQUESTS = 2;
-    int PROFILE = 3;
+int FEEDS = 0;
+int ISSUES = 1;
+int PULL_REQUESTS = 2;
+int PROFILE = 3;
 
-    @IntDef({
-        FEEDS,
-        ISSUES,
-        PULL_REQUESTS,
-        PROFILE
-    })
-    @Retention(RetentionPolicy.SOURCE) @interface NavigationType {}
+@IntDef({
+		FEEDS,
+		ISSUES,
+		PULL_REQUESTS,
+		PROFILE
+	})
+@Retention(RetentionPolicy.SOURCE) @interface NavigationType {}
 
-    interface View extends BaseMvp.FAView {
+interface View extends BaseMvp.FAView {
 
-        void onNavigationChanged(@NavigationType int navType);
+void onNavigationChanged(@NavigationType int navType);
 
-        void onUpdateDrawerMenuHeader();
+void onUpdateDrawerMenuHeader();
 
-        void onOpenProfile();
+void onOpenProfile();
 
-        void onInvalidateNotification();
+void onInvalidateNotification();
 
-        void onUserIsBlackListed();
-    }
+void onUserIsBlackListed();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BottomNavigation.OnMenuItemSelectionListener {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BottomNavigation.OnMenuItemSelectionListener {
 
-        boolean canBackPress(@NonNull DrawerLayout drawerLayout);
+boolean canBackPress(@NonNull DrawerLayout drawerLayout);
 
-        void onModuleChanged(@NonNull FragmentManager fragmentManager, @NavigationType int type);
+void onModuleChanged(@NonNull FragmentManager fragmentManager, @NavigationType int type);
 
-        void onShowHideFragment(@NonNull FragmentManager fragmentManager, @NonNull Fragment toShow, @NonNull Fragment toHide);
+void onShowHideFragment(@NonNull FragmentManager fragmentManager, @NonNull Fragment toShow, @NonNull Fragment toHide);
 
-        void onAddAndHide(@NonNull FragmentManager fragmentManager, @NonNull Fragment toAdd, @NonNull Fragment toHide);
-    }
+void onAddAndHide(@NonNull FragmentManager fragmentManager, @NonNull Fragment toAdd, @NonNull Fragment toHide);
+}
 }

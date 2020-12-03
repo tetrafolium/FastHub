@@ -7,7 +7,7 @@ import com.fastaccess.data.dao.ReactionsModel;
  */
 
 public class ReactionsConverter extends BaseConverter<ReactionsModel> {
-    @Override protected Class<? extends ReactionsModel> getTypeClass() {
-        return ReactionsModel.class;
-    }
+@Override protected Class<? extends ReactionsModel> getTypeClass() {
+	return ReactionsModel.class;
+}
 }

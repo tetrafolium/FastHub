@@ -12,13 +12,13 @@ import lombok.Getter;
  */
 
 @Getter public class ChangelogPresenter extends BasePresenter<ChangelogMvp.View> implements ChangelogMvp.Presenter {
-    private String html;
+private String html;
 
-    @Override public void onLoadChangelog() {
-        manageDisposable(RxHelper.getObservable(ToGsonProvider.getChangelog(App.getInstance()))
-        .subscribe(s -> {
-            this.html = s;
-            sendToView(view -> view.onChangelogLoaded(html));
-        }, throwable -> sendToView(view -> view.onChangelogLoaded(null))));
-    }
+@Override public void onLoadChangelog() {
+	manageDisposable(RxHelper.getObservable(ToGsonProvider.getChangelog(App.getInstance()))
+	                 .subscribe(s->{
+			this.html = s;
+			sendToView(view->view.onChangelogLoaded(html));
+		}, throwable->sendToView(view->view.onChangelogLoaded(null))));
+}
 }

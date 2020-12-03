@@ -21,29 +21,29 @@ import java.util.List;
 
 interface RepoCommitsMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-        android.view.View.OnClickListener, BranchesMvp.BranchSelectionListener {
-        void onNotifyAdapter(@Nullable List<Commit> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
+	               android.view.View.OnClickListener, BranchesMvp.BranchSelectionListener {
+void onNotifyAdapter(@Nullable List<Commit> items, int page);
 
-        @NonNull OnLoadMore getLoadMore();
+@NonNull OnLoadMore getLoadMore();
 
-        void setBranchesData(@NonNull List<BranchesModel> branches, boolean firstTime);
+void setBranchesData(@NonNull List<BranchesModel> branches, boolean firstTime);
 
-        void onShowCommitCount(long sum);
-    }
+void onShowCommitCount(long sum);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Commit>,
-        BaseMvp.PaginationListener {
-        void onFragmentCreated(@NonNull Bundle bundle);
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Commit>,
+	                    BaseMvp.PaginationListener {
+void onFragmentCreated(@NonNull Bundle bundle);
 
-        @NonNull ArrayList<Commit> getCommits();
+@NonNull ArrayList<Commit> getCommits();
 
-        void onWorkOffline();
+void onWorkOffline();
 
-        void onBranchChanged(@NonNull String branch);
+void onBranchChanged(@NonNull String branch);
 
-        String getDefaultBranch();
+String getDefaultBranch();
 
-    }
+}
 }

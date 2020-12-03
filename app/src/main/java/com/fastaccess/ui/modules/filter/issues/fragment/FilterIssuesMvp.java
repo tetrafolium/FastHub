@@ -18,28 +18,28 @@ import java.util.List;
 
 public interface FilterIssuesMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
 
-        void onClear();
+void onClear();
 
-        void onSearch(@NonNull String query, boolean isOpen, boolean isIssue, boolean isEnterprise);
+void onSearch(@NonNull String query, boolean isOpen, boolean isIssue, boolean isEnterprise);
 
-        void onNotifyAdapter(@Nullable List<Issue> items, int page);
+void onNotifyAdapter(@Nullable List<Issue> items, int page);
 
-        @NonNull OnLoadMore<String> getLoadMore();
+@NonNull OnLoadMore<String> getLoadMore();
 
-        void onSetCount(int totalCount);
+void onSetCount(int totalCount);
 
-        void onItemClicked(@NonNull Issue item);
+void onItemClicked(@NonNull Issue item);
 
-        void onShowPopupDetails(@NonNull Issue item);
-    }
+void onShowPopupDetails(@NonNull Issue item);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Issue>,
-        BaseMvp.PaginationListener<String> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Issue>,
+	                    BaseMvp.PaginationListener<String> {
 
-        @NonNull ArrayList<Issue> getIssues();
+@NonNull ArrayList<Issue> getIssues();
 
-    }
+}
 }

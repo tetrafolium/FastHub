@@ -15,18 +15,18 @@ import java.util.ArrayList;
  */
 
 public class RepoFilesAdapter extends BaseRecyclerAdapter<RepoFile, RepoFilesViewHolder, BaseViewHolder
-    .OnItemClickListener<RepoFile>> {
+	                                                  .OnItemClickListener<RepoFile> > {
 
 
-    public RepoFilesAdapter(@NonNull ArrayList<RepoFile> eventsModels) {
-        super(eventsModels);
-    }
+public RepoFilesAdapter(@NonNull ArrayList<RepoFile> eventsModels) {
+	super(eventsModels);
+}
 
-    @Override protected RepoFilesViewHolder viewHolder(ViewGroup parent, int viewType) {
-        return RepoFilesViewHolder.newInstance(parent, this);
-    }
+@Override protected RepoFilesViewHolder viewHolder(ViewGroup parent, int viewType) {
+	return RepoFilesViewHolder.newInstance(parent, this);
+}
 
-    @Override protected void onBindView(RepoFilesViewHolder holder, int position) {
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(RepoFilesViewHolder holder, int position) {
+	holder.bind(getItem(position));
+}
 }

@@ -16,32 +16,32 @@ import java.util.ArrayList;
  */
 
 public class PinnedPullRequestPresenter extends BasePresenter<PinnedPullRequestMvp.View> implements PinnedPullRequestMvp.Presenter {
-    private ArrayList<PullRequest> pullRequests = new ArrayList<>();
+private ArrayList<PullRequest> pullRequests = new ArrayList<>();
 
-    @Override protected void onAttachView(@NonNull PinnedPullRequestMvp.View view) {
-        super.onAttachView(view);
-        if (pullRequests.isEmpty()) {
-            onReload();
-        }
-    }
+@Override protected void onAttachView(@NonNull PinnedPullRequestMvp.View view) {
+	super.onAttachView(view);
+	if (pullRequests.isEmpty()) {
+		onReload();
+	}
+}
 
-    @NonNull @Override public ArrayList<PullRequest> getPinnedPullRequest() {
-        return pullRequests;
-    }
+@NonNull @Override public ArrayList<PullRequest> getPinnedPullRequest() {
+	return pullRequests;
+}
 
-    @Override public void onReload() {
-        manageDisposable(PinnedPullRequests.getMyPinnedPullRequests()
-                         .subscribe(repos -> sendToView(view -> view.onNotifyAdapter(repos)), throwable ->
-                                    sendToView(view -> view.onNotifyAdapter(null))));
-    }
+@Override public void onReload() {
+	manageDisposable(PinnedPullRequests.getMyPinnedPullRequests()
+	                 .subscribe(repos->sendToView(view->view.onNotifyAdapter(repos)), throwable->
+	                            sendToView(view->view.onNotifyAdapter(null))));
+}
 
-    @Override public void onItemClick(int position, View v, PullRequest item) {
-        SchemeParser.launchUri(v.getContext(), !InputHelper.isEmpty(item.getHtmlUrl()) ? item.getHtmlUrl() : item.getUrl());
-    }
+@Override public void onItemClick(int position, View v, PullRequest item) {
+	SchemeParser.launchUri(v.getContext(), !InputHelper.isEmpty(item.getHtmlUrl()) ? item.getHtmlUrl() : item.getUrl());
+}
 
-    @Override public void onItemLongClick(int position, View v, PullRequest item) {
-        if (getView() != null) {
-            getView().onDeletePinnedPullRequest(item.getId(), position);
-        }
-    }
+@Override public void onItemLongClick(int position, View v, PullRequest item) {
+	if (getView() != null) {
+		getView().onDeletePinnedPullRequest(item.getId(), position);
+	}
+}
 }

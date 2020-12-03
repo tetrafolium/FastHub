@@ -24,46 +24,46 @@ import net.grandcentrix.thirtyinch.TiPresenter;
 
 public class ProgressDialogFragment extends BaseDialogFragment {
 
-    public ProgressDialogFragment() {
-        suppressAnimation = true;
-    }
+public ProgressDialogFragment() {
+	suppressAnimation = true;
+}
 
-    public static final String TAG = ProgressDialogFragment.class.getSimpleName();
+public static final String TAG = ProgressDialogFragment.class.getSimpleName();
 
-    @NonNull public static ProgressDialogFragment newInstance(@NonNull Resources resources, @StringRes int msgId, boolean isCancelable) {
-        return newInstance(resources.getString(msgId), isCancelable);
-    }
+@NonNull public static ProgressDialogFragment newInstance(@NonNull Resources resources, @StringRes int msgId, boolean isCancelable) {
+	return newInstance(resources.getString(msgId), isCancelable);
+}
 
-    @NonNull public static ProgressDialogFragment newInstance(@NonNull String msg, boolean isCancelable) {
-        ProgressDialogFragment fragment = new ProgressDialogFragment();
-        fragment.setArguments(Bundler.start()
-                              .put("msg", msg)
-                              .put("isCancelable", isCancelable)
-                              .end());
-        return fragment;
-    }
+@NonNull public static ProgressDialogFragment newInstance(@NonNull String msg, boolean isCancelable) {
+	ProgressDialogFragment fragment = new ProgressDialogFragment();
+	fragment.setArguments(Bundler.start()
+	                      .put("msg", msg)
+	                      .put("isCancelable", isCancelable)
+	                      .end());
+	return fragment;
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.progress_dialog_layout;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.progress_dialog_layout;
+}
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+@Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-    }
+}
 
-    @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog dialog = super.onCreateDialog(savedInstanceState);
-        dialog.setCancelable(false);
-        setCancelable(false);
-        Window window = dialog.getWindow();
-        if (window != null) {
-            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            window.setDimAmount(0);
-        }
-        return dialog;
-    }
+@NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+	Dialog dialog = super.onCreateDialog(savedInstanceState);
+	dialog.setCancelable(false);
+	setCancelable(false);
+	Window window = dialog.getWindow();
+	if (window != null) {
+		window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		window.setDimAmount(0);
+	}
+	return dialog;
+}
 
-    @NonNull @Override public TiPresenter providePresenter() {
-        return new BasePresenter();
-    }
+@NonNull @Override public TiPresenter providePresenter() {
+	return new BasePresenter();
+}
 }

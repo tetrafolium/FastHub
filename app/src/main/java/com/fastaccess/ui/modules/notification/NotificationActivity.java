@@ -31,73 +31,73 @@ import butterknife.BindView;
 
 public class NotificationActivity extends BaseActivity implements OnNotificationChangedListener {
 
-    @BindView(R.id.tabs) TabLayout tabs;
-    @BindView(R.id.notificationContainer)
-    ViewPagerView pager;
+@BindView(R.id.tabs) TabLayout tabs;
+@BindView(R.id.notificationContainer)
+ViewPagerView pager;
 
-    @Override protected int layout() {
-        return R.layout.notification_activity_layout;
-    }
+@Override protected int layout() {
+	return R.layout.notification_activity_layout;
+}
 
-    @Override protected boolean isTransparent() {
-        return true;
-    }
+@Override protected boolean isTransparent() {
+	return true;
+}
 
-    @Override protected boolean canBack() {
-        return true;
-    }
+@Override protected boolean canBack() {
+	return true;
+}
 
-    @Override protected boolean isSecured() {
-        return false;
-    }
+@Override protected boolean isSecured() {
+	return false;
+}
 
-    @NonNull @Override public TiPresenter providePresenter() {
-        return new BasePresenter();
-    }
+@NonNull @Override public TiPresenter providePresenter() {
+	return new BasePresenter();
+}
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        AppHelper.cancelNotification(this);
-        onSelectNotifications();
-        setupTabs();
-        tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
-            @Override public void onTabReselected(TabLayout.Tab tab) {
-                super.onTabReselected(tab);
-                onScrollTop(tab.getPosition());
-            }
-        });
-    }
+@Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	AppHelper.cancelNotification(this);
+	onSelectNotifications();
+	setupTabs();
+	tabs.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(pager) {
+			@Override public void onTabReselected(TabLayout.Tab tab) {
+			        super.onTabReselected(tab);
+			        onScrollTop(tab.getPosition());
+			}
+		});
+}
 
-    @Override public void onScrollTop(int index) {
-        if (pager == null || pager.getAdapter() == null) return;
-        Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
-        if (fragment instanceof BaseFragment) {
-            ((BaseFragment) fragment).onScrollTop(index);
-        }
-    }
+@Override public void onScrollTop(int index) {
+	if (pager == null || pager.getAdapter() == null) return;
+	Fragment fragment = (BaseFragment) pager.getAdapter().instantiateItem(pager, index);
+	if (fragment instanceof BaseFragment) {
+		((BaseFragment) fragment).onScrollTop(index);
+	}
+}
 
-    @Override public void onBackPressed() {
-        if (isTaskRoot()) {
-            startActivity(new Intent(this, MainActivity.class));
-        }
-        super.onBackPressed();
-    }
+@Override public void onBackPressed() {
+	if (isTaskRoot()) {
+		startActivity(new Intent(this, MainActivity.class));
+	}
+	super.onBackPressed();
+}
 
-    @Override public void onNotificationChanged(@NonNull GroupedNotificationModel notification, int index) {
-        if (pager != null && pager.getAdapter() != null) {
-            if (index == 0) {
-                UnreadNotificationsFragment fragment = (UnreadNotificationsFragment) pager.getAdapter().instantiateItem(pager, 0);
-                fragment.onNotifyNotificationChanged(notification);
-            } else {
-                AllNotificationsFragment fragment = (AllNotificationsFragment) pager.getAdapter().instantiateItem(pager, 1);
-                fragment.onNotifyNotificationChanged(notification);
-            }
-        }
-    }
+@Override public void onNotificationChanged(@NonNull GroupedNotificationModel notification, int index) {
+	if (pager != null && pager.getAdapter() != null) {
+		if (index == 0) {
+			UnreadNotificationsFragment fragment = (UnreadNotificationsFragment) pager.getAdapter().instantiateItem(pager, 0);
+			fragment.onNotifyNotificationChanged(notification);
+		} else {
+			AllNotificationsFragment fragment = (AllNotificationsFragment) pager.getAdapter().instantiateItem(pager, 1);
+			fragment.onNotifyNotificationChanged(notification);
+		}
+	}
+}
 
-    private void setupTabs() {
-        pager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(),
-                         FragmentPagerAdapterModel.buildForNotifications(this)));
-        tabs.setupWithViewPager(pager);
-    }
+private void setupTabs() {
+	pager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(),
+	                                           FragmentPagerAdapterModel.buildForNotifications(this)));
+	tabs.setupWithViewPager(pager);
+}
 }

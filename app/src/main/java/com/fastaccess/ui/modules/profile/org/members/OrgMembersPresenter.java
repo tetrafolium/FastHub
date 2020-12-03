@@ -16,61 +16,63 @@ import java.util.ArrayList;
 
 class OrgMembersPresenter extends BasePresenter<OrgMembersMvp.View> implements OrgMembersMvp.Presenter {
 
-    private ArrayList<User> users = new ArrayList<>();
-    private int page;
-    private int previousTotal;
-    private int lastPage = Integer.MAX_VALUE;
+private ArrayList<User> users = new ArrayList<>();
+private int page;
+private int previousTotal;
+private int lastPage = Integer.MAX_VALUE;
 
-    @Override public int getCurrentPage() {
-        return page;
-    }
+@Override public int getCurrentPage() {
+	return page;
+}
 
-    @Override public int getPreviousTotal() {
-        return previousTotal;
-    }
+@Override public int getPreviousTotal() {
+	return previousTotal;
+}
 
-    @Override public void setCurrentPage(int page) {
-        this.page = page;
-    }
+@Override public void setCurrentPage(int page) {
+	this.page = page;
+}
 
-    @Override public void setPreviousTotal(int previousTotal) {
-        this.previousTotal = previousTotal;
-    }
+@Override public void setPreviousTotal(int previousTotal) {
+	this.previousTotal = previousTotal;
+}
 
-    @Override public void onError(@NonNull Throwable throwable) {
-        super.onError(throwable);
-    }
+@Override public void onError(@NonNull Throwable throwable) {
+	super.onError(throwable);
+}
 
-    @Override public boolean onCallApi(int page, @Nullable String parameter) {
-        if (parameter == null) {
-            throw new NullPointerException("Username is null");
-        }
-        if (page == 1) {
-            lastPage = Integer.MAX_VALUE;
-            sendToView(view -> view.getLoadMore().reset());
-        }
-        setCurrentPage(page);
-        if (page > lastPage || lastPage == 0) {
-            sendToView(OrgMembersMvp.View::hideProgress);
-            return false;
-        }
-        makeRestCall(RestProvider.getOrgService(isEnterprise()).getOrgMembers(parameter, page),
-        response -> {
-            lastPage = response.getLast();
-            sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
-        });
-        return true;
-    }
+@Override public boolean onCallApi(int page, @Nullable String parameter) {
+	if (parameter == null) {
+		throw new NullPointerException("Username is null");
+	}
+	if (page == 1) {
+		lastPage = Integer.MAX_VALUE;
+		sendToView(view->view.getLoadMore().reset());
+	}
+	setCurrentPage(page);
+	if (page > lastPage || lastPage == 0) {
+		sendToView(OrgMembersMvp.View::hideProgress);
+		return false;
+	}
+	makeRestCall(RestProvider.getOrgService(isEnterprise()).getOrgMembers(parameter, page),
+	             response->{
+			lastPage = response.getLast();
+			sendToView(view->view.onNotifyAdapter(response.getItems(), page));
+		});
+	return true;
+}
 
-    @NonNull @Override public ArrayList<User> getFollowers() {
-        return users;
-    }
+@NonNull @Override public ArrayList<User> getFollowers() {
+	return users;
+}
 
-    @Override public void onWorkOffline(@NonNull String login) {
-        //TODO
-    }
+@Override public void onWorkOffline(@NonNull String login) {
+	//TODO
+}
 
-    @Override public void onItemClick(int position, View v, User item) {}
+@Override public void onItemClick(int position, View v, User item) {
+}
 
-    @Override public void onItemLongClick(int position, View v, User item) {}
+@Override public void onItemLongClick(int position, View v, User item) {
+}
 }

@@ -13,15 +13,15 @@ import com.fastaccess.ui.base.mvp.BaseMvp;
 
 public interface OrgProfileOverviewMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onInitViews(@Nullable User userModel);
-    }
+interface View extends BaseMvp.FAView {
+void onInitViews(@Nullable User userModel);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter {
-        void onFragmentCreated(@Nullable Bundle bundle);
+interface Presenter extends BaseMvp.FAPresenter {
+void onFragmentCreated(@Nullable Bundle bundle);
 
-        void onWorkOffline(@NonNull String login);
+void onWorkOffline(@NonNull String login);
 
-        @NonNull String getLogin();
-    }
+@NonNull String getLogin();
+}
 }
