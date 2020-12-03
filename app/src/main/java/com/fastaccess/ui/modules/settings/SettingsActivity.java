@@ -3,9 +3,9 @@ package com.fastaccess.ui.modules.settings;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
 import android.widget.ListView;
-
+import androidx.annotation.NonNull;
+import butterknife.BindView;
 import com.fastaccess.R;
 import com.fastaccess.data.dao.SettingsModel;
 import com.fastaccess.helper.ActivityHelper;
@@ -17,95 +17,123 @@ import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
 import com.fastaccess.ui.modules.settings.category.SettingsCategoryActivity;
 import com.fastaccess.ui.modules.theme.ThemeActivity;
 import com.fastaccess.ui.modules.theme.code.ThemeCodeActivity;
-
+import io.reactivex.functions.Action;
+import java.util.ArrayList;
 import net.grandcentrix.thirtyinch.TiPresenter;
 
-import java.util.ArrayList;
+public class SettingsActivity extends BaseActivity
+    implements LanguageBottomSheetDialog.LanguageDialogListener {
 
-import butterknife.BindView;
-import io.reactivex.functions.Action;
+  @BindView(R.id.settingsList) ListView settingsList;
 
-public class SettingsActivity extends BaseActivity implements LanguageBottomSheetDialog.LanguageDialogListener {
+  private static int THEME_CHANGE = 32;
+  private ArrayList<SettingsModel> settings = new ArrayList<>();
 
-@BindView(R.id.settingsList) ListView settingsList;
+  @Override
+  protected int layout() {
+    return R.layout.activity_settings;
+  }
 
-private static int THEME_CHANGE = 32;
-private ArrayList<SettingsModel> settings = new ArrayList<>();
+  @Override
+  protected boolean isTransparent() {
+    return false;
+  }
 
-@Override protected int layout() {
-	return R.layout.activity_settings;
-}
+  @Override
+  protected boolean canBack() {
+    return true;
+  }
 
-@Override protected boolean isTransparent() {
-	return false;
-}
+  @Override
+  protected boolean isSecured() {
+    return false;
+  }
 
-@Override protected boolean canBack() {
-	return true;
-}
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setToolbarIcon(R.drawable.ic_back);
+    setTitle(getString(R.string.settings));
+    if (savedInstanceState == null) {
+      setResult(RESULT_CANCELED);
+    }
+    settings.add(new SettingsModel(R.drawable.ic_color_lens,
+                                   getString(R.string.theme_title),
+                                   SettingsModel.THEME));
+    settings.add(new SettingsModel(R.drawable.ic_color_lens,
+                                   getString(R.string.choose_code_theme),
+                                   SettingsModel.CODE_THEME));
+    settings.add(new SettingsModel(R.drawable.ic_edit,
+                                   getString(R.string.customization),
+                                   SettingsModel.CUSTOMIZATION));
+    settings.add(new SettingsModel(R.drawable.ic_ring,
+                                   getString(R.string.notifications),
+                                   SettingsModel.NOTIFICATION));
+    settings.add(new SettingsModel(R.drawable.ic_settings,
+                                   getString(R.string.behavior),
+                                   SettingsModel.BEHAVIOR));
+    settings.add(new SettingsModel(R.drawable.ic_backup,
+                                   getString(R.string.backup),
+                                   SettingsModel.BACKUP));
+    settings.add(new SettingsModel(R.drawable.ic_language,
+                                   getString(R.string.app_language),
+                                   SettingsModel.LANGUAGE));
+    settingsList.setAdapter(new SettingsAdapter(this, settings));
+    settingsList.setOnItemClickListener((parent, view, position, id) -> {
+      SettingsModel settingsModel =
+          (SettingsModel)parent.getItemAtPosition(position);
+      Intent intent = new Intent(this, SettingsCategoryActivity.class);
+      intent.putExtras(
+          Bundler.start()
+              .put(BundleConstant.ITEM, settingsModel.getSettingsType())
+              .put(BundleConstant.EXTRA, settingsModel.getTitle())
+              .end());
+      if (settingsModel.getSettingsType() == SettingsModel.LANGUAGE) {
+        showLanguageList();
+      } else if (settingsModel.getSettingsType() == SettingsModel.THEME) {
+        ActivityHelper.startReveal(this, new Intent(this, ThemeActivity.class),
+                                   view, THEME_CHANGE);
+      } else if (settingsModel.getSettingsType() == SettingsModel.CODE_THEME) {
+        ActivityHelper.startReveal(this,
+                                   new Intent(this, ThemeCodeActivity.class),
+                                   view, THEME_CHANGE);
+      } else {
+        ActivityHelper.startReveal(this, intent, view);
+      }
+    });
+  }
 
-@Override protected boolean isSecured() {
-	return false;
-}
+  @Override
+  protected void onActivityResult(int requestCode, int resultCode,
+                                  Intent data) {
+    if (requestCode == THEME_CHANGE && resultCode == RESULT_OK) {
+      setResult(resultCode);
+      finish();
+    }
+  }
 
-@Override protected void onCreate(Bundle savedInstanceState) {
-	super.onCreate(savedInstanceState);
-	setToolbarIcon(R.drawable.ic_back);
-	setTitle(getString(R.string.settings));
-	if (savedInstanceState == null) {
-		setResult(RESULT_CANCELED);
-	}
-	settings.add(new SettingsModel(R.drawable.ic_color_lens, getString(R.string.theme_title), SettingsModel.THEME));
-	settings.add(new SettingsModel(R.drawable.ic_color_lens, getString(R.string.choose_code_theme), SettingsModel.CODE_THEME));
-	settings.add(new SettingsModel(R.drawable.ic_edit, getString(R.string.customization), SettingsModel.CUSTOMIZATION));
-	settings.add(new SettingsModel(R.drawable.ic_ring, getString(R.string.notifications), SettingsModel.NOTIFICATION));
-	settings.add(new SettingsModel(R.drawable.ic_settings, getString(R.string.behavior), SettingsModel.BEHAVIOR));
-	settings.add(new SettingsModel(R.drawable.ic_backup, getString(R.string.backup), SettingsModel.BACKUP));
-	settings.add(new SettingsModel(R.drawable.ic_language, getString(R.string.app_language), SettingsModel.LANGUAGE));
-	settingsList.setAdapter(new SettingsAdapter(this, settings));
-	settingsList.setOnItemClickListener((parent, view, position, id)->{
-			SettingsModel settingsModel = (SettingsModel) parent.getItemAtPosition(position);
-			Intent intent = new Intent(this, SettingsCategoryActivity.class);
-			intent.putExtras(Bundler.start()
-			                 .put(BundleConstant.ITEM, settingsModel.getSettingsType())
-			                 .put(BundleConstant.EXTRA, settingsModel.getTitle())
-			                 .end());
-			if (settingsModel.getSettingsType() == SettingsModel.LANGUAGE) {
-			        showLanguageList();
-			} else if (settingsModel.getSettingsType() == SettingsModel.THEME) {
-			        ActivityHelper.startReveal(this, new Intent(this, ThemeActivity.class), view, THEME_CHANGE);
-			} else if (settingsModel.getSettingsType() == SettingsModel.CODE_THEME) {
-			        ActivityHelper.startReveal(this, new Intent(this, ThemeCodeActivity.class), view, THEME_CHANGE);
-			} else {
-			        ActivityHelper.startReveal(this, intent, view);
-			}
-		});
-}
+  @NonNull
+  @Override
+  public TiPresenter providePresenter() {
+    return new BasePresenter();
+  }
 
-@Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	if (requestCode == THEME_CHANGE && resultCode == RESULT_OK) {
-		setResult(resultCode);
-		finish();
-	}
-}
+  private void showLanguageList() {
+    LanguageBottomSheetDialog languageBottomSheetDialog =
+        new LanguageBottomSheetDialog();
+    languageBottomSheetDialog.onAttach((Context)this);
+    languageBottomSheetDialog.show(getSupportFragmentManager(),
+                                   "LanguageBottomSheetDialog");
+  }
 
-@NonNull @Override public TiPresenter providePresenter() {
-	return new BasePresenter();
-}
-
-private void showLanguageList() {
-	LanguageBottomSheetDialog languageBottomSheetDialog = new LanguageBottomSheetDialog();
-	languageBottomSheetDialog.onAttach((Context) this);
-	languageBottomSheetDialog.show(getSupportFragmentManager(), "LanguageBottomSheetDialog");
-}
-
-@Override public void onLanguageChanged(Action action) {
-	try {
-		action.run(); //dismiss dialog avoid leakage
-	} catch (Exception e) {
-		e.printStackTrace();
-	}
-	setResult(RESULT_OK);
-	finish();
-}
+  @Override
+  public void onLanguageChanged(Action action) {
+    try {
+      action.run(); // dismiss dialog avoid leakage
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    setResult(RESULT_OK);
+    finish();
+  }
 }

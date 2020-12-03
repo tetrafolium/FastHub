@@ -9,7 +9,7 @@ import com.fastaccess.ui.modules.repos.RepoPagerMvp;
 
 public interface MyPullsPagerMvp {
 
-interface View extends BaseMvp.FAView, RepoPagerMvp.TabsBadgeListener {}
+  interface View extends BaseMvp.FAView, RepoPagerMvp.TabsBadgeListener {}
 
-interface Presenter {}
+  interface Presenter {}
 }

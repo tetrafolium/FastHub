@@ -8,7 +8,8 @@ import com.fastaccess.data.dao.model.User;
 
 public class UserConverter extends BaseConverter<User> {
 
-@Override protected Class<? extends User> getTypeClass() {
-	return User.class;
-}
+  @Override
+  protected Class<? extends User> getTypeClass() {
+    return User.class;
+  }
 }

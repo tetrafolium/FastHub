@@ -3,7 +3,6 @@ package com.fastaccess.ui.modules.repos.issues.create;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.fastaccess.data.dao.LabelModel;
 import com.fastaccess.data.dao.MilestoneModel;
 import com.fastaccess.data.dao.model.Issue;
@@ -13,7 +12,6 @@ import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.modules.repos.extras.assignees.AssigneesMvp;
 import com.fastaccess.ui.modules.repos.extras.labels.LabelsMvp;
 import com.fastaccess.ui.modules.repos.extras.milestone.MilestoneMvp;
-
 import java.util.ArrayList;
 
 /**
@@ -22,36 +20,40 @@ import java.util.ArrayList;
 
 public interface CreateIssueMvp {
 
-interface View extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener, AssigneesMvp.SelectedAssigneesListener,
-	               MilestoneMvp.OnMilestoneSelected {
-void onSetCode(@NonNull CharSequence charSequence);
+  interface View extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener,
+                         AssigneesMvp.SelectedAssigneesListener,
+                         MilestoneMvp.OnMilestoneSelected {
+    void onSetCode(@NonNull CharSequence charSequence);
 
-void onTitleError(boolean isEmptyTitle);
+    void onTitleError(boolean isEmptyTitle);
 
-void onDescriptionError(boolean isEmptyDesc);
+    void onDescriptionError(boolean isEmptyDesc);
 
-void onSuccessSubmission(Issue issueModel);
+    void onSuccessSubmission(Issue issueModel);
 
-void onSuccessSubmission(PullRequest issueModel);
+    void onSuccessSubmission(PullRequest issueModel);
 
-void onShowUpdate();
+    void onShowUpdate();
 
-void onShowIssueMisc();
-}
+    void onShowIssueMisc();
+  }
 
-interface Presenter extends BaseMvp.FAPresenter {
+  interface Presenter extends BaseMvp.FAPresenter {
 
-void checkAuthority(@NonNull String login, @NonNull String repoId);
+    void checkAuthority(@NonNull String login, @NonNull String repoId);
 
-void onActivityForResult(int resultCode, int requestCode, Intent intent);
+    void onActivityForResult(int resultCode, int requestCode, Intent intent);
 
-void onSubmit(@NonNull String title, @NonNull CharSequence description, @NonNull String login,
-              @NonNull String repo, @Nullable Issue issueModel, @Nullable PullRequest pullRequestModel,
-              @Nullable ArrayList<LabelModel> labels, @Nullable MilestoneModel milestoneModel,
-              @Nullable ArrayList<User> users);
+    void onSubmit(@NonNull String title, @NonNull CharSequence description,
+                  @NonNull String login, @NonNull String repo,
+                  @Nullable Issue issueModel,
+                  @Nullable PullRequest pullRequestModel,
+                  @Nullable ArrayList<LabelModel> labels,
+                  @Nullable MilestoneModel milestoneModel,
+                  @Nullable ArrayList<User> users);
 
-void onCheckAppVersion();
+    void onCheckAppVersion();
 
-boolean isCollaborator();
-}
+    boolean isCollaborator();
+  }
 }

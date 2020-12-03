@@ -2,12 +2,10 @@ package com.fastaccess.ui.modules.repos.extras.milestone;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.fastaccess.data.dao.MilestoneModel;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.modules.repos.extras.milestone.create.CreateMilestoneMvp;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,20 +15,20 @@ import java.util.List;
 
 public interface MilestoneMvp {
 
+  interface OnMilestoneSelected {
+    void onMilestoneSelected(@NonNull MilestoneModel milestoneModel);
+  }
 
-interface OnMilestoneSelected {
-void onMilestoneSelected(@NonNull MilestoneModel milestoneModel);
-}
+  interface View extends BaseMvp.FAView, CreateMilestoneMvp.OnMilestoneAdded {
+    void onNotifyAdapter(@Nullable List<MilestoneModel> items);
 
-interface View extends BaseMvp.FAView, CreateMilestoneMvp.OnMilestoneAdded {
-void onNotifyAdapter(@Nullable List<MilestoneModel> items);
+    void onMilestoneSelected(@NonNull MilestoneModel milestoneModel);
+  }
 
-void onMilestoneSelected(@NonNull MilestoneModel milestoneModel);
-}
+  interface Presenter
+      extends BaseViewHolder.OnItemClickListener<MilestoneModel> {
+    void onLoadMilestones(@NonNull String login, @NonNull String repo);
 
-interface Presenter extends BaseViewHolder.OnItemClickListener<MilestoneModel> {
-void onLoadMilestones(@NonNull String login, @NonNull String repo);
-
-@NonNull ArrayList<MilestoneModel> getMilestones();
-}
+    @NonNull ArrayList<MilestoneModel> getMilestones();
+  }
 }

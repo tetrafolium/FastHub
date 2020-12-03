@@ -8,7 +8,8 @@ import com.fastaccess.data.dao.model.Repo;
 
 public class RepoConverter extends BaseConverter<Repo> {
 
-@Override protected Class<? extends Repo> getTypeClass() {
-	return Repo.class;
-}
+  @Override
+  protected Class<? extends Repo> getTypeClass() {
+    return Repo.class;
+  }
 }

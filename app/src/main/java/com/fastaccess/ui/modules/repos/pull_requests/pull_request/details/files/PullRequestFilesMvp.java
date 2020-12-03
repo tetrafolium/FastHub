@@ -4,7 +4,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.fastaccess.data.dao.CommentRequestModel;
 import com.fastaccess.data.dao.CommitFileChanges;
 import com.fastaccess.data.dao.CommitFileModel;
@@ -14,7 +13,6 @@ import com.fastaccess.ui.adapter.callback.OnToggleView;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.modules.reviews.callback.ReviewCommentListener;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,38 +22,42 @@ import java.util.List;
 
 public interface PullRequestFilesMvp {
 
-interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener,
-	               OnToggleView, OnPatchClickListener, ReviewCommentListener {
-void onNotifyAdapter(@Nullable List<CommitFileChanges> items, int page);
+  interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
+                         android.view.View.OnClickListener, OnToggleView,
+                         OnPatchClickListener, ReviewCommentListener {
+    void onNotifyAdapter(@Nullable List<CommitFileChanges> items, int page);
 
-@NonNull OnLoadMore getLoadMore();
+    @NonNull OnLoadMore getLoadMore();
 
-void onOpenForResult(int position, @NonNull CommitFileChanges linesModel);
-}
+    void onOpenForResult(int position, @NonNull CommitFileChanges linesModel);
+  }
 
-interface Presenter extends BaseMvp.FAPresenter,
-	                    BaseViewHolder.OnItemClickListener<CommitFileChanges>,
-	                    BaseMvp.PaginationListener {
-void onFragmentCreated(@NonNull Bundle bundle);
+  interface Presenter
+      extends BaseMvp.FAPresenter,
+              BaseViewHolder.OnItemClickListener<CommitFileChanges>,
+              BaseMvp.PaginationListener {
+    void onFragmentCreated(@NonNull Bundle bundle);
 
-@NonNull ArrayList<CommitFileChanges> getFiles();
+    @NonNull ArrayList<CommitFileChanges> getFiles();
 
-void onWorkOffline();
-}
+    void onWorkOffline();
+  }
 
-interface OnPatchClickListener {
-void onPatchClicked(int groupPosition, int childPosition, android.view.View v, CommitFileModel commit, CommitLinesModel item);
-}
+  interface OnPatchClickListener {
+    void onPatchClicked(int groupPosition, int childPosition,
+                        android.view.View v, CommitFileModel commit,
+                        CommitLinesModel item);
+  }
 
-interface PatchCallback {
-void onAddComment(CommentRequestModel comment);
-}
+  interface PatchCallback {
+    void onAddComment(CommentRequestModel comment);
+  }
 
-interface CommitCommentCallback {
-@NonNull ArrayList<CommentRequestModel> getCommitComment();
+  interface CommitCommentCallback {
+    @NonNull ArrayList<CommentRequestModel> getCommitComment();
 
-void onAddComment(@NonNull CommentRequestModel comment);
+    void onAddComment(@NonNull CommentRequestModel comment);
 
-boolean hasReviewComments();
-}
+    boolean hasReviewComments();
+  }
 }

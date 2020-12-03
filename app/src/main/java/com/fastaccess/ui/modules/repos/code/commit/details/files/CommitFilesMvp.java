@@ -3,7 +3,6 @@ package com.fastaccess.ui.modules.repos.code.commit.details.files;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.fastaccess.data.dao.CommentRequestModel;
 import com.fastaccess.data.dao.CommitFileChanges;
 import com.fastaccess.data.dao.CommitLinesModel;
@@ -13,7 +12,6 @@ import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.modules.repos.pull_requests.pull_request.details.files.PullRequestFilesMvp;
 import com.fastaccess.ui.modules.reviews.callback.ReviewCommentListener;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.List;
 
 /**
@@ -22,25 +20,30 @@ import java.util.List;
 
 interface CommitFilesMvp {
 
-interface View extends BaseMvp.FAView, OnToggleView, PullRequestFilesMvp.OnPatchClickListener, ReviewCommentListener {
+  interface View extends BaseMvp.FAView, OnToggleView,
+                         PullRequestFilesMvp.OnPatchClickListener,
+                         ReviewCommentListener {
 
-void onNotifyAdapter(@Nullable List<CommitFileChanges> items);
+    void onNotifyAdapter(@Nullable List<CommitFileChanges> items);
 
-void onCommentAdded(@NonNull Comment newComment);
+    void onCommentAdded(@NonNull Comment newComment);
 
-void clearAdapter();
+    void clearAdapter();
 
-void onOpenForResult(int position, CommitFileChanges model);
-}
+    void onOpenForResult(int position, CommitFileChanges model);
+  }
 
-interface Presenter extends BaseMvp.FAPresenter, BaseViewHolder.OnItemClickListener<CommitFileChanges> {
+  interface Presenter
+      extends BaseMvp.FAPresenter,
+              BaseViewHolder.OnItemClickListener<CommitFileChanges> {
 
-void onFragmentCreated(@Nullable Bundle bundle);
+    void onFragmentCreated(@Nullable Bundle bundle);
 
-void onSubmitComment(@NonNull String comment, @NonNull CommitLinesModel item, @Nullable Bundle bundle);
+    void onSubmitComment(@NonNull String comment,
+                         @NonNull CommitLinesModel item,
+                         @Nullable Bundle bundle);
 
-void onSubmit(String username, String name, CommentRequestModel commentRequestModel);
-}
-
-
+    void onSubmit(String username, String name,
+                  CommentRequestModel commentRequestModel);
+  }
 }

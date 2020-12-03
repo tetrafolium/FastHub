@@ -9,7 +9,8 @@ import com.fastaccess.data.dao.model.User;
 
 public class TeamConverter extends BaseConverter<TeamsModel> {
 
-@Override protected Class<? extends TeamsModel> getTypeClass() {
-	return TeamsModel.class;
-}
+  @Override
+  protected Class<? extends TeamsModel> getTypeClass() {
+    return TeamsModel.class;
+  }
 }
