@@ -51,14 +51,12 @@ public class CreateIssuePresenter extends BasePresenter<CreateIssueMvp.View>
   @Override
   public void onActivityForResult(int resultCode, int requestCode,
                                   Intent intent) {
-    if (resultCode == Activity.RESULT_OK &&
-        requestCode == BundleConstant.REQUEST_CODE) {
-      if (intent != null && intent.getExtras() != null) {
-        CharSequence charSequence =
-            intent.getExtras().getCharSequence(BundleConstant.EXTRA);
-        if (!InputHelper.isEmpty(charSequence)) {
-          sendToView(view -> view.onSetCode(charSequence));
-        }
+    if ((resultCode == Activity.RESULT_OK &&
+        requestCode == BundleConstant.REQUEST_CODE) && (intent != null && intent.getExtras() != null)) {
+      CharSequence charSequence =
+          intent.getExtras().getCharSequence(BundleConstant.EXTRA);
+      if (!InputHelper.isEmpty(charSequence)) {
+        sendToView(view -> view.onSetCode(charSequence));
       }
     }
   }

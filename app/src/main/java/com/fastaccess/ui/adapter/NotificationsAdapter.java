@@ -50,14 +50,13 @@ public class NotificationsAdapter extends BaseRecyclerAdapter<
   protected void onBindView(BaseViewHolder holder, int position) {
     if (getItemViewType(position) == GroupedNotificationModel.HEADER) {
       ((NotificationsHeaderViewHolder)holder).bind(getItem(position));
-      if (hideClear)
-        if (getItem(Math.min(position + 1, getItemCount() - 1))
+      if ((hideClear) && (getItem(Math.min(position + 1, getItemCount() - 1))
                 .getNotification()
-                .isUnread()) {
-          (((NotificationsHeaderViewHolder)holder).itemView)
-              .findViewById(R.id.markAsRead)
-              .setVisibility(View.VISIBLE);
-        }
+                .isUnread())) {
+        (((NotificationsHeaderViewHolder)holder).itemView)
+            .findViewById(R.id.markAsRead)
+            .setVisibility(View.VISIBLE);
+      }
     } else {
       ((NotificationsViewHolder)holder).bind(getItem(position));
     }

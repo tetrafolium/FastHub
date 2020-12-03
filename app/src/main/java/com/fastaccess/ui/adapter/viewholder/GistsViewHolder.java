@@ -47,24 +47,22 @@ public class GistsViewHolder extends BaseViewHolder<Gist> {
 
   @Override
   public void bind(@NonNull Gist item) {
-    if (!isFromProfile) {
-      if (avatar != null) {
-        String url =
-            item.getOwner() != null
-                ? item.getOwner().getAvatarUrl()
-                : item.getUser() != null ? item.getUser().getAvatarUrl() : null;
-        String login =
-            item.getOwner() != null
-                ? item.getOwner().getLogin()
-                : item.getUser() != null ? item.getUser().getLogin() : null;
-        avatar.setUrl(url, login, false,
-                      LinkParserHelper.isEnterprise(
-                          item.getOwner() != null
-                              ? item.getOwner().getHtmlUrl()
-                              : item.getUser() != null
-                                    ? item.getUser().getHtmlUrl()
-                                    : null));
-      }
+    if ((!isFromProfile) && (avatar != null)) {
+      String url =
+          item.getOwner() != null
+              ? item.getOwner().getAvatarUrl()
+              : item.getUser() != null ? item.getUser().getAvatarUrl() : null;
+      String login =
+          item.getOwner() != null
+              ? item.getOwner().getLogin()
+              : item.getUser() != null ? item.getUser().getLogin() : null;
+      avatar.setUrl(url, login, false,
+                    LinkParserHelper.isEnterprise(
+                        item.getOwner() != null
+                            ? item.getOwner().getHtmlUrl()
+                            : item.getUser() != null
+                                  ? item.getUser().getHtmlUrl()
+                                  : null));
     }
     title.setText(item.getDisplayTitle(isFromProfile));
     date.setText(ParseDateFormat.getTimeAgo(item.getCreatedAt()));

@@ -23,10 +23,8 @@ class UrlDrawable extends BitmapDrawable implements Drawable.Callback {
         Crashlytics.logException(e);
         e.printStackTrace();
       }
-      if (drawable instanceof GifDrawable) {
-        if (!((GifDrawable)drawable).isRunning()) {
-          ((GifDrawable)drawable).start();
-        }
+      if ((drawable instanceof GifDrawable) && (!((GifDrawable)drawable).isRunning())) {
+        ((GifDrawable)drawable).start();
       }
     }
   }

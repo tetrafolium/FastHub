@@ -131,19 +131,17 @@ public class RepoClosedIssuesFragment
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK) {
-      if (requestCode == RepoIssuesMvp.ISSUE_REQUEST_CODE && data != null) {
-        boolean isClose = data.getExtras().getBoolean(BundleConstant.EXTRA);
-        boolean isOpened =
-            data.getExtras().getBoolean(BundleConstant.EXTRA_TWO);
-        if (isClose) {
-          onRefresh();
-        } else if (isOpened) {
-          if (pagerCallback != null)
-            pagerCallback.setCurrentItem(0, true);
-          onRefresh();
-        } // else ignore!
-      }
+    if ((resultCode == Activity.RESULT_OK) && (requestCode == RepoIssuesMvp.ISSUE_REQUEST_CODE && data != null)) {
+      boolean isClose = data.getExtras().getBoolean(BundleConstant.EXTRA);
+      boolean isOpened =
+          data.getExtras().getBoolean(BundleConstant.EXTRA_TWO);
+      if (isClose) {
+        onRefresh();
+      } else if (isOpened) {
+        if (pagerCallback != null)
+          pagerCallback.setCurrentItem(0, true);
+        onRefresh();
+      } // else ignore!
     }
   }
 

@@ -52,12 +52,10 @@ public class NotificationSchedulerJobTask extends JobService {
 
   @Override
   public boolean onStartJob(JobParameters job) {
-    if (!SINGLE_JOB_ID.equalsIgnoreCase(job.getTag())) {
-      if (PrefGetter.getNotificationTaskDuration() == -1) {
-        scheduleJob(this, -1, false);
-        finishJob(job);
-        return true;
-      }
+    if ((!SINGLE_JOB_ID.equalsIgnoreCase(job.getTag())) && (PrefGetter.getNotificationTaskDuration() == -1)) {
+      scheduleJob(this, -1, false);
+      finishJob(job);
+      return true;
     }
     Login login = null;
     try {

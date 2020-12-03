@@ -291,10 +291,8 @@ public class CreateIssueActivity
           milestoneModel = issue.getMilestone();
           onMilestoneSelected(milestoneModel);
         }
-        if (!InputHelper.isEmpty(issue.getTitle())) {
-          if (title.getEditText() != null)
-            title.getEditText().setText(issue.getTitle());
-        }
+        if ((!InputHelper.isEmpty(issue.getTitle())) && (title.getEditText() != null))
+          title.getEditText().setText(issue.getTitle());
         if (!InputHelper.isEmpty(issue.getBody())) {
           onSetCode(issue.getBody());
         }
@@ -312,10 +310,8 @@ public class CreateIssueActivity
           milestoneModel = pullRequest.getMilestone();
           onMilestoneSelected(milestoneModel);
         }
-        if (!InputHelper.isEmpty(pullRequest.getTitle())) {
-          if (title.getEditText() != null)
-            title.getEditText().setText(pullRequest.getTitle());
-        }
+        if ((!InputHelper.isEmpty(pullRequest.getTitle())) && (title.getEditText() != null))
+          title.getEditText().setText(pullRequest.getTitle());
         if (!InputHelper.isEmpty(pullRequest.getBody())) {
           onSetCode(pullRequest.getBody());
         }
