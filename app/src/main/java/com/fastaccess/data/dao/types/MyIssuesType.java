@@ -5,9 +5,9 @@ package com.fastaccess.data.dao.types;
  */
 
 public enum MyIssuesType {
-    CREATED,
-    ASSIGNED,
-    MENTIONED,
-    REVIEW,
-    PARTICIPATED
+	CREATED,
+	ASSIGNED,
+	MENTIONED,
+	REVIEW,
+	PARTICIPATED
 }

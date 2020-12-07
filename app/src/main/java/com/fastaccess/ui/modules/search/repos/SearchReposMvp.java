@@ -18,23 +18,23 @@ import java.util.List;
 
 interface SearchReposMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<Repo> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<Repo> items, int page);
 
-        void onSetTabCount(int count);
+void onSetTabCount(int count);
 
-        void onSetSearchQuery(@NonNull String query);
+void onSetSearchQuery(@NonNull String query);
 
-        void onQueueSearch(@NonNull String query);
+void onQueueSearch(@NonNull String query);
 
-        @NonNull OnLoadMore<String> getLoadMore();
-    }
+@NonNull OnLoadMore<String> getLoadMore();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Repo>,
-        BaseMvp.PaginationListener<String> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Repo>,
+	                    BaseMvp.PaginationListener<String> {
 
-        @NonNull ArrayList<Repo> getRepos();
+@NonNull ArrayList<Repo> getRepos();
 
-    }
+}
 }

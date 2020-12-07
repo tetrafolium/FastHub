@@ -21,29 +21,29 @@ import java.util.List;
 
 interface RepoPullRequestMvp {
 
-    int PULL_REQUEST_REQUEST_CODE = 1003;
+int PULL_REQUEST_REQUEST_CODE = 1003;
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<PullRequest> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<PullRequest> items, int page);
 
-        @NonNull OnLoadMore<IssueState> getLoadMore();
+@NonNull OnLoadMore<IssueState> getLoadMore();
 
-        void onUpdateCount(int totalCount);
+void onUpdateCount(int totalCount);
 
-        void onOpenPullRequest(@NonNull PullsIssuesParser parser);
+void onOpenPullRequest(@NonNull PullsIssuesParser parser);
 
-        void onShowPullRequestPopup(@NonNull PullRequest item);
-    }
+void onShowPullRequestPopup(@NonNull PullRequest item);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<PullRequest>,
-        BaseMvp.PaginationListener<IssueState> {
-        void onFragmentCreated(@NonNull Bundle bundle);
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<PullRequest>,
+	                    BaseMvp.PaginationListener<IssueState> {
+void onFragmentCreated(@NonNull Bundle bundle);
 
-        void onWorkOffline();
+void onWorkOffline();
 
-        @NonNull ArrayList<PullRequest> getPullRequests();
+@NonNull ArrayList<PullRequest> getPullRequests();
 
-        @NonNull IssueState getIssueState();
-    }
+@NonNull IssueState getIssueState();
+}
 }

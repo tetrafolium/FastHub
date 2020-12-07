@@ -17,19 +17,19 @@ import java.util.List;
  */
 
 interface GistsMvp {
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
 
-        void onNotifyAdapter(@Nullable List<Gist> items, int page);
+void onNotifyAdapter(@Nullable List<Gist> items, int page);
 
-        @NonNull OnLoadMore getLoadMore();
-    }
+@NonNull OnLoadMore getLoadMore();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Gist>,
-        BaseMvp.PaginationListener {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Gist>,
+	                    BaseMvp.PaginationListener {
 
-        @NonNull ArrayList<Gist> getGists();
+@NonNull ArrayList<Gist> getGists();
 
-        void onWorkOffline();
-    }
+void onWorkOffline();
+}
 }

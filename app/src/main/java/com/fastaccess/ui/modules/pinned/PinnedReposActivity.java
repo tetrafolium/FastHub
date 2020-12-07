@@ -27,39 +27,39 @@ import shortbread.Shortcut;
 @Shortcut(id = "pinned", icon = R.drawable.ic_app_shortcut_pinned, shortLabelRes = R.string.pinned, backStack = {MainActivity.class}, rank = 5)
 public class PinnedReposActivity extends BaseActivity {
 
-    @BindView(R.id.tabs) TabLayout tabs;
-    @BindView(R.id.tabbedPager) ViewPagerView tabbedPager;
+@BindView(R.id.tabs) TabLayout tabs;
+@BindView(R.id.tabbedPager) ViewPagerView tabbedPager;
 
-    public static void startActivity(@NonNull Context context) {
-        context.startActivity(new Intent(context, PinnedReposActivity.class));
-    }
+public static void startActivity(@NonNull Context context) {
+	context.startActivity(new Intent(context, PinnedReposActivity.class));
+}
 
-    @Override protected int layout() {
-        return R.layout.tabbed_pager_layout;
-    }
+@Override protected int layout() {
+	return R.layout.tabbed_pager_layout;
+}
 
-    @Override protected boolean isTransparent() {
-        return true;
-    }
+@Override protected boolean isTransparent() {
+	return true;
+}
 
-    @Override protected boolean canBack() {
-        return true;
-    }
+@Override protected boolean canBack() {
+	return true;
+}
 
-    @Override protected boolean isSecured() {
-        return false;
-    }
+@Override protected boolean isSecured() {
+	return false;
+}
 
-    @NonNull @Override public TiPresenter providePresenter() {
-        return new BasePresenter();
-    }
+@NonNull @Override public TiPresenter providePresenter() {
+	return new BasePresenter();
+}
 
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        selectPinned();
-        tabbedPager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapterModel.buildForPinned(this)));
-        tabs.setupWithViewPager(tabbedPager);
-        tabs.setPadding(0, 0, 0, 0);
-        tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
-    }
+@Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+	super.onCreate(savedInstanceState);
+	selectPinned();
+	tabbedPager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapterModel.buildForPinned(this)));
+	tabs.setupWithViewPager(tabbedPager);
+	tabs.setPadding(0, 0, 0, 0);
+	tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+}
 }

@@ -15,23 +15,23 @@ import java.util.List;
  * Created by Kosh on 11 Nov 2016, 2:07 PM
  */
 
-public class PinnedReposAdapter extends BaseRecyclerAdapter<PinnedRepos, PinnedReposViewHolder, BaseViewHolder.OnItemClickListener<PinnedRepos>> {
+public class PinnedReposAdapter extends BaseRecyclerAdapter<PinnedRepos, PinnedReposViewHolder, BaseViewHolder.OnItemClickListener<PinnedRepos> > {
 
-    private boolean singleLine;
+private boolean singleLine;
 
-    public PinnedReposAdapter(boolean singleLine) {
-        this.singleLine = singleLine;
-    }
+public PinnedReposAdapter(boolean singleLine) {
+	this.singleLine = singleLine;
+}
 
-    public PinnedReposAdapter(@NonNull List<PinnedRepos> data, @Nullable BaseViewHolder.OnItemClickListener<PinnedRepos> listener) {
-        super(data, listener);
-    }
+public PinnedReposAdapter(@NonNull List<PinnedRepos> data, @Nullable BaseViewHolder.OnItemClickListener<PinnedRepos> listener) {
+	super(data, listener);
+}
 
-    @Override protected PinnedReposViewHolder viewHolder(ViewGroup parent, int viewType) {
-        return PinnedReposViewHolder.newInstance(parent, this, singleLine);
-    }
+@Override protected PinnedReposViewHolder viewHolder(ViewGroup parent, int viewType) {
+	return PinnedReposViewHolder.newInstance(parent, this, singleLine);
+}
 
-    @Override protected void onBindView(PinnedReposViewHolder holder, int position) {
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(PinnedReposViewHolder holder, int position) {
+	holder.bind(getItem(position));
+}
 }

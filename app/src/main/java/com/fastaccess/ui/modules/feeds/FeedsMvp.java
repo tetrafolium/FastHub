@@ -22,28 +22,28 @@ import java.util.List;
  */
 
 public interface FeedsMvp {
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-        android.view.View.OnClickListener, ListDialogView.onSimpleItemSelection<Parcelable> {
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
+	               android.view.View.OnClickListener, ListDialogView.onSimpleItemSelection<Parcelable> {
 
-        void onNotifyAdapter(@Nullable List<Event> events, int page);
+void onNotifyAdapter(@Nullable List<Event> events, int page);
 
-        void onOpenRepoChooser(@NonNull ArrayList<SimpleUrlsModel> models);
+void onOpenRepoChooser(@NonNull ArrayList<SimpleUrlsModel> models);
 
-        @NonNull OnLoadMore<String> getLoadMore();
+@NonNull OnLoadMore<String> getLoadMore();
 
-        void onOpenCommitChooser(@NonNull List<GitCommitModel> commits);
-    }
+void onOpenCommitChooser(@NonNull List<GitCommitModel> commits);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Event>,
-        BaseMvp.PaginationListener {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Event>,
+	                    BaseMvp.PaginationListener {
 
-        void onFragmentCreated(@NonNull Bundle argument);
+void onFragmentCreated(@NonNull Bundle argument);
 
-        boolean onCallApi(int page);
+boolean onCallApi(int page);
 
-        @NonNull ArrayList<Event> getEvents();
+@NonNull ArrayList<Event> getEvents();
 
-        void onWorkOffline();
-    }
+void onWorkOffline();
+}
 }

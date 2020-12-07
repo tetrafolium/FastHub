@@ -15,35 +15,35 @@ import java.util.ArrayList;
  */
 
 public class PinnedReposPresenter extends BasePresenter<PinnedReposMvp.View> implements PinnedReposMvp.Presenter {
-    private ArrayList<PinnedRepos> pinnedRepos = new ArrayList<>();
+private ArrayList<PinnedRepos> pinnedRepos = new ArrayList<>();
 
-    @Override protected void onAttachView(@NonNull PinnedReposMvp.View view) {
-        super.onAttachView(view);
-        if (pinnedRepos.isEmpty()) {
-            onReload();
-        }
-    }
+@Override protected void onAttachView(@NonNull PinnedReposMvp.View view) {
+	super.onAttachView(view);
+	if (pinnedRepos.isEmpty()) {
+		onReload();
+	}
+}
 
-    @NonNull @Override public ArrayList<PinnedRepos> getPinnedRepos() {
-        return pinnedRepos;
-    }
+@NonNull @Override public ArrayList<PinnedRepos> getPinnedRepos() {
+	return pinnedRepos;
+}
 
-    @Override public void onReload() {
-        manageDisposable(AbstractPinnedRepos.getMyPinnedRepos()
-                         .subscribe(repos -> sendToView(view -> view.onNotifyAdapter(repos)), throwable ->
-                                    sendToView(view -> view.onNotifyAdapter(null))));
-    }
+@Override public void onReload() {
+	manageDisposable(AbstractPinnedRepos.getMyPinnedRepos()
+	                 .subscribe(repos->sendToView(view->view.onNotifyAdapter(repos)), throwable->
+	                            sendToView(view->view.onNotifyAdapter(null))));
+}
 
-    @Override public void onItemClick(int position, View v, PinnedRepos item) {
-        SchemeParser.launchUri(v.getContext(), item.getPinnedRepo().getHtmlUrl());
-    }
+@Override public void onItemClick(int position, View v, PinnedRepos item) {
+	SchemeParser.launchUri(v.getContext(), item.getPinnedRepo().getHtmlUrl());
+}
 
-    @Override public void onItemLongClick(int position, View v, PinnedRepos item) {
-        if (getView() != null) {
-            if (item.getRepoFullName().equalsIgnoreCase("k0shk0sh/FastHub")) {
-                return;
-            }
-            getView().onDeletePinnedRepo(item.getId(), position);
-        }
-    }
+@Override public void onItemLongClick(int position, View v, PinnedRepos item) {
+	if (getView() != null) {
+		if (item.getRepoFullName().equalsIgnoreCase("k0shk0sh/FastHub")) {
+			return;
+		}
+		getView().onDeletePinnedRepo(item.getId(), position);
+	}
+}
 }

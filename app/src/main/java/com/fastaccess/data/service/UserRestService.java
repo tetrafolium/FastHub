@@ -28,55 +28,55 @@ import retrofit2.http.Url;
 
 public interface UserRestService {
 
-    @GET("user") Observable<Login> getUser();
+@GET("user") Observable<Login> getUser();
 
-    @GET("users/{username}") Observable<User> getUser(@Path("username") @NonNull String username);
+@GET("users/{username}") Observable<User> getUser(@Path("username") @NonNull String username);
 
-    @GET("users/{username}/received_events")
-    Observable<Pageable<Event>> getReceivedEvents(@NonNull @Path("username") String userName, @Query("page") int page);
+@GET("users/{username}/received_events")
+Observable<Pageable<Event> > getReceivedEvents(@NonNull @Path("username") String userName, @Query("page") int page);
 
-    @GET("users/{username}/events")
-    Observable<Pageable<Event>> getUserEvents(@NonNull @Path("username") String userName, @Query("page") int page);
+@GET("users/{username}/events")
+Observable<Pageable<Event> > getUserEvents(@NonNull @Path("username") String userName, @Query("page") int page);
 
-    @GET("users/{username}/repos")
-    Observable<Pageable<Repo>> getRepos(@Path("username") @NonNull String username, @QueryMap(encoded = true) Map<String, String> filterParams,
-                                        @Query("page") int page);
+@GET("users/{username}/repos")
+Observable<Pageable<Repo> > getRepos(@Path("username") @NonNull String username, @QueryMap(encoded = true) Map<String, String> filterParams,
+                                     @Query("page") int page);
 
-    @GET("user/repos")
-    Observable<Pageable<Repo>> getRepos(@QueryMap(encoded = true) Map<String, String> filterParams, @Query(value = "page") int page);
+@GET("user/repos")
+Observable<Pageable<Repo> > getRepos(@QueryMap(encoded = true) Map<String, String> filterParams, @Query(value = "page") int page);
 
-    @GET("users/{username}/starred") Observable<Pageable<Repo>>
-    getStarred(@Path("username") @NonNull String username, @Query("page") int page);
+@GET("users/{username}/starred") Observable<Pageable<Repo> >
+getStarred(@Path("username") @NonNull String username, @Query("page") int page);
 
-    @GET("users/{username}/starred?per_page=1") Observable<Pageable<Repo>>
-    getStarredCount(@Path("username") @NonNull String username);
+@GET("users/{username}/starred?per_page=1") Observable<Pageable<Repo> >
+getStarredCount(@Path("username") @NonNull String username);
 
-    @GET("users/{username}/following")
-    Observable<Pageable<User>> getFollowing(@Path("username") @NonNull String username, @Query("page") int page);
+@GET("users/{username}/following")
+Observable<Pageable<User> > getFollowing(@Path("username") @NonNull String username, @Query("page") int page);
 
-    @GET("users/{username}/followers")
-    Observable<Pageable<User>> getFollowers(@Path("username") @NonNull String username, @Query("page") int page);
+@GET("users/{username}/followers")
+Observable<Pageable<User> > getFollowers(@Path("username") @NonNull String username, @Query("page") int page);
 
-    @GET("user/following/{username}")
-    Observable<Response<Boolean>> getFollowStatus(@Path("username") @NonNull String username);
+@GET("user/following/{username}")
+Observable<Response<Boolean> > getFollowStatus(@Path("username") @NonNull String username);
 
-    @PUT("user/following/{username}")
-    Observable<Response<Boolean>> followUser(@Path("username") @NonNull String username);
+@PUT("user/following/{username}")
+Observable<Response<Boolean> > followUser(@Path("username") @NonNull String username);
 
-    @DELETE("user/following/{username}")
-    Observable<Response<Boolean>> unfollowUser(@Path("username") @NonNull String username);
+@DELETE("user/following/{username}")
+Observable<Response<Boolean> > unfollowUser(@Path("username") @NonNull String username);
 
-    @GET Observable<String> getContributions(@Url String url);
+@GET Observable<String> getContributions(@Url String url);
 
-    @GET("user/blocks/{username}")
-    @Headers("Accept: application/vnd.github.giant-sentry-fist-preview+json")
-    Observable<Response<Boolean>> isUserBlocked(@Path("username") @NonNull String username);
+@GET("user/blocks/{username}")
+@Headers("Accept: application/vnd.github.giant-sentry-fist-preview+json")
+Observable<Response<Boolean> > isUserBlocked(@Path("username") @NonNull String username);
 
-    @PUT("user/blocks/{username}")
-    @Headers("Accept: application/vnd.github.giant-sentry-fist-preview+json")
-    Observable<Response<Boolean>> blockUser(@Path("username") @NonNull String username);
+@PUT("user/blocks/{username}")
+@Headers("Accept: application/vnd.github.giant-sentry-fist-preview+json")
+Observable<Response<Boolean> > blockUser(@Path("username") @NonNull String username);
 
-    @DELETE("user/blocks/{username}")
-    @Headers("Accept: application/vnd.github.giant-sentry-fist-preview+json")
-    Observable<Response<Boolean>> unBlockUser(@Path("username") @NonNull String username);
+@DELETE("user/blocks/{username}")
+@Headers("Accept: application/vnd.github.giant-sentry-fist-preview+json")
+Observable<Response<Boolean> > unBlockUser(@Path("username") @NonNull String username);
 }

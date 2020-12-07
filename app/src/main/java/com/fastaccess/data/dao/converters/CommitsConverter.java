@@ -7,7 +7,7 @@ import com.fastaccess.data.dao.CommitListModel;
  */
 
 public class CommitsConverter extends BaseConverter<CommitListModel> {
-    @Override protected Class<? extends CommitListModel> getTypeClass() {
-        return CommitListModel.class;
-    }
+@Override protected Class<? extends CommitListModel> getTypeClass() {
+	return CommitListModel.class;
+}
 }

@@ -10,11 +10,11 @@ import com.fastaccess.ui.base.mvp.BaseMvp;
 
 public interface FilterIssuesActivityMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onSetCount(int count, boolean isOpen);
-    }
+interface View extends BaseMvp.FAView {
+void onSetCount(int count, boolean isOpen);
+}
 
-    interface Presenter {
-        void onStart(@NonNull String login, @NonNull String repoId);
-    }
+interface Presenter {
+void onStart(@NonNull String login, @NonNull String repoId);
+}
 }

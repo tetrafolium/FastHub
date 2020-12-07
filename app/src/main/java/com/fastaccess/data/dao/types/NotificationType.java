@@ -7,17 +7,17 @@ import com.fastaccess.R;
  */
 
 public enum NotificationType {
-    PullRequest(R.drawable.ic_pull_requests),
-    Issue(R.drawable.ic_issues),
-    Commit(R.drawable.ic_push);
+	PullRequest(R.drawable.ic_pull_requests),
+	Issue(R.drawable.ic_issues),
+	Commit(R.drawable.ic_push);
 
-    int drawableRes;
+	int drawableRes;
 
-    NotificationType(int drawableRes) {
-        this.drawableRes = drawableRes;
-    }
+	NotificationType(int drawableRes) {
+		this.drawableRes = drawableRes;
+	}
 
-    public int getDrawableRes() {
-        return drawableRes > 0 ? drawableRes : R.drawable.ic_issues;
-    }
+	public int getDrawableRes() {
+		return drawableRes > 0 ? drawableRes : R.drawable.ic_issues;
+	}
 }

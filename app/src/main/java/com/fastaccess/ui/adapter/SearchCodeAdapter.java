@@ -15,25 +15,25 @@ import java.util.List;
  */
 
 public class SearchCodeAdapter extends BaseRecyclerAdapter<SearchCodeModel, SearchCodeViewHolder, BaseViewHolder
-    .OnItemClickListener<SearchCodeModel>> {
+	                                                   .OnItemClickListener<SearchCodeModel> > {
 
-    private boolean showRepoName;
+private boolean showRepoName;
 
-    public SearchCodeAdapter(@NonNull List<SearchCodeModel> data) {
-        super(data);
-        this.showRepoName = showRepoName;
-    }
+public SearchCodeAdapter(@NonNull List<SearchCodeModel> data) {
+	super(data);
+	this.showRepoName = showRepoName;
+}
 
-    @Override protected SearchCodeViewHolder viewHolder(ViewGroup parent, int viewType) {
-        return SearchCodeViewHolder.newInstance(parent, this);
-    }
+@Override protected SearchCodeViewHolder viewHolder(ViewGroup parent, int viewType) {
+	return SearchCodeViewHolder.newInstance(parent, this);
+}
 
-    @Override protected void onBindView(SearchCodeViewHolder holder, int position) {
-        holder.bind(getItem(position), showRepoName);
-    }
+@Override protected void onBindView(SearchCodeViewHolder holder, int position) {
+	holder.bind(getItem(position), showRepoName);
+}
 
-    public void showRepoName(boolean showRepoName) {
-        this.showRepoName = showRepoName;
-        notifyDataSetChanged();
-    }
+public void showRepoName(boolean showRepoName) {
+	this.showRepoName = showRepoName;
+	notifyDataSetChanged();
+}
 }

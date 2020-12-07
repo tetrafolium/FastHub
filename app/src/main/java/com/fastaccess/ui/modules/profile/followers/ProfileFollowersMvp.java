@@ -19,18 +19,18 @@ import java.util.List;
 
 interface ProfileFollowersMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<User> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<User> items, int page);
 
-        @NonNull OnLoadMore<String> getLoadMore();
-    }
+@NonNull OnLoadMore<String> getLoadMore();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<User>,
-        BaseMvp.PaginationListener<String> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<User>,
+	                    BaseMvp.PaginationListener<String> {
 
-        @NonNull ArrayList<User> getFollowers();
+@NonNull ArrayList<User> getFollowers();
 
-        void onWorkOffline(@NonNull String login);
-    }
+void onWorkOffline(@NonNull String login);
+}
 }

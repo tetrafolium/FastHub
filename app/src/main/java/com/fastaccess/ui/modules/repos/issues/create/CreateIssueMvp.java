@@ -22,36 +22,36 @@ import java.util.ArrayList;
 
 public interface CreateIssueMvp {
 
-    interface View extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener, AssigneesMvp.SelectedAssigneesListener,
-        MilestoneMvp.OnMilestoneSelected {
-        void onSetCode(@NonNull CharSequence charSequence);
+interface View extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener, AssigneesMvp.SelectedAssigneesListener,
+	               MilestoneMvp.OnMilestoneSelected {
+void onSetCode(@NonNull CharSequence charSequence);
 
-        void onTitleError(boolean isEmptyTitle);
+void onTitleError(boolean isEmptyTitle);
 
-        void onDescriptionError(boolean isEmptyDesc);
+void onDescriptionError(boolean isEmptyDesc);
 
-        void onSuccessSubmission(Issue issueModel);
+void onSuccessSubmission(Issue issueModel);
 
-        void onSuccessSubmission(PullRequest issueModel);
+void onSuccessSubmission(PullRequest issueModel);
 
-        void onShowUpdate();
+void onShowUpdate();
 
-        void onShowIssueMisc();
-    }
+void onShowIssueMisc();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter {
+interface Presenter extends BaseMvp.FAPresenter {
 
-        void checkAuthority(@NonNull String login, @NonNull String repoId);
+void checkAuthority(@NonNull String login, @NonNull String repoId);
 
-        void onActivityForResult(int resultCode, int requestCode, Intent intent);
+void onActivityForResult(int resultCode, int requestCode, Intent intent);
 
-        void onSubmit(@NonNull String title, @NonNull CharSequence description, @NonNull String login,
-                      @NonNull String repo, @Nullable Issue issueModel, @Nullable PullRequest pullRequestModel,
-                      @Nullable ArrayList<LabelModel> labels, @Nullable MilestoneModel milestoneModel,
-                      @Nullable ArrayList<User> users);
+void onSubmit(@NonNull String title, @NonNull CharSequence description, @NonNull String login,
+              @NonNull String repo, @Nullable Issue issueModel, @Nullable PullRequest pullRequestModel,
+              @Nullable ArrayList<LabelModel> labels, @Nullable MilestoneModel milestoneModel,
+              @Nullable ArrayList<User> users);
 
-        void onCheckAppVersion();
+void onCheckAppVersion();
 
-        boolean isCollaborator();
-    }
+boolean isCollaborator();
+}
 }

@@ -16,18 +16,18 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor public class HrHandler extends TagNodeHandler {
 
-    private final int color;
-    private final int width;
-    private final boolean isHeader;
+private final int color;
+private final int width;
+private final boolean isHeader;
 
-    @Override public void handleTagNode(TagNode tagNode, SpannableStringBuilder spannableStringBuilder, int i, int i1) {
-        spannableStringBuilder.append("\n");
-        SpannableStringBuilder builder = new SpannableStringBuilder("$");
-        HrSpan hrSpan = new HrSpan(color, width);
-        builder.setSpan(hrSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        builder.setSpan(new CenterSpan(), 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        builder.append("\n");
-        spannableStringBuilder.append(builder);
-    }
+@Override public void handleTagNode(TagNode tagNode, SpannableStringBuilder spannableStringBuilder, int i, int i1) {
+	spannableStringBuilder.append("\n");
+	SpannableStringBuilder builder = new SpannableStringBuilder("$");
+	HrSpan hrSpan = new HrSpan(color, width);
+	builder.setSpan(hrSpan, 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+	builder.setSpan(new CenterSpan(), 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+	builder.append("\n");
+	spannableStringBuilder.append(builder);
+}
 
 }

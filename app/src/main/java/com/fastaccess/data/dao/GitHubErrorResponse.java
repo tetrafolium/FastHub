@@ -12,15 +12,15 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 public class GitHubErrorResponse {
-    private String message;
-    private String documentation_url;
-    private List<GistHubErrorsModel> errors;
+private String message;
+private String documentation_url;
+private List<GistHubErrorsModel> errors;
 
-    @Override public String toString() {
-        return "GitHubErrorResponse{" +
-               "message='" + message + '\'' +
-               ", documentation_url='" + documentation_url + '\'' +
-               ", errors=" + errors +
-               '}';
-    }
+@Override public String toString() {
+	return "GitHubErrorResponse{" +
+	       "message='" + message + '\'' +
+	       ", documentation_url='" + documentation_url + '\'' +
+	       ", errors=" + errors +
+	       '}';
+}
 }

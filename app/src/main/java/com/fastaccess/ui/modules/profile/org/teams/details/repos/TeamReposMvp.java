@@ -18,18 +18,18 @@ import java.util.List;
 
 interface TeamReposMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<Repo> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<Repo> items, int page);
 
-        @NonNull OnLoadMore<Long> getLoadMore();
-    }
+@NonNull OnLoadMore<Long> getLoadMore();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Repo>,
-        BaseMvp.PaginationListener<Long> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Repo>,
+	                    BaseMvp.PaginationListener<Long> {
 
-        @NonNull ArrayList<Repo> getRepos();
+@NonNull ArrayList<Repo> getRepos();
 
-        void onWorkOffline(@NonNull String login);
-    }
+void onWorkOffline(@NonNull String login);
+}
 }

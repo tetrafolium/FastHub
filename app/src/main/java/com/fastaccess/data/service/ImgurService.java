@@ -15,6 +15,6 @@ import io.reactivex.Observable;
  */
 
 public interface ImgurService {
-    @POST("image")
-    Observable<ImgurReponseModel> postImage(@Nullable @Query("title") String title, @Body RequestBody body);
+@POST("image")
+Observable<ImgurReponseModel> postImage(@Nullable @Query("title") String title, @Body RequestBody body);
 }

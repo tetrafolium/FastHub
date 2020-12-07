@@ -16,15 +16,15 @@ import io.reactivex.Observable;
 
 public interface SearchService {
 
-    @GET("search/repositories")
-    Observable<Pageable<Repo>> searchRepositories(@Query(value = "q", encoded = true) String query, @Query("page") long page);
+@GET("search/repositories")
+Observable<Pageable<Repo> > searchRepositories(@Query(value = "q", encoded = true) String query, @Query("page") long page);
 
-    @GET("search/code")
-    Observable<Pageable<SearchCodeModel>> searchCode(@Query(value = "q", encoded = true) String query, @Query("page") long page);
+@GET("search/code")
+Observable<Pageable<SearchCodeModel> > searchCode(@Query(value = "q", encoded = true) String query, @Query("page") long page);
 
-    @GET("search/issues")
-    Observable<Pageable<Issue>> searchIssues(@Query(value = "q", encoded = true) String query, @Query("page") long page);
+@GET("search/issues")
+Observable<Pageable<Issue> > searchIssues(@Query(value = "q", encoded = true) String query, @Query("page") long page);
 
-    @GET("search/users")
-    Observable<Pageable<User>> searchUsers(@Query(value = "q", encoded = true) String query, @Query("page") long page);
+@GET("search/users")
+Observable<Pageable<User> > searchUsers(@Query(value = "q", encoded = true) String query, @Query("page") long page);
 }

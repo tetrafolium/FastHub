@@ -16,15 +16,15 @@ import retrofit2.http.POST;
 
 public interface LoginRestService {
 
-    @GET("user") Observable<Login> loginAccessToken();
+@GET("user") Observable<Login> loginAccessToken();
 
-    @POST("authorizations") Observable<AccessTokenModel> login(@NonNull @Body AuthModel authModel);
+@POST("authorizations") Observable<AccessTokenModel> login(@NonNull @Body AuthModel authModel);
 
-    @FormUrlEncoded @POST("access_token")
-    @Headers("Accept: application/json")
-    Observable<AccessTokenModel> getAccessToken(@NonNull @Field("code") String code,
-            @NonNull @Field("client_id") String clientId,
-            @NonNull @Field("client_secret") String clientSecret,
-            @NonNull @Field("state") String state,
-            @NonNull @Field("redirect_uri") String redirectUrl);
+@FormUrlEncoded @POST("access_token")
+@Headers("Accept: application/json")
+Observable<AccessTokenModel> getAccessToken(@NonNull @Field("code") String code,
+                                            @NonNull @Field("client_id") String clientId,
+                                            @NonNull @Field("client_secret") String clientSecret,
+                                            @NonNull @Field("state") String state,
+                                            @NonNull @Field("redirect_uri") String redirectUrl);
 }

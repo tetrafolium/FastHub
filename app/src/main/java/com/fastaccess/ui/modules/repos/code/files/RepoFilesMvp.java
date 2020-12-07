@@ -18,37 +18,37 @@ import java.util.List;
 
 interface RepoFilesMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, DeleteContentFileCallback {
-        void onNotifyAdapter();
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, DeleteContentFileCallback {
+void onNotifyAdapter();
 
-        void onItemClicked(@NonNull RepoFile model);
+void onItemClicked(@NonNull RepoFile model);
 
-        void onMenuClicked(int position, @NonNull RepoFile model, android.view.View view);
+void onMenuClicked(int position, @NonNull RepoFile model, android.view.View view);
 
-        void onSetData(@NonNull String login, @NonNull String repoId, @NonNull String path, @NonNull String ref,
-                       boolean clear, @Nullable RepoFile toAppend);
+void onSetData(@NonNull String login, @NonNull String repoId, @NonNull String path, @NonNull String ref,
+               boolean clear, @Nullable RepoFile toAppend);
 
-        boolean isRefreshing();
+boolean isRefreshing();
 
-        void onUpdateTab(@Nullable RepoFile toAppend);
-    }
+void onUpdateTab(@Nullable RepoFile toAppend);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<RepoFile> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<RepoFile> {
 
-        @NonNull ArrayList<RepoFile> getFiles();
+@NonNull ArrayList<RepoFile> getFiles();
 
-        void onWorkOffline();
+void onWorkOffline();
 
-        void onCallApi(@Nullable RepoFile toAppend);
+void onCallApi(@Nullable RepoFile toAppend);
 
-        void onInitDataAndRequest(@NonNull String login, @NonNull String repoId, @NonNull String path,
-                                  @NonNull String ref, boolean clear, @Nullable RepoFile toAppend);
+void onInitDataAndRequest(@NonNull String login, @NonNull String repoId, @NonNull String path,
+                          @NonNull String ref, boolean clear, @Nullable RepoFile toAppend);
 
-        @Nullable List<RepoFile> getCachedFiles(@NonNull String url, @NonNull String ref);
+@Nullable List<RepoFile> getCachedFiles(@NonNull String url, @NonNull String ref);
 
-        void onDeleteFile(@NonNull String message, @NonNull RepoFile item, @NonNull String branch);
-    }
+void onDeleteFile(@NonNull String message, @NonNull RepoFile item, @NonNull String branch);
+}
 
 
 }

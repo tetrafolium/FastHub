@@ -17,22 +17,22 @@ import java.util.List;
 
 public interface LabelsMvp {
 
-    interface SelectedLabelsListener {
-        void onSelectedLabels(@NonNull ArrayList<LabelModel> labels);
-    }
+interface SelectedLabelsListener {
+void onSelectedLabels(@NonNull ArrayList<LabelModel> labels);
+}
 
-    interface View extends BaseMvp.FAView, LabelsAdapter.OnSelectLabel {
+interface View extends BaseMvp.FAView, LabelsAdapter.OnSelectLabel {
 
-        @NonNull OnLoadMore getLoadMore();
+@NonNull OnLoadMore getLoadMore();
 
-        void onNotifyAdapter(@Nullable List<LabelModel> items, int page);
+void onNotifyAdapter(@Nullable List<LabelModel> items, int page);
 
-        void onLabelAdded(@NonNull LabelModel labelModel);
-    }
+void onLabelAdded(@NonNull LabelModel labelModel);
+}
 
-    interface Presenter extends BaseMvp.PaginationListener {
+interface Presenter extends BaseMvp.PaginationListener {
 
-        @NonNull ArrayList<LabelModel> getLabels();
+@NonNull ArrayList<LabelModel> getLabels();
 
-    }
+}
 }

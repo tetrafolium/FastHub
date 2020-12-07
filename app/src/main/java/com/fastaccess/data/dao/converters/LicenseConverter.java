@@ -7,7 +7,7 @@ import com.fastaccess.data.dao.LicenseModel;
  */
 
 public class LicenseConverter extends BaseConverter<LicenseModel> {
-    @Override protected Class<? extends LicenseModel> getTypeClass() {
-        return LicenseModel.class;
-    }
+@Override protected Class<? extends LicenseModel> getTypeClass() {
+	return LicenseModel.class;
+}
 }

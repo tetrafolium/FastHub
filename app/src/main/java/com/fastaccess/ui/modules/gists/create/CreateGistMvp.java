@@ -15,22 +15,22 @@ import java.util.HashMap;
 
 interface CreateGistMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onDescriptionError(boolean isEmptyDesc);
+interface View extends BaseMvp.FAView {
+void onDescriptionError(boolean isEmptyDesc);
 
-        void onFileNameError(boolean isEmptyDesc);
+void onFileNameError(boolean isEmptyDesc);
 
-        void onFileContentError(boolean isEmptyDesc);
+void onFileContentError(boolean isEmptyDesc);
 
-        void onSuccessSubmission(Gist gistsModel);
-    }
+void onSuccessSubmission(Gist gistsModel);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter {
+interface Presenter extends BaseMvp.FAPresenter {
 
-        void onSubmit(@NonNull String description, @NonNull HashMap<String, FilesListModel> files, boolean isPublic);
+void onSubmit(@NonNull String description, @NonNull HashMap<String, FilesListModel> files, boolean isPublic);
 
-        void onSubmit(@NonNull CreateGistModel model);
+void onSubmit(@NonNull CreateGistModel model);
 
-        void onSubmitUpdate(@NonNull String id, @NonNull String description, @NonNull HashMap<String, FilesListModel> files);
-    }
+void onSubmitUpdate(@NonNull String id, @NonNull String description, @NonNull HashMap<String, FilesListModel> files);
+}
 }

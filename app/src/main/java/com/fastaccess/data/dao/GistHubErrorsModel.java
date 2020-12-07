@@ -9,7 +9,7 @@ import lombok.Setter;
  */
 
 @Getter @Setter @NoArgsConstructor class GistHubErrorsModel {
-    private String resource;
-    private String field;
-    private String code;
+private String resource;
+private String field;
+private String code;
 }

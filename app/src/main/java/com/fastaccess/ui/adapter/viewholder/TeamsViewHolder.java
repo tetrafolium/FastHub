@@ -20,23 +20,23 @@ import butterknife.BindView;
 
 public class TeamsViewHolder extends BaseViewHolder<TeamsModel> {
 
-    @BindView(R.id.title) FontTextView title;
-    @BindView(R.id.date) FontTextView date;
+@BindView(R.id.title) FontTextView title;
+@BindView(R.id.date) FontTextView date;
 
-    private TeamsViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
-        super(itemView, adapter);
-    }
+private TeamsViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+	super(itemView, adapter);
+}
 
-    public static TeamsViewHolder newInstance(@NonNull ViewGroup viewGroup, @NonNull BaseRecyclerAdapter adapter) {
-        return new TeamsViewHolder(getView(viewGroup, R.layout.feeds_row_no_image_item), adapter);
-    }
+public static TeamsViewHolder newInstance(@NonNull ViewGroup viewGroup, @NonNull BaseRecyclerAdapter adapter) {
+	return new TeamsViewHolder(getView(viewGroup, R.layout.feeds_row_no_image_item), adapter);
+}
 
-    @Override public void bind(@NonNull TeamsModel user) {
-        title.setText(!InputHelper.isEmpty(user.getName()) ? user.getName() : user.getSlug());
-        if (!InputHelper.isEmpty(user.getDescription())) {
-            date.setText(user.getDescription());
-        } else {
-            date.setText(InputHelper.toNA(user.getSlug()));
-        }
-    }
+@Override public void bind(@NonNull TeamsModel user) {
+	title.setText(!InputHelper.isEmpty(user.getName()) ? user.getName() : user.getSlug());
+	if (!InputHelper.isEmpty(user.getDescription())) {
+		date.setText(user.getDescription());
+	} else {
+		date.setText(InputHelper.toNA(user.getSlug()));
+	}
+}
 }

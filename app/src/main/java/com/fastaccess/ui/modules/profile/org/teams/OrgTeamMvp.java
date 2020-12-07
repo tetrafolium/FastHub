@@ -19,18 +19,18 @@ import java.util.List;
 
 interface OrgTeamMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<TeamsModel> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<TeamsModel> items, int page);
 
-        @NonNull OnLoadMore<String> getLoadMore();
-    }
+@NonNull OnLoadMore<String> getLoadMore();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<TeamsModel>,
-        BaseMvp.PaginationListener<String> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<TeamsModel>,
+	                    BaseMvp.PaginationListener<String> {
 
-        @NonNull ArrayList<TeamsModel> getTeams();
+@NonNull ArrayList<TeamsModel> getTeams();
 
-        void onWorkOffline(@NonNull String login);
-    }
+void onWorkOffline(@NonNull String login);
+}
 }

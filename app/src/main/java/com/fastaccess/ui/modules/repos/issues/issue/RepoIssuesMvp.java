@@ -21,38 +21,38 @@ import java.util.List;
 
 interface RepoIssuesMvp {
 
-    int ISSUE_REQUEST_CODE = 1002;
+int ISSUE_REQUEST_CODE = 1002;
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<Issue> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<Issue> items, int page);
 
-        @NonNull OnLoadMore<IssueState> getLoadMore();
+@NonNull OnLoadMore<IssueState> getLoadMore();
 
-        void onAddIssue();
+void onAddIssue();
 
-        void onUpdateCount(int totalCount);
+void onUpdateCount(int totalCount);
 
-        void onOpenIssue(@NonNull PullsIssuesParser parser);
+void onOpenIssue(@NonNull PullsIssuesParser parser);
 
-        void onRefresh(boolean isLastUpdated);
+void onRefresh(boolean isLastUpdated);
 
-        void onShowIssuePopup(@NonNull Issue item);
-    }
+void onShowIssuePopup(@NonNull Issue item);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Issue>,
-        BaseMvp.PaginationListener<IssueState> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Issue>,
+	                    BaseMvp.PaginationListener<IssueState> {
 
-        void onFragmentCreated(@NonNull Bundle bundle, @NonNull IssueState issueState);
+void onFragmentCreated(@NonNull Bundle bundle, @NonNull IssueState issueState);
 
-        void onWorkOffline();
+void onWorkOffline();
 
-        @NonNull ArrayList<Issue> getIssues();
+@NonNull ArrayList<Issue> getIssues();
 
-        @NonNull String repoId();
+@NonNull String repoId();
 
-        @NonNull String login();
+@NonNull String login();
 
-        void onSetSortBy(boolean isLastUpdated);
-    }
+void onSetSortBy(boolean isLastUpdated);
+}
 }
