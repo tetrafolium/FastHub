@@ -104,7 +104,7 @@ public class StateLayout extends NestedScrollView {
         hideReload();
         setVisibility(VISIBLE);
         emptyText.setVisibility(VISIBLE);
-        layoutState = SHOW_EMPTY_STATE;// last so it override visibility state.
+        layoutState = SHOW_EMPTY_STATE; // last so it override visibility state.
     }
 
     public void setOnReloadListener(OnClickListener onReloadListener) {
