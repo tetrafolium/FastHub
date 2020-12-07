@@ -18,10 +18,12 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
  * Created by Kosh on 13 Dec 2016, 1:42 AM
  */
 
-class ReviewsViewHolder private constructor(itemView: View,
-                                            adapter: BaseRecyclerAdapter<*, *, *>?,
-                                            val viewGroup: ViewGroup)
-    : BaseViewHolder<TimelineModel>(itemView, adapter) {
+class ReviewsViewHolder private constructor(
+    itemView: View,
+    adapter: BaseRecyclerAdapter<*, *, *>?,
+    val viewGroup: ViewGroup
+) :
+    BaseViewHolder<TimelineModel>(itemView, adapter) {
 
     @BindView(R.id.stateImage) lateinit var stateImage: ForegroundImageView
     @BindView(R.id.avatarLayout) lateinit var avatarLayout: AvatarLayout
@@ -38,11 +40,13 @@ class ReviewsViewHolder private constructor(itemView: View,
         review?.let {
             stateImage.setImageResource(R.drawable.ic_eye)
             avatarLayout.setUrl(it.user?.avatarUrl, it.user?.login, false, false)
-            stateText.text = SpannableBuilder.builder().bold(if (it.user != null) {
-                it.user.login
-            } else {
-                ""
-            }).append(" ${review.state.replace("_", " ")} ").append(ParseDateFormat.getTimeAgo(it.submittedAt))
+            stateText.text = SpannableBuilder.builder().bold(
+                if (it.user != null) {
+                    it.user.login
+                } else {
+                    ""
+                }
+            ).append(" ${review.state.replace("_", " ")} ").append(ParseDateFormat.getTimeAgo(it.submittedAt))
             if (!it.bodyHtml.isNullOrBlank()) {
                 HtmlHelper.htmlIntoTextView(body, it.bodyHtml, viewGroup.width)
                 body.visibility = View.VISIBLE
@@ -58,5 +62,4 @@ class ReviewsViewHolder private constructor(itemView: View,
             return ReviewsViewHolder(BaseViewHolder.getView(viewGroup, R.layout.review_timeline_row_item), adapter, viewGroup)
         }
     }
-
 }

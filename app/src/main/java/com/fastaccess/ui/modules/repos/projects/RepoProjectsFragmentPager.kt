@@ -1,7 +1,6 @@
 package com.fastaccess.ui.modules.repos.projects
 
 import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
 import android.view.View
 import butterknife.BindView
 import com.fastaccess.R
@@ -17,6 +16,7 @@ import com.fastaccess.ui.base.mvp.presenter.BasePresenter
 import com.fastaccess.ui.modules.repos.RepoPagerMvp
 import com.fastaccess.ui.widgets.SpannableBuilder
 import com.fastaccess.ui.widgets.ViewPagerView
+import com.google.android.material.tabs.TabLayout
 
 /**
  * Created by kosh on 09/09/2017.
@@ -41,7 +41,8 @@ class RepoProjectsFragmentPager : BaseFragment<BaseMvp.FAView, BasePresenter<Bas
         val login = arguments!!.getString(BundleConstant.EXTRA)
         if (!login.isNullOrEmpty() && !repoId.isNullOrEmpty()) {
             pager.adapter = FragmentsPagerAdapter(
-                childFragmentManager, FragmentPagerAdapterModel.buildForRepoProjects(
+                childFragmentManager,
+                FragmentPagerAdapterModel.buildForRepoProjects(
                     requireContext(),
                     repoId, login
                 )

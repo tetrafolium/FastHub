@@ -14,8 +14,11 @@ import com.fastaccess.ui.widgets.markdown.MarkDownLayout
 
 interface EditorMvp {
 
-    interface View : BaseMvp.FAView, EditorLinkImageMvp.EditorLinkCallback,
-            MarkDownLayout.MarkdownListener, EmojiMvp.EmojiCallback {
+    interface View :
+        BaseMvp.FAView,
+        EditorLinkImageMvp.EditorLinkCallback,
+        MarkDownLayout.MarkdownListener,
+        EmojiMvp.EmojiCallback {
         fun onSendResultAndFinish(commentModel: Comment, isNew: Boolean)
 
         fun onSendMarkDownResult()
@@ -37,8 +40,15 @@ interface EditorMvp {
 
         fun onEditCommitComment(savedText: CharSequence, itemId: String, login: String, id: Long)
 
-        fun onHandleSubmission(savedText: CharSequence?, @BundleConstant.ExtraType extraType: String?,
-                               itemId: String?, id: Long, login: String?, issueNumber: Int, sha: String?,
-                               reviewComment: EditReviewCommentModel?)
+        fun onHandleSubmission(
+            savedText: CharSequence?,
+            @BundleConstant.ExtraType extraType: String?,
+            itemId: String?,
+            id: Long,
+            login: String?,
+            issueNumber: Int,
+            sha: String?,
+            reviewComment: EditReviewCommentModel?
+        )
     }
 }

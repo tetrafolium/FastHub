@@ -3,9 +3,9 @@ package com.fastaccess.ui.modules.repos.projects.details
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.viewpager.widget.ViewPager
 import android.view.MenuItem
 import android.view.View
+import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import com.airbnb.lottie.LottieAnimationView
 import com.evernote.android.state.State
@@ -39,8 +39,11 @@ class ProjectPagerActivity : BaseActivity<ProjectPagerMvp.View, ProjectPagerPres
 
     override fun onInitPager(list: List<ProjectColumnModel>) {
         hideProgress()
-        pager.adapter = FragmentsPagerAdapter(supportFragmentManager, FragmentPagerAdapterModel
-                .buildForProjectColumns(list, presenter.viewerCanUpdate))
+        pager.adapter = FragmentsPagerAdapter(
+            supportFragmentManager,
+            FragmentPagerAdapterModel
+                .buildForProjectColumns(list, presenter.viewerCanUpdate)
+        )
     }
 
     override fun showMessage(titleRes: Int, msgRes: Int) {
@@ -137,15 +140,15 @@ class ProjectPagerActivity : BaseActivity<ProjectPagerMvp.View, ProjectPagerPres
 
         fun getIntent(context: Context, login: String, repoId: String? = null, projectId: Long, isEnterprise: Boolean = false): Intent {
             val intent = Intent(context, ProjectPagerActivity::class.java)
-            intent.putExtras(Bundler.start()
+            intent.putExtras(
+                Bundler.start()
                     .put(BundleConstant.ID, projectId)
                     .put(BundleConstant.ITEM, repoId)
                     .put(BundleConstant.EXTRA, login)
                     .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                    .end())
+                    .end()
+            )
             return intent
         }
-
     }
-
 }

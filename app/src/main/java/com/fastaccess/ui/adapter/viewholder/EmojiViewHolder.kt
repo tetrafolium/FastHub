@@ -12,8 +12,8 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
 /**
  * Created by kosh on 17/08/2017.
  */
-class EmojiViewHolder private constructor(view: View, adapter: BaseRecyclerAdapter<*, *, *>)
-    : BaseViewHolder<Emoji>(view, adapter) {
+class EmojiViewHolder private constructor(view: View, adapter: BaseRecyclerAdapter<*, *, *>) :
+    BaseViewHolder<Emoji>(view, adapter) {
 
     @BindView(R.id.emoji) lateinit var emojiTextView: FontTextView
 

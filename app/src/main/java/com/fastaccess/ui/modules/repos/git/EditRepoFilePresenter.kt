@@ -42,16 +42,19 @@ class EditRepoFilePresenter : BasePresenter<EditRepoFileMvp.View>(), EditRepoFil
         if (!text.isNullOrBlank() && !description.isNullOrBlank() && !filename.isNullOrBlank()) {
             model?.let {
                 val commitModel = CommitRequestModel(description!!, Base64.encodeToString(text!!.toByteArray(), Base64.DEFAULT), it.sha, it.ref)
-                val observable = RestProvider.getContentService(isEnterprise).updateCreateFile(it.login, it.repoId,
-                        if (it.path.isNullOrBlank()) {
-                            filename!!
+                val observable = RestProvider.getContentService(isEnterprise).updateCreateFile(
+                    it.login, it.repoId,
+                    if (it.path.isNullOrBlank()) {
+                        filename!!
+                    } else {
+                        if (it.path!!.endsWith("/")) {
+                            "${it.path}$filename"
                         } else {
-                            if (it.path!!.endsWith("/")) {
-                                "${it.path}$filename"
-                            } else {
-                                "${it.path}"
-                            }
-                        }, it.ref, commitModel)
+                            "${it.path}"
+                        }
+                    },
+                    it.ref, commitModel
+                )
                 makeRestCall(observable, { sendToView { it.onSuccessfullyCommitted() } })
             }
         }
@@ -59,11 +62,14 @@ class EditRepoFilePresenter : BasePresenter<EditRepoFileMvp.View>(), EditRepoFil
 
     private fun loadContent() {
         model?.contentUrl?.let {
-            makeRestCall(RestProvider.getRepoService(isEnterprise)
-                    .getFileAsStream(it), {
-                fileContent = it
-                sendToView({ v -> v.onSetText(it) })
-            })
+            makeRestCall(
+                RestProvider.getRepoService(isEnterprise)
+                    .getFileAsStream(it),
+                {
+                    fileContent = it
+                    sendToView({ v -> v.onSetText(it) })
+                }
+            )
         }
     }
 }

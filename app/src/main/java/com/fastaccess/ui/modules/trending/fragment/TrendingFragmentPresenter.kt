@@ -43,17 +43,18 @@ class TrendingFragmentPresenter : BasePresenter<TrendingFragmentMvp.View>(), Tre
         val config = firebaseTrendingConfigModel
 
         if (config == null) {
-            manageDisposable(RxHelper.getSingle(RxFirebaseDatabase.data(FirebaseDatabase.getInstance().reference.child("github_trending")))
-                .doOnSubscribe { sendToView { it.showProgress(0) } }
-                .map {
-                    firebaseTrendingConfigModel = FirebaseTrendingConfigModel
-                        .map(it.value as? HashMap<String, String>)
-                    return@map firebaseTrendingConfigModel
-                }
-                .subscribe(
-                    { callApi(lang, since) },
-                    { callApi(lang, since) }
-                )
+            manageDisposable(
+                RxHelper.getSingle(RxFirebaseDatabase.data(FirebaseDatabase.getInstance().reference.child("github_trending")))
+                    .doOnSubscribe { sendToView { it.showProgress(0) } }
+                    .map {
+                        firebaseTrendingConfigModel = FirebaseTrendingConfigModel
+                            .map(it.value as? HashMap<String, String>)
+                        return@map firebaseTrendingConfigModel
+                    }
+                    .subscribe(
+                        { callApi(lang, since) },
+                        { callApi(lang, since) }
+                    )
             )
         } else {
             callApi(lang, since)
@@ -84,24 +85,25 @@ class TrendingFragmentPresenter : BasePresenter<TrendingFragmentMvp.View>(), Tre
         manageDisposable(disposel)
     }
 
-
     private fun getTrendingObservable(html: String, trendingModel: FirebaseTrendingConfigModel): Observable<List<TrendingModel>> {
         return Observable.fromPublisher { s ->
             val document = Jsoup.parse(html, "")
             val list = document.select(trendingModel.listName)
             val trendingList = arrayListOf<TrendingModel>()
             list.select(trendingModel.listNameSublistTag)?.let { li ->
-                trendingList.addAll(li.map { body ->
-                    val trendingLang = kotlin.runCatching { body.select(trendingModel.language).text() }
-                        .getOrNull() ?: kotlin.runCatching { body.select(trendingModel.languageFallback).text() }.getOrNull()
-                    val todayStars = kotlin.runCatching { body.select(trendingModel.todayStars).text() }
-                        .getOrNull() ?: kotlin.runCatching { body.select(trendingModel.todayStarsFallback).text() }.getOrNull()
-                    val title = kotlin.runCatching { body.select(trendingModel.title).text() }.getOrNull()
-                    val description = kotlin.runCatching { body.select(trendingModel.description).text() }.getOrNull()
-                    val stars = kotlin.runCatching { body.select(trendingModel.stars).text() }.getOrNull()
-                    val forks = kotlin.runCatching { body.select(trendingModel.forks).text() }.getOrNull()
-                    TrendingModel(title, description, trendingLang, stars, forks, todayStars)
-                })
+                trendingList.addAll(
+                    li.map { body ->
+                        val trendingLang = kotlin.runCatching { body.select(trendingModel.language).text() }
+                            .getOrNull() ?: kotlin.runCatching { body.select(trendingModel.languageFallback).text() }.getOrNull()
+                        val todayStars = kotlin.runCatching { body.select(trendingModel.todayStars).text() }
+                            .getOrNull() ?: kotlin.runCatching { body.select(trendingModel.todayStarsFallback).text() }.getOrNull()
+                        val title = kotlin.runCatching { body.select(trendingModel.title).text() }.getOrNull()
+                        val description = kotlin.runCatching { body.select(trendingModel.description).text() }.getOrNull()
+                        val stars = kotlin.runCatching { body.select(trendingModel.stars).text() }.getOrNull()
+                        val forks = kotlin.runCatching { body.select(trendingModel.forks).text() }.getOrNull()
+                        TrendingModel(title, description, trendingLang, stars, forks, todayStars)
+                    }
+                )
             }
             Logger.e(trendingList as List<Any>?)
             s.onNext(trendingList)

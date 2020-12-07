@@ -21,25 +21,25 @@ object TimelineConverter {
         if (jsonObjects == null) return Observable.empty<TimelineModel>()
         val gson = RestProvider.gson
         return Observable.fromIterable(jsonObjects)
-                .map { jsonObject ->
-                    val event = jsonObject.get("event").asString
-                    val timeline = TimelineModel()
-                    if (!InputHelper.isEmpty(event)) {
-                        val type = IssueEventType.getType(event)
-                        timeline.event = type
-                        if (type != null) {
-                            if (type == IssueEventType.commented) {
-                                timeline.comment = getComment(jsonObject, gson)
-                            } else {
-                                timeline.genericEvent = getGenericEvent(jsonObject, gson)
-                            }
+            .map { jsonObject ->
+                val event = jsonObject.get("event").asString
+                val timeline = TimelineModel()
+                if (!InputHelper.isEmpty(event)) {
+                    val type = IssueEventType.getType(event)
+                    timeline.event = type
+                    if (type != null) {
+                        if (type == IssueEventType.commented) {
+                            timeline.comment = getComment(jsonObject, gson)
+                        } else {
+                            timeline.genericEvent = getGenericEvent(jsonObject, gson)
                         }
-                    } else {
-                        timeline.genericEvent = getGenericEvent(jsonObject, gson)
                     }
-                    timeline
+                } else {
+                    timeline.genericEvent = getGenericEvent(jsonObject, gson)
                 }
-                .filter { filterEvents(it.event) }
+                timeline
+            }
+            .filter { filterEvents(it.event) }
     }
 
     fun convert(jsonObjects: List<JsonObject>?, comments: Pageable<ReviewCommentModel>?): List<TimelineModel> {
@@ -70,25 +70,26 @@ object TimelineConverter {
                             list.add(timeline)
                         }
                     } else if (type == IssueEventType.reviewed || type == IssueEventType
-                            .changes_requested) {
+                        .changes_requested
+                    ) {
                         val review = getReview(jsonObject, gson)
                         if (review != null) {
                             timeline.review = review
                             list.add(timeline)
                             val reviewsList = arrayListOf<TimelineModel>()
                             comments?.items?.filter { it.pullRequestReviewId == review.id }
-                                    ?.onEach {
-                                        val grouped = GroupedReviewModel()
-                                        grouped.diffText = it.diffHunk
-                                        grouped.path = it.path
-                                        grouped.position = it.position
-                                        grouped.comments = arrayListOf(it)
-                                        grouped.id = it.id
-                                        val groupTimeline = TimelineModel()
-                                        groupTimeline.event = IssueEventType.GROUPED
-                                        groupTimeline.groupedReviewModel = grouped
-                                        reviewsList.add(groupTimeline)
-                                    }
+                                ?.onEach {
+                                    val grouped = GroupedReviewModel()
+                                    grouped.diffText = it.diffHunk
+                                    grouped.path = it.path
+                                    grouped.position = it.position
+                                    grouped.comments = arrayListOf(it)
+                                    grouped.id = it.id
+                                    val groupTimeline = TimelineModel()
+                                    groupTimeline.event = IssueEventType.GROUPED
+                                    groupTimeline.groupedReviewModel = grouped
+                                    reviewsList.add(groupTimeline)
+                                }
                             comments?.items?.filter { it.pullRequestReviewId != review.id }?.onEach {
                                 reviewsList.onEach { reviews ->
                                     if (it.path == reviews.groupedReviewModel.path && it.position == reviews.groupedReviewModel.position) {
@@ -108,7 +109,7 @@ object TimelineConverter {
                 list.add(timeline)
             }
         }
-        return list.filter({filterEvents(it.event)})
+        return list.filter({ filterEvents(it.event) })
     }
 
     private fun getCommit(jsonObject: JsonObject, gson: Gson): PullRequestCommitModel? {

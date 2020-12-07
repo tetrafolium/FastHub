@@ -82,92 +82,119 @@ class ProjectColumnPresenter : BasePresenter<ProjectColumnMvp.View>(), ProjectCo
             return false
         }
         currentPage = page
-        makeRestCall(RestProvider.getProjectsService(isEnterprise).getProjectCards(parameter!!, page),
-                { response ->
-                    lastPage = response.last
-                    Logger.e(response.items as List<Any>?)
-                    sendToView({ it.onNotifyAdapter(response.items, page) })
-                })
+        makeRestCall(
+            RestProvider.getProjectsService(isEnterprise).getProjectCards(parameter!!, page),
+            { response ->
+                lastPage = response.last
+                Logger.e(response.items as List<Any>?)
+                sendToView({ it.onNotifyAdapter(response.items, page) })
+            }
+        )
         return true
     }
 
     override fun onEditOrDeleteColumn(text: String?, column: ProjectColumnModel) {
         if (text.isNullOrBlank()) {
-            manageDisposable(RxHelper.getObservable(RestProvider.getProjectsService(isEnterprise).deleteColumn(column.id))
+            manageDisposable(
+                RxHelper.getObservable(RestProvider.getProjectsService(isEnterprise).deleteColumn(column.id))
                     .doOnSubscribe {
                         showBlockingProgress()
                     }
-                    .subscribe({
-                        if (it.code() == 204) {
-                            sendToView { it.deleteColumn() }
-                        } else {
-                            sendToView { it.showMessage(R.string.error, R.string.network_error) }
+                    .subscribe(
+                        {
+                            if (it.code() == 204) {
+                                sendToView { it.deleteColumn() }
+                            } else {
+                                sendToView { it.showMessage(R.string.error, R.string.network_error) }
+                            }
+                        },
+                        {
+                            hideBlockingProgress()
+                            onError(it)
                         }
-                    }, {
-                        hideBlockingProgress()
-                        onError(it)
-                    }))
+                    )
+            )
         } else {
             val body = ProjectColumnModel()
             body.name = text
-            manageDisposable(RxHelper.getObservable(RestProvider.getProjectsService(isEnterprise).updateColumn(column.id, body))
+            manageDisposable(
+                RxHelper.getObservable(RestProvider.getProjectsService(isEnterprise).updateColumn(column.id, body))
                     .doOnSubscribe {
                         showBlockingProgress()
                     }
-                    .subscribe({
-                        hideBlockingProgress()
-                    }, {
-                        hideBlockingProgress()
-                        onError(it)
-                    }))
+                    .subscribe(
+                        {
+                            hideBlockingProgress()
+                        },
+                        {
+                            hideBlockingProgress()
+                            onError(it)
+                        }
+                    )
+            )
         }
     }
 
     override fun onDeleteCard(position: Int, card: ProjectCardModel) {
-        manageDisposable(RxHelper.getObservable(RestProvider.getProjectsService(isEnterprise).deleteCard(card.id.toLong()))
+        manageDisposable(
+            RxHelper.getObservable(RestProvider.getProjectsService(isEnterprise).deleteCard(card.id.toLong()))
                 .doOnSubscribe {
                     showBlockingProgress()
                 }
-                .subscribe({
-                    if (it.code() == 204) {
-                        sendToView { it.onRemoveCard(position) }
-                    } else {
-                        sendToView { it.showMessage(R.string.error, R.string.network_error) }
+                .subscribe(
+                    {
+                        if (it.code() == 204) {
+                            sendToView { it.onRemoveCard(position) }
+                        } else {
+                            sendToView { it.showMessage(R.string.error, R.string.network_error) }
+                        }
+                    },
+                    {
+                        hideBlockingProgress()
+                        onError(it)
                     }
-                }, {
-                    hideBlockingProgress()
-                    onError(it)
-                }))
+                )
+        )
     }
 
     override fun createCard(text: String, columnId: Long) {
         val body = ProjectCardModel()
         body.note = text
-        manageDisposable(RxHelper.getObservable(RestProvider.getProjectsService(isEnterprise).createCard(columnId, body))
+        manageDisposable(
+            RxHelper.getObservable(RestProvider.getProjectsService(isEnterprise).createCard(columnId, body))
                 .doOnSubscribe {
                     showBlockingProgress()
                 }
-                .subscribe({ response ->
-                    sendToView { it.addCard(response) }
-                }, {
-                    hideBlockingProgress()
-                    onError(it)
-                }))
+                .subscribe(
+                    { response ->
+                        sendToView { it.addCard(response) }
+                    },
+                    {
+                        hideBlockingProgress()
+                        onError(it)
+                    }
+                )
+        )
     }
 
     override fun editCard(text: String, card: ProjectCardModel, position: Int) {
         val body = ProjectCardModel()
         body.note = text
-        manageDisposable(RxHelper.getObservable(RestProvider.getProjectsService(isEnterprise).updateCard(card.id.toLong(), body))
+        manageDisposable(
+            RxHelper.getObservable(RestProvider.getProjectsService(isEnterprise).updateCard(card.id.toLong(), body))
                 .doOnSubscribe {
                     showBlockingProgress()
                 }
-                .subscribe({ response ->
-                    sendToView { it.updateCard(response, position) }
-                }, {
-                    hideBlockingProgress()
-                    onError(it)
-                }))
+                .subscribe(
+                    { response ->
+                        sendToView { it.updateCard(response, position) }
+                    },
+                    {
+                        hideBlockingProgress()
+                        onError(it)
+                    }
+                )
+        )
     }
 
     private fun showBlockingProgress() {

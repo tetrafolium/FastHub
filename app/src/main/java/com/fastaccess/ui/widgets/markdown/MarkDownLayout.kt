@@ -2,14 +2,13 @@ package com.fastaccess.ui.widgets.markdown
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.google.android.material.snackbar.Snackbar
-import androidx.transition.TransitionManager
-import androidx.fragment.app.FragmentManager
 import android.util.AttributeSet
 import android.view.View
 import android.widget.EditText
 import android.widget.HorizontalScrollView
 import android.widget.LinearLayout
+import androidx.fragment.app.FragmentManager
+import androidx.transition.TransitionManager
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
@@ -21,6 +20,7 @@ import com.fastaccess.provider.emoji.Emoji
 import com.fastaccess.provider.markdown.MarkDownProvider
 import com.fastaccess.ui.modules.editor.emoji.EmojiBottomSheet
 import com.fastaccess.ui.modules.editor.popup.EditorLinkImageDialogFragment
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * Created by kosh on 11/08/2017.
@@ -28,8 +28,10 @@ import com.fastaccess.ui.modules.editor.popup.EditorLinkImageDialogFragment
 class MarkDownLayout : LinearLayout {
 
     private val sentFromFastHub: String by lazy {
-        "\n\n_" + resources.getString(R.string.sent_from_fasthub, AppHelper.getDeviceName(), "",
-                "[" + resources.getString(R.string.app_name) + "](https://play.google.com/store/apps/details?id=com.fastaccess.github)") + "_"
+        "\n\n_" + resources.getString(
+            R.string.sent_from_fasthub, AppHelper.getDeviceName(), "",
+            "[" + resources.getString(R.string.app_name) + "](https://play.google.com/store/apps/details?id=com.fastaccess.github)"
+        ) + "_"
     }
 
     var markdownListener: MarkdownListener? = null
@@ -77,10 +79,12 @@ class MarkDownLayout : LinearLayout {
         }
     }
 
-    @OnClick(R.id.headerOne, R.id.headerTwo, R.id.headerThree, R.id.bold, R.id.italic, R.id.strikethrough,
-            R.id.bullet, R.id.header, R.id.code, R.id.numbered, R.id.quote, R.id.link, R.id.image,
-            R.id.unCheckbox, R.id.checkbox, R.id.inlineCode, R.id.addEmoji,
-            R.id.signature)
+    @OnClick(
+        R.id.headerOne, R.id.headerTwo, R.id.headerThree, R.id.bold, R.id.italic, R.id.strikethrough,
+        R.id.bullet, R.id.header, R.id.code, R.id.numbered, R.id.quote, R.id.link, R.id.image,
+        R.id.unCheckbox, R.id.checkbox, R.id.inlineCode, R.id.addEmoji,
+        R.id.signature
+    )
     fun onActions(v: View) {
         markdownListener?.let {
             it.getEditText().let { editText ->
@@ -88,9 +92,11 @@ class MarkDownLayout : LinearLayout {
                     Snackbar.make(this, R.string.error_highlighting_editor, Snackbar.LENGTH_SHORT).show()
                 } else {
                     when {
-                        v.id == R.id.link -> EditorLinkImageDialogFragment.newInstance(true, getSelectedText())
+                        v.id == R.id.link ->
+                            EditorLinkImageDialogFragment.newInstance(true, getSelectedText())
                                 .show(it.fragmentManager(), "EditorLinkImageDialogFragment")
-                        v.id == R.id.image -> EditorLinkImageDialogFragment.newInstance(false, getSelectedText())
+                        v.id == R.id.image ->
+                            EditorLinkImageDialogFragment.newInstance(false, getSelectedText())
                                 .show(it.fragmentManager(), "EditorLinkImageDialogFragment")
                         v.id == R.id.addEmoji -> {
                             ViewHelper.hideKeyboard(it.getEditText())

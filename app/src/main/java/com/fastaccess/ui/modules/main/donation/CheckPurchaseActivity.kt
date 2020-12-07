@@ -26,30 +26,32 @@ class CheckPurchaseActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         progress = ProgressDialog(this)
-                .apply {
-                    setMessage(getString(R.string.in_progress))
-                    setOnCancelListener { finishActivity(false) }
-                    show()
-                }
+            .apply {
+                setMessage(getString(R.string.in_progress))
+                setOnCancelListener { finishActivity(false) }
+                show()
+            }
         if (AppHelper.isGoogleAvailable(this) && !AppHelper.isEmulator()) {
-            disposable = RxHelper.getObservable(Observable.fromCallable {
-                try {
-                    val purchases = RxBillingService.getInstance(this, BuildConfig.DEBUG)
+            disposable = RxHelper.getObservable(
+                Observable.fromCallable {
+                    try {
+                        val purchases = RxBillingService.getInstance(this, BuildConfig.DEBUG)
                             .getPurchases(ProductType.IN_APP)
                             .toMaybe()
                             .blockingGet(mutableListOf())
-                    if (!purchases.isEmpty()) {
-                        purchases.filterNotNull()
+                        if (!purchases.isEmpty()) {
+                            purchases.filterNotNull()
                                 .map { it.sku() }
                                 .filterNot { !it.isNullOrBlank() }
                                 .onEach { DonateActivity.enableProduct(it, App.getInstance()) }
-                        return@fromCallable true
+                            return@fromCallable true
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                    return@fromCallable false
                 }
-                return@fromCallable false
-            }).subscribe({ finishActivity(it) }, { finishActivity(false) })
+            ).subscribe({ finishActivity(it) }, { finishActivity(false) })
         } else {
             finishActivity(false)
         }

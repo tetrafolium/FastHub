@@ -5,13 +5,12 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import com.google.android.material.textfield.TextInputLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.EditRepoFileModel
@@ -21,6 +20,7 @@ import com.fastaccess.provider.emoji.Emoji
 import com.fastaccess.ui.base.BaseActivity
 import com.fastaccess.ui.widgets.markdown.MarkDownLayout
 import com.fastaccess.ui.widgets.markdown.MarkdownEditText
+import com.google.android.material.textfield.TextInputLayout
 
 /**
  * Created by kosh on 29/08/2017.
@@ -34,7 +34,6 @@ class EditRepoFileActivity : BaseActivity<EditRepoFileMvp.View, EditRepoFilePres
     @BindView(R.id.fileNameHolder) lateinit var fileNameHolder: View
     @BindView(R.id.commitHolder) lateinit var commitHolder: View
     @BindView(R.id.layoutHolder) lateinit var layoutHolder: View
-
 
     override fun layout(): Int = R.layout.edit_repo_file_layout
 
@@ -138,9 +137,9 @@ class EditRepoFileActivity : BaseActivity<EditRepoFileMvp.View, EditRepoFilePres
 
         fun startForResult(activity: Activity, model: EditRepoFileModel, isEnterprise: Boolean) {
             val bundle = Bundler.start()
-                    .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                    .put(BundleConstant.ITEM, model)
-                    .end()
+                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                .put(BundleConstant.ITEM, model)
+                .end()
             val intent = Intent(activity, EditRepoFileActivity::class.java)
             intent.putExtras(bundle)
             activity.startActivityForResult(intent, EDIT_RQ)
@@ -148,9 +147,9 @@ class EditRepoFileActivity : BaseActivity<EditRepoFileMvp.View, EditRepoFilePres
 
         fun startForResult(fragment: Fragment, model: EditRepoFileModel, isEnterprise: Boolean) {
             val bundle = Bundler.start()
-                    .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                    .put(BundleConstant.ITEM, model)
-                    .end()
+                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                .put(BundleConstant.ITEM, model)
+                .end()
             val intent = Intent(fragment.context, EditRepoFileActivity::class.java)
             intent.putExtras(bundle)
             fragment.startActivityForResult(intent, EDIT_RQ)

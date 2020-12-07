@@ -7,8 +7,10 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
 
 interface LoginChooserMvp {
 
-    interface View : BaseMvp.FAView, LanguageBottomSheetDialog.LanguageDialogListener,
-            BaseViewHolder.OnItemClickListener<Login> {
+    interface View :
+        BaseMvp.FAView,
+        LanguageBottomSheetDialog.LanguageDialogListener,
+        BaseViewHolder.OnItemClickListener<Login> {
         fun onAccountsLoaded(accounts: List<Login>?)
     }
 }
