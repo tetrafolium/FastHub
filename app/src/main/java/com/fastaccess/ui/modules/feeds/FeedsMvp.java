@@ -5,7 +5,6 @@ import android.os.Parcelable;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.fastaccess.data.dao.GitCommitModel;
 import com.fastaccess.data.dao.SimpleUrlsModel;
 import com.fastaccess.data.dao.model.Event;
@@ -13,7 +12,6 @@ import com.fastaccess.provider.rest.loadmore.OnLoadMore;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.widgets.dialog.ListDialogView;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,28 +20,29 @@ import java.util.List;
  */
 
 public interface FeedsMvp {
-interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-	               android.view.View.OnClickListener, ListDialogView.onSimpleItemSelection<Parcelable> {
+  interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
+                         android.view.View.OnClickListener,
+                         ListDialogView.onSimpleItemSelection<Parcelable> {
 
-void onNotifyAdapter(@Nullable List<Event> events, int page);
+    void onNotifyAdapter(@Nullable List<Event> events, int page);
 
-void onOpenRepoChooser(@NonNull ArrayList<SimpleUrlsModel> models);
+    void onOpenRepoChooser(@NonNull ArrayList<SimpleUrlsModel> models);
 
-@NonNull OnLoadMore<String> getLoadMore();
+    @NonNull OnLoadMore<String> getLoadMore();
 
-void onOpenCommitChooser(@NonNull List<GitCommitModel> commits);
-}
+    void onOpenCommitChooser(@NonNull List<GitCommitModel> commits);
+  }
 
-interface Presenter extends BaseMvp.FAPresenter,
-	                    BaseViewHolder.OnItemClickListener<Event>,
-	                    BaseMvp.PaginationListener {
+  interface Presenter extends BaseMvp.FAPresenter,
+                              BaseViewHolder.OnItemClickListener<Event>,
+                              BaseMvp.PaginationListener {
 
-void onFragmentCreated(@NonNull Bundle argument);
+    void onFragmentCreated(@NonNull Bundle argument);
 
-boolean onCallApi(int page);
+    boolean onCallApi(int page);
 
-@NonNull ArrayList<Event> getEvents();
+    @NonNull ArrayList<Event> getEvents();
 
-void onWorkOffline();
-}
+    void onWorkOffline();
+  }
 }

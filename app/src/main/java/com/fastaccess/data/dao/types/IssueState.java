@@ -1,21 +1,19 @@
 package com.fastaccess.data.dao.types;
 
 import androidx.annotation.StringRes;
-
 import com.fastaccess.R;
 
 public enum IssueState {
-	open(R.string.opened),
-	closed(R.string.closed),
-	all(R.string.all);
+  open(R.string.opened),
+  closed(R.string.closed),
+  all(R.string.all);
 
-	int status;
+  int status;
 
-	IssueState(@StringRes int status) {
-		this.status = status;
-	}
+  IssueState(@StringRes int status) { this.status = status; }
 
-	@StringRes public int getStatus() {
-		return status;
-	}
+  @StringRes
+  public int getStatus() {
+    return status;
+  }
 }

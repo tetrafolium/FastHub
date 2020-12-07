@@ -2,12 +2,10 @@ package com.fastaccess.ui.modules.repos.extras.labels;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.fastaccess.data.dao.LabelModel;
 import com.fastaccess.provider.rest.loadmore.OnLoadMore;
 import com.fastaccess.ui.adapter.LabelsAdapter;
 import com.fastaccess.ui.base.mvp.BaseMvp;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,22 +15,21 @@ import java.util.List;
 
 public interface LabelsMvp {
 
-interface SelectedLabelsListener {
-void onSelectedLabels(@NonNull ArrayList<LabelModel> labels);
-}
+  interface SelectedLabelsListener {
+    void onSelectedLabels(@NonNull ArrayList<LabelModel> labels);
+  }
 
-interface View extends BaseMvp.FAView, LabelsAdapter.OnSelectLabel {
+  interface View extends BaseMvp.FAView, LabelsAdapter.OnSelectLabel {
 
-@NonNull OnLoadMore getLoadMore();
+    @NonNull OnLoadMore getLoadMore();
 
-void onNotifyAdapter(@Nullable List<LabelModel> items, int page);
+    void onNotifyAdapter(@Nullable List<LabelModel> items, int page);
 
-void onLabelAdded(@NonNull LabelModel labelModel);
-}
+    void onLabelAdded(@NonNull LabelModel labelModel);
+  }
 
-interface Presenter extends BaseMvp.PaginationListener {
+  interface Presenter extends BaseMvp.PaginationListener {
 
-@NonNull ArrayList<LabelModel> getLabels();
-
-}
+    @NonNull ArrayList<LabelModel> getLabels();
+  }
 }

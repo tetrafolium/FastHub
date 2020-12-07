@@ -8,7 +8,8 @@ import com.fastaccess.data.dao.LabelListModel;
 
 public class LabelsListConverter extends BaseConverter<LabelListModel> {
 
-@Override protected Class<? extends LabelListModel> getTypeClass() {
-	return LabelListModel.class;
-}
+  @Override
+  protected Class<? extends LabelListModel> getTypeClass() {
+    return LabelListModel.class;
+  }
 }

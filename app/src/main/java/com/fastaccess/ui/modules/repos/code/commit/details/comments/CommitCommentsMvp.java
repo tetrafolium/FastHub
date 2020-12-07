@@ -4,7 +4,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.fastaccess.data.dao.TimelineModel;
 import com.fastaccess.data.dao.model.Comment;
 import com.fastaccess.data.dao.model.User;
@@ -14,7 +13,6 @@ import com.fastaccess.ui.adapter.callback.OnToggleView;
 import com.fastaccess.ui.adapter.callback.ReactionsCallback;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,59 +22,61 @@ import java.util.List;
 
 interface CommitCommentsMvp {
 
-interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-	               android.view.View.OnClickListener, OnToggleView, ReactionsCallback {
+  interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
+                         android.view.View.OnClickListener, OnToggleView,
+                         ReactionsCallback {
 
-void onNotifyAdapter(@Nullable List<TimelineModel> items, int page);
+    void onNotifyAdapter(@Nullable List<TimelineModel> items, int page);
 
-void onRemove(@NonNull TimelineModel comment);
+    void onRemove(@NonNull TimelineModel comment);
 
-@NonNull OnLoadMore getLoadMore();
+    @NonNull OnLoadMore getLoadMore();
 
-void onEditComment(@NonNull Comment item);
+    void onEditComment(@NonNull Comment item);
 
-void onShowDeleteMsg(long id);
+    void onShowDeleteMsg(long id);
 
-void onTagUser(@Nullable User user);
+    void onTagUser(@Nullable User user);
 
-void onReply(User user, String message);
+    void onReply(User user, String message);
 
-void showReactionsPopup(@NonNull ReactionTypes reactionTypes, @NonNull String login, @NonNull String repoId, long commentId);
+    void showReactionsPopup(@NonNull ReactionTypes reactionTypes,
+                            @NonNull String login, @NonNull String repoId,
+                            long commentId);
 
-void addComment(@NonNull Comment newComment);
+    void addComment(@NonNull Comment newComment);
 
-void showReload();
+    void showReload();
 
-void onHandleComment(@NonNull String text, @Nullable Bundle bundle);
+    void onHandleComment(@NonNull String text, @Nullable Bundle bundle);
 
-@NonNull List<String> getNamesToTags();
+    @NonNull List<String> getNamesToTags();
 
-void hideBlockingProgress();
-}
+    void hideBlockingProgress();
+  }
 
-interface Presenter extends BaseMvp.FAPresenter,
-	                    BaseMvp.PaginationListener<String>, BaseViewHolder.OnItemClickListener<TimelineModel> {
+  interface Presenter
+      extends BaseMvp.FAPresenter, BaseMvp.PaginationListener<String>,
+              BaseViewHolder.OnItemClickListener<TimelineModel> {
 
-void onFragmentCreated(@Nullable Bundle bundle);
+    void onFragmentCreated(@Nullable Bundle bundle);
 
-@NonNull ArrayList<TimelineModel> getComments();
+    @NonNull ArrayList<TimelineModel> getComments();
 
-void onHandleDeletion(@Nullable Bundle bundle);
+    void onHandleDeletion(@Nullable Bundle bundle);
 
-void onWorkOffline();
+    void onWorkOffline();
 
-@NonNull String repoId();
+    @NonNull String repoId();
 
-@NonNull String login();
+    @NonNull String login();
 
-String sha();
+    String sha();
 
-boolean isPreviouslyReacted(long commentId, int vId);
+    boolean isPreviouslyReacted(long commentId, int vId);
 
-boolean isCallingApi(long id, int vId);
+    boolean isCallingApi(long id, int vId);
 
-void onHandleComment(@NonNull String text, @Nullable Bundle bundle);
-}
-
-
+    void onHandleComment(@NonNull String text, @Nullable Bundle bundle);
+  }
 }

@@ -1,12 +1,10 @@
 package com.fastaccess.ui.modules.gists.create;
 
 import androidx.annotation.NonNull;
-
 import com.fastaccess.data.dao.CreateGistModel;
 import com.fastaccess.data.dao.FilesListModel;
 import com.fastaccess.data.dao.model.Gist;
 import com.fastaccess.ui.base.mvp.BaseMvp;
-
 import java.util.HashMap;
 
 /**
@@ -15,22 +13,25 @@ import java.util.HashMap;
 
 interface CreateGistMvp {
 
-interface View extends BaseMvp.FAView {
-void onDescriptionError(boolean isEmptyDesc);
+  interface View extends BaseMvp.FAView {
+    void onDescriptionError(boolean isEmptyDesc);
 
-void onFileNameError(boolean isEmptyDesc);
+    void onFileNameError(boolean isEmptyDesc);
 
-void onFileContentError(boolean isEmptyDesc);
+    void onFileContentError(boolean isEmptyDesc);
 
-void onSuccessSubmission(Gist gistsModel);
-}
+    void onSuccessSubmission(Gist gistsModel);
+  }
 
-interface Presenter extends BaseMvp.FAPresenter {
+  interface Presenter extends BaseMvp.FAPresenter {
 
-void onSubmit(@NonNull String description, @NonNull HashMap<String, FilesListModel> files, boolean isPublic);
+    void onSubmit(@NonNull String description,
+                  @NonNull HashMap<String, FilesListModel> files,
+                  boolean isPublic);
 
-void onSubmit(@NonNull CreateGistModel model);
+    void onSubmit(@NonNull CreateGistModel model);
 
-void onSubmitUpdate(@NonNull String id, @NonNull String description, @NonNull HashMap<String, FilesListModel> files);
-}
+    void onSubmitUpdate(@NonNull String id, @NonNull String description,
+                        @NonNull HashMap<String, FilesListModel> files);
+  }
 }

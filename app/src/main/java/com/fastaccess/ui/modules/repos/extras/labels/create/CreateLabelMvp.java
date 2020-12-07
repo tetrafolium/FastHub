@@ -1,7 +1,6 @@
 package com.fastaccess.ui.modules.repos.extras.labels.create;
 
 import androidx.annotation.NonNull;
-
 import com.fastaccess.data.dao.LabelModel;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
@@ -12,14 +11,14 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
 
 public interface CreateLabelMvp {
 
-interface View extends BaseMvp.FAView {
-void onSuccessfullyCreated(@NonNull LabelModel labelModel1);
+  interface View extends BaseMvp.FAView {
+    void onSuccessfullyCreated(@NonNull LabelModel labelModel1);
 
-void onColorSelected(@NonNull String color);
-}
+    void onColorSelected(@NonNull String color);
+  }
 
-interface Presenter extends BaseViewHolder.OnItemClickListener<String> {
-void onSubmitLabel(@NonNull String name, @NonNull String color,
-                   @NonNull String repo, @NonNull String login);
-}
+  interface Presenter extends BaseViewHolder.OnItemClickListener<String> {
+    void onSubmitLabel(@NonNull String name, @NonNull String color,
+                       @NonNull String repo, @NonNull String login);
+  }
 }

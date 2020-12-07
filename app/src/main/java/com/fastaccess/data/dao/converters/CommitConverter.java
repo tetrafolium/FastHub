@@ -8,7 +8,8 @@ import com.fastaccess.data.dao.model.Commit;
 
 public class CommitConverter extends BaseConverter<Commit> {
 
-@Override protected Class<? extends Commit> getTypeClass() {
-	return Commit.class;
-}
+  @Override
+  protected Class<? extends Commit> getTypeClass() {
+    return Commit.class;
+  }
 }

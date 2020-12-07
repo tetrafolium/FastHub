@@ -2,11 +2,9 @@ package com.fastaccess.ui.modules.pinned.gist;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.fastaccess.data.dao.model.Gist;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,15 +14,15 @@ import java.util.List;
 
 public interface PinnedGistMvp {
 
-interface View extends BaseMvp.FAView {
-void onNotifyAdapter(@Nullable List<Gist> items);
+  interface View extends BaseMvp.FAView {
+    void onNotifyAdapter(@Nullable List<Gist> items);
 
-void onDeletePinnedGist(long id, int position);
-}
+    void onDeletePinnedGist(long id, int position);
+  }
 
-interface Presenter extends BaseViewHolder.OnItemClickListener<Gist> {
-@NonNull ArrayList<Gist> getPinnedGists();
+  interface Presenter extends BaseViewHolder.OnItemClickListener<Gist> {
+    @NonNull ArrayList<Gist> getPinnedGists();
 
-void onReload();
-}
+    void onReload();
+  }
 }
