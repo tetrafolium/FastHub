@@ -156,19 +156,15 @@ public class GistFilesListFragment
         if (ActivityHelper.checkAndRequestReadWritePermission(getActivity())) {
           RestProvider.downloadFile(getContext(), url);
         }
-      } else if (bundle.getBoolean(BundleConstant.YES_NO_EXTRA)) {
-        if (adapter != null) {
-          int position = bundle.getInt(BundleConstant.ID);
-          FilesListModel file = adapter.getItem(position);
-          if (file != null) {
-            if (getPresenter().getFilesMap().get(file.getFilename()) != null) {
-              file = getPresenter().getFilesMap().get(file.getFilename());
-              file.setContent(null);
-              getPresenter().getFilesMap().put(file.getFilename(), file);
-            }
-          }
-          adapter.removeItem(position);
+      } else if ((bundle.getBoolean(BundleConstant.YES_NO_EXTRA)) && (adapter != null)) {
+        int position = bundle.getInt(BundleConstant.ID);
+        FilesListModel file = adapter.getItem(position);
+        if ((file != null) && (getPresenter().getFilesMap().get(file.getFilename()) != null)) {
+          file = getPresenter().getFilesMap().get(file.getFilename());
+          file.setContent(null);
+          getPresenter().getFilesMap().put(file.getFilename(), file);
         }
+        adapter.removeItem(position);
       }
     }
   }
