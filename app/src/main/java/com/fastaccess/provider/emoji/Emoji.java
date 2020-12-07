@@ -36,11 +36,11 @@ public class Emoji {
      *         the bytes that represent the emoji
      */
     protected Emoji(
-            String description,
-            boolean supportsFitzpatrick,
-            List<String> aliases,
-            List<String> tags,
-            byte... bytes
+        String description,
+        boolean supportsFitzpatrick,
+        List<String> aliases,
+        List<String> tags,
+        byte... bytes
     ) {
         this.description = description;
         this.supportsFitzpatrick = supportsFitzpatrick;
@@ -140,8 +140,8 @@ public class Emoji {
     public String getUnicode(Fitzpatrick fitzpatrick) {
         if (!this.supportsFitzpatrick()) {
             throw new UnsupportedOperationException(
-                    "Cannot get the unicode with a fitzpatrick modifier, " +
-                            "the emoji doesn't support fitzpatrick."
+                "Cannot get the unicode with a fitzpatrick modifier, " +
+                "the emoji doesn't support fitzpatrick."
             );
         } else if (fitzpatrick == null) {
             return this.getUnicode();
@@ -178,7 +178,7 @@ public class Emoji {
     @Override
     public boolean equals(Object other) {
         return !(other == null || !(other instanceof Emoji)) &&
-                ((Emoji) other).getUnicode().equals(getUnicode());
+               ((Emoji) other).getUnicode().equals(getUnicode());
     }
 
     @Override
@@ -205,13 +205,13 @@ public class Emoji {
     @Override
     public String toString() {
         return "Emoji{" +
-                "description='" + description + '\'' +
-                ", supportsFitzpatrick=" + supportsFitzpatrick +
-                ", aliases=" + aliases +
-                ", tags=" + tags +
-                ", unicode='" + unicode + '\'' +
-                ", htmlDec='" + htmlDec + '\'' +
-                ", htmlHex='" + htmlHex + '\'' +
-                '}';
+               "description='" + description + '\'' +
+               ", supportsFitzpatrick=" + supportsFitzpatrick +
+               ", aliases=" + aliases +
+               ", tags=" + tags +
+               ", unicode='" + unicode + '\'' +
+               ", htmlDec='" + htmlDec + '\'' +
+               ", htmlHex='" + htmlHex + '\'' +
+               '}';
     }
 }

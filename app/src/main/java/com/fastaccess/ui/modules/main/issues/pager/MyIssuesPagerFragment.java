@@ -104,9 +104,9 @@ public class MyIssuesPagerFragment extends BaseFragment<MyIssuesPagerMvp.View, M
 
     @Nullable private TabsCountStateModel getModelAtIndex(int index) {
         return Stream.of(counts)
-                .filter(model -> model.getTabIndex() == index)
-                .findFirst()
-                .orElse(null);
+               .filter(model -> model.getTabIndex() == index)
+               .findFirst()
+               .orElse(null);
     }
 
     @Override public void onScrollTop(int index) {
@@ -136,25 +136,25 @@ public class MyIssuesPagerFragment extends BaseFragment<MyIssuesPagerMvp.View, M
         TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
         String title = getString(R.string.created);
         switch (model.getTabIndex()) {
-            case 0:
-                title = getString(R.string.created);
-                break;
-            case 1:
-                title = getString(R.string.assigned);
-                break;
-            case 2:
-                title = getString(R.string.mentioned);
-                break;
-            case 3:
-                title = getString(R.string.participated);
+        case 0:
+            title = getString(R.string.created);
+            break;
+        case 1:
+            title = getString(R.string.assigned);
+            break;
+        case 2:
+            title = getString(R.string.mentioned);
+            break;
+        case 3:
+            title = getString(R.string.participated);
         }
         updateDrawable(model, tv);
         tv.setText(SpannableBuilder.builder()
-                .append(title)
-                .append("   ")
-                .append("(")
-                .bold(String.valueOf(model.getCount()))
-                .append(")"));
+                   .append(title)
+                   .append("   ")
+                   .append("(")
+                   .bold(String.valueOf(model.getCount()))
+                   .append(")"));
     }
 
     private void onShowFilterMenu(@Nullable TabsCountStateModel model, TextView tv) {
@@ -167,20 +167,20 @@ public class MyIssuesPagerFragment extends BaseFragment<MyIssuesPagerMvp.View, M
             MyIssuesFragment myIssuesFragment = (MyIssuesFragment) pager.getAdapter().instantiateItem(pager, model.getTabIndex());
             if (myIssuesFragment == null) return false;
             switch (item.getItemId()) {
-                case R.id.opened:
-                    counts.remove(model);
-                    model.setDrawableId(R.drawable.ic_issue_opened_small);
-                    counts.add(model);
-                    updateDrawable(model, tv);
-                    myIssuesFragment.onFilterIssue(IssueState.open);
-                    return true;
-                case R.id.closed:
-                    counts.remove(model);
-                    model.setDrawableId(R.drawable.ic_issue_closed_small);
-                    counts.add(model);
-                    updateDrawable(model, tv);
-                    myIssuesFragment.onFilterIssue(IssueState.closed);
-                    return true;
+            case R.id.opened:
+                counts.remove(model);
+                model.setDrawableId(R.drawable.ic_issue_opened_small);
+                counts.add(model);
+                updateDrawable(model, tv);
+                myIssuesFragment.onFilterIssue(IssueState.open);
+                return true;
+            case R.id.closed:
+                counts.remove(model);
+                model.setDrawableId(R.drawable.ic_issue_closed_small);
+                counts.add(model);
+                updateDrawable(model, tv);
+                myIssuesFragment.onFilterIssue(IssueState.closed);
+                return true;
             }
             return false;
         });

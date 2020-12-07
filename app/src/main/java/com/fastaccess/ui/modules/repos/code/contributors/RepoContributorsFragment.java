@@ -38,9 +38,9 @@ public class RepoContributorsFragment extends BaseFragment<RepoContributorsMvp.V
     public static RepoContributorsFragment newInstance(@NonNull String repoId, @NonNull String login) {
         RepoContributorsFragment view = new RepoContributorsFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .end());
         return view;
     }
 

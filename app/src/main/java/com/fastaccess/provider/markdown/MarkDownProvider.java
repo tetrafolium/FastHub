@@ -37,12 +37,12 @@ public class MarkDownProvider {
     private static final String[] IMAGE_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".svg"};
 
     private static final String[] MARKDOWN_EXTENSIONS = {
-            ".md", ".mkdn", ".mdwn", ".mdown", ".markdown", ".mkd", ".mkdown", ".ron", ".rst", "adoc"
+        ".md", ".mkdn", ".mdwn", ".mdown", ".markdown", ".mkd", ".mkdown", ".ron", ".rst", "adoc"
     };
 
     private static final String[] ARCHIVE_EXTENSIONS = {
-            ".zip", ".7z", ".rar", ".tar.gz", ".tgz", ".tar.Z", ".tar.bz2", ".tbz2", ".tar.lzma", ".tlz", ".apk", ".jar",
-            ".dmg", ".pdf", ".ico", ".docx", ".doc", ".xlsx", ".hwp", ".pptx", ".show", ".mp3", ".ogg", ".ipynb"
+        ".zip", ".7z", ".rar", ".tar.gz", ".tgz", ".tar.Z", ".tar.bz2", ".tbz2", ".tar.lzma", ".tlz", ".apk", ".jar",
+        ".dmg", ".pdf", ".ico", ".docx", ".doc", ".xlsx", ".hwp", ".pptx", ".show", ".mp3", ".ogg", ".ipynb"
     };
 
     private MarkDownProvider() {}
@@ -72,23 +72,23 @@ public class MarkDownProvider {
 
     protected static void render(@NonNull TextView textView, String markdown, int width) {
         List<Extension> extensions = Arrays.asList(
-                StrikethroughExtension.create(),
-                AutolinkExtension.create(),
-                TablesExtension.create(),
-                InsExtension.create(),
-                EmojiExtension.create(),
-                MentionExtension.create(),
-                YamlFrontMatterExtension.create());
+                                         StrikethroughExtension.create(),
+                                         AutolinkExtension.create(),
+                                         TablesExtension.create(),
+                                         InsExtension.create(),
+                                         EmojiExtension.create(),
+                                         MentionExtension.create(),
+                                         YamlFrontMatterExtension.create());
         Parser parser = Parser.builder()
-                .extensions(extensions)
-                .build();
+                        .extensions(extensions)
+                        .build();
         try {
             Node node = parser.parse(markdown);
             String rendered = HtmlRenderer
-                    .builder()
-                    .extensions(extensions)
-                    .build()
-                    .render(node);
+                              .builder()
+                              .extensions(extensions)
+                              .build()
+                              .render(node);
             HtmlHelper.htmlIntoTextView(textView, rendered, (width - (textView.getPaddingStart() + textView.getPaddingEnd())));
         } catch (Exception ignored) {
             HtmlHelper.htmlIntoTextView(textView, markdown, (width - (textView.getPaddingStart() + textView.getPaddingEnd())));

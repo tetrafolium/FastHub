@@ -28,7 +28,7 @@ import java.util.List;
 public interface IssueTimelineMvp {
 
     interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener,
-            OnToggleView, ReactionsCallback {
+        OnToggleView, ReactionsCallback {
 
         void onNotifyAdapter(@Nullable List<TimelineModel> items, int page);
 
@@ -68,7 +68,7 @@ public interface IssueTimelineMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter, BaseViewHolder.OnItemClickListener<TimelineModel>,
-            BaseMvp.PaginationListener<Issue> {
+        BaseMvp.PaginationListener<Issue> {
 
         boolean isPreviouslyReacted(long commentId, int vId);
 

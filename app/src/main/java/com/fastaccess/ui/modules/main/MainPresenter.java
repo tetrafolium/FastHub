@@ -33,31 +33,31 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
     MainPresenter() {
         setEnterprise(PrefGetter.isEnterprise());
         manageDisposable(RxHelper.getObservable(RestProvider.getUserService(isEnterprise()).getUser())
-                .flatMap(login -> {
-                    Login current = Login.getUser();
-                    current.setLogin(login.getLogin());
-                    current.setName(login.getName());
-                    current.setAvatarUrl(login.getAvatarUrl());
-                    current.setEmail(login.getEmail());
-                    current.setBio(login.getBio());
-                    current.setBlog(login.getBlog());
-                    current.setCompany(current.getCompany());
-                    return login.update(current);
-                })
-                .flatMap(login -> RxHelper.getObservable(RestProvider.getNotificationService(isEnterprise())
-                        .getNotifications(ParseDateFormat.getLastWeekDate())))
-                .flatMapSingle(notificationPageable -> {
-                    if (notificationPageable != null && (notificationPageable.getItems() != null && !notificationPageable.getItems().isEmpty())) {
-                        return Notification.saveAsSingle(notificationPageable.getItems());
-                    } else {
-                        Notification.deleteAll();
-                    }
-                    return Single.just(true);
-                })
-                .subscribe(unread -> {/**/}, Throwable::printStackTrace/*fail silently*/, () -> sendToView(view -> {
-                    view.onInvalidateNotification();
-                    view.onUpdateDrawerMenuHeader();
-                })));
+        .flatMap(login -> {
+            Login current = Login.getUser();
+            current.setLogin(login.getLogin());
+            current.setName(login.getName());
+            current.setAvatarUrl(login.getAvatarUrl());
+            current.setEmail(login.getEmail());
+            current.setBio(login.getBio());
+            current.setBlog(login.getBlog());
+            current.setCompany(current.getCompany());
+            return login.update(current);
+        })
+        .flatMap(login -> RxHelper.getObservable(RestProvider.getNotificationService(isEnterprise())
+                 .getNotifications(ParseDateFormat.getLastWeekDate())))
+        .flatMapSingle(notificationPageable -> {
+            if (notificationPageable != null && (notificationPageable.getItems() != null && !notificationPageable.getItems().isEmpty())) {
+                return Notification.saveAsSingle(notificationPageable.getItems());
+            } else {
+                Notification.deleteAll();
+            }
+            return Single.just(true);
+        })
+        .subscribe(unread -> {/**/}, Throwable::printStackTrace/*fail silently*/, () -> sendToView(view -> {
+            view.onInvalidateNotification();
+            view.onUpdateDrawerMenuHeader();
+        })));
     }
 
     @Override public boolean canBackPress(@NonNull DrawerLayout drawerLayout) {
@@ -66,52 +66,52 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
 
     @SuppressWarnings("ConstantConditions")
     @Override public void onModuleChanged(@NonNull FragmentManager fragmentManager, @MainMvp.NavigationType
-            int type) {
+                                          int type) {
         Fragment currentVisible = getVisibleFragment(fragmentManager);
         FeedsFragment homeView = (FeedsFragment) getFragmentByTag(fragmentManager, FeedsFragment
-                .TAG);
+                                 .TAG);
         MyPullsPagerFragment pullRequestView = (MyPullsPagerFragment) getFragmentByTag
-                (fragmentManager, MyPullsPagerFragment.TAG);
+                                               (fragmentManager, MyPullsPagerFragment.TAG);
         MyIssuesPagerFragment issuesView = (MyIssuesPagerFragment) getFragmentByTag
-                (fragmentManager, MyIssuesPagerFragment.TAG);
+                                           (fragmentManager, MyIssuesPagerFragment.TAG);
         switch (type) {
-            case MainMvp.PROFILE:
-                sendToView(MainMvp.View::onOpenProfile);
-                break;
-            case MainMvp.FEEDS:
-                if (homeView == null) {
-                    onAddAndHide(fragmentManager, FeedsFragment.newInstance(null),
-                            currentVisible);
-                } else {
-                    onShowHideFragment(fragmentManager, homeView, currentVisible);
-                }
-                break;
-            case MainMvp.PULL_REQUESTS:
-                if (pullRequestView == null) {
-                    onAddAndHide(fragmentManager, MyPullsPagerFragment.newInstance(
-                    ), currentVisible);
-                } else {
-                    onShowHideFragment(fragmentManager, pullRequestView, currentVisible);
-                }
-                break;
-            case MainMvp.ISSUES:
-                if (issuesView == null) {
-                    onAddAndHide(fragmentManager, MyIssuesPagerFragment.newInstance(), currentVisible);
-                } else {
-                    onShowHideFragment(fragmentManager, issuesView, currentVisible);
-                }
-                break;
+        case MainMvp.PROFILE:
+            sendToView(MainMvp.View::onOpenProfile);
+            break;
+        case MainMvp.FEEDS:
+            if (homeView == null) {
+                onAddAndHide(fragmentManager, FeedsFragment.newInstance(null),
+                             currentVisible);
+            } else {
+                onShowHideFragment(fragmentManager, homeView, currentVisible);
+            }
+            break;
+        case MainMvp.PULL_REQUESTS:
+            if (pullRequestView == null) {
+                onAddAndHide(fragmentManager, MyPullsPagerFragment.newInstance(
+                             ), currentVisible);
+            } else {
+                onShowHideFragment(fragmentManager, pullRequestView, currentVisible);
+            }
+            break;
+        case MainMvp.ISSUES:
+            if (issuesView == null) {
+                onAddAndHide(fragmentManager, MyIssuesPagerFragment.newInstance(), currentVisible);
+            } else {
+                onShowHideFragment(fragmentManager, issuesView, currentVisible);
+            }
+            break;
         }
     }
 
     @Override public void onShowHideFragment(@NonNull FragmentManager fragmentManager, @NonNull Fragment toShow,
-                                             @NonNull Fragment toHide) {
+            @NonNull Fragment toHide) {
         toHide.onHiddenChanged(true);
         fragmentManager
-                .beginTransaction()
-                .hide(toHide)
-                .show(toShow)
-                .commit();
+        .beginTransaction()
+        .hide(toHide)
+        .show(toShow)
+        .commit();
         toShow.onHiddenChanged(false);
     }
 
@@ -119,10 +119,10 @@ public class MainPresenter extends BasePresenter<MainMvp.View> implements MainMv
                                        @NonNull Fragment toHide) {
         toHide.onHiddenChanged(true);
         fragmentManager
-                .beginTransaction()
-                .hide(toHide)
-                .add(R.id.container, toAdd, toAdd.getClass().getSimpleName())
-                .commit();
+        .beginTransaction()
+        .hide(toHide)
+        .add(R.id.container, toAdd, toAdd.getClass().getSimpleName())
+        .commit();
         toAdd.onHiddenChanged(false);
     }
 

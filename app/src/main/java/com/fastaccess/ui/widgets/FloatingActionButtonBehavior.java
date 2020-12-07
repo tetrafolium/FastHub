@@ -43,8 +43,8 @@ public class FloatingActionButtonBehavior extends CoordinatorLayout.Behavior<Flo
     }
 
     @Override public boolean onDependentViewChanged(@NonNull
-                                                    final CoordinatorLayout parent, @NonNull
-                                                    final FloatingActionButton child, final View dependency) {
+            final CoordinatorLayout parent, @NonNull
+            final FloatingActionButton child, final View dependency) {
         log(TAG, INFO, "onDependentViewChanged: " + dependency);
         final List<View> list = parent.getDependencies(child);
         ViewGroup.MarginLayoutParams params = ((ViewGroup.MarginLayoutParams) child.getLayoutParams());

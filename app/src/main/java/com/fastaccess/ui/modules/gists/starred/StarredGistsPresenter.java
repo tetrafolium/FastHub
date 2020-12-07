@@ -57,10 +57,10 @@ class StarredGistsPresenter extends BasePresenter<StarredGistsMvp.View> implemen
             return false;
         }
         makeRestCall(RestProvider.getGistService(isEnterprise()).getStarredGists(page),
-                listResponse -> {
-                    lastPage = listResponse.getLast();
-                    sendToView(view -> view.onNotifyAdapter(listResponse.getItems(), page));
-                });
+        listResponse -> {
+            lastPage = listResponse.getLast();
+            sendToView(view -> view.onNotifyAdapter(listResponse.getItems(), page));
+        });
         return true;
     }
 

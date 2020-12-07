@@ -25,7 +25,9 @@ public class IssuesPageable<M> implements Parcelable {
     public boolean incompleteResults;
     public List<M> items;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.first);
@@ -46,8 +48,12 @@ public class IssuesPageable<M> implements Parcelable {
     }
 
     public static final Creator<IssuesPageable> CREATOR = new Creator<IssuesPageable>() {
-        @Override public IssuesPageable createFromParcel(Parcel source) {return new IssuesPageable(source);}
+        @Override public IssuesPageable createFromParcel(Parcel source) {
+            return new IssuesPageable(source);
+        }
 
-        @Override public IssuesPageable[] newArray(int size) {return new IssuesPageable[size];}
+        @Override public IssuesPageable[] newArray(int size) {
+            return new IssuesPageable[size];
+        }
     };
 }

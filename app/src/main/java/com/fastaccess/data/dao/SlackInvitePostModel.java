@@ -15,7 +15,9 @@ import lombok.Setter;
     private String first_name;
     private String last_name;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.email);
@@ -32,8 +34,12 @@ import lombok.Setter;
     }
 
     public static final Parcelable.Creator<SlackInvitePostModel> CREATOR = new Parcelable.Creator<SlackInvitePostModel>() {
-        @Override public SlackInvitePostModel createFromParcel(Parcel source) {return new SlackInvitePostModel(source);}
+        @Override public SlackInvitePostModel createFromParcel(Parcel source) {
+            return new SlackInvitePostModel(source);
+        }
 
-        @Override public SlackInvitePostModel[] newArray(int size) {return new SlackInvitePostModel[size];}
+        @Override public SlackInvitePostModel[] newArray(int size) {
+            return new SlackInvitePostModel[size];
+        }
     };
 }

@@ -59,17 +59,17 @@ public class HtmlHelper {
             PopupMenu menu = new PopupMenu(view.getContext(), view);
             menu.setOnMenuItemClickListener(menuItem -> {
                 switch (menuItem.getItemId()) {
-                    case R.id.copy:
-                        AppHelper.copyToClipboard(view.getContext(), url);
-                        return true;
-                    case R.id.open:
-                        SchemeParser.launchUri(view.getContext(), Uri.parse(url));
-                        return true;
-                    case R.id.open_new_window:
-                        SchemeParser.launchUri(view.getContext(), Uri.parse(url), false, true);
-                        return true;
-                    default:
-                        return false;
+                case R.id.copy:
+                    AppHelper.copyToClipboard(view.getContext(), url);
+                    return true;
+                case R.id.open:
+                    SchemeParser.launchUri(view.getContext(), Uri.parse(url));
+                    return true;
+                case R.id.open_new_window:
+                    SchemeParser.launchUri(view.getContext(), Uri.parse(url), false, true);
+                    return true;
+                default:
+                    return false;
                 }
             });
             menu.inflate(R.menu.link_popup_menu);

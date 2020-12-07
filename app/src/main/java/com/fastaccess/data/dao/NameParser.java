@@ -42,8 +42,8 @@ public class NameParser {
 
     @Override public String toString() {
         return "NameParser{" +
-                "name='" + name + '\'' +
-                ", username='" + username + '\'' +
-                '}';
+               "name='" + name + '\'' +
+               ", username='" + username + '\'' +
+               '}';
     }
 }

@@ -104,9 +104,9 @@ public class BasePresenter<V extends BaseMvp.FAView> extends TiPresenter<V> impl
 
     @Override public <T> void makeRestCall(@NonNull Observable<T> observable, @NonNull Consumer<T> onNext, boolean cancelable) {
         manageDisposable(
-                RxHelper.getObservable(observable)
-                        .doOnSubscribe(disposable -> onSubscribed(cancelable))
-                        .subscribe(onNext, this::onError, () -> apiCalled = true)
+            RxHelper.getObservable(observable)
+            .doOnSubscribe(disposable -> onSubscribed(cancelable))
+            .subscribe(onNext, this::onError, () -> apiCalled = true)
         );
     }
 
@@ -122,16 +122,16 @@ public class BasePresenter<V extends BaseMvp.FAView> extends TiPresenter<V> impl
 
     public void onCheckGitHubStatus() {
         manageObservable(RestProvider.gitHubStatus()
-                .filter(ObjectsCompat::nonNull)
-                .doOnNext(gitHubStatusModel -> {
-                    Logger.e(gitHubStatusModel);
-                    GithubStatus status = gitHubStatusModel.getStatus();
-                    String description = status != null ? status.getDescription() : null;
-                    String indicatorStatus = status != null ? status.getIndicator() : null;
-                    if (!InputHelper.isEmpty(description) && !"none".equalsIgnoreCase(indicatorStatus)) {
-                        sendToView(v -> v.showErrorMessage("Github Status:(" + indicatorStatus + ")\n" + description));
-                    }
-                }));
+                         .filter(ObjectsCompat::nonNull)
+        .doOnNext(gitHubStatusModel -> {
+            Logger.e(gitHubStatusModel);
+            GithubStatus status = gitHubStatusModel.getStatus();
+            String description = status != null ? status.getDescription() : null;
+            String indicatorStatus = status != null ? status.getIndicator() : null;
+            if (!InputHelper.isEmpty(description) && !"none".equalsIgnoreCase(indicatorStatus)) {
+                sendToView(v -> v.showErrorMessage("Github Status:(" + indicatorStatus + ")\n" + description));
+            }
+        }));
     }
 
     public boolean isEnterprise() {

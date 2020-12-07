@@ -25,7 +25,9 @@ import lombok.Setter;
 
     public SourceModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.type);
@@ -44,8 +46,12 @@ import lombok.Setter;
     }
 
     public static final Creator<SourceModel> CREATOR = new Creator<SourceModel>() {
-        @Override public SourceModel createFromParcel(Parcel source) {return new SourceModel(source);}
+        @Override public SourceModel createFromParcel(Parcel source) {
+            return new SourceModel(source);
+        }
 
-        @Override public SourceModel[] newArray(int size) {return new SourceModel[size];}
+        @Override public SourceModel[] newArray(int size) {
+            return new SourceModel[size];
+        }
     };
 }

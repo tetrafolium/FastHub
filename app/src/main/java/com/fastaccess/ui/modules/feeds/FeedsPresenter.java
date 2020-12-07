@@ -74,7 +74,7 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
                 observable = RestProvider.getOrgService(isEnterprise()).getReceivedEvents(login.getLogin(), user, page);
             } else {
                 observable = RestProvider.getUserService(login.getLogin().equalsIgnoreCase(user)
-                                                         ? PrefGetter.isEnterprise() : isEnterprise()).getUserEvents(user, page);
+                             ? PrefGetter.isEnterprise() : isEnterprise()).getUserEvents(user, page);
             }
         } else {
             observable = RestProvider.getUserService(PrefGetter.isEnterprise()).getReceivedEvents(login.getLogin(), page);
@@ -125,11 +125,11 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
     @Override public void onWorkOffline() {
         if (eventsModels.isEmpty() && InputHelper.isEmpty(user)) {
             manageDisposable(RxHelper.getObservable(Event.getEvents(Login.getUser().getLogin()).toObservable())
-                    .subscribe(modelList -> {
-                        if (modelList != null) {
-                            sendToView(view -> view.onNotifyAdapter(modelList, 1));
-                        }
-                    }, Throwable::printStackTrace));
+            .subscribe(modelList -> {
+                if (modelList != null) {
+                    sendToView(view -> view.onNotifyAdapter(modelList, 1));
+                }
+            }, Throwable::printStackTrace));
         } else {
             sendToView(FeedsMvp.View::hideProgress);
         }
@@ -149,8 +149,8 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
                         Repo repoModel = item.getRepo();
                         NameParser nameParser = new NameParser(repoModel.getUrl());
                         Intent intent = CommitPagerActivity.createIntent(v.getContext(), nameParser.getName(),
-                                nameParser.getUsername(), payloadModel.getHead(), true,
-                                LinkParserHelper.isEnterprise(repoModel.getUrl()));
+                                        nameParser.getUsername(), payloadModel.getHead(), true,
+                                        LinkParserHelper.isEnterprise(repoModel.getUrl()));
                         v.getContext().startActivity(intent);
                     }
                 } else if (payloadModel.getIssue() != null) {
@@ -162,13 +162,13 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
                 } else if (item.getType() == EventsType.ReleaseEvent && payloadModel.getRelease() != null) {
                     NameParser nameParser = new NameParser(payloadModel.getRelease().getHtmlUrl());
                     v.getContext().startActivity(ReleasesListActivity.getIntent(v.getContext(), nameParser.getUsername(), nameParser.getName(),
-                            payloadModel.getRelease().getId(), LinkParserHelper.isEnterprise(payloadModel.getRelease().getHtmlUrl())));
+                                                 payloadModel.getRelease().getId(), LinkParserHelper.isEnterprise(payloadModel.getRelease().getHtmlUrl())));
 
                 } else if (item.getType() == EventsType.CreateEvent && "tag".equalsIgnoreCase(payloadModel.getRefType())) {
                     Repo repoModel = item.getRepo();
                     NameParser nameParser = new NameParser(repoModel.getUrl());
                     v.getContext().startActivity(ReleasesListActivity.getIntent(v.getContext(), nameParser.getUsername(), nameParser.getName(),
-                            payloadModel.getRef(), LinkParserHelper.isEnterprise(repoModel.getUrl())));
+                                                 payloadModel.getRef(), LinkParserHelper.isEnterprise(repoModel.getUrl())));
                 } else if (item.getType() == EventsType.GollumEvent) {
                     Repo repoModel = item.getRepo();
                     NameParser parser = new NameParser(repoModel.getUrl());
@@ -186,8 +186,8 @@ public class FeedsPresenter extends BasePresenter<FeedsMvp.View> implements Feed
         if (item.getType() == EventsType.ForkEvent) {
             if (getView() != null) {
                 getView().onOpenRepoChooser(Stream.of(new SimpleUrlsModel(item.getRepo().getName(), item.getRepo().getUrl()),
-                        new SimpleUrlsModel(item.getPayload().getForkee().getFullName(), item.getPayload().getForkee().getHtmlUrl()))
-                        .collect(Collectors.toCollection(ArrayList::new)));
+                                                      new SimpleUrlsModel(item.getPayload().getForkee().getFullName(), item.getPayload().getForkee().getHtmlUrl()))
+                                            .collect(Collectors.toCollection(ArrayList::new)));
             }
         } else {
             Repo repo = item.getRepo();

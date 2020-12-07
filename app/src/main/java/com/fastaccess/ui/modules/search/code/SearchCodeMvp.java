@@ -35,8 +35,8 @@ interface SearchCodeMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<SearchCodeModel>,
-            BaseMvp.PaginationListener<String> {
+        BaseViewHolder.OnItemClickListener<SearchCodeModel>,
+        BaseMvp.PaginationListener<String> {
 
         @NonNull ArrayList<SearchCodeModel> getCodes();
 

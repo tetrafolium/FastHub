@@ -27,7 +27,7 @@ import java.util.List;
  */
 
 public class IssuesTimelineAdapter extends BaseRecyclerAdapter<TimelineModel, BaseViewHolder,
-        BaseViewHolder.OnItemClickListener<TimelineModel>> {
+    BaseViewHolder.OnItemClickListener<TimelineModel>> {
 
     private final OnToggleView onToggleView;
     private final boolean showEmojies;

@@ -73,16 +73,16 @@ class PullRequestFilesPresenter extends BasePresenter<PullRequestFilesMvp.View> 
         }
         if (repoId == null || login == null) return false;
         makeRestCall(RestProvider.getPullRequestService(isEnterprise()).getPullRequestFiles(login, repoId, number, page)
-                        .flatMap(commitFileModelPageable -> {
-                            if (commitFileModelPageable != null) {
-                                lastPage = commitFileModelPageable.getLast();
-                                if (commitFileModelPageable.getItems() != null) {
-                                    return Observable.just(CommitFileChanges.construct(commitFileModelPageable.getItems()));
-                                }
-                            }
-                            return Observable.empty();
-                        }),
-                response -> sendToView(view -> view.onNotifyAdapter(response, page)));
+        .flatMap(commitFileModelPageable -> {
+            if (commitFileModelPageable != null) {
+                lastPage = commitFileModelPageable.getLast();
+                if (commitFileModelPageable.getItems() != null) {
+                    return Observable.just(CommitFileChanges.construct(commitFileModelPageable.getItems()));
+                }
+            }
+            return Observable.empty();
+        }),
+        response -> sendToView(view -> view.onNotifyAdapter(response, page)));
         return true;
     }
 
@@ -113,22 +113,22 @@ class PullRequestFilesPresenter extends BasePresenter<PullRequestFilesMvp.View> 
             inflater.inflate(R.menu.commit_row_menu, popup.getMenu());
             popup.setOnMenuItemClickListener(item1 -> {
                 switch (item1.getItemId()) {
-                    case R.id.open:
-                        v.getContext().startActivity(CodeViewerActivity.createIntent(v.getContext(), item.getContentsUrl(), item.getBlobUrl()));
-                        break;
-                    case R.id.share:
-                        ActivityHelper.shareUrl(v.getContext(), item.getBlobUrl());
-                        break;
-                    case R.id.download:
-                        Activity activity = ActivityHelper.getActivity(v.getContext());
-                        if (activity == null) break;
-                        if (ActivityHelper.checkAndRequestReadWritePermission(activity)) {
-                            RestProvider.downloadFile(v.getContext(), item.getRawUrl());
-                        }
-                        break;
-                    case R.id.copy:
-                        AppHelper.copyToClipboard(v.getContext(), item.getBlobUrl());
-                        break;
+                case R.id.open:
+                    v.getContext().startActivity(CodeViewerActivity.createIntent(v.getContext(), item.getContentsUrl(), item.getBlobUrl()));
+                    break;
+                case R.id.share:
+                    ActivityHelper.shareUrl(v.getContext(), item.getBlobUrl());
+                    break;
+                case R.id.download:
+                    Activity activity = ActivityHelper.getActivity(v.getContext());
+                    if (activity == null) break;
+                    if (ActivityHelper.checkAndRequestReadWritePermission(activity)) {
+                        RestProvider.downloadFile(v.getContext(), item.getRawUrl());
+                    }
+                    break;
+                case R.id.copy:
+                    AppHelper.copyToClipboard(v.getContext(), item.getBlobUrl());
+                    break;
                 }
                 return true;
             });
@@ -138,6 +138,6 @@ class PullRequestFilesPresenter extends BasePresenter<PullRequestFilesMvp.View> 
 
     @Override public void onItemLongClick(int position, View v, CommitFileChanges item) {
         v.getContext().startActivity(CommitPagerActivity.createIntent(v.getContext(), repoId, login,
-                Uri.parse(item.getCommitFileModel().getContentsUrl()).getQueryParameter("ref")));
+                                     Uri.parse(item.getCommitFileModel().getContentsUrl()).getQueryParameter("ref")));
     }
 }

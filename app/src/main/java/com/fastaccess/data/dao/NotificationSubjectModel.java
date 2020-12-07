@@ -22,14 +22,16 @@ public class NotificationSubjectModel implements Parcelable {
 
     @Override public String toString() {
         return "NotificationSubjectModel{" +
-                ", title='" + title + '\'' +
-                ", url='" + url + '\'' +
-                ", type='" + type + '\'' +
-                ", latestCommentUrl='" + latestCommentUrl + '\'' +
-                '}';
+               ", title='" + title + '\'' +
+               ", url='" + url + '\'' +
+               ", type='" + type + '\'' +
+               ", latestCommentUrl='" + latestCommentUrl + '\'' +
+               '}';
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
@@ -47,8 +49,12 @@ public class NotificationSubjectModel implements Parcelable {
     }
 
     public static final Creator<NotificationSubjectModel> CREATOR = new Creator<NotificationSubjectModel>() {
-        @Override public NotificationSubjectModel createFromParcel(Parcel source) {return new NotificationSubjectModel(source);}
+        @Override public NotificationSubjectModel createFromParcel(Parcel source) {
+            return new NotificationSubjectModel(source);
+        }
 
-        @Override public NotificationSubjectModel[] newArray(int size) {return new NotificationSubjectModel[size];}
+        @Override public NotificationSubjectModel[] newArray(int size) {
+            return new NotificationSubjectModel[size];
+        }
     };
 }

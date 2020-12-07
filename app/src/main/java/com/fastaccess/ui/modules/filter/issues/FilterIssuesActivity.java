@@ -57,7 +57,7 @@ import es.dmoral.toasty.Toasty;
  */
 
 public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.View, FilterIssuesActivityPresenter> implements
-        FilterIssuesActivityMvp.View {
+    FilterIssuesActivityMvp.View {
     @BindView(R.id.back) ForegroundImageView back;
     @BindView(R.id.open) FontTextView open;
     @BindView(R.id.close) FontTextView close;
@@ -84,12 +84,12 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
     public static Intent getIntent(@NonNull Context context, @NonNull String login, @NonNull String repoId, @NonNull String criteria) {
         Intent intent = new Intent(context, FilterIssuesActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA_FOUR, criteria)
-                .put(BundleConstant.EXTRA_TWO, true)
-                .put(BundleConstant.EXTRA_THREE, true)
-                .end());
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.ID, repoId)
+                         .put(BundleConstant.EXTRA_FOUR, criteria)
+                         .put(BundleConstant.EXTRA_TWO, true)
+                         .put(BundleConstant.EXTRA_THREE, true)
+                         .end());
         return intent;
     }
 
@@ -97,12 +97,12 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
                                      boolean isIssue, boolean isOpen, boolean isEnterprise) {
         Intent intent = new Intent(context, FilterIssuesActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA_TWO, isIssue)
-                .put(BundleConstant.EXTRA_THREE, isOpen)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .end());
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.ID, repoId)
+                         .put(BundleConstant.EXTRA_TWO, isIssue)
+                         .put(BundleConstant.EXTRA_THREE, isOpen)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .end());
         View view = context.findViewById(R.id.fab);
         if (view != null) {
             ActivityHelper.startReveal(context, intent, view);
@@ -115,13 +115,13 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
                                      boolean isIssue, boolean isOpen, boolean isEnterprise, @NonNull String criteria) {
         Intent intent = new Intent(view.getContext(), FilterIssuesActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA_TWO, isIssue)
-                .put(BundleConstant.EXTRA_THREE, isOpen)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .put(BundleConstant.EXTRA_FOUR, criteria)
-                .end());
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.ID, repoId)
+                         .put(BundleConstant.EXTRA_TWO, isIssue)
+                         .put(BundleConstant.EXTRA_THREE, isOpen)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .put(BundleConstant.EXTRA_FOUR, criteria)
+                         .end());
         //noinspection ConstantConditions
         ActivityHelper.startReveal(ActivityHelper.getActivity(view.getContext()), intent, view);
     }
@@ -206,7 +206,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
 
     @OnClick(R.id.author) public void onAuthorClicked() {
         Toasty.info(App.getInstance(), "GitHub doesn't have this API yet!\nYou can try typing it yourself for example author:k0shk0sh",
-                Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_LONG).show();
     }
 
     @SuppressLint("InflateParams") @OnClick(R.id.labels) public void onLabelsClicked() {
@@ -287,17 +287,17 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
     @Override public void onSetCount(int count, boolean isOpen) {
         if (isOpen) {
             open.setText(SpannableBuilder.builder()
-                    .append(getString(R.string.open))
-                    .append("(")
-                    .append(String.valueOf(count))
-                    .append(")"));
+                         .append(getString(R.string.open))
+                         .append("(")
+                         .append(String.valueOf(count))
+                         .append(")"));
             close.setText(R.string.closed);
         } else {
             close.setText(SpannableBuilder.builder()
-                    .append(getString(R.string.closed))
-                    .append("(")
-                    .append(String.valueOf(count))
-                    .append(")"));
+                          .append(getString(R.string.closed))
+                          .append("(")
+                          .append(String.valueOf(count))
+                          .append(")"));
             open.setText(R.string.open);
         }
     }
@@ -344,7 +344,7 @@ public class FilterIssuesActivity extends BaseActivity<FilterIssuesActivityMvp.V
     private void onSearch() {
         if (!InputHelper.isEmpty(searchEditText)) {
             getFilterFragment().onSearch(getRepoName() + InputHelper.toString(searchEditText),
-                    open.isSelected(), isIssue, isEnterprise());
+                                         open.isSelected(), isIssue, isEnterprise());
             searchEditText.setSelection(searchEditText.getEditableText().length());
         } else {
             getFilterFragment().onClear();

@@ -25,7 +25,9 @@ public class FilesListModel implements Parcelable, Serializable {
     public FilesListModel() {
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.filename);
@@ -48,8 +50,12 @@ public class FilesListModel implements Parcelable, Serializable {
     }
 
     public static final Creator<FilesListModel> CREATOR = new Creator<FilesListModel>() {
-        @Override public FilesListModel createFromParcel(Parcel source) {return new FilesListModel(source);}
+        @Override public FilesListModel createFromParcel(Parcel source) {
+            return new FilesListModel(source);
+        }
 
-        @Override public FilesListModel[] newArray(int size) {return new FilesListModel[size];}
+        @Override public FilesListModel[] newArray(int size) {
+            return new FilesListModel[size];
+        }
     };
 }

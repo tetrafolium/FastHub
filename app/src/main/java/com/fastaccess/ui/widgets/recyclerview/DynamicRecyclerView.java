@@ -123,7 +123,7 @@ public class DynamicRecyclerView extends RecyclerView {
         if (canAddDivider()) {
             Resources resources = getResources();
             addItemDecoration(new InsetDividerDecoration(resources.getDimensionPixelSize(R.dimen.divider_height),
-                    resources.getDimensionPixelSize(R.dimen.keyline_2), ViewHelper.getListDivider(getContext())));
+                              resources.getDimensionPixelSize(R.dimen.keyline_2), ViewHelper.getListDivider(getContext())));
         }
     }
 
@@ -131,7 +131,7 @@ public class DynamicRecyclerView extends RecyclerView {
         if (canAddDivider()) {
             Resources resources = getResources();
             addItemDecoration(new InsetDividerDecoration(resources.getDimensionPixelSize(R.dimen.divider_height), 0,
-                    ViewHelper.getListDivider(getContext())));
+                              ViewHelper.getListDivider(getContext())));
         }
     }
 
@@ -143,7 +143,7 @@ public class DynamicRecyclerView extends RecyclerView {
         if (canAddDivider()) {
             Resources resources = getResources();
             addItemDecoration(new InsetDividerDecoration(resources.getDimensionPixelSize(R.dimen.divider_height), 0,
-                    ViewHelper.getListDivider(getContext()), toDivide));
+                              ViewHelper.getListDivider(getContext()), toDivide));
         }
     }
 

@@ -52,10 +52,10 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
     public static AssigneesDialogFragment newInstance(@NonNull String login, @NonNull String repoId, boolean isAssignees) {
         AssigneesDialogFragment fragment = new AssigneesDialogFragment();
         fragment.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, isAssignees)
-                .end());
+                              .put(BundleConstant.ID, repoId)
+                              .put(BundleConstant.EXTRA, login)
+                              .put(BundleConstant.EXTRA_TWO, isAssignees)
+                              .end());
         return fragment;
     }
 
@@ -114,17 +114,17 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
 
     @OnClick({R.id.cancel, R.id.ok}) public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.cancel:
-                dismiss();
-                break;
-            case R.id.ok:
-                ArrayList<User> labels = Stream.of(selectionMap)
-                        .filter(value -> value.getValue() != null)
-                        .map(Map.Entry::getValue)
-                        .collect(Collectors.toCollection(ArrayList::new));
-                callback.onSelectedAssignees(labels != null ? labels : new ArrayList<>(), getArguments().getBoolean(BundleConstant.EXTRA_TWO));
-                dismiss();
-                break;
+        case R.id.cancel:
+            dismiss();
+            break;
+        case R.id.ok:
+            ArrayList<User> labels = Stream.of(selectionMap)
+                                     .filter(value -> value.getValue() != null)
+                                     .map(Map.Entry::getValue)
+                                     .collect(Collectors.toCollection(ArrayList::new));
+            callback.onSelectedAssignees(labels != null ? labels : new ArrayList<>(), getArguments().getBoolean(BundleConstant.EXTRA_TWO));
+            dismiss();
+            break;
         }
     }
 
@@ -172,7 +172,7 @@ public class AssigneesDialogFragment extends BaseDialogFragment<AssigneesMvp.Vie
     private void callApi() {
         //noinspection ConstantConditions
         getPresenter().onCallApi(getArguments().getString(BundleConstant.EXTRA),
-                getArguments().getString(BundleConstant.ID),
-                getArguments().getBoolean(BundleConstant.EXTRA_TWO));
+                                 getArguments().getString(BundleConstant.ID),
+                                 getArguments().getBoolean(BundleConstant.EXTRA_TWO));
     }
 }

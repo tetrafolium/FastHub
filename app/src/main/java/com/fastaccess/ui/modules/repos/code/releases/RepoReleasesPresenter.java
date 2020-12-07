@@ -61,13 +61,13 @@ class RepoReleasesPresenter extends BasePresenter<RepoReleasesMvp.View> implemen
         }
         if (repoId == null || login == null) return false;
         makeRestCall(RestProvider.getRepoService(isEnterprise()).getReleases(login, repoId, page),
-                response -> {
-                    if (response.getItems() == null || response.getItems().isEmpty()) {
-                        makeRestCall(RestProvider.getRepoService(isEnterprise()).getTagReleases(login, repoId, page), this::onResponse);
-                        return;
-                    }
-                    onResponse(response);
-                });
+        response -> {
+            if (response.getItems() == null || response.getItems().isEmpty()) {
+                makeRestCall(RestProvider.getRepoService(isEnterprise()).getTagReleases(login, repoId, page), this::onResponse);
+                return;
+            }
+            onResponse(response);
+        });
         return true;
 
     }
@@ -79,18 +79,18 @@ class RepoReleasesPresenter extends BasePresenter<RepoReleasesMvp.View> implemen
         long id = bundle.getLong(BundleConstant.EXTRA_TWO, -1);
         if (!InputHelper.isEmpty(tag)) {
             manageObservable(RestProvider.getRepoService(isEnterprise()).getTagRelease(login, repoId, tag)
-                    .doOnNext(release -> {
-                        if (release != null) {
-                            sendToView(view -> view.onShowDetails(release));
-                        }
-                    }));
+            .doOnNext(release -> {
+                if (release != null) {
+                    sendToView(view -> view.onShowDetails(release));
+                }
+            }));
         } else if (id > 0) {
             manageObservable(RestProvider.getRepoService(isEnterprise()).getRelease(login, repoId, id)
-                    .doOnNext(release -> {
-                        if (release != null) {
-                            sendToView(view -> view.onShowDetails(release));
-                        }
-                    }));
+            .doOnNext(release -> {
+                if (release != null) {
+                    sendToView(view -> view.onShowDetails(release));
+                }
+            }));
         }
         if (!InputHelper.isEmpty(login) && !InputHelper.isEmpty(repoId)) {
             onCallApi(1, null);
@@ -100,7 +100,7 @@ class RepoReleasesPresenter extends BasePresenter<RepoReleasesMvp.View> implemen
     @Override public void onWorkOffline() {
         if (releases.isEmpty()) {
             manageDisposable(RxHelper.getSingle(Release.get(repoId, login))
-                    .subscribe(releasesModels -> sendToView(view -> view.onNotifyAdapter(releasesModels, 1))));
+                             .subscribe(releasesModels -> sendToView(view -> view.onNotifyAdapter(releasesModels, 1))));
         } else {
             sendToView(RepoReleasesMvp.View::hideProgress);
         }

@@ -41,9 +41,9 @@ public class CreateLabelDialogFragment extends BaseDialogFragment<CreateLabelMvp
     public static CreateLabelDialogFragment newInstance(@NonNull String login, @NonNull String repo) {
         CreateLabelDialogFragment fragment = new CreateLabelDialogFragment();
         fragment.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.ID, repo)
-                .end());
+                              .put(BundleConstant.EXTRA, login)
+                              .put(BundleConstant.ID, repo)
+                              .end());
         return fragment;
     }
 

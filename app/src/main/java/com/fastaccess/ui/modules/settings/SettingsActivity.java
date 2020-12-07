@@ -67,9 +67,9 @@ public class SettingsActivity extends BaseActivity implements LanguageBottomShee
             SettingsModel settingsModel = (SettingsModel) parent.getItemAtPosition(position);
             Intent intent = new Intent(this, SettingsCategoryActivity.class);
             intent.putExtras(Bundler.start()
-                    .put(BundleConstant.ITEM, settingsModel.getSettingsType())
-                    .put(BundleConstant.EXTRA, settingsModel.getTitle())
-                    .end());
+                             .put(BundleConstant.ITEM, settingsModel.getSettingsType())
+                             .put(BundleConstant.EXTRA, settingsModel.getTitle())
+                             .end());
             if (settingsModel.getSettingsType() == SettingsModel.LANGUAGE) {
                 showLanguageList();
             } else if (settingsModel.getSettingsType() == SettingsModel.THEME) {

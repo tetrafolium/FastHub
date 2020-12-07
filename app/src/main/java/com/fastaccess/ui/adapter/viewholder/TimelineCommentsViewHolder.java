@@ -148,17 +148,17 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
     }
 
     public static TimelineCommentsViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable IssuesTimelineAdapter adapter,
-                                                         @NonNull OnToggleView onToggleView, boolean showEmojies,
-                                                         @NonNull ReactionsCallback reactionsCallback, String repoOwner, String poster) {
+            @NonNull OnToggleView onToggleView, boolean showEmojies,
+            @NonNull ReactionsCallback reactionsCallback, String repoOwner, String poster) {
         return new TimelineCommentsViewHolder(getView(viewGroup, R.layout.comments_row_item), viewGroup, adapter,
-                onToggleView, showEmojies, reactionsCallback, repoOwner, poster);
+                                              onToggleView, showEmojies, reactionsCallback, repoOwner, poster);
     }
 
     @Override public void bind(@NonNull TimelineModel timelineModel) {
         Comment commentsModel = timelineModel.getComment();
         if (commentsModel.getUser() != null) {
             avatar.setUrl(commentsModel.getUser().getAvatarUrl(), commentsModel.getUser().getLogin(),
-                    false, LinkParserHelper.isEnterprise(commentsModel.getHtmlUrl()));
+                          false, LinkParserHelper.isEnterprise(commentsModel.getHtmlUrl()));
             name.setText(commentsModel.getUser() != null ? commentsModel.getUser().getLogin() : "Anonymous");
             if (commentsModel.getAuthorAssociation() != null && !"none".equalsIgnoreCase(commentsModel.getAuthorAssociation())) {
                 owner.setText(commentsModel.getAuthorAssociation().toLowerCase());
@@ -186,7 +186,7 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
         if (!InputHelper.isEmpty(commentsModel.getPath()) && commentsModel.getPosition() > 0) {
             pathText.setVisibility(View.VISIBLE);
             pathText.setText(String.format("Commented on %s#L%s", commentsModel.getPath(),
-                    commentsModel.getLine() > 0 ? commentsModel.getLine() : commentsModel.getPosition()));
+                                           commentsModel.getLine() > 0 ? commentsModel.getLine() : commentsModel.getPosition()));
         } else {
             pathText.setText("");
             pathText.setVisibility(View.GONE);
@@ -200,7 +200,7 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
         }
         if (commentsModel.getCreatedAt().before(commentsModel.getUpdatedAt())) {
             date.setText(String.format("%s %s", ParseDateFormat.getTimeAgo(commentsModel.getCreatedAt()), itemView
-                    .getResources().getString(R.string.edited)));
+                                       .getResources().getString(R.string.edited)));
         } else {
             date.setText(ParseDateFormat.getTimeAgo(commentsModel.getCreatedAt()));
         }
@@ -225,38 +225,38 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
 //                if (isCallingApi) return;
                 ReactionsModel reactionsModel = comment.getReactions() != null ? comment.getReactions() : new ReactionsModel();
                 switch (v.getId()) {
-                    case R.id.heart:
-                    case R.id.heartReaction:
-                        reactionsModel.setHeart(!isReacted ? reactionsModel.getHeart() + 1 : reactionsModel.getHeart() - 1);
-                        break;
-                    case R.id.sad:
-                    case R.id.sadReaction:
-                        reactionsModel.setConfused(!isReacted ? reactionsModel.getConfused() + 1 : reactionsModel.getConfused() - 1);
-                        break;
-                    case R.id.thumbsDown:
-                    case R.id.thumbsDownReaction:
-                        reactionsModel.setMinusOne(!isReacted ? reactionsModel.getMinusOne() + 1 : reactionsModel.getMinusOne() - 1);
-                        break;
-                    case R.id.thumbsUp:
-                    case R.id.thumbsUpReaction:
-                        reactionsModel.setPlusOne(!isReacted ? reactionsModel.getPlusOne() + 1 : reactionsModel.getPlusOne() - 1);
-                        break;
-                    case R.id.laugh:
-                    case R.id.laughReaction:
-                        reactionsModel.setLaugh(!isReacted ? reactionsModel.getLaugh() + 1 : reactionsModel.getLaugh() - 1);
-                        break;
-                    case R.id.hurray:
-                    case R.id.hurrayReaction:
-                        reactionsModel.setHooray(!isReacted ? reactionsModel.getHooray() + 1 : reactionsModel.getHooray() - 1);
-                        break;
-                    case R.id.rocket:
-                    case R.id.rocketReaction:
-                        reactionsModel.setRocket(!isReacted ? reactionsModel.getRocket() + 1 : reactionsModel.getRocket() - 1);
-                        break;
-                    case R.id.eyes:
-                    case R.id.eyeReaction:
-                        reactionsModel.setEyes(!isReacted ? reactionsModel.getEyes() + 1 : reactionsModel.getEyes() - 1);
-                        break;
+                case R.id.heart:
+                case R.id.heartReaction:
+                    reactionsModel.setHeart(!isReacted ? reactionsModel.getHeart() + 1 : reactionsModel.getHeart() - 1);
+                    break;
+                case R.id.sad:
+                case R.id.sadReaction:
+                    reactionsModel.setConfused(!isReacted ? reactionsModel.getConfused() + 1 : reactionsModel.getConfused() - 1);
+                    break;
+                case R.id.thumbsDown:
+                case R.id.thumbsDownReaction:
+                    reactionsModel.setMinusOne(!isReacted ? reactionsModel.getMinusOne() + 1 : reactionsModel.getMinusOne() - 1);
+                    break;
+                case R.id.thumbsUp:
+                case R.id.thumbsUpReaction:
+                    reactionsModel.setPlusOne(!isReacted ? reactionsModel.getPlusOne() + 1 : reactionsModel.getPlusOne() - 1);
+                    break;
+                case R.id.laugh:
+                case R.id.laughReaction:
+                    reactionsModel.setLaugh(!isReacted ? reactionsModel.getLaugh() + 1 : reactionsModel.getLaugh() - 1);
+                    break;
+                case R.id.hurray:
+                case R.id.hurrayReaction:
+                    reactionsModel.setHooray(!isReacted ? reactionsModel.getHooray() + 1 : reactionsModel.getHooray() - 1);
+                    break;
+                case R.id.rocket:
+                case R.id.rocketReaction:
+                    reactionsModel.setRocket(!isReacted ? reactionsModel.getRocket() + 1 : reactionsModel.getRocket() - 1);
+                    break;
+                case R.id.eyes:
+                case R.id.eyeReaction:
+                    reactionsModel.setEyes(!isReacted ? reactionsModel.getEyes() + 1 : reactionsModel.getEyes() - 1);
+                    break;
                 }
                 comment.setReactions(reactionsModel);
                 appendEmojies(reactionsModel);
@@ -267,7 +267,7 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
 
     private void appendEmojies(ReactionsModel reaction) {
         CommentsHelper.appendEmojies(reaction, thumbsUp, thumbsUpReaction, thumbsDown, thumbsDownReaction, hurray, hurrayReaction, sad,
-                sadReaction, laugh, laughReaction, heart, heartReaction, rocket, rocketReaction, eyes, eyeReaction, reactionsList);
+                                     sadReaction, laugh, laughReaction, heart, heartReaction, rocket, rocketReaction, eyes, eyeReaction, reactionsList);
     }
 
     private void onToggle(boolean expanded, boolean animate) {
@@ -278,7 +278,7 @@ public class TimelineCommentsViewHolder extends BaseViewHolder<TimelineModel> {
         commentOptions.setVisibility(!expanded ? View.GONE : View.VISIBLE);
         reactionsList.setVisibility(expanded ? View.GONE : View.VISIBLE);
         reactionsList.setVisibility(expanded ? View.GONE : reactionsList.getTag() == null || (!((Boolean) reactionsList.getTag()))
-                                                           ? View.GONE : View.VISIBLE);
+                                    ? View.GONE : View.VISIBLE);
     }
 
     @Override protected void onViewIsDetaching() {

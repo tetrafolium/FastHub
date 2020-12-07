@@ -38,7 +38,7 @@ public interface PullRequestTimelineMvp {
     }
 
     interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener,
-            OnToggleView, ReactionsCallback {
+        OnToggleView, ReactionsCallback {
 
         @CallOnMainThread void onNotifyAdapter(@Nullable List<TimelineModel> items, int page);
 
@@ -55,7 +55,7 @@ public interface PullRequestTimelineMvp {
         void onReply(User user, String message);
 
         void showReactionsPopup(@NonNull ReactionTypes type, @NonNull String login, @NonNull String repoId, long idOrNumber, @ReactionsProvider
-                .ReactionType int reactionType);
+                                .ReactionType int reactionType);
 
         void onShowReviewDeleteMsg(long commentId, int groupPosition, int commentPosition);
 
@@ -82,7 +82,7 @@ public interface PullRequestTimelineMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter, BaseViewHolder.OnItemClickListener<TimelineModel>,
-            ReviewCommentCallback, BaseMvp.PaginationListener<PullRequest> {
+        ReviewCommentCallback, BaseMvp.PaginationListener<PullRequest> {
 
         @NonNull ArrayList<TimelineModel> getEvents();
 

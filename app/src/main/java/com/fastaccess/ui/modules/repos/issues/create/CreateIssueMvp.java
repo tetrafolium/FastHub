@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public interface CreateIssueMvp {
 
     interface View extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener, AssigneesMvp.SelectedAssigneesListener,
-            MilestoneMvp.OnMilestoneSelected {
+        MilestoneMvp.OnMilestoneSelected {
         void onSetCode(@NonNull CharSequence charSequence);
 
         void onTitleError(boolean isEmptyTitle);

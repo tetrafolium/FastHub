@@ -38,8 +38,8 @@ public enum ReviewStateType {
 
     @Nullable public static ReviewStateType getType(@NonNull String state) {
         return Stream.of(values())
-                .filter(value -> value.name().toLowerCase().equalsIgnoreCase(state.toLowerCase()))
-                .findFirst()
-                .orElse(null);
+        .filter(value -> value.name().toLowerCase().equalsIgnoreCase(state.toLowerCase()))
+        .findFirst()
+        .orElse(null);
     }
 }

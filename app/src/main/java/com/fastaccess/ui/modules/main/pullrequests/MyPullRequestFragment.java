@@ -46,9 +46,9 @@ public class MyPullRequestFragment extends BaseFragment<MyPullRequestsMvp.View, 
     public static MyPullRequestFragment newInstance(@NonNull IssueState issueState, @NonNull MyIssuesType issuesType) {
         MyPullRequestFragment view = new MyPullRequestFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, issueState)
-                .put(BundleConstant.EXTRA_TWO, issuesType)
-                .end());
+                          .put(BundleConstant.EXTRA, issueState)
+                          .put(BundleConstant.EXTRA_TWO, issuesType)
+                          .end());
         return view;
     }
 
@@ -119,18 +119,18 @@ public class MyPullRequestFragment extends BaseFragment<MyPullRequestsMvp.View, 
     @Override public void onSetCount(int totalCount) {
         if (tabsBadgeListener != null) {
             switch (getIssuesType()) {
-                case CREATED:
-                    tabsBadgeListener.onSetBadge(0, totalCount);
-                    break;
-                case ASSIGNED:
-                    tabsBadgeListener.onSetBadge(1, totalCount);
-                    break;
-                case MENTIONED:
-                    tabsBadgeListener.onSetBadge(2, totalCount);
-                    break;
-                case REVIEW:
-                    tabsBadgeListener.onSetBadge(3, totalCount);
-                    break;
+            case CREATED:
+                tabsBadgeListener.onSetBadge(0, totalCount);
+                break;
+            case ASSIGNED:
+                tabsBadgeListener.onSetBadge(1, totalCount);
+                break;
+            case MENTIONED:
+                tabsBadgeListener.onSetBadge(2, totalCount);
+                break;
+            case REVIEW:
+                tabsBadgeListener.onSetBadge(3, totalCount);
+                break;
             }
         }
     }

@@ -27,7 +27,7 @@ import butterknife.BindView;
  */
 
 public class PullRequestCommitsFragment extends BaseFragment<PullRequestCommitsMvp.View, PullRequestCommitsPresenter>
-        implements PullRequestCommitsMvp.View {
+    implements PullRequestCommitsMvp.View {
 
     @BindView(R.id.recycler) DynamicRecyclerView recycler;
     @BindView(R.id.refresh) SwipeRefreshLayout refresh;
@@ -39,10 +39,10 @@ public class PullRequestCommitsFragment extends BaseFragment<PullRequestCommitsM
     public static PullRequestCommitsFragment newInstance(@NonNull String repoId, @NonNull String login, long number) {
         PullRequestCommitsFragment view = new PullRequestCommitsFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, number)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .put(BundleConstant.EXTRA_TWO, number)
+                          .end());
         return view;
     }
 

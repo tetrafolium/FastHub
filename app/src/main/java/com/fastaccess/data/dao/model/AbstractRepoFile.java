@@ -50,42 +50,44 @@ import static com.fastaccess.data.dao.model.RepoFile.TYPE;
     public static Observable<RepoFile> save(@NonNull List<RepoFile> models, @NonNull String login, @NonNull String repoId) {
         ReactiveEntityStore<Persistable> singleEntityStore = App.getInstance().getDataStore();
         return RxHelper.safeObservable(singleEntityStore.delete(RepoFile.class)
-                .where(REPO_ID.eq(repoId)
-                        .and(LOGIN.eq(login)))
-                .get()
-                .single()
-                .toObservable()
-                .flatMap(integer -> Observable.fromIterable(models))
-                .flatMap(filesModel -> {
-                    filesModel.setRepoId(repoId);
-                    filesModel.setLogin(login);
-                    return filesModel.save(filesModel).toObservable();
-                }));
+                                       .where(REPO_ID.eq(repoId)
+                                              .and(LOGIN.eq(login)))
+                                       .get()
+                                       .single()
+                                       .toObservable()
+                                       .flatMap(integer -> Observable.fromIterable(models))
+        .flatMap(filesModel -> {
+            filesModel.setRepoId(repoId);
+            filesModel.setLogin(login);
+            return filesModel.save(filesModel).toObservable();
+        }));
     }
 
     public static Single<List<RepoFile>> getFiles(@NonNull String login, @NonNull String repoId) {
         return App.getInstance().getDataStore()
-                .select(RepoFile.class)
-                .where(REPO_ID.eq(repoId)
-                        .and(LOGIN.eq(login)))
-                .orderBy(TYPE.asc())
-                .get()
-                .observable()
-                .toList();
+               .select(RepoFile.class)
+               .where(REPO_ID.eq(repoId)
+                      .and(LOGIN.eq(login)))
+               .orderBy(TYPE.asc())
+               .get()
+               .observable()
+               .toList();
     }
 
     public static Observable<RepoFile> getFile(@NonNull String login, @NonNull String repoId, @NonNull String sha) {
         return App.getInstance().getDataStore()
-                .select(RepoFile.class)
-                .where(REPO_ID.eq(repoId)
-                        .and(LOGIN.eq(login))
-                        .and(SHA.eq(sha)))
-                .orderBy(TYPE.asc())
-                .get()
-                .observable();
+               .select(RepoFile.class)
+               .where(REPO_ID.eq(repoId)
+                      .and(LOGIN.eq(login))
+                      .and(SHA.eq(sha)))
+               .orderBy(TYPE.asc())
+               .get()
+               .observable();
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -119,8 +121,12 @@ import static com.fastaccess.data.dao.model.RepoFile.TYPE;
     }
 
     public static final Creator<RepoFile> CREATOR = new Creator<RepoFile>() {
-        @Override public RepoFile createFromParcel(Parcel source) {return new RepoFile(source);}
+        @Override public RepoFile createFromParcel(Parcel source) {
+            return new RepoFile(source);
+        }
 
-        @Override public RepoFile[] newArray(int size) {return new RepoFile[size];}
+        @Override public RepoFile[] newArray(int size) {
+            return new RepoFile[size];
+        }
     };
 }

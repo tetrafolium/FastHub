@@ -27,7 +27,9 @@ public class GitCommitModel implements Parcelable {
     public GitCommitListModel parents;
     public int commentCount;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.sha);
@@ -55,13 +57,17 @@ public class GitCommitModel implements Parcelable {
     }
 
     public static final Creator<GitCommitModel> CREATOR = new Creator<GitCommitModel>() {
-        @Override public GitCommitModel createFromParcel(Parcel source) {return new GitCommitModel(source);}
+        @Override public GitCommitModel createFromParcel(Parcel source) {
+            return new GitCommitModel(source);
+        }
 
-        @Override public GitCommitModel[] newArray(int size) {return new GitCommitModel[size];}
+        @Override public GitCommitModel[] newArray(int size) {
+            return new GitCommitModel[size];
+        }
     };
 
     @Override public String toString() {
-	if (message != null) {
+        if (message != null) {
             return (sha != null && sha.length() > 7 ? sha.substring(0, 7) + " - " : "") + message.split(System.lineSeparator())[0];
         } else if (sha != null && sha.length() > 10) {
             return sha.substring(0, 10);

@@ -33,7 +33,7 @@ import butterknife.Unbinder;
  */
 
 public abstract class BaseMvpBottomSheetDialogFragment<V extends BaseMvp.FAView, P extends BasePresenter<V>> extends TiDialogFragment<P, V>
-        implements BaseMvp.FAView {
+    implements BaseMvp.FAView {
 
     protected BaseMvp.FAView callback;
 
@@ -147,8 +147,8 @@ public abstract class BaseMvpBottomSheetDialogFragment<V extends BaseMvp.FAView,
             if (ViewHelper.isTablet(getActivity())) {
                 if (dialog.getWindow() != null) {
                     dialog.getWindow().setLayout(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT);
+                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
                 }
             }
         });

@@ -32,7 +32,7 @@ import butterknife.BindView;
  */
 
 public class RepoPullRequestPagerFragment extends BaseFragment<RepoPullRequestPagerMvp.View, RepoPullRequestPagerPresenter> implements
-        RepoPullRequestPagerMvp.View {
+    RepoPullRequestPagerMvp.View {
 
     public static final String TAG = RepoPullRequestPagerFragment.class.getSimpleName();
 
@@ -44,9 +44,9 @@ public class RepoPullRequestPagerFragment extends BaseFragment<RepoPullRequestPa
     public static RepoPullRequestPagerFragment newInstance(@NonNull String repoId, @NonNull String login) {
         RepoPullRequestPagerFragment view = new RepoPullRequestPagerFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .end());
         return view;
     }
 
@@ -73,7 +73,7 @@ public class RepoPullRequestPagerFragment extends BaseFragment<RepoPullRequestPa
         String login = getArguments().getString(BundleConstant.EXTRA);
         if (login == null || repoId == null) throw new NullPointerException("repoId || login is null???");
         pager.setAdapter(new FragmentsPagerAdapter(getChildFragmentManager(),
-                FragmentPagerAdapterModel.buildForRepoPullRequest(getContext(), login, repoId)));
+                         FragmentPagerAdapterModel.buildForRepoPullRequest(getContext(), login, repoId)));
         tabs.setupWithViewPager(pager);
         if (savedInstanceState != null && !counts.isEmpty()) {
             Stream.of(counts).forEach(this::updateCount);
@@ -119,10 +119,10 @@ public class RepoPullRequestPagerFragment extends BaseFragment<RepoPullRequestPa
     private void updateCount(@NonNull TabsCountStateModel model) {
         TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
         tv.setText(SpannableBuilder.builder()
-                .append(model.getTabIndex() == 0 ? getString(R.string.opened) : getString(R.string.closed))
-                .append("   ")
-                .append("(")
-                .bold(String.valueOf(model.getCount()))
-                .append(")"));
+                   .append(model.getTabIndex() == 0 ? getString(R.string.opened) : getString(R.string.closed))
+                   .append("   ")
+                   .append("(")
+                   .bold(String.valueOf(model.getCount()))
+                   .append(")"));
     }
 }

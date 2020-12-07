@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class NotificationsAdapter extends BaseRecyclerAdapter<GroupedNotificationModel, BaseViewHolder,
-        BaseViewHolder.OnItemClickListener<GroupedNotificationModel>> {
+    BaseViewHolder.OnItemClickListener<GroupedNotificationModel>> {
     private boolean showUnreadState;
     private boolean hideClear;
 

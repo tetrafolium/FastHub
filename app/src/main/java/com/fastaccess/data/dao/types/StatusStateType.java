@@ -29,8 +29,8 @@ public enum StatusStateType {
 
     @NonNull public static StatusStateType getState(@Nullable String status) {
         return Stream.of(values())
-                .filter(value -> value.name().toLowerCase().equalsIgnoreCase(status))
-                .findFirst()
-                .orElse(pending);
+        .filter(value -> value.name().toLowerCase().equalsIgnoreCase(status))
+        .findFirst()
+        .orElse(pending);
     }
 }

@@ -17,7 +17,9 @@ public class GithubState implements Parcelable {
     private int deletions;
     private int total;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.additions);
@@ -32,8 +34,12 @@ public class GithubState implements Parcelable {
     }
 
     public static final Creator<GithubState> CREATOR = new Creator<GithubState>() {
-        @Override public GithubState createFromParcel(Parcel source) {return new GithubState(source);}
+        @Override public GithubState createFromParcel(Parcel source) {
+            return new GithubState(source);
+        }
 
-        @Override public GithubState[] newArray(int size) {return new GithubState[size];}
+        @Override public GithubState[] newArray(int size) {
+            return new GithubState[size];
+        }
     };
 }

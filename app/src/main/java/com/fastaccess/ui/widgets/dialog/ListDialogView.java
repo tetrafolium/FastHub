@@ -92,15 +92,15 @@ public class ListDialogView<O extends Parcelable> extends BaseDialogFragment imp
 
     public void initArguments(@NonNull String title, @NonNull ArrayList<O> objects) {
         setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, title)
-                .putParcelableArrayList(BundleConstant.ITEM, objects)
-                .end());
+                     .put(BundleConstant.EXTRA, title)
+                     .putParcelableArrayList(BundleConstant.ITEM, objects)
+                     .end());
     }
 
     public void initArguments(@NonNull String title, @NonNull List<O> objects) {
         setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, title)
-                .putParcelableArrayList(BundleConstant.ITEM, (ArrayList<? extends Parcelable>) objects)
-                .end());
+                     .put(BundleConstant.EXTRA, title)
+                     .putParcelableArrayList(BundleConstant.ITEM, (ArrayList<? extends Parcelable>) objects)
+                     .end());
     }
 }

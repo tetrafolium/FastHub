@@ -35,16 +35,16 @@ public class NestedCoordinatorLayout extends CoordinatorLayout implements Nested
     }
 
     @Override public boolean onStartNestedScroll(View child, View target, int nestedScrollAxes) {
-    /* Enable the scrolling behavior of our own children */
+        /* Enable the scrolling behavior of our own children */
         boolean tHandled = super.onStartNestedScroll(child, target, nestedScrollAxes);
-    /* Enable the scrolling behavior of the parent's other children  */
+        /* Enable the scrolling behavior of the parent's other children  */
         return startNestedScroll(nestedScrollAxes) || tHandled;
     }
 
     @Override public void onStopNestedScroll(View target) {
-    /* Disable the scrolling behavior of our own children */
+        /* Disable the scrolling behavior of our own children */
         super.onStopNestedScroll(target);
-    /* Disable the scrolling behavior of the parent's other children  */
+        /* Disable the scrolling behavior of the parent's other children  */
         stopNestedScroll();
     }
 

@@ -25,7 +25,7 @@ import java.util.List;
 public interface PullRequestFilesMvp {
 
     interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener,
-            OnToggleView, OnPatchClickListener, ReviewCommentListener {
+        OnToggleView, OnPatchClickListener, ReviewCommentListener {
         void onNotifyAdapter(@Nullable List<CommitFileChanges> items, int page);
 
         @NonNull OnLoadMore getLoadMore();
@@ -34,8 +34,8 @@ public interface PullRequestFilesMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<CommitFileChanges>,
-            BaseMvp.PaginationListener {
+        BaseViewHolder.OnItemClickListener<CommitFileChanges>,
+        BaseMvp.PaginationListener {
         void onFragmentCreated(@NonNull Bundle bundle);
 
         @NonNull ArrayList<CommitFileChanges> getFiles();

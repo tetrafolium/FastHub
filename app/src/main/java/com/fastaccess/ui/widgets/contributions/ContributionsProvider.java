@@ -32,36 +32,36 @@ public class ContributionsProvider {
             int level = 0;
             String levelString = string.substring(fillPos + FILL_STRING.length(), fillPos + FILL_STRING.length() + 7);
             switch (levelString) {
-                case "#eeeeee":
-                    level = 0;
-                    break;
-                case "#d6e685":
-                    level = 1;
-                    break;
-                case "#8cc665":
-                    level = 2;
-                    break;
-                case "#44a340":
-                    level = 3;
-                    break;
-                case "#1e6823":
-                    level = 4;
-                    break;
-                case "#ebedf0":
-                    level = 0;
-                    break;
-                case "#239a3b":
-                    level = 1;
-                    break;
-                case "#c6e48b":
-                    level = 2;
-                    break;
-                case "#7bc96f":
-                    level = 3;
-                    break;
-                case "#196127":
-                    level = 4;
-                    break;
+            case "#eeeeee":
+                level = 0;
+                break;
+            case "#d6e685":
+                level = 1;
+                break;
+            case "#8cc665":
+                level = 2;
+                break;
+            case "#44a340":
+                level = 3;
+                break;
+            case "#1e6823":
+                level = 4;
+                break;
+            case "#ebedf0":
+                level = 0;
+                break;
+            case "#239a3b":
+                level = 1;
+                break;
+            case "#c6e48b":
+                level = 2;
+                break;
+            case "#7bc96f":
+                level = 3;
+                break;
+            case "#196127":
+                level = 4;
+                break;
             }
 
             int dataEndPos = string.indexOf("\"", dataPos + DATA_STRING.length());
@@ -69,12 +69,12 @@ public class ContributionsProvider {
             int data = Integer.valueOf(dataString);
             String dateString = string.substring(datePos + DATE_STRING.length(), datePos + DATE_STRING.length() + 11);
             contributions.add(new ContributionsDay(
-                    Integer.valueOf(dateString.substring(0, 4)),
-                    Integer.valueOf(dateString.substring(5, 7)),
-                    Integer.valueOf(dateString.substring(8, 10)),
-                    level,
-                    data
-            ));
+                                  Integer.valueOf(dateString.substring(0, 4)),
+                                  Integer.valueOf(dateString.substring(5, 7)),
+                                  Integer.valueOf(dateString.substring(8, 10)),
+                                  level,
+                                  data
+                              ));
         }
 
         return contributions;

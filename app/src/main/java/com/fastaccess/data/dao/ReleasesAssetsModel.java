@@ -28,7 +28,9 @@ import lombok.Setter;
     private Date updatedAt;
     private User uploader;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.url);
@@ -65,8 +67,12 @@ import lombok.Setter;
     }
 
     public static final Creator<ReleasesAssetsModel> CREATOR = new Creator<ReleasesAssetsModel>() {
-        @Override public ReleasesAssetsModel createFromParcel(Parcel source) {return new ReleasesAssetsModel(source);}
+        @Override public ReleasesAssetsModel createFromParcel(Parcel source) {
+            return new ReleasesAssetsModel(source);
+        }
 
-        @Override public ReleasesAssetsModel[] newArray(int size) {return new ReleasesAssetsModel[size];}
+        @Override public ReleasesAssetsModel[] newArray(int size) {
+            return new ReleasesAssetsModel[size];
+        }
     };
 }

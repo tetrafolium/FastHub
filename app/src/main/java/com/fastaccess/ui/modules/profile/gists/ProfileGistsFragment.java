@@ -43,9 +43,9 @@ public class ProfileGistsFragment extends BaseFragment<ProfileGistsMvp.View, Pro
     public static ProfileGistsFragment newInstance(@NonNull String login) {
         ProfileGistsFragment view = new ProfileGistsFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.IS_ENTERPRISE, Login.getUser().getLogin().equalsIgnoreCase(login))
-                .end());
+                          .put(BundleConstant.EXTRA, login)
+                          .put(BundleConstant.IS_ENTERPRISE, Login.getUser().getLogin().equalsIgnoreCase(login))
+                          .end());
         return view;
     }
 

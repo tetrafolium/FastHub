@@ -26,7 +26,7 @@ public class JsoupProvider {
             OkHttpClient.Builder client = new OkHttpClient.Builder();
             if (BuildConfig.DEBUG) {
                 client.addInterceptor(new HttpLoggingInterceptor()
-                        .setLevel(HttpLoggingInterceptor.Level.BODY));
+                                      .setLevel(HttpLoggingInterceptor.Level.BODY));
             }
             client.addInterceptor(Pandora.get().getInterceptor());
             client.addInterceptor(new AuthenticationInterceptor(true));
@@ -37,21 +37,21 @@ public class JsoupProvider {
 
     public static ScrapService getTrendingService(@NonNull String url) {
         return new Retrofit.Builder()
-                .baseUrl(url)
-                .client(provideOkHttpClient())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(ScrapService.class);
+               .baseUrl(url)
+               .client(provideOkHttpClient())
+               .addConverterFactory(ScalarsConverterFactory.create())
+               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+               .build()
+               .create(ScrapService.class);
     }
 
     public static ScrapService getWiki() {
         return new Retrofit.Builder()
-                .baseUrl("https://github.com/")
-                .client(provideOkHttpClient())
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-                .create(ScrapService.class);
+               .baseUrl("https://github.com/")
+               .client(provideOkHttpClient())
+               .addConverterFactory(ScalarsConverterFactory.create())
+               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+               .build()
+               .create(ScrapService.class);
     }
 }

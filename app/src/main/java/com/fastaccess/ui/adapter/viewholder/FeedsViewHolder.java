@@ -130,66 +130,66 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
 
     private void appendOrganizationEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         spannableBuilder.bold(eventsModel.getPayload().getAction().replaceAll("_", ""))
-                .append(" ")
-                .append(eventsModel.getPayload().getInvitation() != null ? eventsModel.getPayload().getInvitation().getLogin() + " " : "")
-                .append(eventsModel.getPayload().getOrganization().getLogin());
+        .append(" ")
+        .append(eventsModel.getPayload().getInvitation() != null ? eventsModel.getPayload().getInvitation().getLogin() + " " : "")
+        .append(eventsModel.getPayload().getOrganization().getLogin());
     }
 
     private void appendProjectCardEvent(SpannableBuilder spannableBuilder, Event eventsModel, boolean isColumn) {
         spannableBuilder.bold(eventsModel.getPayload().getAction())
-                .append(" ")
-                .append(!isColumn ? "project" : "column")
-                .append(" ")
-                .append(eventsModel.getRepo().getName());
+        .append(" ")
+        .append(!isColumn ? "project" : "column")
+        .append(" ")
+        .append(eventsModel.getRepo().getName());
     }
 
     private void appendOrgBlockEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         spannableBuilder.bold(eventsModel.getPayload().getAction())
-                .append(" ")
-                .append(eventsModel.getPayload().getBlockedUser().getLogin())
-                .append(" ")
-                .append(eventsModel.getPayload().getOrganization().getLogin());
+        .append(" ")
+        .append(eventsModel.getPayload().getBlockedUser().getLogin())
+        .append(" ")
+        .append(eventsModel.getPayload().getOrganization().getLogin());
     }
 
     private void appendForkApplyEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         spannableBuilder.bold(eventsModel.getPayload().getHead())
-                .append(" ")
-                .append(eventsModel.getPayload().getBefore())
-                .append(" ")
-                .append(eventsModel.getRepo() != null ? "in " + eventsModel.getRepo().getName() : "");
+        .append(" ")
+        .append(eventsModel.getPayload().getBefore())
+        .append(" ")
+        .append(eventsModel.getRepo() != null ? "in " + eventsModel.getRepo().getName() : "");
     }
 
     private void appendReleaseEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         Release release = eventsModel.getPayload().getRelease();
         spannableBuilder.bold("released")
-                .append(" ")
-                .append(release.getName())
-                .append(" ")
-                .append(eventsModel.getRepo().getName());
+        .append(" ")
+        .append(release.getName())
+        .append(" ")
+        .append(eventsModel.getRepo().getName());
     }
 
     private void appendDeleteEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         spannableBuilder.bold("deleted")
-                .append(" ")
-                .append(eventsModel.getPayload().getRefType())
-                .append(" ")
-                .append(eventsModel.getPayload().getRef())
-                .append(" ")
-                .bold("at")
-                .append(" ")
-                .append(eventsModel.getRepo().getName());
+        .append(" ")
+        .append(eventsModel.getPayload().getRefType())
+        .append(" ")
+        .append(eventsModel.getPayload().getRef())
+        .append(" ")
+        .bold("at")
+        .append(" ")
+        .append(eventsModel.getRepo().getName());
     }
 
     private void appendTeamEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         TeamsModel teamsModel = eventsModel.getPayload().getTeam();
         User user = eventsModel.getPayload().getUser();
         spannableBuilder.bold("added")
-                .append(" ")
-                .append(user != null ? user.getLogin() : eventsModel.getRepo().getName())
-                .append(" ")
-                .bold("in")
-                .append(" ")
-                .append(teamsModel.getName() != null ? teamsModel.getName() : teamsModel.getSlug());
+        .append(" ")
+        .append(user != null ? user.getLogin() : eventsModel.getRepo().getName())
+        .append(" ")
+        .bold("in")
+        .append(" ")
+        .append(teamsModel.getName() != null ? teamsModel.getName() : teamsModel.getSlug());
     }
 
     private void appendPushEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
@@ -198,12 +198,12 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
             ref = ref.substring(11);
         }
         spannableBuilder.bold("pushed to")
-                .append(" ")
-                .append(ref)
-                .append(" ")
-                .bold("at")
-                .append(" ")
-                .append(eventsModel.getRepo().getName());
+        .append(" ")
+        .append(ref)
+        .append(" ")
+        .bold("at")
+        .append(" ")
+        .append(eventsModel.getRepo().getName());
         final List<GitCommitModel> commits = eventsModel.getPayload().getCommits();
         int size = commits != null ? commits.size() : -1;
         SpannableBuilder spanCommits = SpannableBuilder.builder();
@@ -218,8 +218,8 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
                 if (TextUtils.isEmpty(sha)) continue;
                 sha = sha.length() > 7 ? sha.substring(0, 7) : sha;
                 spanCommits.url(sha).append(" ")
-                        .append(commit.getMessage() != null ? commit.getMessage().replaceAll("\\r?\\n|\\r", " ") : "")
-                        .append("\n");
+                .append(commit.getMessage() != null ? commit.getMessage().replaceAll("\\r?\\n|\\r", " ") : "")
+                .append("\n");
                 appended++;
                 if (appended == max) break;
             }
@@ -240,14 +240,14 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         PullRequest pullRequest = eventsModel.getPayload().getPullRequest();
         Comment comment = eventsModel.getPayload().getComment();
         spannableBuilder.bold("reviewed")
-                .append(" ")
-                .bold("pull request")
-                .append(" ")
-                .bold("in")
-                .append(" ")
-                .append(eventsModel.getRepo().getName())
-                .bold("#")
-                .bold(String.valueOf(pullRequest.getNumber()));
+        .append(" ")
+        .bold("pull request")
+        .append(" ")
+        .bold("in")
+        .append(" ")
+        .append(eventsModel.getRepo().getName())
+        .bold("#")
+        .bold(String.valueOf(pullRequest.getNumber()));
         if (comment.getBody() != null) {
             MarkDownProvider.stripMdText(description, comment.getBody().replaceAll("\\r?\\n|\\r", " "));
             description.setVisibility(View.VISIBLE);
@@ -267,12 +267,12 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
             action = "merged";
         }
         spannableBuilder.bold(action)
-                .append(" ")
-                .bold("pull request")
-                .append(" ")
-                .append(eventsModel.getRepo().getName())
-                .bold("#")
-                .bold(String.valueOf(issue.getNumber()));
+        .append(" ")
+        .bold("pull request")
+        .append(" ")
+        .append(eventsModel.getRepo().getName())
+        .bold("#")
+        .bold(String.valueOf(issue.getNumber()));
         if ("opened".equals(action) || "closed".equals(action)) {
             if (issue.getTitle() != null) {
                 MarkDownProvider.stripMdText(description, issue.getTitle().replaceAll("\\r?\\n|\\r", " "));
@@ -290,36 +290,36 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
             action = "private";
         }
         spannableBuilder.append("made")
-                .append(" ")
-                .append(eventsModel.getRepo().getName())
-                .append(" ")
-                .append(action);
+        .append(" ")
+        .append(eventsModel.getRepo().getName())
+        .append(" ")
+        .append(action);
     }
 
     private void appendMemberEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         User user = eventsModel.getPayload().getMember();
         spannableBuilder.bold("added")
-                .append(" ")
-                .append(user != null ? user.getLogin() + " " : "")
-                .append("as a collaborator")
-                .append(" ")
-                .append("to")
-                .append(" ")
-                .append(eventsModel.getRepo().getName());
+        .append(" ")
+        .append(user != null ? user.getLogin() + " " : "")
+        .append("as a collaborator")
+        .append(" ")
+        .append("to")
+        .append(" ")
+        .append(eventsModel.getRepo().getName());
     }
 
     private void appendIssueEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         Issue issue = eventsModel.getPayload().getIssue();
         boolean isLabel = "label".equals(eventsModel.getPayload().getAction());
         LabelModel label = isLabel ? issue.getLabels() != null && !issue.getLabels().isEmpty()
-                                     ? issue.getLabels().get(issue.getLabels().size() - 1) : null : null;
+                           ? issue.getLabels().get(issue.getLabels().size() - 1) : null : null;
         spannableBuilder.bold(isLabel && label != null ? ("Labeled " + label.getName()) : eventsModel.getPayload().getAction())
-                .append(" ")
-                .bold("issue")
-                .append(" ")
-                .append(eventsModel.getRepo().getName())
-                .bold("#")
-                .bold(String.valueOf(issue.getNumber()));
+        .append(" ")
+        .bold("issue")
+        .append(" ")
+        .append(eventsModel.getRepo().getName())
+        .bold("#")
+        .bold(String.valueOf(issue.getNumber()));
         if (issue.getTitle() != null) {
             MarkDownProvider.stripMdText(description, issue.getTitle().replaceAll("\\r?\\n|\\r", " "));
             description.setVisibility(View.VISIBLE);
@@ -333,14 +333,14 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         Comment comment = eventsModel.getPayload().getComment();
         Issue issue = eventsModel.getPayload().getIssue();
         spannableBuilder.bold("commented")
-                .append(" ")
-                .bold("on")
-                .append(" ")
-                .bold(issue.getPullRequest() != null ? "pull request" : "issue")
-                .append(" ")
-                .append(eventsModel.getRepo().getName())
-                .bold("#")
-                .bold(String.valueOf(issue.getNumber()));
+        .append(" ")
+        .bold("on")
+        .append(" ")
+        .bold(issue.getPullRequest() != null ? "pull request" : "issue")
+        .append(" ")
+        .append(eventsModel.getRepo().getName())
+        .bold("#")
+        .bold(String.valueOf(issue.getNumber()));
         if (comment.getBody() != null) {
             MarkDownProvider.stripMdText(description, comment.getBody().replaceAll("\\r?\\n|\\r", " "));
             description.setVisibility(View.VISIBLE);
@@ -355,16 +355,16 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         if (wiki != null && !wiki.isEmpty()) {
             for (WikiModel wikiModel : wiki) {
                 spannableBuilder.bold(wikiModel.getAction())
-                        .append(" ")
-                        .append(wikiModel.getPageName())
-                        .append(" ");
+                .append(" ")
+                .append(wikiModel.getPageName())
+                .append(" ");
             }
         } else {
             spannableBuilder.bold(resources.getString(R.string.gollum))
-                    .append(" ");
+            .append(" ");
         }
         spannableBuilder
-                .append(eventsModel.getRepo().getName());
+        .append(eventsModel.getRepo().getName());
 
     }
 
@@ -372,46 +372,46 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         String action = eventsModel.getPayload().getAction();
         action = "create".equals(action) ? "created" : "update".equals(action) ? "updated" : action;
         spannableBuilder.bold(action)
-                .append(" ")
-                .append(itemView.getResources().getString(R.string.gist))
-                .append(" ")
-                .append(eventsModel.getPayload().getGist().getGistId());
+        .append(" ")
+        .append(itemView.getResources().getString(R.string.gist))
+        .append(" ")
+        .append(eventsModel.getPayload().getGist().getGistId());
     }
 
     private void appendForkEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         spannableBuilder.bold("forked")
-                .append(" ")
-                .append(eventsModel.getRepo().getName());
+        .append(" ")
+        .append(eventsModel.getRepo().getName());
     }
 
     private void appendFollowEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         spannableBuilder.bold("started following")
-                .append(" ")
-                .bold(eventsModel.getPayload().getTarget().getLogin());
+        .append(" ")
+        .bold(eventsModel.getPayload().getTarget().getLogin());
     }
 
     private void appendDownloadEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         spannableBuilder.bold("uploaded a file")
-                .append(" ")
-                .append(eventsModel.getPayload().getDownload() != null ? eventsModel.getPayload().getDownload().getName() : "")
-                .append(" ")
-                .append("to")
-                .append(" ")
-                .append(eventsModel.getRepo().getName());
+        .append(" ")
+        .append(eventsModel.getPayload().getDownload() != null ? eventsModel.getPayload().getDownload().getName() : "")
+        .append(" ")
+        .append("to")
+        .append(" ")
+        .append(eventsModel.getRepo().getName());
     }
 
     private void appendCreateEvent(SpannableBuilder spannableBuilder, Event eventsModel) {
         PayloadModel payloadModel = eventsModel.getPayload();
         String refType = payloadModel.getRefType();
         spannableBuilder
-                .bold("created")
-                .append(" ")
-                .append(refType)
-                .append(" ")
-                .append(!"repository".equalsIgnoreCase(refType) ? payloadModel.getRef() + " " : "")
-                .bold("at")
-                .append(" ")
-                .append(eventsModel.getRepo().getName());
+        .bold("created")
+        .append(" ")
+        .append(refType)
+        .append(" ")
+        .append(!"repository".equalsIgnoreCase(refType) ? payloadModel.getRef() + " " : "")
+        .bold("at")
+        .append(" ")
+        .append(eventsModel.getRepo().getName());
         if (payloadModel.getDescription() != null) {
             MarkDownProvider.stripMdText(description, payloadModel.getDescription().replaceAll("\\r?\\n|\\r", " "));
             description.setVisibility(View.VISIBLE);
@@ -423,23 +423,23 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
 
     private void appendWatch(SpannableBuilder spannableBuilder, EventsType type, Event eventsModel) {
         spannableBuilder.bold(resources.getString(type.getType()).toLowerCase())
-                .append(" ")
-                .append(eventsModel.getRepo().getName());
+        .append(" ")
+        .append(eventsModel.getRepo().getName());
     }
 
     private void appendCommitComment(SpannableBuilder spannableBuilder, Event eventsModel) {
         Comment comment = eventsModel.getPayload().getCommitComment() == null ? eventsModel.getPayload().getComment() : eventsModel.getPayload()
-                .getCommitComment();
+                          .getCommitComment();
         String commitId = comment != null && comment.getCommitId() != null && comment.getCommitId().length() > 10 ?
                           comment.getCommitId().substring(0, 10) : null;
         spannableBuilder.bold("commented")
-                .append(" ")
-                .bold("on")
-                .append(" ")
-                .bold("commit")
-                .append(" ")
-                .append(eventsModel.getRepo().getName())
-                .url(commitId != null ? "@" + commitId : "");
+        .append(" ")
+        .bold("on")
+        .append(" ")
+        .bold("commit")
+        .append(" ")
+        .append(eventsModel.getRepo().getName())
+        .url(commitId != null ? "@" + commitId : "");
         if (comment != null && comment.getBody() != null) {
             MarkDownProvider.stripMdText(description, comment.getBody().replaceAll("\\r?\\n|\\r", " "));
             description.setVisibility(View.VISIBLE);
@@ -459,8 +459,8 @@ public class FeedsViewHolder extends BaseViewHolder<Event> {
         if (avatar != null) {
             if (eventsModel.getActor() != null) {
                 avatar.setUrl(eventsModel.getActor().getAvatarUrl(), eventsModel.getActor().getLogin(),
-                        eventsModel.getActor().isOrganizationType(),
-                        LinkParserHelper.isEnterprise(eventsModel.getActor().getHtmlUrl()));
+                              eventsModel.getActor().isOrganizationType(),
+                              LinkParserHelper.isEnterprise(eventsModel.getActor().getHtmlUrl()));
             } else {
                 avatar.setUrl(null, null, false, false);
             }

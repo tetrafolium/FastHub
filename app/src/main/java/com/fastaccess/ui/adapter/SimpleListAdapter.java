@@ -12,7 +12,7 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
 import java.util.List;
 
 public class SimpleListAdapter<O> extends BaseRecyclerAdapter<O, SimpleViewHolder<O>,
-        SimpleViewHolder.OnItemClickListener<O>> {
+    SimpleViewHolder.OnItemClickListener<O>> {
     public SimpleListAdapter(@NonNull List<O> data, @Nullable SimpleViewHolder.OnItemClickListener<O> listener) {
         super(data, listener);
     }

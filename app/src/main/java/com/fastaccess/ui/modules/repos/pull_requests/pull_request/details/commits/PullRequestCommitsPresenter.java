@@ -62,13 +62,13 @@ class PullRequestCommitsPresenter extends BasePresenter<PullRequestCommitsMvp.Vi
         }
         if (repoId == null || login == null) return false;
         makeRestCall(RestProvider.getPullRequestService(isEnterprise()).getPullRequestCommits(login, repoId, number, page),
-                response -> {
-                    lastPage = response.getLast();
-                    if (getCurrentPage() == 1) {
-                        manageDisposable(Commit.save(response.getItems(), repoId, login, number));
-                    }
-                    sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
-                });
+        response -> {
+            lastPage = response.getLast();
+            if (getCurrentPage() == 1) {
+                manageDisposable(Commit.save(response.getItems(), repoId, login, number));
+            }
+            sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
+        });
         return true;
     }
 
@@ -88,7 +88,7 @@ class PullRequestCommitsPresenter extends BasePresenter<PullRequestCommitsMvp.Vi
     @Override public void onWorkOffline() {
         if (commits.isEmpty()) {
             manageDisposable(RxHelper.getSingle(Commit.getCommits(repoId, login, number))
-                    .subscribe(models -> sendToView(view -> view.onNotifyAdapter(models, 1))));
+                             .subscribe(models -> sendToView(view -> view.onNotifyAdapter(models, 1))));
         } else {
             sendToView(BaseMvp.FAView::hideProgress);
         }

@@ -92,13 +92,15 @@ public class PullsIssuesParser implements Parcelable {
 
     @Override public String toString() {
         return "PullsIssuesParser{" +
-                "login='" + login + '\'' +
-                ", repoId='" + repoId + '\'' +
-                ", number=" + number +
-                '}';
+               "login='" + login + '\'' +
+               ", repoId='" + repoId + '\'' +
+               ", number=" + number +
+               '}';
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.login);
@@ -139,8 +141,12 @@ public class PullsIssuesParser implements Parcelable {
     }
 
     public static final Parcelable.Creator<PullsIssuesParser> CREATOR = new Parcelable.Creator<PullsIssuesParser>() {
-        @Override public PullsIssuesParser createFromParcel(Parcel source) {return new PullsIssuesParser(source);}
+        @Override public PullsIssuesParser createFromParcel(Parcel source) {
+            return new PullsIssuesParser(source);
+        }
 
-        @Override public PullsIssuesParser[] newArray(int size) {return new PullsIssuesParser[size];}
+        @Override public PullsIssuesParser[] newArray(int size) {
+            return new PullsIssuesParser[size];
+        }
     };
 }

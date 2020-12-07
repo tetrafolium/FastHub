@@ -46,22 +46,22 @@ class CommitFilesPresenter extends BasePresenter<CommitFilesMvp.View> implements
             inflater.inflate(R.menu.commit_row_menu, popup.getMenu());
             popup.setOnMenuItemClickListener(item1 -> {
                 switch (item1.getItemId()) {
-                    case R.id.open:
-                        v.getContext().startActivity(CodeViewerActivity.createIntent(v.getContext(), item.getContentsUrl(), item.getBlobUrl()));
-                        break;
-                    case R.id.share:
-                        ActivityHelper.shareUrl(v.getContext(), item.getBlobUrl());
-                        break;
-                    case R.id.download:
-                        Activity activity = ActivityHelper.getActivity(v.getContext());
-                        if (activity == null) break;
-                        if (ActivityHelper.checkAndRequestReadWritePermission(activity)) {
-                            RestProvider.downloadFile(v.getContext(), item.getRawUrl());
-                        }
-                        break;
-                    case R.id.copy:
-                        AppHelper.copyToClipboard(v.getContext(), item.getBlobUrl());
-                        break;
+                case R.id.open:
+                    v.getContext().startActivity(CodeViewerActivity.createIntent(v.getContext(), item.getContentsUrl(), item.getBlobUrl()));
+                    break;
+                case R.id.share:
+                    ActivityHelper.shareUrl(v.getContext(), item.getBlobUrl());
+                    break;
+                case R.id.download:
+                    Activity activity = ActivityHelper.getActivity(v.getContext());
+                    if (activity == null) break;
+                    if (ActivityHelper.checkAndRequestReadWritePermission(activity)) {
+                        RestProvider.downloadFile(v.getContext(), item.getRawUrl());
+                    }
+                    break;
+                case R.id.copy:
+                    AppHelper.copyToClipboard(v.getContext(), item.getBlobUrl());
+                    break;
                 }
                 return true;
             });
@@ -81,12 +81,12 @@ class CommitFilesPresenter extends BasePresenter<CommitFilesMvp.View> implements
             CommitFileListModel commitFiles = CommitFilesSingleton.getInstance().getByCommitId(sha);
             if (commitFiles != null) {
                 manageObservable(Observable.just(commitFiles)
-                        .map(CommitFileChanges::construct)
-                        .doOnSubscribe(disposable -> sendToView(CommitFilesMvp.View::clearAdapter))
-                        .doOnNext(commitFileChanges -> {
-                            sendToView(view -> view.onNotifyAdapter(commitFileChanges));
-                        })
-                        .doOnComplete(() -> sendToView(BaseMvp.FAView::hideProgress)));
+                                 .map(CommitFileChanges::construct)
+                                 .doOnSubscribe(disposable -> sendToView(CommitFilesMvp.View::clearAdapter))
+                .doOnNext(commitFileChanges -> {
+                    sendToView(view -> view.onNotifyAdapter(commitFileChanges));
+                })
+                .doOnComplete(() -> sendToView(BaseMvp.FAView::hideProgress)));
             }
         } else {
             throw new NullPointerException("Bundle is null");
@@ -110,7 +110,7 @@ class CommitFilesPresenter extends BasePresenter<CommitFilesMvp.View> implements
 
     @Override public void onSubmit(String username, String name, CommentRequestModel commentRequestModel) {
         makeRestCall(RestProvider.getRepoService(isEnterprise()).postCommitComment(username, name, sha,
-                commentRequestModel), newComment -> sendToView(view -> view.onCommentAdded(newComment)));
+                     commentRequestModel), newComment -> sendToView(view -> view.onCommentAdded(newComment)));
     }
 
     @Override protected void onDestroy() {

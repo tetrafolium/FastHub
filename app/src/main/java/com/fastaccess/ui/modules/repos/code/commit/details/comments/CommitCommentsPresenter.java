@@ -67,21 +67,21 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
         }
         if (page == 1) {
             manageObservable(RestProvider.getRepoService(isEnterprise()).isCollaborator(login, repoId,
-                    Login.getUser().getLogin())
-                    .doOnNext(booleanResponse -> isCollaborator = booleanResponse.code() == 204));
+                             Login.getUser().getLogin())
+                             .doOnNext(booleanResponse -> isCollaborator = booleanResponse.code() == 204));
         }
         setCurrentPage(page);
         makeRestCall(RestProvider.getRepoService(isEnterprise()).getCommitComments(login, repoId, sha, page)
-                        .flatMap(listResponse -> {
-                            lastPage = listResponse.getLast();
-                            return TimelineModel.construct(listResponse.getItems());
-                        })
-                        .doOnComplete(() -> {
-                            if (lastPage <= 1) {
-                                sendToView(CommitCommentsMvp.View::showReload);
-                            }
-                        }),
-                listResponse -> sendToView(view -> view.onNotifyAdapter(listResponse, page)));
+        .flatMap(listResponse -> {
+            lastPage = listResponse.getLast();
+            return TimelineModel.construct(listResponse.getItems());
+        })
+        .doOnComplete(() -> {
+            if (lastPage <= 1) {
+                sendToView(CommitCommentsMvp.View::showReload);
+            }
+        }),
+        listResponse -> sendToView(view -> view.onNotifyAdapter(listResponse, page)));
         return true;
     }
 
@@ -101,15 +101,15 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
             long commId = bundle.getLong(BundleConstant.EXTRA, 0);
             if (commId != 0) {
                 makeRestCall(RestProvider.getRepoService(isEnterprise()).deleteComment(login, repoId, commId)
-                        , booleanResponse -> sendToView(view -> {
-                            if (booleanResponse.code() == 204) {
-                                Comment comment = new Comment();
-                                comment.setId(commId);
-                                view.onRemove(TimelineModel.constructComment(comment));
-                            } else {
-                                view.showMessage(R.string.error, R.string.error_deleting_comment);
-                            }
-                        }));
+                , booleanResponse -> sendToView(view -> {
+                    if (booleanResponse.code() == 204) {
+                        Comment comment = new Comment();
+                        comment.setId(commId);
+                        view.onRemove(TimelineModel.constructComment(comment));
+                    } else {
+                        view.showMessage(R.string.error, R.string.error_deleting_comment);
+                    }
+                }));
             }
         }
     }
@@ -117,8 +117,8 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
     @Override public void onWorkOffline() {
         if (comments.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Comment.getCommitComments(repoId(), login(), sha).toObservable())
-                    .flatMap(TimelineModel::construct)
-                    .subscribe(models -> sendToView(view -> view.onNotifyAdapter(models, 1))));
+                             .flatMap(TimelineModel::construct)
+                             .subscribe(models -> sendToView(view -> view.onNotifyAdapter(models, 1))));
         } else {
             sendToView(CommitCommentsMvp.View::hideProgress);
         }
@@ -148,12 +148,12 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
         CommentRequestModel model = new CommentRequestModel();
         model.setBody(text);
         manageDisposable(RxHelper.getObservable(RestProvider.getRepoService(isEnterprise()).postCommitComment(login, repoId, sha, model))
-                .doOnSubscribe(disposable -> sendToView(view -> view.showBlockingProgress(0)))
-                .subscribe(comment -> sendToView(view -> view.addComment(comment)),
-                        throwable -> {
-                            onError(throwable);
-                            sendToView(CommitCommentsMvp.View::hideBlockingProgress);
-                        }));
+                         .doOnSubscribe(disposable -> sendToView(view -> view.showBlockingProgress(0)))
+                         .subscribe(comment -> sendToView(view -> view.addComment(comment)),
+        throwable -> {
+            onError(throwable);
+            sendToView(CommitCommentsMvp.View::hideBlockingProgress);
+        }));
     }
 
     @Override public void onItemClick(int position, View v, TimelineModel timelineModel) {

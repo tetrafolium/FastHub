@@ -15,7 +15,9 @@ import lombok.Setter;
     private int status;
     private ImgurImage data;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte(this.success ? (byte) 1 : (byte) 0);
@@ -32,9 +34,13 @@ import lombok.Setter;
     }
 
     public static final Parcelable.Creator<ImgurReponseModel> CREATOR = new Parcelable.Creator<ImgurReponseModel>() {
-        @Override public ImgurReponseModel createFromParcel(Parcel source) {return new ImgurReponseModel(source);}
+        @Override public ImgurReponseModel createFromParcel(Parcel source) {
+            return new ImgurReponseModel(source);
+        }
 
-        @Override public ImgurReponseModel[] newArray(int size) {return new ImgurReponseModel[size];}
+        @Override public ImgurReponseModel[] newArray(int size) {
+            return new ImgurReponseModel[size];
+        }
     };
 
     @Getter @Setter public static class ImgurImage implements Parcelable {
@@ -44,7 +50,9 @@ import lombok.Setter;
 
         public ImgurImage() {}
 
-        @Override public int describeContents() { return 0; }
+        @Override public int describeContents() {
+            return 0;
+        }
 
         @Override public void writeToParcel(Parcel dest, int flags) {
             dest.writeString(this.title);
@@ -59,9 +67,13 @@ import lombok.Setter;
         }
 
         public static final Creator<ImgurImage> CREATOR = new Creator<ImgurImage>() {
-            @Override public ImgurImage createFromParcel(Parcel source) {return new ImgurImage(source);}
+            @Override public ImgurImage createFromParcel(Parcel source) {
+                return new ImgurImage(source);
+            }
 
-            @Override public ImgurImage[] newArray(int size) {return new ImgurImage[size];}
+            @Override public ImgurImage[] newArray(int size) {
+                return new ImgurImage[size];
+            }
         };
     }
 }

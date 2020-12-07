@@ -23,7 +23,9 @@ import lombok.Setter;
 
     public EditReviewCommentModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.groupPosition);
@@ -42,8 +44,12 @@ import lombok.Setter;
     }
 
     public static final Creator<EditReviewCommentModel> CREATOR = new Creator<EditReviewCommentModel>() {
-        @Override public EditReviewCommentModel createFromParcel(Parcel source) {return new EditReviewCommentModel(source);}
+        @Override public EditReviewCommentModel createFromParcel(Parcel source) {
+            return new EditReviewCommentModel(source);
+        }
 
-        @Override public EditReviewCommentModel[] newArray(int size) {return new EditReviewCommentModel[size];}
+        @Override public EditReviewCommentModel[] newArray(int size) {
+            return new EditReviewCommentModel[size];
+        }
     };
 }
