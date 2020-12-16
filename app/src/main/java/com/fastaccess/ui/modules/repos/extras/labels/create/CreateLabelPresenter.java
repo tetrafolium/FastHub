@@ -13,20 +13,21 @@ import com.fastaccess.ui.base.mvp.presenter.BasePresenter;
 
 public class CreateLabelPresenter extends BasePresenter<CreateLabelMvp.View> implements CreateLabelMvp.Presenter {
 
-    @Override public void onItemClick(int position, View v, String item) {
-        if (getView() != null) {
-            getView().onColorSelected(item);
-        }
-    }
+@Override public void onItemClick(int position, View v, String item) {
+	if (getView() != null) {
+		getView().onColorSelected(item);
+	}
+}
 
-    @Override public void onItemLongClick(int position, View v, String item) {}
+@Override public void onItemLongClick(int position, View v, String item) {
+}
 
-    @Override public void onSubmitLabel(@NonNull String name, @NonNull String color, @NonNull String repo, @NonNull String login) {
-        LabelModel labelModel = new LabelModel();
-        labelModel.setColor(color.replaceAll("#", ""));
-        labelModel.setName(name);
-        makeRestCall(RestProvider.getRepoService(isEnterprise())
-                     .addLabel(login, repo, labelModel),
-                     labelModel1 -> sendToView(view -> view.onSuccessfullyCreated(labelModel1)));
-    }
+@Override public void onSubmitLabel(@NonNull String name, @NonNull String color, @NonNull String repo, @NonNull String login) {
+	LabelModel labelModel = new LabelModel();
+	labelModel.setColor(color.replaceAll("#", ""));
+	labelModel.setName(name);
+	makeRestCall(RestProvider.getRepoService(isEnterprise())
+	             .addLabel(login, repo, labelModel),
+	             labelModel1->sendToView(view->view.onSuccessfullyCreated(labelModel1)));
+}
 }

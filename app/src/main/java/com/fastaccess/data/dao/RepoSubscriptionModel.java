@@ -12,9 +12,9 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 public class RepoSubscriptionModel {
-    private boolean subscribed;
-    private boolean ignored;
-    private Date createdAt;
-    private String url;
-    private String repositoryUrl;
+private boolean subscribed;
+private boolean ignored;
+private Date createdAt;
+private String url;
+private String repositoryUrl;
 }

@@ -21,91 +21,91 @@ import lombok.NoArgsConstructor;
  */
 @Entity @NoArgsConstructor public class AbstractFastHubNotification implements Parcelable {
 
-    public enum NotificationType {
-        UPDATE, GUIDE, PURCHASE, REPORT_ISSUE, PROMOTION, STAR_REPO
-    }
+public enum NotificationType {
+	UPDATE, GUIDE, PURCHASE, REPORT_ISSUE, PROMOTION, STAR_REPO
+}
 
-    @Generated @Key long id;
-    @io.requery.Nullable @Column(name = "notification_date") Date date;
-    @io.requery.Nullable boolean read;
-    @io.requery.Nullable String body;
-    @io.requery.Nullable String title;
-    @io.requery.Nullable NotificationType type;
+@Generated @Key long id;
+@io.requery.Nullable @Column(name = "notification_date") Date date;
+@io.requery.Nullable boolean read;
+@io.requery.Nullable String body;
+@io.requery.Nullable String title;
+@io.requery.Nullable NotificationType type;
 
-    public static void update(@NonNull FastHubNotification notification) {
-        App.getInstance().getDataStore().toBlocking().update(notification);
-    }
+public static void update(@NonNull FastHubNotification notification) {
+	App.getInstance().getDataStore().toBlocking().update(notification);
+}
 
-    public static void save(@NonNull FastHubNotification notification) {
-        App.getInstance().getDataStore().toBlocking().insert(notification);
-    }
+public static void save(@NonNull FastHubNotification notification) {
+	App.getInstance().getDataStore().toBlocking().insert(notification);
+}
 
-    @Nullable public static FastHubNotification getLatest() {
-        return App.getInstance().getDataStore().toBlocking()
-               .select(FastHubNotification.class)
-               .where(FastHubNotification.READ.eq(false))
-               .orderBy(FastHubNotification.DATE.desc())
-               .limit(1)
-               .get()
-               .firstOrNull();
-    }
+@Nullable public static FastHubNotification getLatest() {
+	return App.getInstance().getDataStore().toBlocking()
+	       .select(FastHubNotification.class)
+	       .where(FastHubNotification.READ.eq(false))
+	       .orderBy(FastHubNotification.DATE.desc())
+	       .limit(1)
+	       .get()
+	       .firstOrNull();
+}
 
-    @NonNull public static Observable<FastHubNotification> getNotifications() {
-        return App.getInstance().getDataStore()
-               .select(FastHubNotification.class)
-               .orderBy(FastHubNotification.DATE.desc())
-               .get()
-               .observable();
-    }
+@NonNull public static Observable<FastHubNotification> getNotifications() {
+	return App.getInstance().getDataStore()
+	       .select(FastHubNotification.class)
+	       .orderBy(FastHubNotification.DATE.desc())
+	       .get()
+	       .observable();
+}
 
-    public static boolean hasNotifications() {
-        return App.getInstance().getDataStore()
-               .count(FastHubNotification.class)
-               .get()
-               .value() > 0;
-    }
+public static boolean hasNotifications() {
+	return App.getInstance().getDataStore()
+	       .count(FastHubNotification.class)
+	       .get()
+	       .value() > 0;
+}
 
-    @Override public String toString() {
-        return "AbstractFastHubNotification{" +
-               "date=" + date +
-               ", isRead=" + read +
-               ", body='" + body + '\'' +
-               ", title='" + title + '\'' +
-               ", type=" + type +
-               '}';
-    }
+@Override public String toString() {
+	return "AbstractFastHubNotification{" +
+	       "date=" + date +
+	       ", isRead=" + read +
+	       ", body='" + body + '\'' +
+	       ", title='" + title + '\'' +
+	       ", type=" + type +
+	       '}';
+}
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(this.id);
-        dest.writeLong(this.date != null ? this.date.getTime() : -1);
-        dest.writeByte(this.read ? (byte) 1 : (byte) 0);
-        dest.writeString(this.body);
-        dest.writeString(this.title);
-        dest.writeInt(this.type == null ? -1 : this.type.ordinal());
-    }
+@Override public void writeToParcel(Parcel dest, int flags) {
+	dest.writeLong(this.id);
+	dest.writeLong(this.date != null ? this.date.getTime() : -1);
+	dest.writeByte(this.read ? (byte) 1 : (byte) 0);
+	dest.writeString(this.body);
+	dest.writeString(this.title);
+	dest.writeInt(this.type == null ? -1 : this.type.ordinal());
+}
 
-    protected AbstractFastHubNotification(Parcel in) {
-        this.id = in.readLong();
-        long tmpDate = in.readLong();
-        this.date = tmpDate == -1 ? null : new Date(tmpDate);
-        this.read = in.readByte() != 0;
-        this.body = in.readString();
-        this.title = in.readString();
-        int tmpType = in.readInt();
-        this.type = tmpType == -1 ? null : NotificationType.values()[tmpType];
-    }
+protected AbstractFastHubNotification(Parcel in) {
+	this.id = in.readLong();
+	long tmpDate = in.readLong();
+	this.date = tmpDate == -1 ? null : new Date(tmpDate);
+	this.read = in.readByte() != 0;
+	this.body = in.readString();
+	this.title = in.readString();
+	int tmpType = in.readInt();
+	this.type = tmpType == -1 ? null : NotificationType.values()[tmpType];
+}
 
-    public static final Creator<FastHubNotification> CREATOR = new Creator<FastHubNotification>() {
-        @Override public FastHubNotification createFromParcel(Parcel source) {
-            return new FastHubNotification(source);
-        }
+public static final Creator<FastHubNotification> CREATOR = new Creator<FastHubNotification>() {
+	@Override public FastHubNotification createFromParcel(Parcel source) {
+		return new FastHubNotification(source);
+	}
 
-        @Override public FastHubNotification[] newArray(int size) {
-            return new FastHubNotification[size];
-        }
-    };
+	@Override public FastHubNotification[] newArray(int size) {
+		return new FastHubNotification[size];
+	}
+};
 }

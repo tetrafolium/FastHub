@@ -12,17 +12,18 @@ import org.commonmark.renderer.html.HtmlRenderer;
  */
 
 public class MentionExtension implements Parser.ParserExtension, HtmlRenderer.HtmlRendererExtension {
-    private MentionExtension() {}
+private MentionExtension() {
+}
 
-    public static Extension create() {
-        return new MentionExtension();
-    }
+public static Extension create() {
+	return new MentionExtension();
+}
 
-    @Override public void extend(Parser.Builder parserBuilder) {
-        parserBuilder.customDelimiterProcessor(new MentionDelimiterProcessor());
-    }
+@Override public void extend(Parser.Builder parserBuilder) {
+	parserBuilder.customDelimiterProcessor(new MentionDelimiterProcessor());
+}
 
-    @Override public void extend(HtmlRenderer.Builder rendererBuilder) {
-        rendererBuilder.nodeRendererFactory(MentionNodeRenderer::new);
-    }
+@Override public void extend(HtmlRenderer.Builder rendererBuilder) {
+	rendererBuilder.nodeRendererFactory(MentionNodeRenderer::new);
+}
 }

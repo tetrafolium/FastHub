@@ -12,25 +12,25 @@ import com.fastaccess.ui.modules.repos.RepoPagerMvp;
 
 public interface UserPagerMvp {
 
-    interface View extends BaseMvp.FAView, ProfilePagerMvp.View, RepoPagerMvp.TabsBadgeListener {
-        void onInitOrg(boolean isMember);
+interface View extends BaseMvp.FAView, ProfilePagerMvp.View, RepoPagerMvp.TabsBadgeListener {
+void onInitOrg(boolean isMember);
 
-        void onUserBlocked();
+void onUserBlocked();
 
-        void onInvalidateMenu();
+void onInvalidateMenu();
 
-        void onUserUnBlocked();
-    }
+void onUserUnBlocked();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter {
+interface Presenter extends BaseMvp.FAPresenter {
 
-        void onCheckBlocking(@NonNull String login);
+void onCheckBlocking(@NonNull String login);
 
-        void checkOrgMembership(@NonNull String org);
+void checkOrgMembership(@NonNull String org);
 
-        void onBlockUser(@NonNull String login);
+void onBlockUser(@NonNull String login);
 
-        void onUnblockUser(@NonNull String login);
-    }
+void onUnblockUser(@NonNull String login);
+}
 
 }

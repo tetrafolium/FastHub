@@ -17,10 +17,10 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor public class QuoteHandler extends TagNodeHandler {
 
-    @ColorInt private int color;
+@ColorInt private int color;
 
-    @Override
-    public void handleTagNode(TagNode node, SpannableStringBuilder builder, int start, int end) {
-        builder.setSpan(new MarkDownQuoteSpan(color), start + 1, builder.length(), 33);
-    }
+@Override
+public void handleTagNode(TagNode node, SpannableStringBuilder builder, int start, int end) {
+	builder.setSpan(new MarkDownQuoteSpan(color), start + 1, builder.length(), 33);
+}
 }

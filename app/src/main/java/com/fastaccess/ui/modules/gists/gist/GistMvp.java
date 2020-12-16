@@ -14,46 +14,46 @@ import com.fastaccess.ui.modules.editor.comment.CommentEditorFragment;
 
 interface GistMvp {
 
-    interface View extends BaseMvp.FAView, CommentEditorFragment.CommentListener {
-        void onSuccessDeleted();
+interface View extends BaseMvp.FAView, CommentEditorFragment.CommentListener {
+void onSuccessDeleted();
 
-        void onErrorDeleting();
+void onErrorDeleting();
 
-        void onGistStarred(boolean isStarred);
+void onGistStarred(boolean isStarred);
 
-        void onGistForked(boolean isForked);
+void onGistForked(boolean isForked);
 
-        void onSetupDetails();
+void onSetupDetails();
 
-        void onUpdatePinIcon(Gist gist);
-    }
+void onUpdatePinIcon(Gist gist);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter {
+interface Presenter extends BaseMvp.FAPresenter {
 
-        @Nullable Gist getGist();
+@Nullable Gist getGist();
 
-        @NonNull String gistId();
+@NonNull String gistId();
 
-        void onActivityCreated(@Nullable Intent intent);
+void onActivityCreated(@Nullable Intent intent);
 
-        void onDeleteGist();
+void onDeleteGist();
 
-        boolean isOwner();
+boolean isOwner();
 
-        void onStarGist();
+void onStarGist();
 
-        void onForkGist();
+void onForkGist();
 
-        boolean isForked();
+boolean isForked();
 
-        boolean isStarred();
+boolean isStarred();
 
-        void checkStarring(@NonNull String gistId);
+void checkStarring(@NonNull String gistId);
 
-        void callApi();
+void callApi();
 
-        void onWorkOffline(@NonNull String gistId);
+void onWorkOffline(@NonNull String gistId);
 
-        void onPinUnpinGist();
-    }
+void onPinUnpinGist();
+}
 }

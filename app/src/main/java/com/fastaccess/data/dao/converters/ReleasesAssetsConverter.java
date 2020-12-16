@@ -8,7 +8,7 @@ import com.fastaccess.data.dao.ReleasesAssetsListModel;
 
 public class ReleasesAssetsConverter extends BaseConverter<ReleasesAssetsListModel> {
 
-    @Override protected Class<? extends ReleasesAssetsListModel> getTypeClass() {
-        return ReleasesAssetsListModel.class;
-    }
+@Override protected Class<? extends ReleasesAssetsListModel> getTypeClass() {
+	return ReleasesAssetsListModel.class;
+}
 }

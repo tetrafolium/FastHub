@@ -16,17 +16,17 @@ import java.util.List;
 
 public interface AssigneesMvp {
 
-    interface SelectedAssigneesListener {
-        void onSelectedAssignees(@NonNull ArrayList<User> users, boolean isAssignees);
-    }
+interface SelectedAssigneesListener {
+void onSelectedAssignees(@NonNull ArrayList<User> users, boolean isAssignees);
+}
 
-    interface View extends BaseMvp.FAView, AssigneesAdapter.OnSelectAssignee {
-        void onNotifyAdapter(@Nullable List<User> items);
-    }
+interface View extends BaseMvp.FAView, AssigneesAdapter.OnSelectAssignee {
+void onNotifyAdapter(@Nullable List<User> items);
+}
 
-    interface Presenter {
-        void onCallApi(@NonNull String login, @NonNull String repo, boolean isAssignees);
+interface Presenter {
+void onCallApi(@NonNull String login, @NonNull String repo, boolean isAssignees);
 
-        @NonNull ArrayList<User> getList();
-    }
+@NonNull ArrayList<User> getList();
+}
 }

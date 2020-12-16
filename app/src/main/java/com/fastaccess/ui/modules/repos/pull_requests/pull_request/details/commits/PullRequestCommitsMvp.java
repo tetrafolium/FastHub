@@ -19,19 +19,19 @@ import java.util.List;
 
 interface PullRequestCommitsMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<Commit> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<Commit> items, int page);
 
-        @NonNull OnLoadMore getLoadMore();
-    }
+@NonNull OnLoadMore getLoadMore();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Commit>,
-        BaseMvp.PaginationListener {
-        void onFragmentCreated(@NonNull Bundle bundle);
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Commit>,
+	                    BaseMvp.PaginationListener {
+void onFragmentCreated(@NonNull Bundle bundle);
 
-        @NonNull ArrayList<Commit> getCommits();
+@NonNull ArrayList<Commit> getCommits();
 
-        void onWorkOffline();
-    }
+void onWorkOffline();
+}
 }

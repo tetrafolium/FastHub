@@ -24,39 +24,39 @@ import butterknife.BindView;
 
 public class AssigneesViewHolder extends BaseViewHolder<User> {
 
-    @BindView(R.id.avatarLayout) AvatarLayout avatar;
-    @BindView(R.id.title) FontTextView title;
-    @BindView(R.id.date) FontTextView date;
-    @BindColor(R.color.light_gray) int lightGray;
-    private final AssigneesAdapter.OnSelectAssignee onSelectAssignee;
+@BindView(R.id.avatarLayout) AvatarLayout avatar;
+@BindView(R.id.title) FontTextView title;
+@BindView(R.id.date) FontTextView date;
+@BindColor(R.color.light_gray) int lightGray;
+private final AssigneesAdapter.OnSelectAssignee onSelectAssignee;
 
-    @Override public void onClick(View v) {
-        if (onSelectAssignee != null) {
-            int position = getAdapterPosition();
-            onSelectAssignee.onToggleSelection(position, !onSelectAssignee.isAssigneeSelected(position));
-        } else {
-            super.onClick(v);
-        }
-    }
+@Override public void onClick(View v) {
+	if (onSelectAssignee != null) {
+		int position = getAdapterPosition();
+		onSelectAssignee.onToggleSelection(position, !onSelectAssignee.isAssigneeSelected(position));
+	} else {
+		super.onClick(v);
+	}
+}
 
-    private AssigneesViewHolder(@NonNull View itemView, @Nullable AssigneesAdapter.OnSelectAssignee onSelectAssignee,
-                                @NonNull BaseRecyclerAdapter adapter) {
-        super(itemView, adapter);
-        this.onSelectAssignee = onSelectAssignee;
-    }
+private AssigneesViewHolder(@NonNull View itemView, @Nullable AssigneesAdapter.OnSelectAssignee onSelectAssignee,
+                            @NonNull BaseRecyclerAdapter adapter) {
+	super(itemView, adapter);
+	this.onSelectAssignee = onSelectAssignee;
+}
 
-    public static AssigneesViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable AssigneesAdapter.OnSelectAssignee onSelectAssignee,
-            @NonNull BaseRecyclerAdapter adapter) {
-        return new AssigneesViewHolder(getView(viewGroup, R.layout.feeds_row_item), onSelectAssignee, adapter);
-    }
+public static AssigneesViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable AssigneesAdapter.OnSelectAssignee onSelectAssignee,
+                                              @NonNull BaseRecyclerAdapter adapter) {
+	return new AssigneesViewHolder(getView(viewGroup, R.layout.feeds_row_item), onSelectAssignee, adapter);
+}
 
-    @Override public void bind(@NonNull User user) {
-        avatar.setUrl(user.getAvatarUrl(), user.getLogin(), user.isOrganizationType(), LinkParserHelper.isEnterprise(user.getHtmlUrl()));
-        title.setText(user.getLogin());
-        date.setVisibility(View.GONE);
-        if (onSelectAssignee != null) {
-            itemView.setBackgroundColor(onSelectAssignee.isAssigneeSelected(getAdapterPosition())
-                                        ? lightGray : ViewHelper.getWindowBackground(itemView.getContext()));
-        }
-    }
+@Override public void bind(@NonNull User user) {
+	avatar.setUrl(user.getAvatarUrl(), user.getLogin(), user.isOrganizationType(), LinkParserHelper.isEnterprise(user.getHtmlUrl()));
+	title.setText(user.getLogin());
+	date.setVisibility(View.GONE);
+	if (onSelectAssignee != null) {
+		itemView.setBackgroundColor(onSelectAssignee.isAssigneeSelected(getAdapterPosition())
+		                        ? lightGray : ViewHelper.getWindowBackground(itemView.getContext()));
+	}
+}
 }

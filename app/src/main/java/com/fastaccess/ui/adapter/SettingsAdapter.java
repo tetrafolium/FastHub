@@ -23,50 +23,50 @@ import butterknife.ButterKnife;
 
 public class SettingsAdapter extends BaseAdapter {
 
-    private ArrayList<SettingsModel> settings;
-    private final LayoutInflater inflater;
+private ArrayList<SettingsModel> settings;
+private final LayoutInflater inflater;
 
-    public SettingsAdapter(@NonNull Context context, @NonNull ArrayList<SettingsModel> settings) {
-        this.settings = settings;
-        this.inflater = LayoutInflater.from(context);
-    }
+public SettingsAdapter(@NonNull Context context, @NonNull ArrayList<SettingsModel> settings) {
+	this.settings = settings;
+	this.inflater = LayoutInflater.from(context);
+}
 
-    @Override public int getCount() {
-        return settings.size();
-    }
+@Override public int getCount() {
+	return settings.size();
+}
 
-    @Override public SettingsModel getItem(int position) {
-        return settings.get(position);
-    }
+@Override public SettingsModel getItem(int position) {
+	return settings.get(position);
+}
 
-    @Override public long getItemId(int position) {
-        return position;
-    }
+@Override public long getItemId(int position) {
+	return position;
+}
 
-    @Override public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder;
-        View row = convertView;
-        if (row == null) {
-            row = inflater.inflate(R.layout.icon_row_item, parent, false);
-            viewHolder = new ViewHolder(row);
-            row.setTag(viewHolder);
-        } else {
-            viewHolder = (ViewHolder) row.getTag();
-        }
-        SettingsModel model = getItem(position);
-        viewHolder.title.setText(model.getTitle());
-        viewHolder.image.setImageResource(model.getImage());
-        viewHolder.summary.setVisibility(View.GONE);
-        return row;
-    }
+@Override public View getView(int position, View convertView, ViewGroup parent) {
+	ViewHolder viewHolder;
+	View row = convertView;
+	if (row == null) {
+		row = inflater.inflate(R.layout.icon_row_item, parent, false);
+		viewHolder = new ViewHolder(row);
+		row.setTag(viewHolder);
+	} else {
+		viewHolder = (ViewHolder) row.getTag();
+	}
+	SettingsModel model = getItem(position);
+	viewHolder.title.setText(model.getTitle());
+	viewHolder.image.setImageResource(model.getImage());
+	viewHolder.summary.setVisibility(View.GONE);
+	return row;
+}
 
-    static class ViewHolder {
-        @BindView(R.id.iconItemImage) ForegroundImageView image;
-        @BindView(R.id.iconItemTitle) FontTextView title;
-        @BindView(R.id.iconItemSummary) FontTextView summary;
+static class ViewHolder {
+@BindView(R.id.iconItemImage) ForegroundImageView image;
+@BindView(R.id.iconItemTitle) FontTextView title;
+@BindView(R.id.iconItemSummary) FontTextView summary;
 
-        ViewHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
-    }
+ViewHolder(View view) {
+	ButterKnife.bind(this, view);
+}
+}
 }

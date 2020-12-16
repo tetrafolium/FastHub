@@ -10,11 +10,11 @@ import com.fastaccess.ui.base.mvp.BaseMvp;
 
 public interface IssuePopupMvp {
 
-    interface View extends BaseMvp.FAView {
-        void onSuccessfullySubmitted();
-    }
+interface View extends BaseMvp.FAView {
+void onSuccessfullySubmitted();
+}
 
-    interface Presenter {
-        void onSubmit(@NonNull String login, @NonNull String repoId, int issueNumber, @NonNull String text);
-    }
+interface Presenter {
+void onSubmit(@NonNull String login, @NonNull String repoId, int issueNumber, @NonNull String text);
+}
 }

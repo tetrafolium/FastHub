@@ -18,31 +18,32 @@ import lombok.Getter;
  */
 
 public class GistFilesListPresenter extends BasePresenter<GistFilesListMvp.View> implements GistFilesListMvp.Presenter {
-    private ArrayList<FilesListModel> listModels;
-    @Getter private HashMap<String, FilesListModel> filesMap = new HashMap<>();
+private ArrayList<FilesListModel> listModels;
+@Getter private HashMap<String, FilesListModel> filesMap = new HashMap<>();
 
-    @Override public void onItemClick(int position, View v, FilesListModel item) {
-        if (getView() != null) {
-            if (v.getId() == R.id.delete) {
-                getView().onDeleteFile(item, position);
-            } else if (v.getId() == R.id.edit) {
-                getView().onEditFile(item, position);
-            } else {
-                getView().onOpenFile(item, position);
-            }
-        }
-    }
+@Override public void onItemClick(int position, View v, FilesListModel item) {
+	if (getView() != null) {
+		if (v.getId() == R.id.delete) {
+			getView().onDeleteFile(item, position);
+		} else if (v.getId() == R.id.edit) {
+			getView().onEditFile(item, position);
+		} else {
+			getView().onOpenFile(item, position);
+		}
+	}
+}
 
-    @Override public void onItemLongClick(int position, View v, FilesListModel item) {}
+@Override public void onItemLongClick(int position, View v, FilesListModel item) {
+}
 
-    @Override public void onSetList(@Nullable ArrayList<FilesListModel> files) {
-        this.listModels = files;
-    }
+@Override public void onSetList(@Nullable ArrayList<FilesListModel> files) {
+	this.listModels = files;
+}
 
-    @NonNull @Override public ArrayList<FilesListModel> getFiles() {
-        if (listModels == null) {
-            return new ArrayList<>();
-        }
-        return listModels;
-    }
+@NonNull @Override public ArrayList<FilesListModel> getFiles() {
+	if (listModels == null) {
+		return new ArrayList<>();
+	}
+	return listModels;
+}
 }

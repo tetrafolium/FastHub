@@ -20,44 +20,44 @@ import java.util.List;
 
 interface GistCommentsMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-        android.view.View.OnClickListener {
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
+	               android.view.View.OnClickListener {
 
-        void onNotifyAdapter(@Nullable List<Comment> items, int page);
+void onNotifyAdapter(@Nullable List<Comment> items, int page);
 
-        void onRemove(@NonNull Comment comment);
+void onRemove(@NonNull Comment comment);
 
-        @NonNull OnLoadMore<String> getLoadMore();
+@NonNull OnLoadMore<String> getLoadMore();
 
-        void onEditComment(@NonNull Comment item);
+void onEditComment(@NonNull Comment item);
 
-        void onShowDeleteMsg(long id);
+void onShowDeleteMsg(long id);
 
-        void onTagUser(@NonNull User user);
+void onTagUser(@NonNull User user);
 
-        void onReply(User user, String message);
+void onReply(User user, String message);
 
-        void onHandleComment(@NonNull String text, @Nullable Bundle bundle);
+void onHandleComment(@NonNull String text, @Nullable Bundle bundle);
 
-        void onAddNewComment(@NonNull Comment comment);
+void onAddNewComment(@NonNull Comment comment);
 
-        @NonNull ArrayList<String> getNamesToTag();
+@NonNull ArrayList<String> getNamesToTag();
 
-        void hideBlockingProgress();
-    }
+void hideBlockingProgress();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseMvp.PaginationListener<String>, BaseViewHolder.OnItemClickListener<Comment> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseMvp.PaginationListener<String>, BaseViewHolder.OnItemClickListener<Comment> {
 
-        @NonNull ArrayList<Comment> getComments();
+@NonNull ArrayList<Comment> getComments();
 
 
-        void onHandleDeletion(@Nullable Bundle bundle);
+void onHandleDeletion(@Nullable Bundle bundle);
 
-        void onWorkOffline(@NonNull String gistId);
+void onWorkOffline(@NonNull String gistId);
 
-        void onHandleComment(@NonNull String text, @Nullable Bundle bundle, String gistId);
-    }
+void onHandleComment(@NonNull String text, @Nullable Bundle bundle, String gistId);
+}
 
 
 }

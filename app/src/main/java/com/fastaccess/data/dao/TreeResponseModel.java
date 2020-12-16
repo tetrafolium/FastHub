@@ -13,8 +13,8 @@ import lombok.Setter;
  */
 
 @NoArgsConstructor @Getter @Setter public class TreeResponseModel {
-    private String sha;
-    private String url;
-    boolean truncated;
-    List<RepoFile> tree;
+private String sha;
+private String url;
+boolean truncated;
+List<RepoFile> tree;
 }

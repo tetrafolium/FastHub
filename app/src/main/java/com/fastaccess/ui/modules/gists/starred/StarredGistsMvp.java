@@ -17,21 +17,21 @@ import java.util.List;
  */
 
 interface StarredGistsMvp {
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
 
-        void onNotifyAdapter(@Nullable List<Gist> items, int page);
+void onNotifyAdapter(@Nullable List<Gist> items, int page);
 
-        @NonNull OnLoadMore<String> getLoadMore();
+@NonNull OnLoadMore<String> getLoadMore();
 
-        void onStartGistView(@NonNull String gistId);
-    }
+void onStartGistView(@NonNull String gistId);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Gist>,
-        BaseMvp.PaginationListener<String> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Gist>,
+	                    BaseMvp.PaginationListener<String> {
 
-        @NonNull ArrayList<Gist> getGists();
+@NonNull ArrayList<Gist> getGists();
 
-        void onWorkOffline(@NonNull String login);
-    }
+void onWorkOffline(@NonNull String login);
+}
 }

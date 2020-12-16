@@ -21,35 +21,35 @@ import butterknife.BindView;
  */
 
 public class BranchesAdapter extends BaseRecyclerAdapter<BranchesModel, BranchesAdapter.BranchesViewHolder, BaseViewHolder
-    .OnItemClickListener<BranchesModel>> {
+	                                                 .OnItemClickListener<BranchesModel> > {
 
-    public BranchesAdapter(@NonNull List<BranchesModel> data, @Nullable BaseViewHolder.OnItemClickListener<BranchesModel> listener) {
-        super(data, listener);
-    }
+public BranchesAdapter(@NonNull List<BranchesModel> data, @Nullable BaseViewHolder.OnItemClickListener<BranchesModel> listener) {
+	super(data, listener);
+}
 
-    @Override protected BranchesViewHolder viewHolder(ViewGroup parent, int viewType) {
-        return new BranchesViewHolder(BaseViewHolder.getView(parent, R.layout.branches_row_item), this);
-    }
+@Override protected BranchesViewHolder viewHolder(ViewGroup parent, int viewType) {
+	return new BranchesViewHolder(BaseViewHolder.getView(parent, R.layout.branches_row_item), this);
+}
 
-    @Override protected void onBindView(BranchesViewHolder holder, int position) {
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(BranchesViewHolder holder, int position) {
+	holder.bind(getItem(position));
+}
 
 
-    static class BranchesViewHolder extends BaseViewHolder<BranchesModel> {
-        @Nullable @BindView(R.id.image) AppCompatImageView image;
-        @BindView(android.R.id.text1) TextView title;
+static class BranchesViewHolder extends BaseViewHolder<BranchesModel> {
+@Nullable @BindView(R.id.image) AppCompatImageView image;
+@BindView(android.R.id.text1) TextView title;
 
-        BranchesViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
-            super(itemView, adapter);
-        }
+BranchesViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+	super(itemView, adapter);
+}
 
-        @Override public void bind(@NonNull BranchesModel branchesModel) {
-            if (image != null) {
-                image.setImageResource(branchesModel.isTag() ? R.drawable.ic_label : R.drawable.ic_branch);
-                image.setContentDescription(branchesModel.getName());
-            }
-            title.setText(branchesModel.getName());
-        }
-    }
+@Override public void bind(@NonNull BranchesModel branchesModel) {
+	if (image != null) {
+		image.setImageResource(branchesModel.isTag() ? R.drawable.ic_label : R.drawable.ic_branch);
+		image.setContentDescription(branchesModel.getName());
+	}
+	title.setText(branchesModel.getName());
+}
+}
 }

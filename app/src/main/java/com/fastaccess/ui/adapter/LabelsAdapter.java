@@ -16,26 +16,26 @@ import java.util.List;
  */
 
 public class LabelsAdapter extends BaseRecyclerAdapter<LabelModel, LabelsViewHolder, BaseViewHolder
-    .OnItemClickListener<LabelModel>> {
+	                                               .OnItemClickListener<LabelModel> > {
 
-    public interface OnSelectLabel {
-        boolean isLabelSelected(LabelModel labelModel);
+public interface OnSelectLabel {
+boolean isLabelSelected(LabelModel labelModel);
 
-        void onToggleSelection(LabelModel labelModel, boolean select);
-    }
+void onToggleSelection(LabelModel labelModel, boolean select);
+}
 
-    @Nullable private OnSelectLabel onSelectLabel;
+@Nullable private OnSelectLabel onSelectLabel;
 
-    public LabelsAdapter(@NonNull List<LabelModel> eventsModels, @Nullable OnSelectLabel onSelectLabel) {
-        super(eventsModels);
-        this.onSelectLabel = onSelectLabel;
-    }
+public LabelsAdapter(@NonNull List<LabelModel> eventsModels, @Nullable OnSelectLabel onSelectLabel) {
+	super(eventsModels);
+	this.onSelectLabel = onSelectLabel;
+}
 
-    @Override protected LabelsViewHolder viewHolder(ViewGroup parent, int viewType) {
-        return LabelsViewHolder.newInstance(parent, onSelectLabel, this);
-    }
+@Override protected LabelsViewHolder viewHolder(ViewGroup parent, int viewType) {
+	return LabelsViewHolder.newInstance(parent, onSelectLabel, this);
+}
 
-    @Override protected void onBindView(LabelsViewHolder holder, int position) {
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(LabelsViewHolder holder, int position) {
+	holder.bind(getItem(position));
+}
 }

@@ -28,133 +28,133 @@ import butterknife.BindView;
  */
 
 public class OrgReposFragment extends BaseFragment<OrgReposMvp.View, OrgReposPresenter> implements OrgReposMvp.View,
-    ProfileReposFilterBottomSheetDialog.ProfileReposFilterChangeListener {
+	                              ProfileReposFilterBottomSheetDialog.ProfileReposFilterChangeListener {
 
-    @BindView(R.id.recycler) DynamicRecyclerView recycler;
-    @BindView(R.id.refresh) SwipeRefreshLayout refresh;
-    @BindView(R.id.stateLayout) StateLayout stateLayout;
-    @BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
-    private OnLoadMore<String> onLoadMore;
-    private ReposAdapter adapter;
+@BindView(R.id.recycler) DynamicRecyclerView recycler;
+@BindView(R.id.refresh) SwipeRefreshLayout refresh;
+@BindView(R.id.stateLayout) StateLayout stateLayout;
+@BindView(R.id.fastScroller) RecyclerViewFastScroller fastScroller;
+private OnLoadMore<String> onLoadMore;
+private ReposAdapter adapter;
 
-    public static OrgReposFragment newInstance(@NonNull String username) {
-        OrgReposFragment view = new OrgReposFragment();
-        view.setArguments(Bundler.start().put(BundleConstant.EXTRA, username).end());
-        return view;
-    }
+public static OrgReposFragment newInstance(@NonNull String username) {
+	OrgReposFragment view = new OrgReposFragment();
+	view.setArguments(Bundler.start().put(BundleConstant.EXTRA, username).end());
+	return view;
+}
 
-    @Override public void onNotifyAdapter(@Nullable List<Repo> items, int page) {
-        hideProgress();
-        if (items == null || items.isEmpty()) {
-            adapter.clear();
-            return;
-        }
-        if (page <= 1) {
-            adapter.insertItems(items);
-        } else {
-            adapter.addItems(items);
-        }
-    }
+@Override public void onNotifyAdapter(@Nullable List<Repo> items, int page) {
+	hideProgress();
+	if (items == null || items.isEmpty()) {
+		adapter.clear();
+		return;
+	}
+	if (page <= 1) {
+		adapter.insertItems(items);
+	} else {
+		adapter.addItems(items);
+	}
+}
 
-    @Override protected int fragmentLayout() {
-        return R.layout.micro_grid_refresh_list;
-    }
+@Override protected int fragmentLayout() {
+	return R.layout.micro_grid_refresh_list;
+}
 
-    @Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        if (getArguments() == null) {
-            throw new NullPointerException("Bundle is null, username is required");
-        }
-        stateLayout.setEmptyText(R.string.no_repos);
-        stateLayout.setOnReloadListener(this);
-        refresh.setOnRefreshListener(this);
-        recycler.setEmptyView(stateLayout, refresh);
-        getLoadMore().initialize(getPresenter().getCurrentPage(), getPresenter().getPreviousTotal());
-        adapter = new ReposAdapter(getPresenter().getRepos(), false);
-        adapter.setListener(getPresenter());
-        recycler.setAdapter(adapter);
-        recycler.addOnScrollListener(getLoadMore());
-        recycler.addDivider();
-        if (getPresenter().getRepos().isEmpty() && !getPresenter().isApiCalled()) {
-            onRefresh();
-        }
-        fastScroller.attachRecyclerView(recycler);
-    }
+@Override protected void onFragmentCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+	if (getArguments() == null) {
+		throw new NullPointerException("Bundle is null, username is required");
+	}
+	stateLayout.setEmptyText(R.string.no_repos);
+	stateLayout.setOnReloadListener(this);
+	refresh.setOnRefreshListener(this);
+	recycler.setEmptyView(stateLayout, refresh);
+	getLoadMore().initialize(getPresenter().getCurrentPage(), getPresenter().getPreviousTotal());
+	adapter = new ReposAdapter(getPresenter().getRepos(), false);
+	adapter.setListener(getPresenter());
+	recycler.setAdapter(adapter);
+	recycler.addOnScrollListener(getLoadMore());
+	recycler.addDivider();
+	if (getPresenter().getRepos().isEmpty() && !getPresenter().isApiCalled()) {
+		onRefresh();
+	}
+	fastScroller.attachRecyclerView(recycler);
+}
 
-    @NonNull @Override public OrgReposPresenter providePresenter() {
-        return new OrgReposPresenter();
-    }
+@NonNull @Override public OrgReposPresenter providePresenter() {
+	return new OrgReposPresenter();
+}
 
-    @Override public void showProgress(@StringRes int resId) {
+@Override public void showProgress(@StringRes int resId) {
 
-        refresh.setRefreshing(true);
+	refresh.setRefreshing(true);
 
-        stateLayout.showProgress();
-    }
+	stateLayout.showProgress();
+}
 
-    @Override public void hideProgress() {
-        refresh.setRefreshing(false);
-        stateLayout.hideProgress();
-    }
+@Override public void hideProgress() {
+	refresh.setRefreshing(false);
+	stateLayout.hideProgress();
+}
 
-    @Override public void showErrorMessage(@NonNull String message) {
-        showReload();
-        super.showErrorMessage(message);
-    }
+@Override public void showErrorMessage(@NonNull String message) {
+	showReload();
+	super.showErrorMessage(message);
+}
 
-    @Override public void showMessage(int titleRes, int msgRes) {
-        showReload();
-        super.showMessage(titleRes, msgRes);
-    }
+@Override public void showMessage(int titleRes, int msgRes) {
+	showReload();
+	super.showMessage(titleRes, msgRes);
+}
 
-    @NonNull @Override public OnLoadMore<String> getLoadMore() {
-        if (onLoadMore == null) {
-            onLoadMore = new OnLoadMore<>(getPresenter());
-        }
-        onLoadMore.setParameter(getArguments().getString(BundleConstant.EXTRA));
-        return onLoadMore;
-    }
+@NonNull @Override public OnLoadMore<String> getLoadMore() {
+	if (onLoadMore == null) {
+		onLoadMore = new OnLoadMore<>(getPresenter());
+	}
+	onLoadMore.setParameter(getArguments().getString(BundleConstant.EXTRA));
+	return onLoadMore;
+}
 
-    @Override public void onRefresh() {
-        getPresenter().onCallApi(1, getArguments().getString(BundleConstant.EXTRA));
-    }
+@Override public void onRefresh() {
+	getPresenter().onCallApi(1, getArguments().getString(BundleConstant.EXTRA));
+}
 
-    @Override public void onClick(View view) {
-        onRefresh();
-    }
+@Override public void onClick(View view) {
+	onRefresh();
+}
 
-    @Override public void onScrollTop(int index) {
-        super.onScrollTop(index);
-        if (recycler != null) recycler.scrollToPosition(0);
-    }
+@Override public void onScrollTop(int index) {
+	super.onScrollTop(index);
+	if (recycler != null) recycler.scrollToPosition(0);
+}
 
-    @Override public void onRepoFilterClicked() {
-        ProfileReposFilterBottomSheetDialog.newInstance(getPresenter().getFilterOptions())
-        .show(getChildFragmentManager(), "ProfileReposFilterBottomSheetDialog");
-    }
+@Override public void onRepoFilterClicked() {
+	ProfileReposFilterBottomSheetDialog.newInstance(getPresenter().getFilterOptions())
+	.show(getChildFragmentManager(), "ProfileReposFilterBottomSheetDialog");
+}
 
-    @Override public void onFilterApply() {
-        getPresenter().onFilterApply(getArguments().getString(BundleConstant.EXTRA));
-    }
+@Override public void onFilterApply() {
+	getPresenter().onFilterApply(getArguments().getString(BundleConstant.EXTRA));
+}
 
-    @Override public void onTypeSelected(String selectedType) {
-        getPresenter().onTypeSelected(selectedType);
-    }
+@Override public void onTypeSelected(String selectedType) {
+	getPresenter().onTypeSelected(selectedType);
+}
 
-    @Override public void onSortOptionSelected(String selectedSortOption) {
-        //Not supported for org profile
-    }
+@Override public void onSortOptionSelected(String selectedSortOption) {
+	//Not supported for org profile
+}
 
-    @Override public void onSortDirectionSelected(String selectedSortDirection) {
-        //Not supported for org profile
-    }
+@Override public void onSortDirectionSelected(String selectedSortDirection) {
+	//Not supported for org profile
+}
 
-    @Override
-    public String getLogin() {
-        return getArguments().getString(BundleConstant.EXTRA);
-    }
+@Override
+public String getLogin() {
+	return getArguments().getString(BundleConstant.EXTRA);
+}
 
-    private void showReload() {
-        hideProgress();
-        stateLayout.showReload(adapter.getItemCount());
-    }
+private void showReload() {
+	hideProgress();
+	stateLayout.showReload(adapter.getItemCount());
+}
 }

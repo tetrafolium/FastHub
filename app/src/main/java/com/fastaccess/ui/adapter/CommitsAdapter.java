@@ -14,17 +14,17 @@ import java.util.List;
  * Created by Kosh on 11 Nov 2016, 2:07 PM
  */
 
-public class CommitsAdapter extends BaseRecyclerAdapter<Commit, CommitsViewHolder, BaseViewHolder.OnItemClickListener<Commit>> {
+public class CommitsAdapter extends BaseRecyclerAdapter<Commit, CommitsViewHolder, BaseViewHolder.OnItemClickListener<Commit> > {
 
-    public CommitsAdapter(@NonNull List<Commit> data) {
-        super(data);
-    }
+public CommitsAdapter(@NonNull List<Commit> data) {
+	super(data);
+}
 
-    @Override protected CommitsViewHolder viewHolder(ViewGroup parent, int viewType) {
-        return CommitsViewHolder.newInstance(parent, this);
-    }
+@Override protected CommitsViewHolder viewHolder(ViewGroup parent, int viewType) {
+	return CommitsViewHolder.newInstance(parent, this);
+}
 
-    @Override protected void onBindView(CommitsViewHolder holder, int position) {
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(CommitsViewHolder holder, int position) {
+	holder.bind(getItem(position));
+}
 }

@@ -18,25 +18,25 @@ import java.util.ArrayList;
  */
 
 public class CommitFilesAdapter extends BaseRecyclerAdapter<CommitFileChanges, PullRequestFilesViewHolder, BaseViewHolder
-    .OnItemClickListener<CommitFileChanges>> {
+	                                                    .OnItemClickListener<CommitFileChanges> > {
 
 
-    @NonNull private OnToggleView onToggleView;
-    @Nullable private PullRequestFilesMvp.OnPatchClickListener onPatchClickListener;
+@NonNull private OnToggleView onToggleView;
+@Nullable private PullRequestFilesMvp.OnPatchClickListener onPatchClickListener;
 
-    public CommitFilesAdapter(@NonNull ArrayList<CommitFileChanges> eventsModels,
-                              @NonNull OnToggleView onToggleView,
-                              @Nullable PullRequestFilesMvp.OnPatchClickListener onPatchClickListener) {
-        super(eventsModels);
-        this.onToggleView = onToggleView;
-        this.onPatchClickListener = onPatchClickListener;
-    }
+public CommitFilesAdapter(@NonNull ArrayList<CommitFileChanges> eventsModels,
+                          @NonNull OnToggleView onToggleView,
+                          @Nullable PullRequestFilesMvp.OnPatchClickListener onPatchClickListener) {
+	super(eventsModels);
+	this.onToggleView = onToggleView;
+	this.onPatchClickListener = onPatchClickListener;
+}
 
-    @Override protected PullRequestFilesViewHolder viewHolder(ViewGroup parent, int viewType) {
-        return PullRequestFilesViewHolder.newInstance(parent, this, onToggleView, onPatchClickListener);
-    }
+@Override protected PullRequestFilesViewHolder viewHolder(ViewGroup parent, int viewType) {
+	return PullRequestFilesViewHolder.newInstance(parent, this, onToggleView, onPatchClickListener);
+}
 
-    @Override protected void onBindView(PullRequestFilesViewHolder holder, int position) {
-        holder.bind(getItem(position));
-    }
+@Override protected void onBindView(PullRequestFilesViewHolder holder, int position) {
+	holder.bind(getItem(position));
+}
 }

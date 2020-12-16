@@ -20,73 +20,73 @@ import io.reactivex.functions.Consumer;
 
 public interface BaseMvp {
 
-    interface FAView extends TiView, MessageDialogView.MessageDialogViewActionCallback, OnScrollTopListener {
+interface FAView extends TiView, MessageDialogView.MessageDialogViewActionCallback, OnScrollTopListener {
 
-        @CallOnMainThread void showProgress(@StringRes int resId);
+@CallOnMainThread void showProgress(@StringRes int resId);
 
-        @CallOnMainThread void showBlockingProgress(@StringRes int resId);
+@CallOnMainThread void showBlockingProgress(@StringRes int resId);
 
-        @CallOnMainThread void hideProgress();
+@CallOnMainThread void hideProgress();
 
-        @CallOnMainThread void showMessage(@StringRes int titleRes, @StringRes int msgRes);
+@CallOnMainThread void showMessage(@StringRes int titleRes, @StringRes int msgRes);
 
-        @CallOnMainThread void showMessage(@NonNull String titleRes, @NonNull String msgRes);
+@CallOnMainThread void showMessage(@NonNull String titleRes, @NonNull String msgRes);
 
-        @CallOnMainThread void showErrorMessage(@NonNull String msgRes);
+@CallOnMainThread void showErrorMessage(@NonNull String msgRes);
 
-        boolean isLoggedIn();
+boolean isLoggedIn();
 
-        void onRequireLogin();
+void onRequireLogin();
 
-        void onLogoutPressed();
+void onLogoutPressed();
 
-        void onThemeChanged();
+void onThemeChanged();
 
-        void onOpenSettings();
+void onOpenSettings();
 
-        boolean isEnterprise();
+boolean isEnterprise();
 
-        void onOpenUrlInBrowser();
-    }
+void onOpenUrlInBrowser();
+}
 
-    interface FAPresenter {
+interface FAPresenter {
 
-        void onSaveInstanceState(Bundle outState);
+void onSaveInstanceState(Bundle outState);
 
-        void onRestoreInstanceState(Bundle outState);
+void onRestoreInstanceState(Bundle outState);
 
-        void manageDisposable(@Nullable Disposable... disposables);
+void manageDisposable(@Nullable Disposable... disposables);
 
-        <T> void manageObservable(@Nullable Observable<T> observable);
+<T> void manageObservable(@Nullable Observable<T> observable);
 
-        void manageViewDisposable(@Nullable Disposable... disposables);
+void manageViewDisposable(@Nullable Disposable... disposables);
 
-        boolean isApiCalled();
+boolean isApiCalled();
 
-        void onSubscribed(boolean cancelable);
+void onSubscribed(boolean cancelable);
 
-        void onError(@NonNull Throwable throwable);
+void onError(@NonNull Throwable throwable);
 
-        <T> void makeRestCall(@NonNull Observable<T> observable, @NonNull Consumer<T> onNext);
+<T> void makeRestCall(@NonNull Observable<T> observable, @NonNull Consumer<T> onNext);
 
-        <T> void makeRestCall(@NonNull Observable<T> observable, @NonNull Consumer<T> onNext, boolean cancelable);
+<T> void makeRestCall(@NonNull Observable<T> observable, @NonNull Consumer<T> onNext, boolean cancelable);
 
-        void onCheckGitHubStatus();
-    }
+void onCheckGitHubStatus();
+}
 
-    interface PaginationListener<P> {
-        int getCurrentPage();
+interface PaginationListener<P> {
+int getCurrentPage();
 
-        int getPreviousTotal();
+int getPreviousTotal();
 
-        void setCurrentPage(int page);
+void setCurrentPage(int page);
 
-        void setPreviousTotal(int previousTotal);
+void setPreviousTotal(int previousTotal);
 
-        boolean onCallApi(int page, @Nullable P parameter);
-    }
+boolean onCallApi(int page, @Nullable P parameter);
+}
 
-    interface OnScrollTopListener {
-        void onScrollTop(int index);
-    }
+interface OnScrollTopListener {
+void onScrollTop(int index);
+}
 }
