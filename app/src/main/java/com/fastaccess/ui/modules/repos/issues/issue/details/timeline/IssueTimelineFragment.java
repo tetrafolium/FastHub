@@ -254,10 +254,9 @@ public class IssueTimelineFragment
 
   @Override
   public void onTagUser(@Nullable User user) {
-    if (commentsCallback != null)
-      if (user != null) {
-        commentsCallback.onTagUser(user.getLogin());
-      }
+    if ((commentsCallback != null) && (user != null)) {
+      commentsCallback.onTagUser(user.getLogin());
+    }
   }
 
   @Override
@@ -368,39 +367,37 @@ public class IssueTimelineFragment
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == Activity.RESULT_OK) {
-      if (requestCode == BundleConstant.REQUEST_CODE) {
-        if (data == null) {
-          onRefresh();
+    if ((resultCode == Activity.RESULT_OK) && (requestCode == BundleConstant.REQUEST_CODE)) {
+      if (data == null) {
+        onRefresh();
+        return;
+      }
+      Bundle bundle = data.getExtras();
+      if (bundle != null) {
+        boolean isNew = bundle.getBoolean(BundleConstant.EXTRA);
+        Comment commentsModel = bundle.getParcelable(BundleConstant.ITEM);
+        if (commentsModel == null) {
+          onRefresh(); // shit happens, refresh()?
           return;
         }
-        Bundle bundle = data.getExtras();
-        if (bundle != null) {
-          boolean isNew = bundle.getBoolean(BundleConstant.EXTRA);
-          Comment commentsModel = bundle.getParcelable(BundleConstant.ITEM);
-          if (commentsModel == null) {
-            onRefresh(); // shit happens, refresh()?
-            return;
-          }
-          adapter.notifyDataSetChanged();
-          if (isNew) {
+        adapter.notifyDataSetChanged();
+        if (isNew) {
+          adapter.addItem(TimelineModel.constructComment(commentsModel));
+          recycler.smoothScrollToPosition(adapter.getItemCount());
+        } else {
+          int position =
+              adapter.getItem(TimelineModel.constructComment(commentsModel));
+          if (position != -1) {
+            adapter.swapItem(TimelineModel.constructComment(commentsModel),
+                             position);
+            recycler.smoothScrollToPosition(position);
+          } else {
             adapter.addItem(TimelineModel.constructComment(commentsModel));
             recycler.smoothScrollToPosition(adapter.getItemCount());
-          } else {
-            int position =
-                adapter.getItem(TimelineModel.constructComment(commentsModel));
-            if (position != -1) {
-              adapter.swapItem(TimelineModel.constructComment(commentsModel),
-                               position);
-              recycler.smoothScrollToPosition(position);
-            } else {
-              adapter.addItem(TimelineModel.constructComment(commentsModel));
-              recycler.smoothScrollToPosition(adapter.getItemCount());
-            }
           }
-        } else {
-          onRefresh(); // bundle size is too large? refresh the api
         }
+      } else {
+        onRefresh(); // bundle size is too large? refresh the api
       }
     }
   }

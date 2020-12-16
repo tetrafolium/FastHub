@@ -233,10 +233,8 @@ public class GistActivity
   protected void onActivityResult(int requestCode, int resultCode,
                                   Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
-    if (resultCode == RESULT_OK) {
-      if (requestCode == BundleConstant.REQUEST_CODE) {
-        getPresenter().callApi();
-      }
+    if ((resultCode == RESULT_OK) && (requestCode == BundleConstant.REQUEST_CODE)) {
+      getPresenter().callApi();
     }
   }
 
