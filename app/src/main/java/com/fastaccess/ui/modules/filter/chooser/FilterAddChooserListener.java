@@ -6,7 +6,7 @@ package com.fastaccess.ui.modules.filter.chooser;
 
 public interface FilterAddChooserListener {
 
-void onAddSelected();
+  void onAddSelected();
 
-void onSearchSelected();
+  void onSearchSelected();
 }

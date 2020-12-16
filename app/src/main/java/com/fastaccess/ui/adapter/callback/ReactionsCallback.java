@@ -5,7 +5,7 @@ package com.fastaccess.ui.adapter.callback;
  */
 
 public interface ReactionsCallback {
-boolean isPreviouslyReacted(long id, int vId);
+  boolean isPreviouslyReacted(long id, int vId);
 
-boolean isCallingApi(long id, int vId);
+  boolean isCallingApi(long id, int vId);
 }

@@ -1,7 +1,6 @@
 package com.fastaccess.data.dao;
 
 import com.fastaccess.data.dao.model.Commit;
-
 import java.util.ArrayList;
 
 /**

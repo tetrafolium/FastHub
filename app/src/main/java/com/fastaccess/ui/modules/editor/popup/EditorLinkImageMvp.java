@@ -2,9 +2,7 @@ package com.fastaccess.ui.modules.editor.popup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.fastaccess.ui.base.mvp.BaseMvp;
-
 import java.io.File;
 
 /**
@@ -13,15 +11,16 @@ import java.io.File;
 
 public interface EditorLinkImageMvp {
 
-interface EditorLinkCallback {
-void onAppendLink(@Nullable String title, @Nullable String link, boolean isLink);
-}
+  interface EditorLinkCallback {
+    void onAppendLink(@Nullable String title, @Nullable String link,
+                      boolean isLink);
+  }
 
-interface View extends BaseMvp.FAView {
-void onUploaded(@Nullable String title, @Nullable String link);
-}
+  interface View extends BaseMvp.FAView {
+    void onUploaded(@Nullable String title, @Nullable String link);
+  }
 
-interface Presenter {
-void onSubmit(@Nullable String title, @NonNull File file);
-}
+  interface Presenter {
+    void onSubmit(@Nullable String title, @NonNull File file);
+  }
 }

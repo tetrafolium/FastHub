@@ -3,7 +3,6 @@ package com.fastaccess.ui.modules.repos.code.commit.details;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.fastaccess.data.dao.model.Comment;
 import com.fastaccess.data.dao.model.Commit;
 import com.fastaccess.ui.base.mvp.BaseMvp;
@@ -15,32 +14,32 @@ import com.fastaccess.ui.modules.editor.comment.CommentEditorFragment;
 
 public interface CommitPagerMvp {
 
-interface View extends BaseMvp.FAView, CommentEditorFragment.CommentListener {
+  interface View extends BaseMvp.FAView, CommentEditorFragment.CommentListener {
 
-void onSetup();
+    void onSetup();
 
-void onFinishActivity();
+    void onFinishActivity();
 
-void onAddComment(@NonNull Comment newComment);
+    void onAddComment(@NonNull Comment newComment);
 
-String getLogin();
+    String getLogin();
 
-String getRepoId();
-}
+    String getRepoId();
+  }
 
-interface Presenter extends BaseMvp.FAPresenter {
+  interface Presenter extends BaseMvp.FAPresenter {
 
-@Nullable Commit getCommit();
+    @Nullable Commit getCommit();
 
-void onActivityCreated(@Nullable Intent intent);
+    void onActivityCreated(@Nullable Intent intent);
 
-void onWorkOffline(@NonNull String sha, @NonNull String repoId, @NonNull String login);
+    void onWorkOffline(@NonNull String sha, @NonNull String repoId,
+                       @NonNull String login);
 
-String getLogin();
+    String getLogin();
 
-String getRepoId();
+    String getRepoId();
 
-boolean showToRepoBtn();
-}
-
+    boolean showToRepoBtn();
+  }
 }

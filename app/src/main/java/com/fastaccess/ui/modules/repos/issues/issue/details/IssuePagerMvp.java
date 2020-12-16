@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.fastaccess.data.dao.LabelModel;
 import com.fastaccess.data.dao.MilestoneModel;
 import com.fastaccess.data.dao.model.Issue;
@@ -14,7 +13,6 @@ import com.fastaccess.ui.modules.editor.comment.CommentEditorFragment;
 import com.fastaccess.ui.modules.repos.extras.assignees.AssigneesMvp;
 import com.fastaccess.ui.modules.repos.extras.labels.LabelsMvp;
 import com.fastaccess.ui.modules.repos.extras.locking.LockIssuePrCallback;
-
 import java.util.ArrayList;
 
 /**
@@ -23,66 +21,68 @@ import java.util.ArrayList;
 
 public interface IssuePagerMvp {
 
-interface View extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener,
-	               AssigneesMvp.SelectedAssigneesListener, IssuePrCallback<Issue>,
-	               CommentEditorFragment.CommentListener, LockIssuePrCallback {
-void onSetupIssue(boolean isUpdate);
+  interface View
+      extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener,
+              AssigneesMvp.SelectedAssigneesListener, IssuePrCallback<Issue>,
+              CommentEditorFragment.CommentListener, LockIssuePrCallback {
+    void onSetupIssue(boolean isUpdate);
 
-void showSuccessIssueActionMsg(boolean isClose);
+    void showSuccessIssueActionMsg(boolean isClose);
 
-void showErrorIssueActionMsg(boolean isClose);
+    void showErrorIssueActionMsg(boolean isClose);
 
-void onUpdateTimeline();
+    void onUpdateTimeline();
 
-void onUpdateMenu();
+    void onUpdateMenu();
 
-void onMileStoneSelected(@NonNull MilestoneModel milestoneModel);
+    void onMileStoneSelected(@NonNull MilestoneModel milestoneModel);
 
-void onFinishActivity();
-}
+    void onFinishActivity();
+  }
 
-interface Presenter extends BaseMvp.FAPresenter {
+  interface Presenter extends BaseMvp.FAPresenter {
 
-@Nullable Issue getIssue();
+    @Nullable Issue getIssue();
 
-void onActivityCreated(@Nullable Intent intent);
+    void onActivityCreated(@Nullable Intent intent);
 
-void onWorkOffline(long issueNumber, @NonNull String repoId, @NonNull String login);
+    void onWorkOffline(long issueNumber, @NonNull String repoId,
+                       @NonNull String login);
 
-boolean isOwner();
+    boolean isOwner();
 
-boolean isRepoOwner();
+    boolean isRepoOwner();
 
-boolean isLocked();
+    boolean isLocked();
 
-boolean isCollaborator();
+    boolean isCollaborator();
 
-boolean showToRepoBtn();
+    boolean showToRepoBtn();
 
-void onHandleConfirmDialog(@Nullable Bundle bundle);
+    void onHandleConfirmDialog(@Nullable Bundle bundle);
 
-void onOpenCloseIssue();
+    void onOpenCloseIssue();
 
-void onLockUnlockIssue(String reason);
+    void onLockUnlockIssue(String reason);
 
-void onPutMilestones(@NonNull MilestoneModel milestone);
+    void onPutMilestones(@NonNull MilestoneModel milestone);
 
-void onPutLabels(@NonNull ArrayList<LabelModel> labels);
+    void onPutLabels(@NonNull ArrayList<LabelModel> labels);
 
-void onPutAssignees(@NonNull ArrayList<User> users);
+    void onPutAssignees(@NonNull ArrayList<User> users);
 
-String getLogin();
+    String getLogin();
 
-String getRepoId();
+    String getRepoId();
 
-void onUpdateIssue(@NonNull Issue issueModel);
+    void onUpdateIssue(@NonNull Issue issueModel);
 
-void onSubscribeOrMute(boolean mute);
+    void onSubscribeOrMute(boolean mute);
 
-void onPinUnpinIssue();
-}
+    void onPinUnpinIssue();
+  }
 
-interface IssuePrCallback<T> {
-@Nullable T getData();
-}
+  interface IssuePrCallback<T> {
+    @Nullable T getData();
+  }
 }

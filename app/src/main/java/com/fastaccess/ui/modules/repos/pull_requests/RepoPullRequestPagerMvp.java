@@ -1,7 +1,6 @@
 package com.fastaccess.ui.modules.repos.pull_requests;
 
 import androidx.annotation.IntRange;
-
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.modules.repos.RepoPagerMvp;
 
@@ -11,11 +10,11 @@ import com.fastaccess.ui.modules.repos.RepoPagerMvp;
 
 public interface RepoPullRequestPagerMvp {
 
-interface View extends BaseMvp.FAView, RepoPagerMvp.TabsBadgeListener {
-@IntRange(from = 0, to = 1) int getCurrentItem();
+  interface View extends BaseMvp.FAView, RepoPagerMvp.TabsBadgeListener {
+    @IntRange(from = 0, to = 1) int getCurrentItem();
 
-void onScrolled(boolean isUp);
-}
+    void onScrolled(boolean isUp);
+  }
 
-interface Presenter extends BaseMvp.FAPresenter {}
+  interface Presenter extends BaseMvp.FAPresenter {}
 }
