@@ -4,12 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.CommentRequestModel
@@ -119,19 +119,21 @@ class FullScreenFileChangeActivity : BaseActivity<FullScreenFileChangeMvp.View, 
         if (item.text.startsWith("@@")) return
         val commit = presenter.model?.commitFileModel ?: return
         if (PrefGetter.isProEnabled()) {
-            AddReviewDialogFragment.newInstance(item, Bundler.start()
+            AddReviewDialogFragment.newInstance(
+                item,
+                Bundler.start()
                     .put(BundleConstant.ITEM, commit.filename)
                     .put(BundleConstant.EXTRA_TWO, presenter.position)
                     .put(BundleConstant.EXTRA_THREE, position)
-                    .end())
-                    .show(supportFragmentManager, "AddReviewDialogFragment")
+                    .end()
+            )
+                .show(supportFragmentManager, "AddReviewDialogFragment")
         } else {
             PremiumActivity.startActivity(this)
         }
     }
 
     override fun onItemLongClick(position: Int, v: View?, item: CommitLinesModel?) {
-
     }
 
     override fun onCommentAdded(comment: String, item: CommitLinesModel, bundle: Bundle?) {
@@ -161,16 +163,17 @@ class FullScreenFileChangeActivity : BaseActivity<FullScreenFileChangeMvp.View, 
         finish()
     }
 
-
     companion object {
         val FOR_RESULT_CODE = 1002
         fun startActivityForResult(fragment: Fragment, model: CommitFileChanges, position: Int, isCommit: Boolean = false) {
             val intent = Intent(fragment.context, FullScreenFileChangeActivity::class.java)
-            intent.putExtras(Bundler.start()
+            intent.putExtras(
+                Bundler.start()
                     .put(BundleConstant.EXTRA, model)
                     .put(BundleConstant.ITEM, position)
                     .put(BundleConstant.YES_NO_EXTRA, isCommit)
-                    .end())
+                    .end()
+            )
             fragment.startActivityForResult(intent, FOR_RESULT_CODE)
         }
     }

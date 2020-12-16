@@ -18,10 +18,12 @@ import com.fastaccess.ui.widgets.recyclerview.DynamicRecyclerView
 /**
  * Created by kosh on 15/08/2017.
  */
-class CommitThreadViewHolder private constructor(view: View,
-                                                 adapter: BaseRecyclerAdapter<*, *, *>,
-                                                 val onToggleView: OnToggleView)
-    : BaseViewHolder<TimelineModel>(view, adapter), BaseViewHolder.OnItemClickListener<Comment> {
+class CommitThreadViewHolder private constructor(
+    view: View,
+    adapter: BaseRecyclerAdapter<*, *, *>,
+    val onToggleView: OnToggleView
+) :
+    BaseViewHolder<TimelineModel>(view, adapter), BaseViewHolder.OnItemClickListener<Comment> {
 
     @BindView(R.id.pathText) lateinit var pathText: FontTextView
     @BindView(R.id.toggle) lateinit var toggle: View
@@ -49,19 +51,20 @@ class CommitThreadViewHolder private constructor(view: View,
         t?.let {
             val builder = SpannableBuilder.builder()
             pathText.text = builder.append("${if (!it.login.isNullOrBlank()) it.login else ""} commented on")
-                    .append(if (!it.path.isNullOrEmpty()) {
+                .append(
+                    if (!it.path.isNullOrEmpty()) {
                         " ${it.path}#L${it.position} in "
                     } else {
                         " "
-                    })
-                    .url(it.commitId.substring(0, 7))
+                    }
+                )
+                .url(it.commitId.substring(0, 7))
             it.comments?.let {
                 if (!it.isEmpty()) commitComments.adapter = CommitCommentsAdapter(it, this, onToggleView)
             }
         }
         onToggle(onToggleView.isCollapsed(adapterPosition.toLong()))
     }
-
 
     private fun onToggle(expanded: Boolean) {
         toggle.rotation = if (!expanded) 0.0f else 180f
@@ -75,8 +78,11 @@ class CommitThreadViewHolder private constructor(view: View,
     override fun onItemLongClick(position: Int, v: View?, item: Comment) {}
 
     companion object {
-        fun newInstance(parent: ViewGroup, adapter: BaseRecyclerAdapter<*, *, *>,
-                        onToggleView: OnToggleView): CommitThreadViewHolder {
+        fun newInstance(
+            parent: ViewGroup,
+            adapter: BaseRecyclerAdapter<*, *, *>,
+            onToggleView: OnToggleView
+        ): CommitThreadViewHolder {
             return CommitThreadViewHolder(getView(parent, R.layout.grouped_commit_comment_row), adapter, onToggleView)
         }
     }

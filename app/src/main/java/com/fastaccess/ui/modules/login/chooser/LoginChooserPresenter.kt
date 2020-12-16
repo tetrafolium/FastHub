@@ -5,8 +5,10 @@ import com.fastaccess.ui.base.mvp.presenter.BasePresenter
 
 class LoginChooserPresenter : BasePresenter<LoginChooserMvp.View>() {
     init {
-        manageObservable(Login.getAccounts().toList()
+        manageObservable(
+            Login.getAccounts().toList()
                 .toObservable()
-                .doOnNext { sendToView { view -> view.onAccountsLoaded(it) } })
+                .doOnNext { sendToView { view -> view.onAccountsLoaded(it) } }
+        )
     }
 }

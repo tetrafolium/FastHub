@@ -4,9 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.annotation.StringRes
-import androidx.transition.TransitionManager
-import androidx.fragment.app.FragmentManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -15,6 +12,9 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ListView
+import androidx.annotation.StringRes
+import androidx.fragment.app.FragmentManager
+import androidx.transition.TransitionManager
 import butterknife.BindView
 import butterknife.OnClick
 import com.evernote.android.state.State
@@ -81,7 +81,8 @@ class EditorActivity : BaseActivity<EditorMvp.View, EditorPresenter>(), EditorMv
         quote.setCompoundDrawablesWithIntrinsicBounds(
             0, 0,
             if (quote.maxLines == 3) R.drawable.ic_arrow_drop_down
-            else R.drawable.ic_arrow_drop_up, 0
+            else R.drawable.ic_arrow_drop_up,
+            0
         )
     }
 
@@ -182,7 +183,6 @@ class EditorActivity : BaseActivity<EditorMvp.View, EditorPresenter>(), EditorMv
             )
                 .show(supportFragmentManager, MessageDialogView.TAG)
             return
-
         }
         super.onBackPressed()
     }
@@ -217,8 +217,8 @@ class EditorActivity : BaseActivity<EditorMvp.View, EditorPresenter>(), EditorMv
             reviewComment = bundle?.getParcelable(BundleConstant.REVIEW_EXTRA)
             itemId = bundle?.getString(BundleConstant.ID)
             login = bundle?.getString(BundleConstant.EXTRA_TWO)
-            if (extraType.equals(BundleConstant.ExtraType.EDIT_COMMIT_COMMENT_EXTRA, ignoreCase = true)
-                || extraType.equals(BundleConstant.ExtraType.NEW_COMMIT_COMMENT_EXTRA, ignoreCase = true)
+            if (extraType.equals(BundleConstant.ExtraType.EDIT_COMMIT_COMMENT_EXTRA, ignoreCase = true) ||
+                extraType.equals(BundleConstant.ExtraType.NEW_COMMIT_COMMENT_EXTRA, ignoreCase = true)
             ) {
                 sha = bundle?.getString(BundleConstant.EXTRA_THREE)
             } else {

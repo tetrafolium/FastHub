@@ -11,8 +11,11 @@ import com.fastaccess.ui.widgets.markdown.MarkDownLayout
  */
 interface EditRepoFileMvp {
 
-    interface View : BaseMvp.FAView, EditorLinkImageMvp.EditorLinkCallback,
-            MarkDownLayout.MarkdownListener, EmojiMvp.EmojiCallback {
+    interface View :
+        BaseMvp.FAView,
+        EditorLinkImageMvp.EditorLinkCallback,
+        MarkDownLayout.MarkdownListener,
+        EmojiMvp.EmojiCallback {
 
         fun onSetText(content: String?)
         fun onSetTextError(isEmpty: Boolean)

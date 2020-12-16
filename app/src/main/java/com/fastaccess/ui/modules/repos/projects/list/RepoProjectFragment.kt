@@ -2,9 +2,9 @@ package com.fastaccess.ui.modules.repos.projects.list
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import androidx.annotation.StringRes
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import android.view.View
 import butterknife.BindView
 import com.fastaccess.R
 import com.fastaccess.data.dao.types.IssueState
@@ -81,8 +81,11 @@ class RepoProjectFragment : BaseFragment<RepoProjectMvp.View, RepoProjectPresent
         stateLayout.setOnReloadListener({ presenter.onCallApi(1, getState()) })
         refresh.setOnRefreshListener({ presenter.onCallApi(1, getState()) })
         recycler.setEmptyView(stateLayout, refresh)
-        getLoadMore().initialize(presenter.currentPage, presenter
-                .previousTotal)
+        getLoadMore().initialize(
+            presenter.currentPage,
+            presenter
+                .previousTotal
+        )
         adapter.listener = presenter
         recycler.adapter = adapter
         recycler.addDivider()
@@ -135,10 +138,10 @@ class RepoProjectFragment : BaseFragment<RepoProjectMvp.View, RepoProjectPresent
         fun newInstance(login: String, repoId: String? = null, state: IssueState): RepoProjectFragment {
             val fragment = RepoProjectFragment()
             fragment.arguments = Bundler.start()
-                    .put(BundleConstant.ID, repoId)
-                    .put(BundleConstant.EXTRA, login)
-                    .put(BundleConstant.EXTRA_TYPE, state)
-                    .end()
+                .put(BundleConstant.ID, repoId)
+                .put(BundleConstant.EXTRA, login)
+                .put(BundleConstant.EXTRA_TYPE, state)
+                .end()
             return fragment
         }
     }

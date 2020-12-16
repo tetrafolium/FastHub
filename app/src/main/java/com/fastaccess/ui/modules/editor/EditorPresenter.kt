@@ -19,8 +19,10 @@ class EditorPresenter : BasePresenter<EditorMvp.View>(), EditorMvp.Presenter {
         if (!InputHelper.isEmpty(savedText)) {
             val requestModel = CommentRequestModel()
             requestModel.body = savedText!!.toString()
-            makeRestCall<Comment>(RestProvider.getGistService(isEnterprise).editGistComment(gistId, id, requestModel),
-                    { comment -> sendToView { view -> view.onSendResultAndFinish(comment, false) } }, false)
+            makeRestCall<Comment>(
+                RestProvider.getGistService(isEnterprise).editGistComment(gistId, id, requestModel),
+                { comment -> sendToView { view -> view.onSendResultAndFinish(comment, false) } }, false
+            )
         }
     }
 
@@ -28,14 +30,23 @@ class EditorPresenter : BasePresenter<EditorMvp.View>(), EditorMvp.Presenter {
         if (!InputHelper.isEmpty(savedText)) {
             val requestModel = CommentRequestModel()
             requestModel.body = savedText!!.toString()
-            makeRestCall<Comment>(RestProvider.getGistService(isEnterprise).createGistComment(gistId, requestModel),
-                    { comment -> sendToView { view -> view.onSendResultAndFinish(comment, true) } }, false)
+            makeRestCall<Comment>(
+                RestProvider.getGistService(isEnterprise).createGistComment(gistId, requestModel),
+                { comment -> sendToView { view -> view.onSendResultAndFinish(comment, true) } }, false
+            )
         }
     }
 
-    override fun onHandleSubmission(savedText: CharSequence?, @BundleConstant.ExtraType extraType: String?,
-                                    itemId: String?, id: Long, login: String?, issueNumber: Int,
-                                    sha: String?, reviewComment: EditReviewCommentModel?) {
+    override fun onHandleSubmission(
+        savedText: CharSequence?,
+        @BundleConstant.ExtraType extraType: String?,
+        itemId: String?,
+        id: Long,
+        login: String?,
+        issueNumber: Int,
+        sha: String?,
+        reviewComment: EditReviewCommentModel?
+    ) {
         if (extraType == null) {
             throw NullPointerException("extraType  is null")
         }
@@ -92,30 +103,47 @@ class EditorPresenter : BasePresenter<EditorMvp.View>(), EditorMvp.Presenter {
         }
     }
 
-    private fun onEditReviewComment(reviewComment: EditReviewCommentModel, savedText: CharSequence, repoId: String,
-                                    login: String, @Suppress("UNUSED_PARAMETER") issueNumber: Int, id: Long) {
+    private fun onEditReviewComment(
+        reviewComment: EditReviewCommentModel,
+        savedText: CharSequence,
+        repoId: String,
+        login: String,
+        @Suppress("UNUSED_PARAMETER") issueNumber: Int,
+        id: Long
+    ) {
         if (!InputHelper.isEmpty(savedText)) {
             val requestModel = CommentRequestModel()
             requestModel.body = savedText.toString()
-            makeRestCall(RestProvider.getReviewService(isEnterprise).editComment(login, repoId, id, requestModel)
+            makeRestCall(
+                RestProvider.getReviewService(isEnterprise).editComment(login, repoId, id, requestModel)
                     .map { comment ->
                         reviewComment.commentModel = comment
                         reviewComment
-                    }, { comment -> sendToView { view -> view.onSendReviewResultAndFinish(comment, false) } }, false)
+                    },
+                { comment -> sendToView { view -> view.onSendReviewResultAndFinish(comment, false) } }, false
+            )
         }
     }
 
-    private fun onSubmitReviewComment(reviewComment: EditReviewCommentModel, savedText: CharSequence,
-                                      repoId: String, login: String, issueNumber: Int) {
+    private fun onSubmitReviewComment(
+        reviewComment: EditReviewCommentModel,
+        savedText: CharSequence,
+        repoId: String,
+        login: String,
+        issueNumber: Int
+    ) {
         if (!InputHelper.isEmpty(savedText)) {
             val requestModel = CommentRequestModel()
             requestModel.body = savedText.toString()
             requestModel.inReplyTo = reviewComment.inReplyTo
-            makeRestCall(RestProvider.getReviewService(isEnterprise).submitComment(login, repoId, issueNumber.toLong(), requestModel)
+            makeRestCall(
+                RestProvider.getReviewService(isEnterprise).submitComment(login, repoId, issueNumber.toLong(), requestModel)
                     .map { comment ->
                         reviewComment.commentModel = comment
                         reviewComment
-                    }, { comment -> sendToView { view -> view.onSendReviewResultAndFinish(comment, true) } }, false)
+                    },
+                { comment -> sendToView { view -> view.onSendReviewResultAndFinish(comment, true) } }, false
+            )
         }
     }
 
@@ -123,7 +151,8 @@ class EditorPresenter : BasePresenter<EditorMvp.View>(), EditorMvp.Presenter {
         if (!InputHelper.isEmpty(savedText)) {
             val requestModel = CommentRequestModel()
             requestModel.body = savedText.toString()
-            makeRestCall<Comment>(RestProvider.getIssueService(isEnterprise).createIssueComment(login, itemId, issueNumber, requestModel)
+            makeRestCall<Comment>(
+                RestProvider.getIssueService(isEnterprise).createIssueComment(login, itemId, issueNumber, requestModel)
             ) { comment -> sendToView { view -> view.onSendResultAndFinish(comment, true) } }
         }
     }
@@ -132,8 +161,10 @@ class EditorPresenter : BasePresenter<EditorMvp.View>(), EditorMvp.Presenter {
         if (!InputHelper.isEmpty(savedText)) {
             val requestModel = CommentRequestModel()
             requestModel.body = savedText.toString()
-            makeRestCall<Comment>(RestProvider.getIssueService(isEnterprise).editIssueComment(login, itemId, id, requestModel),
-                    { comment -> sendToView { view -> view.onSendResultAndFinish(comment, false) } }, false)
+            makeRestCall<Comment>(
+                RestProvider.getIssueService(isEnterprise).editIssueComment(login, itemId, id, requestModel),
+                { comment -> sendToView { view -> view.onSendResultAndFinish(comment, false) } }, false
+            )
         }
     }
 
@@ -141,8 +172,10 @@ class EditorPresenter : BasePresenter<EditorMvp.View>(), EditorMvp.Presenter {
         if (!InputHelper.isEmpty(savedText)) {
             val requestModel = CommentRequestModel()
             requestModel.body = savedText.toString()
-            makeRestCall<Comment>(RestProvider.getRepoService(isEnterprise).postCommitComment(login, itemId, sha, requestModel),
-                    { comment -> sendToView { view -> view.onSendResultAndFinish(comment, true) } }, false)
+            makeRestCall<Comment>(
+                RestProvider.getRepoService(isEnterprise).postCommitComment(login, itemId, sha, requestModel),
+                { comment -> sendToView { view -> view.onSendResultAndFinish(comment, true) } }, false
+            )
         }
     }
 
@@ -150,8 +183,10 @@ class EditorPresenter : BasePresenter<EditorMvp.View>(), EditorMvp.Presenter {
         if (!InputHelper.isEmpty(savedText)) {
             val requestModel = CommentRequestModel()
             requestModel.body = savedText.toString()
-            makeRestCall<Comment>(RestProvider.getRepoService(isEnterprise).editCommitComment(login, itemId, id, requestModel),
-                    { comment -> sendToView { view -> view.onSendResultAndFinish(comment, false) } }, false)
+            makeRestCall<Comment>(
+                RestProvider.getRepoService(isEnterprise).editCommitComment(login, itemId, id, requestModel),
+                { comment -> sendToView { view -> view.onSendResultAndFinish(comment, false) } }, false
+            )
         }
     }
 }

@@ -12,12 +12,13 @@ import com.fastaccess.provider.scheme.LinkParserHelper
 object ApolloProdivder {
 
     fun getApollo(enterprise: Boolean) = ApolloClient.builder()
-            .serverUrl("${if (enterprise && PrefGetter.isEnterprise()) {
+        .serverUrl(
+            "${if (enterprise && PrefGetter.isEnterprise()) {
                 "${LinkParserHelper.getEndpoint(PrefGetter.getEnterpriseUrl())}/"
             } else {
                 BuildConfig.REST_URL
-            }}graphql")
-            .okHttpClient(RestProvider.provideOkHttpClient())
-            .build()
-
+            }}graphql"
+        )
+        .okHttpClient(RestProvider.provideOkHttpClient())
+        .build()
 }
