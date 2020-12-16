@@ -47,7 +47,9 @@ public class IssueEventAdapterModel implements Parcelable {
 
     public IssueEventAdapterModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.type);
@@ -62,8 +64,12 @@ public class IssueEventAdapterModel implements Parcelable {
     }
 
     public static final Creator<IssueEventAdapterModel> CREATOR = new Creator<IssueEventAdapterModel>() {
-        @Override public IssueEventAdapterModel createFromParcel(Parcel source) {return new IssueEventAdapterModel(source);}
+        @Override public IssueEventAdapterModel createFromParcel(Parcel source) {
+            return new IssueEventAdapterModel(source);
+        }
 
-        @Override public IssueEventAdapterModel[] newArray(int size) {return new IssueEventAdapterModel[size];}
+        @Override public IssueEventAdapterModel[] newArray(int size) {
+            return new IssueEventAdapterModel[size];
+        }
     };
 }

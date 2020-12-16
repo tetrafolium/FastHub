@@ -24,8 +24,8 @@ import java.util.ArrayList;
 public interface IssuePagerMvp {
 
     interface View extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener,
-            AssigneesMvp.SelectedAssigneesListener, IssuePrCallback<Issue>,
-            CommentEditorFragment.CommentListener, LockIssuePrCallback {
+        AssigneesMvp.SelectedAssigneesListener, IssuePrCallback<Issue>,
+        CommentEditorFragment.CommentListener, LockIssuePrCallback {
         void onSetupIssue(boolean isUpdate);
 
         void showSuccessIssueActionMsg(boolean isClose);

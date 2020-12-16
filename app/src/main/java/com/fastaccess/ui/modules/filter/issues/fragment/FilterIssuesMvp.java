@@ -36,8 +36,8 @@ public interface FilterIssuesMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<Issue>,
-            BaseMvp.PaginationListener<String> {
+        BaseViewHolder.OnItemClickListener<Issue>,
+        BaseMvp.PaginationListener<String> {
 
         @NonNull ArrayList<Issue> getIssues();
 

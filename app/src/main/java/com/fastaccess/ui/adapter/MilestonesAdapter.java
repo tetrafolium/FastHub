@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 
 public class MilestonesAdapter extends BaseRecyclerAdapter<MilestoneModel, MilestonesViewHolder,
-        BaseViewHolder.OnItemClickListener<MilestoneModel>> {
+    BaseViewHolder.OnItemClickListener<MilestoneModel>> {
 
     public MilestonesAdapter(@NonNull ArrayList<MilestoneModel> eventsModels) {
         super(eventsModels);

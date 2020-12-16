@@ -51,16 +51,16 @@ import static com.fastaccess.data.dao.model.PinnedPullRequests.LOGIN;
 
     @Nullable public static PinnedPullRequests get(long pullRequestId) {
         return App.getInstance().getDataStore().select(PinnedPullRequests.class)
-                .where(PinnedPullRequests.PULL_REQUEST_ID.eq(pullRequestId))
-                .get()
-                .firstOrNull();
+               .where(PinnedPullRequests.PULL_REQUEST_ID.eq(pullRequestId))
+               .get()
+               .firstOrNull();
     }
 
     public static void delete(long pullRequestId) {
         App.getInstance().getDataStore().delete(PinnedPullRequests.class)
-                .where(PinnedPullRequests.PULL_REQUEST_ID.eq(pullRequestId))
-                .get()
-                .value();
+        .where(PinnedPullRequests.PULL_REQUEST_ID.eq(pullRequestId))
+        .get()
+        .value();
     }
 
     @NonNull public static Disposable updateEntry(@NonNull long pullRequestId) {
@@ -77,12 +77,12 @@ import static com.fastaccess.data.dao.model.PinnedPullRequests.LOGIN;
 
     @NonNull public static Single<List<PullRequest>> getMyPinnedPullRequests() {
         return App.getInstance().getDataStore().select(PinnedPullRequests.class)
-                .where(LOGIN.eq(Login.getUser().getLogin()).or(LOGIN.isNull()))
-                .orderBy(ENTRY_COUNT.desc(), ID.desc())
-                .get()
-                .observable()
-                .map(PinnedPullRequests::getPullRequest)
-                .toList();
+               .where(LOGIN.eq(Login.getUser().getLogin()).or(LOGIN.isNull()))
+               .orderBy(ENTRY_COUNT.desc(), ID.desc())
+               .get()
+               .observable()
+               .map(PinnedPullRequests::getPullRequest)
+               .toList();
     }
 
     public static boolean isPinned(long pullRequestId) {

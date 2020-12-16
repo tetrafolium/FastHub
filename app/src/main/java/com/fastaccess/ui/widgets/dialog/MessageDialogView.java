@@ -133,19 +133,19 @@ public class MessageDialogView extends BaseBottomSheetDialog {
     }
 
     @NonNull public static MessageDialogView newInstance(@NonNull String bundleTitle, @NonNull String bundleMsg,
-                                                         boolean isMarkDown, boolean hideCancel) {
+            boolean isMarkDown, boolean hideCancel) {
         return newInstance(bundleTitle, bundleMsg, isMarkDown, hideCancel, null);
     }
 
     @NonNull public static MessageDialogView newInstance(@NonNull String bundleTitle, @NonNull String bundleMsg, boolean isMarkDown,
-                                                         @Nullable Bundle bundle) {
+            @Nullable Bundle bundle) {
         MessageDialogView messageDialogView = new MessageDialogView();
         messageDialogView.setArguments(getBundle(bundleTitle, bundleMsg, isMarkDown, bundle, false));
         return messageDialogView;
     }
 
     @NonNull public static MessageDialogView newInstance(@NonNull String bundleTitle, @NonNull String bundleMsg, boolean isMarkDown,
-                                                         boolean hideCancel, @Nullable Bundle bundle) {
+            boolean hideCancel, @Nullable Bundle bundle) {
         MessageDialogView messageDialogView = new MessageDialogView();
         messageDialogView.setArguments(getBundle(bundleTitle, bundleMsg, isMarkDown, bundle, hideCancel));
         return messageDialogView;
@@ -157,18 +157,18 @@ public class MessageDialogView extends BaseBottomSheetDialog {
 
     private static Bundle getBundle(String bundleTitle, String bundleMsg, boolean isMarkDown, Bundle bundle, boolean hideCancel) {
         return Bundler.start()
-                .put("bundleTitle", bundleTitle)
-                .put("bundleMsg", bundleMsg)
-                .put("bundle", bundle)
-                .put("isMarkDown", isMarkDown)
-                .put("hideCancel", hideCancel)
-                .end();
+               .put("bundleTitle", bundleTitle)
+               .put("bundleMsg", bundleMsg)
+               .put("bundle", bundle)
+               .put("isMarkDown", isMarkDown)
+               .put("hideCancel", hideCancel)
+               .end();
     }
 
     @NonNull public static Bundle getYesNoBundle(@NonNull Context context) {
         return Bundler.start()
-                .put("primary_extra", context.getString(R.string.yes))
-                .put("secondary_extra", context.getString(R.string.no))
-                .end();
+               .put("primary_extra", context.getString(R.string.yes))
+               .put("secondary_extra", context.getString(R.string.no))
+               .end();
     }
 }

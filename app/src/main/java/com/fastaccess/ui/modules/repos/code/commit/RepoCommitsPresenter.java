@@ -68,8 +68,8 @@ class RepoCommitsPresenter extends BasePresenter<RepoCommitsMvp.View> implements
         }
         if (repoId == null || login == null) return false;
         Observable<Pageable<Commit>> observable = InputHelper.isEmpty(path)
-                                                  ? RestProvider.getRepoService(isEnterprise()).getCommits(login, repoId, branch, page)
-                                                  : RestProvider.getRepoService(isEnterprise()).getCommits(login, repoId, branch, path, page);
+                ? RestProvider.getRepoService(isEnterprise()).getCommits(login, repoId, branch, page)
+                : RestProvider.getRepoService(isEnterprise()).getCommits(login, repoId, branch, path, page);
         makeRestCall(observable, response -> {
             if (response != null && response.getItems() != null) {
                 lastPage = response.getLast();
@@ -102,7 +102,7 @@ class RepoCommitsPresenter extends BasePresenter<RepoCommitsMvp.View> implements
     @Override public void onWorkOffline() {
         if (commits.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Commit.getCommits(repoId, login).toObservable())
-                    .subscribe(models -> sendToView(view -> view.onNotifyAdapter(models, 1))));
+                             .subscribe(models -> sendToView(view -> view.onNotifyAdapter(models, 1))));
         } else {
             sendToView(BaseMvp.FAView::hideProgress);
         }
@@ -128,11 +128,11 @@ class RepoCommitsPresenter extends BasePresenter<RepoCommitsMvp.View> implements
 
     private void getCommitCount(@NonNull String branch) {
         manageDisposable(RxHelper.safeObservable(RxHelper.getObservable(RestProvider.getRepoService(isEnterprise())
-                .getCommitCounts(login, repoId, branch)))
-                .subscribe(response -> {
-                    if (response != null) {
-                        sendToView(view -> view.onShowCommitCount(response.getLast()));
-                    }
-                }, Throwable::printStackTrace));
+                         .getCommitCounts(login, repoId, branch)))
+        .subscribe(response -> {
+            if (response != null) {
+                sendToView(view -> view.onShowCommitCount(response.getLast()));
+            }
+        }, Throwable::printStackTrace));
     }
 }

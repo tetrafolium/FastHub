@@ -89,13 +89,13 @@ import lombok.Getter;
                     SchemeParser.launchUri(v.getContext(), Uri.parse(issueEventModel.getCommitUrl()));
                 } else if (issueEventModel.getLabel() != null) {
                     FilterIssuesActivity.startActivity(v, issue.getLogin(), issue.getRepoId(), true,
-                            true, isEnterprise(), "label:\"" + issueEventModel.getLabel().getName() + "\"");
+                                                       true, isEnterprise(), "label:\"" + issueEventModel.getLabel().getName() + "\"");
                 } else if (issueEventModel.getMilestone() != null) {
                     FilterIssuesActivity.startActivity(v, issue.getLogin(), issue.getRepoId(), true,
-                            true, isEnterprise(), "milestone:\"" + issueEventModel.getMilestone().getTitle() + "\"");
+                                                       true, isEnterprise(), "milestone:\"" + issueEventModel.getMilestone().getTitle() + "\"");
                 } else if (issueEventModel.getAssignee() != null) {
                     FilterIssuesActivity.startActivity(v, issue.getLogin(), issue.getRepoId(), true,
-                            true, isEnterprise(), "assignee:\"" + issueEventModel.getAssignee().getLogin() + "\"");
+                                                       true, isEnterprise(), "assignee:\"" + issueEventModel.getAssignee().getLogin() + "\"");
                 } else {
                     SourceModel sourceModel = issueEventModel.getSource();
                     if (sourceModel != null) {
@@ -116,7 +116,7 @@ import lombok.Getter;
                     popupMenu.inflate(R.menu.comments_menu);
                     String username = Login.getUser().getLogin();
                     boolean isOwner = CommentsHelper.isOwner(username, item.getIssue().getLogin(),
-                            item.getIssue().getUser().getLogin()) || isCollaborator;
+                                      item.getIssue().getUser().getLogin()) || isCollaborator;
                     popupMenu.getMenu().findItem(R.id.edit).setVisible(isOwner);
                     popupMenu.setOnMenuItemClickListener(item1 -> {
                         if (getView() == null) return false;
@@ -126,7 +126,7 @@ import lombok.Getter;
                             Activity activity = ActivityHelper.getActivity(v.getContext());
                             if (activity == null) return false;
                             CreateIssueActivity.startForResult(activity,
-                                    item.getIssue().getLogin(), item.getIssue().getRepoId(), item.getIssue(), isEnterprise());
+                                                               item.getIssue().getLogin(), item.getIssue().getRepoId(), item.getIssue(), isEnterprise());
                         } else if (item1.getItemId() == R.id.share) {
                             ActivityHelper.shareUrl(v.getContext(), item.getIssue().getHtmlUrl());
                         }
@@ -184,15 +184,15 @@ import lombok.Getter;
                 if (getView() == null || getView().getIssue() == null) return;
                 Issue issue = getView().getIssue();
                 makeRestCall(RestProvider.getIssueService(isEnterprise()).deleteIssueComment(issue.getLogin(), issue.getRepoId(), commId),
-                        booleanResponse -> sendToView(view -> {
-                            if (booleanResponse.code() == 204) {
-                                Comment comment = new Comment();
-                                comment.setId(commId);
-                                view.onRemove(TimelineModel.constructComment(comment));
-                            } else {
-                                view.showMessage(R.string.error, R.string.error_deleting_comment);
-                            }
-                        }));
+                booleanResponse -> sendToView(view -> {
+                    if (booleanResponse.code() == 204) {
+                        Comment comment = new Comment();
+                        comment.setId(commId);
+                        view.onRemove(TimelineModel.constructComment(comment));
+                    } else {
+                        view.showMessage(R.string.error, R.string.error_deleting_comment);
+                    }
+                }));
             }
         }
     }
@@ -218,14 +218,14 @@ import lombok.Getter;
                 CommentRequestModel commentRequestModel = new CommentRequestModel();
                 commentRequestModel.setBody(text);
                 manageDisposable(RxHelper.getObservable(RestProvider.getIssueService(isEnterprise()).createIssueComment(issue.getLogin(), issue
-                                .getRepoId(),
-                        issue.getNumber(), commentRequestModel))
-                        .doOnSubscribe(disposable -> sendToView(view -> view.showBlockingProgress(0)))
-                        .subscribe(comment -> sendToView(view -> view.addNewComment(TimelineModel.constructComment(comment))),
-                                throwable -> {
-                                    onError(throwable);
-                                    sendToView(IssueTimelineMvp.View::onHideBlockingProgress);
-                                }));
+                                                        .getRepoId(),
+                                                        issue.getNumber(), commentRequestModel))
+                                 .doOnSubscribe(disposable -> sendToView(view -> view.showBlockingProgress(0)))
+                                 .subscribe(comment -> sendToView(view -> view.addNewComment(TimelineModel.constructComment(comment))),
+                throwable -> {
+                    onError(throwable);
+                    sendToView(IssueTimelineMvp.View::onHideBlockingProgress);
+                }));
             }
         }
     }
@@ -275,20 +275,20 @@ import lombok.Getter;
         String repoId = parameter.getRepoId();
         if (page == 1) {
             manageObservable(RestProvider.getRepoService(isEnterprise()).isCollaborator(login, repoId,
-                    Login.getUser().getLogin())
-                    .doOnNext(booleanResponse -> isCollaborator = booleanResponse.code() == 204));
+                             Login.getUser().getLogin())
+                             .doOnNext(booleanResponse -> isCollaborator = booleanResponse.code() == 204));
         }
         int number = parameter.getNumber();
         Observable<List<TimelineModel>> observable = RestProvider.getIssueService(isEnterprise())
                 .getTimeline(login, repoId, number, page)
-                .flatMap(response -> {
-                    if (response != null) {
-                        lastPage = response.getLast();
-                    }
-                    return TimelineConverter.INSTANCE.convert(response != null ? response.getItems() : null);
-                })
-                .toList()
-                .toObservable();
+        .flatMap(response -> {
+            if (response != null) {
+                lastPage = response.getLast();
+            }
+            return TimelineConverter.INSTANCE.convert(response != null ? response.getItems() : null);
+        })
+        .toList()
+        .toObservable();
         makeRestCall(observable, timeline -> {
             sendToView(view -> view.onNotifyAdapter(timeline, page));
             loadComment(page, commentId, login, repoId, timeline);

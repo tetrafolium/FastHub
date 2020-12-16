@@ -57,7 +57,7 @@ public class FastHubAboutActivity extends MaterialAboutActivity {
         MaterialAboutCard.Builder logoAuthor = new MaterialAboutCard.Builder();
         buildLogo(context, newLogoAuthor, logoAuthor);
         return new MaterialAboutList(appCardBuilder.build(), miscCardBuilder.build(), authorCardBuilder.build(),
-                newLogoAuthor.build(), logoAuthor.build());
+                                     newLogoAuthor.build(), logoAuthor.build());
     }
 
     @Override protected CharSequence getActivityTitle() {
@@ -81,100 +81,100 @@ public class FastHubAboutActivity extends MaterialAboutActivity {
     private void buildLogo(Context context, MaterialAboutCard.Builder newLogoAuthor, MaterialAboutCard.Builder logoAuthor) {
         newLogoAuthor.title(getString(R.string.logo_designer, "Cookicons"));
         newLogoAuthor.addItem(new MaterialAboutActionItem.Builder()
-                .text(R.string.google_plus)
-                .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
-                .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "https://plus.google.com/+CookiconsDesign"))
-                .build())
-                .addItem(new MaterialAboutActionItem.Builder()
-                        .text(R.string.twitter)
-                        .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
-                        .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "https://twitter.com/mcookie"))
-                        .build())
-                .addItem(new MaterialAboutActionItem.Builder()
-                        .text(R.string.website)
-                        .icon(ContextCompat.getDrawable(context, R.drawable.ic_brower))
-                        .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "https://cookicons.co/"))
-                        .build());
+                              .text(R.string.google_plus)
+                              .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
+                              .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "https://plus.google.com/+CookiconsDesign"))
+                              .build())
+        .addItem(new MaterialAboutActionItem.Builder()
+                 .text(R.string.twitter)
+                 .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
+                 .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "https://twitter.com/mcookie"))
+                 .build())
+        .addItem(new MaterialAboutActionItem.Builder()
+                 .text(R.string.website)
+                 .icon(ContextCompat.getDrawable(context, R.drawable.ic_brower))
+                 .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "https://cookicons.co/"))
+                 .build());
 
         logoAuthor.title(String.format("Old %s", getString(R.string.logo_designer, "Kevin Aguilar")));
         logoAuthor.addItem(new MaterialAboutActionItem.Builder()
-                .text(R.string.google_plus)
-                .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
-                .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "https://plus.google.com/+KevinAguilarC"))
-                .build())
-                .addItem(new MaterialAboutActionItem.Builder()
-                        .text(R.string.twitter)
-                        .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
-                        .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "https://twitter.com/kevttob"))
-                        .build())
-                .addItem(new MaterialAboutActionItem.Builder()
-                        .text(R.string.website)
-                        .icon(ContextCompat.getDrawable(context, R.drawable.ic_brower))
-                        .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "http://kevaguilar.com/"))
-                        .build());
+                           .text(R.string.google_plus)
+                           .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
+                           .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "https://plus.google.com/+KevinAguilarC"))
+                           .build())
+        .addItem(new MaterialAboutActionItem.Builder()
+                 .text(R.string.twitter)
+                 .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
+                 .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "https://twitter.com/kevttob"))
+                 .build())
+        .addItem(new MaterialAboutActionItem.Builder()
+                 .text(R.string.website)
+                 .icon(ContextCompat.getDrawable(context, R.drawable.ic_brower))
+                 .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "http://kevaguilar.com/"))
+                 .build());
     }
 
     private void buildAuthor(Context context, MaterialAboutCard.Builder authorCardBuilder) {
         authorCardBuilder.title(R.string.author);
         authorCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text("Kosh Sergani")
-                .subText("k0shk0sh")
-                .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
-                .setOnClickAction(() -> UserPagerActivity.startActivity(context, "k0shk0sh", false, false,0))
-                .build())
-                .addItem(new MaterialAboutActionItem.Builder()
-                        .text(R.string.fork_github)
-                        .icon(ContextCompat.getDrawable(context, R.drawable.ic_github))
-                        .setOnClickAction(() -> startActivity(RepoPagerActivity.createIntent(this, "FastHub", "k0shk0sh")))
-                        .build())
-                .addItem(ConvenienceBuilder.createEmailItem(context, ContextCompat.getDrawable(context, R.drawable.ic_email),
-                        getString(R.string.send_email), true, getString(R.string.email_address), getString(R.string.question_concerning_fasthub)));
+                                  .text("Kosh Sergani")
+                                  .subText("k0shk0sh")
+                                  .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
+                                  .setOnClickAction(() -> UserPagerActivity.startActivity(context, "k0shk0sh", false, false,0))
+                                  .build())
+        .addItem(new MaterialAboutActionItem.Builder()
+                 .text(R.string.fork_github)
+                 .icon(ContextCompat.getDrawable(context, R.drawable.ic_github))
+                 .setOnClickAction(() -> startActivity(RepoPagerActivity.createIntent(this, "FastHub", "k0shk0sh")))
+                 .build())
+        .addItem(ConvenienceBuilder.createEmailItem(context, ContextCompat.getDrawable(context, R.drawable.ic_email),
+                 getString(R.string.send_email), true, getString(R.string.email_address), getString(R.string.question_concerning_fasthub)));
     }
 
     private void buildMisc(Context context, MaterialAboutCard.Builder miscCardBuilder) {
         miscCardBuilder.title(R.string.about)
-                .addItem(new MaterialAboutActionItem.Builder()
-                        .text(R.string.support_development)
-                        .icon(ContextCompat.getDrawable(context, R.drawable.ic_heart))
-                        .setOnClickAction(() -> startActivity(new Intent(context, DonationActivity.class)))
-                        .build())
-                .addItem(new MaterialAboutActionItem.Builder()
-                        .text(R.string.changelog)
-                        .icon(ContextCompat.getDrawable(context, R.drawable.ic_track_changes))
-                        .setOnClickAction(() -> new ChangelogBottomSheetDialog().show(getSupportFragmentManager(), "ChangelogBottomSheetDialog"))
-                        .build())
-                .addItem(new MaterialAboutActionItem.Builder()
-                        .text(R.string.join_slack)
-                        .icon(ContextCompat.getDrawable(context, R.drawable.ic_slack))
-                        .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "http://rebrand.ly/fasthub"))
-                        .build())
-                .addItem(new MaterialAboutActionItem.Builder()
-                        .text(R.string.open_source_libs)
-                        .icon(ContextCompat.getDrawable(context, R.drawable.ic_github))
-                        .setOnClickAction(() -> new LibsBuilder()
-                                .withActivityStyle(AppHelper.isNightMode(getResources()) ? Libs.ActivityStyle.DARK : Libs.ActivityStyle.LIGHT)
-                                .withAutoDetect(true)
-                                .withActivityTitle(this.getResources().getString(R.string.open_source_libs))
-                                .withAboutIconShown(true)
-                                .withAboutVersionShown(true)
-                                .start(this))
-                        .build());
+        .addItem(new MaterialAboutActionItem.Builder()
+                 .text(R.string.support_development)
+                 .icon(ContextCompat.getDrawable(context, R.drawable.ic_heart))
+                 .setOnClickAction(() -> startActivity(new Intent(context, DonationActivity.class)))
+                 .build())
+        .addItem(new MaterialAboutActionItem.Builder()
+                 .text(R.string.changelog)
+                 .icon(ContextCompat.getDrawable(context, R.drawable.ic_track_changes))
+                 .setOnClickAction(() -> new ChangelogBottomSheetDialog().show(getSupportFragmentManager(), "ChangelogBottomSheetDialog"))
+                 .build())
+        .addItem(new MaterialAboutActionItem.Builder()
+                 .text(R.string.join_slack)
+                 .icon(ContextCompat.getDrawable(context, R.drawable.ic_slack))
+                 .setOnClickAction(() -> ActivityHelper.startCustomTab(this, "http://rebrand.ly/fasthub"))
+                 .build())
+        .addItem(new MaterialAboutActionItem.Builder()
+                 .text(R.string.open_source_libs)
+                 .icon(ContextCompat.getDrawable(context, R.drawable.ic_github))
+                 .setOnClickAction(() -> new LibsBuilder()
+                                   .withActivityStyle(AppHelper.isNightMode(getResources()) ? Libs.ActivityStyle.DARK : Libs.ActivityStyle.LIGHT)
+                                   .withAutoDetect(true)
+                                   .withActivityTitle(this.getResources().getString(R.string.open_source_libs))
+                                   .withAboutIconShown(true)
+                                   .withAboutVersionShown(true)
+                                   .start(this))
+                 .build());
     }
 
     private void buildApp(Context context, MaterialAboutCard.Builder appCardBuilder) {
         appCardBuilder.addItem(new MaterialAboutActionItem.Builder()
-                .text(getString(R.string.version))
-                .icon(ContextCompat.getDrawable(context, R.drawable.ic_update))
-                .subText(BuildConfig.VERSION_NAME)
-                .setOnClickAction(() -> startService(new Intent(this, CheckVersionService.class)))
-                .build())
-                .addItem(ConvenienceBuilder.createRateActionItem(context, ContextCompat.getDrawable(context, R.drawable.ic_star_filled),
-                        getString(R.string.rate_app), null))
-                .addItem(new MaterialAboutActionItem.Builder()
-                        .text(R.string.report_issue)
-                        .subText(R.string.report_issue_here)
-                        .icon(ContextCompat.getDrawable(context, R.drawable.ic_bug))
-                        .setOnClickAction(() -> CreateIssueActivity.startForResult(this, CreateIssueActivity.startForResult(this), malRecyclerview))
-                        .build());
+                               .text(getString(R.string.version))
+                               .icon(ContextCompat.getDrawable(context, R.drawable.ic_update))
+                               .subText(BuildConfig.VERSION_NAME)
+                               .setOnClickAction(() -> startService(new Intent(this, CheckVersionService.class)))
+                               .build())
+        .addItem(ConvenienceBuilder.createRateActionItem(context, ContextCompat.getDrawable(context, R.drawable.ic_star_filled),
+                 getString(R.string.rate_app), null))
+        .addItem(new MaterialAboutActionItem.Builder()
+                 .text(R.string.report_issue)
+                 .subText(R.string.report_issue_here)
+                 .icon(ContextCompat.getDrawable(context, R.drawable.ic_bug))
+                 .setOnClickAction(() -> CreateIssueActivity.startForResult(this, CreateIssueActivity.startForResult(this), malRecyclerview))
+                 .build());
     }
 }

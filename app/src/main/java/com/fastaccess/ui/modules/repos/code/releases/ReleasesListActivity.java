@@ -29,8 +29,8 @@ public class ReleasesListActivity extends BaseActivity {
     public static Intent getIntent(@NonNull Context context, @NonNull String username, @NonNull String repoId) {
         Intent intent = new Intent(context, ReleasesListActivity.class);
         intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, username)
-                .end());
+                         .put(BundleConstant.EXTRA, username)
+                         .end());
         return intent;
     }
 
@@ -38,10 +38,10 @@ public class ReleasesListActivity extends BaseActivity {
                                    @NonNull String tag, boolean isEnterprise) {
         Intent intent = new Intent(context, ReleasesListActivity.class);
         intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, username)
-                .put(BundleConstant.EXTRA_THREE, tag)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .end());
+                         .put(BundleConstant.EXTRA, username)
+                         .put(BundleConstant.EXTRA_THREE, tag)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .end());
         return intent;
     }
 
@@ -49,10 +49,10 @@ public class ReleasesListActivity extends BaseActivity {
                                    long id, boolean isEnterprise) {
         Intent intent = new Intent(context, ReleasesListActivity.class);
         intent.putExtras(Bundler.start().put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, username)
-                .put(BundleConstant.EXTRA_TWO, id)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .end());
+                         .put(BundleConstant.EXTRA, username)
+                         .put(BundleConstant.EXTRA_TWO, id)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .end());
         return intent;
     }
 
@@ -87,11 +87,11 @@ public class ReleasesListActivity extends BaseActivity {
                 login = bundle.getString(BundleConstant.EXTRA);
                 //noinspection ConstantConditions
                 getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.container, RepoReleasesFragment
-                                .newInstance(repoId, login, bundle.getString(BundleConstant.EXTRA_THREE),
-                                        bundle.getLong(BundleConstant.EXTRA_TWO)))
-                        .commit();
+                .beginTransaction()
+                .replace(R.id.container, RepoReleasesFragment
+                         .newInstance(repoId, login, bundle.getString(BundleConstant.EXTRA_THREE),
+                                      bundle.getLong(BundleConstant.EXTRA_TWO)))
+                .commit();
 
                 setTaskName(repoId + "/" + login + " " + getString(R.string.releases));
             }

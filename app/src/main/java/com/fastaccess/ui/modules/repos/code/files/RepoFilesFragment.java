@@ -90,11 +90,11 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
                 if (InputHelper.isEmpty(url)) return;
                 if (model.getSize() > FileHelper.ONE_MB && !MarkDownProvider.isImage(url)) {
                     MessageDialogView.newInstance(getString(R.string.big_file), getString(R.string.big_file_description),
-                            false, true, Bundler.start()
-                                    .put(BundleConstant.EXTRA, model.getDownloadUrl())
-                                    .put(BundleConstant.YES_NO_EXTRA, true)
-                                    .end())
-                            .show(getChildFragmentManager(), "MessageDialogView");
+                                                  false, true, Bundler.start()
+                                                  .put(BundleConstant.EXTRA, model.getDownloadUrl())
+                                                  .put(BundleConstant.YES_NO_EXTRA, true)
+                                                  .end())
+                    .show(getChildFragmentManager(), "MessageDialogView");
                 } else {
                     CodeViewerActivity.startActivity(getContext(), url, model.getHtmlUrl());
                 }
@@ -118,39 +118,39 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
         popup.getMenu().findItem(R.id.history).setVisible(true);
         popup.setOnMenuItemClickListener(item1 -> {
             switch (item1.getItemId()) {
-                case R.id.share:
-                    ActivityHelper.shareUrl(v.getContext(), item.getHtmlUrl());
-                    break;
-                case R.id.download:
-                    if (ActivityHelper.checkAndRequestReadWritePermission(getActivity())) {
-                        RestProvider.downloadFile(getContext(), item.getDownloadUrl());
+            case R.id.share:
+                ActivityHelper.shareUrl(v.getContext(), item.getHtmlUrl());
+                break;
+            case R.id.download:
+                if (ActivityHelper.checkAndRequestReadWritePermission(getActivity())) {
+                    RestProvider.downloadFile(getContext(), item.getDownloadUrl());
+                }
+                break;
+            case R.id.copy:
+                AppHelper.copyToClipboard(v.getContext(), !InputHelper.isEmpty(item.getHtmlUrl()) ? item.getHtmlUrl() : item.getUrl());
+                break;
+            case R.id.editFile:
+                if (PrefGetter.isProEnabled() || PrefGetter.isAllFeaturesUnlocked()) {
+                    if (canOpen) {
+                        EditRepoFileModel fileModel = new EditRepoFileModel(getPresenter().login, getPresenter().repoId,
+                                item.getPath(), getPresenter().ref, item.getSha(), item.getDownloadUrl(), item.getName(), true);
+                        EditRepoFileActivity.Companion.startForResult(this, fileModel, isEnterprise());
                     }
-                    break;
-                case R.id.copy:
-                    AppHelper.copyToClipboard(v.getContext(), !InputHelper.isEmpty(item.getHtmlUrl()) ? item.getHtmlUrl() : item.getUrl());
-                    break;
-                case R.id.editFile:
-                    if (PrefGetter.isProEnabled() || PrefGetter.isAllFeaturesUnlocked()) {
-                        if (canOpen) {
-                            EditRepoFileModel fileModel = new EditRepoFileModel(getPresenter().login, getPresenter().repoId,
-                                    item.getPath(), getPresenter().ref, item.getSha(), item.getDownloadUrl(), item.getName(), true);
-                            EditRepoFileActivity.Companion.startForResult(this, fileModel, isEnterprise());
-                        }
-                    } else {
-                        PremiumActivity.Companion.startActivity(getContext());
-                    }
-                    break;
-                case R.id.deleteFile:
-                    if (PrefGetter.isProEnabled() || PrefGetter.isAllFeaturesUnlocked()) {
-                        DeleteFileBottomSheetFragment.Companion.newInstance(position, item.getName())
-                                .show(getChildFragmentManager(), DeleteFileBottomSheetFragment.class.getSimpleName());
-                    } else {
-                        PremiumActivity.Companion.startActivity(getContext());
-                    }
-                    break;
-                case R.id.history:
-                    getPresenter().onItemLongClick(position, v, item);
-                    break;
+                } else {
+                    PremiumActivity.Companion.startActivity(getContext());
+                }
+                break;
+            case R.id.deleteFile:
+                if (PrefGetter.isProEnabled() || PrefGetter.isAllFeaturesUnlocked()) {
+                    DeleteFileBottomSheetFragment.Companion.newInstance(position, item.getName())
+                    .show(getChildFragmentManager(), DeleteFileBottomSheetFragment.class.getSimpleName());
+                } else {
+                    PremiumActivity.Companion.startActivity(getContext());
+                }
+                break;
+            case R.id.history:
+                getPresenter().onItemLongClick(position, v, item);
+                break;
             }
             return true;
         });
@@ -252,6 +252,6 @@ public class RepoFilesFragment extends BaseFragment<RepoFilesMvp.View, RepoFiles
 
     private boolean canOpen(@NonNull RepoFile item) {
         return item.getDownloadUrl() != null && !MarkDownProvider.isImage(item.getDownloadUrl())
-                && !MarkDownProvider.isArchive(item.getDownloadUrl());
+               && !MarkDownProvider.isArchive(item.getDownloadUrl());
     }
 }

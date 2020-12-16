@@ -94,11 +94,11 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
 
     public Single<PullRequest> save(PullRequest entity) {
         return RxHelper.getSingle(App.getInstance().getDataStore()
-                .delete(PullRequest.class)
-                .where(PullRequest.ID.eq(entity.getId()))
-                .get()
-                .single()
-                .flatMap(observer -> App.getInstance().getDataStore().insert(entity)));
+                                  .delete(PullRequest.class)
+                                  .where(PullRequest.ID.eq(entity.getId()))
+                                  .get()
+                                  .single()
+                                  .flatMap(observer -> App.getInstance().getDataStore().insert(entity)));
     }
 
     public static Disposable save(@NonNull List<PullRequest> models, @NonNull String repoId, @NonNull String login) {
@@ -106,10 +106,10 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                 dataSource.delete(PullRequest.class)
-                        .where(REPO_ID.equal(repoId)
-                                .and(LOGIN.equal(login)))
-                        .get()
-                        .value();
+                .where(REPO_ID.equal(repoId)
+                       .and(LOGIN.equal(login)))
+                .get()
+                .value();
                 if (!models.isEmpty()) {
                     for (PullRequest pullRequest : models) {
                         dataSource.delete(PullRequest.class).where(PullRequest.ID.eq(pullRequest.getId())).get().value();
@@ -127,34 +127,34 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
     }
 
     public static Single<List<PullRequest>> getPullRequests(@NonNull String repoId, @NonNull String login,
-                                                            @NonNull IssueState issueState) {
+            @NonNull IssueState issueState) {
         return App.getInstance().getDataStore()
-                .select(PullRequest.class)
-                .where(REPO_ID.equal(repoId)
-                        .and(LOGIN.equal(login))
-                        .and(STATE.equal(issueState)))
-                .orderBy(UPDATED_AT.desc())
-                .get()
-                .observable()
-                .toList();
+               .select(PullRequest.class)
+               .where(REPO_ID.equal(repoId)
+                      .and(LOGIN.equal(login))
+                      .and(STATE.equal(issueState)))
+               .orderBy(UPDATED_AT.desc())
+               .get()
+               .observable()
+               .toList();
     }
 
     public static Observable<PullRequest> getPullRequestById(long id) {
         return App.getInstance().getDataStore()
-                .select(PullRequest.class)
-                .where(ID.eq(id))
-                .get()
-                .observable();
+               .select(PullRequest.class)
+               .where(ID.eq(id))
+               .get()
+               .observable();
     }
 
     public static Observable<PullRequest> getPullRequestByNumber(int number, @NonNull String repoId, @NonNull String login) {
         return App.getInstance().getDataStore()
-                .select(PullRequest.class)
-                .where(REPO_ID.equal(repoId)
-                        .and(LOGIN.equal(login))
-                        .and(NUMBER.equal(number)))
-                .get()
-                .observable();
+               .select(PullRequest.class)
+               .where(REPO_ID.equal(repoId)
+                      .and(LOGIN.equal(login))
+                      .and(NUMBER.equal(number)))
+               .get()
+               .observable();
     }
 
     @NonNull public static SpannableBuilder getMergeBy(@NonNull PullRequest pullRequest, @NonNull Context context, boolean showRepoName) {
@@ -166,25 +166,25 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
                 PullsIssuesParser parser = PullsIssuesParser.getForPullRequest(pullRequest.getHtmlUrl());
                 if (parser != null)
                     builder.bold(parser.getLogin())
-                            .append("/")
-                            .bold(parser.getRepoId())
-                            .append(" ")
-                            .bold("#").bold(String.valueOf(pullRequest.getNumber()))
-                            .append(" ");
+                    .append("/")
+                    .bold(parser.getRepoId())
+                    .append(" ")
+                    .bold("#").bold(String.valueOf(pullRequest.getNumber()))
+                    .append(" ");
             } else {
                 builder.bold("#" + pullRequest.getNumber())
-                        .append(" ")
-                        .append(merger != null ? merger.getLogin() + " " : "");
+                .append(" ")
+                .append(merger != null ? merger.getLogin() + " " : "");
             }
             builder.append(context.getString(R.string.merged).toLowerCase())
-                    .append(" ");
+            .append(" ");
             if (pullRequest.getHead() != null) {
                 builder.bold(pullRequest.getHead().getRef())
-                        .append(" ")
-                        .append(context.getString(R.string.to))
-                        .append(" ")
-                        .bold(pullRequest.getBase().getRef())
-                        .append(" ");
+                .append(" ")
+                .append(context.getString(R.string.to))
+                .append(" ")
+                .bold(pullRequest.getBase().getRef())
+                .append(" ");
             }
             builder.append(ParseDateFormat.getTimeAgo(pullRequest.getMergedAt()));
             return builder;
@@ -196,43 +196,45 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
                 PullsIssuesParser parser = PullsIssuesParser.getForPullRequest(pullRequest.getHtmlUrl());
                 if (parser != null) {
                     builder.bold(parser.getLogin())
-                            .append("/")
-                            .bold(parser.getRepoId())
-                            .append(" ")
-                            .bold("#").bold(String.valueOf(pullRequest.getNumber()))
-                            .append(" ");
+                    .append("/")
+                    .bold(parser.getRepoId())
+                    .append(" ")
+                    .bold("#").bold(String.valueOf(pullRequest.getNumber()))
+                    .append(" ");
                 }
             } else {
                 builder.bold("#" + pullRequest.getNumber())
-                        .append(" ")
-                        .append(user.getLogin())
-                        .append(" ");
+                .append(" ")
+                .append(user.getLogin())
+                .append(" ");
             }
             if (pullRequest.getState() == IssueState.open && pullRequest.getHead() != null && pullRequest.getBase() != null) {
                 return builder
-                        .append(context.getString(R.string.want_to_merge))
-                        .append(" ")
-                        .bold(pullRequest.getHead().getRef())
-                        .append(" ")
-                        .append(context.getString(R.string.to))
-                        .append(" ")
-                        .bold(pullRequest.getBase().getRef())
-                        .append(" ")
-                        .append(ParseDateFormat.getTimeAgo(pullRequest.getState() == IssueState.closed
-                                                           ? pullRequest.getClosedAt() : pullRequest.getCreatedAt()));
+                       .append(context.getString(R.string.want_to_merge))
+                       .append(" ")
+                       .bold(pullRequest.getHead().getRef())
+                       .append(" ")
+                       .append(context.getString(R.string.to))
+                       .append(" ")
+                       .bold(pullRequest.getBase().getRef())
+                       .append(" ")
+                       .append(ParseDateFormat.getTimeAgo(pullRequest.getState() == IssueState.closed
+                               ? pullRequest.getClosedAt() : pullRequest.getCreatedAt()));
             } else {
                 return builder
-                        .bold(status.toLowerCase())
-                        .append(" ")
-                        .bold(pullRequest.getHead() != null ? pullRequest.getHead().getRef() : "")
-                        .append(" ")
-                        .append(ParseDateFormat.getTimeAgo(pullRequest.getState() == IssueState.closed
-                                                           ? pullRequest.getClosedAt() : pullRequest.getCreatedAt()));
+                       .bold(status.toLowerCase())
+                       .append(" ")
+                       .bold(pullRequest.getHead() != null ? pullRequest.getHead().getRef() : "")
+                       .append(" ")
+                       .append(ParseDateFormat.getTimeAgo(pullRequest.getState() == IssueState.closed
+                               ? pullRequest.getClosedAt() : pullRequest.getCreatedAt()));
             }
         }
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -328,8 +330,12 @@ import static com.fastaccess.data.dao.model.PullRequest.UPDATED_AT;
     }
 
     public static final Creator<PullRequest> CREATOR = new Creator<PullRequest>() {
-        @Override public PullRequest createFromParcel(Parcel source) {return new PullRequest(source);}
+        @Override public PullRequest createFromParcel(Parcel source) {
+            return new PullRequest(source);
+        }
 
-        @Override public PullRequest[] newArray(int size) {return new PullRequest[size];}
+        @Override public PullRequest[] newArray(int size) {
+            return new PullRequest[size];
+        }
     };
 }

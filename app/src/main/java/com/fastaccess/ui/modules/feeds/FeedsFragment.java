@@ -56,9 +56,9 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
     public static FeedsFragment newInstance(@Nullable String user, boolean isOrg) {
         FeedsFragment feedsFragment = new FeedsFragment();
         feedsFragment.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, user)
-                .put(BundleConstant.EXTRA_TWO, isOrg)
-                .end());
+                                   .put(BundleConstant.EXTRA, user)
+                                   .put(BundleConstant.EXTRA_TWO, isOrg)
+                                   .end());
         return feedsFragment;
     }
 
@@ -74,7 +74,7 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
         adapter = new FeedsAdapter(getPresenter().getEvents(), isProfile());
         adapter.setListener(getPresenter());
         getLoadMore().initialize(getPresenter().getCurrentPage(), getPresenter()
-                .getPreviousTotal());
+                                 .getPreviousTotal());
         recycler.setAdapter(adapter);
         if (isProfile()) {
             recycler.addDivider();
@@ -162,7 +162,7 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
             GitCommitModel model = (GitCommitModel) item;
             NameParser nameParser = new NameParser(model.getUrl());
             Intent intent = CommitPagerActivity.createIntent(getContext(), nameParser.getName(),
-                    nameParser.getUsername(), model.getSha(), true, LinkParserHelper.isEnterprise(model.getUrl()));
+                            nameParser.getUsername(), model.getSha(), true, LinkParserHelper.isEnterprise(model.getUrl()));
             getContext().startActivity(intent);
         }
     }
@@ -181,6 +181,6 @@ public class FeedsFragment extends BaseFragment<FeedsMvp.View, FeedsPresenter> i
 
     public boolean isProfile() {
         return !InputHelper.isEmpty(getArguments().getString(BundleConstant.EXTRA)) &&
-                !getArguments().getBoolean(BundleConstant.EXTRA_TWO);
+               !getArguments().getBoolean(BundleConstant.EXTRA_TWO);
     }
 }

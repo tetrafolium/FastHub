@@ -46,7 +46,7 @@ public class AssigneesViewHolder extends BaseViewHolder<User> {
     }
 
     public static AssigneesViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable AssigneesAdapter.OnSelectAssignee onSelectAssignee,
-                                                  @NonNull BaseRecyclerAdapter adapter) {
+            @NonNull BaseRecyclerAdapter adapter) {
         return new AssigneesViewHolder(getView(viewGroup, R.layout.feeds_row_item), onSelectAssignee, adapter);
     }
 
@@ -56,7 +56,7 @@ public class AssigneesViewHolder extends BaseViewHolder<User> {
         date.setVisibility(View.GONE);
         if (onSelectAssignee != null) {
             itemView.setBackgroundColor(onSelectAssignee.isAssigneeSelected(getAdapterPosition())
-                    ? lightGray : ViewHelper.getWindowBackground(itemView.getContext()));
+                                        ? lightGray : ViewHelper.getWindowBackground(itemView.getContext()));
         }
     }
 }

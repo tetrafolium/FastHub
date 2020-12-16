@@ -26,8 +26,8 @@ interface PullRequestCommitsMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<Commit>,
-            BaseMvp.PaginationListener {
+        BaseViewHolder.OnItemClickListener<Commit>,
+        BaseMvp.PaginationListener {
         void onFragmentCreated(@NonNull Bundle bundle);
 
         @NonNull ArrayList<Commit> getCommits();

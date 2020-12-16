@@ -20,7 +20,9 @@ public class MergeRequestModel implements Parcelable {
     private String head;
     private String mergeMethod = "merge";
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.commitMessage);
@@ -37,8 +39,12 @@ public class MergeRequestModel implements Parcelable {
     }
 
     public static final Creator<MergeRequestModel> CREATOR = new Creator<MergeRequestModel>() {
-        @Override public MergeRequestModel createFromParcel(Parcel source) {return new MergeRequestModel(source);}
+        @Override public MergeRequestModel createFromParcel(Parcel source) {
+            return new MergeRequestModel(source);
+        }
 
-        @Override public MergeRequestModel[] newArray(int size) {return new MergeRequestModel[size];}
+        @Override public MergeRequestModel[] newArray(int size) {
+            return new MergeRequestModel[size];
+        }
     };
 }

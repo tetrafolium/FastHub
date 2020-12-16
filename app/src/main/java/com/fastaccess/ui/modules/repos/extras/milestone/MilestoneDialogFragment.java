@@ -45,9 +45,9 @@ public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, Mil
     public static MilestoneDialogFragment newInstance(@NonNull String login, @NonNull String repo) {
         MilestoneDialogFragment fragment = new MilestoneDialogFragment();
         fragment.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.ID, repo)
-                .end());
+                              .put(BundleConstant.EXTRA, login)
+                              .put(BundleConstant.ID, repo)
+                              .end());
         return fragment;
     }
 
@@ -155,7 +155,7 @@ public class MilestoneDialogFragment extends BaseFragment<MilestoneMvp.View, Mil
     private boolean onAddMilestone() {
         //noinspection ConstantConditions
         CreateMilestoneDialogFragment.newInstance(getArguments().getString(BundleConstant.EXTRA), getArguments().getString(BundleConstant.ID))
-                .show(getChildFragmentManager(), CreateMilestoneDialogFragment.TAG);
+        .show(getChildFragmentManager(), CreateMilestoneDialogFragment.TAG);
         return true;
     }
 }

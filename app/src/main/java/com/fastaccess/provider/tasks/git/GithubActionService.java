@@ -42,14 +42,14 @@ public class GithubActionService extends IntentService {
     private CompositeDisposable disposable = new CompositeDisposable();
 
     @IntDef({
-            STAR_REPO,
-            UNSTAR_REPO,
-            FORK_REPO,
-            WATCH_REPO,
-            UNWATCH_REPO,
-            STAR_GIST,
-            UNSTAR_GIST,
-            FORK_GIST,
+        STAR_REPO,
+        UNSTAR_REPO,
+        FORK_REPO,
+        WATCH_REPO,
+        UNWATCH_REPO,
+        STAR_GIST,
+        UNSTAR_GIST,
+        FORK_GIST,
     })
     @Retention(RetentionPolicy.SOURCE) @interface GitActionType {}
 
@@ -57,21 +57,21 @@ public class GithubActionService extends IntentService {
                                     @GitActionType int type, boolean isEnterprise) {
         Intent intent = new Intent(context.getApplicationContext(), GithubActionService.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.ID, repo)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TYPE, type)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .end());
+                         .put(BundleConstant.ID, repo)
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.EXTRA_TYPE, type)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .end());
         context.startService(intent);
     }
 
     public static void startForGist(@NonNull Context context, @NonNull String id, @GitActionType int type, boolean isEnterprise) {
         Intent intent = new Intent(context.getApplicationContext(), GithubActionService.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.ID, id)
-                .put(BundleConstant.EXTRA_TYPE, type)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .end());
+                         .put(BundleConstant.ID, id)
+                         .put(BundleConstant.EXTRA_TYPE, type)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .end());
         context.startService(intent);
     }
 
@@ -87,30 +87,30 @@ public class GithubActionService extends IntentService {
             String login = bundle.getString(BundleConstant.EXTRA);
             boolean isEnterprise = bundle.getBoolean(BundleConstant.IS_ENTERPRISE);
             switch (type) {
-                case FORK_GIST:
-                    forkGist(id, isEnterprise);
-                    break;
-                case FORK_REPO:
-                    forkRepo(id, login, isEnterprise);
-                    break;
-                case STAR_GIST:
-                    starGist(id, isEnterprise);
-                    break;
-                case STAR_REPO:
-                    starRepo(id, login, isEnterprise);
-                    break;
-                case UNSTAR_GIST:
-                    unStarGist(id, isEnterprise);
-                    break;
-                case UNSTAR_REPO:
-                    unStarRepo(id, login, isEnterprise);
-                    break;
-                case UNWATCH_REPO:
-                    unWatchRepo(id, login, isEnterprise);
-                    break;
-                case WATCH_REPO:
-                    watchRepo(id, login, isEnterprise);
-                    break;
+            case FORK_GIST:
+                forkGist(id, isEnterprise);
+                break;
+            case FORK_REPO:
+                forkRepo(id, login, isEnterprise);
+                break;
+            case STAR_GIST:
+                starGist(id, isEnterprise);
+                break;
+            case STAR_REPO:
+                starRepo(id, login, isEnterprise);
+                break;
+            case UNSTAR_GIST:
+                unStarGist(id, isEnterprise);
+                break;
+            case UNSTAR_REPO:
+                unStarRepo(id, login, isEnterprise);
+                break;
+            case UNWATCH_REPO:
+                unWatchRepo(id, login, isEnterprise);
+                break;
+            case WATCH_REPO:
+                watchRepo(id, login, isEnterprise);
+                break;
             }
         }
     }
@@ -124,12 +124,12 @@ public class GithubActionService extends IntentService {
         if (id != null) {
             String msg = getString(R.string.forking, getString(R.string.gist));
             disposable.add(
-                    RestProvider.getGistService(isEnterprise)
-                            .forkGist(id)
-                            .doOnSubscribe(disposable -> showNotification(msg))
-                            .subscribeOn(Schedulers.io())
-                            .subscribe(response -> {
-                            }, throwable -> hideNotification(msg), () -> hideNotification(msg))
+                RestProvider.getGistService(isEnterprise)
+                .forkGist(id)
+                .doOnSubscribe(disposable -> showNotification(msg))
+                .subscribeOn(Schedulers.io())
+            .subscribe(response -> {
+            }, throwable -> hideNotification(msg), () -> hideNotification(msg))
             );
         }
     }
@@ -138,12 +138,12 @@ public class GithubActionService extends IntentService {
         if (id != null && login != null) {
             String msg = getString(R.string.forking, id);
             disposable.add(
-                    RestProvider.getRepoService(isEnterprise)
-                            .forkRepo(login, id)
-                            .doOnSubscribe(disposable -> showNotification(msg))
-                            .subscribeOn(Schedulers.io())
-                            .subscribe(response -> {
-                            }, throwable -> hideNotification(msg), () -> hideNotification(msg))
+                RestProvider.getRepoService(isEnterprise)
+                .forkRepo(login, id)
+                .doOnSubscribe(disposable -> showNotification(msg))
+                .subscribeOn(Schedulers.io())
+            .subscribe(response -> {
+            }, throwable -> hideNotification(msg), () -> hideNotification(msg))
             );
         }
     }
@@ -152,12 +152,12 @@ public class GithubActionService extends IntentService {
         if (id != null) {
             String msg = getString(R.string.starring, getString(R.string.gist));
             disposable.add(RestProvider.getGistService(isEnterprise)
-                    .starGist(id)
-                    .doOnSubscribe(disposable -> showNotification(msg))
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(response -> {
-                    }, throwable -> hideNotification(msg), () -> hideNotification(msg))
-            );
+                           .starGist(id)
+                           .doOnSubscribe(disposable -> showNotification(msg))
+                           .subscribeOn(Schedulers.io())
+            .subscribe(response -> {
+            }, throwable -> hideNotification(msg), () -> hideNotification(msg))
+                          );
         }
     }
 
@@ -165,12 +165,12 @@ public class GithubActionService extends IntentService {
         if (id != null && login != null) {
             String msg = getString(R.string.starring, id);
             disposable.add(RestProvider.getRepoService(isEnterprise)
-                    .starRepo(login, id)
-                    .doOnSubscribe(disposable -> showNotification(msg))
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(response -> {
-                    }, throwable -> hideNotification(msg), () -> hideNotification(msg))
-            );
+                           .starRepo(login, id)
+                           .doOnSubscribe(disposable -> showNotification(msg))
+                           .subscribeOn(Schedulers.io())
+            .subscribe(response -> {
+            }, throwable -> hideNotification(msg), () -> hideNotification(msg))
+                          );
         }
     }
 
@@ -178,12 +178,12 @@ public class GithubActionService extends IntentService {
         if (id != null) {
             String msg = getString(R.string.un_starring, getString(R.string.gist));
             disposable.add(RestProvider.getGistService(isEnterprise)
-                    .unStarGist(id)
-                    .doOnSubscribe(disposable -> showNotification(msg))
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(response -> {
-                    }, throwable -> hideNotification(msg), () -> hideNotification(msg))
-            );
+                           .unStarGist(id)
+                           .doOnSubscribe(disposable -> showNotification(msg))
+                           .subscribeOn(Schedulers.io())
+            .subscribe(response -> {
+            }, throwable -> hideNotification(msg), () -> hideNotification(msg))
+                          );
         }
     }
 
@@ -191,12 +191,12 @@ public class GithubActionService extends IntentService {
         if (id != null && login != null) {
             String msg = getString(R.string.un_starring, id);
             disposable.add(RestProvider.getRepoService(isEnterprise)
-                    .unstarRepo(login, id)
-                    .doOnSubscribe(disposable -> showNotification(msg))
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(response -> {
-                    }, throwable -> hideNotification(msg), () -> hideNotification(msg))
-            );
+                           .unstarRepo(login, id)
+                           .doOnSubscribe(disposable -> showNotification(msg))
+                           .subscribeOn(Schedulers.io())
+            .subscribe(response -> {
+            }, throwable -> hideNotification(msg), () -> hideNotification(msg))
+                          );
         }
     }
 
@@ -204,12 +204,12 @@ public class GithubActionService extends IntentService {
         if (id != null && login != null) {
             String msg = getString(R.string.un_watching, id);
             disposable.add(RestProvider.getRepoService(isEnterprise)
-                    .unwatchRepo(login, id)
-                    .doOnSubscribe(disposable -> showNotification(msg))
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(response -> {
-                    }, throwable -> hideNotification(msg), () -> hideNotification(msg))
-            );
+                           .unwatchRepo(login, id)
+                           .doOnSubscribe(disposable -> showNotification(msg))
+                           .subscribeOn(Schedulers.io())
+            .subscribe(response -> {
+            }, throwable -> hideNotification(msg), () -> hideNotification(msg))
+                          );
         }
     }
 
@@ -217,20 +217,20 @@ public class GithubActionService extends IntentService {
         if (id != null && login != null) {
             String msg = getString(R.string.watching, id);
             disposable.add(RestProvider.getRepoService(isEnterprise)
-                    .watchRepo(login, id)
-                    .doOnSubscribe(disposable -> showNotification(msg))
-                    .subscribeOn(Schedulers.io())
-                    .subscribe(response -> {
-                    }, throwable -> hideNotification(msg), () -> hideNotification(msg))
-            );
+                           .watchRepo(login, id)
+                           .doOnSubscribe(disposable -> showNotification(msg))
+                           .subscribeOn(Schedulers.io())
+            .subscribe(response -> {
+            }, throwable -> hideNotification(msg), () -> hideNotification(msg))
+                          );
         }
     }
 
     private NotificationCompat.Builder getNotification(@NonNull String title) {
         if (notification == null) {
             notification = new NotificationCompat.Builder(this, title)
-                    .setSmallIcon(R.drawable.ic_sync)
-                    .setProgress(0, 100, true);
+            .setSmallIcon(R.drawable.ic_sync)
+            .setProgress(0, 100, true);
         }
         notification.setContentTitle(title);
         return notification;

@@ -17,7 +17,9 @@ public class LabelModel implements Parcelable {
     String name;
     String color;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.url);
@@ -32,9 +34,13 @@ public class LabelModel implements Parcelable {
     }
 
     public static final Creator<LabelModel> CREATOR = new Creator<LabelModel>() {
-        @Override public LabelModel createFromParcel(Parcel source) {return new LabelModel(source);}
+        @Override public LabelModel createFromParcel(Parcel source) {
+            return new LabelModel(source);
+        }
 
-        @Override public LabelModel[] newArray(int size) {return new LabelModel[size];}
+        @Override public LabelModel[] newArray(int size) {
+            return new LabelModel[size];
+        }
     };
 
     @Override public boolean equals(Object o) {
@@ -52,9 +58,9 @@ public class LabelModel implements Parcelable {
 
     @Override public String toString() {
         return "LabelModel{" +
-                "url='" + url + '\'' +
-                ", name='" + name + '\'' +
-                ", color='" + color + '\'' +
-                '}';
+               "url='" + url + '\'' +
+               ", name='" + name + '\'' +
+               ", color='" + color + '\'' +
+               '}';
     }
 }

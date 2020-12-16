@@ -55,10 +55,10 @@ class OrgMembersPresenter extends BasePresenter<OrgMembersMvp.View> implements O
             return false;
         }
         makeRestCall(RestProvider.getOrgService(isEnterprise()).getOrgMembers(parameter, page),
-                response -> {
-                    lastPage = response.getLast();
-                    sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
-                });
+        response -> {
+            lastPage = response.getLast();
+            sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
+        });
         return true;
     }
 

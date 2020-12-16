@@ -21,7 +21,7 @@ import java.util.List;
 interface GistCommentsMvp {
 
     interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-            android.view.View.OnClickListener {
+        android.view.View.OnClickListener {
 
         void onNotifyAdapter(@Nullable List<Comment> items, int page);
 
@@ -47,7 +47,7 @@ interface GistCommentsMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseMvp.PaginationListener<String>, BaseViewHolder.OnItemClickListener<Comment> {
+        BaseMvp.PaginationListener<String>, BaseViewHolder.OnItemClickListener<Comment> {
 
         @NonNull ArrayList<Comment> getComments();
 

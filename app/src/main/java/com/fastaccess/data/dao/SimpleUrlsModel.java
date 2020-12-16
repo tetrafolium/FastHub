@@ -33,7 +33,9 @@ public class SimpleUrlsModel implements Parcelable {
         return item;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.item);
@@ -46,8 +48,12 @@ public class SimpleUrlsModel implements Parcelable {
     }
 
     public static final Creator<SimpleUrlsModel> CREATOR = new Creator<SimpleUrlsModel>() {
-        @Override public SimpleUrlsModel createFromParcel(Parcel source) {return new SimpleUrlsModel(source);}
+        @Override public SimpleUrlsModel createFromParcel(Parcel source) {
+            return new SimpleUrlsModel(source);
+        }
 
-        @Override public SimpleUrlsModel[] newArray(int size) {return new SimpleUrlsModel[size];}
+        @Override public SimpleUrlsModel[] newArray(int size) {
+            return new SimpleUrlsModel[size];
+        }
     };
 }

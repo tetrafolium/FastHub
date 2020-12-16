@@ -22,7 +22,7 @@ import java.util.List;
 interface RepoCommitsMvp {
 
     interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-            android.view.View.OnClickListener, BranchesMvp.BranchSelectionListener {
+        android.view.View.OnClickListener, BranchesMvp.BranchSelectionListener {
         void onNotifyAdapter(@Nullable List<Commit> items, int page);
 
         @NonNull OnLoadMore getLoadMore();
@@ -33,8 +33,8 @@ interface RepoCommitsMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<Commit>,
-            BaseMvp.PaginationListener {
+        BaseViewHolder.OnItemClickListener<Commit>,
+        BaseMvp.PaginationListener {
         void onFragmentCreated(@NonNull Bundle bundle);
 
         @NonNull ArrayList<Commit> getCommits();

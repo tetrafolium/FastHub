@@ -70,7 +70,9 @@ public class PullRequestCommitModel implements Parcelable {
         this.login = login;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.login);
@@ -91,8 +93,12 @@ public class PullRequestCommitModel implements Parcelable {
     }
 
     public static final Creator<PullRequestCommitModel> CREATOR = new Creator<PullRequestCommitModel>() {
-        @Override public PullRequestCommitModel createFromParcel(Parcel source) {return new PullRequestCommitModel(source);}
+        @Override public PullRequestCommitModel createFromParcel(Parcel source) {
+            return new PullRequestCommitModel(source);
+        }
 
-        @Override public PullRequestCommitModel[] newArray(int size) {return new PullRequestCommitModel[size];}
+        @Override public PullRequestCommitModel[] newArray(int size) {
+            return new PullRequestCommitModel[size];
+        }
     };
 }

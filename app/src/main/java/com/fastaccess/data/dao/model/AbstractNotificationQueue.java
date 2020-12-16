@@ -27,8 +27,8 @@ import lombok.NoArgsConstructor;
 
     public static boolean exists(long notificationId) {
         return App.getInstance().getDataStore().toBlocking().select(NotificationQueue.class)
-                .where(NotificationQueue.NOTIFICATION_ID.eq(notificationId))
-                .get().firstOrNull() != null;
+               .where(NotificationQueue.NOTIFICATION_ID.eq(notificationId))
+               .get().firstOrNull() != null;
     }
 
     public static Observable<Boolean> put(@Nullable List<Notification> models) {
@@ -54,7 +54,9 @@ import lombok.NoArgsConstructor;
         }));
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.notificationId);
@@ -68,9 +70,13 @@ import lombok.NoArgsConstructor;
     }
 
     public static final Parcelable.Creator<NotificationQueue> CREATOR = new Parcelable.Creator<NotificationQueue>() {
-        @Override public NotificationQueue createFromParcel(Parcel source) {return new NotificationQueue(source);}
+        @Override public NotificationQueue createFromParcel(Parcel source) {
+            return new NotificationQueue(source);
+        }
 
-        @Override public NotificationQueue[] newArray(int size) {return new NotificationQueue[size];}
+        @Override public NotificationQueue[] newArray(int size) {
+            return new NotificationQueue[size];
+        }
     };
 
 }

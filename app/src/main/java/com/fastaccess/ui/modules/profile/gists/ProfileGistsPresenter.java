@@ -62,11 +62,11 @@ class ProfileGistsPresenter extends BasePresenter<ProfileGistsMvp.View> implemen
             return false;
         }
         makeRestCall(RestProvider.getGistService(isEnterprise()).getUserGists(parameter, page),
-                listResponse -> {
-                    lastPage = listResponse.getLast();
-                    sendToView(view -> view.onNotifyAdapter(listResponse.getItems(), page));
-                    manageDisposable(Gist.save(Stream.of(listResponse.getItems()).toList(), parameter));
-                });
+        listResponse -> {
+            lastPage = listResponse.getLast();
+            sendToView(view -> view.onNotifyAdapter(listResponse.getItems(), page));
+            manageDisposable(Gist.save(Stream.of(listResponse.getItems()).toList(), parameter));
+        });
         return true;
     }
 
@@ -77,7 +77,7 @@ class ProfileGistsPresenter extends BasePresenter<ProfileGistsMvp.View> implemen
     @Override public void onWorkOffline(@NonNull String login) {
         if (gistsModels.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Gist.getMyGists(login).toObservable()).subscribe(gistsModels1 ->
-                    sendToView(view -> view.onNotifyAdapter(gistsModels1, 1))));
+                             sendToView(view -> view.onNotifyAdapter(gistsModels1, 1))));
         } else {
             sendToView(ProfileGistsMvp.View::hideProgress);
         }

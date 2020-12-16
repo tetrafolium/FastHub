@@ -43,7 +43,7 @@ import butterknife.OnClick;
  */
 
 public class IssuePopupFragment extends BaseMvpBottomSheetDialogFragment<IssuePopupMvp.View, IssuePopupPresenter>
-        implements IssuePopupMvp.View {
+    implements IssuePopupMvp.View {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.appbar) AppBarLayout appbar;
@@ -71,7 +71,7 @@ public class IssuePopupFragment extends BaseMvpBottomSheetDialogFragment<IssuePo
         }
         if (parser == null) return;
         fragment.setArguments(getBundle(parser.getLogin(), parser.getRepoId(), issue.getNumber(), issue.getTitle(), issue.getBody(), issue.getUser(),
-                issue.getAssignee(), issue.getLabels(), issue.getMilestone(), !issue.isLocked()));
+                                        issue.getAssignee(), issue.getLabels(), issue.getMilestone(), !issue.isLocked()));
         fragment.show(manager, "");
     }
 
@@ -80,28 +80,28 @@ public class IssuePopupFragment extends BaseMvpBottomSheetDialogFragment<IssuePo
         PullsIssuesParser parser = PullsIssuesParser.getForPullRequest(pullRequest.getHtmlUrl());
         if (parser == null) return;
         fragment.setArguments(getBundle(parser.getLogin(), parser.getRepoId(), pullRequest.getNumber(),
-                pullRequest.getTitle(), pullRequest.getBody(), pullRequest.getUser(),
-                pullRequest.getAssignee(), pullRequest.getLabels(), pullRequest.getMilestone(), !pullRequest.isLocked()));
+                                        pullRequest.getTitle(), pullRequest.getBody(), pullRequest.getUser(),
+                                        pullRequest.getAssignee(), pullRequest.getLabels(), pullRequest.getMilestone(), !pullRequest.isLocked()));
         fragment.show(manager, "");
     }
 
     @NonNull private static Bundle getBundle(@NonNull String login, @NonNull String repoId,
-                                             int number, @NonNull String title, @NonNull String body,
-                                             @NonNull User user, @Nullable User assignee,
-                                             @Nullable LabelListModel labels, @Nullable MilestoneModel milestone,
-                                             boolean canComment) {
+            int number, @NonNull String title, @NonNull String body,
+            @NonNull User user, @Nullable User assignee,
+            @Nullable LabelListModel labels, @Nullable MilestoneModel milestone,
+            boolean canComment) {
         return Bundler.start()
-                .put(BundleConstant.EXTRA_SEVEN, login)
-                .put(BundleConstant.EXTRA_EIGHT, repoId)
-                .put(BundleConstant.ID, number)
-                .put(BundleConstant.EXTRA, title)
-                .put(BundleConstant.EXTRA_TWO, body)
-                .put(BundleConstant.EXTRA_THREE, user)
-                .put(BundleConstant.EXTRA_FOUR, assignee)
-                .putParcelableArrayList(BundleConstant.EXTRA_FIVE, labels)
-                .put(BundleConstant.EXTRA_SIX, milestone)
-                .put(BundleConstant.YES_NO_EXTRA, canComment)
-                .end();
+               .put(BundleConstant.EXTRA_SEVEN, login)
+               .put(BundleConstant.EXTRA_EIGHT, repoId)
+               .put(BundleConstant.ID, number)
+               .put(BundleConstant.EXTRA, title)
+               .put(BundleConstant.EXTRA_TWO, body)
+               .put(BundleConstant.EXTRA_THREE, user)
+               .put(BundleConstant.EXTRA_FOUR, assignee)
+               .putParcelableArrayList(BundleConstant.EXTRA_FIVE, labels)
+               .put(BundleConstant.EXTRA_SIX, milestone)
+               .put(BundleConstant.YES_NO_EXTRA, canComment)
+               .end();
     }
 
     @OnClick(R.id.submit) void onSubmit() {
@@ -109,7 +109,7 @@ public class IssuePopupFragment extends BaseMvpBottomSheetDialogFragment<IssuePo
         if (!isEmpty) {
             //noinspection ConstantConditions
             getPresenter().onSubmit(getArguments().getString(BundleConstant.EXTRA_SEVEN), getArguments().getString(BundleConstant.EXTRA_EIGHT),
-                    getArguments().getInt(BundleConstant.ID), InputHelper.toString(comment));
+                                    getArguments().getInt(BundleConstant.ID), InputHelper.toString(comment));
         } else {
             showMessage(R.string.error, R.string.required_field);
         }

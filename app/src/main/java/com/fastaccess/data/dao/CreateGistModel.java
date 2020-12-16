@@ -21,7 +21,9 @@ public class CreateGistModel implements Parcelable {
     private String description;
     @SerializedName("public") private Boolean publicGist;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeSerializable(this.files);
@@ -36,8 +38,12 @@ public class CreateGistModel implements Parcelable {
     }
 
     public static final Creator<CreateGistModel> CREATOR = new Creator<CreateGistModel>() {
-        @Override public CreateGistModel createFromParcel(Parcel source) {return new CreateGistModel(source);}
+        @Override public CreateGistModel createFromParcel(Parcel source) {
+            return new CreateGistModel(source);
+        }
 
-        @Override public CreateGistModel[] newArray(int size) {return new CreateGistModel[size];}
+        @Override public CreateGistModel[] newArray(int size) {
+            return new CreateGistModel[size];
+        }
     };
 }

@@ -26,7 +26,7 @@ public class CreateLabelPresenter extends BasePresenter<CreateLabelMvp.View> imp
         labelModel.setColor(color.replaceAll("#", ""));
         labelModel.setName(name);
         makeRestCall(RestProvider.getRepoService(isEnterprise())
-                        .addLabel(login, repo, labelModel),
-                labelModel1 -> sendToView(view -> view.onSuccessfullyCreated(labelModel1)));
+                     .addLabel(login, repo, labelModel),
+                     labelModel1 -> sendToView(view -> view.onSuccessfullyCreated(labelModel1)));
     }
 }

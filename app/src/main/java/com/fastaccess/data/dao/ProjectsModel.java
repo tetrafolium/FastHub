@@ -121,7 +121,9 @@ public class ProjectsModel implements Parcelable {
         this.updatedAt = updatedAt;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.ownerUrl);
@@ -158,8 +160,12 @@ public class ProjectsModel implements Parcelable {
     }
 
     public static final Creator<ProjectsModel> CREATOR = new Creator<ProjectsModel>() {
-        @Override public ProjectsModel createFromParcel(Parcel source) {return new ProjectsModel(source);}
+        @Override public ProjectsModel createFromParcel(Parcel source) {
+            return new ProjectsModel(source);
+        }
 
-        @Override public ProjectsModel[] newArray(int size) {return new ProjectsModel[size];}
+        @Override public ProjectsModel[] newArray(int size) {
+            return new ProjectsModel[size];
+        }
     };
 }

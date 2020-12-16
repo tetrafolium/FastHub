@@ -40,8 +40,8 @@ interface RepoIssuesMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<Issue>,
-            BaseMvp.PaginationListener<IssueState> {
+        BaseViewHolder.OnItemClickListener<Issue>,
+        BaseMvp.PaginationListener<IssueState> {
 
         void onFragmentCreated(@NonNull Bundle bundle, @NonNull IssueState issueState);
 

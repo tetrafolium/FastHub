@@ -27,7 +27,7 @@ import butterknife.BindView;
  */
 
 public class PinnedPullRequestFragment extends BaseFragment<PinnedPullRequestMvp.View, PinnedPullRequestPresenter> implements PinnedPullRequestMvp
-        .View {
+    .View {
 
     public static final String TAG = PinnedPullRequestFragment.class.getSimpleName();
 
@@ -50,11 +50,11 @@ public class PinnedPullRequestFragment extends BaseFragment<PinnedPullRequestMvp
 
     @Override public void onDeletePinnedPullRequest(long id, int position) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
-                Bundler.start().put(BundleConstant.YES_NO_EXTRA, true)
-                        .put(BundleConstant.EXTRA, position)
-                        .put(BundleConstant.ID, id)
-                        .end())
-                .show(getChildFragmentManager(), MessageDialogView.TAG);
+                                      Bundler.start().put(BundleConstant.YES_NO_EXTRA, true)
+                                      .put(BundleConstant.EXTRA, position)
+                                      .put(BundleConstant.ID, id)
+                                      .end())
+        .show(getChildFragmentManager(), MessageDialogView.TAG);
     }
 
     @Override protected int fragmentLayout() {

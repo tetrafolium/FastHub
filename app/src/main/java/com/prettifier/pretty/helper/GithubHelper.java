@@ -23,8 +23,8 @@ import java.util.ArrayList;
 public class GithubHelper {
 
     @NonNull public static String generateContent(@NonNull Context context, @NonNull String source,
-                                                  @Nullable String baseUrl, boolean dark,
-                                                  boolean isWiki, boolean replace) {
+            @Nullable String baseUrl, boolean dark,
+            boolean isWiki, boolean replace) {
         if (baseUrl == null) {
             return mergeContent(context, Jsoup.parse(source).html(), dark);
         } else {
@@ -58,7 +58,7 @@ public class GithubHelper {
     }
 
     @NonNull private static String getParsedHtml(@NonNull String source, String owner, String repoName,
-                                                 String builder, String baseLinkUrl, boolean isWiki) {
+            String builder, String baseLinkUrl, boolean isWiki) {
         Document document = Jsoup.parse(source, "");
         Elements imageElements = document.getElementsByTag("img");
         if (imageElements != null && !imageElements.isEmpty()) {
@@ -113,20 +113,20 @@ public class GithubHelper {
 
     @NonNull private static String mergeContent(@NonNull Context context, @NonNull String source, boolean dark) {
         return "<html>\n" +
-                "\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
-                "    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + getStyle(dark) + "\">\n" +
-                "\n" + getCodeStyle(context, dark) + "\n" +
-                "    <script src=\"./intercept-hash.js\"></script>\n" +
-                "</head>\n" +
-                "\n" +
-                "<body>\n" + source +
-                "\n<script src=\"./intercept-touch.js\"></script>\n" +
-                "</body>\n" +
-                "\n" +
-                "</html>\n";
+               "\n" +
+               "<head>\n" +
+               "    <meta charset=\"UTF-8\">\n" +
+               "    <meta name=\"viewport\" content=\"width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;\"/>" +
+               "    <link rel=\"stylesheet\" type=\"text/css\" href=\"" + getStyle(dark) + "\">\n" +
+               "\n" + getCodeStyle(context, dark) + "\n" +
+               "    <script src=\"./intercept-hash.js\"></script>\n" +
+               "</head>\n" +
+               "\n" +
+               "<body>\n" + source +
+               "\n<script src=\"./intercept-touch.js\"></script>\n" +
+               "</body>\n" +
+               "\n" +
+               "</html>\n";
     }
 
     @NonNull private static String getStyle(boolean dark) {
@@ -138,11 +138,11 @@ public class GithubHelper {
         String primaryColor = getCodeBackgroundColor(context);
         String accentColor = "#" + Integer.toHexString(ViewHelper.getAccentColor(context)).substring(2).toUpperCase();
         return "<style>\n" +
-                "body .highlight pre, body pre {\n" +
-                "background-color: " + primaryColor + " !important;\n" +
-                (PrefGetter.getThemeType(context) == PrefGetter.AMLOD ? "border: solid 1px " + accentColor + " !important;\n" : "") +
-                "}\n" +
-                "</style>";
+               "body .highlight pre, body pre {\n" +
+               "background-color: " + primaryColor + " !important;\n" +
+               (PrefGetter.getThemeType(context) == PrefGetter.AMLOD ? "border: solid 1px " + accentColor + " !important;\n" : "") +
+               "}\n" +
+               "</style>";
     }
 
     @NonNull private static String getCodeBackgroundColor(@NonNull Context context) {

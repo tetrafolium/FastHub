@@ -75,11 +75,11 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
                                       boolean isEnterprise, int index) {
         Intent intent = new Intent(context, UserPagerActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .put(BundleConstant.EXTRA_TYPE, isOrg)
-                .put(BundleConstant.EXTRA_TWO, index)
-                .end());
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .put(BundleConstant.EXTRA_TYPE, isOrg)
+                         .put(BundleConstant.EXTRA_TWO, index)
+                         .end());
         if (context instanceof Service || context instanceof Application) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         }
@@ -269,9 +269,9 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
     @Override public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.share && !InputHelper.isEmpty(login)) {
             ActivityHelper.shareUrl(this, new Uri.Builder().scheme("https")
-                    .authority(LinkParserHelper.HOST_DEFAULT)
-                    .appendPath(login)
-                    .toString());
+                                    .authority(LinkParserHelper.HOST_DEFAULT)
+                                    .appendPath(login)
+                                    .toString());
             return true;
         } else if (item.getItemId() == R.id.block && !InputHelper.isEmpty(login)) {
             getPresenter().onBlockUser(login);
@@ -287,9 +287,9 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
                 String username = login.getLogin();
                 if (!username.equalsIgnoreCase(this.login)) {
                     menu.findItem(R.id.block)
-                            .setIcon(getPresenter().isUserBlocked() ? R.drawable.ic_unlock : R.drawable.ic_lock)
-                            .setTitle(getPresenter().isUserBlocked() ? getString(R.string.unblock) : getString(R.string.block))
-                            .setVisible(true);
+                    .setIcon(getPresenter().isUserBlocked() ? R.drawable.ic_unlock : R.drawable.ic_lock)
+                    .setTitle(getPresenter().isUserBlocked() ? getString(R.string.unblock) : getString(R.string.block))
+                    .setVisible(true);
                 }
             }
         }
@@ -323,10 +323,10 @@ public class UserPagerActivity extends BaseActivity<UserPagerMvp.View, UserPager
     private void updateCount(@NonNull TabsCountStateModel model) {
         TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
         tv.setText(SpannableBuilder.builder()
-                .append(getString(R.string.starred))
-                .append("   ")
-                .append("(")
-                .bold(String.valueOf(model.getCount()))
-                .append(")"));
+                   .append(getString(R.string.starred))
+                   .append("   ")
+                   .append("(")
+                   .bold(String.valueOf(model.getCount()))
+                   .append(")"));
     }
 }

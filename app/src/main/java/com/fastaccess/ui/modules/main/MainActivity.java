@@ -130,7 +130,7 @@ public class MainActivity extends BaseActivity<MainMvp.View, MainPresenter> impl
             ViewHelper.tintDrawable(menu.findItem(R.id.notifications).setIcon(R.drawable.ic_ring).getIcon(), ViewHelper.getAccentColor(this));
         } else {
             ViewHelper.tintDrawable(menu.findItem(R.id.notifications)
-                    .setIcon(R.drawable.ic_notifications_none).getIcon(), ViewHelper.getIconColor(this));
+                                    .setIcon(R.drawable.ic_notifications_none).getIcon(), ViewHelper.getIconColor(this));
         }
         return super.onPrepareOptionsMenu(menu);
     }
@@ -175,13 +175,13 @@ public class MainActivity extends BaseActivity<MainMvp.View, MainPresenter> impl
             }
         } else if (index == 1) {
             MyIssuesPagerFragment issuesView = (MyIssuesPagerFragment) getFragmentByTag
-                    (fragmentManager, MyIssuesPagerFragment.TAG);
+                                               (fragmentManager, MyIssuesPagerFragment.TAG);
             if (issuesView != null) {
                 issuesView.onScrollTop(index);
             }
         } else if (index == 2) {
             MyPullsPagerFragment pullRequestView = (MyPullsPagerFragment) getFragmentByTag
-                    (fragmentManager, MyPullsPagerFragment.TAG);
+                                                   (fragmentManager, MyPullsPagerFragment.TAG);
             if (pullRequestView != null) {
                 pullRequestView.onScrollTop(0);
             }
@@ -202,17 +202,17 @@ public class MainActivity extends BaseActivity<MainMvp.View, MainPresenter> impl
                     if (getIntent().getAction().equalsIgnoreCase("myPulls")) {
                         navType = MainMvp.PULL_REQUESTS;
                         getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.container, MyPullsPagerFragment.newInstance(), MyPullsPagerFragment.TAG)
-                                .commit();
+                        .beginTransaction()
+                        .replace(R.id.container, MyPullsPagerFragment.newInstance(), MyPullsPagerFragment.TAG)
+                        .commit();
                         bottomNavigation.setSelectedIndex(2, true);
                         attachFeeds = false;
                     } else if (getIntent().getAction().equalsIgnoreCase("myIssues")) {
                         navType = MainMvp.ISSUES;
                         getSupportFragmentManager()
-                                .beginTransaction()
-                                .replace(R.id.container, MyIssuesPagerFragment.newInstance(), MyIssuesPagerFragment.TAG)
-                                .commit();
+                        .beginTransaction()
+                        .replace(R.id.container, MyIssuesPagerFragment.newInstance(), MyIssuesPagerFragment.TAG)
+                        .commit();
                         bottomNavigation.setSelectedIndex(1, true);
                         attachFeeds = false;
                     }
@@ -220,9 +220,9 @@ public class MainActivity extends BaseActivity<MainMvp.View, MainPresenter> impl
                 hideShowShadow(navType == MainMvp.FEEDS);
                 if (attachFeeds) {
                     getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.container, FeedsFragment.newInstance(null), FeedsFragment.TAG)
-                            .commit();
+                    .beginTransaction()
+                    .replace(R.id.container, FeedsFragment.newInstance(null), FeedsFragment.TAG)
+                    .commit();
                 }
             }
             Typeface myTypeface = TypeFaceHelper.getTypeface();

@@ -44,21 +44,23 @@ import github.PullRequestTimelineQuery;
 
     @NotNull @Override public String toString() {
         return "ReactionsModel{" +
-                "id=" + id +
-                ", url='" + url + '\'' +
-                ", total_count=" + total_count +
-                ", plusOne=" + plusOne +
-                ", minusOne=" + minusOne +
-                ", laugh=" + laugh +
-                ", hooray=" + hooray +
-                ", confused=" + confused +
-                ", heart=" + heart +
-                ", rocket=" + rocket +
-                ", eyes=" + eyes +
-                '}';
+               "id=" + id +
+               ", url='" + url + '\'' +
+               ", total_count=" + total_count +
+               ", plusOne=" + plusOne +
+               ", minusOne=" + minusOne +
+               ", laugh=" + laugh +
+               ", hooray=" + hooray +
+               ", confused=" + confused +
+               ", heart=" + heart +
+               ", rocket=" + rocket +
+               ", eyes=" + eyes +
+               '}';
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -95,8 +97,12 @@ import github.PullRequestTimelineQuery;
     }
 
     public static final Creator<ReactionsModel> CREATOR = new Creator<ReactionsModel>() {
-        @Override public ReactionsModel createFromParcel(Parcel source) {return new ReactionsModel(source);}
+        @Override public ReactionsModel createFromParcel(Parcel source) {
+            return new ReactionsModel(source);
+        }
 
-        @Override public ReactionsModel[] newArray(int size) {return new ReactionsModel[size];}
+        @Override public ReactionsModel[] newArray(int size) {
+            return new ReactionsModel[size];
+        }
     };
 }

@@ -81,12 +81,12 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
                                       boolean isEnterprise) {
         Intent intent = new Intent(context, CommitPagerActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.ID, sha)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, repoId)
-                .put(BundleConstant.EXTRA_THREE, showRepoBtn)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .end());
+                         .put(BundleConstant.ID, sha)
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.EXTRA_TWO, repoId)
+                         .put(BundleConstant.EXTRA_THREE, showRepoBtn)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .end());
         return intent;
     }
 
@@ -97,8 +97,8 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
     @OnClick(R.id.detailsIcon) void onTitleClick() {
         if (getPresenter().getCommit() != null && !InputHelper.isEmpty(getPresenter().getCommit().getGitCommit().getMessage()))
             MessageDialogView.newInstance(String.format("%s/%s", getPresenter().getLogin(), getPresenter().getRepoId()),
-                    getPresenter().getCommit().getGitCommit().getMessage(), true, false)
-                    .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                          getPresenter().getCommit().getGitCommit().getMessage(), true, false)
+            .show(getSupportFragmentManager(), MessageDialogView.TAG);
     }
 
     @Override protected int layout() {
@@ -178,10 +178,10 @@ public class CommitPagerActivity extends BaseActivity<CommitPagerMvp.View, Commi
         detailsIcon.setVisibility(View.VISIBLE);
         size.setVisibility(View.GONE);
         date.setText(SpannableBuilder.builder()
-                .bold(getPresenter().repoId)
-                .append(" ")
-                .append(" ")
-                .append(ParseDateFormat.getTimeAgo(dateValue)));
+                     .bold(getPresenter().repoId)
+                     .append(" ")
+                     .append(" ")
+                     .append(ParseDateFormat.getTimeAgo(dateValue)));
         avatarLayout.setUrl(avatar, login, false, LinkParserHelper.isEnterprise(commit.getHtmlUrl()));
         addition.setText(String.valueOf(commit.getStats() != null ? commit.getStats().getAdditions() : 0));
         deletion.setText(String.valueOf(commit.getStats() != null ? commit.getStats().getDeletions() : 0));

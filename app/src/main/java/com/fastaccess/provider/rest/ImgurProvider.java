@@ -23,9 +23,9 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 public class ImgurProvider {
 
     public final static Gson gson = new GsonBuilder()
-            .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
-            .setPrettyPrinting()
-            .create();
+    .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
+    .setPrettyPrinting()
+    .create();
 
     private ImgurProvider() {}
 
@@ -33,7 +33,7 @@ public class ImgurProvider {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         if (BuildConfig.DEBUG) {
             client.addInterceptor(new HttpLoggingInterceptor()
-                    .setLevel(HttpLoggingInterceptor.Level.BODY));
+                                  .setLevel(HttpLoggingInterceptor.Level.BODY));
         }
         client.addInterceptor(chain -> {
             Request original = chain.request();
@@ -48,11 +48,11 @@ public class ImgurProvider {
 
     private static Retrofit provideRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl(BuildConfig.IMGUR_URL)
-                .client(provideOkHttpClient())
-                .addConverterFactory(new GithubResponseConverter(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
+               .baseUrl(BuildConfig.IMGUR_URL)
+               .client(provideOkHttpClient())
+               .addConverterFactory(new GithubResponseConverter(gson))
+               .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+               .build();
     }
 
     @NonNull public static ImgurService getImgurService() {

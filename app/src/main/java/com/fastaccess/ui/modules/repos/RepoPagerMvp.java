@@ -28,11 +28,11 @@ public interface RepoPagerMvp {
     int PROFILE = 4;
 
     @IntDef({
-            CODE,
-            ISSUES,
-            PULL_REQUEST,
-            PROJECTS,
-            PROFILE
+        CODE,
+        ISSUES,
+        PULL_REQUEST,
+        PROJECTS,
+        PROFILE
     })
     @Retention(RetentionPolicy.SOURCE) @interface RepoNavigationType {}
 

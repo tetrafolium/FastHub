@@ -92,39 +92,39 @@ import lombok.Setter;
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForProfile(@NonNull Context context, @NonNull String login) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.overview), ProfileOverviewFragment.newInstance(login)),
-                new FragmentPagerAdapterModel(context.getString(R.string.feed), FeedsFragment.newInstance(login, false)),
-                new FragmentPagerAdapterModel(context.getString(R.string.repos), ProfileReposFragment.newInstance(login)),
-                new FragmentPagerAdapterModel(context.getString(R.string.starred), ProfileStarredFragment.newInstance(login)),
-                new FragmentPagerAdapterModel(context.getString(R.string.gists), ProfileGistsFragment.newInstance(login)),
-                new FragmentPagerAdapterModel(context.getString(R.string.followers), ProfileFollowersFragment.newInstance(login)),
-                new FragmentPagerAdapterModel(context.getString(R.string.following), ProfileFollowingFragment.newInstance(login)))
-                .collect(Collectors.toList());
+                         new FragmentPagerAdapterModel(context.getString(R.string.feed), FeedsFragment.newInstance(login, false)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.repos), ProfileReposFragment.newInstance(login)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.starred), ProfileStarredFragment.newInstance(login)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.gists), ProfileGistsFragment.newInstance(login)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.followers), ProfileFollowersFragment.newInstance(login)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.following), ProfileFollowingFragment.newInstance(login)))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForRepoCode(@NonNull Context context, @NonNull String repoId,
-                                                                            @NonNull String login, @NonNull String url,
-                                                                            @NonNull String defaultBranch,
-                                                                            @NonNull String htmlUrl) {
+            @NonNull String login, @NonNull String url,
+            @NonNull String defaultBranch,
+            @NonNull String htmlUrl) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.readme), ViewerFragment.newInstance(url, htmlUrl, true)),
-                new FragmentPagerAdapterModel(context.getString(R.string.files), RepoFilePathFragment.newInstance(login, repoId, null,
-                        defaultBranch)),
-                new FragmentPagerAdapterModel(context.getString(R.string.commits), RepoCommitsFragment.newInstance(repoId, login, defaultBranch)),
-                new FragmentPagerAdapterModel(context.getString(R.string.releases), RepoReleasesFragment.newInstance(repoId, login)),
-                new FragmentPagerAdapterModel(context.getString(R.string.contributors), RepoContributorsFragment.newInstance(repoId, login)))
-                .collect(Collectors.toList());
+                         new FragmentPagerAdapterModel(context.getString(R.string.files), RepoFilePathFragment.newInstance(login, repoId, null,
+                                 defaultBranch)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.commits), RepoCommitsFragment.newInstance(repoId, login, defaultBranch)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.releases), RepoReleasesFragment.newInstance(repoId, login)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.contributors), RepoContributorsFragment.newInstance(repoId, login)))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForSearch(@NonNull Context context) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.repos), SearchReposFragment.newInstance()),
-                new FragmentPagerAdapterModel(context.getString(R.string.users), SearchUsersFragment.newInstance()),
-                new FragmentPagerAdapterModel(context.getString(R.string.issues), SearchIssuesFragment.newInstance()),
-                new FragmentPagerAdapterModel(context.getString(R.string.code), SearchCodeFragment.newInstance()))
-                .collect(Collectors.toList());
+                         new FragmentPagerAdapterModel(context.getString(R.string.users), SearchUsersFragment.newInstance()),
+                         new FragmentPagerAdapterModel(context.getString(R.string.issues), SearchIssuesFragment.newInstance()),
+                         new FragmentPagerAdapterModel(context.getString(R.string.code), SearchCodeFragment.newInstance()))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForIssues(@NonNull Context context, long commentId) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.details), IssueTimelineFragment.newInstance(commentId)))
-                .collect(Collectors.toList());
+               .collect(Collectors.toList());
     }
 
 
@@ -133,28 +133,28 @@ import lombok.Setter;
         String repoId = pullRequest.getRepoId();
         int number = pullRequest.getNumber();
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.details), PullRequestTimelineFragment.newInstance()),
-                new FragmentPagerAdapterModel(context.getString(R.string.commits), PullRequestCommitsFragment.newInstance(repoId, login, number)),
-                new FragmentPagerAdapterModel(context.getString(R.string.files), PullRequestFilesFragment.newInstance(repoId, login, number)))
-                .collect(Collectors.toList());
+                         new FragmentPagerAdapterModel(context.getString(R.string.commits), PullRequestCommitsFragment.newInstance(repoId, login, number)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.files), PullRequestFilesFragment.newInstance(repoId, login, number)))
+               .collect(Collectors.toList());
     }
 
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForRepoIssue(@NonNull Context context, @NonNull String login,
-                                                                             @NonNull String repoId) {
+            @NonNull String repoId) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.opened),
-                        RepoOpenedIssuesFragment.newInstance(repoId, login)),
-                new FragmentPagerAdapterModel(context.getString(R.string.closed),
-                        RepoClosedIssuesFragment.newInstance(repoId, login)))
-                .collect(Collectors.toList());
+                         RepoOpenedIssuesFragment.newInstance(repoId, login)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.closed),
+                                 RepoClosedIssuesFragment.newInstance(repoId, login)))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForRepoPullRequest(@NonNull Context context, @NonNull String login,
-                                                                                   @NonNull String repoId) {
+            @NonNull String repoId) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.opened),
-                        RepoPullRequestFragment.newInstance(repoId, login, IssueState.open)),
-                new FragmentPagerAdapterModel(context.getString(R.string.closed),
-                        RepoPullRequestFragment.newInstance(repoId, login, IssueState.closed)))
-                .collect(Collectors.toList());
+                         RepoPullRequestFragment.newInstance(repoId, login, IssueState.open)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.closed),
+                                 RepoPullRequestFragment.newInstance(repoId, login, IssueState.closed)))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForCommit(@NonNull Context context, @NonNull Commit commitModel) {
@@ -162,121 +162,121 @@ import lombok.Setter;
         String repoId = commitModel.getRepoId();
         String sha = commitModel.getSha();
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.files),
-                        CommitFilesFragment.newInstance(commitModel.getSha(), commitModel.getFiles())),
-                new FragmentPagerAdapterModel(context.getString(R.string.comments),
-                        CommitCommentsFragment.newInstance(login, repoId, sha)))
-                .collect(Collectors.toList());
+                         CommitFilesFragment.newInstance(commitModel.getSha(), commitModel.getFiles())),
+                         new FragmentPagerAdapterModel(context.getString(R.string.comments),
+                                 CommitCommentsFragment.newInstance(login, repoId, sha)))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForGist(@NonNull Context context, @NonNull Gist gistsModel) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.files), GistFilesListFragment.newInstance(gistsModel
-                        .getFilesAsList(), false)),
-                new FragmentPagerAdapterModel(context.getString(R.string.comments), GistCommentsFragment.newInstance(gistsModel.getGistId())))
-                .collect(Collectors.toList());
+                         .getFilesAsList(), false)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.comments), GistCommentsFragment.newInstance(gistsModel.getGistId())))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForNotifications(@NonNull Context context) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.unread), new UnreadNotificationsFragment()),
-                new FragmentPagerAdapterModel(context.getString(R.string.all), AllNotificationsFragment.newInstance()),
-                new FragmentPagerAdapterModel(context.getString(R.string.app_name), new FastHubNotificationsFragment()))
-                .collect(Collectors.toList());
+                         new FragmentPagerAdapterModel(context.getString(R.string.all), AllNotificationsFragment.newInstance()),
+                         new FragmentPagerAdapterModel(context.getString(R.string.app_name), new FastHubNotificationsFragment()))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForGists(@NonNull Context context) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.my_gists), ProfileGistsFragment
-                        .newInstance(Login.getUser().getLogin())),
-                new FragmentPagerAdapterModel(context.getString(R.string.starred), StarredGistsFragment.newInstance()),
-                new FragmentPagerAdapterModel(context.getString(R.string.public_gists), GistsFragment.newInstance()))
-                .collect(Collectors.toList());
+                         .newInstance(Login.getUser().getLogin())),
+                         new FragmentPagerAdapterModel(context.getString(R.string.starred), StarredGistsFragment.newInstance()),
+                         new FragmentPagerAdapterModel(context.getString(R.string.public_gists), GistsFragment.newInstance()))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForMyIssues(@NonNull Context context) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.created),
-                        MyIssuesFragment.newInstance(IssueState.open, MyIssuesType.CREATED)),
-                new FragmentPagerAdapterModel(context.getString(R.string.assigned),
-                        MyIssuesFragment.newInstance(IssueState.open, MyIssuesType.ASSIGNED)),
-                new FragmentPagerAdapterModel(context.getString(R.string.mentioned),
-                        MyIssuesFragment.newInstance(IssueState.open, MyIssuesType.MENTIONED)),
-                new FragmentPagerAdapterModel(context.getString(R.string.participated),
-                        MyIssuesFragment.newInstance(IssueState.open, MyIssuesType.PARTICIPATED)))
-                .collect(Collectors.toList());
+                         MyIssuesFragment.newInstance(IssueState.open, MyIssuesType.CREATED)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.assigned),
+                                 MyIssuesFragment.newInstance(IssueState.open, MyIssuesType.ASSIGNED)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.mentioned),
+                                 MyIssuesFragment.newInstance(IssueState.open, MyIssuesType.MENTIONED)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.participated),
+                                 MyIssuesFragment.newInstance(IssueState.open, MyIssuesType.PARTICIPATED)))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForMyPulls(@NonNull Context context) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.created),
-                        MyPullRequestFragment.newInstance(IssueState.open, MyIssuesType.CREATED)),
-                new FragmentPagerAdapterModel(context.getString(R.string.assigned),
-                        MyPullRequestFragment.newInstance(IssueState.open, MyIssuesType.ASSIGNED)),
-                new FragmentPagerAdapterModel(context.getString(R.string.mentioned),
-                        MyPullRequestFragment.newInstance(IssueState.open, MyIssuesType.MENTIONED)),
-                new FragmentPagerAdapterModel(context.getString(R.string.review_requests),
-                        MyPullRequestFragment.newInstance(IssueState.open, MyIssuesType.REVIEW)))
-                .collect(Collectors.toList());
+                         MyPullRequestFragment.newInstance(IssueState.open, MyIssuesType.CREATED)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.assigned),
+                                 MyPullRequestFragment.newInstance(IssueState.open, MyIssuesType.ASSIGNED)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.mentioned),
+                                 MyPullRequestFragment.newInstance(IssueState.open, MyIssuesType.MENTIONED)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.review_requests),
+                                 MyPullRequestFragment.newInstance(IssueState.open, MyIssuesType.REVIEW)))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForOrg(@NonNull Context context, @NonNull String login, boolean isMember) {
         return Stream.of(
-                new FragmentPagerAdapterModel(context.getString(R.string.feeds),
-                        isMember ? FeedsFragment.newInstance(login, true) : null),
-                new FragmentPagerAdapterModel(context.getString(R.string.overview), OrgProfileOverviewFragment.newInstance(login)),
-                new FragmentPagerAdapterModel(context.getString(R.string.repos), OrgReposFragment.newInstance(login)),
-                new FragmentPagerAdapterModel(context.getString(R.string.people), OrgMembersFragment.newInstance(login)),
-                new FragmentPagerAdapterModel(context.getString(R.string.teams), isMember ? OrgTeamFragment.newInstance(login) : null))
-                .filter(fragmentPagerAdapterModel -> fragmentPagerAdapterModel.getFragment() != null)
-                .collect(Collectors.toList());
+                   new FragmentPagerAdapterModel(context.getString(R.string.feeds),
+                           isMember ? FeedsFragment.newInstance(login, true) : null),
+                   new FragmentPagerAdapterModel(context.getString(R.string.overview), OrgProfileOverviewFragment.newInstance(login)),
+                   new FragmentPagerAdapterModel(context.getString(R.string.repos), OrgReposFragment.newInstance(login)),
+                   new FragmentPagerAdapterModel(context.getString(R.string.people), OrgMembersFragment.newInstance(login)),
+                   new FragmentPagerAdapterModel(context.getString(R.string.teams), isMember ? OrgTeamFragment.newInstance(login) : null))
+               .filter(fragmentPagerAdapterModel -> fragmentPagerAdapterModel.getFragment() != null)
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForTeam(@NonNull Context context, long id) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.members), TeamMembersFragment.newInstance(id)),
-                new FragmentPagerAdapterModel(context.getString(R.string.repos), TeamReposFragment.newInstance(id)))
-                .collect(Collectors.toList());
+                         new FragmentPagerAdapterModel(context.getString(R.string.repos), TeamReposFragment.newInstance(id)))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForTheme() {
         return Stream.of(new FragmentPagerAdapterModel("", ThemeFragment.Companion.newInstance(R.style.ThemeLight)),
-                new FragmentPagerAdapterModel("", ThemeFragment.Companion.newInstance(R.style.ThemeDark)),
-                new FragmentPagerAdapterModel("", ThemeFragment.Companion.newInstance(R.style.ThemeAmlod)),
-                new FragmentPagerAdapterModel("", ThemeFragment.Companion.newInstance(R.style.ThemeBluish)))
+                         new FragmentPagerAdapterModel("", ThemeFragment.Companion.newInstance(R.style.ThemeDark)),
+                         new FragmentPagerAdapterModel("", ThemeFragment.Companion.newInstance(R.style.ThemeAmlod)),
+                         new FragmentPagerAdapterModel("", ThemeFragment.Companion.newInstance(R.style.ThemeBluish)))
 //                new FragmentPagerAdapterModel("", ThemeFragment.Companion.newInstance(R.style.ThemeMidnight)))
-                .collect(Collectors.toList());
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForBranches(@NonNull Context context, @NonNull String repoId, @NonNull String login) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.branches),
-                        BranchesFragment.Companion.newInstance(login, repoId, true)),
-                new FragmentPagerAdapterModel(context.getString(R.string.tags),
-                        BranchesFragment.Companion.newInstance(login, repoId, false)))
-                .toList();
+                         BranchesFragment.Companion.newInstance(login, repoId, true)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.tags),
+                                 BranchesFragment.Companion.newInstance(login, repoId, false)))
+               .toList();
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForRepoProjects(@NonNull Context context, @Nullable String repoId,
-                                                                                @NonNull String login) {
+            @NonNull String login) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.open),
-                        RepoProjectFragment.Companion.newInstance(login, repoId, IssueState.open)),
-                new FragmentPagerAdapterModel(context.getString(R.string.closed),
-                        RepoProjectFragment.Companion.newInstance(login, repoId, IssueState.closed)))
-                .toList();
+                         RepoProjectFragment.Companion.newInstance(login, repoId, IssueState.open)),
+                         new FragmentPagerAdapterModel(context.getString(R.string.closed),
+                                 RepoProjectFragment.Companion.newInstance(login, repoId, IssueState.closed)))
+               .toList();
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForProjectColumns(@NonNull List<ProjectColumnModel> models, boolean isCollaborator) {
         return Stream.of(models)
-                .map(projectColumnModel -> new FragmentPagerAdapterModel("", ProjectColumnFragment.Companion
-                        .newInstance(projectColumnModel, isCollaborator), String.valueOf(projectColumnModel.getId())))
-                .toList();
+               .map(projectColumnModel -> new FragmentPagerAdapterModel("", ProjectColumnFragment.Companion
+                       .newInstance(projectColumnModel, isCollaborator), String.valueOf(projectColumnModel.getId())))
+               .toList();
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForPinned(@NonNull Context context) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.repos), PinnedReposFragment.newInstance()),
-                new FragmentPagerAdapterModel(context.getString(R.string.issues), PinnedIssueFragment.newInstance()),
-                new FragmentPagerAdapterModel(context.getString(R.string.pull_requests), PinnedPullRequestFragment.newInstance()),
-                new FragmentPagerAdapterModel(context.getString(R.string.gists), PinnedGistFragment.newInstance()))
-                .collect(Collectors.toList());
+                         new FragmentPagerAdapterModel(context.getString(R.string.issues), PinnedIssueFragment.newInstance()),
+                         new FragmentPagerAdapterModel(context.getString(R.string.pull_requests), PinnedPullRequestFragment.newInstance()),
+                         new FragmentPagerAdapterModel(context.getString(R.string.gists), PinnedGistFragment.newInstance()))
+               .collect(Collectors.toList());
     }
 
     @NonNull public static List<FragmentPagerAdapterModel> buildForDrawer(@NonNull Context context) {
         return Stream.of(new FragmentPagerAdapterModel(context.getString(R.string.menu_label), new MainDrawerFragment()),
-                new FragmentPagerAdapterModel(context.getString(R.string.profile), new AccountDrawerFragment()))
-                .toList();
+                         new FragmentPagerAdapterModel(context.getString(R.string.profile), new AccountDrawerFragment()))
+               .toList();
     }
 
     @Override public boolean equals(Object o) {

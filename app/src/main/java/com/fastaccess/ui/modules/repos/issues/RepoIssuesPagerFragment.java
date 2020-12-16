@@ -44,9 +44,9 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
     public static RepoIssuesPagerFragment newInstance(@NonNull String repoId, @NonNull String login) {
         RepoIssuesPagerFragment view = new RepoIssuesPagerFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .end());
         return view;
     }
 
@@ -73,7 +73,7 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
         String login = getArguments().getString(BundleConstant.EXTRA);
         if (login == null || repoId == null) throw new NullPointerException("repoId || login is null???");
         pager.setAdapter(new FragmentsPagerAdapter(getChildFragmentManager(),
-                FragmentPagerAdapterModel.buildForRepoIssue(getContext(), login, repoId)));
+                         FragmentPagerAdapterModel.buildForRepoIssue(getContext(), login, repoId)));
         tabs.setupWithViewPager(pager);
         if (savedInstanceState != null && !counts.isEmpty()) {
             Stream.of(counts).forEach(this::updateCount);
@@ -145,10 +145,10 @@ public class RepoIssuesPagerFragment extends BaseFragment<RepoIssuesPagerMvp.Vie
     private void updateCount(@NonNull TabsCountStateModel model) {
         TextView tv = ViewHelper.getTabTextView(tabs, model.getTabIndex());
         tv.setText(SpannableBuilder.builder()
-                .append(model.getTabIndex() == 0 ? getString(R.string.opened) : getString(R.string.closed))
-                .append("   ")
-                .append("(")
-                .bold(String.valueOf(model.getCount()))
-                .append(")"));
+                   .append(model.getTabIndex() == 0 ? getString(R.string.opened) : getString(R.string.closed))
+                   .append("   ")
+                   .append("(")
+                   .bold(String.valueOf(model.getCount()))
+                   .append(")"));
     }
 }

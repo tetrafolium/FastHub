@@ -77,22 +77,22 @@ public class RepoMiscPresenter extends BasePresenter<RepoMiscMVp.View> implement
             return false;
         }
         switch (type) {
-            case RepoMiscMVp.WATCHERS:
-                makeRestCall(RestProvider.getRepoService(isEnterprise()).getWatchers(owner, repo, page), response -> onResponse(page, response));
-                return true;
-            case RepoMiscMVp.STARS:
-                makeRestCall(RestProvider.getRepoService(isEnterprise()).getStargazers(owner, repo, page), response -> onResponse(page, response));
-                return true;
-            case RepoMiscMVp.FORKS:
-                makeRestCall(RestProvider.getRepoService(isEnterprise()).getForks(owner, repo, page)
-                        .flatMap(repoPageable -> {
-                            lastPage = repoPageable.getLast();
-                            return Observable.fromIterable(repoPageable.getItems())
-                                    .map(Repo::getOwner)
-                                    .toList()
-                                    .toObservable();
-                        }), owners -> sendToView(view -> view.onNotifyAdapter(owners, page)));
-                return true;
+        case RepoMiscMVp.WATCHERS:
+            makeRestCall(RestProvider.getRepoService(isEnterprise()).getWatchers(owner, repo, page), response -> onResponse(page, response));
+            return true;
+        case RepoMiscMVp.STARS:
+            makeRestCall(RestProvider.getRepoService(isEnterprise()).getStargazers(owner, repo, page), response -> onResponse(page, response));
+            return true;
+        case RepoMiscMVp.FORKS:
+            makeRestCall(RestProvider.getRepoService(isEnterprise()).getForks(owner, repo, page)
+            .flatMap(repoPageable -> {
+                lastPage = repoPageable.getLast();
+                return Observable.fromIterable(repoPageable.getItems())
+                .map(Repo::getOwner)
+                .toList()
+                .toObservable();
+            }), owners -> sendToView(view -> view.onNotifyAdapter(owners, page)));
+            return true;
         }
         return false;
     }

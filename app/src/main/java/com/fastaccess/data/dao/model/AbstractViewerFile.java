@@ -12,7 +12,8 @@ import io.requery.Entity;
 import io.requery.Generated;
 import io.requery.Key;
 import lombok.NoArgsConstructor;
-import io.reactivex.Observable;import io.reactivex.Single;
+import io.reactivex.Observable;
+import io.reactivex.Single;
 
 /**
  * Created by Kosh on 06 Dec 2016, 10:42 PM
@@ -27,23 +28,25 @@ import io.reactivex.Observable;import io.reactivex.Single;
 
     public Single<ViewerFile> save(ViewerFile modelEntity) {
         return RxHelper.getSingle(App.getInstance().getDataStore()
-                .delete(ViewerFile.class)
-                .where(ViewerFile.FULL_URL.eq(modelEntity.getFullUrl()))
-                .get()
-                .single()
-                .flatMap(i -> App.getInstance().getDataStore().insert(modelEntity)));
+                                  .delete(ViewerFile.class)
+                                  .where(ViewerFile.FULL_URL.eq(modelEntity.getFullUrl()))
+                                  .get()
+                                  .single()
+                                  .flatMap(i -> App.getInstance().getDataStore().insert(modelEntity)));
     }
 
     public static Observable<ViewerFile> get(@NonNull String url) {
         return App.getInstance()
-                .getDataStore()
-                .select(ViewerFile.class)
-                .where(ViewerFile.FULL_URL.equal(url))
-                .get()
-                .observable();
+               .getDataStore()
+               .select(ViewerFile.class)
+               .where(ViewerFile.FULL_URL.equal(url))
+               .get()
+               .observable();
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -62,8 +65,12 @@ import io.reactivex.Observable;import io.reactivex.Single;
     }
 
     public static final Creator<ViewerFile> CREATOR = new Creator<ViewerFile>() {
-        @Override public ViewerFile createFromParcel(Parcel source) {return new ViewerFile(source);}
+        @Override public ViewerFile createFromParcel(Parcel source) {
+            return new ViewerFile(source);
+        }
 
-        @Override public ViewerFile[] newArray(int size) {return new ViewerFile[size];}
+        @Override public ViewerFile[] newArray(int size) {
+            return new ViewerFile[size];
+        }
     };
 }

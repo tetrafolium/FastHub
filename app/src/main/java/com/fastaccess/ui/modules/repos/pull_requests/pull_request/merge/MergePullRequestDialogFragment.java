@@ -27,7 +27,7 @@ import butterknife.OnItemSelected;
  */
 
 public class MergePullRequestDialogFragment extends BaseDialogFragment<MergePullReqeustMvp.View, MergePullRequestPresenter>
-        implements MergePullReqeustMvp.View {
+    implements MergePullReqeustMvp.View {
 
     @BindView(R.id.title) TextInputLayout title;
     @BindView(R.id.mergeMethod) AppCompatSpinner mergeMethod;
@@ -37,8 +37,8 @@ public class MergePullRequestDialogFragment extends BaseDialogFragment<MergePull
     public static MergePullRequestDialogFragment newInstance(@Nullable String title) {
         MergePullRequestDialogFragment view = new MergePullRequestDialogFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, title)
-                .end());
+                          .put(BundleConstant.EXTRA, title)
+                          .end());
         return view;
     }
 

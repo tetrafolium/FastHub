@@ -65,13 +65,13 @@ class OrgReposPresenter extends BasePresenter<OrgReposMvp.View> implements OrgRe
         }
         filterOptions.setOrg(true);
         makeRestCall(RestProvider.getOrgService(isEnterprise()).getOrgRepos(parameter, filterOptions.getQueryMap(), page),
-                repoModelPageable -> {
-                    lastPage = repoModelPageable.getLast();
-                    if (getCurrentPage() == 1) {
-                        manageDisposable(Repo.saveMyRepos(repoModelPageable.getItems(), parameter));
-                    }
-                    sendToView(view -> view.onNotifyAdapter(repoModelPageable.getItems(), page));
-                });
+        repoModelPageable -> {
+            lastPage = repoModelPageable.getLast();
+            if (getCurrentPage() == 1) {
+                manageDisposable(Repo.saveMyRepos(repoModelPageable.getItems(), parameter));
+            }
+            sendToView(view -> view.onNotifyAdapter(repoModelPageable.getItems(), page));
+        });
         return true;
     }
 
@@ -82,7 +82,7 @@ class OrgReposPresenter extends BasePresenter<OrgReposMvp.View> implements OrgRe
     @Override public void onWorkOffline(@NonNull String login) {
         if (repos.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Repo.getMyRepos(login).toObservable()).subscribe(repoModels ->
-                    sendToView(view -> view.onNotifyAdapter(repoModels, 1))));
+                             sendToView(view -> view.onNotifyAdapter(repoModels, 1))));
         } else {
             sendToView(OrgReposMvp.View::hideProgress);
         }

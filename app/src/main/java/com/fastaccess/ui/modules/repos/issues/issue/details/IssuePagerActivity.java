@@ -97,13 +97,13 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
                                       boolean isEnterprise, long commentId) {
         Intent intent = new Intent(context, IssuePagerActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.ID, number)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, repoId)
-                .put(BundleConstant.EXTRA_THREE, showToRepoBtn)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .put(BundleConstant.EXTRA_SIX, commentId)
-                .end());
+                         .put(BundleConstant.ID, number)
+                         .put(BundleConstant.EXTRA, login)
+                         .put(BundleConstant.EXTRA_TWO, repoId)
+                         .put(BundleConstant.EXTRA_THREE, showToRepoBtn)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .put(BundleConstant.EXTRA_SIX, commentId)
+                         .end());
         return intent;
 
     }
@@ -111,8 +111,8 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
     @OnClick(R.id.detailsIcon) void onTitleClick() {
         if (getPresenter().getIssue() != null && !InputHelper.isEmpty(getPresenter().getIssue().getTitle()))
             MessageDialogView.newInstance(String.format("%s/%s", getPresenter().getLogin(), getPresenter().getRepoId()),
-                    getPresenter().getIssue().getTitle(), false, true)
-                    .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                          getPresenter().getIssue().getTitle(), false, true)
+            .show(getSupportFragmentManager(), MessageDialogView.TAG);
     }
 
     @Override protected int layout() {
@@ -185,40 +185,40 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
             return true;
         } else if (item.getItemId() == R.id.closeIssue) {
             MessageDialogView.newInstance(
-                    issueModel.getState() == IssueState.open ? getString(R.string.close_issue) : getString(R.string.re_open_issue),
-                    getString(R.string.confirm_message), Bundler.start().put(BundleConstant.EXTRA, true)
-                            .put(BundleConstant.YES_NO_EXTRA, true).end())
-                    .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                issueModel.getState() == IssueState.open ? getString(R.string.close_issue) : getString(R.string.re_open_issue),
+                getString(R.string.confirm_message), Bundler.start().put(BundleConstant.EXTRA, true)
+                .put(BundleConstant.YES_NO_EXTRA, true).end())
+            .show(getSupportFragmentManager(), MessageDialogView.TAG);
             return true;
         } else if (item.getItemId() == R.id.lockIssue) {
             if (!getPresenter().isLocked()) {
                 LockIssuePrBottomSheetDialog.Companion
-                        .newInstance()
-                        .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                .newInstance()
+                .show(getSupportFragmentManager(), MessageDialogView.TAG);
             } else {
                 MessageDialogView.newInstance(getString(R.string.unlock_issue), getString(R.string.unlock_issue_details),
-                        Bundler.start().put(BundleConstant.EXTRA_TWO, true)
-                                .put(BundleConstant.YES_NO_EXTRA, true)
-                                .end())
-                        .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                              Bundler.start().put(BundleConstant.EXTRA_TWO, true)
+                                              .put(BundleConstant.YES_NO_EXTRA, true)
+                                              .end())
+                .show(getSupportFragmentManager(), MessageDialogView.TAG);
             }
             return true;
         } else if (item.getItemId() == R.id.labels) {
             LabelsDialogFragment.newInstance(getPresenter().getIssue() != null ? getPresenter().getIssue().getLabels() : null,
-                    getPresenter().getRepoId(), getPresenter().getLogin())
-                    .show(getSupportFragmentManager(), "LabelsDialogFragment");
+                                             getPresenter().getRepoId(), getPresenter().getLogin())
+            .show(getSupportFragmentManager(), "LabelsDialogFragment");
             return true;
         } else if (item.getItemId() == R.id.edit) {
             CreateIssueActivity.startForResult(this, getPresenter().getLogin(), getPresenter().getRepoId(),
-                    getPresenter().getIssue(), isEnterprise());
+                                               getPresenter().getIssue(), isEnterprise());
             return true;
         } else if (item.getItemId() == R.id.milestone) {
             MilestoneDialogFragment.newInstance(getPresenter().getLogin(), getPresenter().getRepoId())
-                    .show(getSupportFragmentManager(), "MilestoneDialogFragment");
+            .show(getSupportFragmentManager(), "MilestoneDialogFragment");
             return true;
         } else if (item.getItemId() == R.id.assignees) {
             AssigneesDialogFragment.newInstance(getPresenter().getLogin(), getPresenter().getRepoId(), true)
-                    .show(getSupportFragmentManager(), "AssigneesDialogFragment");
+            .show(getSupportFragmentManager(), "AssigneesDialogFragment");
             return true;
         } else if (item.getItemId() == R.id.subscribe) {
             getPresenter().onSubscribeOrMute(false);
@@ -264,7 +264,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
         if (getPresenter().getIssue() != null) {
             boolean isPinned = PinnedIssues.isPinned(getPresenter().getIssue().getId());
             pinUnpin.setIcon(isPinned ? ContextCompat.getDrawable(this, R.drawable.ic_pin_filled)
-                                      : ContextCompat.getDrawable(this, R.drawable.ic_pin));
+                             : ContextCompat.getDrawable(this, R.drawable.ic_pin));
             closeIssue.setTitle(getPresenter().getIssue().getState() == IssueState.closed ? getString(R.string.re_open) : getString(R.string.close));
             lockIssue.setTitle(isLocked ? getString(R.string.unlock_issue) : getString(R.string.lock_issue));
         }
@@ -293,7 +293,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
             if (pager.getAdapter() == null) {
                 Logger.e(getPresenter().commentId);
                 pager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(), FragmentPagerAdapterModel
-                        .buildForIssues(this, getPresenter().commentId)));
+                                 .buildForIssues(this, getPresenter().commentId)));
             } else {
                 onUpdateTimeline();
             }
@@ -372,7 +372,7 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
 
     @Override public void onNavToRepoClicked() {
         Intent intent = ActivityHelper.editBundle(RepoPagerActivity.createIntent(this, getPresenter().getRepoId(),
-                getPresenter().getLogin(), RepoPagerMvp.ISSUES), isEnterprise());
+                        getPresenter().getLogin(), RepoPagerMvp.ISSUES), isEnterprise());
         startActivity(intent);
         finish();
     }
@@ -384,9 +384,9 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
     @Override public void finish() {
         Intent intent = new Intent();
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA, isClosed)
-                .put(BundleConstant.EXTRA_TWO, isOpened)
-                .end());
+                         .put(BundleConstant.EXTRA, isClosed)
+                         .put(BundleConstant.EXTRA_TWO, isOpened)
+                         .end());
         setResult(RESULT_OK, intent);
         super.finish();
     }
@@ -449,14 +449,14 @@ public class IssuePagerActivity extends BaseActivity<IssuePagerMvp.View, IssuePa
                 username = issueModel.getUser() != null ? issueModel.getUser().getLogin() : "N/A";
             }
             date.setText(SpannableBuilder.builder()
-                    .append(ContextCompat.getDrawable(this,
-                            issueModel.getState() == IssueState.open ? R.drawable.ic_issue_opened_small : R.drawable.ic_issue_closed_small))
-                    .append(" ")
-                    .append(getString(issueModel.getState().getStatus()))
-                    .append(" ").append(getString(R.string.by)).append(" ").append(username).append(" ")
-                    .append(parsedDate));
+                         .append(ContextCompat.getDrawable(this,
+                                 issueModel.getState() == IssueState.open ? R.drawable.ic_issue_opened_small : R.drawable.ic_issue_closed_small))
+                         .append(" ")
+                         .append(getString(issueModel.getState().getStatus()))
+                         .append(" ").append(getString(R.string.by)).append(" ").append(username).append(" ")
+                         .append(parsedDate));
             avatarLayout.setUrl(userModel.getAvatarUrl(), userModel.getLogin(), false,
-                    LinkParserHelper.isEnterprise(issueModel.getHtmlUrl()));
+                                LinkParserHelper.isEnterprise(issueModel.getHtmlUrl()));
         }
     }
 }

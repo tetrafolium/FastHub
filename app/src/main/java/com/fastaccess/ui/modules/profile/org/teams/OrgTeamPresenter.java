@@ -57,10 +57,10 @@ class OrgTeamPresenter extends BasePresenter<OrgTeamMvp.View> implements OrgTeam
             return false;
         }
         makeRestCall(RestProvider.getOrgService(isEnterprise()).getOrgTeams(parameter, page),
-                response -> {
-                    lastPage = response.getLast();
-                    sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
-                });
+        response -> {
+            lastPage = response.getLast();
+            sendToView(view -> view.onNotifyAdapter(response.getItems(), page));
+        });
         return true;
     }
 

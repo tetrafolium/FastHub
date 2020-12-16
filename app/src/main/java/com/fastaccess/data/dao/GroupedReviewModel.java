@@ -69,7 +69,9 @@ public class GroupedReviewModel implements Parcelable {
         this.comments = comments;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.position);
@@ -91,8 +93,12 @@ public class GroupedReviewModel implements Parcelable {
     }
 
     public static final Creator<GroupedReviewModel> CREATOR = new Creator<GroupedReviewModel>() {
-        @Override public GroupedReviewModel createFromParcel(Parcel source) {return new GroupedReviewModel(source);}
+        @Override public GroupedReviewModel createFromParcel(Parcel source) {
+            return new GroupedReviewModel(source);
+        }
 
-        @Override public GroupedReviewModel[] newArray(int size) {return new GroupedReviewModel[size];}
+        @Override public GroupedReviewModel[] newArray(int size) {
+            return new GroupedReviewModel[size];
+        }
     };
 }

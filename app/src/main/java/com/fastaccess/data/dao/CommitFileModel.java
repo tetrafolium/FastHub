@@ -19,7 +19,9 @@ public class CommitFileModel implements Parcelable {
     private String contentsUrl;
     private String patch;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.sha);
@@ -48,24 +50,28 @@ public class CommitFileModel implements Parcelable {
     }
 
     public static final Creator<CommitFileModel> CREATOR = new Creator<CommitFileModel>() {
-        @Override public CommitFileModel createFromParcel(Parcel source) {return new CommitFileModel(source);}
+        @Override public CommitFileModel createFromParcel(Parcel source) {
+            return new CommitFileModel(source);
+        }
 
-        @Override public CommitFileModel[] newArray(int size) {return new CommitFileModel[size];}
+        @Override public CommitFileModel[] newArray(int size) {
+            return new CommitFileModel[size];
+        }
     };
 
     @Override public String toString() {
         return "CommitFileModel{" +
-                "sha='" + sha + '\'' +
-                ", filename='" + filename + '\'' +
-                ", status='" + status + '\'' +
-                ", additions=" + additions +
-                ", deletions=" + deletions +
-                ", changes=" + changes +
-                ", blobUrl='" + blobUrl + '\'' +
-                ", rawUrl='" + rawUrl + '\'' +
-                ", contentsUrl='" + contentsUrl + '\'' +
-                ", patch='" + patch + '\'' +
-                '}';
+               "sha='" + sha + '\'' +
+               ", filename='" + filename + '\'' +
+               ", status='" + status + '\'' +
+               ", additions=" + additions +
+               ", deletions=" + deletions +
+               ", changes=" + changes +
+               ", blobUrl='" + blobUrl + '\'' +
+               ", rawUrl='" + rawUrl + '\'' +
+               ", contentsUrl='" + contentsUrl + '\'' +
+               ", patch='" + patch + '\'' +
+               '}';
     }
 
     public String getSha() {

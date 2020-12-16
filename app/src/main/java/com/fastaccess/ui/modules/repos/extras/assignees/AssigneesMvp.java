@@ -27,6 +27,6 @@ public interface AssigneesMvp {
     interface Presenter {
         void onCallApi(@NonNull String login, @NonNull String repo, boolean isAssignees);
 
-       @NonNull ArrayList<User> getList();
+        @NonNull ArrayList<User> getList();
     }
 }

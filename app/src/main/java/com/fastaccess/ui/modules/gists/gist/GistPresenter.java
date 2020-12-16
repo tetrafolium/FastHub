@@ -51,20 +51,20 @@ class GistPresenter extends BasePresenter<GistMvp.View> implements GistMvp.Prese
     @Override public void onDeleteGist() {
         if (getGist() == null) return;
         manageDisposable(RxHelper.getObservable(RestProvider.getGistService(isEnterprise()).deleteGist(getGist().getGistId()))
-                .doOnSubscribe(disposable -> onSubscribed(false))
-                .doOnNext(booleanResponse -> {
-                    if (booleanResponse.code() == 204) {
-                        sendToView(GistMvp.View::onSuccessDeleted);
-                    } else {
-                        sendToView(GistMvp.View::onErrorDeleting);
-                    }
-                })
-                .subscribe(booleanResponse -> {/**/}, throwable -> sendToView(view -> view.showErrorMessage(throwable.getMessage()))));
+                         .doOnSubscribe(disposable -> onSubscribed(false))
+        .doOnNext(booleanResponse -> {
+            if (booleanResponse.code() == 204) {
+                sendToView(GistMvp.View::onSuccessDeleted);
+            } else {
+                sendToView(GistMvp.View::onErrorDeleting);
+            }
+        })
+        .subscribe(booleanResponse -> {/**/}, throwable -> sendToView(view -> view.showErrorMessage(throwable.getMessage()))));
     }
 
     @Override public boolean isOwner() {
         return getGist() != null && getGist().getOwner() != null &&
-                getGist().getOwner().getLogin().equals(Login.getUser().getLogin());
+               getGist().getOwner().getLogin().equals(Login.getUser().getLogin());
     }
 
     @Override public void onStarGist() {
@@ -87,19 +87,19 @@ class GistPresenter extends BasePresenter<GistMvp.View> implements GistMvp.Prese
 
     @Override public void checkStarring(@NonNull String gistId) {
         makeRestCall(RestProvider.getGistService(isEnterprise()).checkGistStar(gistId),
-                booleanResponse -> {
-                    isGistStarred = booleanResponse.code() == 204;
-                    sendToView(view -> view.onGistStarred(isGistStarred));
-                });
+        booleanResponse -> {
+            isGistStarred = booleanResponse.code() == 204;
+            sendToView(view -> view.onGistStarred(isGistStarred));
+        });
     }
 
     @Override public void onWorkOffline(@NonNull String gistId) {
         if (gist == null) {
             manageDisposable(RxHelper.getObservable(Gist.getGist(gistId))
-                    .subscribe(gistsModel -> {
-                        this.gist = gistsModel;
-                        sendToView(GistMvp.View::onSetupDetails);
-                    }));
+            .subscribe(gistsModel -> {
+                this.gist = gistsModel;
+                sendToView(GistMvp.View::onSetupDetails);
+            }));
         }
     }
 

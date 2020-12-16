@@ -28,11 +28,11 @@ public class SearchPresenter extends BasePresenter<SearchMvp.View> implements Se
         super.onAttachView(view);
         if (hints.isEmpty()) {
             manageDisposable(SearchHistory.getHistory()
-                    .subscribe(strings -> {
-                        hints.clear();
-                        if (strings != null) hints.addAll(strings);
-                        view.onNotifyAdapter(null);
-                    }));
+            .subscribe(strings -> {
+                hints.clear();
+                if (strings != null) hints.addAll(strings);
+                view.onNotifyAdapter(null);
+            }));
         }
     }
 

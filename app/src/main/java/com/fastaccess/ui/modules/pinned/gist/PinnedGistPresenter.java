@@ -31,8 +31,8 @@ public class PinnedGistPresenter extends BasePresenter<PinnedGistMvp.View> imple
 
     @Override public void onReload() {
         manageDisposable(PinnedGists.getMyPinnedGists()
-                .subscribe(repos -> sendToView(view -> view.onNotifyAdapter(repos)), throwable ->
-                        sendToView(view -> view.onNotifyAdapter(null))));
+                         .subscribe(repos -> sendToView(view -> view.onNotifyAdapter(repos)), throwable ->
+                                    sendToView(view -> view.onNotifyAdapter(null))));
     }
 
     @Override public void onItemClick(int position, View v, Gist item) {

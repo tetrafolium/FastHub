@@ -19,19 +19,19 @@ import lombok.Getter;
 
     @Override public void onCheckBlocking(@NonNull String login) {
         makeRestCall(RestProvider.getUserService(isEnterprise()).isUserBlocked(login),
-                booleanResponse -> sendToView(view -> {
-                    isUserBlockedRequested = true;
-                    isUserBlocked = booleanResponse.code() == 204;
-                    view.onInvalidateMenu();
-                }));
+        booleanResponse -> sendToView(view -> {
+            isUserBlockedRequested = true;
+            isUserBlocked = booleanResponse.code() == 204;
+            view.onInvalidateMenu();
+        }));
     }
 
     @Override public void checkOrgMembership(@NonNull String org) {
         makeRestCall(RestProvider.getOrgService(isEnterprise()).isMember(org, Login.getUser().getLogin()),
-                booleanResponse -> sendToView(view -> {
-                    isMember = booleanResponse.code() == 204 ? 1 : 0;
-                    view.onInitOrg(isMember == 1);
-                }));
+        booleanResponse -> sendToView(view -> {
+            isMember = booleanResponse.code() == 204 ? 1 : 0;
+            view.onInitOrg(isMember == 1);
+        }));
     }
 
     @Override public void onBlockUser(@NonNull String login) {
@@ -39,18 +39,18 @@ import lombok.Getter;
             onUnblockUser(login);
         } else {
             makeRestCall(RestProvider.getUserService(isEnterprise()).blockUser(login),
-                    booleanResponse -> sendToView(view -> {
-                        isUserBlocked = true;
-                        view.onUserBlocked();
-                    }));
+            booleanResponse -> sendToView(view -> {
+                isUserBlocked = true;
+                view.onUserBlocked();
+            }));
         }
     }
 
     @Override public void onUnblockUser(@NonNull String login) {
         makeRestCall(RestProvider.getUserService(isEnterprise()).unBlockUser(login),
-                booleanResponse -> sendToView(view -> {
-                    isUserBlocked = false;
-                    view.onUserUnBlocked();
-                }));
+        booleanResponse -> sendToView(view -> {
+            isUserBlocked = false;
+            view.onUserUnBlocked();
+        }));
     }
 }

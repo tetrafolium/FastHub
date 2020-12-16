@@ -22,7 +22,9 @@ import lombok.Setter;
     private String membersUrl;
     private String repositoriesUrl;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -49,8 +51,12 @@ import lombok.Setter;
     }
 
     public static final Creator<TeamsModel> CREATOR = new Creator<TeamsModel>() {
-        @Override public TeamsModel createFromParcel(Parcel source) {return new TeamsModel(source);}
+        @Override public TeamsModel createFromParcel(Parcel source) {
+            return new TeamsModel(source);
+        }
 
-        @Override public TeamsModel[] newArray(int size) {return new TeamsModel[size];}
+        @Override public TeamsModel[] newArray(int size) {
+            return new TeamsModel[size];
+        }
     };
 }

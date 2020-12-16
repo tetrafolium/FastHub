@@ -69,7 +69,7 @@ public class CommentsViewHolder extends BaseViewHolder<Comment> {
     @Override public void bind(@NonNull Comment commentsModel) {
         if (commentsModel.getUser() != null) {
             avatar.setUrl(commentsModel.getUser().getAvatarUrl(), commentsModel.getUser().getLogin(),
-                    commentsModel.getUser().isOrganizationType(), LinkParserHelper.isEnterprise(commentsModel.getUser().getHtmlUrl()));
+                          commentsModel.getUser().isOrganizationType(), LinkParserHelper.isEnterprise(commentsModel.getUser().getHtmlUrl()));
         } else {
             avatar.setUrl(null, null, false, false);
         }
@@ -82,7 +82,7 @@ public class CommentsViewHolder extends BaseViewHolder<Comment> {
         name.setText(commentsModel.getUser() != null ? commentsModel.getUser().getLogin() : "Anonymous");
         if (commentsModel.getCreatedAt().before(commentsModel.getUpdatedAt())) {
             date.setText(String.format("%s %s", ParseDateFormat.getTimeAgo(commentsModel.getCreatedAt()),
-                    date.getResources().getString(R.string.edited)));
+                                       date.getResources().getString(R.string.edited)));
         } else {
             date.setText(ParseDateFormat.getTimeAgo(commentsModel.getCreatedAt()));
         }

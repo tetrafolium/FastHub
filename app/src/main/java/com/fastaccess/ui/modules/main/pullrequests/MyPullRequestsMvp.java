@@ -33,8 +33,8 @@ public interface MyPullRequestsMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<PullRequest>,
-            BaseMvp.PaginationListener<IssueState> {
+        BaseViewHolder.OnItemClickListener<PullRequest>,
+        BaseMvp.PaginationListener<IssueState> {
 
         @NonNull ArrayList<PullRequest> getPullRequests();
 

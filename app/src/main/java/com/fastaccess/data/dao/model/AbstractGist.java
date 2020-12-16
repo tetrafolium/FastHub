@@ -69,9 +69,9 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
                     if (login.getLogin().equalsIgnoreCase(ownerName)) {
                         BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                         dataSource.delete(Gist.class)
-                                .where(Gist.OWNER_NAME.equal(ownerName))
-                                .get()
-                                .value();
+                        .where(Gist.OWNER_NAME.equal(ownerName))
+                        .get()
+                        .value();
                         if (!models.isEmpty()) {
                             for (Gist gistModel : models) {
                                 dataSource.delete(Gist.class).where(ID.eq(gistModel.getId())).get().value();
@@ -81,11 +81,11 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
                         }
                     } else {
                         App.getInstance().getDataStore().toBlocking()
-                                .delete(Gist.class)
-                                .where(Gist.OWNER_NAME.notEqual(ownerName)
-                                        .or(OWNER_NAME.isNull()))
-                                .get()
-                                .value();
+                        .delete(Gist.class)
+                        .where(Gist.OWNER_NAME.notEqual(ownerName)
+                               .or(OWNER_NAME.isNull()))
+                        .get()
+                        .value();
                     }
                 }
                 s.onNext("");
@@ -98,31 +98,31 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
 
     @NonNull public static Single<List<Gist>> getMyGists(@NonNull String ownerName) {
         return App.getInstance()
-                .getDataStore()
-                .select(Gist.class)
-                .where(Gist.OWNER_NAME.equal(ownerName))
-                .get()
-                .observable()
-                .toList();
+               .getDataStore()
+               .select(Gist.class)
+               .where(Gist.OWNER_NAME.equal(ownerName))
+               .get()
+               .observable()
+               .toList();
     }
 
     @NonNull public static Single<List<Gist>> getGists() {
         return App.getInstance()
-                .getDataStore()
-                .select(Gist.class)
-                .where(Gist.OWNER_NAME.isNull())
-                .get()
-                .observable()
-                .toList();
+               .getDataStore()
+               .select(Gist.class)
+               .where(Gist.OWNER_NAME.isNull())
+               .get()
+               .observable()
+               .toList();
     }
 
     public static Observable<Gist> getGist(@NonNull String gistId) {
         return App.getInstance()
-                .getDataStore()
-                .select(Gist.class)
-                .where(Gist.GIST_ID.eq(gistId))
-                .get()
-                .observable();
+               .getDataStore()
+               .select(Gist.class)
+               .where(Gist.GIST_ID.eq(gistId))
+               .get()
+               .observable();
     }
 
     @Override public boolean equals(Object o) {
@@ -139,8 +139,8 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
     @NonNull public ArrayList<FilesListModel> getFilesAsList() {
         if (files != null) {
             return Stream.of(files)
-                    .map(Map.Entry::getValue)
-                    .collect(Collectors.toCollection(ArrayList::new));
+                   .map(Map.Entry::getValue)
+                   .collect(Collectors.toCollection(ArrayList::new));
         }
         return new ArrayList<>();
     }
@@ -166,7 +166,7 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
                     FilesListModel filesListModel = files.get(0);
                     if (!InputHelper.isEmpty(filesListModel.getFilename()) && filesListModel.getFilename().trim().length() > 2) {
                         spannableBuilder.append(" ").append("/").append(" ")
-                                .append(filesListModel.getFilename());
+                        .append(filesListModel.getFilename());
                         addDescription = false;
                     }
                 }
@@ -185,7 +185,7 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
                     FilesListModel filesListModel = files.get(0);
                     if (!InputHelper.isEmpty(filesListModel.getFilename()) && filesListModel.getFilename().trim().length() > 2) {
                         spannableBuilder.append(" ")
-                                .append(filesListModel.getFilename());
+                        .append(filesListModel.getFilename());
                     }
                 }
             }
@@ -201,7 +201,9 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
         return 0;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -250,8 +252,12 @@ import static com.fastaccess.data.dao.model.Gist.OWNER_NAME;
     }
 
     public static final Creator<Gist> CREATOR = new Creator<Gist>() {
-        @Override public Gist createFromParcel(Parcel source) {return new Gist(source);}
+        @Override public Gist createFromParcel(Parcel source) {
+            return new Gist(source);
+        }
 
-        @Override public Gist[] newArray(int size) {return new Gist[size];}
+        @Override public Gist[] newArray(int size) {
+            return new Gist[size];
+        }
     };
 }
