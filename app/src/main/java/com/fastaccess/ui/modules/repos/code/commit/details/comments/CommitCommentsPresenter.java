@@ -101,7 +101,7 @@ class CommitCommentsPresenter extends BasePresenter<CommitCommentsMvp.View> impl
             long commId = bundle.getLong(BundleConstant.EXTRA, 0);
             if (commId != 0) {
                 makeRestCall(RestProvider.getRepoService(isEnterprise()).deleteComment(login, repoId, commId)
-                , booleanResponse -> sendToView(view -> {
+, booleanResponse -> sendToView(view -> {
                     if (booleanResponse.code() == 204) {
                         Comment comment = new Comment();
                         comment.setId(commId);

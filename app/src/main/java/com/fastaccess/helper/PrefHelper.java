@@ -45,7 +45,7 @@ public class PrefHelper {
         } else {
             edit.putString(key, value.toString());
         }
-        edit.commit();//apply on UI
+        edit.commit(); //apply on UI
     }
 
     @Nullable public static String getString(@NonNull String key) {

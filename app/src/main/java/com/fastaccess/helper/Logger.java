@@ -20,25 +20,25 @@ public class Logger {
 
     private static void e(@NonNull String tag, @Nullable Object text) {
         if (!DEBUG) return;
-        Log.e(tag, text != null ? text.toString() : "LOGGER IS NULL");//avoid null
+        Log.e(tag, text != null ? text.toString() : "LOGGER IS NULL"); //avoid null
     }
 
     private static void d(@NonNull String tag, @Nullable Object text) {
         if (!DEBUG) return;
-        Log.d(tag, text != null ? text.toString() : "LOGGER IS NULL");//avoid null
+        Log.d(tag, text != null ? text.toString() : "LOGGER IS NULL"); //avoid null
     }
 
     private static void i(@NonNull String tag, @Nullable Object text) {
         if (!DEBUG) return;
-        Log.i(tag, text != null ? text.toString() : "LOGGER IS NULL");//avoid null
+        Log.i(tag, text != null ? text.toString() : "LOGGER IS NULL"); //avoid null
     }
 
     public static void d(@Nullable Object text) {
-        d(getCurrentClassName() + " || " + getCurrentMethodName(), text);//avoid null
+        d(getCurrentClassName() + " || " + getCurrentMethodName(), text); //avoid null
     }
 
     public static void i(@Nullable Object text) {
-        i(getCurrentClassName() + " || " + getCurrentMethodName(), text);//avoid null
+        i(getCurrentClassName() + " || " + getCurrentMethodName(), text); //avoid null
     }
 
     public static void e(Object... objects) {

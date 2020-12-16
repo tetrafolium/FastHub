@@ -75,7 +75,7 @@ public class FastHubAboutActivity extends MaterialAboutActivity {
         if (item.getItemId() == android.R.id.home) {
             finish();
         }
-        return false;//override
+        return false; //override
     }
 
     private void buildLogo(Context context, MaterialAboutCard.Builder newLogoAuthor, MaterialAboutCard.Builder logoAuthor) {
@@ -120,7 +120,7 @@ public class FastHubAboutActivity extends MaterialAboutActivity {
                                   .text("Kosh Sergani")
                                   .subText("k0shk0sh")
                                   .icon(ContextCompat.getDrawable(context, R.drawable.ic_profile))
-                                  .setOnClickAction(() -> UserPagerActivity.startActivity(context, "k0shk0sh", false, false,0))
+                                  .setOnClickAction(() -> UserPagerActivity.startActivity(context, "k0shk0sh", false, false, 0))
                                   .build())
         .addItem(new MaterialAboutActionItem.Builder()
                  .text(R.string.fork_github)

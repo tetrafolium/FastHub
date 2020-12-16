@@ -22,7 +22,7 @@ public class PaginationInterceptor implements Interceptor {
         if (headers != null) {
             if ((headers.values("Accept").contains("application/vnd.github.html") ||
                     headers.values("Accept").contains("application/vnd.github.VERSION.raw"))) {
-                return response;//return them as they are.
+                return response; //return them as they are.
             }
         }
         if (response.isSuccessful()) {

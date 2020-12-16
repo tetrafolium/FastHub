@@ -61,9 +61,9 @@ import static android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
     @Override public void handleTagNode(TagNode node, SpannableStringBuilder builder, int start, int end) {
         if (isPre) {
             StringBuffer buffer = new StringBuffer();
-            buffer.append("\n");//fake padding top + make sure, pre is always by itself
+            buffer.append("\n"); //fake padding top + make sure, pre is always by itself
             getPlainText(buffer, node);
-            buffer.append("\n");//fake padding bottom + make sure, pre is always by itself
+            buffer.append("\n"); //fake padding bottom + make sure, pre is always by itself
             builder.append(replace(buffer.toString()));
             builder.append("\n");
             builder.setSpan(new CodeBackgroundRoundedSpan(color), start, builder.length(), SPAN_EXCLUSIVE_EXCLUSIVE);
