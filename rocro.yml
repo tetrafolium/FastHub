@@ -1,3 +1,15 @@
 inspecode:
   infer:
-    thresholds: {num-issues: 999}
+  # - thresholds: { num-issues: 62 }
+  - thresholds: {num-issues: 116}
+    machine: {cpu: 0.25}      # minimum setting
+  - thresholds: {num-issues: 116}
+    machine: {cpu: 0.3}
+  - thresholds: {num-issues: 116}
+    machine: {cpu: 0.4}
+  - thresholds: {num-issues: 116}
+    machine: {cpu: 0.5}
+  - thresholds: {num-issues: 116}
+    # machine: {cpu: 0.75}    # (= default)
+  - thresholds: {num-issues: 116}
+    machine: {cpu: 1.0}       # maximum setting at Enterprise-AWS
