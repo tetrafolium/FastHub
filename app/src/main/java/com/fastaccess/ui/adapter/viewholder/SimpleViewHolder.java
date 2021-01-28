@@ -17,13 +17,13 @@ import butterknife.BindView;
 
 public class SimpleViewHolder<O> extends BaseViewHolder<O> {
 
-    @BindView(R.id.title) FontTextView title;
+@BindView(R.id.title) FontTextView title;
 
-    public SimpleViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
-        super(itemView, adapter);
-    }
+public SimpleViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+	super(itemView, adapter);
+}
 
-    @Override public void bind(@NonNull O o) {
-        title.setText(o.toString());
-    }
+@Override public void bind(@NonNull O o) {
+	title.setText(o.toString());
+}
 }

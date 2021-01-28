@@ -16,17 +16,17 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class RepoPathsManager {
-    private HashMap<String, List<RepoFile>> files = new HashMap<>();
+private HashMap<String, List<RepoFile> > files = new HashMap<>();
 
-    @Nullable public List<RepoFile> getPaths(@NonNull String url, @NonNull String ref) {
-        return files.get(ref + "/" + url);
-    }
+@Nullable public List<RepoFile> getPaths(@NonNull String url, @NonNull String ref) {
+	return files.get(ref + "/" + url);
+}
 
-    public void setFiles(@NonNull String ref, @NonNull String path, @NonNull List<RepoFile> paths) {
-        files.put(ref + "/" + path, paths);
-    }
+public void setFiles(@NonNull String ref, @NonNull String path, @NonNull List<RepoFile> paths) {
+	files.put(ref + "/" + path, paths);
+}
 
-    public void clear() {
-        files.clear();
-    }
+public void clear() {
+	files.clear();
+}
 }

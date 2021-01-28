@@ -14,46 +14,46 @@ import lombok.Setter;
 @Getter @Setter
 public class SimpleUrlsModel implements Parcelable {
 
-    public String item;
-    public String url;
-    public String extension;
+public String item;
+public String url;
+public String extension;
 
-    public SimpleUrlsModel(String item, String url) {
-        this.item = item;
-        this.url = url;
-    }
+public SimpleUrlsModel(String item, String url) {
+	this.item = item;
+	this.url = url;
+}
 
-    public SimpleUrlsModel(String item, String url, String extension) {
-        this.item = item;
-        this.url = url;
-        this.extension = extension;
-    }
+public SimpleUrlsModel(String item, String url, String extension) {
+	this.item = item;
+	this.url = url;
+	this.extension = extension;
+}
 
-    @Override public String toString() {
-        return item;
-    }
+@Override public String toString() {
+	return item;
+}
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.item);
-        dest.writeString(this.url);
-    }
+@Override public void writeToParcel(Parcel dest, int flags) {
+	dest.writeString(this.item);
+	dest.writeString(this.url);
+}
 
-    @SuppressWarnings("WeakerAccess") protected SimpleUrlsModel(Parcel in) {
-        this.item = in.readString();
-        this.url = in.readString();
-    }
+@SuppressWarnings("WeakerAccess") protected SimpleUrlsModel(Parcel in) {
+	this.item = in.readString();
+	this.url = in.readString();
+}
 
-    public static final Creator<SimpleUrlsModel> CREATOR = new Creator<SimpleUrlsModel>() {
-        @Override public SimpleUrlsModel createFromParcel(Parcel source) {
-            return new SimpleUrlsModel(source);
-        }
+public static final Creator<SimpleUrlsModel> CREATOR = new Creator<SimpleUrlsModel>() {
+	@Override public SimpleUrlsModel createFromParcel(Parcel source) {
+		return new SimpleUrlsModel(source);
+	}
 
-        @Override public SimpleUrlsModel[] newArray(int size) {
-            return new SimpleUrlsModel[size];
-        }
-    };
+	@Override public SimpleUrlsModel[] newArray(int size) {
+		return new SimpleUrlsModel[size];
+	}
+};
 }

@@ -19,20 +19,20 @@ import java.util.List;
 
 interface RepoContributorsMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<User> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<User> items, int page);
 
-        @NonNull OnLoadMore getLoadMore();
-    }
+@NonNull OnLoadMore getLoadMore();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<User>,
-        BaseMvp.PaginationListener {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<User>,
+	                    BaseMvp.PaginationListener {
 
-        void onFragmentCreated(@NonNull Bundle bundle);
+void onFragmentCreated(@NonNull Bundle bundle);
 
-        void onWorkOffline();
+void onWorkOffline();
 
-        @NonNull ArrayList<User> getUsers();
-    }
+@NonNull ArrayList<User> getUsers();
+}
 }

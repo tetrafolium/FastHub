@@ -9,6 +9,6 @@ import lombok.Setter;
  */
 
 @AllArgsConstructor @Getter @Setter public class NotificationSubscriptionBodyModel {
-    private Boolean subscribed;
-    private Boolean ignored;
+private Boolean subscribed;
+private Boolean ignored;
 }

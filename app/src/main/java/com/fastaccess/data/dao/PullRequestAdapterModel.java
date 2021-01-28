@@ -21,55 +21,56 @@ import lombok.Setter;
 @Getter @Setter
 public class PullRequestAdapterModel implements Parcelable {
 
-    public static final int HEADER = 1;
-    public static final int ROW = 2;
-    private int type;
+public static final int HEADER = 1;
+public static final int ROW = 2;
+private int type;
 
-    private IssueEvent issueEvent;
-    private PullRequest pullRequest;
+private IssueEvent issueEvent;
+private PullRequest pullRequest;
 
-    private PullRequestAdapterModel(int type, IssueEvent model) {
-        this.type = type;
-        this.issueEvent = model;
-    }
+private PullRequestAdapterModel(int type, IssueEvent model) {
+	this.type = type;
+	this.issueEvent = model;
+}
 
-    public PullRequestAdapterModel(int type, PullRequest pullRequest) {
-        this.type = type;
-        this.pullRequest = pullRequest;
-    }
+public PullRequestAdapterModel(int type, PullRequest pullRequest) {
+	this.type = type;
+	this.pullRequest = pullRequest;
+}
 
-    public static ArrayList<PullRequestAdapterModel> addEvents(@Nullable List<IssueEvent> modelList) {
-        ArrayList<PullRequestAdapterModel> models = new ArrayList<>();
-        if (modelList == null || modelList.isEmpty()) return models;
-        Stream.of(modelList).forEach(issueEventModel -> models.add(new PullRequestAdapterModel(ROW, issueEventModel)));
-        return models;
-    }
+public static ArrayList<PullRequestAdapterModel> addEvents(@Nullable List<IssueEvent> modelList) {
+	ArrayList<PullRequestAdapterModel> models = new ArrayList<>();
+	if (modelList == null || modelList.isEmpty()) return models;
+	Stream.of(modelList).forEach(issueEventModel->models.add(new PullRequestAdapterModel(ROW, issueEventModel)));
+	return models;
+}
 
-    public PullRequestAdapterModel() {}
+public PullRequestAdapterModel() {
+}
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.type);
-        dest.writeParcelable(this.issueEvent, flags);
-        dest.writeParcelable(this.pullRequest, flags);
-    }
+@Override public void writeToParcel(Parcel dest, int flags) {
+	dest.writeInt(this.type);
+	dest.writeParcelable(this.issueEvent, flags);
+	dest.writeParcelable(this.pullRequest, flags);
+}
 
-    private PullRequestAdapterModel(Parcel in) {
-        this.type = in.readInt();
-        this.issueEvent = in.readParcelable(IssueEvent.class.getClassLoader());
-        this.pullRequest = in.readParcelable(PullRequest.class.getClassLoader());
-    }
+private PullRequestAdapterModel(Parcel in) {
+	this.type = in.readInt();
+	this.issueEvent = in.readParcelable(IssueEvent.class.getClassLoader());
+	this.pullRequest = in.readParcelable(PullRequest.class.getClassLoader());
+}
 
-    public static final Creator<PullRequestAdapterModel> CREATOR = new Creator<PullRequestAdapterModel>() {
-        @Override public PullRequestAdapterModel createFromParcel(Parcel source) {
-            return new PullRequestAdapterModel(source);
-        }
+public static final Creator<PullRequestAdapterModel> CREATOR = new Creator<PullRequestAdapterModel>() {
+	@Override public PullRequestAdapterModel createFromParcel(Parcel source) {
+		return new PullRequestAdapterModel(source);
+	}
 
-        @Override public PullRequestAdapterModel[] newArray(int size) {
-            return new PullRequestAdapterModel[size];
-        }
-    };
+	@Override public PullRequestAdapterModel[] newArray(int size) {
+		return new PullRequestAdapterModel[size];
+	}
+};
 }

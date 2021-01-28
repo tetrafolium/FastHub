@@ -15,30 +15,30 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 public class RenameModel implements Parcelable {
-    @SerializedName("from") String fromValue;
-    @SerializedName("to") String toValue;
+@SerializedName("from") String fromValue;
+@SerializedName("to") String toValue;
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.fromValue);
-        dest.writeString(this.toValue);
-    }
+@Override public void writeToParcel(Parcel dest, int flags) {
+	dest.writeString(this.fromValue);
+	dest.writeString(this.toValue);
+}
 
-    protected RenameModel(Parcel in) {
-        this.fromValue = in.readString();
-        this.toValue = in.readString();
-    }
+protected RenameModel(Parcel in) {
+	this.fromValue = in.readString();
+	this.toValue = in.readString();
+}
 
-    public static final Creator<RenameModel> CREATOR = new Creator<RenameModel>() {
-        @Override public RenameModel createFromParcel(Parcel source) {
-            return new RenameModel(source);
-        }
+public static final Creator<RenameModel> CREATOR = new Creator<RenameModel>() {
+	@Override public RenameModel createFromParcel(Parcel source) {
+		return new RenameModel(source);
+	}
 
-        @Override public RenameModel[] newArray(int size) {
-            return new RenameModel[size];
-        }
-    };
+	@Override public RenameModel[] newArray(int size) {
+		return new RenameModel[size];
+	}
+};
 }

@@ -21,22 +21,22 @@ import butterknife.BindView;
 
 public class NotificationsHeaderViewHolder extends BaseViewHolder<GroupedNotificationModel> {
 
-    @Nullable @BindView(R.id.headerTitle) FontTextView headerTitle;
-    @BindView(R.id.markAsRead) AppCompatImageButton markAsRead;
+@Nullable @BindView(R.id.headerTitle) FontTextView headerTitle;
+@BindView(R.id.markAsRead) AppCompatImageButton markAsRead;
 
-    private NotificationsHeaderViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
-        super(itemView, adapter);
-        markAsRead.setOnClickListener(this);
-    }
+private NotificationsHeaderViewHolder(@NonNull View itemView, @Nullable BaseRecyclerAdapter adapter) {
+	super(itemView, adapter);
+	markAsRead.setOnClickListener(this);
+}
 
-    public static NotificationsHeaderViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter) {
-        return new NotificationsHeaderViewHolder(getView(viewGroup, R.layout.notification_header_row_item), adapter);
-    }
+public static NotificationsHeaderViewHolder newInstance(@NonNull ViewGroup viewGroup, @Nullable BaseRecyclerAdapter adapter) {
+	return new NotificationsHeaderViewHolder(getView(viewGroup, R.layout.notification_header_row_item), adapter);
+}
 
-    @Override public void bind(@NonNull GroupedNotificationModel model) {
-        Repo repo = model.getRepo();
-        if (repo != null && headerTitle != null) {
-            headerTitle.setText(repo.getFullName());
-        }
-    }
+@Override public void bind(@NonNull GroupedNotificationModel model) {
+	Repo repo = model.getRepo();
+	if (repo != null && headerTitle != null) {
+		headerTitle.setText(repo.getFullName());
+	}
+}
 }

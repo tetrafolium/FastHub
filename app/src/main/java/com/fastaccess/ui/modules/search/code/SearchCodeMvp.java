@@ -18,27 +18,27 @@ import java.util.List;
 
 interface SearchCodeMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<SearchCodeModel> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<SearchCodeModel> items, int page);
 
-        void onSetTabCount(int count);
+void onSetTabCount(int count);
 
-        void onSetSearchQuery(@NonNull String query, boolean showRepoName);
+void onSetSearchQuery(@NonNull String query, boolean showRepoName);
 
-        void onQueueSearch(@NonNull String query);
+void onQueueSearch(@NonNull String query);
 
-        void onQueueSearch(@NonNull String query, boolean showRepoName);
+void onQueueSearch(@NonNull String query, boolean showRepoName);
 
-        @NonNull OnLoadMore<String> getLoadMore();
+@NonNull OnLoadMore<String> getLoadMore();
 
-        void onItemClicked(@NonNull SearchCodeModel item);
-    }
+void onItemClicked(@NonNull SearchCodeModel item);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<SearchCodeModel>,
-        BaseMvp.PaginationListener<String> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<SearchCodeModel>,
+	                    BaseMvp.PaginationListener<String> {
 
-        @NonNull ArrayList<SearchCodeModel> getCodes();
+@NonNull ArrayList<SearchCodeModel> getCodes();
 
-    }
+}
 }

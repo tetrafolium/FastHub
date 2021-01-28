@@ -7,7 +7,7 @@ import com.fastaccess.data.dao.GithubFileModel;
  */
 
 public class GitHubFilesConverter extends BaseConverter<GithubFileModel> {
-    @Override protected Class<? extends GithubFileModel> getTypeClass() {
-        return GithubFileModel.class;
-    }
+@Override protected Class<? extends GithubFileModel> getTypeClass() {
+	return GithubFileModel.class;
+}
 }

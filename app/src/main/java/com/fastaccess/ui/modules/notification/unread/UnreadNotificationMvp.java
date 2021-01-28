@@ -20,26 +20,26 @@ import java.util.List;
 
 public interface UnreadNotificationMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener  {
-        @CallOnMainThread void onNotifyAdapter(@Nullable List<GroupedNotificationModel> items);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener  {
+@CallOnMainThread void onNotifyAdapter(@Nullable List<GroupedNotificationModel> items);
 
-        void onRemove(int position);
+void onRemove(int position);
 
-        void onReadNotification(@NonNull Notification notification);
+void onReadNotification(@NonNull Notification notification);
 
-        void onClick(@NonNull String url);
+void onClick(@NonNull String url);
 
-        void onNotifyNotificationChanged(@NonNull GroupedNotificationModel notification);
-    }
+void onNotifyNotificationChanged(@NonNull GroupedNotificationModel notification);
+}
 
-    interface Presenter extends BaseViewHolder.OnItemClickListener<GroupedNotificationModel> {
+interface Presenter extends BaseViewHolder.OnItemClickListener<GroupedNotificationModel> {
 
-        void onWorkOffline();
+void onWorkOffline();
 
-        @NonNull ArrayList<GroupedNotificationModel> getNotifications();
+@NonNull ArrayList<GroupedNotificationModel> getNotifications();
 
-        void onMarkAllAsRead(@NonNull List<GroupedNotificationModel> data);
+void onMarkAllAsRead(@NonNull List<GroupedNotificationModel> data);
 
-        void onCallApi();
-    }
+void onCallApi();
+}
 }

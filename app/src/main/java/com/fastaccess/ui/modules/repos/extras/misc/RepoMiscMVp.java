@@ -20,28 +20,28 @@ import java.util.List;
 
 public interface RepoMiscMVp {
 
-    int WATCHERS = 0;
-    int FORKS = 1;
-    int STARS = 2;
+int WATCHERS = 0;
+int FORKS = 1;
+int STARS = 2;
 
-    @IntDef({
-        WATCHERS,
-        FORKS,
-        STARS
-    })
-    @Retention(RetentionPolicy.SOURCE) @interface MiscType {}
+@IntDef({
+		WATCHERS,
+		FORKS,
+		STARS
+	})
+@Retention(RetentionPolicy.SOURCE) @interface MiscType {}
 
 
-    interface View extends BaseMvp.FAView {
-        void onNotifyAdapter(@Nullable List<User> items, int page);
+interface View extends BaseMvp.FAView {
+void onNotifyAdapter(@Nullable List<User> items, int page);
 
-        @NonNull OnLoadMore<Integer> getLoadMore();
-    }
+@NonNull OnLoadMore<Integer> getLoadMore();
+}
 
-    interface Presenter extends BaseMvp.PaginationListener<Integer>, BaseViewHolder.OnItemClickListener<User> {
+interface Presenter extends BaseMvp.PaginationListener<Integer>, BaseViewHolder.OnItemClickListener<User> {
 
-        @NonNull ArrayList<User> getList();
+@NonNull ArrayList<User> getList();
 
-        @MiscType int getType();
-    }
+@MiscType int getType();
+}
 }

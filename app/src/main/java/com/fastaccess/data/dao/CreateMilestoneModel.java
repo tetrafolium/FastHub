@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 public class CreateMilestoneModel {
-    private String title;
-    private String description;
-    @SerializedName("due_on") private String dueOn;
+private String title;
+private String description;
+@SerializedName("due_on") private String dueOn;
 }

@@ -18,20 +18,20 @@ import java.util.List;
 
 interface ProfileStarredMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
-        void onNotifyAdapter(@Nullable List<Repo> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener, android.view.View.OnClickListener {
+void onNotifyAdapter(@Nullable List<Repo> items, int page);
 
-        @NonNull OnLoadMore<String> getLoadMore();
+@NonNull OnLoadMore<String> getLoadMore();
 
-        void onUpdateCount(int starredCount);
-    }
+void onUpdateCount(int starredCount);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Repo>,
-        BaseMvp.PaginationListener<String> {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Repo>,
+	                    BaseMvp.PaginationListener<String> {
 
-        @NonNull ArrayList<Repo> getRepos();
+@NonNull ArrayList<Repo> getRepos();
 
-        void onWorkOffline(@NonNull String login);
-    }
+void onWorkOffline(@NonNull String login);
+}
 }

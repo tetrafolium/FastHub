@@ -21,27 +21,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 @AllArgsConstructor
 public class GithubResponseConverter extends Converter.Factory {
-    private Gson gson;
+private Gson gson;
 
-    @Override public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-        try {
-            if (type == String.class) {
-                return new StringResponseConverter();
-            }
-            return GsonConverterFactory.create(gson).responseBodyConverter(type, annotations, retrofit);
-        } catch (OutOfMemoryError ignored) {
-            return null;
-        }
-    }
+@Override public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
+	try {
+		if (type == String.class) {
+			return new StringResponseConverter();
+		}
+		return GsonConverterFactory.create(gson).responseBodyConverter(type, annotations, retrofit);
+	} catch (OutOfMemoryError ignored) {
+		return null;
+	}
+}
 
-    @Override public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations,
-            Annotation[] methodAnnotations, Retrofit retrofit) {
-        return GsonConverterFactory.create(gson).requestBodyConverter(type, parameterAnnotations, methodAnnotations, retrofit);
-    }
+@Override public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations,
+                                                                Annotation[] methodAnnotations, Retrofit retrofit) {
+	return GsonConverterFactory.create(gson).requestBodyConverter(type, parameterAnnotations, methodAnnotations, retrofit);
+}
 
-    public static class StringResponseConverter implements Converter<ResponseBody, String> {
-        @Override public String convert(@NonNull ResponseBody value) throws IOException {
-            return value.string();
-        }
-    }
+public static class StringResponseConverter implements Converter<ResponseBody, String> {
+@Override public String convert(@NonNull ResponseBody value) throws IOException {
+	return value.string();
+}
+}
 }

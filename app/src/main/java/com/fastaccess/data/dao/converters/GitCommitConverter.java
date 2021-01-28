@@ -7,7 +7,7 @@ import com.fastaccess.data.dao.GitCommitModel;
  */
 
 public class GitCommitConverter extends BaseConverter<GitCommitModel> {
-    @Override protected Class<? extends GitCommitModel> getTypeClass() {
-        return GitCommitModel.class;
-    }
+@Override protected Class<? extends GitCommitModel> getTypeClass() {
+	return GitCommitModel.class;
+}
 }

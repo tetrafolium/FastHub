@@ -12,33 +12,34 @@ import lombok.ToString;
  */
 
 @Getter @Setter @ToString public class LanguageColorModel implements Parcelable {
-    public String color;
-    public String url;
+public String color;
+public String url;
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.color);
-        dest.writeString(this.url);
-    }
+@Override public void writeToParcel(Parcel dest, int flags) {
+	dest.writeString(this.color);
+	dest.writeString(this.url);
+}
 
-    public LanguageColorModel() {}
+public LanguageColorModel() {
+}
 
-    private LanguageColorModel(Parcel in) {
-        this.color = in.readString();
-        this.url = in.readString();
-    }
+private LanguageColorModel(Parcel in) {
+	this.color = in.readString();
+	this.url = in.readString();
+}
 
-    public static final Parcelable.Creator<LanguageColorModel> CREATOR = new Parcelable.Creator<LanguageColorModel>() {
-        @Override public LanguageColorModel createFromParcel(Parcel source) {
-            return new LanguageColorModel(source);
-        }
+public static final Parcelable.Creator<LanguageColorModel> CREATOR = new Parcelable.Creator<LanguageColorModel>() {
+	@Override public LanguageColorModel createFromParcel(Parcel source) {
+		return new LanguageColorModel(source);
+	}
 
-        @Override public LanguageColorModel[] newArray(int size) {
-            return new LanguageColorModel[size];
-        }
-    };
+	@Override public LanguageColorModel[] newArray(int size) {
+		return new LanguageColorModel[size];
+	}
+};
 }
 

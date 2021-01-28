@@ -7,7 +7,7 @@ import com.fastaccess.data.dao.RepoPermissionsModel;
  */
 
 public class RepoPermissionConverter extends BaseConverter<RepoPermissionsModel> {
-    @Override protected Class<? extends RepoPermissionsModel> getTypeClass() {
-        return RepoPermissionsModel.class;
-    }
+@Override protected Class<? extends RepoPermissionsModel> getTypeClass() {
+	return RepoPermissionsModel.class;
+}
 }

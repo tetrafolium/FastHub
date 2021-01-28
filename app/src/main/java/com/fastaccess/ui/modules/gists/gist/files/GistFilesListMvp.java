@@ -17,23 +17,23 @@ import java.util.HashMap;
 
 public interface GistFilesListMvp {
 
-    interface View extends BaseMvp.FAView, AddGistMvp.AddGistFileListener {
-        void onOpenFile(@NonNull FilesListModel item, int position);
+interface View extends BaseMvp.FAView, AddGistMvp.AddGistFileListener {
+void onOpenFile(@NonNull FilesListModel item, int position);
 
-        void onDeleteFile(@NonNull FilesListModel item, int position);
+void onDeleteFile(@NonNull FilesListModel item, int position);
 
-        void onEditFile(@NonNull FilesListModel item, int position);
+void onEditFile(@NonNull FilesListModel item, int position);
 
-        void onInitFiles(@Nullable ArrayList<FilesListModel> file, boolean isOwner);
+void onInitFiles(@Nullable ArrayList<FilesListModel> file, boolean isOwner);
 
-        void onAddNewFile();
+void onAddNewFile();
 
-        @NonNull HashMap<String, FilesListModel> getFiles();
-    }
+@NonNull HashMap<String, FilesListModel> getFiles();
+}
 
-    interface Presenter extends BaseMvp.FAPresenter, BaseViewHolder.OnItemClickListener<FilesListModel> {
-        void onSetList(@Nullable ArrayList<FilesListModel> files);
+interface Presenter extends BaseMvp.FAPresenter, BaseViewHolder.OnItemClickListener<FilesListModel> {
+void onSetList(@Nullable ArrayList<FilesListModel> files);
 
-        @NonNull ArrayList<FilesListModel> getFiles();
-    }
+@NonNull ArrayList<FilesListModel> getFiles();
+}
 }

@@ -22,41 +22,41 @@ import butterknife.BindView;
 
 public class RepoFilesViewHolder extends BaseViewHolder<RepoFile> {
 
-    @BindView(R.id.contentTypeImage) ForegroundImageView contentTypeImage;
-    @BindView(R.id.title) FontTextView title;
-    @BindView(R.id.size) FontTextView size;
-    @BindView(R.id.menu) ForegroundImageView menu;
-    @BindString(R.string.file) String file;
+@BindView(R.id.contentTypeImage) ForegroundImageView contentTypeImage;
+@BindView(R.id.title) FontTextView title;
+@BindView(R.id.size) FontTextView size;
+@BindView(R.id.menu) ForegroundImageView menu;
+@BindString(R.string.file) String file;
 
-    @Override public void onClick(View v) {
-        if (v.getId() == R.id.contentTypeImage) {
-            itemView.callOnClick();
-        } else {
-            super.onClick(v);
-        }
-    }
+@Override public void onClick(View v) {
+	if (v.getId() == R.id.contentTypeImage) {
+		itemView.callOnClick();
+	} else {
+		super.onClick(v);
+	}
+}
 
-    private RepoFilesViewHolder(@NonNull View itemView, @NonNull BaseRecyclerAdapter adapter) {
-        super(itemView, adapter);
-        menu.setOnClickListener(this);
-        contentTypeImage.setOnClickListener(this);
-    }
+private RepoFilesViewHolder(@NonNull View itemView, @NonNull BaseRecyclerAdapter adapter) {
+	super(itemView, adapter);
+	menu.setOnClickListener(this);
+	contentTypeImage.setOnClickListener(this);
+}
 
-    public static RepoFilesViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter) {
-        return new RepoFilesViewHolder(getView(viewGroup, R.layout.repo_files_row_item), adapter);
-    }
+public static RepoFilesViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter) {
+	return new RepoFilesViewHolder(getView(viewGroup, R.layout.repo_files_row_item), adapter);
+}
 
-    @Override public void bind(@NonNull RepoFile filesModel) {
-        contentTypeImage.setContentDescription(String.format("%s %s", filesModel.getName(), file));
-        title.setText(filesModel.getName());
-        if (filesModel.getType() != null && filesModel.getType().getIcon() != 0) {
-            contentTypeImage.setImageResource(filesModel.getType().getIcon());
-            if (filesModel.getType() == FilesType.file) {
-                size.setText(Formatter.formatFileSize(size.getContext(), filesModel.getSize()));
-                size.setVisibility(View.VISIBLE);
-            } else {
-                size.setVisibility(View.GONE);
-            }
-        }
-    }
+@Override public void bind(@NonNull RepoFile filesModel) {
+	contentTypeImage.setContentDescription(String.format("%s %s", filesModel.getName(), file));
+	title.setText(filesModel.getName());
+	if (filesModel.getType() != null && filesModel.getType().getIcon() != 0) {
+		contentTypeImage.setImageResource(filesModel.getType().getIcon());
+		if (filesModel.getType() == FilesType.file) {
+			size.setText(Formatter.formatFileSize(size.getContext(), filesModel.getSize()));
+			size.setVisibility(View.VISIBLE);
+		} else {
+			size.setVisibility(View.GONE);
+		}
+	}
+}
 }

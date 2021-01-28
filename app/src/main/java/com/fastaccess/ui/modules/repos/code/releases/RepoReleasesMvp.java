@@ -21,25 +21,25 @@ import java.util.List;
 
 interface RepoReleasesMvp {
 
-    interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-        android.view.View.OnClickListener, ListDialogView.onSimpleItemSelection<SimpleUrlsModel> {
-        void onNotifyAdapter(@Nullable List<Release> items, int page);
+interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
+	               android.view.View.OnClickListener, ListDialogView.onSimpleItemSelection<SimpleUrlsModel> {
+void onNotifyAdapter(@Nullable List<Release> items, int page);
 
-        @NonNull OnLoadMore getLoadMore();
+@NonNull OnLoadMore getLoadMore();
 
-        void onDownload(@NonNull Release item);
+void onDownload(@NonNull Release item);
 
-        void onShowDetails(@NonNull Release item);
-    }
+void onShowDetails(@NonNull Release item);
+}
 
-    interface Presenter extends BaseMvp.FAPresenter,
-        BaseViewHolder.OnItemClickListener<Release>,
-        BaseMvp.PaginationListener {
+interface Presenter extends BaseMvp.FAPresenter,
+	                    BaseViewHolder.OnItemClickListener<Release>,
+	                    BaseMvp.PaginationListener {
 
-        void onFragmentCreated(@NonNull Bundle bundle);
+void onFragmentCreated(@NonNull Bundle bundle);
 
-        void onWorkOffline();
+void onWorkOffline();
 
-        @NonNull ArrayList<Release> getReleases();
-    }
+@NonNull ArrayList<Release> getReleases();
+}
 }

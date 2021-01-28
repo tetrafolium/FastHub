@@ -13,39 +13,39 @@ import lombok.Setter;
 
 @Getter @Setter @NoArgsConstructor
 public class LicenseModel implements Parcelable {
-    String key;
-    String name;
-    String spdxId;
-    String url;
-    boolean featured;
+String key;
+String name;
+String spdxId;
+String url;
+boolean featured;
 
-    @Override public int describeContents() {
-        return 0;
-    }
+@Override public int describeContents() {
+	return 0;
+}
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.key);
-        dest.writeString(this.name);
-        dest.writeString(this.spdxId);
-        dest.writeString(this.url);
-        dest.writeByte(this.featured ? (byte) 1 : (byte) 0);
-    }
+@Override public void writeToParcel(Parcel dest, int flags) {
+	dest.writeString(this.key);
+	dest.writeString(this.name);
+	dest.writeString(this.spdxId);
+	dest.writeString(this.url);
+	dest.writeByte(this.featured ? (byte) 1 : (byte) 0);
+}
 
-    protected LicenseModel(Parcel in) {
-        this.key = in.readString();
-        this.name = in.readString();
-        this.spdxId = in.readString();
-        this.url = in.readString();
-        this.featured = in.readByte() != 0;
-    }
+protected LicenseModel(Parcel in) {
+	this.key = in.readString();
+	this.name = in.readString();
+	this.spdxId = in.readString();
+	this.url = in.readString();
+	this.featured = in.readByte() != 0;
+}
 
-    public static final Creator<LicenseModel> CREATOR = new Creator<LicenseModel>() {
-        @Override public LicenseModel createFromParcel(Parcel source) {
-            return new LicenseModel(source);
-        }
+public static final Creator<LicenseModel> CREATOR = new Creator<LicenseModel>() {
+	@Override public LicenseModel createFromParcel(Parcel source) {
+		return new LicenseModel(source);
+	}
 
-        @Override public LicenseModel[] newArray(int size) {
-            return new LicenseModel[size];
-        }
-    };
+	@Override public LicenseModel[] newArray(int size) {
+		return new LicenseModel[size];
+	}
+};
 }

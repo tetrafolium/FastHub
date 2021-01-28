@@ -15,35 +15,35 @@ import com.fastaccess.helper.TypeFaceHelper;
  */
 public class FontEditText extends AppCompatEditText {
 
-    public FontEditText(@NonNull Context context) {
-        super(context);
-        init();
-    }
+public FontEditText(@NonNull Context context) {
+	super(context);
+	init();
+}
 
-    public FontEditText(@NonNull Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
+public FontEditText(@NonNull Context context, AttributeSet attrs) {
+	super(context, attrs);
+	init();
 
-    }
+}
 
-    public FontEditText(@NonNull Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-        init();
-    }
+public FontEditText(@NonNull Context context, AttributeSet attrs, int defStyleAttr) {
+	super(context, attrs, defStyleAttr);
+	init();
+}
 
-    private void init() {
-        if (isInEditMode()) return;
-        setInputType(getInputType() | EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_FLAG_NO_FULLSCREEN);
-        setImeOptions(getImeOptions() | EditorInfo.IME_FLAG_NO_FULLSCREEN);
-        TypeFaceHelper.applyTypeface(this);
-    }
+private void init() {
+	if (isInEditMode()) return;
+	setInputType(getInputType() | EditorInfo.IME_FLAG_NO_EXTRACT_UI | EditorInfo.IME_FLAG_NO_FULLSCREEN);
+	setImeOptions(getImeOptions() | EditorInfo.IME_FLAG_NO_FULLSCREEN);
+	TypeFaceHelper.applyTypeface(this);
+}
 
-    @SuppressLint("SetTextI18n") public void setText(CharSequence text, BufferType type) {
-        try {
-            super.setText(text, type);
-        } catch (Exception e) {
-            setText("I tried, but your OEM just sucks because they modify the framework components and therefore causing the app to crash!" + ".\nFastHub");
-            Crashlytics.logException(e);
-        }
-    }
+@SuppressLint("SetTextI18n") public void setText(CharSequence text, BufferType type) {
+	try {
+		super.setText(text, type);
+	} catch (Exception e) {
+		setText("I tried, but your OEM just sucks because they modify the framework components and therefore causing the app to crash!" + ".\nFastHub");
+		Crashlytics.logException(e);
+	}
+}
 }
