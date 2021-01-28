@@ -66,7 +66,7 @@ public class LabelSpan extends ReplacementSpan {
             }
 
             @Override public int getMaxWidth() {
-                return 1000;//random number
+                return 1000; //random number
             }
 
             @Override public float getRoundedCornerRadius() {

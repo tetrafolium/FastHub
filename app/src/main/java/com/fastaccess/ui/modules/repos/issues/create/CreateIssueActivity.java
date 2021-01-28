@@ -146,7 +146,7 @@ public class CreateIssueActivity extends BaseActivity<CreateIssueMvp.View, Creat
 
     @NonNull public static Intent startForResult(@NonNull Activity activity) {
         String login = "k0shk0sh"; // FIXME: 23/02/2017 hardcoded
-        String repoId = "FastHub";// FIXME: 23/02/2017 hardcoded
+        String repoId = "FastHub"; // FIXME: 23/02/2017 hardcoded
         Intent intent = new Intent(activity, CreateIssueActivity.class);
         intent.putExtras(Bundler.start()
                          .put(BundleConstant.EXTRA, login)

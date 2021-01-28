@@ -101,7 +101,7 @@ public class SettingsActivity extends BaseActivity implements LanguageBottomShee
 
     @Override public void onLanguageChanged(Action action) {
         try {
-            action.run();//dismiss dialog avoid leakage
+            action.run(); //dismiss dialog avoid leakage
         } catch (Exception e) {
             e.printStackTrace();
         }

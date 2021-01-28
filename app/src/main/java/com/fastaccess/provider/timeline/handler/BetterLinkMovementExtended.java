@@ -45,7 +45,7 @@ public class BetterLinkMovementExtended extends LinkMovementMethod {
         private GestureDetector.SimpleOnGestureListener listener = null;
 
         @Override public boolean onDown(MotionEvent e) {
-            if(listener != null) listener.onDown(e);
+            if (listener != null) listener.onDown(e);
             return true;
         }
 
@@ -54,7 +54,7 @@ public class BetterLinkMovementExtended extends LinkMovementMethod {
         }
 
         @Override public void onLongPress(MotionEvent e) {
-            if(listener != null) listener.onLongPress(e);
+            if (listener != null) listener.onLongPress(e);
         }
     }
 
@@ -148,7 +148,7 @@ public class BetterLinkMovementExtended extends LinkMovementMethod {
 
         boolean ret = gestureDetector.onTouchEvent(event);
 
-        if(!ret && event.getAction() == MotionEvent.ACTION_UP) {
+        if (!ret && event.getAction() == MotionEvent.ACTION_UP) {
             clickGestureListener.listener = null;
             removeUrlHighlightColor(view);
             this.touchStartedOverLink = false;
@@ -223,7 +223,7 @@ public class BetterLinkMovementExtended extends LinkMovementMethod {
 
     private void dispatchUrlLongClick(TextView textView, BetterLinkMovementExtended.ClickableSpanWithText spanWithText) {
         String spanUrl = spanWithText.text();
-        if(onLinkLongClickListener != null) onLinkLongClickListener.onLongClick(textView, spanUrl);
+        if (onLinkLongClickListener != null) onLinkLongClickListener.onLongClick(textView, spanUrl);
     }
 
     static class ClickableSpanWithText {

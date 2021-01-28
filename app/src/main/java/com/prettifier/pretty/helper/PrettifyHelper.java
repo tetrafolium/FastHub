@@ -88,7 +88,7 @@ public class PrettifyHelper {
     }
 
     private static boolean textTooLarge(@NonNull String text) {
-        return text.length() > 304800;//>roughly 300kb ? disable highlighting to avoid crash.
+        return text.length() > 304800; //>roughly 300kb ? disable highlighting to avoid crash.
     }
 
 }

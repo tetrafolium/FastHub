@@ -195,7 +195,7 @@ public class SchemeParser {
         String owner = null;
         String repo = null;
         String number = null;
-        String fragment = uri.getEncodedFragment();//#issuecomment-332236665
+        String fragment = uri.getEncodedFragment(); //#issuecomment-332236665
         Long commentId = null;
         if (!InputHelper.isEmpty(fragment) && fragment.split("-").length > 1) {
             fragment = fragment.split("-")[1];
@@ -236,7 +236,7 @@ public class SchemeParser {
         String owner = null;
         String repo = null;
         String number = null;
-        String fragment = uri.getEncodedFragment();//#issuecomment-332236665
+        String fragment = uri.getEncodedFragment(); //#issuecomment-332236665
         Long commentId = null;
         if (!InputHelper.isEmpty(fragment) && fragment.split("-").length > 1) {
             fragment = fragment.split("-")[1];
