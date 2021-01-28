@@ -129,11 +129,9 @@ public class SearchActivity
     if (!tabsCountSet.isEmpty()) {
       setupTab();
     }
-    if (savedInstanceState == null && getIntent() != null) {
-      if (getIntent().hasExtra("search")) {
-        searchEditText.setText(getIntent().getStringExtra("search"));
-        getPresenter().onSearchClicked(pager, searchEditText);
-      }
+    if ((savedInstanceState == null && getIntent() != null) && (getIntent().hasExtra("search"))) {
+      searchEditText.setText(getIntent().getStringExtra("search"));
+      getPresenter().onSearchClicked(pager, searchEditText);
     }
     tabs.addOnTabSelectedListener(
         new TabLayout.ViewPagerOnTabSelectedListener(pager) {

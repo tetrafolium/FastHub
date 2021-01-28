@@ -172,11 +172,9 @@ public abstract class BaseMvpBottomSheetDialogFragment<
       dialog.getWindow().setBackgroundDrawable(
           new ColorDrawable(Color.TRANSPARENT));
     dialog.setOnShowListener(dialogInterface -> {
-      if (ViewHelper.isTablet(getActivity())) {
-        if (dialog.getWindow() != null) {
-          dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,
-                                       ViewGroup.LayoutParams.MATCH_PARENT);
-        }
+      if ((ViewHelper.isTablet(getActivity())) && (dialog.getWindow() != null)) {
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT,
+                                     ViewGroup.LayoutParams.MATCH_PARENT);
       }
     });
     return dialog;

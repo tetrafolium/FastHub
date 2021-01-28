@@ -79,12 +79,10 @@ public class MainActivity
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (savedInstanceState == null) {
-      if (getIntent() != null &&
-          getIntent().getBooleanExtra(SlackBottomSheetDialog.TAG, false)) {
-        new SlackBottomSheetDialog().show(getSupportFragmentManager(),
-                                          SlackBottomSheetDialog.TAG);
-      }
+    if ((savedInstanceState == null) && (getIntent() != null &&
+          getIntent().getBooleanExtra(SlackBottomSheetDialog.TAG, false))) {
+      new SlackBottomSheetDialog().show(getSupportFragmentManager(),
+                                        SlackBottomSheetDialog.TAG);
     }
 
     if (BuildConfig.DEBUG) {

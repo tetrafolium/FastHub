@@ -165,10 +165,8 @@ public class UserPagerActivity
       tabs.setTabGravity(TabLayout.GRAVITY_FILL);
       tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
       tabs.setupWithViewPager(pager);
-      if (savedInstanceState == null) {
-        if (index != -1) {
-          pager.setCurrentItem(index);
-        }
+      if ((savedInstanceState == null) && (index != -1)) {
+        pager.setCurrentItem(index);
       }
     } else {
       if (getPresenter().getIsMember() == -1) {
@@ -192,10 +190,8 @@ public class UserPagerActivity
         hideShowFab(position);
       }
     });
-    if (!isOrg) {
-      if (savedInstanceState != null && !counts.isEmpty()) {
-        Stream.of(counts).forEach(this::updateCount);
-      }
+    if ((!isOrg) && (savedInstanceState != null && !counts.isEmpty())) {
+      Stream.of(counts).forEach(this::updateCount);
     }
     hideShowFab(pager.getCurrentItem());
   }

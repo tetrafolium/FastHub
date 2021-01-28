@@ -269,10 +269,8 @@ public class RepoFilesFragment
     super.onMessageDialogActionClicked(isOk, bundle);
     if (isOk && bundle != null) {
       String url = bundle.getString(BundleConstant.EXTRA);
-      if (!InputHelper.isEmpty(url)) {
-        if (ActivityHelper.checkAndRequestReadWritePermission(getActivity())) {
-          RestProvider.downloadFile(getContext(), url);
-        }
+      if ((!InputHelper.isEmpty(url)) && (ActivityHelper.checkAndRequestReadWritePermission(getActivity()))) {
+        RestProvider.downloadFile(getContext(), url);
       }
     }
   }

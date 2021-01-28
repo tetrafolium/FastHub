@@ -111,19 +111,15 @@ public class CommitFilesFragment
 
   @Override
   public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    if (resultCode == Activity.RESULT_OK) {
-      if (requestCode ==
+    if ((resultCode == Activity.RESULT_OK) && (requestCode ==
               FullScreenFileChangeActivity.Companion.getFOR_RESULT_CODE() &&
-          data != null) {
-        List<CommentRequestModel> comments =
-            data.getParcelableArrayListExtra(BundleConstant.ITEM);
-        if (comments != null && !comments.isEmpty()) {
-          if (viewCallback != null &&
-              !InputHelper.isEmpty(viewCallback.getLogin())) {
-            getPresenter().onSubmit(viewCallback.getLogin(),
-                                    viewCallback.getRepoId(), comments.get(0));
-          }
-        }
+          data != null)) {
+      List<CommentRequestModel> comments =
+          data.getParcelableArrayListExtra(BundleConstant.ITEM);
+      if ((comments != null && !comments.isEmpty()) && (viewCallback != null &&
+            !InputHelper.isEmpty(viewCallback.getLogin()))) {
+        getPresenter().onSubmit(viewCallback.getLogin(),
+                                viewCallback.getRepoId(), comments.get(0));
       }
     }
     super.onActivityResult(requestCode, resultCode, data);

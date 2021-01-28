@@ -195,15 +195,13 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter>
   protected void onCreate(Bundle savedInstanceState) {
     setTheme(R.style.LoginTheme);
     super.onCreate(savedInstanceState);
-    if (savedInstanceState == null) {
-      if (getIntent() != null && getIntent().getExtras() != null) {
-        isBasicAuth =
-            getIntent().getExtras().getBoolean(BundleConstant.YES_NO_EXTRA);
-        password.setHint(isBasicAuth ? getString(R.string.password)
-                                     : getString(R.string.access_token));
-        if (getIntent().getExtras().getBoolean(BundleConstant.EXTRA_TWO)) {
-          onOpenBrowser();
-        }
+    if ((savedInstanceState == null) && (getIntent() != null && getIntent().getExtras() != null)) {
+      isBasicAuth =
+          getIntent().getExtras().getBoolean(BundleConstant.YES_NO_EXTRA);
+      password.setHint(isBasicAuth ? getString(R.string.password)
+                                   : getString(R.string.access_token));
+      if (getIntent().getExtras().getBoolean(BundleConstant.EXTRA_TWO)) {
+        onOpenBrowser();
       }
     }
     accessTokenCheckbox.setVisibility(isEnterprise() ? View.VISIBLE
