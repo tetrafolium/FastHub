@@ -8,7 +8,5 @@ import androidx.annotation.Nullable;
 
 public class ObjectsCompat {
 
-public static boolean nonNull(@Nullable Object obj) {
-	return obj != null;
-}
+  public static boolean nonNull(@Nullable Object obj) { return obj != null; }
 }

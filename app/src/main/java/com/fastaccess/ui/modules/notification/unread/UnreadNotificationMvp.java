@@ -3,16 +3,13 @@ package com.fastaccess.ui.modules.notification.unread;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import com.fastaccess.data.dao.GroupedNotificationModel;
 import com.fastaccess.data.dao.model.Notification;
 import com.fastaccess.ui.base.mvp.BaseMvp;
 import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder;
-
-import net.grandcentrix.thirtyinch.callonmainthread.CallOnMainThread;
-
 import java.util.ArrayList;
 import java.util.List;
+import net.grandcentrix.thirtyinch.callonmainthread.CallOnMainThread;
 
 /**
  * Created by Kosh on 25 Apr 2017, 3:51 PM
@@ -20,26 +17,29 @@ import java.util.List;
 
 public interface UnreadNotificationMvp {
 
-interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener  {
-@CallOnMainThread void onNotifyAdapter(@Nullable List<GroupedNotificationModel> items);
+  interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener {
+    @CallOnMainThread
+    void onNotifyAdapter(@Nullable List<GroupedNotificationModel> items);
 
-void onRemove(int position);
+    void onRemove(int position);
 
-void onReadNotification(@NonNull Notification notification);
+    void onReadNotification(@NonNull Notification notification);
 
-void onClick(@NonNull String url);
+    void onClick(@NonNull String url);
 
-void onNotifyNotificationChanged(@NonNull GroupedNotificationModel notification);
-}
+    void
+    onNotifyNotificationChanged(@NonNull GroupedNotificationModel notification);
+  }
 
-interface Presenter extends BaseViewHolder.OnItemClickListener<GroupedNotificationModel> {
+  interface Presenter
+      extends BaseViewHolder.OnItemClickListener<GroupedNotificationModel> {
 
-void onWorkOffline();
+    void onWorkOffline();
 
-@NonNull ArrayList<GroupedNotificationModel> getNotifications();
+    @NonNull ArrayList<GroupedNotificationModel> getNotifications();
 
-void onMarkAllAsRead(@NonNull List<GroupedNotificationModel> data);
+    void onMarkAllAsRead(@NonNull List<GroupedNotificationModel> data);
 
-void onCallApi();
-}
+    void onCallApi();
+  }
 }

@@ -8,7 +8,11 @@ import lombok.Setter;
 /**
  * Created by Kosh on 10.02.18.
  */
-@NoArgsConstructor @AllArgsConstructor @Getter @Setter public class LockIssuePrModel {
-private boolean locked;
-private String activeLockReason;
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class LockIssuePrModel {
+  private boolean locked;
+  private String activeLockReason;
 }

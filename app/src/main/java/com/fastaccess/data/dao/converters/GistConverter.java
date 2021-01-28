@@ -7,7 +7,8 @@ import com.fastaccess.data.dao.model.Gist;
  */
 
 public class GistConverter extends BaseConverter<Gist> {
-@Override protected Class<? extends Gist> getTypeClass() {
-	return Gist.class;
-}
+  @Override
+  protected Class<? extends Gist> getTypeClass() {
+    return Gist.class;
+  }
 }

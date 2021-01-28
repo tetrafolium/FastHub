@@ -8,7 +8,6 @@ import android.graphics.Paint.Style;
 import android.graphics.PixelFormat;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import androidx.annotation.NonNull;
 import android.text.Layout.Alignment;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -17,13 +16,11 @@ import android.text.StaticLayout;
 import android.text.TextPaint;
 import android.text.style.AlignmentSpan;
 import android.text.style.ImageSpan;
-
-import net.nightwhistler.htmlspanner.TagNodeHandler;
-
-import org.htmlcleaner.TagNode;
-
+import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
+import net.nightwhistler.htmlspanner.TagNodeHandler;
+import org.htmlcleaner.TagNode;
 
 /**
  * Handles simple HTML tables.
@@ -35,218 +32,206 @@ import java.util.List;
  */
 public class TableHandler extends TagNodeHandler {
 
-private int tableWidth = 500;
-private Typeface typeFace = Typeface.DEFAULT;
-private float textSize = 28f;
-private int textColor = Color.BLACK;
-private static final int PADDING = 20;
+  private int tableWidth = 500;
+  private Typeface typeFace = Typeface.DEFAULT;
+  private float textSize = 28f;
+  private int textColor = Color.BLACK;
+  private static final int PADDING = 20;
 
-@Override public boolean rendersContent() {
-	return true;
-}
+  @Override
+  public boolean rendersContent() {
+    return true;
+  }
 
-@Override public void handleTagNode(TagNode node, SpannableStringBuilder builder, int start, int end) {
-	Table table = getTable(node);
-	for (int i = 0; i < table.getRows().size(); i++) {
-		List<Spanned> row = table.getRows().get(i);
-		builder.append("\uFFFC");
-		TableRowDrawable drawable = new TableRowDrawable(row, table.isDrawBorder());
-		drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
-		                   drawable.getIntrinsicHeight());
-		builder.setSpan(new ImageSpan(drawable), start + i, builder.length(), 33);
+  @Override
+  public void handleTagNode(TagNode node, SpannableStringBuilder builder,
+                            int start, int end) {
+    Table table = getTable(node);
+    for (int i = 0; i < table.getRows().size(); i++) {
+      List<Spanned> row = table.getRows().get(i);
+      builder.append("\uFFFC");
+      TableRowDrawable drawable =
+          new TableRowDrawable(row, table.isDrawBorder());
+      drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
+                         drawable.getIntrinsicHeight());
+      builder.setSpan(new ImageSpan(drawable), start + i, builder.length(), 33);
+    }
+    builder.append("\uFFFC");
+    Drawable drawable =
+        new TableRowDrawable(new ArrayList<Spanned>(), table.isDrawBorder());
+    drawable.setBounds(0, 0, tableWidth, 1);
+    builder.setSpan(new ImageSpan(drawable), builder.length() - 1,
+                    builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    builder.setSpan((AlignmentSpan)()
+                        -> Alignment.ALIGN_CENTER,
+                    start, builder.length(),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    builder.append("\n");
+  }
 
-	}
-	builder.append("\uFFFC");
-	Drawable drawable = new TableRowDrawable(new ArrayList<Spanned>(), table.isDrawBorder());
-	drawable.setBounds(0, 0, tableWidth, 1);
-	builder.setSpan(new ImageSpan(drawable), builder.length() - 1, builder.length(),
-	                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-	builder.setSpan((AlignmentSpan) ()->Alignment.ALIGN_CENTER, start, builder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-	builder.append("\n");
-}
+  public void setTableWidth(int tableWidth) { this.tableWidth = tableWidth; }
 
-public void setTableWidth(int tableWidth) {
-	this.tableWidth = tableWidth;
-}
+  public void setTextColor(int textColor) { this.textColor = textColor; }
 
-public void setTextColor(int textColor) {
-	this.textColor = textColor;
-}
+  private void readNode(Object node, Table table) {
+    if (node instanceof TagNode) {
+      TagNode tagNode = (TagNode)node;
+      if (tagNode.getName().equals("td") || tagNode.getName().equals("th")) {
+        Spanned result = this.getSpanner().fromTagNode(tagNode);
+        table.addCell(result);
+        return;
+      }
+      if (tagNode.getName().equals("tr")) {
+        table.addRow();
+      }
+      for (Object child : tagNode.getChildTags()) {
+        readNode(child, table);
+      }
+    }
+  }
 
-private void readNode(Object node, Table table) {
-	if (node instanceof TagNode) {
-		TagNode tagNode = (TagNode) node;
-		if (tagNode.getName().equals("td") || tagNode.getName().equals("th")) {
-			Spanned result = this.getSpanner().fromTagNode(tagNode);
-			table.addCell(result);
-			return;
-		}
-		if (tagNode.getName().equals("tr")) {
-			table.addRow();
-		}
-		for (Object child : tagNode.getChildTags()) {
-			readNode(child, table);
-		}
-	}
+  private Table getTable(TagNode node) {
 
-}
+    String border = node.getAttributeByName("border");
 
-private Table getTable(TagNode node) {
+    boolean drawBorder = !"0".equals(border);
 
-	String border = node.getAttributeByName("border");
+    Table result = new Table(drawBorder);
 
-	boolean drawBorder = !"0".equals(border);
+    readNode(node, result);
 
-	Table result = new Table(drawBorder);
+    return result;
+  }
 
-	readNode(node, result);
+  private TextPaint getTextPaint() {
+    TextPaint textPaint = new TextPaint();
+    textPaint.setColor(this.textColor);
+    textPaint.linkColor = this.textColor;
+    textPaint.setAntiAlias(true);
+    textPaint.setTextSize(this.textSize);
+    textPaint.setTypeface(this.typeFace);
 
-	return result;
-}
+    return textPaint;
+  }
 
-private TextPaint getTextPaint() {
-	TextPaint textPaint = new TextPaint();
-	textPaint.setColor(this.textColor);
-	textPaint.linkColor = this.textColor;
-	textPaint.setAntiAlias(true);
-	textPaint.setTextSize(this.textSize);
-	textPaint.setTypeface(this.typeFace);
+  private int calculateRowHeight(List<Spanned> row) {
 
-	return textPaint;
-}
+    if (row.size() == 0) {
+      return 0;
+    }
 
-private int calculateRowHeight(List<Spanned> row) {
+    TextPaint textPaint = getTextPaint();
 
-	if (row.size() == 0) {
-		return 0;
-	}
+    int columnWidth = tableWidth / row.size();
 
-	TextPaint textPaint = getTextPaint();
+    int rowHeight = 0;
 
-	int columnWidth = tableWidth / row.size();
+    for (Spanned cell : row) {
 
-	int rowHeight = 0;
+      StaticLayout layout =
+          new StaticLayout(cell, textPaint, columnWidth - 2 * PADDING,
+                           Alignment.ALIGN_NORMAL, 1.5f, 0.5f, true);
 
-	for (Spanned cell : row) {
+      if (layout.getHeight() > rowHeight) {
+        rowHeight = layout.getHeight();
+      }
+    }
 
-		StaticLayout layout = new StaticLayout(cell, textPaint, columnWidth
-		                                       - 2 * PADDING, Alignment.ALIGN_NORMAL, 1.5f, 0.5f, true);
+    return rowHeight;
+  }
 
-		if (layout.getHeight() > rowHeight) {
-			rowHeight = layout.getHeight();
-		}
-	}
+  private class TableRowDrawable extends Drawable {
 
-	return rowHeight;
-}
+    private List<Spanned> tableRow;
 
-private class TableRowDrawable extends Drawable {
+    private int rowHeight;
+    private boolean paintBorder;
 
-private List<Spanned> tableRow;
+    TableRowDrawable(List<Spanned> tableRow, boolean paintBorder) {
+      this.tableRow = tableRow;
+      this.rowHeight = calculateRowHeight(tableRow);
+      this.paintBorder = paintBorder;
+    }
 
-private int rowHeight;
-private boolean paintBorder;
+    @Override
+    public void draw(@NonNull Canvas canvas) {
+      Paint paint = new Paint();
+      paint.setColor(textColor);
+      paint.setStyle(Style.STROKE);
 
-TableRowDrawable(List<Spanned> tableRow, boolean paintBorder) {
-	this.tableRow = tableRow;
-	this.rowHeight = calculateRowHeight(tableRow);
-	this.paintBorder = paintBorder;
-}
+      int numberOfColumns = tableRow.size();
 
-@Override public void draw(@NonNull Canvas canvas) {
-	Paint paint = new Paint();
-	paint.setColor(textColor);
-	paint.setStyle(Style.STROKE);
+      if (numberOfColumns == 0) {
+        return;
+      }
 
-	int numberOfColumns = tableRow.size();
+      int columnWidth = tableWidth / numberOfColumns;
 
-	if (numberOfColumns == 0) {
-		return;
-	}
+      int offset;
 
-	int columnWidth = tableWidth / numberOfColumns;
+      for (int i = 0; i < numberOfColumns; i++) {
 
-	int offset;
+        offset = i * columnWidth;
 
-	for (int i = 0; i < numberOfColumns; i++) {
+        if (paintBorder) {
+          // The rect is open at the bottom, so there's a single line
+          // between rows.
+          canvas.drawRect(offset, 0, offset + columnWidth, rowHeight, paint);
+        }
 
-		offset = i * columnWidth;
+        StaticLayout layout = new StaticLayout(
+            tableRow.get(i), getTextPaint(), (columnWidth - 2 * PADDING),
+            Alignment.ALIGN_NORMAL, 1.5f, 0.5f, true);
 
-		if (paintBorder) {
-			// The rect is open at the bottom, so there's a single line
-			// between rows.
-			canvas.drawRect(offset, 0, offset + columnWidth, rowHeight, paint);
-		}
+        canvas.translate(offset + PADDING, 0);
+        layout.draw(canvas);
+        canvas.translate(-1 * (offset + PADDING), 0);
+      }
+    }
 
-		StaticLayout layout = new StaticLayout(tableRow.get(i),
-		                                       getTextPaint(), (columnWidth - 2 * PADDING),
-		                                       Alignment.ALIGN_NORMAL, 1.5f, 0.5f, true);
+    @Override
+    public int getIntrinsicHeight() {
+      return rowHeight;
+    }
 
-		canvas.translate(offset + PADDING, 0);
-		layout.draw(canvas);
-		canvas.translate(-1 * (offset + PADDING), 0);
+    @Override
+    public int getIntrinsicWidth() {
+      return tableWidth;
+    }
 
-	}
-}
+    @Override
+    public int getOpacity() {
+      return PixelFormat.OPAQUE;
+    }
 
-@Override
-public int getIntrinsicHeight() {
-	return rowHeight;
-}
+    @Override
+    public void setAlpha(int alpha) {}
 
-@Override
-public int getIntrinsicWidth() {
-	return tableWidth;
-}
+    @Override
+    public void setColorFilter(ColorFilter cf) {}
+  }
 
-@Override
-public int getOpacity() {
-	return PixelFormat.OPAQUE;
-}
+  private class Table {
 
-@Override
-public void setAlpha(int alpha) {
+    private boolean drawBorder;
+    private List<List<Spanned>> content = new ArrayList<>();
 
-}
+    private Table(boolean drawBorder) { this.drawBorder = drawBorder; }
 
-@Override
-public void setColorFilter(ColorFilter cf) {
+    boolean isDrawBorder() { return drawBorder; }
 
-}
-}
+    void addRow() { content.add(new ArrayList<>()); }
 
-private class Table {
+    List<Spanned> getBottomRow() { return content.get(content.size() - 1); }
 
-private boolean drawBorder;
-private List<List<Spanned> > content = new ArrayList<>();
+    List<List<Spanned>> getRows() { return content; }
 
-private Table(boolean drawBorder) {
-	this.drawBorder = drawBorder;
-}
+    void addCell(Spanned text) {
+      if (content.isEmpty()) {
+        throw new IllegalStateException("No rows added yet");
+      }
 
-boolean isDrawBorder() {
-	return drawBorder;
-}
-
-void addRow() {
-	content.add(new ArrayList<>());
-}
-
-List<Spanned> getBottomRow() {
-	return content.get(content.size() - 1);
-}
-
-List<List<Spanned> > getRows() {
-	return content;
-}
-
-void addCell(Spanned text) {
-	if (content.isEmpty()) {
-		throw new IllegalStateException("No rows added yet");
-	}
-
-	getBottomRow().add(text);
-}
-}
-
+      getBottomRow().add(text);
+    }
+  }
 }

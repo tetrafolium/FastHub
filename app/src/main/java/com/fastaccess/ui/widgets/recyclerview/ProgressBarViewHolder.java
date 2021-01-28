@@ -1,9 +1,8 @@
 package com.fastaccess.ui.widgets.recyclerview;
 
-import androidx.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
-
+import androidx.annotation.NonNull;
 import com.fastaccess.R;
 
 /**
@@ -12,15 +11,13 @@ import com.fastaccess.R;
 
 public class ProgressBarViewHolder extends BaseViewHolder {
 
-private ProgressBarViewHolder(@NonNull View itemView) {
-	super(itemView);
-}
+  private ProgressBarViewHolder(@NonNull View itemView) { super(itemView); }
 
-public static ProgressBarViewHolder newInstance(ViewGroup viewGroup) {
-	return new ProgressBarViewHolder(getView(viewGroup, R.layout.progress_layout));
-}
+  public static ProgressBarViewHolder newInstance(ViewGroup viewGroup) {
+    return new ProgressBarViewHolder(
+        getView(viewGroup, R.layout.progress_layout));
+  }
 
-@Override public void bind(@NonNull Object o) {
-
-}
+  @Override
+  public void bind(@NonNull Object o) {}
 }

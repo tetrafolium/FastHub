@@ -8,7 +8,8 @@ import com.fastaccess.data.dao.model.PullRequest;
 
 public class PullRequestConverter extends BaseConverter<PullRequest> {
 
-@Override protected Class<? extends PullRequest> getTypeClass() {
-	return PullRequest.class;
-}
+  @Override
+  protected Class<? extends PullRequest> getTypeClass() {
+    return PullRequest.class;
+  }
 }

@@ -8,14 +8,13 @@ import com.fastaccess.ui.base.mvp.BaseMvp;
 
 public interface ProfilePagerMvp {
 
-interface View extends BaseMvp.FAView {
-void onNavigateToFollowers();
+  interface View extends BaseMvp.FAView {
+    void onNavigateToFollowers();
 
-void onNavigateToFollowing();
+    void onNavigateToFollowing();
 
-void onCheckType(boolean isOrg);
+    void onCheckType(boolean isOrg);
+  }
 
-}
-
-interface Presenter extends BaseMvp.FAPresenter {}
+  interface Presenter extends BaseMvp.FAPresenter {}
 }
