@@ -90,14 +90,14 @@ public class MyIssuesPresenter extends BasePresenter<MyIssuesMvp.View> implement
 
     @NonNull private String getUrl(@NonNull IssueState parameter) {
         switch (issuesType) {
-            case CREATED:
-                return RepoQueryProvider.getMyIssuesPullRequestQuery(login, parameter, false);
-            case ASSIGNED:
-                return RepoQueryProvider.getAssigned(login, parameter, false);
-            case MENTIONED:
-                return RepoQueryProvider.getMentioned(login, parameter, false);
-            case PARTICIPATED:
-                return RepoQueryProvider.getParticipated(login, parameter, false);
+        case CREATED:
+            return RepoQueryProvider.getMyIssuesPullRequestQuery(login, parameter, false);
+        case ASSIGNED:
+            return RepoQueryProvider.getAssigned(login, parameter, false);
+        case MENTIONED:
+            return RepoQueryProvider.getMentioned(login, parameter, false);
+        case PARTICIPATED:
+            return RepoQueryProvider.getParticipated(login, parameter, false);
         }
         return RepoQueryProvider.getMyIssuesPullRequestQuery(login, parameter, false);
     }

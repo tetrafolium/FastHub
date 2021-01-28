@@ -45,16 +45,16 @@ public class IssueTimelineViewHolder extends BaseViewHolder<TimelineModel> {
         IssueEventType event = issueEventModel.getEvent();
         if (issueEventModel.getAssignee() != null && issueEventModel.getAssigner() != null) {
             avatarLayout.setUrl(issueEventModel.getAssigner().getAvatarUrl(), issueEventModel.getAssigner().getLogin(),
-                    false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
+                                false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
         } else {
             if (event != IssueEventType.committed) {
                 avatarLayout.setVisibility(View.VISIBLE);
                 if (issueEventModel.getActor() != null) {
                     avatarLayout.setUrl(issueEventModel.getActor().getAvatarUrl(), issueEventModel.getActor().getLogin(),
-                            false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
+                                        false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
                 } else if (issueEventModel.getAuthor() != null) {
                     avatarLayout.setUrl(issueEventModel.getAuthor().getAvatarUrl(), issueEventModel.getAuthor().getLogin(),
-                            false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
+                                        false, LinkParserHelper.isEnterprise(issueEventModel.getUrl()));
                 }
             } else {
                 avatarLayout.setVisibility(View.GONE);

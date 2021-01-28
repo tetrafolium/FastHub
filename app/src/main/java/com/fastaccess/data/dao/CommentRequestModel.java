@@ -27,7 +27,7 @@ import lombok.Setter;
 
         CommentRequestModel that = (CommentRequestModel) o;
         return (path != null ? path.equals(that.path) : that.path == null) &&
-                (position != null ? position.equals(that.position) : that.position == null);
+               (position != null ? position.equals(that.position) : that.position == null);
     }
 
     @Override public int hashCode() {
@@ -36,7 +36,9 @@ import lombok.Setter;
         return result;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.body);
@@ -48,12 +50,12 @@ import lombok.Setter;
 
     @Override public String toString() {
         return "CommentRequestModel{" +
-                "body='" + body + '\'' +
-                ", inReplyTo=" + inReplyTo +
-                ", path='" + path + '\'' +
-                ", position=" + position +
-                ", line=" + line +
-                '}';
+               "body='" + body + '\'' +
+               ", inReplyTo=" + inReplyTo +
+               ", path='" + path + '\'' +
+               ", position=" + position +
+               ", line=" + line +
+               '}';
     }
 
     private CommentRequestModel(Parcel in) {
@@ -65,8 +67,12 @@ import lombok.Setter;
     }
 
     public static final Creator<CommentRequestModel> CREATOR = new Creator<CommentRequestModel>() {
-        @Override public CommentRequestModel createFromParcel(Parcel source) {return new CommentRequestModel(source);}
+        @Override public CommentRequestModel createFromParcel(Parcel source) {
+            return new CommentRequestModel(source);
+        }
 
-        @Override public CommentRequestModel[] newArray(int size) {return new CommentRequestModel[size];}
+        @Override public CommentRequestModel[] newArray(int size) {
+            return new CommentRequestModel[size];
+        }
     };
 }

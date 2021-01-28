@@ -80,27 +80,27 @@ class RepoIssuesPresenter extends BasePresenter<RepoIssuesMvp.View> implements R
         setCurrentPage(page);
         String finalSortBy = sortBy;
         makeRestCall(RestProvider.getIssueService(isEnterprise())
-                        .getRepositoryIssues(login, repoId, parameter.name(), sortBy, page)
-                        .flatMap(issues -> {
-                            lastPage = issues.getLast();
-                            List<Issue> filtered = Stream.of(issues.getItems())
-                                    .filter(issue -> issue.getPullRequest() == null)
-                                    .toList();
-                            if (filtered != null) {
-                                if (filtered.size() < 10 && issues.getNext() > 1) {
-                                    setCurrentPage(getCurrentPage() + 1);
-                                    return grabMoreIssues(filtered, parameter.name(), finalSortBy, getCurrentPage());
-                                }
-                                return Observable.just(filtered);
-                            }
-                            return Observable.just(new ArrayList<Issue>());
-                        })
-                        .doOnNext(filtered -> {
-                            if (getCurrentPage() == 1) {
-                                Issue.save(filtered, repoId, login);
-                            }
-                        }),
-                issues -> sendToView(view -> view.onNotifyAdapter(issues, page)));
+                     .getRepositoryIssues(login, repoId, parameter.name(), sortBy, page)
+        .flatMap(issues -> {
+            lastPage = issues.getLast();
+            List<Issue> filtered = Stream.of(issues.getItems())
+            .filter(issue -> issue.getPullRequest() == null)
+            .toList();
+            if (filtered != null) {
+                if (filtered.size() < 10 && issues.getNext() > 1) {
+                    setCurrentPage(getCurrentPage() + 1);
+                    return grabMoreIssues(filtered, parameter.name(), finalSortBy, getCurrentPage());
+                }
+                return Observable.just(filtered);
+            }
+            return Observable.just(new ArrayList<Issue>());
+        })
+        .doOnNext(filtered -> {
+            if (getCurrentPage() == 1) {
+                Issue.save(filtered, repoId, login);
+            }
+        }),
+        issues -> sendToView(view -> view.onNotifyAdapter(issues, page)));
         return true;
     }
 
@@ -116,10 +116,10 @@ class RepoIssuesPresenter extends BasePresenter<RepoIssuesMvp.View> implements R
     @Override public void onWorkOffline() {
         if (issues.isEmpty()) {
             manageDisposable(RxHelper.getSingle(Issue.getIssues(repoId, login, issueState))
-                    .subscribe(issueModel -> sendToView(view -> {
-                        view.onNotifyAdapter(issueModel, 1);
-                        view.onUpdateCount(issueModel.size());
-                    })));
+            .subscribe(issueModel -> sendToView(view -> {
+                view.onNotifyAdapter(issueModel, 1);
+                view.onUpdateCount(issueModel.size());
+            })));
         } else {
             sendToView(BaseMvp.FAView::hideProgress);
         }
@@ -154,31 +154,31 @@ class RepoIssuesPresenter extends BasePresenter<RepoIssuesMvp.View> implements R
 
     private void onCallCountApi(@NonNull IssueState issueState) {
         manageDisposable(RxHelper.getObservable(RestProvider.getIssueService(isEnterprise())
-                .getIssuesWithCount(RepoQueryProvider.getIssuesPullRequestQuery(login, repoId, issueState, false), 1))
-                .subscribe(pullRequestPageable -> sendToView(view -> view.onUpdateCount(pullRequestPageable.getTotalCount())),
-                        Throwable::printStackTrace));
+                                                .getIssuesWithCount(RepoQueryProvider.getIssuesPullRequestQuery(login, repoId, issueState, false), 1))
+                         .subscribe(pullRequestPageable -> sendToView(view -> view.onUpdateCount(pullRequestPageable.getTotalCount())),
+                                    Throwable::printStackTrace));
     }
 
     private Observable<List<Issue>> grabMoreIssues(@NonNull List<Issue> issues, @NonNull String state, @NonNull String sortBy, int page) {
         return RestProvider.getIssueService(isEnterprise()).getRepositoryIssues(login, repoId, state, sortBy, page)
-                .flatMap(issuePageable -> {
-                    if (issuePageable != null) {
-                        lastPage = issuePageable.getLast();
-                        List<Issue> filtered = Stream.of(issuePageable.getItems())
-                                .filter(issue -> issue.getPullRequest() == null)
-                                .toList();
-                        if (filtered != null) {
-                            issues.addAll(filtered);
-                            if (issues.size() < 10 && issuePageable.getNext() > 1 && this.issues.size() < 10) {
-                                setCurrentPage(getCurrentPage() + 1);
-                                return grabMoreIssues(issues, state, sortBy, getCurrentPage());
-                            }
-                            issues.addAll(filtered);
-                            return Observable.just(issues);
-                        }
+        .flatMap(issuePageable -> {
+            if (issuePageable != null) {
+                lastPage = issuePageable.getLast();
+                List<Issue> filtered = Stream.of(issuePageable.getItems())
+                .filter(issue -> issue.getPullRequest() == null)
+                .toList();
+                if (filtered != null) {
+                    issues.addAll(filtered);
+                    if (issues.size() < 10 && issuePageable.getNext() > 1 && this.issues.size() < 10) {
+                        setCurrentPage(getCurrentPage() + 1);
+                        return grabMoreIssues(issues, state, sortBy, getCurrentPage());
                     }
+                    issues.addAll(filtered);
                     return Observable.just(issues);
-                });
+                }
+            }
+            return Observable.just(issues);
+        });
     }
 
 }

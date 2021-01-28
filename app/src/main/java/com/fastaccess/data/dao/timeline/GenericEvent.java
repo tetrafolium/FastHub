@@ -51,7 +51,9 @@ import lombok.Setter;
     private List<ParentsModel> parents;
     private IssueEventType event;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -112,8 +114,12 @@ import lombok.Setter;
     }
 
     public static final Creator<GenericEvent> CREATOR = new Creator<GenericEvent>() {
-        @Override public GenericEvent createFromParcel(Parcel source) {return new GenericEvent(source);}
+        @Override public GenericEvent createFromParcel(Parcel source) {
+            return new GenericEvent(source);
+        }
 
-        @Override public GenericEvent[] newArray(int size) {return new GenericEvent[size];}
+        @Override public GenericEvent[] newArray(int size) {
+            return new GenericEvent[size];
+        }
     };
 }

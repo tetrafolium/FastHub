@@ -35,11 +35,11 @@ public interface IssueService {
 
     @GET("repos/{owner}/{repo}/issues")
     Observable<Pageable<Issue>> getRepositoryIssues(@Path("owner") String owner, @Path("repo") String repo,
-                                                    @Query("state") String state, @Query("sort") String sortBy,
-                                                    @Query("page") int page);
+            @Query("state") String state, @Query("sort") String sortBy,
+            @Query("page") int page);
 
     @GET("search/issues") Observable<Pageable<Issue>> getIssuesWithCount(@NonNull @Query(value = "q", encoded = true) String query,
-                                                                         @Query("page") int page);
+            @Query("page") int page);
 
     @GET("user/issues")
     Observable<Pageable<Issue>> getUserIssues(@Query("page") int page, @Query("state") @NonNull String state);
@@ -51,13 +51,13 @@ public interface IssueService {
 
     @GET("repos/{owner}/{repo}/issues/{issue_number}/events?per_page=100")
     Observable<Pageable<IssueEvent>> getTimeline(@Path("owner") String owner, @Path("repo") String repo,
-                                                 @Path("issue_number") int issue_number);
+            @Path("issue_number") int issue_number);
 
     @GET("repos/{owner}/{repo}/issues/{issue_number}/timeline?per_page=100")
     @Headers("Accept: application/vnd.github.mockingbird-preview,application/vnd.github.VERSION.full+json," +
-            " application/vnd.github.squirrel-girl-preview")
+             " application/vnd.github.squirrel-girl-preview")
     Observable<IssuesPageable<JsonObject>> getTimeline(@Path("owner") String owner, @Path("repo") String repo,
-                                                       @Path("issue_number") int issue_number, @Query("page") int page);
+            @Path("issue_number") int issue_number, @Query("page") int page);
 
     @POST("repos/{owner}/{repo}/issues")
     Observable<Issue> createIssue(@Path("owner") String owner, @Path("repo") String repo,
@@ -81,9 +81,9 @@ public interface IssueService {
     @GET("repos/{owner}/{repo}/issues/{number}/comments?per_page=100")
     @Headers("Accept: application/vnd.github.VERSION.full+json, application/vnd.github.squirrel-girl-preview")
     Observable<Pageable<Comment>> getIssueComments(@Path("owner") String owner,
-                                                   @Path("repo") String repo,
-                                                   @Path("number") int number,
-                                                   @Query("page") int page);
+            @Path("repo") String repo,
+            @Path("number") int number,
+            @Query("page") int page);
 
     @GET("repos/{owner}/{repo}/issues/{number}/comments/{id}")
     @Headers("Accept: application/vnd.github.VERSION.full+json, application/vnd.github.squirrel-girl-preview")
@@ -108,7 +108,7 @@ public interface IssueService {
 
     @PUT("repos/{owner}/{repo}/issues/{number}/labels")
     Observable<Pageable<LabelModel>> putLabels(@Path("owner") String owner, @Path("repo") String repo,
-                                               @Path("number") int number, @Body @NonNull List<String> labels);
+            @Path("number") int number, @Body @NonNull List<String> labels);
 
 
     @POST("repos/{owner}/{repo}/issues/{number}/assignees")
@@ -121,7 +121,7 @@ public interface IssueService {
 
     @GET("/repos/{owner}/{repo}/issues/comments/{id}")
     @Headers("Accept: application/vnd.github.mockingbird-preview,application/vnd.github.VERSION.full+json," +
-            " application/vnd.github.squirrel-girl-preview")
+             " application/vnd.github.squirrel-girl-preview")
     Observable<Comment> getComment(@Path("owner") String owner, @Path("repo") String repo, @Path("id") long id);
 
 }

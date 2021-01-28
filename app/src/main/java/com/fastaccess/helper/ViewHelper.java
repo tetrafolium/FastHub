@@ -90,7 +90,7 @@ public class ViewHelper {
 
     @ColorInt private static int getColorAttr(@NonNull Context context, int attr) {
         Resources.Theme theme = context.getTheme();
-        TypedArray typedArray = theme.obtainStyledAttributes(new int[]{attr});
+        TypedArray typedArray = theme.obtainStyledAttributes(new int[] {attr});
         final int color = typedArray.getColor(0, Color.LTGRAY);
         typedArray.recycle();
         return color;
@@ -123,31 +123,31 @@ public class ViewHelper {
 
     @NonNull private static StateListDrawable getStateListDrawable(int normalColor, int pressedColor) {
         StateListDrawable states = new StateListDrawable();
-        states.addState(new int[]{android.R.attr.state_pressed}, new ColorDrawable(pressedColor));
-        states.addState(new int[]{android.R.attr.state_focused}, new ColorDrawable(pressedColor));
-        states.addState(new int[]{android.R.attr.state_activated}, new ColorDrawable(pressedColor));
-        states.addState(new int[]{android.R.attr.state_selected}, new ColorDrawable(pressedColor));
-        states.addState(new int[]{}, new ColorDrawable(normalColor));
+        states.addState(new int[] {android.R.attr.state_pressed}, new ColorDrawable(pressedColor));
+        states.addState(new int[] {android.R.attr.state_focused}, new ColorDrawable(pressedColor));
+        states.addState(new int[] {android.R.attr.state_activated}, new ColorDrawable(pressedColor));
+        states.addState(new int[] {android.R.attr.state_selected}, new ColorDrawable(pressedColor));
+        states.addState(new int[] {}, new ColorDrawable(normalColor));
         return states;
     }
 
     public static ColorStateList textSelector(int normalColor, int pressedColor) {
         return new ColorStateList(
-                new int[][]{
-                        new int[]{android.R.attr.state_pressed},
-                        new int[]{android.R.attr.state_focused},
-                        new int[]{android.R.attr.state_activated},
-                        new int[]{android.R.attr.state_selected},
-                        new int[]{}
-                },
-                new int[]{
-                        pressedColor,
-                        pressedColor,
-                        pressedColor,
-                        pressedColor,
-                        normalColor
-                }
-        );
+                   new int[][] {
+                       new int[]{android.R.attr.state_pressed},
+                       new int[]{android.R.attr.state_focused},
+                       new int[]{android.R.attr.state_activated},
+                       new int[]{android.R.attr.state_selected},
+                       new int[]{}
+                   },
+                   new int[] {
+                       pressedColor,
+                       pressedColor,
+                       pressedColor,
+                       pressedColor,
+                       normalColor
+                   }
+               );
     }
 
     private static boolean isTablet(@NonNull Resources resources) {

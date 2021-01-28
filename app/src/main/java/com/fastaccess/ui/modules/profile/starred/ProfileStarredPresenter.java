@@ -68,12 +68,12 @@ class ProfileStarredPresenter extends BasePresenter<ProfileStarredMvp.View> impl
         Observable<Pageable<Repo>> observable;
         if (starredCount == -1) {
             observable = Observable.zip(RestProvider.getUserService(isEnterprise()).getStarred(parameter, page),
-                    RestProvider.getUserService(isEnterprise()).getStarredCount(parameter), (repoPageable, count) -> {
-                        if (count != null) {
-                            starredCount = count.getLast();
-                        }
-                        return repoPageable;
-                    });
+            RestProvider.getUserService(isEnterprise()).getStarredCount(parameter), (repoPageable, count) -> {
+                if (count != null) {
+                    starredCount = count.getLast();
+                }
+                return repoPageable;
+            });
         } else {
             observable = RestProvider.getUserService(isEnterprise()).getStarred(parameter, page);
         }
@@ -97,11 +97,11 @@ class ProfileStarredPresenter extends BasePresenter<ProfileStarredMvp.View> impl
     @Override public void onWorkOffline(@NonNull String login) {
         if (repos.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Repo.getStarred(login).toObservable()).subscribe(repoModels ->
-                    sendToView(view -> {
-                        starredCount = -1;
-                        view.onUpdateCount(repoModels != null ? repoModels.size() : 0);
-                        view.onNotifyAdapter(repoModels, 1);
-                    })));
+            sendToView(view -> {
+                starredCount = -1;
+                view.onUpdateCount(repoModels != null ? repoModels.size() : 0);
+                view.onNotifyAdapter(repoModels, 1);
+            })));
         } else {
             sendToView(ProfileStarredMvp.View::hideProgress);
         }

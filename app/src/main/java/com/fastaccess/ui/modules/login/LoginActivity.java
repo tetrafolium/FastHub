@@ -60,9 +60,9 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
     public static void startOAuth(@NonNull Activity activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.YES_NO_EXTRA, true)
-                .put(BundleConstant.EXTRA_TWO, true)
-                .end());
+                         .put(BundleConstant.YES_NO_EXTRA, true)
+                         .put(BundleConstant.EXTRA_TWO, true)
+                         .end());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
         activity.finish();
@@ -75,9 +75,9 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
     public static void start(@NonNull Activity activity, boolean isBasicAuth, boolean isEnterprise) {
         Intent intent = new Intent(activity, LoginActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.YES_NO_EXTRA, isBasicAuth)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .end());
+                         .put(BundleConstant.YES_NO_EXTRA, isBasicAuth)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .end());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         activity.startActivity(intent);
         activity.finish();
@@ -86,8 +86,8 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
     @OnClick(R.id.browserLogin) void onOpenBrowser() {
         if (isEnterprise()) {
             MessageDialogView.newInstance(getString(R.string.warning), getString(R.string.github_enterprise_reply),
-                    true, Bundler.start().put("hide_buttons", true).end())
-                    .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                          true, Bundler.start().put("hide_buttons", true).end())
+            .show(getSupportFragmentManager(), MessageDialogView.TAG);
             return;
         }
         ActivityHelper.startCustomTab(this, getPresenter().getAuthorizationUrl());
@@ -100,7 +100,7 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
     @OnCheckedChanged(R.id.accessTokenCheckbox) void onCheckChanged(boolean checked) {
         isBasicAuth = !checked;
         password.setHint(checked ? getString(R.string.access_token) : getString(R.string
-                .password));
+                         .password));
     }
 
     @OnEditorAction(R.id.passwordEditText) public boolean onSendPassword() {
@@ -230,33 +230,33 @@ public class LoginActivity extends BaseActivity<LoginMvp.View, LoginPresenter> i
 
     protected void checkPurchases(@Nullable Action action) {
         getPresenter().manageViewDisposable(RxBillingService.getInstance(this, BuildConfig.DEBUG)
-                .getPurchases(ProductType.IN_APP)
-                .doOnSubscribe(disposable -> showProgress(0))
-                .subscribe((purchases, throwable) -> {
-                    hideProgress();
-                    if (throwable == null) {
-                        Logger.e(purchases);
-                        if (purchases != null && !purchases.isEmpty()) {
-                            for (Purchase purchase : purchases) {
-                                String sku = purchase.sku();
-                                if (!InputHelper.isEmpty(sku)) {
-                                    DonateActivity.Companion.enableProduct(sku, App.getInstance());
-                                }
-                            }
+                                            .getPurchases(ProductType.IN_APP)
+                                            .doOnSubscribe(disposable -> showProgress(0))
+        .subscribe((purchases, throwable) -> {
+            hideProgress();
+            if (throwable == null) {
+                Logger.e(purchases);
+                if (purchases != null && !purchases.isEmpty()) {
+                    for (Purchase purchase : purchases) {
+                        String sku = purchase.sku();
+                        if (!InputHelper.isEmpty(sku)) {
+                            DonateActivity.Companion.enableProduct(sku, App.getInstance());
                         }
-                    } else {
-                        throwable.printStackTrace();
                     }
-                    if (action != null) action.run();
-                }));
+                }
+            } else {
+                throwable.printStackTrace();
+            }
+            if (action != null) action.run();
+        }));
     }
 
     private void doLogin() {
         if (progress.getVisibility() == View.GONE) {
             getPresenter().login(InputHelper.toString(username),
-                    InputHelper.toString(password),
-                    InputHelper.toString(twoFactor),
-                    isBasicAuth, InputHelper.toString(endpoint));
+                                 InputHelper.toString(password),
+                                 InputHelper.toString(twoFactor),
+                                 isBasicAuth, InputHelper.toString(endpoint));
         }
     }
 }

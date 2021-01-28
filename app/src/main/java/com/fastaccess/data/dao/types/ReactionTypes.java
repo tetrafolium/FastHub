@@ -51,8 +51,8 @@ public enum ReactionTypes {
 
     @Nullable public static ReactionTypes get(@IdRes int vId) {
         return Stream.of(values())
-                .filter(value -> value.getvId() == vId || value.secondaryViewId == vId)
-                .findFirst()
-                .orElse(null);
+               .filter(value -> value.getvId() == vId || value.secondaryViewId == vId)
+               .findFirst()
+               .orElse(null);
     }
 }

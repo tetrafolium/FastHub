@@ -45,31 +45,31 @@ public class PrefGetter {
     public static final int DEEP_ORANGE = 16;
 
     @IntDef({
-            LIGHT,
-            DARK,
-            AMLOD,
-            MID_NIGHT_BLUE,
-            BLUISH
+        LIGHT,
+        DARK,
+        AMLOD,
+        MID_NIGHT_BLUE,
+        BLUISH
     })
     @Retention(RetentionPolicy.SOURCE) public @interface ThemeType {}
 
     @IntDef({
-            RED,
-            PINK,
-            PURPLE,
-            DEEP_PURPLE,
-            INDIGO,
-            BLUE,
-            LIGHT_BLUE,
-            CYAN,
-            TEAL,
-            GREEN,
-            LIGHT_GREEN,
-            LIME,
-            YELLOW,
-            AMBER,
-            ORANGE,
-            DEEP_ORANGE
+        RED,
+        PINK,
+        PURPLE,
+        DEEP_PURPLE,
+        INDIGO,
+        BLUE,
+        LIGHT_BLUE,
+        CYAN,
+        TEAL,
+        GREEN,
+        LIGHT_GREEN,
+        LIME,
+        YELLOW,
+        AMBER,
+        ORANGE,
+        DEEP_ORANGE
     })
     @Retention(RetentionPolicy.SOURCE) @interface ThemeColor {}
 
@@ -227,22 +227,22 @@ public class PrefGetter {
     public static int notificationDurationMillis(@NonNull String prefValue) {
         if (!InputHelper.isEmpty(prefValue)) {
             switch (prefValue) {
-                case "1":
-                    return 60;
-                case "5":
-                    return 5 * 60;
-                case "10":
-                    return 10 * 60;
-                case "20":
-                    return 20 * 60;
-                case "30":
-                    return 30 * 60;
-                case "60":
-                    return 60 * 60; // 1 hour
-                case "120":
-                    return (60 * 2) * 60; // 2 hours
-                case "180":
-                    return (60 * 3) * 60; // 3 hours
+            case "1":
+                return 60;
+            case "5":
+                return 5 * 60;
+            case "10":
+                return 10 * 60;
+            case "20":
+                return 20 * 60;
+            case "30":
+                return 30 * 60;
+            case "60":
+                return 60 * 60; // 1 hour
+            case "120":
+                return (60 * 2) * 60; // 2 hours
+            case "180":
+                return (60 * 3) * 60; // 3 hours
             }
         }
         return -1;

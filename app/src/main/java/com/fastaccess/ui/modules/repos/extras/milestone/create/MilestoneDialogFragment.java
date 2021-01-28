@@ -33,9 +33,9 @@ public class MilestoneDialogFragment extends BaseDialogFragment implements Miles
     public static MilestoneDialogFragment newInstance(@NonNull String login, @NonNull String repo) {
         MilestoneDialogFragment view = new MilestoneDialogFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.ID, repo)
-                .end());
+                          .put(BundleConstant.EXTRA, login)
+                          .put(BundleConstant.ID, repo)
+                          .end());
         return view;
     }
 
@@ -75,12 +75,12 @@ public class MilestoneDialogFragment extends BaseDialogFragment implements Miles
         if (savedInstanceState == null) {
             Bundle bundle = getArguments();
             com.fastaccess.ui.modules.repos.extras.milestone.MilestoneDialogFragment milestoneView = new com.fastaccess.ui.modules.repos.extras
-                    .milestone.MilestoneDialogFragment();
+            .milestone.MilestoneDialogFragment();
             milestoneView.setArguments(bundle);
             getChildFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.singleContainer, milestoneView, com.fastaccess.ui.modules.repos.extras.milestone.MilestoneDialogFragment.TAG)
-                    .commit();
+            .beginTransaction()
+            .replace(R.id.singleContainer, milestoneView, com.fastaccess.ui.modules.repos.extras.milestone.MilestoneDialogFragment.TAG)
+            .commit();
         }
     }
 

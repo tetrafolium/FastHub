@@ -61,16 +61,16 @@ public class CreateGistActivity extends BaseActivity<CreateGistMvp.View, CreateG
         String login = gistsModel.getOwner() != null ? gistsModel.getOwner().getLogin() :
                        gistsModel.getUser() != null ? gistsModel.getUser().getLogin() : "";
         starter.putExtras(Bundler.start()
-                .putParcelableArrayList(BundleConstant.ITEM, gistsModel.getFilesAsList())
-                .put(BundleConstant.EXTRA, Login.getUser().getLogin().equalsIgnoreCase(login))
-                .put(BundleConstant.ID, gistsModel.getGistId())
-                .put(BundleConstant.EXTRA_TWO, gistsModel.getDescription())
-                .end());
+                          .putParcelableArrayList(BundleConstant.ITEM, gistsModel.getFilesAsList())
+                          .put(BundleConstant.EXTRA, Login.getUser().getLogin().equalsIgnoreCase(login))
+                          .put(BundleConstant.ID, gistsModel.getGistId())
+                          .put(BundleConstant.EXTRA_TWO, gistsModel.getDescription())
+                          .end());
     }
 
     @OnClick(value = {R.id.createPublicGist, R.id.createSecretGist}) void onClick(View view) {
         getPresenter().onSubmit(InputHelper.toString(description),
-                getFilesFragment().getFiles(), view.getId() == R.id.createPublicGist);
+                                getFilesFragment().getFiles(), view.getId() == R.id.createPublicGist);
     }
 
     @OnClick(R.id.addFile) public void onViewClicked() {
@@ -150,8 +150,8 @@ public class CreateGistActivity extends BaseActivity<CreateGistMvp.View, CreateG
         } else {
             ViewHelper.hideKeyboard(description);
             MessageDialogView.newInstance(getString(R.string.close), getString(R.string.unsaved_data_warning),
-                    Bundler.start().put("primary_extra", getString(R.string.discard)).put("secondary_extra", getString(R.string.cancel))
-                            .put(BundleConstant.EXTRA, true).end()).show(getSupportFragmentManager(), MessageDialogView.TAG);
+                                          Bundler.start().put("primary_extra", getString(R.string.discard)).put("secondary_extra", getString(R.string.cancel))
+                                          .put(BundleConstant.EXTRA, true).end()).show(getSupportFragmentManager(), MessageDialogView.TAG);
         }
     }
 

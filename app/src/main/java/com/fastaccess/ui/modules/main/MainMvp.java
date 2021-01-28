@@ -25,10 +25,10 @@ public interface MainMvp {
     int PROFILE = 3;
 
     @IntDef({
-            FEEDS,
-            ISSUES,
-            PULL_REQUESTS,
-            PROFILE
+        FEEDS,
+        ISSUES,
+        PULL_REQUESTS,
+        PROFILE
     })
     @Retention(RetentionPolicy.SOURCE) @interface NavigationType {}
 
@@ -46,7 +46,7 @@ public interface MainMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BottomNavigation.OnMenuItemSelectionListener {
+        BottomNavigation.OnMenuItemSelectionListener {
 
         boolean canBackPress(@NonNull DrawerLayout drawerLayout);
 

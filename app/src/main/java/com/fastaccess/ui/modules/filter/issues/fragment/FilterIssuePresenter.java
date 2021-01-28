@@ -63,13 +63,13 @@ public class FilterIssuePresenter extends BasePresenter<FilterIssuesMvp.View> im
         }
         setCurrentPage(page);
         makeRestCall(RestProvider.getSearchService(isEnterprise()).searchIssues(parameter, page),
-                issues -> {
-                    lastPage = issues.getLast();
-                    if (getCurrentPage() == 1) {
-                        sendToView(view -> view.onSetCount(issues.getTotalCount()));
-                    }
-                    sendToView(view -> view.onNotifyAdapter(issues.getItems(), page));
-                });
+        issues -> {
+            lastPage = issues.getLast();
+            if (getCurrentPage() == 1) {
+                sendToView(view -> view.onSetCount(issues.getTotalCount()));
+            }
+            sendToView(view -> view.onNotifyAdapter(issues.getItems(), page));
+        });
         return true;
     }
 }

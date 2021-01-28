@@ -26,7 +26,9 @@ public class SearchCodeModel implements Parcelable {
 
     public SearchCodeModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
@@ -49,8 +51,12 @@ public class SearchCodeModel implements Parcelable {
     }
 
     public static final Creator<SearchCodeModel> CREATOR = new Creator<SearchCodeModel>() {
-        @Override public SearchCodeModel createFromParcel(Parcel source) {return new SearchCodeModel(source);}
+        @Override public SearchCodeModel createFromParcel(Parcel source) {
+            return new SearchCodeModel(source);
+        }
 
-        @Override public SearchCodeModel[] newArray(int size) {return new SearchCodeModel[size];}
+        @Override public SearchCodeModel[] newArray(int size) {
+            return new SearchCodeModel[size];
+        }
     };
 }

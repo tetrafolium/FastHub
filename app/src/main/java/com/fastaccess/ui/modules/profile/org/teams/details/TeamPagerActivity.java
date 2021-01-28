@@ -38,10 +38,10 @@ public class TeamPagerActivity extends BaseActivity {
     public static void startActivity(@NonNull Context context, long id, @NonNull String name) {
         Intent intent = new Intent(context, TeamPagerActivity.class);
         intent.putExtras(Bundler
-                .start()
-                .put(BundleConstant.ID, id)
-                .put(BundleConstant.EXTRA, name)
-                .end());
+                         .start()
+                         .put(BundleConstant.ID, id)
+                         .put(BundleConstant.EXTRA, name)
+                         .end());
         context.startActivity(intent);
     }
 

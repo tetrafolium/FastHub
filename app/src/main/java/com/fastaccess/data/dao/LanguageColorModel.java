@@ -15,7 +15,9 @@ import lombok.ToString;
     public String color;
     public String url;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.color);
@@ -30,9 +32,13 @@ import lombok.ToString;
     }
 
     public static final Parcelable.Creator<LanguageColorModel> CREATOR = new Parcelable.Creator<LanguageColorModel>() {
-        @Override public LanguageColorModel createFromParcel(Parcel source) {return new LanguageColorModel(source);}
+        @Override public LanguageColorModel createFromParcel(Parcel source) {
+            return new LanguageColorModel(source);
+        }
 
-        @Override public LanguageColorModel[] newArray(int size) {return new LanguageColorModel[size];}
+        @Override public LanguageColorModel[] newArray(int size) {
+            return new LanguageColorModel[size];
+        }
     };
 }
 

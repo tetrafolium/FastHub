@@ -17,7 +17,9 @@ public class MarkdownModel implements Parcelable {
     private String mode = "gfm";
     private String context;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.text);
@@ -32,8 +34,12 @@ public class MarkdownModel implements Parcelable {
     }
 
     public static final Parcelable.Creator<MarkdownModel> CREATOR = new Parcelable.Creator<MarkdownModel>() {
-        @Override public MarkdownModel createFromParcel(Parcel source) {return new MarkdownModel(source);}
+        @Override public MarkdownModel createFromParcel(Parcel source) {
+            return new MarkdownModel(source);
+        }
 
-        @Override public MarkdownModel[] newArray(int size) {return new MarkdownModel[size];}
+        @Override public MarkdownModel[] newArray(int size) {
+            return new MarkdownModel[size];
+        }
     };
 }

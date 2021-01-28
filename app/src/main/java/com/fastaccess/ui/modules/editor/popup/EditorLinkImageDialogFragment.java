@@ -32,7 +32,7 @@ import es.dmoral.toasty.Toasty;
  */
 
 public class EditorLinkImageDialogFragment extends BaseDialogFragment<EditorLinkImageMvp.View, EditorLinkImagePresenter>
-        implements EditorLinkImageMvp.View {
+    implements EditorLinkImageMvp.View {
 
     private EditorLinkImageMvp.EditorLinkCallback callback;
 
@@ -43,10 +43,10 @@ public class EditorLinkImageDialogFragment extends BaseDialogFragment<EditorLink
     public static EditorLinkImageDialogFragment newInstance(boolean isLink, @Nullable String link) {
         EditorLinkImageDialogFragment fragment = new EditorLinkImageDialogFragment();
         fragment.setArguments(Bundler
-                .start()
-                .put(BundleConstant.YES_NO_EXTRA, isLink)
-                .put(BundleConstant.ITEM, link)
-                .end());
+                              .start()
+                              .put(BundleConstant.YES_NO_EXTRA, isLink)
+                              .put(BundleConstant.ITEM, link)
+                              .end());
         return fragment;
     }
 

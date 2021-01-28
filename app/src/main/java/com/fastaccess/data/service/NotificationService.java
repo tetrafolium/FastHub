@@ -38,14 +38,14 @@ public interface NotificationService {
     String UTF8 = "✓";
 
     @StringDef({
-            ISSUE_THREAD_CLASS,
-            PULL_REQUEST_THREAD_CLASS
+        ISSUE_THREAD_CLASS,
+        PULL_REQUEST_THREAD_CLASS
     })
     @Retention(RetentionPolicy.SOURCE) @interface ThreadClass {}
 
     @StringDef({
-            SUBSCRIBE,
-            MUTE
+        SUBSCRIBE,
+        MUTE
     })
     @Retention(RetentionPolicy.SOURCE) @interface ThreadId {}
 

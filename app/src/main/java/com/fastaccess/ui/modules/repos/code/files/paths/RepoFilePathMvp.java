@@ -35,7 +35,7 @@ interface RepoFilePathMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<RepoFile> {
+        BaseViewHolder.OnItemClickListener<RepoFile> {
 
         void onFragmentCreated(@Nullable Bundle bundle);
 

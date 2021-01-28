@@ -28,7 +28,7 @@ import es.dmoral.toasty.Toasty;
  */
 
 public class PullRequestFilesViewHolder extends BaseViewHolder<CommitFileChanges> implements
-        BaseViewHolder.OnItemClickListener<CommitLinesModel> {
+    BaseViewHolder.OnItemClickListener<CommitLinesModel> {
 
     @BindView(R.id.name) FontTextView name;
     @BindView(R.id.patchList) DynamicRecyclerView patch;
@@ -67,10 +67,10 @@ public class PullRequestFilesViewHolder extends BaseViewHolder<CommitFileChanges
     }
 
     public static PullRequestFilesViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter,
-                                                         @NonNull OnToggleView onToggleView,
-                                                         @Nullable PullRequestFilesMvp.OnPatchClickListener onPatchClickListener) {
+            @NonNull OnToggleView onToggleView,
+            @Nullable PullRequestFilesMvp.OnPatchClickListener onPatchClickListener) {
         return new PullRequestFilesViewHolder(getView(viewGroup, R.layout.pullrequest_file_row_item), viewGroup, adapter,
-                onToggleView, onPatchClickListener);
+                                              onToggleView, onPatchClickListener);
     }
 
     @Override public void bind(@NonNull CommitFileChanges commitFileChanges) {
@@ -78,21 +78,21 @@ public class PullRequestFilesViewHolder extends BaseViewHolder<CommitFileChanges
         toggle.setVisibility(commit.getPatch() == null ? View.GONE : View.VISIBLE);
         name.setText(commit.getFilename());
         changes.setText(SpannableBuilder.builder()
-                .append(changesText)
-                .append("\n")
-                .bold(String.valueOf(commit.getChanges())));
+                        .append(changesText)
+                        .append("\n")
+                        .bold(String.valueOf(commit.getChanges())));
         addition.setText(SpannableBuilder.builder()
-                .append(additionText)
-                .append("\n")
-                .bold(String.valueOf(commit.getAdditions())));
+                         .append(additionText)
+                         .append("\n")
+                         .bold(String.valueOf(commit.getAdditions())));
         deletion.setText(SpannableBuilder.builder()
-                .append(deletionText)
-                .append("\n")
-                .bold(String.valueOf(commit.getDeletions())));
+                         .append(deletionText)
+                         .append("\n")
+                         .bold(String.valueOf(commit.getDeletions())));
         status.setText(SpannableBuilder.builder()
-                .append(statusText)
-                .append("\n")
-                .bold(String.valueOf(commit.getStatus())));
+                       .append(statusText)
+                       .append("\n")
+                       .bold(String.valueOf(commit.getStatus())));
         int position = getAdapterPosition();
         onToggle(onToggleView.isCollapsed(position), false, position);
     }

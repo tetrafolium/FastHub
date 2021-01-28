@@ -76,13 +76,13 @@ class ProfileReposPresenter extends BasePresenter<ProfileReposMvp.View> implemen
         makeRestCall(isProfile
                      ? RestProvider.getUserService(isEnterprise()).getRepos(filterOptions.getQueryMap(), page)
                      : RestProvider.getUserService(isEnterprise()).getRepos(parameter, filterOptions.getQueryMap(), page),
-                repoModelPageable -> {
-                    lastPage = repoModelPageable.getLast();
-                    if (getCurrentPage() == 1) {
-                        manageDisposable(Repo.saveMyRepos(repoModelPageable.getItems(), parameter));
-                    }
-                    sendToView(view -> view.onNotifyAdapter(repoModelPageable.getItems(), page));
-                });
+        repoModelPageable -> {
+            lastPage = repoModelPageable.getLast();
+            if (getCurrentPage() == 1) {
+                manageDisposable(Repo.saveMyRepos(repoModelPageable.getItems(), parameter));
+            }
+            sendToView(view -> view.onNotifyAdapter(repoModelPageable.getItems(), page));
+        });
         return true;
     }
 
@@ -93,7 +93,7 @@ class ProfileReposPresenter extends BasePresenter<ProfileReposMvp.View> implemen
     @Override public void onWorkOffline(@NonNull String login) {
         if (repos.isEmpty()) {
             manageDisposable(RxHelper.getObservable(Repo.getMyRepos(login).toObservable()).subscribe(repoModels ->
-                    sendToView(view -> view.onNotifyAdapter(repoModels, 1))));
+                             sendToView(view -> view.onNotifyAdapter(repoModels, 1))));
         } else {
             sendToView(ProfileReposMvp.View::hideProgress);
         }

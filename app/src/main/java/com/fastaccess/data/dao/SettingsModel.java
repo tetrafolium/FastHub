@@ -25,13 +25,13 @@ import lombok.Setter;
     public static final int CODE_THEME = 6;
 
     @IntDef({
-            THEME,
-            NOTIFICATION,
-            CUSTOMIZATION,
-            BEHAVIOR,
-            BACKUP,
-            LANGUAGE,
-            CODE_THEME
+        THEME,
+        NOTIFICATION,
+        CUSTOMIZATION,
+        BEHAVIOR,
+        BACKUP,
+        LANGUAGE,
+        CODE_THEME
     })
     @Retention(RetentionPolicy.SOURCE) public @interface SettingsType {}
 

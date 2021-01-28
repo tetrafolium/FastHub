@@ -39,7 +39,7 @@ import butterknife.BindView;
  */
 
 public class AllNotificationsFragment extends BaseFragment<AllNotificationsMvp.View, AllNotificationsPresenter>
-        implements AllNotificationsMvp.View {
+    implements AllNotificationsMvp.View {
 
     @BindView(R.id.recycler) DynamicRecyclerView recycler;
     @BindView(R.id.refresh) AppbarRefreshLayout refresh;
@@ -162,11 +162,11 @@ public class AllNotificationsFragment extends BaseFragment<AllNotificationsMvp.V
         if (item.getItemId() == R.id.readAll) {
             if (!adapter.getData().isEmpty()) {
                 MessageDialogView.newInstance(getString(R.string.mark_all_as_read), getString(R.string.confirm_message),
-                        false, false, Bundler.start()
-                                .put("primary_button", getString(R.string.yes))
-                                .put("secondary_button", getString(R.string.no))
-                                .end())
-                        .show(getChildFragmentManager(), MessageDialogView.TAG);
+                                              false, false, Bundler.start()
+                                              .put("primary_button", getString(R.string.yes))
+                                              .put("secondary_button", getString(R.string.no))
+                                              .end())
+                .show(getChildFragmentManager(), MessageDialogView.TAG);
             }
             return true;
         }
@@ -175,9 +175,9 @@ public class AllNotificationsFragment extends BaseFragment<AllNotificationsMvp.V
 
     @Override public void onPrepareOptionsMenu(Menu menu) {
         boolean hasUnread = Stream.of(adapter.getData())
-                .filter(ObjectsCompat::nonNull)
-                .filter(group -> group.getType() == GroupedNotificationModel.ROW)
-                .anyMatch(group -> group.getNotification().isUnread());
+                            .filter(ObjectsCompat::nonNull)
+                            .filter(group -> group.getType() == GroupedNotificationModel.ROW)
+                            .anyMatch(group -> group.getNotification().isUnread());
         menu.findItem(R.id.readAll).setVisible(hasUnread);
         super.onPrepareOptionsMenu(menu);
     }

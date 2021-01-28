@@ -87,7 +87,7 @@ public class ColorPickerPreference extends Preference implements ColorPicker.OnC
         colorTypedArray.recycle();
         HashMap<Integer, Integer> preferenceValueToColor = new HashMap<>();
 
-        for(int i=0; i<colorNames.length; i++){
+        for(int i=0; i<colorNames.length; i++) {
             preferenceValueToColor.put(PrefGetter.getThemeColor(getContext().getResources(), colorNames[i]), colors.get(i));
         }
         return preferenceValueToColor.get(PrefGetter.getThemeColor(getContext()));

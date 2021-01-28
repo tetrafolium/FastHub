@@ -72,11 +72,11 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
 
     public Single<Issue> save(Issue entity) {
         return RxHelper.getSingle(App.getInstance().getDataStore()
-                .delete(Issue.class)
-                .where(Issue.ID.eq(entity.getId()))
-                .get()
-                .single()
-                .flatMap(observer -> App.getInstance().getDataStore().insert(entity)));
+                                  .delete(Issue.class)
+                                  .where(Issue.ID.eq(entity.getId()))
+                                  .get()
+                                  .single()
+                                  .flatMap(observer -> App.getInstance().getDataStore().insert(entity)));
     }
 
     public static Disposable save(@NonNull List<Issue> models, @NonNull String repoId, @NonNull String login) {
@@ -84,9 +84,9 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                 dataSource.delete(Issue.class)
-                        .where(REPO_ID.equal(repoId).and(LOGIN.equal(login)))
-                        .get()
-                        .value();
+                .where(REPO_ID.equal(repoId).and(LOGIN.equal(login)))
+                .get()
+                .value();
                 if (!models.isEmpty()) {
                     for (Issue issueModel : models) {
                         dataSource.delete(Issue.class).where(Issue.ID.eq(issueModel.getId())).get().value();
@@ -105,34 +105,36 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
 
     public static Single<List<Issue>> getIssues(@NonNull String repoId, @NonNull String login, @NonNull IssueState issueState) {
         return App.getInstance().getDataStore().select(Issue.class)
-                .where(REPO_ID.equal(repoId)
-                        .and(LOGIN.equal(login))
-                        .and(STATE.equal(issueState)))
-                .orderBy(UPDATED_AT.desc())
-                .get()
-                .observable()
-                .toList();
+               .where(REPO_ID.equal(repoId)
+                      .and(LOGIN.equal(login))
+                      .and(STATE.equal(issueState)))
+               .orderBy(UPDATED_AT.desc())
+               .get()
+               .observable()
+               .toList();
     }
 
     public static Observable<Issue> getIssue(long id) {
         return App.getInstance().getDataStore()
-                .select(Issue.class)
-                .where(ID.equal(id))
-                .get()
-                .observable();
+               .select(Issue.class)
+               .where(ID.equal(id))
+               .get()
+               .observable();
     }
 
     public static Observable<Issue> getIssueByNumber(int number, String repoId, String login) {
         return App.getInstance().getDataStore()
-                .select(Issue.class)
-                .where(NUMBER.equal(number)
-                        .and(REPO_ID.eq(repoId))
-                        .and(LOGIN.eq(login)))
-                .get()
-                .observable();
+               .select(Issue.class)
+               .where(NUMBER.equal(number)
+                      .and(REPO_ID.eq(repoId))
+                      .and(LOGIN.eq(login)))
+               .get()
+               .observable();
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -197,9 +199,13 @@ import static com.fastaccess.data.dao.model.Issue.UPDATED_AT;
     }
 
     public static final Creator<Issue> CREATOR = new Creator<Issue>() {
-        @Override public Issue createFromParcel(Parcel source) {return new Issue(source);}
+        @Override public Issue createFromParcel(Parcel source) {
+            return new Issue(source);
+        }
 
-        @Override public Issue[] newArray(int size) {return new Issue[size];}
+        @Override public Issue[] newArray(int size) {
+            return new Issue[size];
+        }
     };
 
 }

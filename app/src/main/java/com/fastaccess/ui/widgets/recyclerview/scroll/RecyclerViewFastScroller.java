@@ -58,20 +58,20 @@ public class RecyclerViewFastScroller extends FrameLayout {
     @SuppressLint("ClickableViewAccessibility") @Override public boolean onTouchEvent(@NonNull MotionEvent event) {
         int action = event.getAction();
         switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                if (event.getX() < (scrollerView.getX() - scrollerView.getPaddingStart())) return false;
-                scrollerView.setSelected(true);
-                hideAppbar();
-            case MotionEvent.ACTION_MOVE:
-                float y = event.getY();
-                setScrollerHeight(y);
-                setRecyclerViewPosition(y);
-                return true;
-            case MotionEvent.ACTION_UP:
-            case MotionEvent.ACTION_CANCEL:
-                scrollerView.setSelected(false);
-                showAppbar();
-                return true;
+        case MotionEvent.ACTION_DOWN:
+            if (event.getX() < (scrollerView.getX() - scrollerView.getPaddingStart())) return false;
+            scrollerView.setSelected(true);
+            hideAppbar();
+        case MotionEvent.ACTION_MOVE:
+            float y = event.getY();
+            setScrollerHeight(y);
+            setRecyclerViewPosition(y);
+            return true;
+        case MotionEvent.ACTION_UP:
+        case MotionEvent.ACTION_CANCEL:
+            scrollerView.setSelected(false);
+            showAppbar();
+            return true;
         }
         return super.onTouchEvent(event);
     }

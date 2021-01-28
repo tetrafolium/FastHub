@@ -28,13 +28,13 @@ import java.util.Date;
 public class TimelineProvider {
 
     @NonNull public static SpannableBuilder getStyledEvents(@NonNull GenericEvent issueEventModel,
-                                                            @NonNull Context context, boolean isMerged) {
+            @NonNull Context context, boolean isMerged) {
         IssueEventType event = issueEventModel.getEvent();
         SpannableBuilder spannableBuilder = SpannableBuilder.builder();
         Date date = issueEventModel.getCreatedAt() != null
                     ? issueEventModel.getCreatedAt()
                     : issueEventModel.getAuthor() != null
-                      ? issueEventModel.getAuthor().getDate() : null;
+                    ? issueEventModel.getAuthor().getDate() : null;
         if (event != null) {
             String to = context.getString(R.string.to);
             String from = context.getString(R.string.from);
@@ -49,8 +49,8 @@ public class TimelineProvider {
                 spannableBuilder.append(" ").append(getDate(issueEventModel.getCreatedAt()));
             } else if (event == IssueEventType.committed) {
                 spannableBuilder.append(issueEventModel.getMessage().replaceAll("\n", " "))
-                        .append(" ")
-                        .url(substring(issueEventModel.getSha()));
+                .append(" ")
+                .url(substring(issueEventModel.getSha()));
             } else {
                 User user = null;
                 if (issueEventModel.getAssignee() != null && issueEventModel.getAssigner() != null) {
@@ -71,69 +71,69 @@ public class TimelineProvider {
                         spannableBuilder.append(" ").append(IssueEventType.merged.name());
                     } else {
                         spannableBuilder
-                                .append(" ")
-                                .append(event.name().replaceAll("_", " "))
-                                .append(" ")
-                                .append(thisString);
+                        .append(" ")
+                        .append(event.name().replaceAll("_", " "))
+                        .append(" ")
+                        .append(thisString);
                     }
                     if (issueEventModel.getCommitId() != null) {
                         spannableBuilder
-                                .append(" ")
-                                .append(in)
-                                .append(" ")
-                                .url(substring(issueEventModel.getCommitId()));
+                        .append(" ")
+                        .append(in)
+                        .append(" ")
+                        .url(substring(issueEventModel.getCommitId()));
                     }
                 } else if (event == IssueEventType.assigned || event == IssueEventType.unassigned) {
                     spannableBuilder
-                            .append(" ");
+                    .append(" ");
                     if ((user != null && issueEventModel.getAssignee() != null) && user.getLogin()
                             .equalsIgnoreCase(issueEventModel.getAssignee().getLogin())) {
                         spannableBuilder
-                                .append(event == IssueEventType.assigned ? "self-assigned this" : "removed their assignment");
+                        .append(event == IssueEventType.assigned ? "self-assigned this" : "removed their assignment");
                     } else {
                         spannableBuilder
-                                .append(event == IssueEventType.assigned ? "assigned" : "unassigned");
+                        .append(event == IssueEventType.assigned ? "assigned" : "unassigned");
                         spannableBuilder
-                                .append(" ")
-                                .bold(issueEventModel.getAssignee() != null ? issueEventModel.getAssignee().getLogin() : "");
+                        .append(" ")
+                        .bold(issueEventModel.getAssignee() != null ? issueEventModel.getAssignee().getLogin() : "");
                     }
                 } else if (event == IssueEventType.locked || event == IssueEventType.unlocked) {
                     spannableBuilder
-                            .append(" ")
-                            .append(event == IssueEventType.locked ? "locked and limited conversation to collaborators" : "unlocked this " +
-                                    "conversation");
+                    .append(" ")
+                    .append(event == IssueEventType.locked ? "locked and limited conversation to collaborators" : "unlocked this " +
+                            "conversation");
                 } else if (event == IssueEventType.head_ref_deleted || event == IssueEventType.head_ref_restored) {
                     spannableBuilder.append(" ").append(event.name().replaceAll("_", " "),
-                            new BackgroundColorSpan(HtmlHelper.getWindowBackground(PrefGetter.getThemeType())));
+                                                        new BackgroundColorSpan(HtmlHelper.getWindowBackground(PrefGetter.getThemeType())));
                 } else if (event == IssueEventType.milestoned || event == IssueEventType.demilestoned) {
                     spannableBuilder.append(" ")
-                            .append(event == IssueEventType.milestoned ? "added this to the" : "removed this from the")
-                            .append(" ")
-                            .bold(issueEventModel.getMilestone().getTitle())
-                            .append(" ")
-                            .append("milestone");
+                    .append(event == IssueEventType.milestoned ? "added this to the" : "removed this from the")
+                    .append(" ")
+                    .bold(issueEventModel.getMilestone().getTitle())
+                    .append(" ")
+                    .append("milestone");
                 } else if (event == IssueEventType.deployed) {
                     spannableBuilder.append(" ")
-                            .bold("deployed");
+                    .bold("deployed");
                 } else {
                     spannableBuilder.append(" ").append(event.name().replaceAll("_", " "));
                 }
                 if (event == IssueEventType.renamed) {
                     spannableBuilder
-                            .append(" ")
-                            .append(from)
-                            .append(" ")
-                            .bold(issueEventModel.getRename().getFromValue())
-                            .append(" ")
-                            .append(to)
-                            .append(" ")
-                            .bold(issueEventModel.getRename().getToValue());
+                    .append(" ")
+                    .append(from)
+                    .append(" ")
+                    .bold(issueEventModel.getRename().getFromValue())
+                    .append(" ")
+                    .append(to)
+                    .append(" ")
+                    .bold(issueEventModel.getRename().getToValue());
                 } else if (event == IssueEventType.referenced || event == IssueEventType.merged) {
                     spannableBuilder
-                            .append(" ")
-                            .append("commit")
-                            .append(" ")
-                            .url(substring(issueEventModel.getCommitId()));
+                    .append(" ")
+                    .append("commit")
+                    .append(" ")
+                    .url(substring(issueEventModel.getCommitId()));
                 } else if (event == IssueEventType.cross_referenced) {
                     SourceModel sourceModel = issueEventModel.getSource();
                     if (sourceModel != null) {
@@ -151,11 +151,11 @@ public class TimelineProvider {
                         }
                         if (!InputHelper.isEmpty(title)) {
                             spannableBuilder.append(" ")
-                                    .append(thisString)
-                                    .append(" in ")
-                                    .append(type)
-                                    .append(" ")
-                                    .append(title);
+                            .append(thisString)
+                            .append(" in ")
+                            .append(type)
+                            .append(" ")
+                            .append(title);
                         }
                     }
                 }
@@ -172,22 +172,22 @@ public class TimelineProvider {
         User reviewer = issueEventModel.getRequestedReviewer();
         if (reviewer != null && user.getLogin().equalsIgnoreCase(reviewer.getLogin())) {
             spannableBuilder
-                    .append(event == IssueEventType.review_requested
-                            ? "self-requested a review" : "removed their request for review");
+            .append(event == IssueEventType.review_requested
+                    ? "self-requested a review" : "removed their request for review");
         } else {
             spannableBuilder
-                    .append(event == IssueEventType.review_requested ? "Requested a review" : "dismissed the review")
-                    .append(" ")
-                    .append(reviewer != null && !reviewer.getLogin().equalsIgnoreCase(user.getLogin()) ? from : " ")
-                    .append(reviewer != null && !reviewer.getLogin().equalsIgnoreCase(user.getLogin()) ? " " : "");
+            .append(event == IssueEventType.review_requested ? "Requested a review" : "dismissed the review")
+            .append(" ")
+            .append(reviewer != null && !reviewer.getLogin().equalsIgnoreCase(user.getLogin()) ? from : " ")
+            .append(reviewer != null && !reviewer.getLogin().equalsIgnoreCase(user.getLogin()) ? " " : "");
         }
         if (issueEventModel.getRequestedTeam() != null) {
             String name = !InputHelper.isEmpty(issueEventModel.getRequestedTeam().getName())
                           ? issueEventModel.getRequestedTeam().getName() : issueEventModel.getRequestedTeam().getSlug();
             spannableBuilder
-                    .bold(name)
-                    .append(" ")
-                    .append("team");
+            .bold(name)
+            .append(" ")
+            .append("team");
         } else if (reviewer != null && !user.getLogin().equalsIgnoreCase(reviewer.getLogin())) {
             spannableBuilder.bold(issueEventModel.getRequestedReviewer().getLogin());
         }

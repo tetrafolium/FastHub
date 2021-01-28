@@ -97,7 +97,7 @@ public class NotificationActivity extends BaseActivity implements OnNotification
 
     private void setupTabs() {
         pager.setAdapter(new FragmentsPagerAdapter(getSupportFragmentManager(),
-                FragmentPagerAdapterModel.buildForNotifications(this)));
+                         FragmentPagerAdapterModel.buildForNotifications(this)));
         tabs.setupWithViewPager(pager);
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
  */
 
 public class LabelsAdapter extends BaseRecyclerAdapter<LabelModel, LabelsViewHolder, BaseViewHolder
-        .OnItemClickListener<LabelModel>> {
+    .OnItemClickListener<LabelModel>> {
 
     public interface OnSelectLabel {
         boolean isLabelSelected(LabelModel labelModel);

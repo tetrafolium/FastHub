@@ -64,17 +64,17 @@ import lombok.Setter;
     public int getType() {
         if (getEvent() != null) {
             switch (getEvent()) {
-                case commented:
-                    return COMMENT;
-                case reviewed:
-                case changes_requested:
-                    return REVIEW;
-                case GROUPED:
-                    return GROUP;
-                case commit_commented:
-                    return COMMIT_COMMENTS;
-                default:
-                    return EVENT;
+            case commented:
+                return COMMENT;
+            case reviewed:
+            case changes_requested:
+                return REVIEW;
+            case GROUPED:
+                return GROUP;
+            case commit_commented:
+                return COMMIT_COMMENTS;
+            default:
+                return EVENT;
             }
         } else {
             if (issue != null || pullRequest != null) return HEADER;
@@ -98,9 +98,9 @@ import lombok.Setter;
     @NonNull public static Observable<List<TimelineModel>> construct(@Nullable List<Comment> comments) {
         if (comments == null || comments.isEmpty()) return Observable.empty();
         return Observable.fromIterable(comments)
-                .map(TimelineModel::new)
-                .toList()
-                .toObservable();
+               .map(TimelineModel::new)
+               .toList()
+               .toObservable();
     }
 
     @Override public boolean equals(Object o) {
@@ -186,7 +186,9 @@ import lombok.Setter;
         this.commit = commit;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.event == null ? -1 : this.event.ordinal());
@@ -216,8 +218,12 @@ import lombok.Setter;
     }
 
     public static final Creator<TimelineModel> CREATOR = new Creator<TimelineModel>() {
-        @Override public TimelineModel createFromParcel(Parcel source) {return new TimelineModel(source);}
+        @Override public TimelineModel createFromParcel(Parcel source) {
+            return new TimelineModel(source);
+        }
 
-        @Override public TimelineModel[] newArray(int size) {return new TimelineModel[size];}
+        @Override public TimelineModel[] newArray(int size) {
+            return new TimelineModel[size];
+        }
     };
 }

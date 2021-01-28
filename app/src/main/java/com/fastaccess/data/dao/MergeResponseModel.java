@@ -19,7 +19,9 @@ public class MergeResponseModel implements Parcelable {
     private String message;
     private String documentationUrl;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.sha);
@@ -36,8 +38,12 @@ public class MergeResponseModel implements Parcelable {
     }
 
     public static final Creator<MergeResponseModel> CREATOR = new Creator<MergeResponseModel>() {
-        @Override public MergeResponseModel createFromParcel(Parcel source) {return new MergeResponseModel(source);}
+        @Override public MergeResponseModel createFromParcel(Parcel source) {
+            return new MergeResponseModel(source);
+        }
 
-        @Override public MergeResponseModel[] newArray(int size) {return new MergeResponseModel[size];}
+        @Override public MergeResponseModel[] newArray(int size) {
+            return new MergeResponseModel[size];
+        }
     };
 }

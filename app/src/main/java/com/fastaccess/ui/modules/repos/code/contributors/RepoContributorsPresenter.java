@@ -54,12 +54,12 @@ class RepoContributorsPresenter extends BasePresenter<RepoContributorsMvp.View> 
             return false;
         }
         makeRestCall(RestProvider.getRepoService(isEnterprise()).getContributors(login, repoId, page),
-                response -> {
-                    if (response != null) {
-                        lastPage = response.getLast();
-                    }
-                    sendToView(view -> view.onNotifyAdapter(response != null ? response.getItems() : null, page));
-                });
+        response -> {
+            if (response != null) {
+                lastPage = response.getLast();
+            }
+            sendToView(view -> view.onNotifyAdapter(response != null ? response.getItems() : null, page));
+        });
         return true;
     }
 

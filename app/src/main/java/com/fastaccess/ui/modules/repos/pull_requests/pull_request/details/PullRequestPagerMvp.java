@@ -30,10 +30,10 @@ import java.util.ArrayList;
 public interface PullRequestPagerMvp {
 
     interface View extends BaseMvp.FAView, LabelsMvp.SelectedLabelsListener,
-            AssigneesMvp.SelectedAssigneesListener, MergePullReqeustMvp.MergeCallback,
-            IssuePagerMvp.IssuePrCallback<PullRequest>, PullRequestFilesMvp.PatchCallback,
-            CommentEditorFragment.CommentListener, ReviewChangesMvp.ReviewSubmissionCallback,
-            LockIssuePrCallback {
+        AssigneesMvp.SelectedAssigneesListener, MergePullReqeustMvp.MergeCallback,
+        IssuePagerMvp.IssuePrCallback<PullRequest>, PullRequestFilesMvp.PatchCallback,
+        CommentEditorFragment.CommentListener, ReviewChangesMvp.ReviewSubmissionCallback,
+        LockIssuePrCallback {
 
         void onSetupIssue(boolean update);
 

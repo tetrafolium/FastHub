@@ -11,7 +11,7 @@ import java.util.Date;
  * Created by Kosh on 04 May 2017, 7:10 PM
  */
 
- public class ReviewCommentModel implements Parcelable {
+public class ReviewCommentModel implements Parcelable {
 
     private long id;
     private String url;
@@ -191,7 +191,9 @@ import java.util.Date;
         this.id = id;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -238,8 +240,12 @@ import java.util.Date;
     }
 
     public static final Creator<ReviewCommentModel> CREATOR = new Creator<ReviewCommentModel>() {
-        @Override public ReviewCommentModel createFromParcel(Parcel source) {return new ReviewCommentModel(source);}
+        @Override public ReviewCommentModel createFromParcel(Parcel source) {
+            return new ReviewCommentModel(source);
+        }
 
-        @Override public ReviewCommentModel[] newArray(int size) {return new ReviewCommentModel[size];}
+        @Override public ReviewCommentModel[] newArray(int size) {
+            return new ReviewCommentModel[size];
+        }
     };
 }

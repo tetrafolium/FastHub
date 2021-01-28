@@ -41,7 +41,7 @@ public interface OrganizationService {
 
     @GET("users/{username}/events/orgs/{org}")
     Observable<Pageable<Event>> getReceivedEvents(@NonNull @Path("username") String userName,
-                                                  @NonNull @Path("org") String org, @Query("page") int page);
+            @NonNull @Path("org") String org, @Query("page") int page);
 
     @GET("orgs/{org}/repos")
     Observable<Pageable<Repo>> getOrgRepos(@NonNull @Path("org") String org,

@@ -29,7 +29,9 @@ import lombok.Setter;
 
     public PullRequestStatusModel() {}
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(this.state == null ? -1 : this.state.ordinal());
@@ -58,8 +60,12 @@ import lombok.Setter;
     }
 
     public static final Creator<PullRequestStatusModel> CREATOR = new Creator<PullRequestStatusModel>() {
-        @Override public PullRequestStatusModel createFromParcel(Parcel source) {return new PullRequestStatusModel(source);}
+        @Override public PullRequestStatusModel createFromParcel(Parcel source) {
+            return new PullRequestStatusModel(source);
+        }
 
-        @Override public PullRequestStatusModel[] newArray(int size) {return new PullRequestStatusModel[size];}
+        @Override public PullRequestStatusModel[] newArray(int size) {
+            return new PullRequestStatusModel[size];
+        }
     };
 }

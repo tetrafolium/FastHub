@@ -27,7 +27,9 @@ public class BranchesModel implements Parcelable {
         return name;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
@@ -46,8 +48,12 @@ public class BranchesModel implements Parcelable {
     }
 
     public static final Creator<BranchesModel> CREATOR = new Creator<BranchesModel>() {
-        @Override public BranchesModel createFromParcel(Parcel source) {return new BranchesModel(source);}
+        @Override public BranchesModel createFromParcel(Parcel source) {
+            return new BranchesModel(source);
+        }
 
-        @Override public BranchesModel[] newArray(int size) {return new BranchesModel[size];}
+        @Override public BranchesModel[] newArray(int size) {
+            return new BranchesModel[size];
+        }
     };
 }

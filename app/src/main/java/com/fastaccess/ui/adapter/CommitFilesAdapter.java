@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 
 public class CommitFilesAdapter extends BaseRecyclerAdapter<CommitFileChanges, PullRequestFilesViewHolder, BaseViewHolder
-        .OnItemClickListener<CommitFileChanges>> {
+    .OnItemClickListener<CommitFileChanges>> {
 
 
     @NonNull private OnToggleView onToggleView;

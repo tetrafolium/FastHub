@@ -23,21 +23,21 @@ public abstract class AbstractSearchHistory implements Parcelable {
 
     public Single<SearchHistory> save(SearchHistory entity) {
         return RxHelper.getSingle(
-                App.getInstance().getDataStore()
-                        .delete(SearchHistory.class)
-                        .where(SearchHistory.TEXT.eq(entity.getText()))
-                        .get()
-                        .single()
-                        .flatMap(integer -> App.getInstance().getDataStore().insert(entity)));
+                   App.getInstance().getDataStore()
+                   .delete(SearchHistory.class)
+                   .where(SearchHistory.TEXT.eq(entity.getText()))
+                   .get()
+                   .single()
+                   .flatMap(integer -> App.getInstance().getDataStore().insert(entity)));
     }
 
     public static Single<List<SearchHistory>> getHistory() {
         return App.getInstance().getDataStore()
-                .select(SearchHistory.class)
-                .groupBy(SearchHistory.TEXT.asc())
-                .get()
-                .observable()
-                .toList();
+               .select(SearchHistory.class)
+               .groupBy(SearchHistory.TEXT.asc())
+               .get()
+               .observable()
+               .toList();
     }
 
     @Override public String toString() {
@@ -58,9 +58,13 @@ public abstract class AbstractSearchHistory implements Parcelable {
         return text != null ? text.hashCode() : 0;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {dest.writeString(this.text);}
+    @Override public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.text);
+    }
 
     public AbstractSearchHistory() {}
 
@@ -68,18 +72,24 @@ public abstract class AbstractSearchHistory implements Parcelable {
         this.text = text;
     }
 
-    protected AbstractSearchHistory(Parcel in) {this.text = in.readString();}
+    protected AbstractSearchHistory(Parcel in) {
+        this.text = in.readString();
+    }
 
     public static final Creator<SearchHistory> CREATOR = new Creator<SearchHistory>() {
-        @Override public SearchHistory createFromParcel(Parcel source) {return new SearchHistory(source);}
+        @Override public SearchHistory createFromParcel(Parcel source) {
+            return new SearchHistory(source);
+        }
 
-        @Override public SearchHistory[] newArray(int size) {return new SearchHistory[size];}
+        @Override public SearchHistory[] newArray(int size) {
+            return new SearchHistory[size];
+        }
     };
 
     public static void deleteAll() {
         App.getInstance().getDataStore()
-                .delete(SearchHistory.class)
-                .get()
-                .value();
+        .delete(SearchHistory.class)
+        .get()
+        .value();
     }
 }

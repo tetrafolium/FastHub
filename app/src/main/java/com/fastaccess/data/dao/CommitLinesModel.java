@@ -55,7 +55,9 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
                             try {
                                 leftLineNo = Math.abs(Integer.parseInt(matcher.group(1))) - 1;
                                 rightLineNo = Integer.parseInt(matcher.group(3)) - 1;
-                            } catch (NumberFormatException e) {e.printStackTrace();}
+                            } catch (NumberFormatException e) {
+                                e.printStackTrace();
+                            }
                         }
                     } else if (firstChar == '+') {
                         position++;
@@ -81,14 +83,16 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
                         token = token.replace("\\ No newline at end of file", "");
                     }
                     models.add(new CommitLinesModel(token, color, token.startsWith("@@") || !addLeft ? -1 : leftLineNo,
-                            token.startsWith("@@") || !addRight ? -1 : rightLineNo, index != -1, position, false));
+                                                    token.startsWith("@@") || !addRight ? -1 : rightLineNo, index != -1, position, false));
                 }
             }
         }
         return models;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.text);
@@ -109,9 +113,13 @@ import static com.fastaccess.ui.widgets.DiffLineSpan.HUNK_TITLE;
     }
 
     public static final Creator<CommitLinesModel> CREATOR = new Creator<CommitLinesModel>() {
-        @Override public CommitLinesModel createFromParcel(Parcel source) {return new CommitLinesModel(source);}
+        @Override public CommitLinesModel createFromParcel(Parcel source) {
+            return new CommitLinesModel(source);
+        }
 
-        @Override public CommitLinesModel[] newArray(int size) {return new CommitLinesModel[size];}
+        @Override public CommitLinesModel[] newArray(int size) {
+            return new CommitLinesModel[size];
+        }
     };
 
     public String getText() {

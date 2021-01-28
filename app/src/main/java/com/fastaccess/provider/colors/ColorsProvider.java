@@ -43,32 +43,32 @@ public class ColorsProvider {
     @SuppressLint("CheckResult") public static void load() {
         if (colors.isEmpty()) {
             RxHelper.safeObservable(Observable
-                    .create(observableEmitter -> {
-                        try {
-                            Type type = new TypeToken<Map<String, LanguageColorModel>>() {}.getType();
-                            try (InputStream stream = App.getInstance().getAssets().open("colors.json")) {
-                                Gson gson = new Gson();
-                                try (JsonReader reader = new JsonReader(new InputStreamReader(stream))) {
-                                    colors.putAll(gson.fromJson(reader, type));
-                                    observableEmitter.onNext("");
-                                }
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            observableEmitter.onError(e);
+            .create(observableEmitter -> {
+                try {
+                    Type type = new TypeToken<Map<String, LanguageColorModel>>() {} .getType();
+                    try (InputStream stream = App.getInstance().getAssets().open("colors.json")) {
+                        Gson gson = new Gson();
+                        try (JsonReader reader = new JsonReader(new InputStreamReader(stream))) {
+                            colors.putAll(gson.fromJson(reader, type));
+                            observableEmitter.onNext("");
                         }
-                        observableEmitter.onComplete();
-                    }))
-                    .subscribe(s -> {/**/}, Throwable::printStackTrace);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    observableEmitter.onError(e);
+                }
+                observableEmitter.onComplete();
+            }))
+            .subscribe(s -> {/**/}, Throwable::printStackTrace);
         }
     }
 
     @NonNull public static ArrayList<String> languages() {
         ArrayList<String> lang = new ArrayList<>();
         lang.addAll(Stream.of(colors)
-                .filter(value -> value != null && !InputHelper.isEmpty(value.getKey()))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toCollection(ArrayList::new)));
+                    .filter(value -> value != null && !InputHelper.isEmpty(value.getKey()))
+                    .map(Map.Entry::getKey)
+                    .collect(Collectors.toCollection(ArrayList::new)));
         lang.add(0, "All");
         lang.addAll(1, POPULAR_LANG);
         return lang;
@@ -82,7 +82,10 @@ public class ColorsProvider {
         LanguageColorModel color = getColor(lang);
         int langColor = ColorGenerator.getColor(context, lang);
         if (color != null && !InputHelper.isEmpty(color.getColor())) {
-            try {langColor = Color.parseColor(color.getColor());} catch (Exception ignored) {}
+            try {
+                langColor = Color.parseColor(color.getColor());
+            }
+            catch (Exception ignored) {}
         }
         return langColor;
     }

@@ -69,11 +69,11 @@ import static com.fastaccess.data.dao.model.IssueEvent.REPO_ID;
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                 dataSource.delete(IssueEvent.class)
-                        .where(LOGIN.equal(login)
-                                .and(REPO_ID.equal(repoId))
-                                .and(ISSUE_ID.equal(issueId)))
-                        .get()
-                        .value();
+                .where(LOGIN.equal(login)
+                       .and(REPO_ID.equal(repoId))
+                       .and(ISSUE_ID.equal(issueId)))
+                .get()
+                .value();
                 if (!models.isEmpty()) {
                     for (IssueEvent issueEventModel : models) {
                         dataSource.delete(IssueEvent.class).where(IssueEvent.ID.eq(issueEventModel.getId())).get().value();
@@ -92,19 +92,21 @@ import static com.fastaccess.data.dao.model.IssueEvent.REPO_ID;
     }
 
     public static Single<List<IssueEvent>> get(@NonNull String repoId, @NonNull String login,
-                                               @NonNull String issueId) {
+            @NonNull String issueId) {
         return App.getInstance().getDataStore()
-                .select(IssueEvent.class)
-                .where(LOGIN.equal(login)
-                        .and(REPO_ID.equal(repoId))
-                        .and(ISSUE_ID.equal(issueId)))
-                .orderBy(CREATED_AT.desc())
-                .get()
-                .observable()
-                .toList();
+               .select(IssueEvent.class)
+               .where(LOGIN.equal(login)
+                      .and(REPO_ID.equal(repoId))
+                      .and(ISSUE_ID.equal(issueId)))
+               .orderBy(CREATED_AT.desc())
+               .get()
+               .observable()
+               .toList();
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -155,8 +157,12 @@ import static com.fastaccess.data.dao.model.IssueEvent.REPO_ID;
     }
 
     public static final Creator<IssueEvent> CREATOR = new Creator<IssueEvent>() {
-        @Override public IssueEvent createFromParcel(Parcel source) {return new IssueEvent(source);}
+        @Override public IssueEvent createFromParcel(Parcel source) {
+            return new IssueEvent(source);
+        }
 
-        @Override public IssueEvent[] newArray(int size) {return new IssueEvent[size];}
+        @Override public IssueEvent[] newArray(int size) {
+            return new IssueEvent[size];
+        }
     };
 }

@@ -61,62 +61,62 @@ import lombok.NoArgsConstructor;
 
     public Observable<Login> update(Login login) {
         return RxHelper.safeObservable(App.getInstance().getDataStore().update(login)
-                .toObservable());
+                                       .toObservable());
     }
 
     public void save(Login entity) {
         App.getInstance().getDataStore()
-                .delete(Login.class)
-                .where(Login.LOGIN.eq(entity.getLogin()))
-                .get()
-                .single()
-                .flatMap(integer -> App.getInstance().getDataStore().insert(entity))
-                .blockingGet();
+        .delete(Login.class)
+        .where(Login.LOGIN.eq(entity.getLogin()))
+        .get()
+        .single()
+        .flatMap(integer -> App.getInstance().getDataStore().insert(entity))
+        .blockingGet();
     }
 
     public static Login getUser() {
         return App.getInstance().getDataStore()
-                .select(Login.class)
-                .where(Login.LOGIN.notNull()
-                        .and(Login.TOKEN.notNull())
-                        .and(Login.IS_LOGGED_IN.eq(true)))
-                .get()
-                .firstOrNull();
+               .select(Login.class)
+               .where(Login.LOGIN.notNull()
+                      .and(Login.TOKEN.notNull())
+                      .and(Login.IS_LOGGED_IN.eq(true)))
+               .get()
+               .firstOrNull();
     }
 
     public static Login getUser(@NonNull String login) {
         return App.getInstance().getDataStore()
-                .select(Login.class)
-                .where(Login.LOGIN.eq(login)
-                        .and(Login.TOKEN.notNull()))
-                .get()
-                .firstOrNull();
+               .select(Login.class)
+               .where(Login.LOGIN.eq(login)
+                      .and(Login.TOKEN.notNull()))
+               .get()
+               .firstOrNull();
     }
 
     public static Observable<Login> getAccounts() {
         return App.getInstance().getDataStore()
-                .select(Login.class)
-                .where(Login.IS_LOGGED_IN.eq(false))
-                .orderBy(Login.LOGIN.desc())
-                .get()
-                .observable();
+               .select(Login.class)
+               .where(Login.IS_LOGGED_IN.eq(false))
+               .orderBy(Login.LOGIN.desc())
+               .get()
+               .observable();
     }
 
     public static void logout() {
         Login login = getUser();
         if (login == null) return;
         App.getInstance().getDataStore().toBlocking().delete(PinnedRepos.class)
-                .where(PinnedRepos.LOGIN.eq(login.getLogin())).get().value();
+        .where(PinnedRepos.LOGIN.eq(login.getLogin())).get().value();
         App.getInstance().getDataStore().toBlocking().delete(login);
     }
 
     public static boolean hasNormalLogin() {
         return App.getInstance().getDataStore()
-                .count(Login.class)
-                .where(Login.IS_ENTERPRISE.eq(false)
-                        .or(Login.IS_ENTERPRISE.isNull()))
-                .get()
-                .value() > 0;
+               .count(Login.class)
+               .where(Login.IS_ENTERPRISE.eq(false)
+                      .or(Login.IS_ENTERPRISE.isNull()))
+               .get()
+               .value() > 0;
     }
 
     public static Observable<Boolean> onMultipleLogin(@NonNull Login userModel, boolean isEnterprise, boolean isNew) {
@@ -125,8 +125,8 @@ import lombok.NoArgsConstructor;
             if (currentUser != null) {
                 currentUser.setIsLoggedIn(false);
                 App.getInstance().getDataStore()
-                        .toBlocking()
-                        .update(currentUser);
+                .toBlocking()
+                .update(currentUser);
             }
             if (!isEnterprise) {
                 PrefGetter.resetEnterprise();
@@ -138,14 +138,14 @@ import lombok.NoArgsConstructor;
                 userModel.setOtpCode(isEnterprise ? PrefGetter.getEnterpriseOtpCode() : PrefGetter.getOtpCode());
                 userModel.setEnterpriseUrl(isEnterprise ? PrefGetter.getEnterpriseUrl() : null);
                 App.getInstance().getDataStore()
-                        .toBlocking()
-                        .delete(Login.class)
-                        .where(Login.ID.eq(userModel.getId()))
-                        .get()
-                        .value();
+                .toBlocking()
+                .delete(Login.class)
+                .where(Login.ID.eq(userModel.getId()))
+                .get()
+                .value();
                 App.getInstance().getDataStore()
-                        .toBlocking()
-                        .insert(userModel);
+                .toBlocking()
+                .insert(userModel);
             } else {
                 if (isEnterprise) {
                     PrefGetter.setTokenEnterprise(userModel.token);
@@ -157,8 +157,8 @@ import lombok.NoArgsConstructor;
                     PrefGetter.setOtpCode(userModel.otpCode);
                 }
                 App.getInstance().getDataStore()
-                        .toBlocking()
-                        .update(userModel);
+                .toBlocking()
+                .update(userModel);
             }
             s.onNext(true);
             s.onComplete();

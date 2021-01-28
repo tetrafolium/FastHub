@@ -58,21 +58,21 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
     private RepoFilesFragment repoFilesView;
 
     public static RepoFilePathFragment newInstance(@NonNull String login, @NonNull String repoId, @Nullable String path,
-                                                   @NonNull String defaultBranch) {
+            @NonNull String defaultBranch) {
         return newInstance(login, repoId, path, defaultBranch, false);
     }
 
     public static RepoFilePathFragment newInstance(@NonNull String login, @NonNull String repoId,
-                                                   @Nullable String path, @NonNull String defaultBranch,
-                                                   boolean forceAppendPath) {
+            @Nullable String path, @NonNull String defaultBranch,
+            boolean forceAppendPath) {
         RepoFilePathFragment view = new RepoFilePathFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, path)
-                .put(BundleConstant.EXTRA_THREE, defaultBranch)
-                .put(BundleConstant.EXTRA_FOUR, forceAppendPath)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .put(BundleConstant.EXTRA_TWO, path)
+                          .put(BundleConstant.EXTRA_THREE, defaultBranch)
+                          .put(BundleConstant.EXTRA_FOUR, forceAppendPath)
+                          .end());
         return view;
     }
 
@@ -107,10 +107,10 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
         }
         if (ActivityHelper.checkAndRequestReadWritePermission(getActivity())) {
             MessageDialogView.newInstance(getString(R.string.download), getString(R.string.confirm_message),
-                    Bundler.start()
-                            .put(BundleConstant.YES_NO_EXTRA, true)
-                            .end())
-                    .show(getChildFragmentManager(), MessageDialogView.TAG);
+                                          Bundler.start()
+                                          .put(BundleConstant.YES_NO_EXTRA, true)
+                                          .end())
+            .show(getChildFragmentManager(), MessageDialogView.TAG);
         }
     }
 
@@ -127,7 +127,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
 
     @OnClick(R.id.branches) void onBranchesClicked() {
         BranchesPagerFragment.Companion.newInstance(getPresenter().login, getPresenter().repoId)
-                .show(getChildFragmentManager(), "BranchesFragment");
+        .show(getChildFragmentManager(), "BranchesFragment");
     }
 
     @Override public void onNotifyAdapter(@Nullable List<RepoFile> items, int page) {
@@ -147,7 +147,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
     @Override public void onItemClicked(@NonNull RepoFile model, int position) {
         if (getRepoFilesView().isRefreshing()) return;
         getRepoFilesView().onSetData(getPresenter().getLogin(), getPresenter().getRepoId(),
-                Objects.toString(model.getPath(), ""), ref, false, null);
+                                     Objects.toString(model.getPath(), ""), ref, false, null);
         if ((position + 1) < adapter.getItemCount()) {
             adapter.subList(position + 1, adapter.getItemCount());
         }
@@ -156,7 +156,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
 
     @Override public void onAppendPath(@NonNull RepoFile model) {
         getRepoFilesView().onSetData(getPresenter().getLogin(), getPresenter().getRepoId(),
-                Objects.toString(model.getPath(), ""), ref, false, model);
+                                     Objects.toString(model.getPath(), ""), ref, false, model);
     }
 
     @Override public void onAppenedtab(@Nullable RepoFile repoFile) {
@@ -171,7 +171,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
             ref = getPresenter().getDefaultBranch();
         }
         getRepoFilesView().onSetData(getPresenter().getLogin(), getPresenter().getRepoId(),
-                Objects.toString(getPresenter().getPath(), ""), ref, false, null);
+                                     Objects.toString(getPresenter().getPath(), ""), ref, false, null);
     }
 
     @Override public boolean canPressBack() {
@@ -184,7 +184,7 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
             adapter.removeItem(adapter.getItemCount() - 1);
             RepoFile model = adapter.getItem(adapter.getItemCount() - 1);
             getRepoFilesView().onSetData(getPresenter().getLogin(), getPresenter().getRepoId(),
-                    Objects.toString(model.getPath(), ""), ref, false, null);
+                                         Objects.toString(model.getPath(), ""), ref, false, null);
             recycler.scrollToPosition(adapter.getItemCount() - 1);
         } else {
             onBackClicked();
@@ -231,13 +231,13 @@ public class RepoFilePathFragment extends BaseFragment<RepoFilePathMvp.View, Rep
             boolean isDownload = bundle.getBoolean(BundleConstant.YES_NO_EXTRA);
             if (isDownload) {
                 Uri uri = new Uri.Builder()
-                        .scheme("https")
-                        .authority("github.com")
-                        .appendPath(getPresenter().getLogin())
-                        .appendPath(getPresenter().getRepoId())
-                        .appendPath("archive")
-                        .appendPath(ref + ".zip")
-                        .build();
+                .scheme("https")
+                .authority("github.com")
+                .appendPath(getPresenter().getLogin())
+                .appendPath(getPresenter().getRepoId())
+                .appendPath("archive")
+                .appendPath(ref + ".zip")
+                .build();
                 RestProvider.downloadFile(getContext(), uri.toString());
             }
         }

@@ -25,8 +25,8 @@ interface TeamReposMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<Repo>,
-            BaseMvp.PaginationListener<Long> {
+        BaseViewHolder.OnItemClickListener<Repo>,
+        BaseMvp.PaginationListener<Long> {
 
         @NonNull ArrayList<Repo> getRepos();
 

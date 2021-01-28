@@ -93,7 +93,7 @@ public class EmojiManager {
 
     public static boolean isEmoji(String string) {
         return string != null &&
-                EMOJI_TRIE.isEmoji(string.toCharArray()).exactMatch();
+               EMOJI_TRIE.isEmoji(string.toCharArray()).exactMatch();
     }
 
     public static boolean isOnlyEmojis(String string) {

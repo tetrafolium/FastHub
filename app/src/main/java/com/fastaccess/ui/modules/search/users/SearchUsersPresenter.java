@@ -49,18 +49,18 @@ class SearchUsersPresenter extends BasePresenter<SearchUsersMvp.View> implements
             return false;
         }
         makeRestCall(RestProvider.getSearchService(isEnterprise()).searchUsers(parameter, page),
-                response -> {
-                    lastPage = response.getLast();
-                    sendToView(view -> {
-                        view.onNotifyAdapter(response.isIncompleteResults() ? null : response.getItems(), page);
-                        if (!response.isIncompleteResults()) {
-                            view.onSetTabCount(response.getTotalCount());
-                        } else {
-                            view.onSetTabCount(0);
-                            view.showMessage(R.string.error, R.string.search_results_warning);
-                        }
-                    });
-                });
+        response -> {
+            lastPage = response.getLast();
+            sendToView(view -> {
+                view.onNotifyAdapter(response.isIncompleteResults() ? null : response.getItems(), page);
+                if (!response.isIncompleteResults()) {
+                    view.onSetTabCount(response.getTotalCount());
+                } else {
+                    view.onSetTabCount(0);
+                    view.showMessage(R.string.error, R.string.search_results_warning);
+                }
+            });
+        });
         return true;
     }
 

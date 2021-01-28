@@ -52,7 +52,9 @@ public class PayloadModel implements Parcelable {
     public User organization;
     public User invitation;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.action);
@@ -109,8 +111,12 @@ public class PayloadModel implements Parcelable {
     }
 
     public static final Creator<PayloadModel> CREATOR = new Creator<PayloadModel>() {
-        @Override public PayloadModel createFromParcel(Parcel source) {return new PayloadModel(source);}
+        @Override public PayloadModel createFromParcel(Parcel source) {
+            return new PayloadModel(source);
+        }
 
-        @Override public PayloadModel[] newArray(int size) {return new PayloadModel[size];}
+        @Override public PayloadModel[] newArray(int size) {
+            return new PayloadModel[size];
+        }
     };
 }

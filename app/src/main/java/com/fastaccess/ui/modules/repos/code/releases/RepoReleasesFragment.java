@@ -49,20 +49,20 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
     public static RepoReleasesFragment newInstance(@NonNull String repoId, @NonNull String login) {
         RepoReleasesFragment view = new RepoReleasesFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .end());
         return view;
     }
 
     public static RepoReleasesFragment newInstance(@NonNull String repoId, @NonNull String login, @Nullable String tag, long id) {
         RepoReleasesFragment view = new RepoReleasesFragment();
         view.setArguments(Bundler.start()
-                .put(BundleConstant.ID, repoId)
-                .put(BundleConstant.EXTRA, login)
-                .put(BundleConstant.EXTRA_TWO, id)
-                .put(BundleConstant.EXTRA_THREE, tag)
-                .end());
+                          .put(BundleConstant.ID, repoId)
+                          .put(BundleConstant.EXTRA, login)
+                          .put(BundleConstant.EXTRA_TWO, id)
+                          .put(BundleConstant.EXTRA_THREE, tag)
+                          .end());
         return view;
     }
 
@@ -150,10 +150,10 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
         }
         if (item.getAssets() != null && !item.getAssets().isEmpty()) {
             ArrayList<SimpleUrlsModel> mapped = Stream.of(item.getAssets())
-                    .filter(value -> value != null && value.getBrowserDownloadUrl() != null)
-                    .map(assetsModel -> new SimpleUrlsModel(String.format("%s (%s)", assetsModel.getName(), assetsModel.getDownloadCount()),
-                            assetsModel.getBrowserDownloadUrl()))
-                    .collect(Collectors.toCollection(ArrayList::new));
+                                                .filter(value -> value != null && value.getBrowserDownloadUrl() != null)
+                                                .map(assetsModel -> new SimpleUrlsModel(String.format("%s (%s)", assetsModel.getName(), assetsModel.getDownloadCount()),
+                                                        assetsModel.getBrowserDownloadUrl()))
+                                                .collect(Collectors.toCollection(ArrayList::new));
             if (mapped != null && !mapped.isEmpty()) {
                 models.addAll(mapped);
             }
@@ -166,7 +166,7 @@ public class RepoReleasesFragment extends BaseFragment<RepoReleasesMvp.View, Rep
     @Override public void onShowDetails(@NonNull Release item) {
         if (!InputHelper.isEmpty(item.getBody())) {
             MessageDialogView.newInstance(!InputHelper.isEmpty(item.getName()) ? item.getName() : item.getTagName(),
-                    item.getBody(), true, false).show(getChildFragmentManager(), MessageDialogView.TAG);
+                                          item.getBody(), true, false).show(getChildFragmentManager(), MessageDialogView.TAG);
         } else {
             showErrorMessage(getString(R.string.no_body));
         }

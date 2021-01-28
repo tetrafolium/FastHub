@@ -116,7 +116,7 @@ public interface RepoService {
     @NonNull @GET("repos/{owner}/{repo}/commits/{sha}/comments")
     @Headers("Accept: application/vnd.github.VERSION.full+json, application/vnd.github.squirrel-girl-preview")
     Observable<Pageable<Comment>> getCommitComments(@NonNull @Path("owner") String owner, @NonNull @Path("repo") String repo,
-                                                    @NonNull @Path("sha") String ref, @Query("page") int page);
+            @NonNull @Path("sha") String ref, @Query("page") int page);
 
     @NonNull @POST("repos/{owner}/{repo}/commits/{sha}/comments")
     @Headers("Accept: application/vnd.github.VERSION.full+json, application/vnd.github.squirrel-girl-preview")
@@ -134,12 +134,12 @@ public interface RepoService {
 
     @NonNull @GET("repos/{owner}/{repo}/contents/{path}")
     Observable<Pageable<RepoFile>> getRepoFiles(@NonNull @Path("owner") String owner, @NonNull @Path("repo") String repo,
-                                                @NonNull @Path(value = "path", encoded = true) String path,
-                                                @NonNull @Query("ref") String ref);
+            @NonNull @Path(value = "path", encoded = true) String path,
+            @NonNull @Query("ref") String ref);
 
     @NonNull @GET("repos/{owner}/{repo}/git/trees/{sha}?recursive=1")
     Observable<TreeResponseModel> getRepoTree(@NonNull @Path("owner") String owner, @NonNull @Path("repo") String repo,
-                                              @NonNull @Path("sha") String sha);
+            @NonNull @Path("sha") String sha);
 
     @NonNull @GET("repos/{owner}/{repo}/labels?per_page=100")
     Observable<Pageable<LabelModel>> getLabels(@NonNull @Path("owner") String owner, @NonNull @Path("repo") String repo);
@@ -152,7 +152,7 @@ public interface RepoService {
 
     @NonNull @GET("repos/{owner}/{repo}/collaborators/{username}")
     Observable<Response<Boolean>> isCollaborator(@NonNull @Path("owner") String owner, @NonNull @Path("repo") String repo,
-                                                 @NonNull @Path("username") String username);
+            @NonNull @Path("username") String username);
 
     @NonNull @GET("repos/{owner}/{repo}/collaborators?per_page=100")
     Observable<Pageable<User>> getCollaborator(@NonNull @Path("owner") String owner, @NonNull @Path("repo") String repo);
@@ -160,18 +160,18 @@ public interface RepoService {
 
     @NonNull @GET("repos/{owner}/{repo}/branches")
     Observable<Pageable<BranchesModel>> getBranches(@NonNull @Path("owner") String owner, @NonNull @Path("repo") String repo,
-                                                    @Query("page") int page);
+            @Query("page") int page);
 
     @NonNull @GET("repos/{owner}/{repo}/tags")
     Observable<Pageable<BranchesModel>> getTags(@NonNull @Path("owner") String owner, @NonNull @Path("repo") String repo,
-                                                @Query("page") int page);
+            @Query("page") int page);
 
     @NonNull @GET("repos/{owner}/{repo}/milestones")
     Observable<Pageable<MilestoneModel>> getMilestones(@Path("owner") String owner, @Path("repo") String repo);
 
     @NonNull @POST("repos/{owner}/{repo}/milestones")
     Observable<MilestoneModel> createMilestone(@Path("owner") String owner, @Path("repo") String repo,
-                                               @Body CreateMilestoneModel create);
+            @Body CreateMilestoneModel create);
 
     @NonNull @GET("repos/{owner}/{repo}/assignees")
     Observable<Pageable<User>> getAssignees(@Path("owner") String owner, @Path("repo") String repo);

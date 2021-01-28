@@ -48,7 +48,7 @@ import butterknife.BindView;
  */
 
 public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelineMvp.View, PullRequestTimelinePresenter>
-        implements PullRequestTimelineMvp.View {
+    implements PullRequestTimelineMvp.View {
 
     @BindView(R.id.recycler) DynamicRecyclerView recycler;
     @BindView(R.id.refresh) AppbarRefreshLayout refresh;
@@ -73,7 +73,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
             issueCallback = (IssuePagerMvp.IssuePrCallback) context;
         } else {
             throw new IllegalArgumentException(String.format("%s or parent fragment must implement IssuePagerMvp.IssuePrCallback", context.getClass()
-                    .getSimpleName()));
+                                               .getSimpleName()));
         }
         if (getParentFragment() instanceof CommentEditorFragment.CommentListener) {
             commentsCallback = (CommentEditorFragment.CommentListener) getParentFragment();
@@ -81,7 +81,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
             commentsCallback = (CommentEditorFragment.CommentListener) context;
         } else {
             throw new IllegalArgumentException(String.format("%s or parent fragment must implement CommentEditorFragment.CommentListener",
-                    context.getClass().getSimpleName()));
+                                               context.getClass().getSimpleName()));
         }
     }
 
@@ -105,7 +105,7 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         }
         boolean isMerged = getPresenter().isMerged(getPullRequest());
         adapter = new IssuesTimelineAdapter(getPresenter().getEvents(), this, true,
-                this, isMerged, getPresenter(), getPullRequest().getLogin(), getPullRequest().getUser().getLogin());
+                                            this, isMerged, getPresenter(), getPullRequest().getLogin(), getPullRequest().getUser().getLogin());
         stateLayout.setEmptyText(R.string.no_events);
         recycler.setEmptyView(stateLayout, refresh);
         refresh.setOnRefreshListener(this);
@@ -185,16 +185,16 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         Intent intent = new Intent(getContext(), EditorActivity.class);
         if (getPullRequest() == null) return;
         intent.putExtras(Bundler
-                .start()
-                .put(BundleConstant.ID, getPullRequest().getRepoId())
-                .put(BundleConstant.EXTRA_TWO, getPullRequest().getLogin())
-                .put(BundleConstant.EXTRA_THREE, getPullRequest().getNumber())
-                .put(BundleConstant.EXTRA_FOUR, item.getId())
-                .put(BundleConstant.EXTRA, item.getBody())
-                .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.EDIT_ISSUE_COMMENT_EXTRA)
-                .putStringArrayList("participants", CommentsHelper.getUsersByTimeline(adapter.getData()))
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
-                .end());
+                         .start()
+                         .put(BundleConstant.ID, getPullRequest().getRepoId())
+                         .put(BundleConstant.EXTRA_TWO, getPullRequest().getLogin())
+                         .put(BundleConstant.EXTRA_THREE, getPullRequest().getNumber())
+                         .put(BundleConstant.EXTRA_FOUR, item.getId())
+                         .put(BundleConstant.EXTRA, item.getBody())
+                         .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.EDIT_ISSUE_COMMENT_EXTRA)
+                         .putStringArrayList("participants", CommentsHelper.getUsersByTimeline(adapter.getData()))
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
+                         .end());
         View view = getFromView();
         ActivityHelper.startReveal(this, intent, view, BundleConstant.REQUEST_CODE);
     }
@@ -207,17 +207,17 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
         Intent intent = new Intent(getContext(), EditorActivity.class);
         if (getPullRequest() == null) return;
         intent.putExtras(Bundler
-                .start()
-                .put(BundleConstant.ID, getPullRequest().getRepoId())
-                .put(BundleConstant.EXTRA_TWO, getPullRequest().getLogin())
-                .put(BundleConstant.EXTRA_THREE, getPullRequest().getNumber())
-                .put(BundleConstant.EXTRA_FOUR, item.getId())
-                .put(BundleConstant.EXTRA, item.getBody())
-                .put(BundleConstant.REVIEW_EXTRA, model)
-                .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.EDIT_REVIEW_COMMENT_EXTRA)
-                .putStringArrayList("participants", CommentsHelper.getUsersByTimeline(adapter.getData()))
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
-                .end());
+                         .start()
+                         .put(BundleConstant.ID, getPullRequest().getRepoId())
+                         .put(BundleConstant.EXTRA_TWO, getPullRequest().getLogin())
+                         .put(BundleConstant.EXTRA_THREE, getPullRequest().getNumber())
+                         .put(BundleConstant.EXTRA_FOUR, item.getId())
+                         .put(BundleConstant.EXTRA, item.getBody())
+                         .put(BundleConstant.REVIEW_EXTRA, model)
+                         .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.EDIT_REVIEW_COMMENT_EXTRA)
+                         .putStringArrayList("participants", CommentsHelper.getUsersByTimeline(adapter.getData()))
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
+                         .end());
         View view = getFromView();
         ActivityHelper.startReveal(this, intent, view, BundleConstant.REVIEW_REQUEST_CODE);
     }
@@ -229,27 +229,27 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
 
     @Override public void onShowDeleteMsg(long id) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
-                Bundler.start()
-                        .put(BundleConstant.EXTRA, id)
-                        .put(BundleConstant.YES_NO_EXTRA, false)
-                        .end())
-                .show(getChildFragmentManager(), MessageDialogView.TAG);
+                                      Bundler.start()
+                                      .put(BundleConstant.EXTRA, id)
+                                      .put(BundleConstant.YES_NO_EXTRA, false)
+                                      .end())
+        .show(getChildFragmentManager(), MessageDialogView.TAG);
     }
 
     @Override public void onReply(User user, String message) {
         Intent intent = new Intent(getContext(), EditorActivity.class);
         if (getPullRequest() == null) return;
         intent.putExtras(Bundler
-                .start()
-                .put(BundleConstant.ID, getPullRequest().getRepoId())
-                .put(BundleConstant.EXTRA_TWO, getPullRequest().getLogin())
-                .put(BundleConstant.EXTRA_THREE, getPullRequest().getNumber())
-                .put(BundleConstant.EXTRA, "@" + user.getLogin())
-                .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.NEW_ISSUE_COMMENT_EXTRA)
-                .putStringArrayList("participants", CommentsHelper.getUsersByTimeline(adapter.getData()))
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
-                .put("message", message)
-                .end());
+                         .start()
+                         .put(BundleConstant.ID, getPullRequest().getRepoId())
+                         .put(BundleConstant.EXTRA_TWO, getPullRequest().getLogin())
+                         .put(BundleConstant.EXTRA_THREE, getPullRequest().getNumber())
+                         .put(BundleConstant.EXTRA, "@" + user.getLogin())
+                         .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.NEW_ISSUE_COMMENT_EXTRA)
+                         .putStringArrayList("participants", CommentsHelper.getUsersByTimeline(adapter.getData()))
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
+                         .put("message", message)
+                         .end());
         View view = getFromView();
         ActivityHelper.startReveal(this, intent, view, BundleConstant.REQUEST_CODE);
     }
@@ -259,22 +259,22 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
     }
 
     @Override public void onReplyOrCreateReview(@Nullable User user, @Nullable String message,
-                                                int groupPosition, int childPosition,
-                                                @NonNull EditReviewCommentModel model) {
+            int groupPosition, int childPosition,
+            @NonNull EditReviewCommentModel model) {
         Intent intent = new Intent(getContext(), EditorActivity.class);
         if (getPullRequest() == null) return;
         intent.putExtras(Bundler
-                .start()
-                .put(BundleConstant.ID, getPullRequest().getRepoId())
-                .put(BundleConstant.EXTRA_TWO, getPullRequest().getLogin())
-                .put(BundleConstant.EXTRA_THREE, getPullRequest().getNumber())
-                .put(BundleConstant.EXTRA, user != null ? "@" + user.getLogin() : "")
-                .put(BundleConstant.REVIEW_EXTRA, model)
-                .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.NEW_REVIEW_COMMENT_EXTRA)
-                .putStringArrayList("participants", CommentsHelper.getUsersByTimeline(adapter.getData()))
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
-                .put("message", message)
-                .end());
+                         .start()
+                         .put(BundleConstant.ID, getPullRequest().getRepoId())
+                         .put(BundleConstant.EXTRA_TWO, getPullRequest().getLogin())
+                         .put(BundleConstant.EXTRA_THREE, getPullRequest().getNumber())
+                         .put(BundleConstant.EXTRA, user != null ? "@" + user.getLogin() : "")
+                         .put(BundleConstant.REVIEW_EXTRA, model)
+                         .put(BundleConstant.EXTRA_TYPE, BundleConstant.ExtraType.NEW_REVIEW_COMMENT_EXTRA)
+                         .putStringArrayList("participants", CommentsHelper.getUsersByTimeline(adapter.getData()))
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise())
+                         .put("message", message)
+                         .end());
         View view = getFromView();
         ActivityHelper.startReveal(this, intent, view, BundleConstant.REVIEW_REQUEST_CODE);
     }
@@ -295,19 +295,19 @@ public class PullRequestTimelineFragment extends BaseFragment<PullRequestTimelin
     }
 
     @Override public void showReactionsPopup(@NonNull ReactionTypes type, @NonNull String login, @NonNull String repoId,
-                                             long idOrNumber, int reactionType) {
+            long idOrNumber, int reactionType) {
         ReactionsDialogFragment.newInstance(login, repoId, type, idOrNumber, reactionType).show(getChildFragmentManager(), "ReactionsDialogFragment");
     }
 
     @Override public void onShowReviewDeleteMsg(long commentId, int groupPosition, int commentPosition) {
         MessageDialogView.newInstance(getString(R.string.delete), getString(R.string.confirm_message),
-                Bundler.start()
-                        .put(BundleConstant.EXTRA, commentId)
-                        .put(BundleConstant.YES_NO_EXTRA, true)
-                        .put(BundleConstant.EXTRA_TWO, groupPosition)
-                        .put(BundleConstant.EXTRA_THREE, commentPosition)
-                        .end())
-                .show(getChildFragmentManager(), MessageDialogView.TAG);
+                                      Bundler.start()
+                                      .put(BundleConstant.EXTRA, commentId)
+                                      .put(BundleConstant.YES_NO_EXTRA, true)
+                                      .put(BundleConstant.EXTRA_TWO, groupPosition)
+                                      .put(BundleConstant.EXTRA_THREE, commentPosition)
+                                      .end())
+        .show(getChildFragmentManager(), MessageDialogView.TAG);
     }
 
     @Override public void onRemoveReviewComment(int groupPosition, int commentPosition) {

@@ -21,7 +21,7 @@ import butterknife.BindView;
  */
 
 public class BranchesAdapter extends BaseRecyclerAdapter<BranchesModel, BranchesAdapter.BranchesViewHolder, BaseViewHolder
-        .OnItemClickListener<BranchesModel>> {
+    .OnItemClickListener<BranchesModel>> {
 
     public BranchesAdapter(@NonNull List<BranchesModel> data, @Nullable BaseViewHolder.OnItemClickListener<BranchesModel> listener) {
         super(data, listener);

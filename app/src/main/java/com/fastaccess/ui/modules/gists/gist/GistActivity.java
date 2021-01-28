@@ -53,7 +53,7 @@ import butterknife.OnClick;
  */
 
 public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
-        implements GistMvp.View {
+    implements GistMvp.View {
 
     @BindView(R.id.avatarLayout) AvatarLayout avatarLayout;
     @BindView(R.id.headerTitle) FontTextView title;
@@ -74,16 +74,16 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
     public static Intent createIntent(@NonNull Context context, @NonNull String gistId, boolean isEnterprise) {
         Intent intent = new Intent(context, GistActivity.class);
         intent.putExtras(Bundler.start()
-                .put(BundleConstant.EXTRA, gistId)
-                .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
-                .end());
+                         .put(BundleConstant.EXTRA, gistId)
+                         .put(BundleConstant.IS_ENTERPRISE, isEnterprise)
+                         .end());
         return intent;
     }
 
     @OnClick(R.id.detailsIcon) void onTitleClick() {
         if (getPresenter().getGist() != null && !InputHelper.isEmpty(getPresenter().getGist().getDescription()))
             MessageDialogView.newInstance(getString(R.string.details), getPresenter().getGist().getDescription(), false, true)
-                    .show(getSupportFragmentManager(), MessageDialogView.TAG);
+            .show(getSupportFragmentManager(), MessageDialogView.TAG);
     }
 
     @OnClick({R.id.startGist, R.id.forkGist, R.id.browser}) public void onGistActions(View view) {
@@ -92,19 +92,19 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
             view.setEnabled(false);
         }
         switch (view.getId()) {
-            case R.id.startGist:
-                GithubActionService.startForGist(this, getPresenter().getGist().getGistId(),
-                        getPresenter().isStarred() ? GithubActionService.UNSTAR_GIST : GithubActionService.STAR_GIST, isEnterprise());
-                getPresenter().onStarGist();
-                break;
-            case R.id.forkGist:
-                GithubActionService.startForGist(this, getPresenter().getGist().getGistId(),
-                        GithubActionService.FORK_GIST, isEnterprise());
-                getPresenter().onForkGist();
-                break;
-            case R.id.browser:
-                ActivityHelper.startCustomTab(this, getPresenter().getGist().getHtmlUrl());
-                break;
+        case R.id.startGist:
+            GithubActionService.startForGist(this, getPresenter().getGist().getGistId(),
+                                             getPresenter().isStarred() ? GithubActionService.UNSTAR_GIST : GithubActionService.STAR_GIST, isEnterprise());
+            getPresenter().onStarGist();
+            break;
+        case R.id.forkGist:
+            GithubActionService.startForGist(this, getPresenter().getGist().getGistId(),
+                                             GithubActionService.FORK_GIST, isEnterprise());
+            getPresenter().onForkGist();
+            break;
+        case R.id.browser:
+            ActivityHelper.startCustomTab(this, getPresenter().getGist().getHtmlUrl());
+            break;
         }
     }
 
@@ -170,11 +170,11 @@ public class GistActivity extends BaseActivity<GistMvp.View, GistPresenter>
             return true;
         } else if (item.getItemId() == R.id.deleteGist) {
             MessageDialogView.newInstance(
-                    getString(R.string.delete_gist), getString(R.string.confirm_message),
-                    Bundler.start()
-                            .put(BundleConstant.YES_NO_EXTRA, true)
-                            .put(BundleConstant.EXTRA, true).end())
-                    .show(getSupportFragmentManager(), MessageDialogView.TAG);
+                getString(R.string.delete_gist), getString(R.string.confirm_message),
+                Bundler.start()
+                .put(BundleConstant.YES_NO_EXTRA, true)
+                .put(BundleConstant.EXTRA, true).end())
+            .show(getSupportFragmentManager(), MessageDialogView.TAG);
             return true;
         } else if (item.getItemId() == android.R.id.home) {
             GistsListActivity.startActivity(this);

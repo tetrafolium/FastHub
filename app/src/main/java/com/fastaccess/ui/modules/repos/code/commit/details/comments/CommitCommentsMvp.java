@@ -25,7 +25,7 @@ import java.util.List;
 interface CommitCommentsMvp {
 
     interface View extends BaseMvp.FAView, SwipeRefreshLayout.OnRefreshListener,
-            android.view.View.OnClickListener, OnToggleView, ReactionsCallback {
+        android.view.View.OnClickListener, OnToggleView, ReactionsCallback {
 
         void onNotifyAdapter(@Nullable List<TimelineModel> items, int page);
 
@@ -55,7 +55,7 @@ interface CommitCommentsMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseMvp.PaginationListener<String>, BaseViewHolder.OnItemClickListener<TimelineModel> {
+        BaseMvp.PaginationListener<String>, BaseViewHolder.OnItemClickListener<TimelineModel> {
 
         void onFragmentCreated(@Nullable Bundle bundle);
 

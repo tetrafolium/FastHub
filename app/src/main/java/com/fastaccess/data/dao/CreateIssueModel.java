@@ -21,7 +21,9 @@ public class CreateIssueModel implements Parcelable {
     private ArrayList<String> assignees;
     private Long milestone;
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.title);
@@ -40,8 +42,12 @@ public class CreateIssueModel implements Parcelable {
     }
 
     public static final Creator<CreateIssueModel> CREATOR = new Creator<CreateIssueModel>() {
-        @Override public CreateIssueModel createFromParcel(Parcel source) {return new CreateIssueModel(source);}
+        @Override public CreateIssueModel createFromParcel(Parcel source) {
+            return new CreateIssueModel(source);
+        }
 
-        @Override public CreateIssueModel[] newArray(int size) {return new CreateIssueModel[size];}
+        @Override public CreateIssueModel[] newArray(int size) {
+            return new CreateIssueModel[size];
+        }
     };
 }

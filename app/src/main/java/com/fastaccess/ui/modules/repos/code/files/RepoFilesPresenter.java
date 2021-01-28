@@ -56,33 +56,33 @@ class RepoFilesPresenter extends BasePresenter<RepoFilesMvp.View> implements Rep
     @Override public void onWorkOffline() {
         if ((repoId == null || login == null) || !files.isEmpty()) return;
         manageDisposable(RxHelper.getObservable(RepoFile.getFiles(login, repoId).toObservable())
-                .flatMap(response -> {
-                    if (response != null) {
-                        return Observable.fromIterable(response)
-                                .filter(repoFile -> repoFile != null && repoFile.getType() != null)
-                                .sorted((repoFile, repoFile2) -> repoFile2.getType().compareTo(repoFile.getType()));
-                    }
-                    return Observable.empty();
-                })
-                .toList()
-                .subscribe(models -> {
-                    files.addAll(models);
-                    sendToView(RepoFilesMvp.View::onNotifyAdapter);
-                }));
+        .flatMap(response -> {
+            if (response != null) {
+                return Observable.fromIterable(response)
+                .filter(repoFile -> repoFile != null && repoFile.getType() != null)
+                .sorted((repoFile, repoFile2) -> repoFile2.getType().compareTo(repoFile.getType()));
+            }
+            return Observable.empty();
+        })
+        .toList()
+        .subscribe(models -> {
+            files.addAll(models);
+            sendToView(RepoFilesMvp.View::onNotifyAdapter);
+        }));
     }
 
     @Override public void onCallApi(@Nullable RepoFile toAppend) {
         if (repoId == null || login == null) return;
         makeRestCall(RestProvider.getRepoService(isEnterprise()).getRepoFiles(login, repoId, path, ref)
-                .flatMap(response -> {
-                    if (response != null && response.getItems() != null) {
-                        return Observable.fromIterable(response.getItems())
-                                .filter(repoFile -> repoFile.getType() != null)
-                                .sorted((repoFile, repoFile2) -> repoFile2.getType().compareTo(repoFile.getType()));
-                    }
-                    return Observable.empty();
-                })
-                .toList().toObservable(), response -> {
+        .flatMap(response -> {
+            if (response != null && response.getItems() != null) {
+                return Observable.fromIterable(response.getItems())
+                .filter(repoFile -> repoFile.getType() != null)
+                .sorted((repoFile, repoFile2) -> repoFile2.getType().compareTo(repoFile.getType()));
+            }
+            return Observable.empty();
+        })
+        .toList().toObservable(), response -> {
             files.clear();
             if (response != null) {
                 manageObservable(RepoFile.save(response, login, repoId));
@@ -98,7 +98,7 @@ class RepoFilesPresenter extends BasePresenter<RepoFilesMvp.View> implements Rep
     }
 
     @Override public void onInitDataAndRequest(@NonNull String login, @NonNull String repoId, @NonNull String path,
-                                               @NonNull String ref, boolean clear, @Nullable RepoFile toAppend) {
+            @NonNull String ref, boolean clear, @Nullable RepoFile toAppend) {
         if (clear) pathsModel.clear();
         this.login = login;
         this.repoId = repoId;
@@ -124,7 +124,7 @@ class RepoFilesPresenter extends BasePresenter<RepoFilesMvp.View> implements Rep
     @Override public void onDeleteFile(@NonNull String message, @NonNull RepoFile item, @NonNull String branch) {
         CommitRequestModel body = new CommitRequestModel(message, null, item.getSha(), branch);
         makeRestCall(RestProvider.getContentService(isEnterprise())
-                        .deleteFile(login, repoId, item.getPath(), ref, body),
-                gitCommitModel -> sendToView(SwipeRefreshLayout.OnRefreshListener::onRefresh));
+                     .deleteFile(login, repoId, item.getPath(), ref, body),
+                     gitCommitModel -> sendToView(SwipeRefreshLayout.OnRefreshListener::onRefresh));
     }
 }

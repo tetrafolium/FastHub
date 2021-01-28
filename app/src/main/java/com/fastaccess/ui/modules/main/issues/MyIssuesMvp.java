@@ -33,8 +33,8 @@ public interface MyIssuesMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<Issue>,
-            BaseMvp.PaginationListener<IssueState> {
+        BaseViewHolder.OnItemClickListener<Issue>,
+        BaseMvp.PaginationListener<IssueState> {
 
         @NonNull ArrayList<Issue> getIssues();
 

@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 public class ReviewCommentsAdapter extends BaseRecyclerAdapter<ReviewCommentModel, ReviewCommentsViewHolder, BaseViewHolder
-        .OnItemClickListener<ReviewCommentModel>> {
+    .OnItemClickListener<ReviewCommentModel>> {
 
     private final OnToggleView onToggleView;
     private final ReactionsCallback reactionsCallback;

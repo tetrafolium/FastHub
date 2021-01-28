@@ -22,7 +22,7 @@ import butterknife.OnClick;
  */
 
 public class ChangelogBottomSheetDialog extends BaseMvpBottomSheetDialogFragment<ChangelogMvp.View, ChangelogPresenter> implements
-        ChangelogMvp.View {
+    ChangelogMvp.View {
 
     @BindView(R.id.title) FontTextView title;
     @BindView(R.id.message) FontTextView message;

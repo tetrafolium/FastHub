@@ -26,8 +26,8 @@ interface TeamMembersMvp {
     }
 
     interface Presenter extends BaseMvp.FAPresenter,
-            BaseViewHolder.OnItemClickListener<User>,
-            BaseMvp.PaginationListener<Long> {
+        BaseViewHolder.OnItemClickListener<User>,
+        BaseMvp.PaginationListener<Long> {
 
         @NonNull ArrayList<User> getFollowers();
 

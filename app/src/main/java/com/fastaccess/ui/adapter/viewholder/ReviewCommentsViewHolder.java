@@ -137,16 +137,16 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
     }
 
     public static ReviewCommentsViewHolder newInstance(ViewGroup viewGroup, BaseRecyclerAdapter adapter,
-                                                       @NonNull OnToggleView onToggleView, @NonNull ReactionsCallback reactionsCallback,
-                                                       String repoOwner, String poster) {
+            @NonNull OnToggleView onToggleView, @NonNull ReactionsCallback reactionsCallback,
+            String repoOwner, String poster) {
         return new ReviewCommentsViewHolder(getView(viewGroup, R.layout.review_comments_row_item),
-                viewGroup, adapter, onToggleView, reactionsCallback, repoOwner, poster);
+                                            viewGroup, adapter, onToggleView, reactionsCallback, repoOwner, poster);
     }
 
     @Override public void bind(@NonNull ReviewCommentModel commentModel) {
         if (commentModel.getUser() != null) {
             avatarView.setUrl(commentModel.getUser().getAvatarUrl(), commentModel.getUser().getLogin(), commentModel.getUser()
-                    .isOrganizationType(), LinkParserHelper.isEnterprise(commentModel.getHtmlUrl()));
+                              .isOrganizationType(), LinkParserHelper.isEnterprise(commentModel.getHtmlUrl()));
             name.setText(commentModel.getUser().getLogin());
             if (commentModel.getAuthorAssociation() != null && !"none".equalsIgnoreCase(commentModel.getAuthorAssociation())) {
                 owner.setText(commentModel.getAuthorAssociation().toLowerCase());
@@ -189,38 +189,38 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
                 boolean isReacted = reactionsCallback == null || reactionsCallback.isPreviouslyReacted(comment.getId(), v.getId());
                 ReactionsModel reactionsModel = comment.getReactions() != null ? comment.getReactions() : new ReactionsModel();
                 switch (v.getId()) {
-                    case R.id.heart:
-                    case R.id.heartReaction:
-                        reactionsModel.setHeart(!isReacted ? reactionsModel.getHeart() + 1 : reactionsModel.getHeart() - 1);
-                        break;
-                    case R.id.sad:
-                    case R.id.sadReaction:
-                        reactionsModel.setConfused(!isReacted ? reactionsModel.getConfused() + 1 : reactionsModel.getConfused() - 1);
-                        break;
-                    case R.id.thumbsDown:
-                    case R.id.thumbsDownReaction:
-                        reactionsModel.setMinusOne(!isReacted ? reactionsModel.getMinusOne() + 1 : reactionsModel.getMinusOne() - 1);
-                        break;
-                    case R.id.thumbsUp:
-                    case R.id.thumbsUpReaction:
-                        reactionsModel.setPlusOne(!isReacted ? reactionsModel.getPlusOne() + 1 : reactionsModel.getPlusOne() - 1);
-                        break;
-                    case R.id.laugh:
-                    case R.id.laughReaction:
-                        reactionsModel.setLaugh(!isReacted ? reactionsModel.getLaugh() + 1 : reactionsModel.getLaugh() - 1);
-                        break;
-                    case R.id.hurray:
-                    case R.id.hurrayReaction:
-                        reactionsModel.setHooray(!isReacted ? reactionsModel.getHooray() + 1 : reactionsModel.getHooray() - 1);
-                        break;
-                    case R.id.rocket:
-                    case R.id.rocketReaction:
-                        reactionsModel.setRocket(!isReacted ? reactionsModel.getRocket() + 1 : reactionsModel.getRocket() - 1);
-                        break;
-                    case R.id.eyes:
-                    case R.id.eyeReaction:
-                        reactionsModel.setEyes(!isReacted ? reactionsModel.getEyes() + 1 : reactionsModel.getEyes() - 1);
-                        break;
+                case R.id.heart:
+                case R.id.heartReaction:
+                    reactionsModel.setHeart(!isReacted ? reactionsModel.getHeart() + 1 : reactionsModel.getHeart() - 1);
+                    break;
+                case R.id.sad:
+                case R.id.sadReaction:
+                    reactionsModel.setConfused(!isReacted ? reactionsModel.getConfused() + 1 : reactionsModel.getConfused() - 1);
+                    break;
+                case R.id.thumbsDown:
+                case R.id.thumbsDownReaction:
+                    reactionsModel.setMinusOne(!isReacted ? reactionsModel.getMinusOne() + 1 : reactionsModel.getMinusOne() - 1);
+                    break;
+                case R.id.thumbsUp:
+                case R.id.thumbsUpReaction:
+                    reactionsModel.setPlusOne(!isReacted ? reactionsModel.getPlusOne() + 1 : reactionsModel.getPlusOne() - 1);
+                    break;
+                case R.id.laugh:
+                case R.id.laughReaction:
+                    reactionsModel.setLaugh(!isReacted ? reactionsModel.getLaugh() + 1 : reactionsModel.getLaugh() - 1);
+                    break;
+                case R.id.hurray:
+                case R.id.hurrayReaction:
+                    reactionsModel.setHooray(!isReacted ? reactionsModel.getHooray() + 1 : reactionsModel.getHooray() - 1);
+                    break;
+                case R.id.rocket:
+                case R.id.rocketReaction:
+                    reactionsModel.setRocket(!isReacted ? reactionsModel.getRocket() + 1 : reactionsModel.getRocket() - 1);
+                    break;
+                case R.id.eyes:
+                case R.id.eyeReaction:
+                    reactionsModel.setEyes(!isReacted ? reactionsModel.getEyes() + 1 : reactionsModel.getEyes() - 1);
+                    break;
                 }
                 comment.setReactions(reactionsModel);
                 appendEmojies(reactionsModel);
@@ -230,7 +230,7 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
 
     private void appendEmojies(ReactionsModel reaction) {
         CommentsHelper.appendEmojies(reaction, thumbsUp, thumbsUpReaction, thumbsDown, thumbsDownReaction, hurray, hurrayReaction, sad,
-                sadReaction, laugh, laughReaction, heart, heartReaction, rocket, rocketReaction, eyes, eyeReaction, reactionsList);
+                                     sadReaction, laugh, laughReaction, heart, heartReaction, rocket, rocketReaction, eyes, eyeReaction, reactionsList);
     }
 
     private long getId() {
@@ -249,7 +249,7 @@ public class ReviewCommentsViewHolder extends BaseViewHolder<ReviewCommentModel>
         commentOptions.setVisibility(!expanded ? View.GONE : View.VISIBLE);
         reactionsList.setVisibility(expanded ? View.GONE : View.VISIBLE);
         reactionsList.setVisibility(expanded ? View.GONE : reactionsList.getTag() == null || (!((Boolean) reactionsList.getTag()))
-                                                           ? View.GONE : View.VISIBLE);
+                                    ? View.GONE : View.VISIBLE);
     }
 
     @Override protected void onViewIsDetaching() {

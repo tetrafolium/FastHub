@@ -70,9 +70,9 @@ public abstract class AbstractCommit implements Parcelable {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                 dataSource.delete(Commit.class)
-                        .where(REPO_ID.eq(repoId).and(LOGIN.eq(login)))
-                        .get()
-                        .value();
+                .where(REPO_ID.eq(repoId).and(LOGIN.eq(login)))
+                .get()
+                .value();
                 if (!models.isEmpty()) {
                     for (Commit commitModel : models) {
                         dataSource.delete(Commit.class).where(ID.eq(commitModel.getId())).get().value();
@@ -94,11 +94,11 @@ public abstract class AbstractCommit implements Parcelable {
             try {
                 BlockingEntityStore<Persistable> dataSource = App.getInstance().getDataStore().toBlocking();
                 dataSource.delete(Commit.class)
-                        .where(REPO_ID.eq(repoId)
-                                .and(LOGIN.eq(login))
-                                .and(PULL_REQUEST_NUMBER.eq(number)))
-                        .get()
-                        .value();
+                .where(REPO_ID.eq(repoId)
+                       .and(LOGIN.eq(login))
+                       .and(PULL_REQUEST_NUMBER.eq(number)))
+                .get()
+                .value();
                 if (!models.isEmpty()) {
                     for (Commit commitModel : models) {
                         dataSource.delete(Commit.class).where(ID.eq(commitModel.getId())).get().value();
@@ -118,38 +118,40 @@ public abstract class AbstractCommit implements Parcelable {
 
     public static Single<List<Commit>> getCommits(@NonNull String repoId, @NonNull String login) {
         return App.getInstance().getDataStore()
-                .select(Commit.class)
-                .where(REPO_ID.eq(repoId)
-                        .and(LOGIN.eq(login))
-                        .and(PULL_REQUEST_NUMBER.eq(0L)))
-                .get()
-                .observable()
-                .toList();
+               .select(Commit.class)
+               .where(REPO_ID.eq(repoId)
+                      .and(LOGIN.eq(login))
+                      .and(PULL_REQUEST_NUMBER.eq(0L)))
+               .get()
+               .observable()
+               .toList();
     }
 
     public static Single<List<Commit>> getCommits(@NonNull String repoId, @NonNull String login, long pullRequestNumber) {
         return App.getInstance().getDataStore()
-                .select(Commit.class)
-                .where(REPO_ID.eq(repoId)
-                        .and(LOGIN.eq(login))
-                        .and(PULL_REQUEST_NUMBER.eq(pullRequestNumber)))
-                .get()
-                .observable()
-                .toList();
+               .select(Commit.class)
+               .where(REPO_ID.eq(repoId)
+                      .and(LOGIN.eq(login))
+                      .and(PULL_REQUEST_NUMBER.eq(pullRequestNumber)))
+               .get()
+               .observable()
+               .toList();
     }
 
     public static Observable<Commit> getCommit(@NonNull String sha, @NonNull String repoId, @NonNull String login) {
         return App.getInstance().getDataStore()
-                .select(Commit.class)
-                .where(REPO_ID.eq(repoId)
-                        .and(LOGIN.eq(login))
-                        .and(SHA.eq(sha)))
-                .limit(1)
-                .get()
-                .observable();
+               .select(Commit.class)
+               .where(REPO_ID.eq(repoId)
+                      .and(LOGIN.eq(login))
+                      .and(SHA.eq(sha)))
+               .limit(1)
+               .get()
+               .observable();
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override public int describeContents() {
+        return 0;
+    }
 
     @Override public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.id);
@@ -196,8 +198,12 @@ public abstract class AbstractCommit implements Parcelable {
     }
 
     public static final Creator<Commit> CREATOR = new Creator<Commit>() {
-        @Override public Commit createFromParcel(Parcel source) {return new Commit(source);}
+        @Override public Commit createFromParcel(Parcel source) {
+            return new Commit(source);
+        }
 
-        @Override public Commit[] newArray(int size) {return new Commit[size];}
+        @Override public Commit[] newArray(int size) {
+            return new Commit[size];
+        }
     };
 }
