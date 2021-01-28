@@ -38,7 +38,7 @@ inspecode:
       thresholds: {num-issues: 116}
 
     jscpd:
-      thresholds: {num-issues: 770}
+      thresholds: {num-issues: 768}
 
     ktlint:
       auto-fix: true
