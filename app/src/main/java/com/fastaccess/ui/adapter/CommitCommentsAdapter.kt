@@ -10,10 +10,12 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
 /**
  * Created by kosh on 15/08/2017.
  */
-class CommitCommentsAdapter(data: List<Comment>,
-                            listener: BaseViewHolder.OnItemClickListener<Comment>,
-                            var onToggleView: OnToggleView)
-    : BaseRecyclerAdapter<Comment, CommitCommentsViewHolder,
+class CommitCommentsAdapter(
+    data: List<Comment>,
+    listener: BaseViewHolder.OnItemClickListener<Comment>,
+    var onToggleView: OnToggleView
+) :
+    BaseRecyclerAdapter<Comment, CommitCommentsViewHolder,
         BaseViewHolder.OnItemClickListener<Comment>>(data, listener) {
 
     override fun viewHolder(parent: ViewGroup, viewType: Int): CommitCommentsViewHolder {

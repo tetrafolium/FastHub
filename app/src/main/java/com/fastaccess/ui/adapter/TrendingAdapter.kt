@@ -12,7 +12,7 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
  */
 
 class TrendingAdapter(data: MutableList<TrendingModel>) : BaseRecyclerAdapter<TrendingModel,
-        TrendingViewHolder, BaseViewHolder.OnItemClickListener<TrendingModel>>(data) {
+    TrendingViewHolder, BaseViewHolder.OnItemClickListener<TrendingModel>>(data) {
 
     override fun viewHolder(parent: ViewGroup?, viewType: Int): TrendingViewHolder {
         return TrendingViewHolder(BaseViewHolder.getView(parent!!, R.layout.trending_row_item), this)
@@ -21,5 +21,4 @@ class TrendingAdapter(data: MutableList<TrendingModel>) : BaseRecyclerAdapter<Tr
     override fun onBindView(holder: TrendingViewHolder?, position: Int) {
         holder?.bind(getItem(position))
     }
-
 }

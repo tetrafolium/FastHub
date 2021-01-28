@@ -23,17 +23,23 @@ class FullScreenFileChangePresenter : BasePresenter<FullScreenFileChangeMvp.View
             isCommit = it.getBoolean(BundleConstant.YES_NO_EXTRA)
         }
         model?.let {
-            manageDisposable(RxHelper.getObservable(Observable.fromIterable(it.linesModel))
+            manageDisposable(
+                RxHelper.getObservable(Observable.fromIterable(it.linesModel))
                     .doOnSubscribe({ sendToView { it.showProgress(0) } })
                     .flatMap { Observable.just(it) }
                     .subscribe
-                    ({
-                        sendToView { v -> v.onNotifyAdapter(it) }
-                    }, {
-                        onError(it)
-                    }, {
-                        sendToView { it.hideProgress() }
-                    }))
+                    (
+                        {
+                            sendToView { v -> v.onNotifyAdapter(it) }
+                        },
+                        {
+                            onError(it)
+                        },
+                        {
+                            sendToView { it.hideProgress() }
+                        }
+                    )
+            )
         }
     }
 }

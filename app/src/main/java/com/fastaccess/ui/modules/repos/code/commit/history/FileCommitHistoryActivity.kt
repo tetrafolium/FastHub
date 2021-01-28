@@ -67,7 +67,11 @@ class FileCommitHistoryActivity : BaseActivity<BaseMvp.FAView, BasePresenter<Bas
 
     companion object {
         fun startActivity(
-            context: Context, login: String, repoId: String, branch: String, path: String,
+            context: Context,
+            login: String,
+            repoId: String,
+            branch: String,
+            path: String,
             enterprise: Boolean
         ) {
             val intent = Intent(context, FileCommitHistoryActivity::class.java)

@@ -20,8 +20,10 @@ import com.fastaccess.ui.widgets.FontTextView
 /**
  * Created by kosh on 23/07/2017.
  */
-class NotificationSoundBottomSheet : BaseMvpBottomSheetDialogFragment<NotificationSoundMvp.View,
-        NotificationSoundPresenter>(), NotificationSoundMvp.View {
+class NotificationSoundBottomSheet :
+    BaseMvpBottomSheetDialogFragment<NotificationSoundMvp.View,
+        NotificationSoundPresenter>(),
+    NotificationSoundMvp.View {
 
     @BindView(R.id.title) lateinit var title: FontTextView
     @BindView(R.id.picker) lateinit var radioGroup: RadioGroup

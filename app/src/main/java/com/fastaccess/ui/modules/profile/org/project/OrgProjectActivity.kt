@@ -3,7 +3,6 @@ package com.fastaccess.ui.modules.profile.org.project
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.appbar.AppBarLayout
 import butterknife.BindView
 import com.evernote.android.state.State
 import com.fastaccess.R
@@ -13,6 +12,7 @@ import com.fastaccess.ui.base.BaseActivity
 import com.fastaccess.ui.base.mvp.BaseMvp
 import com.fastaccess.ui.base.mvp.presenter.BasePresenter
 import com.fastaccess.ui.modules.repos.projects.RepoProjectsFragmentPager
+import com.google.android.material.appbar.AppBarLayout
 
 /**
  * Created by Hashemsergani on 24.09.17.

@@ -1,8 +1,6 @@
 package com.fastaccess.ui.modules.repos.wiki
 
 import android.content.Intent
-import com.fastaccess.BuildConfig
-import com.fastaccess.R
 import com.fastaccess.data.dao.wiki.FirebaseWikiConfigModel
 import com.fastaccess.data.dao.wiki.WikiContentModel
 import com.fastaccess.data.dao.wiki.WikiSideBarModel
@@ -62,22 +60,23 @@ class WikiPresenter : BasePresenter<WikiMvp.View>(), WikiMvp.Presenter {
     }
 
     private fun callApi(sidebar: WikiSideBarModel) {
-        manageViewDisposable(RxHelper.getObservable(JsoupProvider.getWiki().getWiki(sidebar.link))
-            .flatMap { s -> RxHelper.getObservable(getWikiContent(s)) }
-            .doOnSubscribe { sendToView { it.showProgress(0) } }
-            .subscribe(
-                { response -> sendToView { view -> view.onLoadContent(response) } },
-                { throwable ->
-                    if (throwable is HttpException) {
-                        if (throwable.code() == 404) {
-                            sendToView { it.showPrivateRepoError() }
-                            return@subscribe
+        manageViewDisposable(
+            RxHelper.getObservable(JsoupProvider.getWiki().getWiki(sidebar.link))
+                .flatMap { s -> RxHelper.getObservable(getWikiContent(s)) }
+                .doOnSubscribe { sendToView { it.showProgress(0) } }
+                .subscribe(
+                    { response -> sendToView { view -> view.onLoadContent(response) } },
+                    { throwable ->
+                        if (throwable is HttpException) {
+                            if (throwable.code() == 404) {
+                                sendToView { it.showPrivateRepoError() }
+                                return@subscribe
+                            }
                         }
-                    }
-                    onError(throwable)
-                },
-                { sendToView { it.hideProgress() } }
-            )
+                        onError(throwable)
+                    },
+                    { sendToView { it.hideProgress() } }
+                )
         )
     }
 
@@ -98,12 +97,17 @@ class WikiPresenter : BasePresenter<WikiMvp.View>(), WikiMvp.Presenter {
                 val rightBarList = wikiContent?.select(firebaseWikiConfigModel.sideBarUl)?.select(firebaseWikiConfigModel.sideBarList)
                 val headerHtml = "<div class='gh-header-meta'><h1>$header</h1><p>$subHeaderText</p></div>"
                 val content = "$headerHtml $wikiBody"
-                s.onNext(WikiContentModel(content, null, rightBarList?.map {
-                    WikiSideBarModel(
-                        it.select(firebaseWikiConfigModel.sideBarListTitle).text(),
-                        it.select(firebaseWikiConfigModel.sideBarListTitle).attr(firebaseWikiConfigModel.sideBarListLink)
+                s.onNext(
+                    WikiContentModel(
+                        content, null,
+                        rightBarList?.map {
+                            WikiSideBarModel(
+                                it.select(firebaseWikiConfigModel.sideBarListTitle).text(),
+                                it.select(firebaseWikiConfigModel.sideBarListTitle).attr(firebaseWikiConfigModel.sideBarListLink)
+                            )
+                        } ?: listOf()
                     )
-                } ?: listOf()))
+                )
             } else {
                 s.onNext(WikiContentModel("<h2 align='center'>No Wiki</h4>", "", arrayListOf()))
             }

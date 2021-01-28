@@ -11,8 +11,8 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
 /**
  * Created by kosh on 17/08/2017.
  */
-class EmojiAdapter(listener: BaseViewHolder.OnItemClickListener<Emoji>)
-    : BaseRecyclerAdapter<Emoji, EmojiViewHolder, BaseViewHolder.OnItemClickListener<Emoji>>(listener), Filterable {
+class EmojiAdapter(listener: BaseViewHolder.OnItemClickListener<Emoji>) :
+    BaseRecyclerAdapter<Emoji, EmojiViewHolder, BaseViewHolder.OnItemClickListener<Emoji>>(listener), Filterable {
 
     var copiedList = mutableListOf<Emoji>()
 
@@ -34,7 +34,7 @@ class EmojiAdapter(listener: BaseViewHolder.OnItemClickListener<Emoji>)
                 val filteredResults: List<Emoji> = if (text.isNotBlank()) {
                     val data = data.filter {
                         text in it.tags || it.description.contains(text) ||
-                                it.unicode.contains(text) || text in it.aliases
+                            it.unicode.contains(text) || text in it.aliases
                     }
                     if (data.isNotEmpty()) data
                     else copiedList

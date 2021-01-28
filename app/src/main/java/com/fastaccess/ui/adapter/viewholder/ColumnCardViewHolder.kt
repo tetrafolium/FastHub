@@ -14,8 +14,8 @@ import com.fastaccess.ui.widgets.recyclerview.BaseViewHolder
 /**
  * Created by Hashemsergani on 11.09.17.
  */
-class ColumnCardViewHolder private constructor(item: View, adapter: BaseRecyclerAdapter<*, *, *>, val isOwner: Boolean)
-    : BaseViewHolder<ProjectCardModel>(item, adapter) {
+class ColumnCardViewHolder private constructor(item: View, adapter: BaseRecyclerAdapter<*, *, *>, val isOwner: Boolean) :
+    BaseViewHolder<ProjectCardModel>(item, adapter) {
 
     @BindView(R.id.title) lateinit var title: TextView
     @BindView(R.id.addedBy) lateinit var addedBy: TextView

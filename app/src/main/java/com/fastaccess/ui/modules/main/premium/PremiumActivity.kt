@@ -5,12 +5,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.transition.TransitionManager
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.transition.TransitionManager
 import butterknife.BindView
 import butterknife.OnClick
 import butterknife.OnEditorAction
@@ -97,11 +97,14 @@ class PremiumActivity : BaseActivity<PremiumMvp.View, PremiumPresenter>(), Premi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         buyAll.text = getString(R.string.purchase_all).replace("%price%", "$7.99")
-        RxHelper.getObservable(RxBillingService.getInstance(this, BuildConfig.DEBUG)
+        RxHelper.getObservable(
+            RxBillingService.getInstance(this, BuildConfig.DEBUG)
                 .getSkuDetails(ProductType.IN_APP, arrayListOf(enterpriseKey, proKey, allFeaturesKey))
-                .toObservable())
-                .flatMap { Observable.fromIterable(it) }
-                .subscribe({
+                .toObservable()
+        )
+            .flatMap { Observable.fromIterable(it) }
+            .subscribe(
+                {
                     Logger.e(it.sku(), it.price(), it.priceCurrencyCode(), it.priceAmountMicros())
                     when (it.sku()) {
                         enterpriseKey -> {
@@ -117,7 +120,9 @@ class PremiumActivity : BaseActivity<PremiumMvp.View, PremiumPresenter>(), Premi
                             buyAll.tag = it.priceAmountMicros()
                         }
                     }
-                }, { t -> t.printStackTrace() })
+                },
+                { t -> t.printStackTrace() }
+            )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

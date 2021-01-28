@@ -15,7 +15,7 @@ import java.text.NumberFormat
  * Created by kosh on 09/08/2017.
  */
 class ProfilePinnedReposViewHolder private constructor(view: View, adapter: BaseRecyclerAdapter<*, *, *>) :
-        BaseViewHolder<GetPinnedReposQuery.Node>(view, adapter) {
+    BaseViewHolder<GetPinnedReposQuery.Node>(view, adapter) {
 
     @BindView(R.id.title) lateinit var title: FontTextView
     @BindView(R.id.issues) lateinit var issues: FontTextView

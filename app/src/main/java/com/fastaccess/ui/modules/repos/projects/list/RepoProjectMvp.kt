@@ -19,8 +19,9 @@ interface RepoProjectMvp {
         fun onChangeTotalCount(count: Int)
     }
 
-    interface Presenter : BaseViewHolder.OnItemClickListener<RepoProjectsOpenQuery.Node>,
-            BaseMvp.PaginationListener<IssueState> {
+    interface Presenter :
+        BaseViewHolder.OnItemClickListener<RepoProjectsOpenQuery.Node>,
+        BaseMvp.PaginationListener<IssueState> {
 
         fun onFragmentCreate(bundle: Bundle?)
 

@@ -1,16 +1,12 @@
 package com.fastaccess.ui.widgets.markdown
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.TextView
-import com.crashlytics.android.Crashlytics
 import com.fastaccess.ui.widgets.FontEditText
 import java.util.*
-
 
 /**
  * Created by kosh on 14/08/2017.
@@ -107,5 +103,4 @@ class MarkdownEditText : FontEditText {
             mention?.setAdapter(adapter)
         }
     }
-
 }

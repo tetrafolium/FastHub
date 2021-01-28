@@ -1,6 +1,5 @@
 package com.fastaccess.data.service
 
-
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET

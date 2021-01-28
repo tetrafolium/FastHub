@@ -2,7 +2,6 @@ package com.fastaccess.ui.modules.repos.git.delete
 
 import android.content.Context
 import android.os.Bundle
-import com.google.android.material.textfield.TextInputLayout
 import android.view.View
 import butterknife.BindView
 import butterknife.OnClick
@@ -11,6 +10,7 @@ import com.fastaccess.helper.BundleConstant
 import com.fastaccess.helper.Bundler
 import com.fastaccess.helper.InputHelper
 import com.fastaccess.ui.base.BaseBottomSheetDialog
+import com.google.android.material.textfield.TextInputLayout
 
 /**
  * Created by Hashemsergani on 02/09/2017.
@@ -21,7 +21,6 @@ class DeleteFileBottomSheetFragment : BaseBottomSheetDialog() {
     @BindView(R.id.fileName) lateinit var fileName: TextInputLayout
 
     private var deleteCallback: DeleteContentFileCallback? = null
-
 
     @OnClick(R.id.delete) fun onDeleteClicked() {
         description.error = if (InputHelper.isEmpty(description)) getString(R.string.required_field) else null
@@ -63,9 +62,9 @@ class DeleteFileBottomSheetFragment : BaseBottomSheetDialog() {
         fun newInstance(position: Int, path: String): DeleteFileBottomSheetFragment {
             val fragment = DeleteFileBottomSheetFragment()
             fragment.arguments = Bundler.start()
-                    .put(BundleConstant.EXTRA, position)
-                    .put(BundleConstant.ITEM, path)
-                    .end()
+                .put(BundleConstant.EXTRA, position)
+                .put(BundleConstant.ITEM, path)
+                .end()
             return fragment
         }
     }

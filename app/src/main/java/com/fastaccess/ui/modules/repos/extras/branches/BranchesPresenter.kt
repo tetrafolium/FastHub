@@ -22,7 +22,6 @@ class BranchesPresenter : BasePresenter<BranchesMvp.View>(), BranchesMvp.Present
 
     var branches = ArrayList<BranchesModel>()
 
-
     override fun onFragmentCreated(bundle: Bundle) {
         login = bundle.getString(BundleConstant.EXTRA)
         repoId = bundle.getString(BundleConstant.ID)
@@ -34,9 +33,10 @@ class BranchesPresenter : BasePresenter<BranchesMvp.View>(), BranchesMvp.Present
 
     private fun callApi(login: String, repoId: String, page: Int) {
         val observable = if (!isBranch) RestProvider.getRepoService(isEnterprise)
-                .getTags(login, repoId, page) else RestProvider.getRepoService(isEnterprise)
-                .getBranches(login, repoId, page)
-        return makeRestCall(observable
+            .getTags(login, repoId, page) else RestProvider.getRepoService(isEnterprise)
+            .getBranches(login, repoId, page)
+        return makeRestCall(
+            observable
                 .flatMap({ t: Pageable<BranchesModel>? ->
                     val list = ArrayList<BranchesModel>()
                     if (t != null) {
@@ -47,7 +47,9 @@ class BranchesPresenter : BasePresenter<BranchesMvp.View>(), BranchesMvp.Present
                         }
                     }
                     return@flatMap Observable.just(list)
-                }), { items -> sendToView { v -> v.onNotifyAdapter(items, page) } })
+                }),
+            { items -> sendToView { v -> v.onNotifyAdapter(items, page) } }
+        )
     }
 
     override fun onItemClick(position: Int, v: View?, item: BranchesModel?) {
@@ -85,5 +87,4 @@ class BranchesPresenter : BasePresenter<BranchesMvp.View>(), BranchesMvp.Present
         callApi(login!!, repoId!!, page)
         return true
     }
-
 }

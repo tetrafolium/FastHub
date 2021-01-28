@@ -10,7 +10,7 @@ import github.RepoProjectsOpenQuery
  * Created by kosh on 09/09/2017.
  */
 class ProjectsAdapter(data: ArrayList<RepoProjectsOpenQuery.Node>) :
-        BaseRecyclerAdapter<RepoProjectsOpenQuery.Node, ProjectViewHolder, BaseViewHolder.OnItemClickListener<RepoProjectsOpenQuery.Node>>(data) {
+    BaseRecyclerAdapter<RepoProjectsOpenQuery.Node, ProjectViewHolder, BaseViewHolder.OnItemClickListener<RepoProjectsOpenQuery.Node>>(data) {
 
     override fun viewHolder(parent: ViewGroup, viewType: Int): ProjectViewHolder = ProjectViewHolder.newInstance(parent, this)
 

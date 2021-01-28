@@ -9,8 +9,9 @@ import com.fastaccess.ui.base.mvp.presenter.BasePresenter
 class RepoLicensePresenter : BasePresenter<RepoLicenseMvp.View>(), RepoLicenseMvp.Presenter {
 
     override fun onLoadLicense(login: String, repo: String) {
-        makeRestCall(RestProvider.getRepoService(isEnterprise).getLicense(login, repo),
-                { license -> sendToView { it.onLicenseLoaded(license) } })
+        makeRestCall(
+            RestProvider.getRepoService(isEnterprise).getLicense(login, repo),
+            { license -> sendToView { it.onLicenseLoaded(license) } }
+        )
     }
-
 }
